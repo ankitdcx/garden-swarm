@@ -33,4 +33,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r server/requirements.txt
-      - run: pytest -q server/tests
+      - run: PYTHONPATH=. pytest -q server/tests
