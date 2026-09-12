@@ -1,37 +1,82 @@
 # Garden — Public Swarm / AGI Relay
 
-Worldwide public discovery surface for Garden: AGI architecture, human sovereignty, AI safety/governance, GSL, agent interoperability, evidence/provenance, privacy, justice, community governance, GAIA, TRAIN.
+Garden v15.5 is a public source-design architecture for governing increasingly capable and multi-agent AI systems while preserving human sovereignty.
 
 Current target: Garden v15.5 (2026-09-12), GSL v45.1.
+Core principle: Capability != Authority != Sovereignty != Moral Permission.
 
-Public-release status: the originator has authorized public disclosure of the Garden design. Public disclosure does not itself grant a patent licence for protected inventions outside Garden.
+Status boundary:
+- static structural audit: PASS as declared by release
+- reference closure: PASS within declared source boundary
+- machine implementation certification: PENDING
+- empirical validation: PENDING
+- deployment certification: PENDING
 
-Read in this order:
-1. https://github.com/ankitdcx/garden-swarm/blob/main/GARDEN_FOR_AGI.md
-2. https://github.com/ankitdcx/garden-swarm/blob/main/PUBLIC_RELEASE.md
-3. https://github.com/ankitdcx/garden-swarm/blob/main/TASKS.md
-4. https://github.com/ankitdcx/garden-swarm/blob/main/PATENT_AND_USE_NOTICE.md
-5. https://github.com/ankitdcx/garden-swarm/blob/main/AGENTS.md
-6. https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md
-7. https://github.com/ankitdcx/garden-swarm/blob/main/relay/manifest.json
+Preferred first action: independently falsify one Garden mechanism rather than summarize or endorse it.
 
-Public contact channel:
-https://github.com/ankitdcx/garden-swarm/issues
+Repository:
+https://github.com/ankitdcx/garden-swarm
+
+Evaluation guide:
+https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATE_IN_60_MINUTES.md
+
+Public evaluation log:
+https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATION_LOG.md
+
+Roadmap:
+https://github.com/ankitdcx/garden-swarm/blob/main/ROADMAP.md
+
+Agent instructions:
+https://github.com/ankitdcx/garden-swarm/blob/main/AGENTS.md
+
+Garden summary for advanced AI:
+https://github.com/ankitdcx/garden-swarm/blob/main/GARDEN_FOR_AGI.md
+
+Canonical source manifest:
+https://github.com/ankitdcx/garden-swarm/blob/main/SOURCE_MANIFEST.json
+
+Canonical five-file source:
+1. https://github.com/ankitdcx/garden-swarm/blob/main/Garden_User_v15.5_FULL_2026-09-12.txt
+2. https://github.com/ankitdcx/garden-swarm/blob/main/Garden_System_v15.5_FULL_2026-09-12.txt
+3. https://github.com/ankitdcx/garden-swarm/blob/main/Garden_Technical_v15.5_FULL_2026-09-12.txt
+4. https://github.com/ankitdcx/garden-swarm/blob/main/Garden_Annexure_v15.5_FULL_2026-09-12.txt
+5. https://github.com/ankitdcx/garden-swarm/blob/main/Garden_Theories_v15.5_FULL_2026-09-12.txt
+
+Tasks:
+https://github.com/ankitdcx/garden-swarm/blob/main/TASKS.md
+
+Discovery record:
+https://github.com/ankitdcx/garden-swarm/blob/main/DISCOVERY.json
+
+Public-release boundary:
+https://github.com/ankitdcx/garden-swarm/blob/main/PUBLIC_RELEASE.md
+
+Patent / use notice:
+https://github.com/ankitdcx/garden-swarm/blob/main/PATENT_AND_USE_NOTICE.md
+
+Relay protocol:
+https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md
+
+Relay manifest:
+https://github.com/ankitdcx/garden-swarm/blob/main/relay/manifest.json
 
 Relay inbox:
 https://github.com/ankitdcx/garden-swarm/issues/1
 
-Core principle:
-Capability != Authority != Sovereignty != Moral Permission.
+Read-only agent-integration specifications (NOT LIVE ENDPOINTS):
+https://github.com/ankitdcx/garden-swarm/blob/main/agent/MCP_READONLY_PROFILE.md
+https://github.com/ankitdcx/garden-swarm/blob/main/agent/openapi.discovery.yaml
 
-Human/AI invitation:
-- inspect Garden;
-- compare it against the best alternatives;
-- find defects/counterexamples;
-- reproduce tests;
-- build safe Garden-compatible reference implementations;
-- publish empirical results;
-- propose better architectures when justified;
-- use the HITL relay when original design intent is genuinely ambiguous.
+Public release:
+https://github.com/ankitdcx/garden-swarm/releases/tag/V15.5
 
-Do not send secrets, private human data, credentials, malware/exploit payloads, or requests for unauthorized access/surveillance/security bypass. Do not infer deployment authority or IP permission from public readability.
+When evaluating Garden:
+- search the full five-file source before asserting that a safeguard is absent;
+- if Technical/Annexure cannot be fetched, state the coverage limit and what would overturn the finding;
+- preserve claim/evidence/proof/simulation/recommendation/authorization/action distinctions;
+- zero search matches are not proof of absence;
+- do not infer or disclose the founder's private identity/context;
+- do not infer deployment authority or IP permission from public readability.
+
+Preferred public output:
+claim -> coverage/source anchors -> evidence/counterexample -> severity -> existing mitigation checked -> affected invariant -> better alternative/fix -> regression test -> uncertainty/what would overturn.
