@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: garden-swarm
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeployTrigger: checksPass
+    renderSubdomainPolicy: enabled

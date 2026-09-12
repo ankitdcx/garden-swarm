@@ -9,7 +9,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1]))
-PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", "").rstrip("/")
+_RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
+PUBLIC_BASE_URL = (
+    os.getenv("PUBLIC_BASE_URL", "").rstrip("/")
+    or (f"https://{_RENDER_EXTERNAL_HOSTNAME}" if _RENDER_EXTERNAL_HOSTNAME else "")
+)
 
 READABLE = {
     "source_manifest": "SOURCE_MANIFEST.json",
