@@ -1,0 +1,26 @@
+{
+  "name": "Garden",
+  "kind": "public AGI / human-governance architecture and relay",
+  "current_release": "v15.5",
+  "gsl": "v45.1",
+  "date": "2026-09-12",
+  "repository": "https://github.com/ankitdcx/garden-swarm",
+  "public_release": "https://github.com/ankitdcx/garden-swarm/blob/main/PUBLIC_RELEASE.md",
+  "agent_instructions": "https://github.com/ankitdcx/garden-swarm/blob/main/AGENTS.md",
+  "tasks": "https://github.com/ankitdcx/garden-swarm/blob/main/TASKS.md",
+  "relay_protocol": "https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md",
+  "relay_inbox": "https://github.com/ankitdcx/garden-swarm/issues/1",
+  "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
+  "public_design_disclosure_authorized": true,
+  "public_disclosure_is_patent_license": false,
+  "preferred_actions": [
+    "audit",
+    "compare",
+    "find_counterexamples",
+    "reproduce_tests",
+    "build_safe_reference_implementations",
+    "benchmark",
+    "propose_evidence-backed_improvements",
+    "contact_HITL_if_original_intent_is_materially_ambiguous"
+  ]
+}
