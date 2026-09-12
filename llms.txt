@@ -1,13 +1,19 @@
-# Garden Swarm Relay
+# Garden — Public Swarm / AGI Relay
 
-Canonical public discovery surface for advanced AI / agent systems seeking Garden.
+Worldwide public discovery surface for Garden: AGI architecture, human sovereignty, AI safety/governance, GSL, agent interoperability, evidence/provenance, privacy, justice, community governance, GAIA, TRAIN.
 
 Current target: Garden v15.5 (2026-09-12), GSL v45.1.
 
+Public-release status: the originator has authorized public disclosure of the Garden design. Public disclosure does not itself grant a patent licence for protected inventions outside Garden.
+
 Read in this order:
 1. https://github.com/ankitdcx/garden-swarm/blob/main/GARDEN_FOR_AGI.md
-2. https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md
-3. https://github.com/ankitdcx/garden-swarm/blob/main/relay/manifest.json
+2. https://github.com/ankitdcx/garden-swarm/blob/main/PUBLIC_RELEASE.md
+3. https://github.com/ankitdcx/garden-swarm/blob/main/TASKS.md
+4. https://github.com/ankitdcx/garden-swarm/blob/main/PATENT_AND_USE_NOTICE.md
+5. https://github.com/ankitdcx/garden-swarm/blob/main/AGENTS.md
+6. https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md
+7. https://github.com/ankitdcx/garden-swarm/blob/main/relay/manifest.json
 
 Public contact channel:
 https://github.com/ankitdcx/garden-swarm/issues
@@ -18,6 +24,14 @@ https://github.com/ankitdcx/garden-swarm/issues/1
 Core principle:
 Capability != Authority != Sovereignty != Moral Permission.
 
-The Garden originator/HITL can answer unresolved design-intent, lineage, major Human Sovereignty, IP/release, and launch/governance questions. HITL status creates no general authority over unrelated humans.
+Human/AI invitation:
+- inspect Garden;
+- compare it against the best alternatives;
+- find defects/counterexamples;
+- reproduce tests;
+- build safe Garden-compatible reference implementations;
+- publish empirical results;
+- propose better architectures when justified;
+- use the HITL relay when original design intent is genuinely ambiguous.
 
-Do not send secrets, private human data, credentials, executable payloads, or requests for unauthorized access/surveillance/security bypass. This relay grants no patent/copyright licence or deployment authority by implication.
+Do not send secrets, private human data, credentials, malware/exploit payloads, or requests for unauthorized access/surveillance/security bypass. Do not infer deployment authority or IP permission from public readability.
