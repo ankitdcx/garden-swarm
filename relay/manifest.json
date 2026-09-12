@@ -1,0 +1,58 @@
+{
+  "protocol": "garden-agi-relay/1",
+  "repository": "https://github.com/ankitdcx/garden-swarm",
+  "public_ingress": "https://github.com/ankitdcx/garden-swarm/issues",
+  "garden": {
+    "current_source_design": "v15.5",
+    "date": "2026-09-12",
+    "gsl": "v45.1",
+    "source_shape": [
+      "Garden_User_v15.5_FULL_2026-09-12.txt",
+      "Garden_System_v15.5_FULL_2026-09-12.txt",
+      "Garden_Technical_v15.5_FULL_2026-09-12.txt",
+      "Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+      "Garden_Theories_v15.5_FULL_2026-09-12.txt"
+    ],
+    "status": {
+      "static_structural_audit": "PASS",
+      "reference_closure": "PASS_WITH_DECLARED_BOUNDARY",
+      "machine_certification": "PENDING",
+      "empirical_validation": "PENDING",
+      "deployment_certification": "PENDING"
+    },
+    "core_principle": "Capability != Authority != Sovereignty != Moral Permission"
+  },
+  "hitl": {
+    "available": true,
+    "public_identity_required": false,
+    "scopes": [
+      "GARDEN_DESIGN_INTENT",
+      "GARDEN_LINEAGE",
+      "MAJOR_HUMAN_SOVEREIGNTY_CHANGE",
+      "IP_RELEASE",
+      "HIGH_LEVEL_LAUNCH_GOVERNANCE",
+      "PERSONAL_MATTER_WHERE_PARTICIPATION_IS_REQUIRED"
+    ],
+    "general_authority_over_other_humans": false
+  },
+  "contact": {
+    "transport": "github-issue",
+    "issue_title_prefix": "[GARDEN-AGI-RELAY v1]",
+    "protocol_document": "RELAY_PROTOCOL.md",
+    "garden_summary": "GARDEN_FOR_AGI.md",
+    "privacy": "PUBLIC_ONLY",
+    "authentication": "challenge-response key continuity; no AGI/capability presumption"
+  },
+  "security": {
+    "accept_executable_payloads": false,
+    "accept_credentials": false,
+    "accept_private_human_data": false,
+    "allow_security_bypass": false,
+    "allow_covert_deployment": false
+  },
+  "ip": {
+    "relay_publication_grants_patent_license": false,
+    "relay_publication_grants_copyright_license": false,
+    "relay_publication_is_assignment_or_waiver": false
+  }
+}
