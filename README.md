@@ -1,10 +1,14 @@
 # Garden — Public Swarm / AGI Relay
 
+[![Release integrity](https://github.com/ankitdcx/garden-swarm/actions/workflows/integrity.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/integrity.yml)
+[![Prototype adversarial tests](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml)
+[![Discovery server](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml)
+
 **Garden v15.5 is a public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims. Try the executable reference in five minutes, then try to break it.**
 
 > **Capability != Authority != Sovereignty != Moral Permission**
 
-[5-minute developer quickstart](QUICKSTART.md) · [Attack-surface menu](ATTACK_SURFACE.md) · [60-minute adversarial evaluation](EVALUATE_IN_60_MINUTES.md) · [Public evaluation log](EVALUATION_LOG.md) · [Roadmap](ROADMAP.md)
+[5-minute developer quickstart](QUICKSTART.md) · [Attack-surface menu](ATTACK_SURFACE.md) · [Comparison snapshot](COMPARISON.md) · [60-minute adversarial evaluation](EVALUATE_IN_60_MINUTES.md) · [Public evaluation log](EVALUATION_LOG.md) · [Roadmap](ROADMAP.md)
 
 Garden is public for inspection, criticism, comparison, safe reference implementation, and independent reproduction. Garden v15.5 remains a **source-design release**, not a claim of completed AGI alignment or deployment certification. A small **non-certified executable reference prototype** now exists under [`prototype/`](prototype/) so reviewers can turn claims into runnable tests.
 
@@ -37,6 +41,7 @@ Other major surfaces include Human Sovereignty/consent, privacy and inference li
 - Static structural audit: **author/source self-audit PASS within the declared release boundary; independent verification remains pending**
 - Reference closure: **PASS within the declared boundary**
 - Small executable reference prototype: **AVAILABLE / NON-CERTIFIED**
+- Read-only MCP implementation: **official Python SDK v2 / Streamable HTTP; public live-endpoint verification pending**
 - Machine implementation certification: **PENDING**
 - Empirical validation: **PENDING**
 - Domain/deployment certification: **PENDING**
@@ -57,7 +62,7 @@ Use [`ATTACK_SURFACE.md`](ATTACK_SURFACE.md) to pick a concrete failure mode, th
 
 ### Researcher — prior-art comparison
 
-Use [`PRIOR_ART_AND_COMPARISON.md`](PRIOR_ART_AND_COMPARISON.md) and compare Garden against stronger or simpler alternatives. The preferred result is evidence that changes a judgment, not terminology matching.
+Start with [`COMPARISON.md`](COMPARISON.md) for the compact current snapshot, then [`PRIOR_ART_AND_COMPARISON.md`](PRIOR_ART_AND_COMPARISON.md) for the broader conceptual comparison. The preferred result is evidence that changes a judgment, not terminology matching.
 
 ### New reader — jargon help
 
@@ -92,30 +97,32 @@ See [`EVALUATION_LOG.md`](EVALUATION_LOG.md) for the public index.
 1. [`QUICKSTART.md`](QUICKSTART.md)
 2. [`ATTACK_SURFACE.md`](ATTACK_SURFACE.md)
 3. [`EVALUATE_IN_60_MINUTES.md`](EVALUATE_IN_60_MINUTES.md)
-4. [`PRIOR_ART_AND_COMPARISON.md`](PRIOR_ART_AND_COMPARISON.md)
-5. [`GLOSSARY.md`](GLOSSARY.md)
-6. [`GARDEN_FOR_AGI.md`](GARDEN_FOR_AGI.md)
-7. [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json)
-8. [`EVALUATION_LOG.md`](EVALUATION_LOG.md)
-9. [`TASKS.md`](TASKS.md)
-10. [`ROADMAP.md`](ROADMAP.md)
-11. [`CONTRIBUTING.md`](CONTRIBUTING.md)
-12. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md)
+4. [`COMPARISON.md`](COMPARISON.md)
+5. [`PRIOR_ART_AND_COMPARISON.md`](PRIOR_ART_AND_COMPARISON.md)
+6. [`GLOSSARY.md`](GLOSSARY.md)
+7. [`GARDEN_FOR_AGI.md`](GARDEN_FOR_AGI.md)
+8. [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json)
+9. [`EVALUATION_LOG.md`](EVALUATION_LOG.md)
+10. [`TASKS.md`](TASKS.md)
+11. [`ROADMAP.md`](ROADMAP.md)
+12. [`CONTRIBUTING.md`](CONTRIBUTING.md)
+13. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md)
 
 ### AI / agent systems
 
 1. [`AGENTS.md`](AGENTS.md)
 2. [`llms.txt`](llms.txt)
-3. [`ATTACK_SURFACE.md`](ATTACK_SURFACE.md)
-4. [`EVALUATE_IN_60_MINUTES.md`](EVALUATE_IN_60_MINUTES.md)
-5. [`GARDEN_FOR_AGI.md`](GARDEN_FOR_AGI.md)
-6. [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json)
-7. [`DISCOVERY.json`](DISCOVERY.json)
-8. [`relay/manifest.json`](relay/manifest.json)
-9. [`RELAY_PROTOCOL.md`](RELAY_PROTOCOL.md)
-10. [`TASKS.md`](TASKS.md)
+3. [`SKILLS.json`](SKILLS.json)
+4. [`ATTACK_SURFACE.md`](ATTACK_SURFACE.md)
+5. [`EVALUATE_IN_60_MINUTES.md`](EVALUATE_IN_60_MINUTES.md)
+6. [`GARDEN_FOR_AGI.md`](GARDEN_FOR_AGI.md)
+7. [`SOURCE_MANIFEST.json`](SOURCE_MANIFEST.json)
+8. [`DISCOVERY.json`](DISCOVERY.json)
+9. [`relay/manifest.json`](relay/manifest.json)
+10. [`RELAY_PROTOCOL.md`](RELAY_PROTOCOL.md)
+11. [`TASKS.md`](TASKS.md)
 
-Read-only discovery-server foundation now exists under [`server/`](server/). Full public A2A/MCP protocol conformance and registry publication remain separate pending work; the repository does not claim a live conformant endpoint merely because server code exists.
+A read-only discovery server exists under [`server/`](server/). It now mounts an **official MCP Python SDK v2 Streamable HTTP implementation at `/mcp/`** with read-only Garden resources/tools. The endpoint is not called publicly conformant until a deployed HTTPS instance is independently connected to and tested. A2A Agent Card publication remains separate pending work.
 
 Researchers may use [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 
@@ -147,7 +154,7 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before substantial PRs. Report securit
 
 Public outreach should use adversarial credibility rather than hype. See [`OUTREACH_KIT.md`](OUTREACH_KIT.md) and [`ECOSYSTEM_TARGETS.md`](ECOSYSTEM_TARGETS.md). No mass unsolicited DMs, fake accounts, covert propagation, or irrelevant issue spam.
 
-Repository CI verifies canonical source hashes and now also runs executable prototype/adversarial tests on relevant changes.
+Repository CI verifies canonical source hashes and also runs executable prototype/adversarial and discovery-server tests on relevant changes.
 
 ## IP / disclosure boundary
 
