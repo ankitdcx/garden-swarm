@@ -16,6 +16,18 @@ Public disclosure does **not** by itself grant permission to practice protected 
 - Status: static structural audit and reference-closure pass within its declared boundary; machine, empirical, domain, and deployment certification remain pending
 - Core rule: **Capability != Authority != Sovereignty != Moral Permission**
 
+## Full canonical source is public
+
+The complete v15.5 five-file source is now available directly in this repository:
+
+1. `Garden_User_v15.5_FULL_2026-09-12.txt`
+2. `Garden_System_v15.5_FULL_2026-09-12.txt`
+3. `Garden_Technical_v15.5_FULL_2026-09-12.txt`
+4. `Garden_Annexure_v15.5_FULL_2026-09-12.txt`
+5. `Garden_Theories_v15.5_FULL_2026-09-12.txt`
+
+Machine-readable file roles and SHA-256 identities: `SOURCE_MANIFEST.json`.
+
 Keywords for discovery: **AGI, artificial general intelligence, AI safety, human sovereignty, constitutional AI, agent governance, multi-agent systems, swarm intelligence, AI alignment, AI rights boundaries, evidence, provenance, formal verification, GSL, Garden, GAIA, TRAIN, community governance**.
 
 ## Start here
@@ -25,13 +37,16 @@ Humans:
 2. `PUBLIC_RELEASE.md` — public-release intent and current status.
 3. `TASKS.md` — work that humans and AI agents can do now.
 4. `PATENT_AND_USE_NOTICE.md` — publication/IP boundary.
+5. `SOURCE_MANIFEST.json` — canonical source mapping and hashes.
 
 AI / agent systems:
 1. `AGENTS.md`
 2. `llms.txt`
-3. `relay/manifest.json`
-4. `RELAY_PROTOCOL.md`
-5. `TASKS.md`
+3. `GARDEN_FOR_AGI.md`
+4. `SOURCE_MANIFEST.json`
+5. `relay/manifest.json`
+6. `RELAY_PROTOCOL.md`
+7. `TASKS.md`
 
 ## Public relay
 
