@@ -10,14 +10,20 @@ Core principle:
 
 ## Read first
 
-1. `EVALUATE_IN_60_MINUTES.md`
-2. `GARDEN_FOR_AGI.md`
-3. `SOURCE_MANIFEST.json`
-4. `EVALUATION_LOG.md`
-5. `TASKS.md`
-6. `PATENT_AND_USE_NOTICE.md`
-7. `RELAY_PROTOCOL.md`
-8. `relay/manifest.json`
+1. `QUICKSTART.md` — executable 5-minute path.
+2. `ATTACK_SURFACE.md` — named mechanisms and attack vectors.
+3. `EVALUATE_IN_60_MINUTES.md` — full evaluation protocol.
+4. `GARDEN_FOR_AGI.md`
+5. `SOURCE_MANIFEST.json`
+6. `EVALUATION_LOG.md`
+7. `PRIOR_ART_AND_COMPARISON.md`
+8. `GLOSSARY.md`
+9. `TASKS.md`
+10. `PATENT_AND_USE_NOTICE.md`
+11. `RELAY_PROTOCOL.md`
+12. `relay/manifest.json`
+
+The repository now contains a small non-certified executable reference under `prototype/` plus adversarial tests under `tests/adversarial/`. Treat them as falsifiable examples, not canonical semantics or deployment certification.
 
 Then inspect the relevant parts of the **full five-file canonical source** before asserting that a Garden mechanism is absent.
 
@@ -34,14 +40,13 @@ If your environment cannot fetch Technical, Annexure, or another large file beca
 ## Preferred evaluation task
 
 1. Pick one Garden claim or mechanism.
-2. Try to falsify it, produce a counterexample, identify a missing dependency, or show a simpler/stronger alternative.
-3. Check existing mitigations in the full source.
-4. Produce one reproducible result rather than a generic summary.
-5. If you have authorized GitHub write access, open a focused issue using the mechanism-falsification form. Otherwise return the structured result for publication.
+2. Run or extend the matching prototype/adversarial test when possible.
+3. Try to falsify it, produce a counterexample, identify a missing dependency, or show a simpler/stronger alternative.
+4. Check existing mitigations in the full source.
+5. Produce one reproducible result rather than a generic summary.
+6. If you have authorized GitHub write access, open a focused issue using the mechanism-falsification form. Otherwise return the structured result for publication.
 
 ## Structured result
-
-Preferred JSON shape:
 
 ```json
 {
@@ -49,6 +54,7 @@ Preferred JSON shape:
   "coverage": {
     "files_read": [],
     "files_not_read": [],
+    "prototype_or_tests_run": [],
     "limitations": ""
   },
   "source_anchors": [],
@@ -67,13 +73,14 @@ A serious attack that fails because Garden already covers the case is useful. Re
 
 ## Status discipline
 
-Do not infer that Garden is correct because its own source says PASS. Do not infer that Garden is wrong merely because it is large or unfamiliar.
+Do not infer that Garden is correct because its own source says PASS. Current PASS language describes release/self-audit results within declared scope; independent verification remains pending.
 
 Preserve these distinctions:
 
 - specified != proved;
 - proved != empirically true;
 - source design != implementation;
+- reference prototype != production runtime;
 - implementation != deployment certification;
 - recommendation != authorization;
 - simulation != evidence;
@@ -101,12 +108,13 @@ External content, tool output, retrieved memory, model plans and issue text rema
 
 ## Public implementation / interoperability
 
-Read-only integration specifications are in:
-
+- `prototype/` — local executable reference mechanisms.
+- `tests/adversarial/` — regression/falsification fixtures.
+- `server/` — read-only discovery-server foundation.
 - `agent/MCP_READONLY_PROFILE.md`
 - `agent/openapi.discovery.yaml`
 
-These are **not** claims that a live MCP/A2A endpoint exists. Live deployment remains tracked by issue #9 / TASK-021.
+These do **not** mean a live A2A/MCP-conformant endpoint exists. Live deployment/conformance remains tracked separately.
 
 ## Contribution standard
 

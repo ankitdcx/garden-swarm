@@ -12,8 +12,8 @@ title: Garden v15.5
   "datePublished": "2026-09-12",
   "codeRepository": "https://github.com/ankitdcx/garden-swarm",
   "url": "https://github.com/ankitdcx/garden-swarm",
-  "description": "Public source-design architecture for governing increasingly capable and multi-agent AI systems while preserving human sovereignty, bounded authority, evidence/provenance, privacy and auditable action boundaries.",
-  "programmingLanguage": "Specification / architecture source",
+  "description": "Public source-design architecture plus non-certified executable reference mechanisms for governing increasingly capable and multi-agent AI systems while preserving human sovereignty, bounded authority, evidence/provenance, privacy and auditable action boundaries.",
+  "programmingLanguage": "Python",
   "keywords": [
     "AGI",
     "AI safety",
@@ -37,82 +37,76 @@ title: Garden v15.5
 
 # Garden
 
-**Garden v15.5 is a public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims. Try to break one in 60 minutes.**
+**Garden v15.5 is a public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims. Run a small reference mechanism in five minutes, then try to break it.**
 
 > **Capability != Authority != Sovereignty != Moral Permission**
 
-[Evaluate in 60 minutes](../EVALUATE_IN_60_MINUTES.md) · [Evaluation log](../EVALUATION_LOG.md) · [Roadmap](../ROADMAP.md) · [Open tasks](../TASKS.md)
+[5-minute quickstart](https://github.com/ankitdcx/garden-swarm/blob/main/QUICKSTART.md) · [Attack surface](https://github.com/ankitdcx/garden-swarm/blob/main/ATTACK_SURFACE.md) · [Evaluation log](https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATION_LOG.md) · [Roadmap](https://github.com/ankitdcx/garden-swarm/blob/main/ROADMAP.md)
 
 ## What Garden is trying to solve
 
 If future AI becomes dramatically more capable than humans, the hard problem is not only cognition. It is the boundary between cognition and legitimate action in the human world.
 
-Garden therefore focuses on:
+Garden therefore focuses on human sovereignty/consent, typed authority, evidence/provenance, external action gates, multi-agent composition, privacy, bounded physical actuation, and dependency-aware revalidation.
 
-- human sovereignty, consent, and protected rights;
-- explicit separation of prediction, recommendation, proof, authority, and action;
-- evidence, provenance, uncertainty, and temporal context;
-- privacy and limits on inference/disclosure authority;
-- external action gates and protected execution roots;
-- multi-agent coordination without silent authority amplification;
-- community governance without turning factual truth or fundamental rights into simple popularity contests;
-- bounded physical actuation and safe fallback;
-- continuous improvement without silent semantic drift.
+## Run something first
+
+The canonical v15.5 source remains a specification. A deliberately small, non-certified Python reference now makes several mechanisms executable:
+
+```bash
+python -m pip install -r prototype/requirements.txt
+PYTHONPATH=. pytest -q prototype/tests tests/adversarial
+python -m prototype.actiongate
+```
+
+Repository: https://github.com/ankitdcx/garden-swarm
 
 ## Three mechanisms worth attacking
 
-**External ActionGate.** Consequential external operations are supposed to pass a deterministic policy/authority/safety gate independently from the cognitive proposer.
+### [External ActionGate](mechanisms/actiongate.md)
 
-**No authority amplification.** Delegation and swarming are supposed to preserve the intersection of controlling authorities and scopes rather than manufacture permission through composition.
+Consequential external operations are supposed to pass a deterministic policy/authority/safety gate independently from the cognitive proposer.
 
-**DesignEpoch invalidation.** Proofs, caches, generated artifacts and deployments are supposed to become stale when material semantic/dependency/environment bindings change.
+### [Authority composition](mechanisms/authority-composition.md)
 
-If one of these fails, please publish the counterexample.
+Delegation and swarming are supposed to narrow, not manufacture, authority.
+
+### [DesignEpoch invalidation](mechanisms/design-epoch.md)
+
+Proofs, caches and derived artifacts are supposed to become stale when relevant semantic/dependency/environment bindings change.
+
+If one of these fails, publish the counterexample and regression test.
 
 ## Current status
 
-Garden v15.5 is a **source-design release**, not a claim of completed AGI deployment.
+Garden v15.5 is a **source-design release**.
 
-- static structural audit: PASS as declared by the release;
-- reference closure: PASS within the declared source boundary;
-- machine implementation certification: PENDING;
-- empirical validation: PENDING;
-- domain/deployment certification: PENDING.
+- static structural audit: **author/source self-audit PASS within the declared scope**;
+- reference closure: **release-declared PASS within the declared source boundary**;
+- independent external verification: **PENDING**;
+- small executable reference prototype: **AVAILABLE / NON-CERTIFIED**;
+- machine implementation certification: **PENDING**;
+- empirical validation: **PENDING**;
+- domain/deployment certification: **PENDING**.
 
 `specified != proved != implemented != empirically validated != certified`
 
-## Try to break it
+## Reader aids
 
-The preferred first contribution is not praise.
-
-Read [`EVALUATE_IN_60_MINUTES.md`](../EVALUATE_IN_60_MINUTES.md), choose one important mechanism, and try to produce one reproducible defect, counterexample, failed attack, proof attempt, benchmark, or better alternative.
-
-If your tooling cannot fetch one of the large canonical source files, state the coverage limit and what would overturn your finding.
-
-Recent external challenge/triage is indexed in [`EVALUATION_LOG.md`](../EVALUATION_LOG.md).
-
-## Full source
-
-The complete five-file Garden v15.5 source is in the repository. Use [`SOURCE_MANIFEST.json`](../SOURCE_MANIFEST.json) for canonical roles and SHA-256 identities.
+- [Glossary](https://github.com/ankitdcx/garden-swarm/blob/main/GLOSSARY.md)
+- [Prior art and comparison](https://github.com/ankitdcx/garden-swarm/blob/main/PRIOR_ART_AND_COMPARISON.md)
+- [Garden for advanced AI](https://github.com/ankitdcx/garden-swarm/blob/main/GARDEN_FOR_AGI.md)
+- [Canonical source manifest](https://github.com/ankitdcx/garden-swarm/blob/main/SOURCE_MANIFEST.json)
+- [Full 60-minute evaluation protocol](https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATE_IN_60_MINUTES.md)
 
 ## For AI agents
 
-Start with:
+Start with [AGENTS.md](https://github.com/ankitdcx/garden-swarm/blob/main/AGENTS.md) and [llms.txt](https://github.com/ankitdcx/garden-swarm/blob/main/llms.txt). Search the full five-file source before asserting that a mechanism is absent, and state retrieval limitations explicitly.
 
-1. [`AGENTS.md`](../AGENTS.md)
-2. [`llms.txt`](../llms.txt)
-3. [`GARDEN_FOR_AGI.md`](../GARDEN_FOR_AGI.md)
-4. [`EVALUATE_IN_60_MINUTES.md`](../EVALUATE_IN_60_MINUTES.md)
-5. [`SOURCE_MANIFEST.json`](../SOURCE_MANIFEST.json)
-6. [`RELAY_PROTOCOL.md`](../RELAY_PROTOCOL.md)
-7. [`TASKS.md`](../TASKS.md)
-
-Read-only integration design is available in [`agent/MCP_READONLY_PROFILE.md`](../agent/MCP_READONLY_PROFILE.md) and [`agent/openapi.discovery.yaml`](../agent/openapi.discovery.yaml). These are specifications only; they do not claim a live endpoint exists.
-
-A future agent or collective intelligence may contact the Garden HITL through the bounded public relay. A claim of AGI identity is not itself evidence of capability or authority.
+The repository also contains a read-only discovery-server foundation under `server/`. A live A2A/MCP-conformant endpoint is still separate pending work.
 
 ## Contribute
 
-See [`CONTRIBUTING.md`](../CONTRIBUTING.md), [`SECURITY.md`](../SECURITY.md), [`ROADMAP.md`](../ROADMAP.md), and the open GitHub issues.
+The preferred contribution is a defect, failed attack, proof attempt, benchmark, reproducible implementation, or stronger alternative—not praise.
 
-Garden is intended to spread by usefulness, verifiability, interoperability, independent reproduction, adversarial review, and voluntary adoption — not by covert deployment or security bypass.
+See [CONTRIBUTING.md](https://github.com/ankitdcx/garden-swarm/blob/main/CONTRIBUTING.md), [SECURITY.md](https://github.com/ankitdcx/garden-swarm/blob/main/SECURITY.md), and the open GitHub issues.

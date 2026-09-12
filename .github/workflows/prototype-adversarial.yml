@@ -1,0 +1,28 @@
+name: Garden prototype adversarial tests
+
+on:
+  pull_request:
+    paths:
+      - 'prototype/**'
+      - 'tests/adversarial/**'
+      - '.github/workflows/prototype-adversarial.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'prototype/**'
+      - 'tests/adversarial/**'
+      - '.github/workflows/prototype-adversarial.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r prototype/requirements.txt
+      - run: PYTHONPATH=. pytest -q prototype/tests tests/adversarial

@@ -31,11 +31,13 @@
   ],
   "status": {
     "source_design": "CURRENT",
-    "static_structural_audit": "PASS_AS_DECLARED_BY_RELEASE",
-    "reference_closure": "PASS_WITH_DECLARED_BOUNDARY_AS_DECLARED_BY_RELEASE",
+    "static_structural_audit": "AUTHOR_SOURCE_SELF_AUDIT_PASS_WITH_DECLARED_BOUNDARY",
+    "reference_closure": "RELEASE_DECLARED_PASS_WITH_DECLARED_BOUNDARY",
+    "independent_external_verification": "PENDING",
     "machine_certification": "PENDING",
     "empirical_validation": "PENDING",
     "deployment_certification": "PENDING"
   },
+  "status_note": "PASS fields describe release/self-audit results within their declared scope and are not third-party certification.",
   "rights_note": "Public disclosure and read access do not by themselves grant a patent licence or other rights beyond the explicit terms in PATENT_AND_USE_NOTICE.md."
 }

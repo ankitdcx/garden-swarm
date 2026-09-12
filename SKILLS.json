@@ -1,0 +1,49 @@
+{
+  "project": "Garden",
+  "release": "v15.5",
+  "status": "public-source-design-with-non-certified-reference-prototype",
+  "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
+  "agent_tasks": [
+    {
+      "id": "evaluate-mechanism",
+      "mode": "read_only",
+      "inputs": ["claim_or_mechanism", "coverage"],
+      "outputs": ["finding", "severity", "source_anchors", "test", "uncertainty"],
+      "instructions": "ATTACK_SURFACE.md"
+    },
+    {
+      "id": "run-reference-prototype",
+      "mode": "local_code",
+      "inputs": ["prototype fixture"],
+      "outputs": ["ALLOW|REJECT|ESCALATE or CURRENT|STALE|UNKNOWN", "reasons"],
+      "instructions": "QUICKSTART.md"
+    },
+    {
+      "id": "inspect-canonical-source",
+      "mode": "read_only",
+      "inputs": ["source path or semantic anchor"],
+      "outputs": ["quoted/located source anchors", "coverage limits"],
+      "instructions": "SOURCE_MANIFEST.json"
+    },
+    {
+      "id": "build-finding-payload",
+      "mode": "read_only",
+      "inputs": ["structured evaluation"],
+      "outputs": ["GitHub-issue-ready payload"],
+      "instructions": "AGENTS.md"
+    }
+  ],
+  "boundaries": {
+    "github_write_required_for_posting": true,
+    "no_private_data": true,
+    "no_credentials": true,
+    "no_arbitrary_code_execution_service": true,
+    "no_deployment_authority": true,
+    "no_real_world_actuation": true,
+    "no_claim_of_live_a2a_or_mcp_conformance": true
+  },
+  "canonical_source": "SOURCE_MANIFEST.json",
+  "developer_entry": "QUICKSTART.md",
+  "attack_menu": "ATTACK_SURFACE.md",
+  "agent_instructions": "AGENTS.md"
+}
