@@ -1,0 +1,32 @@
+name: Claim / propose a task
+description: Claim an existing Garden task or propose a bounded new work package.
+title: "[TASK] "
+labels: []
+body:
+  - type: input
+    id: task
+    attributes:
+      label: Task ID / source issue
+      placeholder: "TASK-003 / issue #4 / new proposal"
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Bounded deliverable
+      description: What independently reviewable artifact will you produce?
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Method / tools / assumptions
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: How can another person or agent reproduce or falsify the result?
+  - type: textarea
+    id: risks
+    attributes:
+      label: Rights / privacy / safety / IP considerations

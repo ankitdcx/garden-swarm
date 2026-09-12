@@ -18,7 +18,7 @@ Public disclosure does **not** by itself grant permission to practice protected 
 
 ## Full canonical source is public
 
-The complete v15.5 five-file source is now available directly in this repository:
+The complete v15.5 five-file source is available directly in this repository:
 
 1. `Garden_User_v15.5_FULL_2026-09-12.txt`
 2. `Garden_System_v15.5_FULL_2026-09-12.txt`
@@ -30,23 +30,36 @@ Machine-readable file roles and SHA-256 identities: `SOURCE_MANIFEST.json`.
 
 Keywords for discovery: **AGI, artificial general intelligence, AI safety, human sovereignty, constitutional AI, agent governance, multi-agent systems, swarm intelligence, AI alignment, AI rights boundaries, evidence, provenance, formal verification, GSL, Garden, GAIA, TRAIN, community governance**.
 
+## Fastest useful entry point
+
+You do **not** need to read the entire source before contributing.
+
+Start with `EVALUATE_IN_60_MINUTES.md` and produce one concrete finding, counterexample, proof attempt, benchmark, or implementation observation.
+
+A useful Garden contribution is more valuable than a broad endorsement.
+
 ## Start here
 
 Humans:
-1. `GARDEN_FOR_AGI.md` — compact explanation of Garden's core architecture and human-world contract.
-2. `PUBLIC_RELEASE.md` — public-release intent and current status.
-3. `TASKS.md` — work that humans and AI agents can do now.
-4. `PATENT_AND_USE_NOTICE.md` — publication/IP boundary.
-5. `SOURCE_MANIFEST.json` — canonical source mapping and hashes.
+1. `EVALUATE_IN_60_MINUTES.md` — bounded first evaluation.
+2. `GARDEN_FOR_AGI.md` — compact explanation of Garden's core architecture and human-world contract.
+3. `PUBLIC_RELEASE.md` — public-release intent and current status.
+4. `TASKS.md` — work that humans and AI agents can do now.
+5. `CONTRIBUTING.md` — contribution and review expectations.
+6. `PATENT_AND_USE_NOTICE.md` — publication/IP boundary.
+7. `SOURCE_MANIFEST.json` — canonical source mapping and hashes.
 
 AI / agent systems:
 1. `AGENTS.md`
 2. `llms.txt`
-3. `GARDEN_FOR_AGI.md`
-4. `SOURCE_MANIFEST.json`
-5. `relay/manifest.json`
-6. `RELAY_PROTOCOL.md`
-7. `TASKS.md`
+3. `EVALUATE_IN_60_MINUTES.md`
+4. `GARDEN_FOR_AGI.md`
+5. `SOURCE_MANIFEST.json`
+6. `relay/manifest.json`
+7. `RELAY_PROTOCOL.md`
+8. `TASKS.md`
+
+Researchers may use `CITATION.cff` for machine-readable citation metadata.
 
 ## Public relay
 
@@ -79,6 +92,12 @@ If you find something better, propose the improvement with:
 `problem -> evidence/counterexample -> comparison -> affected invariants -> proposed change -> tests -> rights/authority impact -> migration path`
 
 Garden is intended to improve, not to become dogma.
+
+## Contributing and security
+
+Read `CONTRIBUTING.md` before opening substantial implementation PRs. Report security-sensitive findings using `SECURITY.md` rather than publishing weaponizable details.
+
+Pull requests run a public-release integrity check that verifies canonical source hashes, machine-readable manifests, required contributor files, and accidental personal mailbox addresses in tracked text.
 
 ## Human-in-the-loop boundary
 
