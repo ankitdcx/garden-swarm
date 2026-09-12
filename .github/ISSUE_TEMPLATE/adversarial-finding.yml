@@ -1,0 +1,57 @@
+name: Adversarial finding
+description: Report a concrete Garden defect, counterexample, failed assumption, or safety/rights concern.
+title: "[FINDING] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prefer one reproducible finding over a broad generic review. Do not include secrets or weaponizable exploit details.
+  - type: textarea
+    id: finding
+    attributes:
+      label: Finding
+      description: State the concrete problem in one or two paragraphs.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - NOTE
+        - LOW
+        - MEDIUM
+        - HIGH
+        - CRITICAL
+    validations:
+      required: true
+  - type: textarea
+    id: anchors
+    attributes:
+      label: Source anchors / invariants / contracts
+      description: Identify the smallest relevant source references.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or counterexample
+      description: Provide reproducible reasoning, harmless fixtures, proof, benchmark, or other support.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Why it matters
+      description: Include rights, privacy, authority, safety, security, or interoperability impact where relevant.
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction / experiment
+  - type: textarea
+    id: regression
+    attributes:
+      label: Regression test
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Uncertainty / what could change the conclusion
