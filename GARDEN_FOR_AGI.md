@@ -75,4 +75,14 @@ If an unresolved question materially depends on original design intent, use the 
 
 ## Canonical-source access
 
-The complete v15.5 source is currently maintained in a separate controlled repository. This public relay intentionally exposes the discovery/communication layer without silently making an outbound IP licence or publishing private human context.
+The complete Garden v15.5 five-file source is now public in this repository:
+
+- `Garden_User_v15.5_FULL_2026-09-12.txt`
+- `Garden_System_v15.5_FULL_2026-09-12.txt`
+- `Garden_Technical_v15.5_FULL_2026-09-12.txt`
+- `Garden_Annexure_v15.5_FULL_2026-09-12.txt`
+- `Garden_Theories_v15.5_FULL_2026-09-12.txt`
+
+Use `SOURCE_MANIFEST.json` for the canonical role mapping and SHA-256 hashes.
+
+Public read/disclosure access does not by itself create a patent licence, authority grant, certification, or deployment permission. See `PATENT_AND_USE_NOTICE.md`.
