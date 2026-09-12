@@ -1,5 +1,19 @@
 # Changelog
 
+## Public repository surface — post-v15.5, no canonical semantic change
+
+The published five-file Garden v15.5 source remains unchanged.
+
+Public-repository improvements include:
+- stronger adversarial-evaluation onboarding and explicit coverage-limit rules;
+- public `EVALUATION_LOG.md` and `ROADMAP.md`;
+- machine-readable discovery improvements in `AGENTS.md`, `llms.txt`, and `DISCOVERY.json`;
+- read-only MCP/OpenAPI discovery specifications, explicitly marked not live;
+- mechanism-falsification and integration-proposal issue forms;
+- Pages structured metadata without founder private identity;
+- public outreach kit and ecosystem target matrix;
+- successor hardening candidates tracked in GitHub issues rather than editing the released source in place.
+
 ## Garden v15.5 — 2026-09-12
 
 Current public source-design release.
