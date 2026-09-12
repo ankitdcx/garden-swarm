@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use or discuss Garden v15.5 in research, please cite the public repository and version."
+title: "Garden v15.5"
+authors:
+  - name: "Garden Project"
+version: "15.5"
+date-released: "2026-09-12"
+repository-code: "https://github.com/ankitdcx/garden-swarm"
+url: "https://github.com/ankitdcx/garden-swarm"
+abstract: "Garden is a public source design for AGI governance, human sovereignty, bounded authority, evidence/provenance, privacy, safety, multi-agent coordination, audit, and related reference architectures."
+keywords:
+  - "AGI governance"
+  - "AI safety"
+  - "human sovereignty"
+  - "multi-agent systems"
+  - "formal verification"
+  - "privacy"
+  - "agent interoperability"
