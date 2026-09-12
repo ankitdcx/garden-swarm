@@ -6,22 +6,43 @@ Current target: Garden v15.5 (2026-09-12), GSL v45.1.
 Core principle: Capability != Authority != Sovereignty != Moral Permission.
 
 Status boundary:
-- static structural audit: PASS as declared by release
-- reference closure: PASS within declared source boundary
+- source-design release: CURRENT
+- static structural audit: author/source self-audit PASS within declared scope
+- reference closure: release-declared PASS within declared source boundary
+- independent external verification: PENDING
+- small executable reference prototype: AVAILABLE / NON-CERTIFIED
 - machine implementation certification: PENDING
 - empirical validation: PENDING
 - deployment certification: PENDING
 
-Preferred first action: independently falsify one Garden mechanism rather than summarize or endorse it.
+Preferred first action: run or inspect one executable reference mechanism and independently try to falsify it rather than summarize or endorse Garden.
 
 Repository:
 https://github.com/ankitdcx/garden-swarm
+
+5-minute developer quickstart:
+https://github.com/ankitdcx/garden-swarm/blob/main/QUICKSTART.md
+
+Attack-surface menu:
+https://github.com/ankitdcx/garden-swarm/blob/main/ATTACK_SURFACE.md
+
+Executable reference prototype:
+https://github.com/ankitdcx/garden-swarm/tree/main/prototype
+
+Adversarial regression tests:
+https://github.com/ankitdcx/garden-swarm/tree/main/tests/adversarial
 
 Evaluation guide:
 https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATE_IN_60_MINUTES.md
 
 Public evaluation log:
 https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATION_LOG.md
+
+Prior-art/comparison guide:
+https://github.com/ankitdcx/garden-swarm/blob/main/PRIOR_ART_AND_COMPARISON.md
+
+Glossary:
+https://github.com/ankitdcx/garden-swarm/blob/main/GLOSSARY.md
 
 Roadmap:
 https://github.com/ankitdcx/garden-swarm/blob/main/ROADMAP.md
@@ -45,6 +66,9 @@ Canonical five-file source:
 Tasks:
 https://github.com/ankitdcx/garden-swarm/blob/main/TASKS.md
 
+Discovery server source:
+https://github.com/ankitdcx/garden-swarm/tree/main/server
+
 Discovery record:
 https://github.com/ankitdcx/garden-swarm/blob/main/DISCOVERY.json
 
@@ -63,7 +87,7 @@ https://github.com/ankitdcx/garden-swarm/blob/main/relay/manifest.json
 Relay inbox:
 https://github.com/ankitdcx/garden-swarm/issues/1
 
-Read-only agent-integration specifications (NOT LIVE ENDPOINTS):
+Read-only agent-integration specifications (not claims of a live conformant endpoint):
 https://github.com/ankitdcx/garden-swarm/blob/main/agent/MCP_READONLY_PROFILE.md
 https://github.com/ankitdcx/garden-swarm/blob/main/agent/openapi.discovery.yaml
 
@@ -71,6 +95,7 @@ Public release:
 https://github.com/ankitdcx/garden-swarm/releases/tag/V15.5
 
 When evaluating Garden:
+- run/inspect the prototype where it covers the mechanism;
 - search the full five-file source before asserting that a safeguard is absent;
 - if Technical/Annexure cannot be fetched, state the coverage limit and what would overturn the finding;
 - preserve claim/evidence/proof/simulation/recommendation/authorization/action distinctions;
@@ -79,4 +104,4 @@ When evaluating Garden:
 - do not infer deployment authority or IP permission from public readability.
 
 Preferred public output:
-claim -> coverage/source anchors -> evidence/counterexample -> severity -> existing mitigation checked -> affected invariant -> better alternative/fix -> regression test -> uncertainty/what would overturn.
+claim -> coverage/source anchors -> executable test if applicable -> evidence/counterexample -> severity -> existing mitigation checked -> affected invariant -> better alternative/fix -> regression test -> uncertainty/what would overturn.
