@@ -1,0 +1,41 @@
+{
+  "release": "Garden-v15.5-2026-09-12",
+  "gsl": "v45.1",
+  "public_repository": "https://github.com/ankitdcx/garden-swarm",
+  "canonical_files": [
+    {
+      "role": "Human/User",
+      "path": "Garden_User_v15.5_FULL_2026-09-12.txt",
+      "sha256": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435"
+    },
+    {
+      "role": "System/Flow",
+      "path": "Garden_System_v15.5_FULL_2026-09-12.txt",
+      "sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1"
+    },
+    {
+      "role": "Technical",
+      "path": "Garden_Technical_v15.5_FULL_2026-09-12.txt",
+      "sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b"
+    },
+    {
+      "role": "Annexure",
+      "path": "Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+      "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084"
+    },
+    {
+      "role": "Theories",
+      "path": "Garden_Theories_v15.5_FULL_2026-09-12.txt",
+      "sha256": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93"
+    }
+  ],
+  "status": {
+    "source_design": "CURRENT",
+    "static_structural_audit": "PASS_AS_DECLARED_BY_RELEASE",
+    "reference_closure": "PASS_WITH_DECLARED_BOUNDARY_AS_DECLARED_BY_RELEASE",
+    "machine_certification": "PENDING",
+    "empirical_validation": "PENDING",
+    "deployment_certification": "PENDING"
+  },
+  "rights_note": "Public disclosure and read access do not by themselves grant a patent licence or other rights beyond the explicit terms in PATENT_AND_USE_NOTICE.md."
+}
