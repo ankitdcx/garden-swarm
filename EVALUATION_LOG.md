@@ -21,6 +21,8 @@ Full-source triage found that most of these failure classes already have explici
 
 Detailed record: issue #15.
 
+The authority-amplification attack is also preserved as a public postmortem in `docs/evaluations/001-authority-amplification.md` and as an executable regression test under `tests/adversarial/`.
+
 ### Audit synthesis #2 — issue #16
 
 An external AI reviewer argued that Garden's hard-gate conjunction lacked a non-physical enforcement substrate and that consent authentication could be mistaken for proof of informed/voluntary consent.
@@ -45,14 +47,26 @@ Issue #17 records two candidate hardening items without modifying the published 
 
 It also preserves the strongest external challenge scenarios as future executable regression tests.
 
+## Executable regression status
+
+A non-certified reference harness now exists under `prototype/` and `tests/adversarial/` for:
+
+- stale policy/DesignEpoch handling;
+- delegation-chain authority amplification;
+- shared-memory/untrusted-context escalation for high-impact action;
+- signed delegation receipt mutation/expiry checks.
+
+These tests increase falsifiability; they do not constitute production security proof or deployment certification.
+
 ## How to add an evaluation
 
-Start with `EVALUATE_IN_60_MINUTES.md` or issue #10.
+Start with `ATTACK_SURFACE.md`, `EVALUATE_IN_60_MINUTES.md`, or issue #10.
 
 A useful report states:
 
 - claim/mechanism;
 - coverage and exact source anchors;
+- executable test/prototype coverage where applicable;
 - failure/counterexample or negative result;
 - severity;
 - existing mitigation checked;
