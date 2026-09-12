@@ -1,0 +1,23 @@
+name: Documentation / discoverability improvement
+description: Improve explanation, navigation, citation, onboarding, or agent discoverability without silently changing Garden semantics.
+title: "[DOCS] "
+labels: []
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard to find, understand, or discover?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+    validations:
+      required: true
+  - type: textarea
+    id: semantic-risk
+    attributes:
+      label: Semantic-risk check
+      description: Explain why this is presentation/navigation only, or identify any actual semantic change explicitly.
