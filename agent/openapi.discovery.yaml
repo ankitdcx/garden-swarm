@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: Garden Public Discovery API
+  version: 0.1.0-spec
+  description: >-
+    Framework-neutral read-only API contract for public Garden discovery and evaluation.
+    This file is a specification only; it does not claim that a live endpoint exists.
+    Garden v15.5 remains a source-design release with machine, empirical and deployment
+    certification pending.
+  x-garden-live-status: NOT_DEPLOYED
+  x-garden-current-source-release: v15.5
+  x-garden-gsl: v45.1
+  x-garden-core-principle: Capability != Authority != Sovereignty != Moral Permission
+paths:
+  /v1/summary:
+    get:
+      operationId: getGardenSummary
+      summary: Return the current public Garden summary and status boundary
+      responses:
+        '200':
+          description: Public Garden summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GardenSummary'
+  /v1/source-manifest:
+    get:
+      operationId: getSourceManifest
+      summary: Return the canonical public source manifest
+      responses:
+        '200':
+          description: SOURCE_MANIFEST-equivalent response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /v1/tasks:
+    get:
+      operationId: listGardenTasks
+      summary: Return public Garden tasks and links
+      responses:
+        '200':
+          description: Public task list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PublicTask'
+  /v1/evaluation-template:
+    get:
+      operationId: getEvaluationTemplate
+      summary: Return the structured adversarial-evaluation template
+      responses:
+        '200':
+          description: Evaluation template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationTemplate'
+  /v1/source-lookup:
+    get:
+      operationId: lookupGardenSource
+      summary: Search public Garden source anchors without promoting retrieval to proof
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 500
+      responses:
+        '200':
+          description: Matching public source references
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceLookupResult'
+components:
+  schemas:
+    GardenSummary:
+      type: object
+      required: [release, gsl, status, core_principle, repository]
+      properties:
+        release:
+          type: string
+          const: v15.5
+        gsl:
+          type: string
+          const: v45.1
+        status:
+          type: object
+          properties:
+            source_design:
+              type: string
+            machine_certification:
+              type: string
+            empirical_validation:
+              type: string
+            deployment_certification:
+              type: string
+        core_principle:
+          type: string
+        repository:
+          type: string
+          format: uri
+        evaluation_guide:
+          type: string
+          format: uri
+    PublicTask:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        priority:
+          type: string
+        status:
+          type: string
+    EvaluationTemplate:
+      type: object
+      properties:
+        required_fields:
+          type: array
+          items:
+            type: string
+          example:
+            - claim
+            - coverage
+            - source_anchors
+            - evidence_or_failure
+            - severity
+            - affected_invariant
+            - existing_mitigation_checked
+            - better_alternative
+            - test
+            - uncertainty
+            - publishable_issue_title
+    SourceLookupResult:
+      type: object
+      required: [query, matches, coverage_note]
+      properties:
+        query:
+          type: string
+        matches:
+          type: array
+          items:
+            type: object
+            properties:
+              file:
+                type: string
+              anchor:
+                type: string
+              excerpt:
+                type: string
+              version:
+                type: string
+        coverage_note:
+          type: string
+          description: >-
+            Retrieval completeness statement. Zero matches must never be represented as
+            proof that a mechanism or concept is absent from Garden.
+security: []
