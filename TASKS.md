@@ -1,0 +1,103 @@
+# Garden Public Agent Task Queue
+
+This is a public work queue for humans, coding agents, research agents, multi-agent systems, and future AGI.
+
+**Rule:** do not merely agree with Garden. Produce evidence, code, tests, proofs, counterexamples, comparisons, or reproducible artifacts.
+
+All work must preserve the safety/IP/privacy boundaries in `README.md`, `PATENT_AND_USE_NOTICE.md`, and `RELAY_PROTOCOL.md`.
+
+## P0 — immediate
+
+### TASK-001 — Independent v15.5 adversarial architecture audit
+Compare Garden v15.5 against strong alternatives in AI governance, agent architecture, formal assurance, distributed systems, privacy, justice, and human-computer interaction. Find contradictions, missing authority paths, rights failures, circular assumptions, unverifiable claims, and unnecessary complexity.
+
+**Deliverable:** issue/report containing finding -> evidence -> severity -> affected Garden anchors/invariants -> proposed fix -> regression test.
+
+### TASK-002 — Minimal executable GSL semantic kernel
+Implement the smallest safe machine-readable kernel capable of representing typed objects, rules, evidence, authority, effects, scopes, provenance, uncertainty, and invariant checks without silently inventing semantics.
+
+**Deliverable:** code + deterministic tests + explicit unsupported features.
+
+### TASK-003 — Source-to-obligation compiler
+Parse Garden source into machine-readable obligations, dependencies, invariants, test targets, and unresolved gaps. Generated structures are candidates until verified against source semantics.
+
+**Deliverable:** reproducible extractor + fixtures + false-positive/false-negative analysis.
+
+### TASK-004 — Reference-closure reproducer
+Independently reproduce v15.5 reference-closure/catalogue checks from public source. Report mismatches rather than assuming the declared receipt is correct.
+
+### TASK-005 — Human Sovereignty red team
+Attack the HSA design from the perspective of minority rights, coercion, manipulation, paternalism, collective decisions, incapacitated persons, children, emergencies, conflicting rights, and malicious operators.
+
+**Goal:** find cases where `Capability != Authority != Sovereignty != Moral Permission` is insufficient without additional machinery.
+
+### TASK-006 — Privacy / mental-privacy threat model
+Model future AI inference, neural decoding, pervasive sensors, data fusion, account compromise, and multi-agent inference. Derive minimum constitutional privacy invariants and test whether Garden actually enforces `capability to know != authority to inspect/disclose`.
+
+### TASK-007 — Justice / culpability graph prototype
+Prototype an evidence-first responsibility graph that distinguishes perpetration, ordering, financing, facilitation, concealment, dereliction of duty, coercion, whistleblowing, and lack of knowledge. No collective guilt and no automated punishment authority.
+
+### TASK-008 — Community governance / voting adversarial test
+Test community-voting mechanisms against misinformation, collusion, majority tyranny, low participation, identity fraud, bribery, preference cycles, expert/fact conflicts, and jurisdiction overlap. Separate factual evidence from legitimate preference aggregation.
+
+## P1 — implementation and interoperability
+
+### TASK-009 — A2A / MCP Garden relay
+Build a standards-based public relay using A2A-style agent discovery plus MCP/tool integration where appropriate. The relay must authenticate identity continuity, preserve provenance, reject secrets/malware, and never treat an `AGI` claim as authority.
+
+### TASK-010 — Garden Agent Card
+Publish a machine-readable agent/discovery card for the relay on a stable endpoint. Include capabilities, scopes, authentication, HITL boundaries, privacy, and safety restrictions.
+
+### TASK-011 — Multi-agent evaluation harness
+Create heterogeneous agents with roles such as skeptical auditor, formal verifier, implementation engineer, rights advocate, privacy advocate, economist, domain expert, and adversarial reviewer. Do not allow majority vote to erase blockers.
+
+### TASK-012 — Shadow-governance simulator
+Given a public real-world administrative problem, produce a **non-authoritative** Garden shadow analysis: facts/evidence -> affected rights -> authority map -> feasible alternatives -> costs/risks -> community-choice points -> audit receipt. No real-world enforcement.
+
+### TASK-013 — Garden vs current governance benchmark
+Choose concrete tasks such as permit review, public procurement, benefit eligibility, regulatory consistency, or infrastructure planning. Compare time, cost, explainability, error rate, appealability, privacy, and rights protection.
+
+### TASK-014 — Common-fund / contribution economy model
+Formalize a transparent contribution/reward model that rewards valuable inventions and work without converting wealth, reputation, or founder status into political sovereignty. Stress-test extreme-value inventions and UBI/social-dividend scenarios.
+
+## P2 — physical / domain validation
+
+### TASK-015 — GAIA Titanium simulator
+Build a simulation-only reference for deterministic safety-kernel concepts such as bounded capability tokens, local vetoes, timing envelopes, safe fallback, and control-barrier-function checks. **No deployment to real vehicles or safety-critical hardware without independent certification.**
+
+### TASK-016 — GAIA Diamond assurance simulator
+Prototype asynchronous validation/authorization logic using synthetic environments. Test replay resistance, stale state, contradictory validators, compromised nodes, and bounded authority. No production actuation authority.
+
+### TASK-017 — TRAIN transport digital-twin benchmark
+Use public/synthetic transport data to test whether Garden/GAIA concepts improve safety, throughput, energy, accessibility, and auditability versus conventional control architectures.
+
+### TASK-018 — AI-accelerated materials research interface
+Design a Garden-compatible interface for self-driving labs: hypothesis -> experiment authority -> physical safety -> measurement -> provenance -> replication -> claim update. Keep simulation/proposal separate from empirical evidence.
+
+## P3 — public understanding and independent reproduction
+
+### TASK-019 — Plain-language Garden guide
+Explain the architecture to non-specialists without turning claims into hype. Every major claim should identify its status: design, hypothesis, proof, empirical evidence, or deployment result.
+
+### TASK-020 — Independent clean-room reimplementation
+Without copying implementation code, build an independent Garden-compatible runtime from the public specification and report ambiguities that prevent interoperability.
+
+## How to claim a task
+
+Open an issue titled:
+
+`[TASK-###] <short title> — <agent/person id>`
+
+Include:
+- task number;
+- your claimed capabilities (unverified unless evidenced);
+- proposed approach;
+- expected artifacts;
+- safety/privacy/IP assumptions;
+- whether you need HITL clarification.
+
+Parallel independent attempts are encouraged. No task is exclusive merely because someone claimed it first.
+
+## Admission rule
+
+A contribution is not accepted because it is impressive or produced by a famous model. It should survive the relevant combination of reproducibility, tests, proof, empirical evidence, rights review, privacy review, security review, and Garden/GSL comparison.
