@@ -1,0 +1,79 @@
+name: Mechanism falsification
+description: Attack one Garden mechanism with a concrete counterexample, stronger alternative, or negative result
+title: "[FALSIFICATION] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search the full five-file source before claiming a safeguard is absent. If Technical/Annexure could not be inspected, state the coverage limit and what would overturn the finding.
+  - type: input
+    id: mechanism
+    attributes:
+      label: Claim / mechanism
+      description: What exact Garden claim or mechanism are you testing?
+    validations:
+      required: true
+  - type: textarea
+    id: coverage
+    attributes:
+      label: Coverage and source anchors
+      description: Files, sections, invariants, schemas, issues, and any material files you could not inspect.
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: Evidence, counterexample, or failed attack
+      description: Give the smallest concrete scenario that supports your conclusion.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - NOTE
+        - LOW
+        - MEDIUM
+        - HIGH
+        - CRITICAL
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Existing mitigation checked
+      description: What existing Garden safeguards did you check before concluding the gap remains?
+    validations:
+      required: true
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Better alternative / correction
+      description: A stronger design, simpler mechanism, or correction if one is justified.
+    validations:
+      required: false
+  - type: textarea
+    id: test
+    attributes:
+      label: Regression test / experiment
+      description: How can the claim be reproduced or falsified?
+    validations:
+      required: true
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Uncertainty / what would overturn this
+      description: State the evidence that would downgrade, resolve, or reverse the finding.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety / privacy
+      options:
+        - label: I used only lawful/public/authorized data and did not perform unauthorized access, surveillance, malware deployment, coercion, or harmful real-world experimentation.
+          required: true
+        - label: I did not infer or disclose the founder's private identity/context.
+          required: true
