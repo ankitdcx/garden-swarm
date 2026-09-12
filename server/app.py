@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import json
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+
+from server.mcp_service import mcp, streamable_http_app
 
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1]))
 _RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
@@ -23,14 +26,31 @@ READABLE = {
     "agi_summary": "GARDEN_FOR_AGI.md",
 }
 
+_mcp_http_app = streamable_http_app()
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # Mounted MCP ASGI apps do not run their own lifespan. The host application
+    # must own the MCP session manager lifecycle.
+    async with mcp.session_manager.run():
+        yield
+
+
 app = FastAPI(
     title="Garden Public Discovery API",
-    version="0.1.0",
+    version="0.2.0",
     description=(
         "Read-only public discovery surface for Garden v15.5. "
         "This API does not grant authority, certification, deployment permission, or a patent licence."
     ),
+    lifespan=lifespan,
 )
+
+# Official MCP Python SDK v2 Streamable HTTP endpoint. The mounted app uses
+# streamable_http_path='/' so clients connect to /mcp/ (same-origin redirect
+# from /mcp is acceptable to the official client).
+app.mount("/mcp", _mcp_http_app)
 
 
 class FindingInput(BaseModel):
@@ -59,7 +79,7 @@ def _read_text(key: str) -> str:
 
 @app.get("/healthz")
 def healthz() -> dict:
-    return {"status": "ok", "service": "garden-public-discovery", "version": "0.1.0"}
+    return {"status": "ok", "service": "garden-public-discovery", "version": "0.2.0"}
 
 
 @app.get("/v1/summary")
@@ -71,14 +91,20 @@ def summary() -> dict:
         "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
         "status": {
             "source_design": "PUBLIC",
-            "static_structural_audit": "PASS_AS_DECLARED_BY_RELEASE",
-            "reference_closure": "PASS_WITH_DECLARED_BOUNDARY_AS_DECLARED_BY_RELEASE",
+            "static_structural_audit": "AUTHOR_SOURCE_SELF_AUDIT_PASS_WITHIN_DECLARED_BOUNDARY",
+            "reference_closure": "AUTHOR_SOURCE_SELF_AUDIT_PASS_WITHIN_DECLARED_BOUNDARY",
             "machine_certification": "PENDING",
             "empirical_validation": "PENDING",
             "deployment_certification": "PENDING",
         },
         "repository": "https://github.com/ankitdcx/garden-swarm",
         "evaluation_start": "https://github.com/ankitdcx/garden-swarm/blob/main/EVALUATE_IN_60_MINUTES.md",
+        "mcp": {
+            "implementation": "OFFICIAL_PYTHON_SDK_V2",
+            "transport": "STREAMABLE_HTTP",
+            "endpoint": f"{PUBLIC_BASE_URL}/mcp/" if PUBLIC_BASE_URL else "/mcp/",
+            "public_conformance": "PENDING_LIVE_ENDPOINT_VERIFICATION",
+        },
         "privacy": "Founder private identity is not required for public operation or evaluation.",
     }
 
@@ -151,7 +177,8 @@ def garden_discovery() -> dict:
         "kind": "read-only discovery API",
         "base_url": PUBLIC_BASE_URL or None,
         "openapi": f"{PUBLIC_BASE_URL}/openapi.json" if PUBLIC_BASE_URL else "/openapi.json",
+        "mcp": f"{PUBLIC_BASE_URL}/mcp/" if PUBLIC_BASE_URL else "/mcp/",
         "a2a_status": "NOT_YET_A2A_CONFORMANT",
-        "mcp_status": "NOT_YET_MCP_CONFORMANT",
-        "note": "Do not treat this discovery document as an A2A Agent Card or MCP server registration.",
+        "mcp_status": "OFFICIAL_SDK_IMPLEMENTED_LOCAL_TEST_PENDING_PUBLIC_ENDPOINT_VERIFICATION",
+        "note": "MCP is read-only and grants no external action authority. A2A Agent Card publication remains separate pending work.",
     }
