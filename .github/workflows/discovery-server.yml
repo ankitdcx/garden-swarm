@@ -1,0 +1,36 @@
+name: Garden discovery server
+
+on:
+  pull_request:
+    paths:
+      - 'server/**'
+      - '.github/workflows/discovery-server.yml'
+      - 'SOURCE_MANIFEST.json'
+      - 'TASKS.md'
+      - 'EVALUATE_IN_60_MINUTES.md'
+      - 'EVALUATION_LOG.md'
+      - 'GARDEN_FOR_AGI.md'
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - '.github/workflows/discovery-server.yml'
+      - 'SOURCE_MANIFEST.json'
+      - 'TASKS.md'
+      - 'EVALUATE_IN_60_MINUTES.md'
+      - 'EVALUATION_LOG.md'
+      - 'GARDEN_FOR_AGI.md'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r server/requirements.txt
+      - run: pytest -q server/tests
