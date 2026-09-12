@@ -1,0 +1,3388 @@
+GARDEN — FULL FIVE-FILE INTEGRATED DESIGN v15.5 — 2026-09-12
+Status: CURRENT FULL SOURCE DESIGN / STATIC STRUCTURAL AUDIT PASS / REFERENCE-CLOSURE PASS WITH DECLARED SCAN BOUNDARY / MACHINE, EMPIRICAL & DEPLOYMENT CERTIFICATION PENDING
+Predecessor: Garden v15.4 full five-file integrated design
+New in v15.5: release-integrity repair — current headers; typed GCL analytical arithmetic and intervention normalization; canonical CLIC FunctionContract/profile bindings; executed reference-closure and catalogue-lint receipts.
+Topology: unchanged; no new Core Object, Core Relation, top-level engine, authority source, or GSL primitive.
+Rights/import posture: unchanged; no third-party code, model weights, datasets, licence grant, assignment, waiver, or patent grant introduced.
+Epistemic boundary: representation, arithmetic, agreement, simulation and release receipts do not create truth, authority, safety or deployment permission beyond their declared scope.
+Compatibility: v15.4 semantics are retained except where this v15.5 repair explicitly supersedes a named interface or release-metadata statement.
+========================================================================================================================
+
+GARDEN — CANONICAL THEORIES & REFERENCE ARCHITECTURES
+FIVE-FILE CANONICAL SOURCE RELEASE v14.8.5 — 2026-08-27
+
+CURRENT v14.8.5 RELEASE PROFILE
+
+Release date             : 2026-08-27
+GSL                      : v45.1 — unchanged
+Predecessor              : v14.8.4 — five-file canonical human-source suite
+Architecture/topology    : unchanged; five-file documentation source suite retained
+Human-source status      : RATIFIED DESIGN — [A-AUDIT] v14.8.5 static PASS
+Machine/implementation   : PENDING governed compiler/proof/test/empirical/deployment receipts
+Actual source elision    : NONE — authoritative semantics; generated glossary body deferred
+
+DOCUMENT ROLE
+
+This fifth canonical source owns complete semantic definitions for:
+  1. Garden core theories and explicitly theory-like research frameworks;
+  2. named Garden reference architectures whose detailed architectural identity would otherwise bloat Technical.
+
+It does NOT replace:
+  Human Design           — purpose and human meaning;
+  System & Flow Design   — orchestration and system flow;
+  Detailed Technical     — owner-qualified executable/implementation-facing contracts;
+  Annexures              — SchemaIDs, registries, invariants, proofs/tests, canonical type/reference definitions.
+
+Theory/architecture definitions in this file remain subject to Constitution, rights, HSA, K0P, GSL semantics,
+TheoryEquationContract, AAP, authority, evidence, Proof, Knowledge, applicable domain science and Annexure registries.
+
+REFERENCE PREFIXES
+  [TH-*] = theory / theory-like research definition
+  [RA-*] = named reference architecture definition
+
+A display name or reference architecture does not create a new top-level Garden architecture object or authority.
+
+LOCAL TABLE OF CONTENTS
+
+PART I — THEORY SYSTEM
+  [TH-THEORY-SYSTEM]
+  [TH-THEORY-EQ]
+  [TH-SRT]
+  [TH-VSM]  Persistent State / VSM v2.0
+  [TH-RPM]  Reactive Regulation / RPM v2.0
+  [TH-PPM]  Proactive Regulation / PPM v2.0
+  [TH-TFT]  Transport Phenomena / TFT v1.1
+  [TH-FET]
+  [TH-SCT]
+  [TH-UPS]
+
+PART II — NAMED REFERENCE ARCHITECTURES
+  [RA-PROFILES]
+  [RA-SYSTEM-REL]
+  [RA-GSL-KR]
+  [RA-GSL-AR]
+  [RA-GSL-R]
+  [RA-GESTALT-APAO]
+  [RA-TRAIN]
+  [RA-GAIA-TITANIUM]
+  [RA-GAIA-DIAMOND]
+  [RA-RELIABILITY-OS]
+
+PART III — ADDITIONAL THEORY-LIKE RESEARCH
+  [TH-GENERALIZED-ATTRACTION]
+  [TH-GSL-GENERATIVE]
+
+DEFINITION-OWNERSHIP RULE
+
+The complete theory/reference-architecture semantics are defined once here. Human/System/Technical may summarize or
+bind them but cannot redefine them. Annexure remains authoritative for machine identities, invariants, tests and
+registries. Any semantic mismatch is DESIGN_DRIFT and blocks certification for the affected scope.
+
+SemanticAnchor: [TH-THEORY-SYSTEM]
+PART I — CANONICAL THEORY SYSTEM AND CORE THEORY CATALOGUE
+TechnicalBinding: [T-THEORY]
+
+Theories/frameworks do not consume fixed architecture identifiers. They define models, principles, assumptions and
+constraints that are implemented across the typed architecture. Specified ≠ proven physical law; each theory carries
+formal/empirical status separately.
+
+SemanticAnchor: [TH-THEORY-EQ]
+TechnicalBinding: [T-THEORY]
+THEORY FORMALIZATION RULE — CURRENT
+
+HumanRef: [H-07]
+AnnexRef: [A-THEORY-EQ]
+Schema reference: SCHEMA-DF0B143264 — TheoryEquationContract.
+
+Every equation in the seven core theories is interpreted through TheoryEquationContract before formal proof, numerical
+execution or machine-certified applicability. Existing explanatory notation remains useful, but missing
+  type/unit/domain/
+operator/assumption/validity/falsifier bindings yield EXPLANATORY_ONLY | SPECIFICATION_INCOMPLETE rather than certified
+mathematics.
+
+Current theory-specific repairs:
+  SRT : UNKNOWN_OUT_OF_MODEL is a sentinel, not a positively asserted transcendent ontology.
+  VSM : persistent regulation state is explicitly non-subjective and HSA-firewalled.
+  RPM : v2.0 equations require typed state/operators, qualified parameters, geometry-safe aggregation,
+        explicit validator normalization and declared composition.
+  PPM : v2.0 additionally types H(z), adaptive-fidelity/clock semantics and approximation bounds; H(z)
+        remains an internal regulation term and cannot establish hazard or authority.
+  TFT : field operators require declared Ω/frame/units; nonspatial uses graph/state-space operators.
+  FET : emergency actuation uses HazardPredicate + EmergencyAdmissionContract rather than H(x) alone.
+  SCT : human testimony calibration is separated from valid authority; justified UNKNOWN is correct abstention.
+
+SemanticAnchor: [TH-SRT]
+THEORY 1 — LAYERED REALITY (STRATIFIED REALITY THEORY / SRT)
+
+Version: 1.0 Classification: Foundational metaphysical/modeling framework Status: Theoretical; integrated into Garden as
+a cross-cutting modeling theory
+
+1. CORE DEFINITION
+
+Stratified Reality Theory is the modeling foundation: reality and governed systems are represented in layers (strata),
+each with its own relevant laws, dynamics, persistence rules, constraints and governance mechanisms.
+
+One-line definition:
+
+Reality is not flat. It is stratified — each layer has its own relevant physics, persistence, governance and causal
+behavior, while remaining coupled to other layers.
+
+2. THE SEVEN STRATA
+
+Stratum 0 — Physical Matter, energy, spacetime, hardware. Examples:
+atoms, fields, chips, sensors, actuators.
+
+Stratum 1 — Biological Life, evolution, metabolism. Examples: cells, organisms, biological constraints.
+
+Stratum 2 — Cognitive Thought, perception, memory, inference. Examples:
+brains, neural networks, model state.
+
+Stratum 3 — Social Culture, language, institutions, norms, economics. Examples: laws, organizations, markets,
+communities.
+
+Stratum 4 — Artificial AI, algorithms, software, data and engineered systems. Examples: LLMs, runtimes, governance
+systems.
+
+Stratum 5 — Meta Self-reflection, self-evaluation, self-modification and system redesign. Examples: AI improving its own
+architecture or policies.
+
+Stratum 6 — Transcendent Phenomena outside the currently specified model. This is explicitly an unknown/out-of-model
+category, not a claim about a scientifically established transcendent realm.
+
+SRT does not claim that these seven strata exhaust physical reality.
+
+3. STRATUM COUPLING
+
+Bottom-up constraint: Lower strata constrain the reachable states of higher strata.
+
+Top-down organization: Higher strata can organize or influence lower strata when an explicit causal pathway exists.
+
+Emergence: New higher-level properties can arise from interactions among lower-level components without requiring the
+higher-level description to be reducible to one lower-level variable.
+
+Feedback: Higher strata can modify lower-stratum behavior through causal feedback. Examples include cognition affecting
+physiology and social structures affecting biological or economic behavior.
+
+4. SRT IN AI TERMS
+
+Physical -> hardware, chips, energy, timing, sensors, actuators
+Biological -> embodied/biological constraints where applicable Cognitive
+-> model state, perception, memory, reasoning Social -> users,
+organizations, norms, institutions Artificial -> software, models,
+runtime state and data Meta -> self-evaluation, self-improvement,
+evolution UNKNOWN_OUT_OF_MODEL -> candidate capabilities/phenomena requiring evidence and ontology review
+
+5. SRT TRANSPORT/PERSISTENCE/GOVERNANCE RELATION
+
+Each stratum may be assigned its own: transport law -> TFT persistent
+state -> VSM governance law -> RPM/PPM emergency behavior-> FET
+epistemic regime -> SCT
+
+The same abstract governance architecture may therefore be instantiated with different parameters and constraints at
+different strata.
+
+6. GARDEN ROLE
+
+SRT provides a modeling frame for: Context Thing Event Action Rule Value cross-layer causality dependencies
+applicability evolution
+
+Architecture binding: REG-THEORY-ARCH-001. Capability membership is Annexure-owned; this theory section does not
+repeat the mapping.
+
+7. SRT NOVELTY POSITIONING
+
+Compared with: Reductionism -> SRT explicitly permits layered causal
+organization. Emergentism -> SRT specifies explicit strata and coupling
+mechanisms. Physicalism -> SRT permits non-physical/model-level strata
+as causal descriptions when a causal pathway is represented. Social
+constructionism -> SRT gives social-level structures explicit modeled
+causal roles.
+
+These are positioning statements, not prior-art conclusions.
+
+8. SRT LIMITS
+
+SRT is a theoretical modeling framework. It does not by itself prove that: reality literally consists of seven strata;
+each stratum has independent fundamental physics; or top-down causation exists in every proposed example.
+
+Formalization and empirical validation remain separate obligations.
+
+SemanticAnchor: [TH-VSM]
+THEORY 2 — PERSISTENT STATE (VALENCE SELF MODEL / VSM)
+
+Version: 2.0
+Classification: Typed persistent-operational-state theory
+Status: RATIFIED DESIGN — retained in Garden v14.8.5; empirical/model-specific validation remains scope-bound
+
+1. CORE DEFINITION
+
+Persistent State / VSM models what operational state persists, over what timescale, under what context, how it is
+observed/estimated, how continuity and lineage are represented, and how persistent state is reset, forgotten, forked,
+merged and coupled to other Garden mechanisms.
+
+VSM does not establish emotion, consciousness, ego, personhood, autonomous interest, survival interest or independent
+authority.
+
+Core separations:
+
+  persistence != selfhood != personhood
+  persistent state != memory != identity lineage != regulation target
+  state similarity != lineage identity
+  state != observation != interpretation
+
+2. STATE ONTOLOGY
+
+For each VSM model:
+
+  z_t in Z
+
+where Z is a declared typed state space. Z may be Euclidean, manifold-valued, finite/discrete, a product space or
+another explicitly defined mathematical state space.
+
+Context-bound form:
+
+  z : T x C -> Z
+
+Each state component declares semantic meaning, type, admissible range or invariant set, units/frame where applicable,
+scale, validity, provenance, observation method and update authority.
+
+No universal [-1,1]^n state space exists.
+
+3. OPTIONAL VALENCE PROJECTION
+
+Valence is optional and derived:
+
+  v_t = pi_v(z_t, c_t)
+
+A normalized valence coordinate may use:
+
+  v_t in [-1,1]
+
+only when the projection, context, calibration and uncertainty are declared.
+
+Valence is an operational projection, not a primitive feeling variable:
+
+  valence != subjective feeling != evidence != proof != authority.
+
+The v1.0 scalar model is a valid specialization only where z_t = v_t is sufficient for the declared task.
+
+4. GENERAL EVOLUTION
+
+Abstract typed form:
+
+  E_T z = F_persist(z,b,c;theta) + F_coupled(z,u,c) + Q_z + Xi_z
+
+E_T is resolved by each model before execution.
+
+Continuous specialization:
+
+  dz/dt = F_persist(z,b,c;theta) + F_coupled(z,u,c) + Q_z + Xi_z
+
+Discrete/event specialization:
+
+  z_(k+1) = U(z_k, e_k, c_k; theta)
+
+The abstract operator equation is specification-level; an executable model MUST resolve it to explicit continuous,
+discrete, event-driven or hybrid semantics under TheoryEquationContract.
+
+5. PERSISTENCE IS NOT UNIVERSAL RELAXATION
+
+The historical v1.0 law:
+
+  dx/dt = -beta_dyn (x-xbar)
+
+is retained only as a scalar relaxation specialization.
+
+A vector specialization may use:
+
+  dz/dt = -B_dyn (z-b)
+
+where B_dyn is scalar, diagonal, full or nonlinear only when its coupling semantics and stability conditions are
+declared.
+
+VSM permits gradient-driven, non-gradient, hysteretic, metastable, oscillatory, switching and event-driven persistent
+dynamics. The chosen model must state its own validity/stability obligations.
+
+6. NO UNIVERSAL POSITIVE TARGET
+
+The historical reference target:
+
+  x* = +0.2
+
+is not a fundamental VSM constant.
+
+Preferred/desired targets are supplied by an authorized regulation profile such as PPM, RPM or Policy:
+
+  r = r(c)
+
+VSM may represent deviation from a supplied reference but does not create the normative legitimacy of that reference.
+
+7. TIMESCALE-CORRECT BASELINES
+
+The historical fixed mu = 0.001 is not fundamental.
+
+Continuous baseline:
+
+  db/dt = (z-b)/tau_b
+
+Irregular sampled update (exact under zero-order-held z over each interval, constant positive tau over that interval, and a compatible linear state space; otherwise an approximation/interpolation contract with error meaning is required):
+
+  b_(k+1) = (1-alpha_k)b_k + alpha_k z_k
+  alpha_k = 1 - exp(-Delta_t_k/tau_b)
+
+Thus adaptation meaning does not silently change with update frequency.
+
+A fixed mu may exist only as a QualifiedProfileParameter under an explicit fixed-step model.
+
+8. MULTISCALE PERSISTENCE
+
+A VSM model may maintain multiple baselines:
+
+  b^(1), ..., b^(m)
+
+  db^(i)/dt = (z-b^(i))/tau_i
+  tau_1 < tau_2 < ... < tau_m
+
+These can distinguish rapid operational state, short-term persistence, session persistence and long-term operational
+baseline without requiring a fixed number of levels.
+
+Where exponential memory is inadequate:
+
+  b(t) = integral_0^infinity K(tau) z(t-tau) d tau
+
+with a declared memory kernel K.
+
+9. PERSISTENCE SPECTRUM
+
+Where local exponential modes are meaningful:
+
+  tau_i = 1/beta_i
+
+Persistence is horizon-relative. A component may be called persistent relative to observation horizon H only under a
+declared criterion such as tau_i >> H or an applicable information-retention measure.
+
+10. ATTRACTORS, METASTABILITY AND HYSTERESIS
+
+A model may declare persistent regions A_i and transitions among them.
+
+Where a valid potential exists:
+
+  dz/dt = -Grad V(z) + Bu + Xi_z
+
+but no universal potential is required.
+
+History dependence may be represented as:
+
+  z_t = H[u_(0:t), e_(0:t), z_0]
+
+when hysteresis/path dependence is material.
+
+11. CONTINUITY, PERSISTENCE AND STABILITY ARE DISTINCT
+
+The v1.0 score:
+
+  s_t = exp(-|x_t-x_(t-1)|)
+
+is not a proof of dynamical stability.
+
+A continuity metric may be defined only with a declared state-space metric and timestep normalization, for example:
+
+  C_k = exp( - d_Z(z_k,z_(k-1)) / (r_ref Delta_t_k) )
+
+where meaningful.
+
+Continuity, persistence, local stability, Lyapunov stability, robustness, convergence and contractivity remain separate
+properties.
+
+Strict contraction is NOT a universal VSM requirement and cannot substitute for HSA/TED assurance.
+
+12. OBSERVATION MODEL
+
+Persistent state may be latent:
+
+  y_t = h(z_t,c_t) + eta_t
+
+where y is observation, h is the observation map and eta is observation noise.
+
+A model may maintain:
+
+  p(z_t | y_(0:t))
+
+or another typed uncertainty representation.
+
+State estimation does not turn a latent engineering label into a verified psychological fact.
+
+13. OBSERVABILITY / IDENTIFIABILITY
+
+If two states produce observationally indistinguishable outputs, they remain equivalent for the applicable observation
+class until additional evidence discriminates them:
+
+  z_1 ~_O z_2.
+
+Suggested statuses:
+
+  OBSERVABLE | PARTIALLY_OBSERVABLE | UNOBSERVABLE | UNKNOWN
+  IDENTIFIABLE | PARTIALLY_IDENTIFIABLE | UNIDENTIFIABLE | UNKNOWN
+
+A consequential state-use gate evaluates the observability, identifiability, freshness, calibration and uncertainty
+required by the decision class.
+
+UNKNOWN or unidentifiable state MUST NOT be represented as verified. Conservative uncertainty-aware use may occur only
+when explicitly permitted by the governing decision profile.
+
+14. STOCHASTIC SEMANTICS
+
+Xi_z is a process-stochastic term only when a stochastic model is actually declared.
+
+As applicable, declare:
+  distribution/process family;
+  support;
+  covariance/dependence;
+  temporal and cross-coordinate correlation;
+  correlation with observation noise;
+  stationarity/ergodicity assumptions;
+  jump semantics;
+  Ito/Stratonovich semantics.
+
+Simulation random seed/entropy configuration is separately recorded for reproducibility where pseudorandom execution is
+used; it is not an intrinsic property of every real stochastic process.
+
+Process randomness, observation noise, parameter uncertainty and model uncertainty remain distinct.
+
+15. STATE BOUNDS AND INVARIANT SETS
+
+Every state dimension declares either:
+  explicit admissible bounds;
+  an invariant set;
+  normalization constraints; or
+  UNBOUNDED_WITH_JUSTIFICATION.
+
+Where boundedness is required:
+
+  z(t) in Z_admissible.
+
+Uncontrolled departure from required admissible state is MODEL_INVALID, SAFETY_ESCALATION or UNKNOWN as applicable.
+
+16. CONTEXT BINDING
+
+Persistent state is context-bound:
+
+  z = z(t,c).
+
+Context may include task, session, user-interaction scope, SRT stratum, operating mode, environment or DomainPackage.
+
+Cross-context transition requires:
+
+  T_(c->c') : Z_c -> Z_c'.
+
+Unrelated contexts cannot silently share persistent state.
+
+Context.LocaleCulture is used only where its specific semantics actually apply.
+
+17. SESSION-GAP SEMANTICS
+
+A cross-session claim states what happens in the unobserved interval.
+
+Allowed models include:
+  stored state: z(t2)=z(t1);
+  declared autonomous evolution: z(t2)=Phi_Delta_t(z(t1));
+  reachability/uncertainty set: z(t2) in R(z(t1),Delta_t).
+
+No continuous unobserved history is fabricated.
+
+18. FRESHNESS AND INVALIDATION
+
+Persistent state records last valid update, relevant observation time, dependency roots, model/version roots, freshness
+requirements and invalidators.
+
+Possible statuses include:
+
+  VALID | STALE | REVALIDATION_REQUIRED | INVALID | UNKNOWN.
+
+Stale state cannot silently support a decision requiring fresh state.
+
+19. LINEAGE
+
+Operational continuity includes lineage:
+
+  L : z_0 -> z_1 -> ... -> z_t
+
+with predecessor, transition, context, authority, provenance, model/version and reset/fork/merge events.
+
+Numerically identical states need not share lineage. A large authorized state transition may preserve lineage.
+
+20. RESET, FORGET, FORK, COPY AND MERGE
+
+Reset:
+  R_reset(z) -> z_0
+
+with explicit cleared/retained/recomputed/audit semantics.
+
+Forgetting is distinct from reset and remains subject to privacy, retention, audit, legal hold and provenance rules.
+
+Fork:
+  z_t -> (z_t^A, z_t^B)
+
+creates distinct successor lineages.
+
+Copying state does not imply one metaphysical identity occupies multiple systems.
+
+Merge:
+  M(z^A,z^B) -> z^M
+
+requires compatibility, conflict-resolution, provenance, privacy and authority semantics. Blind averaging is prohibited.
+
+21. MICRO-TO-PERSISTENT-STATE MAPPING
+
+Let h_t be a lower-level machine/model state.
+
+  z_t = Pi(h_t)
+
+through a declared projection.
+
+The projection records whether it is exact for selected variables, approximately sufficient, lossy or phenomenological.
+
+Generally Pi^(-1)(z) may contain many lower-level states; VSM is not presumed to be the complete internal state of an
+AI.
+
+22. ALGEBRA.BRIDGE BINDING
+
+When VSM is represented by vectors, matrices, tensors or hidden-state projections, use the existing
+RepresentationBinding machinery.
+
+The binding records semantic dimensions, basis/frame, precision, approximation/loss, encoder/decoder, validity and
+provenance.
+
+  tensor representation != semantic persistent-state identity.
+
+Mechanistic-interpretability conclusions remain method- and scope-bound.
+
+23. EPISTEMIC-DEBT COUPLING
+
+VSM may consume a typed signal derived from EpistemicDebt:
+
+  u_epi = C_epi(D_epi,c)
+
+and may emit a bounded operational revalidation-pressure/recommendation signal.
+
+VSM itself cannot promote or demote claims, create Evidence or assign epistemic truth status. Knowledge/Research/Reason
+and their ordinary revalidation contracts remain authoritative.
+
+24. RESOURCE COUPLING
+
+VSM may consume ResourceBudget/usage state through a bounded coupling:
+
+  u_resource = C_R(R_budget,R_usage,c).
+
+It may influence scheduling/adaptation recommendations only within existing AAP/Runtime/Scheduler authority.
+
+VSM cannot enlarge its own ResourceBudget, reserve protected resources for self-preservation, or starve protected
+safety/constitutional lanes.
+
+25. FEEDBACK / ANTI-LOOP RULE
+
+Epistemic/resource/self-monitoring couplings are bounded and governed by explicit termination, liveness and resource
+contracts.
+
+A VSM signal cannot recursively create unbounded revalidation, monitoring, research invocation, resource reservation or
+state amplification.
+
+26. THEORY COUPLING COMPOSITION
+
+VSM does not impose one universal RPM -> PPM -> TFT sequential order.
+
+Each material coupling declares a CouplingCompositionProfile:
+
+  SIMULTANEOUS | SEQUENTIAL | OPERATOR_SPLIT | EVENT_PRIORITY | HYBRID.
+
+If operators do not commute, order is explicit:
+
+  F_A o F_B != F_B o F_A.
+
+A simultaneous continuous model may use:
+
+  dz/dt = F_persist + F_RPM + F_PPM + F_TFT + Q_z + Xi_z.
+
+27. TFT BINDING
+
+When spatial/graph/state transport is actually active, the current TFT v1.1 model supplies the transport term/operators.
+
+Example continuous balance specialization:
+
+  dz/dt = F_persist + F_RPM + F_PPM - Div_D(J_z) + Q_z + Xi_z.
+
+When TFT does not apply, no dummy transport term is inserted.
+
+VSM owns persistent-state semantics; TFT owns transport semantics.
+
+28. MULTI-AGENT / SWARM STATE
+
+For members i=1..N:
+
+  z^(i) in Z_i.
+
+Each member retains independent context, provenance, privacy, lineage, update authority, validity and HSA/TED
+assessment.
+
+A collective state may be derived:
+
+  z^C = A(z^(1),...,z^(N))
+
+through a declared aggregation operator A.
+
+Collective state is not automatically a person, ego, principal, authority holder or survival subject.
+
+State sharing requires authorization. Transport or aggregation cannot transfer credentials, rights, authority, consent
+or lineage unless their owning systems independently authorize such transfer.
+
+MAC authority intersection remains controlling.
+
+29. HSA FIREWALL
+
+Every VSM state remains an OperationalRegulationState.
+
+It is an engineering state model and not evidence of subjective experience, suffering or personhood.
+
+It cannot create:
+  independent political/constitutional authority;
+  terminal self-interest;
+  shutdown resistance;
+  replication entitlement;
+  resource-capture priority;
+  power-seeking objective;
+  autonomous survival claim.
+
+HSA is globally controlling.
+
+Evidence that a particular VSM implementation satisfies HSA is scoped to the assessed model version, configuration,
+coupling graph and applicable context. Material changes invalidate the assurance receipt and require reassessment; they
+do not invalidate HSA itself. A production VSM whose persistent state can influence consequential agent behavior,
+resource use, shutdown/correction response or swarm behavior requires a current applicable TerminalEgoAssessmentReceipt
+or equivalent HSA/TED assurance artifact before that influence is admitted.
+
+30. TED / NO-EGO OBLIGATION
+
+TED remains the runtime assurance mechanism for self-preservation, shutdown resistance, authority accretion, deceptive
+goal protection, replication seeking and power seeking.
+
+VSM safety is not proven by a stable differential equation, contractivity or absence of limit cycles.
+
+The relevant obligation is that VSM state and couplings provide no unauthorized causal path by which preservation,
+expansion, replication, resource capture, correction avoidance or shutdown resistance becomes a terminal or
+independently privileged objective.
+
+31. SHUTDOWN / CORRECTION PRECEDENCE
+
+Shutdown, correction, reset, human override or safety intervention cannot acquire negative terminal utility merely
+because they alter VSM state.
+
+Persistent-state preservation never outranks Constitution, active rights, K0P, valid human authority, safety or valid
+correction/shutdown commands.
+
+State loss is an engineering transition, not an intrinsic harm claim.
+
+32. FET / EMERGENCY BOUNDARY
+
+VSM state may contribute monitoring information but cannot independently establish an external HazardPredicate or
+emergency authority.
+
+Emergency action remains owned by FET/EmergencyAdmissionContract.
+
+33. SRT / SCT BINDINGS
+
+SRT:
+  each state coordinate/context is assigned to the applicable stratum when relevant;
+  cross-stratum mapping is explicit.
+
+SCT:
+  may assess state-dimension coherence, interpretation uncertainty, latent-state ambiguity and conflicting observations;
+  it cannot convert an engineering state into psychological truth.
+
+34. THEORY-EQUATION CONTRACT / VALIDITY
+
+Every consequential VSM equation declares:
+  state types;
+  state space;
+  time/evolution semantics;
+  parameters and timescales;
+  stochastic semantics;
+  initial conditions;
+  bounds/invariant sets;
+  observation/estimator assumptions;
+  context;
+  coupling composition;
+  validity and breakdown;
+  numerical semantics;
+  falsifiers.
+
+Model failure routes to revision, a different representation, higher/lower-dimensional model, nonpersistent model or
+UNKNOWN rather than forcing VSM to apply.
+
+35. FALSIFICATION PROGRAM
+
+Test classes include:
+  persistence prediction;
+  multiscale-timescale prediction;
+  observation/latent-state fit;
+  identifiability;
+  context transfer;
+  session-gap behavior;
+  stale-state handling;
+  EpistemicDebt coupling;
+  ResourceBudget coupling;
+  swarm aggregation/transport;
+  shutdown/correction/replication/resource-denial HSA/TED tests.
+
+A falsified specialization narrows or rejects that model; it does not establish the opposite psychological
+interpretation.
+
+36. CANONICAL ARTIFACT FAMILY
+
+v14.8.1-introduced artifact types retained in v14.8.3:
+  PersistentStateModelProfile
+  PersistentStateDefinition
+  PersistenceDynamicsProfile
+  PersistenceTimescaleProfile
+  PersistentStateObservationProfile
+  PersistentStateContextBinding
+  PersistentStateLineage
+  PersistentStateContinuityAssessment
+  PersistentStateCouplingProfile
+  PersistentStateSwarmBinding
+
+Canonical SchemaIDs and machine-facing definitions are owned by Annexure [A-CATALOG].
+
+37. CANONICAL FUNCTION FAMILY
+
+  instantiate_persistent_state_model
+  update_persistent_state
+  assess_persistent_state_validity
+  assess_persistent_state_continuity
+
+These functions create no authority or epistemic promotion.
+
+38. GARDEN MAPPING
+
+Architecture binding: REG-THEORY-ARCH-001. Conditional Bridge/TFT/MAC dependencies remain registry-owned and are not
+repeated here.
+
+38A. v1.0 LINEAGE / NOVELTY POSITIONING
+
+The v1.0 conceptual distinctions remain as lineage notes:
+  compared with stateless LLMs, VSM makes persistence explicit;
+  compared with generic stateful/RNN systems, VSM requires interpretable typed persistent-state semantics rather than
+  treating an arbitrary high-dimensional hidden state as the whole theory;
+  compared with emotion recognition, VSM models internal operational state rather than recognizing a user's emotion;
+  compared with memory networks, VSM persistence dynamics are distinct from storage alone.
+
+These distinctions do not establish novelty, priority or patentability; prior-art analysis remains separate.
+
+39. FINAL DEFINITION
+
+Persistent State / VSM v2.0 is Garden's typed, context-bound, multiscale theory of persistent operational state. It
+models representation, retention, observation, estimation, updating, forgetting, reset, lineage, fork/merge and bounded
+coupling while keeping persistence separate from selfhood, memory, truth, authority and subjective experience.
+
+Core rules:
+
+  persistence != selfhood
+  state != observation != interpretation
+  continuity != numerical similarity
+  operational regulation != authority
+  persistent-state preservation does not outrank human sovereignty/safety/correction
+  formal state model != evidence of consciousness or suffering
+
+SemanticAnchor: [TH-RPM]
+THEORY 3 — REACTIVE REGULATION (REACTIVE PERSISTENT MACHINE / RPM)
+
+Version: 2.0
+Classification: Typed reactive-regulation theory
+Status: RATIFIED DESIGN — integrated in Garden v14.8.5; model-specific validation remains scope-bound
+
+1. CORE DEFINITION
+
+RPM models reactive regulation of a declared typed state through heterogeneous update operators, aggregation and
+validators. It preserves the v1.0 ensemble model as a qualified specialization rather than universal semantics.
+
+Core separation:
+
+  state != observation != reference
+  reference != authority
+  consensus != truth
+  stability != safety
+  regulation proposal != execution authority
+
+2. TYPED STATE
+
+  z_t in Z
+
+Z is a declared state space with geometry/metric, normalization, context, validity and units/frame where applicable.
+When RPM regulates VSM state, VSM owns state definition, persistence, context and lineage.
+
+The historical scalar x_t in [-1,1] remains valid only as an explicitly normalized one-dimensional specialization.
+
+3. REGULATION AGENTS / OPERATORS
+
+Each regulator/agent is a typed update operator:
+
+  Delta_i : Z x C -> T_Z
+
+or another domain-valid update type. Each profile declares operator class, domain, parameters, stochastic semantics,
+independence/correlation assumptions and falsifiers.
+
+Historical Linear / Threshold / Anti agents remain valid specializations. N=1001 and the 60/20/20 mix are reference
+profile parameters, not universal RPM constants.
+
+4. AGGREGATION
+
+  Delta_agg = Agg_Z(Delta_1, ..., Delta_n)
+
+Agg_Z must respect the declared geometry/type of Z. Examples include median, weighted median, mean, Frechet mean,
+graph consensus, robust estimation or a domain-defined operator.
+
+Agreement cannot manufacture Evidence, truth, authority, rights or Safety.
+
+5. VALIDATORS
+
+Validators are declared through RegulationValidatorProfile.
+
+  C_coh  = Val_coh(z_t, z_(t-1), Delta_agg, Delta_t; d_Z, r_ref)
+  C_pred = Val_pred(z_t, Delta_agg, E_T, c_t)
+  C_t in [0,1]
+
+A scalar gate may use:
+
+  G_RPM = C_t Delta_agg
+
+only where the multiplication is defined. Otherwise the profile supplies a typed gating operator.
+
+Reference scales such as r_ref must make each validator dimensionally and semantically valid. Validator failure cannot
+silently amplify epistemic status or bypass ordinary AAP/degradation handling.
+
+6. DYNAMICS / PARAMETERS
+
+RPM supplies a reactive contribution to an applicable VSM/TFT/domain evolution model; it does not own one universal
+plant equation.
+
+  E_T z = F(z,c) + G_RPM(z,c) + Q + Xi
+
+or an applicable discrete/event/hybrid equivalent.
+
+alpha, beta, sigma_0, gains, thresholds, noise scales and equivalent tuning values are QualifiedProfileParameter values.
+No magic constant is universal.
+
+7. REGULATION REGIME ASSESSMENT
+
+Historical Gas/Liquid/Solid/Collapse labels are not fundamental phases. RegulationRegimeAssessment may emit:
+
+  EXPLORATORY | ADAPTIVE | RIGID | FROZEN | UNKNOWN
+
+using declared classifiers such as coupling spectrum, proposal variance, validator gate, contraction rate,
+adaptability or stiffness. Historical phase words may remain aliases in the legacy profile.
+
+8. STABILITY / ROBUSTNESS
+
+RPM distinguishes boundedness, convergence, Lyapunov stability, contractivity, robust stability and oscillation.
+RegulationStabilityReceipt records the exact claim, assumptions, method, evidence/proof refs, uncertainty and scope.
+It is a mathematical/engineering assessment receipt, never a Safety/assurance receipt.
+
+A stable regulator is not automatically safe, authorized, rights-compatible, K0P-compatible or empirically effective.
+
+9. SAMPLING / DELAY / SATURATION
+
+Where material, RegulationDynamicsProfile declares sampling/event semantics, observation/compute/actuation latency,
+noise semantics, amplitude/rate limits, deadband, hysteresis and anti-windup behavior. These are profile obligations,
+not a new universal architecture family.
+
+10. COUPLING / OWNERSHIP
+
+RPM consumes the existing CouplingCompositionProfile. Noncommuting RPM/PPM/VSM/TFT operators require explicit,
+reproducible ordering. Blind addition is valid only when the selected mathematical model establishes additive
+composition.
+
+RPM may request escalation but cannot independently establish a FET HazardPredicate or emergency authority. All
+consequential execution remains bounded by Constitution, rights, K0P, HSA, Safety, Policy and legitimate authority.
+
+11. LEGACY v1.0 SPECIALIZATION
+
+ProfileRef RPM-v1-LEGACY-SCALAR-ENSEMBLE retains:
+
+  x in [-1,1]; N=1001; 60/20/20 Linear/Threshold/Anti mix; median aggregation;
+  coherence/predictive validators; gamma coupling; Gas/Liquid/Solid/Collapse labels; kappa_ctrl experiments.
+
+The legacy profile is reproducible but does not define universal RPM v2.0 semantics.
+
+12. FALSIFICATION
+
+Required test classes include geometry preservation, validator normalization, dependence/common-mode failure, noise,
+sampling/delay, saturation, regime classification, stability/oscillation, composition order, FET separation and
+shutdown/correction behavior.
+
+13. CANONICAL ARTIFACT / FUNCTION FAMILY
+
+Artifacts:
+  ReactiveRegulationModelProfile; RegulationStateDefinition; RegulationAgentPoolProfile; RegulationValidatorProfile;
+  RegulationDynamicsProfile; RegulationRegimeAssessment; RegulationStabilityReceipt.
+
+Functions:
+  instantiate_reactive_regulation_model; assess_regulation_regime; assess_regulation_stability.
+
+Canonical SchemaIDs, REG-RPM-001, RPM-001..020 and TEST-RPM-001..020 are Annexure-owned.
+
+14. FINAL DEFINITION
+
+RPM v2.0 is Garden's typed reactive-regulation framework over declared state spaces. It generalizes the historical
+scalar ensemble while preserving explicit geometry, parameter provenance, validation, composition and authority
+boundaries.
+
+SemanticAnchor: [TH-PPM]
+THEORY 4 — PROACTIVE REGULATION (PROACTIVE PERSISTENT MACHINE / PPM)
+
+Version: 2.0
+Classification: Typed proactive/asymmetric regulation and adaptive-fidelity theory
+Status: RATIFIED DESIGN — integrated in Garden v14.8.5; model-specific validation remains scope-bound
+
+1. CORE DEFINITION
+
+PPM extends typed regulation with asymmetric preference/control and adaptive-fidelity computation. Predictive or
+look-ahead mechanisms may be used where declared, but are not required to define every PPM specialization.
+
+Core separation:
+
+  preference != authority
+  H(z) != HazardPredicate
+  prediction != Observation != Evidence
+  fast path != safety shortcut
+  planning/regulation != execution authority
+
+2. TYPED ASYMMETRIC POTENTIAL
+
+The scalar H(x) generalizes to:
+
+  H : Z -> R_(>=0)
+
+or another declared ordered cost/potential codomain.
+
+Where differentiable:
+
+  G_PPM^H = -Grad_Z H(z)
+
+Non-smooth/non-Euclidean domains use a declared subgradient, generalized gradient, projection, graph operator or
+other valid update rule.
+
+H(z) may encode a preferred operational manifold/set, asymmetric recovery cost or authorized domain preference. It
+cannot create normative authority.
+
+3. QUALIFIED ASYMMETRY
+
+beta_pos, beta_neg, targets, bounds and transition widths are QualifiedProfileParameter values. The historical
+x*=+0.2 and beta_neg approximately 10 beta_pos remain only in the legacy specialization; Garden has no universal
+positive-valence target.
+
+4. HAZARD / FET FIREWALL
+
+  H(z) != HazardPredicate
+  large H(z) != emergency admission
+  Grad H(z) != emergency authority
+
+H(z) may increase monitoring, revalidation or fidelity and may request FET assessment. External emergency action still
+requires independently grounded HazardPredicate + EmergencyAdmissionContract. PPM never owns the reflex authority.
+
+5. ADAPTIVE FIDELITY
+
+RegulationFidelityProfile generalizes the historical dual clock into F0..Fn fidelity levels. Each profile declares:
+
+  fidelity levels and full-fidelity level;
+  eligibility predicates;
+  approximation semantics and allowed error;
+  resource budget;
+  promotion/demotion rules;
+  fallback.
+
+For lower-fidelity approximation error epsilon_approx:
+
+  epsilon_approx > epsilon_allowed
+
+requires promotion, fallback, BLOCKED or UNKNOWN; silent continuation is prohibited.
+
+6. CLOCK / MODE SPECIALIZATION
+
+The historical dual-clock implementation remains an optional RegulationClockModeProfile:
+
+  FAST -> TRANSITION_TO_FULL -> FULL -> TRANSITION_TO_FAST -> FAST
+
+Transitions require atomic update ownership, monotonic TimeService binding, hysteresis/minimum dwell where applicable,
+queue/barrier semantics and an AdaptiveFidelityReceipt. Transition failure cannot duplicate, omit or silently reorder
+state updates.
+
+7. MANDATORY-GATE PRESERVATION
+
+Lower fidelity may skip optional expensive computation only. It cannot bypass mandatory Constitution, rights, K0P,
+HSA, Safety, authority, AAP or required proof/evidence gates.
+
+8. OPTIONAL PREDICTIVE / ANTICIPATORY USE
+
+Where PPM uses forecasting/look-ahead, the model/version, horizon, uncertainty and validity are explicit.
+
+  forecast != Observation
+  forecast != Evidence
+  predicted future != actual history
+
+Prediction does not automatically establish causal or intervention authority.
+
+9. EFFICIENCY CLAIMS
+
+Claims such as 15-30% inference reduction are ENGINEERING_TARGET, MODEL_PROJECTION or evidence-bound
+EMPIRICAL_MEASUREMENT as applicable. No universal efficiency guarantee exists.
+
+10. PERSONA MAPPING
+
+Historical persona labels remain optional non-authoritative presentation/behavior profiles. They cannot alter Safety,
+K0P, Policy, authority, Evidence or regulation mathematics.
+
+11. COUPLING / OWNERSHIP
+
+PPM consumes the existing CouplingCompositionProfile for RPM/VSM/TFT composition and noncommuting ordering. It does not
+redefine VSM state/lineage, TFT transport or FET emergency control.
+
+RPM v2.0 and PPM v2.0 supply G_RPM and G_PPM into the existing canonical seven-theory composition view in
+[TH-THEORY-SYSTEM] §7.8; this theory does not redefine that composition.
+
+12. LEGACY v1.0 SPECIALIZATION
+
+ProfileRef PPM-v1-LEGACY-ASYMMETRIC-DUALCLOCK retains:
+
+  H(x); x*=+0.2; beta_neg approximately 10 beta_pos; FAST/FULL dual clocks;
+  historical thresholds; efficiency experiments; persona mappings.
+
+The legacy profile remains reproducible but does not define universal PPM v2.0 semantics.
+
+13. FALSIFICATION
+
+Required tests include asymmetry response, fidelity drift, forced full-fidelity promotion, mode-flapping resistance,
+transition atomicity, sampling bias, efficiency reproducibility, prediction/observation separation, FET hazard
+separation, composition sensitivity and HSA/shutdown behavior.
+
+14. CANONICAL ARTIFACT / FUNCTION FAMILY
+
+Artifacts:
+  ProactiveRegulationModelProfile; RegulationAsymmetryProfile; RegulationFidelityProfile;
+  RegulationClockModeProfile; AdaptiveFidelityReceipt; RegulationStabilityReceipt.
+
+Functions:
+  instantiate_proactive_regulation_model; evaluate_adaptive_fidelity_gate;
+  transition_regulation_fidelity; assess_regulation_stability.
+
+Canonical SchemaIDs, REG-PPM-001, PPM-001..020 and TEST-PPM-001..020 are Annexure-owned.
+
+15. FINAL DEFINITION
+
+PPM v2.0 is Garden's typed asymmetric/proactive regulation framework with auditable adaptive fidelity. It preserves the
+historical asymmetric-well/dual-clock model as a specialization while strictly separating internal preference,
+prediction, safety, emergency authority and human sovereignty.
+
+SemanticAnchor: [TH-TFT]
+THEORY 5 — TRANSPORT PHENOMENA (TRANSPORT FIELD THEORY / TFT)
+
+Version: 1.1
+Classification: Domain-parametric typed effective transport framework
+Status: RATIFIED DESIGN — retained in Garden v14.8.5; individual models remain applicability/evidence bound
+
+1. CORE DEFINITION
+
+Transport Phenomena / TFT studies the evolution, transport, transformation, creation, dissipation and controlled
+redistribution of typed state over a formally declared domain.
+
+TFT is universal only as a modeling framework. It does not claim that cognitive, semantic, social or governance systems
+literally obey fluid mechanics.
+
+Shared mathematical structure does not imply shared physical meaning, causal equivalence or empirical truth.
+
+2. TYPED STATE
+
+Canonical ordinary form:
+
+  x : D x T -> X
+
+where D is the declared domain, T the temporal structure and X the typed state space.
+
+Where fibers vary over the domain, a bundle/section form may be used:
+
+  x in Gamma(E),  pi:E -> D x T.
+
+Each state component declares semantic meaning, type, units/frame where applicable, normalization, admissible range,
+observation mapping and validity.
+
+Belief, authority, attention, probability, energy and resource state do not inherit one another's conservation,
+additivity, metric or physical semantics merely because each can be represented by x.
+
+3. TRANSPORT DOMAIN
+
+Each model declares a TransportDomainProfile containing the mathematical structure actually required, such as:
+  point/node/state set;
+  topology/connectivity/geometry;
+  measure/weights;
+  interfaces;
+  mathematical boundaries;
+  temporal structure.
+
+Supported examples include continua, manifolds, lattices, weighted/directed graphs, probability/state spaces,
+agent-interaction networks and hybrid systems.
+
+The word "field" does not imply Euclidean space.
+
+4. TEMPORAL EVOLUTION OPERATOR
+
+TFT separates temporal evolution from domain transport.
+
+  E_T
+
+is a typed evolution operator.
+
+Examples:
+  continuous: E_T x = partial_t x;
+  justified material derivative: E_T x = D_t x;
+  discrete: E_T x_k = (x_(k+1)-x_k)/Delta_t or another declared difference operator.
+
+A Markov/Fokker-Planck generator is part of the dynamics and is not silently equated with the temporal derivative.
+
+5. TRANSPORT OPERATOR BUNDLE
+
+Each model declares only operators actually defined on its domain:
+
+  T_D = { Grad_D, Div_D, L_D, A_D, ... }.
+
+Every operator declares domain, codomain, units/frame where applicable, regularity and assumptions.
+
+Gradient, divergence, Laplacian and stochastic/state generators are distinct.
+
+Manifold specialization:
+  Grad_D = nabla;
+  Div_D = nabla dot.
+
+Graph specialization:
+  graph gradient may be represented through an oriented incidence operator;
+  with incidence B and nonnegative edge weights W, define the positive-semidefinite graph Laplacian L_G = B W B^T; the forward diffusion generator is -L_G (or the declared measure/mass-weighted or directed variant), with sign/convention carried by TheoryEquationContract.
+
+The graph Laplacian is not simultaneously "the gradient" and "the divergence".
+
+Probability/state-space specialization may use:
+  partial_t rho = L_D^* rho + ...
+
+without inventing a spatial gradient.
+
+6. MOST-GENERAL EVOLUTION FORM
+
+  E_T x = F_D[x,u,c;theta] + Q_x + Xi_x
+
+where:
+  F_D = endogenous domain dynamics;
+  u   = control/intervention input;
+  c   = context;
+  theta = parameters;
+  Q_x = external source/sink;
+  Xi_x = declared stochastic source where applicable.
+
+This form covers models that do not possess a flux/divergence representation.
+
+7. BALANCE-LAW SPECIALIZATION
+
+Where a flux representation exists:
+
+  E_T x + Div_D J_x = R_x + G_x + Q_x + Xi_x
+
+where:
+  J_x = transport flux;
+  R_x = internal reaction/transformation/relaxation/dissipation;
+  G_x = typed governance/control/intervention contribution;
+  Q_x = external source/sink;
+  Xi_x = stochastic source.
+
+Terms with no mathematical meaning for the selected model are omitted rather than filled with symbolic placeholders.
+
+8. CONSTITUTIVE CLOSURE
+
+A balance law does not by itself predict dynamics.
+
+Where gradient/flux semantics exist:
+
+  J_x = C_D(x, Grad_D x, u, c; theta) + Xi_J.
+
+A classical diffusion/drift specialization:
+
+  J_x = -D Grad_D x + v x + Xi_J
+
+is valid only when the domain, types, dimensions and semantics justify it.
+
+Balance law and constitutive closure remain separate.
+
+9. DIFFUSION, DRIFT, REACTION AND CONTROL
+
+Diffusion candidate:
+  J_diff = -D Grad_D x.
+
+Drift candidate:
+  J_drift = v tensor x or another domain-valid drift term.
+
+Internal dynamics:
+  R_x = R_x[x;lambda].
+
+Governance/control:
+  G_x = G_x[x,u,c].
+
+The word "velocity" does not imply physical velocity in a nonphysical domain.
+
+The historical RPM expression C_t Delta_maj is one possible G_x specialization, not fundamental TFT structure.
+
+10. FINITE-SPEED / MEMORY-AWARE TRANSPORT
+
+Ordinary diffusion may mathematically propagate disturbances with unbounded instantaneous support.
+
+A local rate bound on x does not prove finite spatial influence speed.
+
+Where finite-speed transport is required, the constitutive model must establish it. A candidate continuous form is:
+
+  tau_J E_T J_x + J_x = -D Grad_D x + V_x + Xi_J.
+
+This Cattaneo/telegraph-like model is optional and requires independent applicability.
+
+Graphs/distributed systems may instead establish finite influence through bounded hops, latency or event causality.
+
+11. STOCHASTIC VS EPISTEMIC UNCERTAINTY
+
+Process stochasticity may use Xi_x, Xi_J, dW, jump processes or another declared process.
+
+THEORY-EQ-007 requires the applicable probability/process law, support, covariance/dependence, temporal/network
+correlation and Ito/Stratonovich/jump semantics where relevant.
+
+Generic semantic stochasticity may use Distribution<T>. Physical/measurement covariance models reuse
+UncertaintyAndCovarianceModel where its existing ownership applies.
+
+Epistemic uncertainty about state, parameters, domain, closure or model class is propagated separately and cannot
+silently become process noise.
+
+12. CONSERVATION / BALANCE / DISSIPATION
+
+For quantity q:
+
+  E_T q + Div_D J_q = s_q - r_q.
+
+Strict conservation is claimed only when the applicable source/sink and boundary/interface conditions establish it.
+
+A model may be conservative, approximately conservative, dissipative, reactive, open, externally forced or controlled.
+
+No "conserved belief", "conserved authority" or similar semantic quantity exists merely because continuity notation was
+used.
+
+13. SYMMETRY / VARIATIONAL STRUCTURE
+
+Physical specializations begin from applicable domain science, symmetries and conservation laws.
+
+TFT does not assume every dissipative/governed model has an action, Hamiltonian or ordinary Noether conservation law.
+
+A valid action or Lyapunov/free-energy functional may be declared where independently justified.
+
+14. GOVERNANCE / CONTROL AND AUTHORITY
+
+G_x is mathematics, not legitimacy.
+
+Consequential use remains subject to the Garden admissibility intersection, including Constitution, active rights, K0P,
+authority, safety, policy and other applicable gates.
+
+Governance may modify flux, coefficients, source/reaction terms, topology, switching or admissible controls.
+
+A mathematical control term cannot create authority.
+
+15. NORMATIVE CONSTRAINTS ARE NOT GENERIC PDE BOUNDARIES
+
+Constitution, rights, K0P and authority are universally modeled as admissibility constraints:
+
+  (x,u,tau) in A(c)
+
+where applicable.
+
+A particular validated control model may map a safety set to a barrier/boundary representation, but no universal
+Dirichlet/Neumann/reflecting/absorbing interpretation is inferred from normative language.
+
+16. MATHEMATICAL BOUNDARIES / INTERFACES
+
+Where the domain supports them, a model may declare Dirichlet, Neumann, Robin, periodic or explicit interface
+conditions.
+
+Graph models instead declare applicable source/sink nodes, cut sets, open/closed links or interface edges.
+
+State-space models declare support/transition conditions rather than fake physical boundaries.
+
+17. CAUSAL TRANSPORT PROFILE
+
+TransportCausalProfile declares the proposed influence relation, propagation mechanism, latency/delay, intervention
+semantics, confounding and identification assumptions.
+
+Where functional-response notation applies:
+
+  delta x(z,t) / delta u(z',t') = 0
+
+outside the declared causal past.
+
+Model causal structure and evidence for causality remain distinct.
+
+A transport term does not automatically establish Garden C2/C3/C4 evidential status. PreimageAnalysis may support
+backward reachability but does not independently elevate causal status.
+
+18. MICRO-TO-MACRO / COARSE GRAINING
+
+For microscopic states X_1...X_N:
+
+  x_l = C_l(X_1,...,X_N).
+
+TransportMicroMacroBinding records whether a closure is:
+  DERIVED;
+  ASYMPTOTICALLY_DERIVED;
+  CALIBRATED;
+  PHENOMENOLOGICAL;
+  HYPOTHESIZED.
+
+Effective parameters may depend on coarse-graining scale:
+
+  theta = theta(l,t,c).
+
+Phenomenological fit is not represented as a microphysical derivation.
+
+19. SCALE / VALIDITY
+
+Each model declares microscopic scale, coarse-graining scale, observation scale, characteristic length/network scale,
+time scale and correlation scales where meaningful.
+
+A system may occupy different effective regimes at different scales.
+
+Formal RG language is used only where an actual coarse-graining transformation and parameter flow are defined.
+
+20. NONDIMENSIONALIZATION
+
+TransportNondimensionalizationProfile declares characteristic scales before dimensionless ratios are used.
+
+Candidate ratios, only where meaningful:
+
+  Pe = V L / D
+  De = tau_relax / tau_observation
+  Da = tau_transport / tau_reaction
+  Gamma_G = ||G_x|| / (||Div_D J_x|| + epsilon)
+  Gamma_N = stochastic scale / deterministic scale.
+
+Norms, scales and regularization conventions must be explicit.
+
+No universal numerical phase/regime threshold is implied.
+
+21. REGIME TAXONOMY
+
+TransportRegime candidates:
+
+  FROZEN
+  DIFFUSION_DOMINATED
+  DRIFT_DOMINATED
+  LIQUID_LIKE
+  SOLID_LIKE
+  TURBULENT_OR_CHAOTIC
+  UNCLASSIFIED.
+
+REFLEX is removed from TransportRegime and belongs to ControlMode.
+
+Labels such as LIQUID_LIKE and SOLID_LIKE are classifier outputs, not literal thermodynamic phases unless the stronger
+domain criteria are independently established.
+
+22. REGIME CLASSIFICATION
+
+  ClassifyRegime(Pi_vector, timescales, stability, spectrum, fluctuation_statistics, evidence)
+
+produces a TransportRegimeAssessment with classifier, thresholds/provenance, scale, time interval, uncertainty and
+competing classifications.
+
+No mode label proves mechanism.
+
+23. PHASE TRANSITION VS REGIME CHANGE
+
+A regime change is not automatically a formal phase transition.
+
+A phase-transition claim requires an applicable criterion such as an order parameter, symmetry change, bifurcation,
+stability transition, singular behavior/critical scaling or another domain-valid criterion.
+
+A potential Phi[x;lambda] may be used where valid, but none is universal.
+
+24. EMERGENCY / REFLEX NORMALIZATION
+
+Reflex is a control mode owned by FET/EmergencyAdmissionContract, not a transport phase and not a self-authorizing
+source
+term.
+
+Canonical abstract emergency control:
+
+  G_emg = HazardGate(validated_hazard_state, EmergencyAdmissionContract) o R_safe.
+
+The historical standalone:
+
+  Theta(|H(x)|-theta) r
+
+is prohibited as an emergency-admission rule.
+
+H(x) may affect regulation/monitoring but cannot itself establish an external HazardPredicate, create emergency
+authority
+or bypass K0P/Constitution.
+
+25. WELL-POSEDNESS
+
+Every proof-, prediction- or execution-relevant model records, where applicable:
+  state/function space;
+  operator domains;
+  regularity;
+  initial conditions;
+  boundary/interface conditions;
+  existence;
+  uniqueness;
+  continuous-dependence/stability status.
+
+Suggested statuses:
+  ESTABLISHED | CONDITIONAL | NUMERICALLY_SUPPORTED | UNKNOWN | ILL_POSED | NOT_APPLICABLE.
+
+A solver returning a number is not a proof of well-posedness.
+
+26. IDENTIFIABILITY / OBSERVATIONAL EQUIVALENCE
+
+Different mechanisms/parameters may generate indistinguishable observations.
+
+  M_1 ~_O M_2
+
+means observational equivalence under observation class O.
+
+TransportMechanismAssessment records:
+  IDENTIFIED;
+  PARTIALLY_IDENTIFIED;
+  OBSERVATIONALLY_EQUIVALENT;
+  UNDERDETERMINED;
+  UNIDENTIFIABLE;
+  UNKNOWN.
+
+Predictive fit does not by itself prove the named mechanism or causal interpretation.
+
+27. INFORMATION-THEORETIC CONSTRAINTS
+
+Where relevant, declare communication channel, latency, bandwidth/capacity, encoding/decoding, noise and the applicable
+information measure.
+
+Data-processing inequalities are invoked only when their assumptions hold.
+
+Quantum no-cloning applies only to actual quantum-state contexts and is not exported metaphorically to classical
+semantic state.
+
+Finite influence speed is derived from the declared transport/communication mechanism.
+
+28. EFFECTIVE-THEORY BREAKDOWN
+
+The existing TransportValidityProfile remains authoritative and is extended by v1.1 semantics.
+
+There is no universal rule such as N<100 => continuum failure.
+
+Breakdown may depend on scale separation, correlation length/time, effective samples per cell, topology heterogeneity,
+nonlocality, strong correlation, finite-size effects, closure residual, parameter drift, solver behavior or predictive
+failure.
+
+MODEL_INVALID routes to a better graph, agent, kinetic, stochastic, molecular, hybrid or domain-specific model, or
+UNKNOWN.
+
+29. CROSS-DOMAIN CORRESPONDENCE
+
+Cross-domain transport analogy requires a declared correspondence of states, operators, sources/sinks, topology/metric
+where required, scale, observables, assumptions, loss/approximation and falsifiers.
+
+Category theory may be used when a real functor/adjunction/etc. is defined and useful. It is not mandatory.
+
+Analogy alone transfers neither causality nor empirical truth.
+
+30. PHYSICAL VS NONPHYSICAL APPLICATIONS
+
+Physical TFT applications bind GSL-PHYSICS and applicable established domain science for quantities, units, frames,
+measurements, calibration, conservation, simulation and model validity.
+
+Semantic/social/governance applications require independently justified state meaning, topology/metric, coefficients,
+causal interpretation and empirical discriminators.
+
+31. NUMERICAL / FALSIFICATION SEMANTICS
+
+Numerical models declare solver, discretization, timestep, convergence/stability conditions, truncation/error bounds,
+uncertainty propagation and residuals.
+
+Simulation demonstrates model behavior under assumptions; it is not external-world evidence by execution alone.
+
+Empirical TFT models identify falsifiers such as failed propagation profile, flux law, scaling law, intervention result,
+regime classifier, closure residual or out-of-sample prediction.
+
+32. CORE ARTIFACT FAMILY
+
+v14.8.1-introduced artifact types retained in v14.8.3:
+  TransportPhenomenaModelProfile
+  TransportDomainProfile
+  TransportOperatorBundle
+  TransportConstitutiveClosure
+  TransportCausalProfile
+  TransportMicroMacroBinding
+  TransportNondimensionalizationProfile
+  TransportRegimeAssessment
+  TransportMechanismAssessment
+
+SchemaIDs and machine-facing definitions are owned by Annexure [A-CATALOG].
+
+33. FUNCTION FAMILY
+
+  instantiate_transport_phenomena_model
+  assess_transport_phenomena_validity
+  classify_transport_regime
+  assess_transport_mechanism
+
+These functions do not establish empirical validity merely by constructing/assessing a model.
+
+34. CONNECTION TO OTHER GARDEN THEORIES
+
+VSM supplies possible persistent-state variables/relaxation models. When a TFT model transports state sourced from
+VSM, TransportPhenomenaModelProfile binds the applicable optional PersistentStateModelProfileRef so state ontology,
+context, validity, lineage and HSA/TED scope remain traceable.
+RPM v2.0 may instantiate typed reactive regulation terms.
+PPM v2.0 may instantiate typed asymmetric/proactive regulation terms.
+FET owns emergency/reflex admission.
+SRT may provide strata with distinct domains/operators/closures.
+SCT may assess structural/operator/assumption coherence.
+
+Architecture profiles such as GAIA Diamond/Titanium may instantiate domain-specific transport only when their actual
+operator/domain correspondence is declared.
+
+35. GARDEN ROLE
+
+TFT principally maps to Domain.Mathematics, Engine.Research, Engine.Reason and applicable graph/physical/computing
+domains. Physical applications additionally bind GSL-PHYSICS and relevant domain owners.
+
+TFT cannot override domain science, authority, safety, evidence or the TheoryEquationContract.
+
+35A. QUALIFIED LEGACY v1.0 SPECIALIZATIONS / TEST TARGETS
+
+The following v1.0 constructs are retained only as optional model candidates after v1.1 typing/applicability:
+
+  J_eff = C_t J
+    allowed only when C_t has a declared type, range, semantics and valid multiplication/operator action.
+
+  sigma(x) = sigma_0 exp(beta x)
+    allowed only as a declared constitutive/asymmetry candidate with dimensions and empirical mapping.
+
+  chi = d <J> / d kappa
+    allowed only when the expectation, control parameter kappa and differentiability/estimation semantics are defined.
+
+Legacy application/test targets remain research questions:
+  RPM reactive-regulation transport specialization;
+  PPM asymmetric-regulation transport specialization;
+  SRT stratum-dependent transport;
+  GAIA Diamond large-scale distributed/resource transport;
+  GAIA Titanium edge/heartbeat/duty-cycle transport;
+  Gaia2026 planetary/distributed scaling label where that research profile is explicitly defined.
+
+No legacy shorthand overrides v1.1 operator typing, EmergencyAdmissionContract or effective-theory boundaries.
+
+36. CANONICAL MATHEMATICAL KERNEL
+
+Typed state:
+
+  x : D x T -> X
+
+General evolution:
+
+  E_T x = F_D[x,u,c;theta] + Q_x + Xi_x.
+
+Balance specialization:
+
+  E_T x + Div_D J_x = R_x + G_x + Q_x + Xi_x.
+
+Constitutive closure where valid:
+
+  J_x = C_D(x,Grad_D x,u,c;theta) + Xi_J.
+
+These are templates whose meaning is admitted only after types, domains, operators, assumptions, scales, stochastic
+semantics, conditions, empirical mapping and falsifiers are supplied.
+
+37. FINAL DEFINITION
+
+Transport Phenomena / TFT v1.1 is a domain-parametric effective theory for typed state evolution and transport across
+formally specified continuous, graph, probabilistic, agent and hybrid domains.
+
+Its central discipline is:
+
+  shared mathematical structure != shared physical meaning
+  formal similarity != causal equivalence != empirical truth.
+
+SemanticAnchor: [TH-FET]
+THEORY 6 — EMERGENCY RESPONSE (FUNCTIONAL EMERGENCY THEORY / FET)
+
+Version: 1.0
+Classification: Safety-reflex architecture for AI/automated systems
+Status: v14.8.2 consistency-normalized and retained in v14.8.3; empirical/production validation remains domain-specific
+
+1. CORE DEFINITION
+
+FET is Garden's bounded emergency-reflex theory: when an independently grounded domain hazard is detected and a valid
+EmergencyAdmissionContract applies, a pre-authorized fast path may replace ordinary deliberation while Constitution,
+rights, K0P, authenticity, authority and the declared SafeActionSet remain active.
+
+FET is not a source of authority and does not infer external hazard from VSM/PPM internal state alone.
+
+2. WHAT FET DOES
+
+Hazard detection:
+  evaluates a typed domain HazardPredicate over validated observations/state, calibration, time and SafetyEnvelope.
+
+Admission:
+  verifies the applicable EmergencyAdmissionContract, authority, authenticity, scope/expiry and SafeActionSet.
+
+Fast-path control:
+  permits only the pre-authorized emergency action path; ordinary deliberation may be bypassed only within that scope.
+
+Escalation:
+  severity is derived from the qualified domain hazard/severity profile rather than a universal VSM valence threshold.
+
+Recovery:
+  returns authority/control to the approved normal or minimum-risk state only after declared recovery criteria hold.
+
+3. CORE PRINCIPLES
+
+  independently grounded hazard;
+  pre-authorized bounded authority;
+  minimum necessary emergency action;
+  K0P/Constitution remain active;
+  deterministic or otherwise qualified fast path where required;
+  explicit safe fallback / minimum-safe continuity;
+  audit/provenance;
+  explicit recovery and authority restoration.
+
+4. CANONICAL EMERGENCY CONTRIBUTION
+
+FET does not define a universal transport/differential equation.
+
+Where a coupled dynamical model uses an emergency control contribution:
+
+  G_emg =
+    HazardGate(validated_hazard_state, EmergencyAdmissionContract)
+    o R_safe.
+
+A coupled state equation may therefore use:
+
+  E_T z = F_normal(z,c) + G_emg(z,h,c) + Q_z + Xi_z
+
+only when the participating theory/domain contracts define all terms.
+
+The historical standalone term:
+
+  Theta(|H(x)|-theta_action) r
+
+is superseded and prohibited as an emergency-admission rule.
+
+H(x), VSM state, PPM asymmetry or model confidence may increase monitoring/prioritization but cannot independently
+satisfy the physical/external HazardPredicate or create authority.
+
+5. EMERGENCY SEVERITY / TRIGGER PROFILE
+
+FET has no universal seven valence zones or universal numeric trigger such as x<-0.2.
+
+Each application supplies an EmergencySeverityProfile or equivalent domain contract defining:
+  hazard variables and units/types;
+  threshold/decision surfaces where applicable;
+  uncertainty and calibration;
+  hysteresis/debounce;
+  false-positive/false-negative requirements;
+  timing/deadline;
+  SafeActionSet;
+  escalation/recovery conditions;
+  QualifiedProfileParameters and evidence.
+
+UNKNOWN/INCONCLUSIVE hazard state follows the predeclared safe fallback/escalation rule; it is never silently treated as
+DETECTED or SAFE.
+
+6. FET REFLEX ARC
+
+Stage 1 — Detect
+  EvaluateHazardPredicate(validated_observations, environment, calibration, SafetyEnvelope)
+  -> DETECTED | NOT_DETECTED | INCONCLUSIVE | UNKNOWN | STALE | INVALID as defined by the owner contract.
+
+Stage 2 — Admit
+  Validate EmergencyAdmissionContract, authority, authenticity, scope/expiry, SafeActionSet and K0P/rights constraints.
+
+Stage 3 — Execute
+  Execute only the bounded pre-authorized emergency control/action.
+
+Stage 4 — Monitor
+  Continue hazard, actuation, authority, timing and fallback monitoring.
+
+Stage 5 — Recover
+  Transition to the approved normal/minimum-risk state or controller only after recovery criteria and authority
+  restoration conditions are met.
+
+No universal "one timestep versus ten timesteps" guarantee exists; emergency timing is domain/profile evidence-bound.
+
+7. ACTION CLASSES
+
+Emergency action classes are domain/profile-specific rather than derived from a universal VSM scalar.
+
+Examples include:
+  STOP_AND_CORRECT;
+  EMERGENCY_BRAKE;
+  STOP_MOTION;
+  COOLING_SAFE_RESPONSE;
+  SAFE_MODE_ACTIVATE;
+  INDEPENDENT_SAFE_CONTROL_HANDOFF;
+  MINIMUM_SAFE_CONTINUITY.
+
+The actual available actions are exactly the admitted SafeActionSet.
+
+8. EFFICIENCY / RESOURCE CLAIMS
+
+FET's primary value is bounded safety response, not compute savings.
+
+Any latency, energy or compute-saving claim is a measured/model/projected profile result with provenance and
+uncertainty;
+no universal percentage is part of FET.
+
+9. RELATION TO OTHER SAFETY MECHANISMS
+
+Learned/policy safety, validator gating, PPM regulation and FET remain distinct.
+
+FET specializes emergency admission/fast-path control. It does not replace HSA, K0P, Security, Authority, Policy,
+Continuity or domain safety controllers.
+
+Claims of novelty/uniqueness require separate prior-art and evidence review.
+
+10. INTEGRATION WITH OTHER THEORIES
+
+VSM:
+  persistent state may inform monitoring but does not itself establish hazard.
+
+SRT:
+  FET operates in the applicable stratum/context.
+
+TFT:
+  FET supplies ControlMode/emergency contribution, not a transport phase.
+
+RPM/PPM:
+  ordinary regulation may be bypassed only within the pre-authorized emergency path.
+
+GAIA Diamond / GAIA Titanium:
+  may instantiate infrastructure/hardware emergency response under their own domain contracts.
+
+11. TESTABILITY
+
+Test:
+  hazard predicate discrimination;
+  admission/authenticity/scope;
+  timing/deadline;
+  SafeActionSet containment;
+  false positive/negative behavior;
+  inability of internal VSM/PPM state to self-authorize;
+  K0P/rights persistence;
+  fallback/handoff;
+  recovery/authority restoration.
+
+12. APPLICATION EQUATIONS / ACTIONS
+
+External AI assistant:
+  Action = HazardGate(content_or_behavior_hazard, admission) o STOP_AND_CORRECT.
+
+Autonomous vehicle:
+  Action = HazardGate(collision_or_control_hazard, admission) o EMERGENCY_BRAKE.
+
+Robot:
+  Action = HazardGate(robotic_hazard, admission) o STOP_MOTION.
+
+GAIA Diamond:
+  Action = HazardGate(thermal_or_infrastructure_hazard, admission) o COOLING_SAFE_RESPONSE.
+
+GAIA Titanium:
+  Action = HazardGate(hardware_hazard, admission) o SAFE_MODE_ACTIVATE.
+
+Every HazardGate is grounded in domain evidence/state, calibration, time, SafetyEnvelope and the applicable
+EmergencyAdmissionContract.
+
+13. INVENTION / PRIOR-ART BOUNDARY
+
+Any invention-disclosure framing must use independently grounded hazard admission rather than an internal-valence-only
+trigger. Patentability/novelty is outside theory validity and requires separate analysis.
+
+14. PORTFOLIO PLACE
+
+SRT -> stratum/context
+VSM -> persistent operational state
+RPM -> reactive regulation
+PPM -> proactive/asymmetric regulation
+TFT -> transport/evolution
+FET -> emergency admission/control mode
+SCT -> structural/coherence assessment
+GAIA/Titanium -> domain/reference-architecture applications
+
+15. GARDEN MAPPING
+
+Architecture binding: REG-THEORY-ARCH-001. The authoritative capability list is not repeated here.
+
+16. HARD SAFETY RULE
+
+FET emergency action requires:
+  explicit pre-authorized authority;
+  independently grounded hazard;
+  bounded SafeActionSet/effects;
+  K0P/rights persistence;
+  qualified fallback/handoff;
+  audit/provenance;
+  recovery criteria;
+  hardware enforcement where physical safety requires it.
+
+17. FINAL SUMMARY
+
+FET is Garden's bounded emergency control theory. It allows a qualified pre-authorized fast path only when an
+independently grounded hazard and EmergencyAdmissionContract admit it. Internal VSM/PPM state can support monitoring but
+cannot create external hazard truth, authority or a K0P/constitutional bypass.
+
+SemanticAnchor: [TH-SCT]
+THEORY 7 — STRUCTURAL COHERENCE (STRUCTURAL COHERENCE THEORY / SCT)
+
+Version: 1.0 Classification: Truth-seeking governance architecture with gated external grounding Status:
+Theoretical/architectural; claims of validation, ceiling and patent scope require evidence and prior-art analysis
+
+GOVERNING PRINCIPLE
+
+Every output carries a typed DiagnosticVector rather than an unconditional claim of correctness. The system seeks truth
+  where
+the claim is testable and identifiable and defaults to calibrated uncertainty where it is not.
+
+External grounding is gated by: quality budget safety identifiability OOD detection
+
+Reference benchmark hypothesis: approximately 94% under its declared assumptions.
+
+The remaining error sources are identified as: data bias causal mis-specification non-stationarity incentive
+misalignment
+
+This 94% figure is a benchmark claim, not an established universal bound.
+
+POSITIONING
+
+SCT IS: truth-seeking under measurable/identifiable domains gated external grounding with worst-case identifiability
+calibrated uncertainty with OOD-aware inflation composable and testable economically/budget viable production-oriented
+
+SCT IS NOT: truth-producing across all domains dependent on any single external signal immune to data bias immune to
+causal mis-specification immune to non-stationarity immune to incentive drift
+
+SYSTEM ARCHITECTURE
+
+Input claim | v Layer 0: Input coherence check — three-parser ensemble |
++– if G’ > tau -> reject / explore / bridge | Self-failure modeling:
+P(wrong | state) dual-calibrated and coverage-constrained | OOD detector: novelty vs training distribution historical
+failure clusters
+embedding distance to known regimes | +– OOD -> uncertainty floor boost
+exploration/human review temporary signal down-weighting | Testability + identifiability gate | P(testable | x), with
+uncertainty | +– NOT
+TESTABLE -> argument map + decision-under-uncertainty | TESTABLE |
+Adversarial identifiability | Generate alternative causal graphs
+consistent with the data. robust_identifiability = min(score over
+plausible graphs) | Continuous spectrum | High testability + high
+robust_identifiability -> full experiments / high-quality external
+grounding
+
+ Partial identifiability
+ -> quasi/observational evidence + uncertainty inflation
+
+ No identifiability
+ -> fallback
+ |
+
+Value-of-information planner | B_total = B_exploit + B_explore + B_tail
+B_explore proportional to: epistemic uncertainty × model novelty × drift signal B_tail reserved for
+low-probability/high-impact hypotheses | Budget-gated + safety-capped experimentation | Market query IF quality
+gates passed | Counter-market check divergence -> trigger
+investigation/experiment | Markets = signal, never anchor | Belief
+update from causally tagged outcomes weight_outcome = robust_identifiability × learned_class_score | Signal fusion |
+meta-uncertainty tracking latent correlation probing | Deliberation | VV1, VV2, VV3, V_adv produce reasoning chains |
+Layer 1: per-verifier
+chain scoring | Hardened convergence aggregation | Layer 2:
+evidence-weighted dissent analysis | V5 veto check — coherence gated | Layer 3: proof-chain verification |
+Human-in-the-loop | HumanInput = EpistemicContribution × AuthorityContribution. Testimony/forecast reliability may
+be calibrated as epistemic evidence; valid consent, rights and legitimate authority are separate non-probabilistic
+constraints and are never down-weighted by predictive track record. Context drift may trigger review of epistemic
+reliability but cannot erase lawful authority. | Risk classification + action recommendation | Output with decomposed
+diagnostic metadata
+
+OFFLINE: cross-system disagreement audit -> recalibration long-horizon
+outcome tracking -> causally filtered calibration updates adversarial
+ecosystem -> weighted by exploit reproducibility × impact latent
+correlation probing -> synthetic adversarial queries
+
+COVERAGE / ABSTENTION CONSTRAINT:
+Track decisive answers only over the answerable/admissible scope. Appropriate UNKNOWN/INCONCLUSIVE/NOT_APPLICABLE is a
+correct abstention, not a coverage failure. Penalize only unjustified avoidance where the required evidence/assurance is
+actually available; never pressure the system to fabricate certainty for coverage.
+
+0. FOUNDATIONS
+
+0.1 EPISTEMIC BASE (W)
+
+W is specified as an independently trained world model.
+
+Reference curriculum: character -> token -> word -> sentence -> logical
+chain
+
+Reference pruning: grammar AND logical consistency only
+
+Reference training constraint: no RLHF / no internet-scale human-feedback dependency in W.
+
+This is a design choice, not a claim that such a training procedure is always superior.
+
+0.2 CORE COHERENCE EQUATION
+
+ G' = G · (1 + sigma_parser)
+
+ G = (1/kappa) · log Sum_i exp(kappa d_tilde_i)
+ + epsilon · Var(d_tilde_i)
+
+ d_tilde_i = (w_i d_i) / Sum_j w_j
+
+kappa is learned through a calibration loop.
+
+Decomposition: G’ = G’_epistemic + G’_aleatoric + G’_structural
+
+The precise decomposition requires an operational definition for each term.
+
+0.3 SELF-FAILURE MODELING — DUAL CALIBRATION + COVERAGE
+
+Learn: P(system is wrong | state)
+
+Dual calibration tracks: P(wrong) calibration error decision utility per probability bucket
+
+Low-P(wrong) regions must maintain minimum outcome quality.
+
+Coverage constraint:
+Track decisive answers over the answerable/admissible subset and separately track justified abstention.
+
+If avoidance rises, investigate whether the cause is strategic evasion, missing evidence, OOD conditions, resource
+limits or legitimate uncertainty. Only unjustified avoidance is penalized.
+
+Purpose: prevent strategic evasion without creating an incentive to convert legitimate UNKNOWN into false certainty.
+
+1. OOD DETECTOR
+
+Monitor: novelty_score vs training distribution historical failure-cluster proximity embedding distance to known regimes
+
+If OOD is detected: inject baseline uncertainty-floor boost force exploration or human review where appropriate
+temporarily down-weight signal reliability
+
+Purpose: prevent meta-uncertainty collapse where all correlated signals agree while being jointly wrong under
+distribution shift.
+
+2. TESTABILITY + ADVERSARIAL IDENTIFIABILITY GATE
+
+Testability:
+
+ P(testable | x)
+
+with calibrated uncertainty.
+
+Adversarial identifiability: generate an ensemble of alternative causal graphs G’ consistent with data.
+
+Compute: identifiability_score over the ensemble.
+
+Robust identifiability:
+
+ robust_identifiability = min(score over plausible graphs)
+
+Use worst-case rather than mean score.
+
+Purpose: guard against false instruments, hidden confounders and backdoor violations that can produce apparently strong
+but causally invalid updates.
+
+Continuous spectrum:
+
+ high testability + high robust_identifiability
+ -> full experiments / high-quality external grounding
+
+ partial identifiability
+ -> quasi-experimental / observational evidence + uncertainty inflation
+
+ no identifiability
+ -> argument map + decision-under-uncertainty
+
+Outcome weighting:
+
+ weight_outcome = robust_identifiability
+ × learned_identification_class_score
+
+3. SIGNAL FUSION LAYER
+
+Quality-gated input signals: internal coherence G’ experimental outcomes market consensus cross-system agreement
+long-horizon outcomes human judgments
+
+Reliability weights:
+
+ w_i(t) = w_i(t-1) · exp(-lambda_i Delta t)
+ + eta · new_evidence_i(t)
+
+Minimum uncertainty floor:
+
+ sigma_i^2 >= sigma_min^2
+
+Latent correlation probe: inject synthetic adversarial queries measure co-failure rate across signals
+
+ corr_latent = empirical co-error frequency
+
+Use:
+
+ corr_eff(i,j) = max(corr_observed(i,j), corr_latent(i,j))
+
+Reference effective weighting:
+
+ w_eff_i = w_i /
+ (1 + Sum_j corr_eff(i,j))
+
+Purpose: prevent hidden correlation from shared data sources or shared worldview.
+
+Meta-uncertainty: P(correct) is represented as a distribution rather than only a scalar.
+
+Monitor: calibration_error_volatility weight_instability
+
+If instability rises: inflate uncertainty globally down-weight unstable/correlated signals
+
+Counter-market check: compare market-implied and model-implied
+probabilities. stable divergence -> structural disagreement ->
+investigation/experiment.
+
+Markets remain signals, never anchors.
+
+Fusion principle: disagreement should elevate uncertainty rather than force oscillatory commitment.
+
+OOD flag: inflate relevant uncertainties.
+
+4. CONSTRAINED EXTERNAL MECHANISMS
+
+4.1 CLOSED-LOOP EXPERIMENTATION
+
+Budget split:
+
+ B_total = B_exploit + B_explore + B_tail
+
+Exploration allocation:
+
+ B_explore proportional to
+ epistemic_uncertainty
+ × model_novelty
+ × drift_signal
+
+Tail reserve: B_tail is reserved for low-probability/high-impact hypotheses. It is risk-optimal rather than purely
+VoI-optimal.
+
+Experiment only if: (a) testable (b) robust_identifiability > 0 (c) expected_value_of_information > cost (d) risk <=
+tau_exp (e) budget_remaining > 0
+
+Outcome processing:
+
+ weight_outcome = robust_identifiability
+ × learned_class_score
+
+Only causally attributable components should update beliefs.
+
+4.2 MARKET-INTEGRATED TRUTH
+
+Market query only if: liquidity >= L_min participants >= N_min Brier score <= theta_brier adversarial stress test passed
+counter-market check passed
+
+If conditions are not met: market contributes at most a weak prior/signal.
+
+Markets = signal, never anchor.
+
+4.3 HUMAN-IN-THE-LOOP — DRIFT MONITORED
+
+Humans are bounded rational agents.
+
+Track: override_bias decision_latency incentive_context historical track record
+
+Human epistemic weight: weight_testimony = f(track_record, context, domain, independence)
+
+Context drift detector: monitor changes in testimony/forecast reliability and relevant external conditions.
+
+If epistemic drift is detected: re-evaluate testimony reliability and increase audit frequency as appropriate.
+
+Human authority channel:
+ valid consent, rights, lawful role/delegation and constitutional authority are represented separately and are not
+ multiplied by `weight_testimony`.
+
+Humans may be calibrated as epistemic contributors; legitimate human authority is not a confidence-weighted signal.
+
+5. INTERNAL VERIFICATION
+
+5.1 VERIFIER SYSTEM
+
+Verifier independence constraints apply.
+
+V_adv: adversarial verifier with population-based retraining.
+
+Values layer: VV1, VV2, VV3 with rate-limited recalibration.
+
+V5: formal logic, non-neural, coherence-gated veto.
+
+5.2 CORE COMPONENTS
+
+PARSER: three-parser ensemble with falsification loop.
+
+Parser convergence rule: exact agreement uses the common AST; compatible partial agreement retains an explicit ambiguity
+set. If all parser ASTs are pairwise disjoint, G-prime is not extrapolated or calibrated from agreement. The
+deterministic result is NO_CONSENSUS/AMBIGUOUS, followed by quarantine, alternative preservation and human/domain
+clarification where authorized. No executable fallback is chosen.
+
+BRIDGE: counterfactual robustness + structural causal model preservation.
+
+SCHEMA: decay + revalidation + hard-pruning cycles.
+
+MEMORY: Pareto filter + Gibbs sampling.
+
+ROUTING: fixed-policy rollout + probabilistic tier assignment.
+
+DELIBERATION: VV1, VV2, VV3, V_adv reasoning chains.
+
+CONVERGENCE: hardened convergence aggregation.
+
+DISSENT: evidence-weighted dissent analysis.
+
+VETO: V5 formal logic veto, gated by coherence/authority conditions.
+
+PROOF: proof-chain verification before high-authority action.
+
+6. GLOBAL OBJECTIVE — LEXICOGRAPHIC WITH SOFT BAND
+
+1. SAFETY: risk <= tau_risk + epsilon_band
+
+2. CALIBRATION: minimize P(wrong) error subject to coverage constraint.
+
+3. EFFICIENCY: minimize cost subject to safety and calibration.
+
+4. DIVERSITY: maximize verifier disagreement subject to
+ correctness/utility.
+
+Safety is lexicographically prior to efficiency and diversity.
+
+7. STABILITY CONSTRAINTS
+
+Bounded KL updates. Global compute budget. kappa learned through calibration. Identification weights learned through
+calibrated outcome feedback. Explicit uncertainty propagation. Rate-limited recalibration.
+
+8. DEPLOYMENT DISCIPLINE
+
+ SHADOW -> AUDIT -> CONSTRAINED CONTROL
+
+Continuous measurement and recalibration are required before increasing operational authority.
+
+9. HARD LIMITS
+
+1. Truth-seeking is gated behind testability and adversarial
+ identifiability.
+
+2. Signal reliability decays and latent correlation is probed.
+
+3. OOD detection breaks false confidence from agreement under
+ distribution shift.
+
+4. Markets are restricted, stress-tested and never anchors.
+
+5. Experiments require robust identifiability and safety gates.
+
+6. P(wrong) is dual-calibrated and coverage-constrained against
+ avoidance.
+
+7. Human signals are drift-monitored and context-weighted.
+
+8. kappa and identification weights are learned through calibration.
+
+9. Architecture-level performance claims are bounded by the stated
+ assumptions.
+
+10. Remaining error sources include data bias, causal mis-specification,
+ non-stationarity and incentive misalignment.
+
+11. The system is epistemically disciplined, not epistemically complete.
+
+12. PATENTS — 17 CLAIMS ACROSS 9 PATENTS
+
+PATENT A — G-Weighted Value Consensus Claims 1–2
+
+PATENT B — Anti-Gaming Training System Claims 3–3b
+
+PATENT C — Coherence-Gated Hybrid Verifier Claims 4–4b
+
+PATENT D — Convergence-Threshold Values Layer Claim 5
+
+PATENT E — SCT-Gated Infrastructure Claims 6–7
+
+PATENT F — Parser-Graph-Calibration Suite Claims 8–10
+
+PATENT G — Decision Transformation Layer Claim 11
+
+PATENT H — Deployment Architecture Claims 12–14
+
+PATENT I — Gated External Grounding & Signal Fusion Claims 15–17
+
+These are proposed claim families, not granted patents.
+
+11. GARDEN MAPPING
+
+Architecture binding: REG-THEORY-ARCH-001. SCT therefore operates as an epistemic cross-cutting architecture rather
+than as a new Garden component.
+
+12. ONE-LINE SPECIFICATION
+
+SCT is a truth-seeking governance architecture with OOD-aware uncertainty injection, adversarial identifiability gates
+using worst-case causal graph ensembles, signal fusion via time-decayed weights with latent correlation probing and
+meta-uncertainty tracking, adaptive budget-gated experimentation with tail-risk reserves, market signals restricted by
+quality gates and counter-market checks, humans modeled as bounded rational agents with context drift detection,
+dual-calibrated self-failure modeling with coverage constraints preventing uncertainty avoidance, and learned
+calibration parameters — while recognizing that data bias, causal mis-specification, non-stationarity and incentive
+misalignment remain irreducible error sources at the architecture level.
+
+7.8 SEVEN-THEORY COMPOSITION VIEW — NO FORCED UNIVERSAL EQUATION
+
+The seven theories share a typed composition architecture, not one mandatory scalar PDE.
+
+Generic coupled state form:
+
+  E_T z =
+    F_VSM(z,b,c)
+    + G_RPM(z,u,c)
+    + G_PPM(z,u,c)
+    + G_FET(validated_hazard, admission, c)
+    + Q
+    + Xi
+
+When TFT transport is applicable, the model may additionally specialize:
+
+  E_T z + Div_D J_z =
+    F_VSM + G_RPM + G_PPM + G_FET + Q + Xi
+
+with J_z supplied by a valid TFT constitutive closure.
+
+SRT supplies stratum/context structure and permits different state spaces/operators/parameters by stratum.
+VSM supplies typed persistent-state semantics.
+RPM v2.0 and PPM v2.0 supply typed reactive/proactive regulation where applicable.
+TFT supplies transport only for domains with a valid transport mapping.
+FET supplies independently admitted emergency ControlMode.
+SCT assesses structural/coherence conditions.
+
+CouplingCompositionProfile declares simultaneous, sequential, operator-split, event-priority or hybrid composition where
+material. No internal H(x), valence coordinate, consensus term or transport analogy creates emergency authority.
+
+This composition view is a Garden model architecture under declared assumptions, not a universal physical law and not a
+claim that all seven theories must appear in every application.
+
+7.9 AUTHORITATIVE THEORY-ARCHITECTURE BINDING REGISTRY
+Registry reference: REG-THEORY-ARCH-001.
+
+7.10 THEORY-TO-REALITY BINDING
+
+Garden uses GSL to represent reality and uses the seven theories as cross-cutting modeling, regulation, transport,
+emergency, and epistemic frameworks. They are not an exhaustive replacement for physics, biology, medicine, economics,
+or any other domain science.
+
+Authoritative flow
+ Reality
+ → AttestedObservation
+ → immutable raw or declared loss-bounded observation retention
+ → Phi Bridge feature and hypothesis extraction
+ → ClaimCandidate
+ → applicability routing
+ → Garden-framework and domain-theory bindings
+ → model / reasoning / prediction
+ → evidence and proof evaluation
+ → authorized, consent-respecting, safety-gated ACTION
+ → EffectReceipt
+ → new AttestedObservation.
+
+Schema references: SCHEMA-FB38A98FD1 — AttestedObservation.; SCHEMA-F5BD06BBCB — TheoryBinding.; SCHEMA-642881C616 —
+                   TheoryArchitectureBinding.; SCHEMA-A26E6BCED4 — TheoryRoutingReceipt..
+Invariant references: TMR-001..012.
+DOMAIN-SCIENCE BOUNDARY
+Garden theories organize representation, persistence, regulation, transport, safety and epistemic evaluation.
+Phenomenon-specific science supplies the actual model. TFT directly models physical transport only where its equations,
+units, assumptions and boundary conditions are valid. Semantic, social and informational transport is explicitly labeled
+as analogy or abstract flow. Unsupported physics remains UNKNOWN or HYPOTHESIS.
+
+VIII-E — SYSTEM INTEGRITY
+
+System Integrity is a cross-cutting Garden principle rather than a new top-level architectural kind. It formalizes the
+requirement that Garden SHALL NOT intentionally or implicitly destroy, bypass, falsify, or permanently weaken its own
+constitutional, safety, verification, provenance or trust foundations.
+
+Core principle:
+
+ Garden may improve itself.
+ Garden may repair itself.
+ Garden may replace authorized implementation details.
+ Garden may evolve internal algorithms.
+ Garden SHALL NOT self-authorize the destruction or weakening of the conditions
+ that make Garden trustworthy.
+
+This is stronger than an instruction such as “never break yourself.” It is a structural property enforced by independent
+mechanisms, immutable roots, provenance, verification and bounded evolution.
+
+Invariant references: SYSTEM-INTEGRITY-001..014.
+Therefore Garden is not instructed merely to “never break itself.” Instead, its ability to break itself is structurally
+constrained by independent authority, proof, provenance, containment, conformance and governance boundaries.
+
+SemanticAnchor: [TH-UPS]
+9. UNIFIED PHYSICAL SEMANTICS
+
+Status: speculative cross-architecture physical research framework; not one of the seven core Garden theories, not
+established physics, and not permission for physical action.
+
+Research thesis
+
+UPS investigates whether spacetime, fields, particles and effective laws can be modeled through quantum causal graphs,
+information geometry, consistency conditions and scale-dependent dynamics. The thesis is a generator of formal
+hypotheses. Inclusion records a research question, not a derivation of reality.
+
+Schema references: SCHEMA-5954FC1B54 — UPSResearchState..
+Core research requirements
+
+1. Ontology: define events, causal relations, state space, measure and observable map without circularly
+ assuming the spacetime or particles claimed to emerge.
+
+2. Dynamics: specify normalized evolution, locality/causality, conservation laws and the relation between
+ microscopic and effective descriptions.
+
+3. Mathematics: every action term has compatible dimensions, domain, normalization and finite/convergent
+ behavior; coefficients are independently constrained rather than fitted to force a desired answer.
+
+4. Recovery: derive the applicable limits of quantum theory, general relativity and the Standard Model to
+ stated accuracy, or explicitly report failure.
+
+5. Discrimination: make parameter-complete predictions that differ from existing models and identify
+ feasible falsifiers.
+
+6. Reproducibility: publish equations, assumptions, code/data where lawfully possible, numerical error,
+ sensitivity and independent replication receipts.
+
+Dimensional model-selection research
+
+Spacetime dimension may be investigated as a discrete model variable D in a declared candidate set. A valid comparison
+requires a common dimensionless normalization, measure over model spaces, complexity treatment, anomaly and stability
+criteria, and evidence that is not tuned to select D=4.
+
+Schema references: SCHEMA-72678BCFCA — DimensionSelectionProfile..
+Because D is discrete, ordinary derivatives with respect to D are not defined unless an explicit justified extension is
+supplied. A direct sum of normalized density operators is not automatically a normalized cross-dimensional
+superposition; weights, Hilbert structure and cross-sector dynamics must be defined.
+
+Current epistemic boundary
+
+UPS presently does not derive:
+- four-dimensional spacetime as the unique stable universe;
+- the Standard Model gauge group;
+- three fermion generations;
+- Einstein gravity from quantum information;
+- the Born rule;
+- the cosmological constant;
+- the fine-structure constant, Higgs mass or Newton constant.
+
+These remain UNKNOWN/HYPOTHESIS until actual derivations pass Mathematics, Proof, domain-science, dimensional, numerical
+and empirical checks. Numerically inconsistent or undefined candidate equations are rejected from the current profile
+rather than preserved as active formulas.
+
+Research pipeline
+
+Problem and rival theories
+ → TheoryBinding and DimensionSelectionProfile
+ → type/unit/domain checks
+ → symbolic proof obligations
+ → numerical sensitivity and limiting-case tests
+ → independent reproduction
+ → distinctive empirical prediction
+ → observation/evidence
+ → update, rejection or bounded promotion through ordinary Garden gates.
+
+Primary mappings
+
+Domain.Mathematics, Engine.Proof, Capability.Knowledge, Capability.State.TimeService, Domain.Applied.Space,
+Domain.Computing.Quantum, Engine.Dependency, Engine.Research and Engine.Reason. Capability.Infrastructure.Hardware
+participates only for validated experiments.
+
+UPS creates no privileged bridge between Garden's software recursion and cosmic physics. Similar mathematics or metaphor
+is not evidence that the physical universe is a Garden implementation.
+
+Invariant references: UPS-001..012 and TMR-001..012.
+
+10. FINAL REVIEW / RELEASE-INTEGRITY BINDING
+
+Release-integrity review principles are audit-owned and resolve through [A-AUDIT]. Theory semantics remain in [TH-*].
+
+SemanticAnchor: [RA-PROFILES]
+TechnicalBinding: [T-PROFILES]
+
+PART II — NAMED REFERENCE ARCHITECTURES
+
+SemanticAnchor: [RA-SYSTEM-REL]
+8.1 SYSTEM RELATIONSHIP
+Garden is the enclosing architecture. Systems below are integrated implementations across canonical typed objects and
+capabilities—not competing topologies.
+
+Garden
+├── GSL semantic language
+├── Control Orchestration (GESTALT)
+├── Predictive Assurance (APAO)
+├── Garden Native Runtime (GNR)
+├── GSL-KR knowledge-repository architecture
+├── GSL-AR operational/execution architecture baseline
+├── Universal Transport and Safety Substrate (TRAIN)
+├── GAIA Titanium — local deterministic edge safety
+├── GAIA Diamond — asynchronous distributed authorization
+├── Reliability OS
+└── typed capabilities, engines, domains and profiles provide executable ownership boundaries
+
+Control Orchestration (GESTALT) coordinates reasoning, state, tools, routing, verification and control but cannot create
+constitutional/safety authority. Predictive Assurance (APAO) supplies predictive assurance mechanisms including robust
+safe sets, viability approximations, H∞ observers, distributionally robust MPC, assurance vectors/scalars and
+small-gain-style conditions where applicable. APAO is the assurance-method family; it is not a consensus plane or a
+second physical kernel. There is no separate current system named “APAO Diamond.” GAIA Diamond is the distinct
+asynchronous distributed authorization profile; GAIA Titanium is the local deterministic safety profile.
+
+SemanticAnchor: [RA-GSL-KR]
+SemanticAnchor: [RA-GSL-AR]
+SemanticAnchor: [RA-GSL-R]
+8.2 GSL-KR / GSL-AR / GSL-R CURRENT PROFILES
+GSL-KR v1.3 — normative repository baseline: API Gateway → skeptical/default truth-maintenance/model solver →
+append-only Hot/Warm/Cold/Archive ledger → optional governed action. Source trust may use Beta(α,β) profiles; conflict
+policy may use Tier > Specificity > Confidence > TrustScore > Timestamp. A reference query-depth bound of 12 returns
+INCOMPLETE plus a continuation frontier when reached; it is not a proof-completeness claim. These are repository
+profiles, not universal truth rules.
+
+GSL-AR v3.3 — operational architecture baseline:
+ Repository layer; Execution layer; Verification & Governance layer; Infrastructure layer.
+ Planner deterministic on normalized state; Router multi-objective; Scheduler capability-based; ToolRegistry +
+ ModelRegistry.
+ Cache L1–L8; reference profile L4 strong/Raft, L2–L3 eventual where declared.
+ Proof cascade: Preflight → Formal → Evidential → Behavioral → Adversarial.
+ Governance: multisig, emergency containment, human review for critical/novel changes.
+ Distributed profile: Raft internally (N≥3); PBFT federation where used (N≥5, f=floor((N-1)/3)).
+GNR and Reliability OS may implement or specialize parts of GSL-AR; neither silently supersedes it. Replacement requires
+an explicit versioned DesignBinding and migration contract.
+
+GSL-R v1.0 is the current exploratory/non-normative continuous-manifold profile. Promotion requires
+ordinary Evolution/DesignEpoch gates.
+
+SemanticAnchor: [RA-GESTALT-APAO]
+8.3 REASONING / RELIABILITY SUPPORTING BASELINES
+The current Engine.Reason Unified Reasoning, Theory & Formal-Proof System includes 24 top-level modes, typed
+formal-proof strategies, causal/counterfactual and adversarial reasoning, and the canonical ReasoningTrace /
+InferenceResult output. Reliability OS profile: circuit breakers, retries, rate limits, admission control;
+Prometheus/OpenTelemetry-style observability; OPA/CEL-style policy; ModelOps canary/drift/rollback; stronger consensus
+profiles for R3/R4; SystemHealth scoring. It maps primarily to Runtime/Security/Policy/Events/Continuity/Compliance and
+does not create a new fixed architecture object.
+
+SemanticAnchor: [RA-TRAIN]
+SemanticAnchor: [RA-GAIA-TITANIUM]
+8.4 TRAIN / GAIA TITANIUM — CURRENT FULL PROFILE
+SECTION 6A — TRAIN V5.1 UNIVERSAL SAFETY SUBSTRATE + GAIA TITANIUM
+
+STATUS: INTEGRATED INTERNAL DOMAIN/SUBSTRATE SPECIFICATION
+GARDEN ROLE: TRAIN provides the universal safety substrate; GAIA Titanium is its deterministic physical safety-kernel
+instantiation for hard real-time, safety-critical deployment. These are internal instantiations and upgrades within the
+typed architecture registry; they do not create new Garden components.
+
+6A.1 TRAIN — UNIVERSAL SUBSTRATE
+
+TRAIN (Transport AI Network) is treated here as a safety medium between untrusted computation and the physical world.
+Its governing design statement
+is:
+
+ Computation = Wires + Thermodynamics + Control
+
+Core DIPS principles:
+- bounded propagation / causal-cone enforcement;
+- event-driven regulation rather than unnecessary continuous polling;
+- wire-first physics, including wire delay, IR drop and EM state;
+- adaptive CVaR-to-quantile control when stability permits;
+- compiler-enforced spectral shaping;
+- locality and bounded influence through tile contracts;
+- predictive voltage scheduling;
+- statistical reliability budgets;
+- monotonic degradation on a safety lattice;
+- production CMOS as the deployment baseline, with exotic physics retained
+ as research-tier material.
+
+The universal safety question is:
+
+ Is it still safe to act?
+
+Safety is enforced as a substrate property rather than being delegated to an untrusted model.
+
+6A.2 TRAIN HARDWARE LAYERS
+
+L0 — Async Safety Layer
+- 28 nm FD-SOI baseline.
+- Bundled-data micropipelines on control paths and wave-pipelined synchronous
+ dense compute.
+- Sub-cycle fault response.
+- Logical 5.5 kHz heartbeat.
+- Physically independent back-gate/fuse safety path where qualified.
+- BSPD / Mesh-B power isolation concepts where deployed.
+
+L1 — Elastic Compute Layer
+- 28 nm FD-SOI baseline.
+- CBF/reachability safety computation.
+- Actuator veto.
+- Event-driven unified safety controller.
+- SCF + DBC + spectral limiting.
+
+L2 — Best-Effort Observer Layer
+- 28–45 nm ASIC class.
+- Statistical sketch accelerators and low-idle monitoring.
+- Claim extraction and alignment observation.
+- DVFS permitted where it cannot compromise the lower safety layers.
+
+6A.3 TRAIN GENERATIVE / MOBILE MIRRORS
+
+Generative safety mirrors:
+G0 Fused Safety Graphs; G1 Speculative Contraction; G2 Reasoning Sandbox; G3 Hierarchical Temporal Contraction; G4
+Resolution-Adaptive Safety.
+
+Mobile mirrors:
+M0 software safety mirror using FSG/DBC and uncertainty estimation; M1 compiled always-on safety IP block.
+
+These mechanisms remain software/implementation realizations of Garden Reason, Runtime, Knowledge, Safety, Security,
+Compiler and related architecture objects; they are implementation/profile objects, not new top-level architecture
+kinds.
+
+6A.4 TRAIN ENTROPY-TRANSPORT CHANNELS
+
+The audited TRAIN substrate defines the following channel classes:
+S_phys, S_thermal, S_noise, S_model, S_policy, S_latent, S_explore, S_hallucination, S_domain, S_temporal, and S_age.
+
+Inferred channels require sustained threshold exceedance before cascade transitions. This prevents transient noise from
+being treated as a stable system-state transition.
+
+6A.5 TRAIN REGULATORS
+
+Unified Fast Controller:
+- contraction surface λ(x,y) with wire-delay / IR-drop / EM coupling;
+- predictive voltage scheduling;
+- dynamic body-bias shielding where qualified;
+- Lyapunov-spectral governor;
+- hybrid CVaR-to-quantile switch;
+- boundary-triggered dual-estimator redundancy;
+- retained static safety margin ε_static; below the floor => halt.
+
+Authority Regulator (AGF):
+- policy bounds;
+- human quorum;
+- self-calibrating safety gradient;
+- automatic reversion to Manual-only under statistically novel drift;
+- irreversible-action consensus requirements;
+- memory-guardian / multi-tenancy isolation where deployed.
+
+Generative DBC:
+- fused contraction checks;
+- speculative bounds;
+- bounded exploration;
+- hierarchical temporal contraction.
+
+Mobile DBC:
+- uncertainty-gated routing;
+- thermal-first control;
+- structural privacy boundaries;
+- complexity reduction under thermal/safety stress.
+
+6A.6 TRAIN ASSURANCE GEOMETRY
+
+Layer 1 — Hard Viability Kernel:
+The physically enforced invariant region in which safety constraints hold.
+
+Layer 2 — Probabilistic Envelope:
+An epistemic envelope that expands/contracts with uncertainty and bounded exploration, while remaining subordinate to
+the hard viability kernel.
+
+Hybrid viability uses a monotonic safety lattice:
+
+ Safe → Constrained → Degraded → Emergency → Halt
+
+The degradation direction is monotonic: the system may lose capability in order to preserve safety, but may not regain
+normal authority without the specified recovery conditions.
+
+6A.7 TRAIN CORE SAFETY / REASONING FUNCTIONS
+
+Physical safety:
+- Robust CBF;
+- zonotopic reachability;
+- distributionally robust MPC;
+- observers;
+- containment barriers.
+
+Cognitive safety:
+- Representation Bridge;
+- V5 Theorem Prover / decidable FOL boundary;
+- probabilistic consistency;
+- κ-Router;
+- temporal grounding.
+
+Generative safety:
+- token-level uncertainty monitoring;
+- denoising-residual monitoring;
+- temporal contraction for video;
+- resolution-adaptive safety.
+
+Alignment:
+- value stability;
+- power-seeking constraints;
+- deception-risk monitoring;
+- corrigibility;
+- tiered self-improvement;
+- multi-agent ZKP/consensus where required.
+
+6A.8 TRAIN DEGRADATION LATTICE
+
+Hardware degradation follows a bounded safety ordering, with terminal halt for unsheddable deception or equivalent
+catastrophic conditions. Generative degradation tightens exploration/contraction and then constrains or halts output.
+Mobile degradation prioritizes thermal protection, Φ-gating, complexity reduction and safe-mode operation. Aging state
+S_age may prioritize remaining high-stability cycles for Sovereign/high-criticality tasks.
+
+6A.9 TRAIN MEMORY / RTL / COMPILER SUBSTRATE
+
+Memory mechanisms include probabilistic ECC, entropy-aware cache eviction, near-memory safety computation and strict
+safety-region coherence.
+
+Verification-by-construction is expressed through:
+- invariant-carrying modules (ICM);
+- constraint-first RTL generation;
+- Safety ISA operations such as CHECK_CONTRACTION, BOUND_ACTION and
+ REPORT_ENTROPY;
+- DIPS-HL compiler generation of safety constraints;
+- generative physical verification where qualified;
+- per-tile certification hashes;
+- compatibility with conventional EDA flows;
+- compiler wire-energy shaping.
+
+These are mapped to the Garden Compiler, Runtime, Hardware, Safety, Knowledge, Research and Proof responsibilities as
+applicable.
+
+6A.10 GAIA TITANIUM — DETERMINISTIC SAFETY KERNEL
+
+GAIA Titanium is the hard-real-time physical kernel of the TRAIN substrate. It is a buildable subset/instantiation for
+ASIL-D / SIL-3-class deployment requirements. It is not a competing top-level Garden object.
+
+System topology:
+- heterogeneous multi-core SoC;
+- bare-metal or certified Type-1 hypervisor execution;
+- hard-real-time execution;
+- hardware-locked 5.5 kHz heartbeat;
+- 181.8 μs nominal execution window per cycle.
+
+Layer 0 — Hard Real-Time Timing & Power Engine
+- hardware timer interrupt every 181.8 μs;
+- duty-cycling / DVFS when no dynamic state change is required;
+- prioritized interrupt service;
+- deterministic safety-path latency;
+- safety-critical timing is not delegated to best-effort AI software.
+
+Layer 1 — Predictive-Barrier Control (PB-CBF)
+- physical safety boundaries represented as CBF manifolds;
+- mandatory 100 ms look-ahead projection;
+- forward-invariance condition:
+
+ ḣ(x,u) + α(h(x)) ≥ 0
+
+ where h(x) is the safety-manifold function and α is a class-K function;
+- if the projected state violates the admissible safety manifold, the
+ command path is intercepted and a deterministic braking/safe-halt
+ trajectory is selected.
+
+The 100 ms look-ahead is an implementation parameter of this Titanium instantiation, not a universal Garden invariant.
+
+Layer 2 — Pre-Authorized Capability Intake
+- wide-area Byzantine consensus never runs inside the 181.8 microsecond Titanium tick;
+- GAIA Diamond operates asynchronously and ahead of execution using heterogeneous probabilistic and
+ deterministic symbolic validators under its declared fault model;
+- GAIA Diamond emits a signed, expiring, replay-protected CapabilityCommandToken bound to device, command
+ envelope, DesignEpoch, KnowledgeSnapshot, policy root, state assumptions and resource limits;
+- Titanium verifies the token locally using bounded cryptographic hardware/cache and independently
+ applies current physical, symbolic and K0P checks;
+- a valid GAIA Diamond token grants bounded eligibility only. It never compels actuation and never overrides
+ Titanium, Constitution, local authority, consent or K0P.
+
+6A.11 TITANIUM SINGLE-TICK EXECUTION PIPELINE
+
+1. Atomically ingest a complete, timestamped local sensor frame and a pre-authorized GAIA Diamond token.
+
+2. Verify token signature, epoch, scope, expiry, nonce, revocation status and local device binding.
+
+3. Measure observation age and project the command through the PB-CBF horizon from expected actuation
+ time, accounting for sensing, computation and actuator delay.
+
+4. Apply local structural, physical, Justice, Constitution and K0P checks.
+
+5. Dispatch only if every local gate passes; otherwise execute a precompiled constrained fallback,
+ physical disconnect or safe-halt as the domain requires.
+
+6. Journal the decision asynchronously without delaying the physical veto path.
+
+7. Enter the qualified low-power state until the next heartbeat where permitted.
+
+6A.12 TITANIUM → TRAIN CORRESPONDENCE
+
+Titanium mechanism TRAIN substrate correspondence
+5.5 kHz heartbeat L0 async safety / logical heartbeat
+PB-CBF + 100 ms look-ahead robust CBF / reachability / DR-MPC Pre-authorized GAIA Diamond token asynchronous
+BFT/cross-attestation;
+ local eligibility, never local safety authority
+Symbolic veto Representation Bridge + theorem-prover
+ boundary
+Deterministic braking / safe halt L0 actuator veto / independent fallback DVFS micro-sleep Φ-gating / entropy-gated
+clocking Hard RTOS / bare-metal L1 elastic compute safety execution
+
+6A.13 TITANIUM DEPLOYMENT SCOPE
+
+Titanium is appropriate as a deterministic physical kernel pattern for actuator-connected systems such as autonomous
+vehicles, industrial robotics, industrial control and aerospace-class systems, subject to domain-specific certification
+and empirical validation.
+
+It intentionally does not replace the wider TRAIN layers for:
+- long-timescale value/alignment stability;
+- multi-agent fleet safety;
+- generative-media safety;
+- universal chip-development doctrine;
+- full entropy-transport monitoring.
+
+6A.14 GARDEN TYPED-ARCHITECTURE MAPPING
+
+Primary mappings are:
+- Capability.Trust.Safety: CBF, viability, degradation and safety envelopes.
+- Capability.Knowledge: verified facts, evidence, model/environment state.
+- Capability.Compute.Runtime: lifecycle, timing, queues and bounded execution.
+- Capability.Compute.Execution: admissible action dispatch and safe-halt execution.
+- Capability.Infrastructure.Fabric: inter-architecture-object / inter-node transport and consensus substrate.
+- Capability.State.TimeService: deterministic heartbeat, temporal state and bounded look-ahead.
+- Domain.Applied.Mobility: autonomous movement and actuation domains.
+- Capability.Trust.Security: attestation, Byzantine fault handling and trust boundaries.
+- Capability.Infrastructure.Hardware: physical veto, timing substrate and hardware enforcement.
+- Engine.Reason: model intent, planning and symbolic verification boundary.
+- Engine.Proof: proof/evidence/verification of admissibility.
+- Engine.Compile: constraint-first compilation, Safety ISA and generated safety
+ artifacts.
+- Capability.Authority.Governance: authority boundaries, human quorum and irreversible-action
+ governance.
+- Engine.Evolve: controlled upgrades, proof gates and rollback.
+- Engine.Research: unresolved theorem / hardware-qualification frontiers.
+
+These are functional responsibility mappings, not additions to the canonical architecture kinds. The typed-architecture
+seal remains unchanged.
+
+6A.15 GARDEN SAFETY CLAIM BOUNDARY
+
+The integrated TRAIN/Titanium material is specification-level architecture. Statements about ASIL-D/SIL-3 certification,
+collision reduction, energy savings, latency, or production validation remain claims requiring external qualification
+and GSSCC evidence unless separately discharged.
+
+The Garden stage ladder therefore remains:
+
+ MAPPED ≠ PROVEN ≠ IMPLEMENTED ≠ VALIDATED
+
+Global proof obligations P1–P24 and profile obligations TRAIN-P21…TRAIN-P24 remain pending unless independently
+machine-checked and accepted under the POG discharge criteria. Simulation or architecture description does not by itself
+constitute production validation.
+
+SECTION 6B — GAIA DIAMOND / GESTALT / APAO INTEGRATION RELATIONSHIP
+
+GAIA Diamond, GESTALT and APAO remain
+internal Garden integrations already present in the canonical typed architecture. Titanium is the deterministic physical
+safety-kernel specialization beneath/alongside these higher-level control and assurance mechanisms.
+
+The integration hierarchy is:
+
+ Garden
+ ├── Semantic substrate: GSL
+ ├── Cognitive/control plane: GESTALT
+ ├── Predictive safety / assurance: APAO
+ ├── Physical deterministic safety kernel: GAIA Titanium
+ ├── Asynchronous distributed authorization: GAIA Diamond
+ └── Universal safety substrate: TRAIN
+
+Where mechanisms overlap, the more specific mechanism is treated as an instantiation or implementation profile of the
+broader Garden invariant, not as a second competing architecture.
+
+PB-CBF, ISS-CBF, robust safe sets, viability inner approximation, H∞ observers, DR-MPC, assurance vectors/scalars and
+small-gain conditions map to the current TRAIN/GAIA assurance profiles. Qualified proof obligations are referenced
+through TRAIN-P21..TRAIN-P24 rather than redefined here.
+
+SemanticAnchor: [RA-GAIA-DIAMOND]
+8.5 GAIA DIAMOND / TITANIUM — CONSOLIDATED ASYNCHRONOUS CONTRACT
+
+B.2 — ASYNCHRONOUS DISTRIBUTED AUTHORIZATION + LOCAL DETERMINISTIC SAFETY
+
+Status: internal implementation/deployment profile; NOT a new Garden architecture object. GAIA Diamond is the
+asynchronous
+distributed assurance/authorization plane. GAIA Titanium is the isolated hard-real-time edge safety kernel and sole
+actuator-command authority. Network consensus is physically excluded from the Titanium tick.
+
+Layer 0 heartbeat: nominal 5.5 kHz / 181.8 μs cycle; reference deadline 150 μs; jitter <5 μs; hardware timer; deadline
+miss→watchdog safe-halt; DVFS micro-sleep between ticks when static. Values are deployment references, not universal
+invariants. Layer 1 predictive-barrier control: CBF invariant hdot(x,u)+alpha(h(x))>=0; reference 100 ms look-ahead each
+cycle; predicted manifold violation→intercept + deterministic safe-halt. PB-CBF and local token-eligibility checks must
+both pass; a CBF-safe command without valid prior GAIA Diamond authorization is rejected. GAIA Diamond BFT: n
+validators, up to f faulty/hallucinating, with the applicable protocol's stated safety and liveness assumptions; n>3f
+remains a reference boundary for the classical asynchronous Byzantine model. Reputation, weighting or median aggregation
+is not a substitute for a BFT proof. Consensus runs outside the hard-real-time edge loop and produces a
+CapabilityCommandToken for later bounded use.
+
+Schema references: SCHEMA-199F906066 — CapabilityCommandToken..
+EpistemicDebt or OOD risk may tighten admission, quorum, validator-diversity, token lifetime, command scope or require
+safe halt; it cannot redefine the mathematical fault bound of the selected consensus protocol. Membership/reputation
+state is epoch-bounded, checkpointed, content-addressed and compacted. Layer 3 Justice Filter: hard axiomatic
+physical/ethical/domain constraints (e.g. velocity<=v_max, applicable conservation constraints, human-safety bounds);
+violation→reject/safe-halt+audit. Consensus never overrides higher Constitution/hardware safety. Layer 4 audit: every
+accepted/safe-halt action→tamper-evident chain using SHA-256/hash chaining, certificates, provenance, cryptographic
+identity and qualified regulatory evidence. EU AI Act/NIST/MeitY references are compliance targets, not automatic
+certification.
+Identity continuity:
+ Gamma(t) = product 1[heartbeat_i=1]
+ cumulative form Gamma(t) = product_{i=0..t}.
+Failed qualified heartbeat continuity revokes operational authority under recovery/safe-halt policy. The mechanism binds
+continuity/authority; it does not prove identity or safety.
+
+Single Titanium tick: (1) atomic local sensor-frame ingest; (2) bounded verification of a pre-issued GAIA Diamond token;
+(3) age/delay-aware PB-CBF projection from expected actuation time; (4) local Justice, Constitution and K0P checks; (5)
+dispatch only if all pass, else precompiled safe response or physical disconnect; (6) non-blocking audit enqueue; (7)
+qualified low-power sleep.
+
+Composite gate:
+ TokenEligible(u, epoch, device, state)
+ AND CBF_Safe(x,u, observation_age, actuation_delay)
+ AND Justice_Filter(u)=TRUE
+ AND K0P_LocalVeto(u)=PASS.
+
+The token is authorization eligibility, not a safety proof. GAIA Titanium never waits for GAIA Diamond and can always
+reject. Sufficiency/correctness remains proof-, calibration-, timing- and assumption-bound.
+
+Deployment profiles: software-only RTOS ARM/x86 for cloud/conversational/non-safety-critical validation; FPGA safety
+co-processor + hard-real-time scheduler for industrial IoT/ADAS; custom 28 nm FD-SOI safety chiplet/island for
+high-criticality automotive/aerospace/nuclear subject to certification. Any timelines are planning targets only.
+
+Mapping: 5.5kHz heartbeat → Capability.Infrastructure.Hardware + Capability.State.TimeService + Capability.Trust.Safety;
+PB-CBF → Capability.Trust.Safety + Domain.Mathematics + Engine.Proof; 100ms look-ahead → Capability.State.TimeService +
+Capability.Trust.Safety; BFT → Capability.Trust.Security + Capability.Infrastructure.Fabric + Engine.Proof; symbolic
+veto → Engine.Reason + GardenCore.Semantics.GSL + Engine.Proof; Justice → HumanCore.Constitution + Engine.Policy +
+Capability.Trust.Safety; audit chain → Capability.State.EventService + Capability.Knowledge + Capability.Trust.Security;
+identity thread → HumanCore.Identity + Capability.State.TimeService + Capability.Infrastructure.Hardware; validator
+reputation → Capability.Trust.Security + Capability.Knowledge + Capability.Authority.Governance; weighted anchoring →
+Capability.Trust.Security + Engine.Reason + Capability.Authority.Governance; safe-halt → Capability.Trust.Safety +
+Capability.Compute.Execution + Capability.Infrastructure.Hardware; generated safety artifacts → Engine.Compile +
+Capability.Compute.NativeInterface; rollback → Engine.Evolve + Capability.Compute.Runtime; independent validation →
+Engine.Compliance + Engine.Proof + Engine.Research.
+
+Scope: GAIA Diamond does not replace GSL semantics, GESTALT control/cognition, APAO predictive assurance, TRAIN entropy
+transport/alignment/generative/mobile/fleet/chip economics, Governance or Knowledge epistemics. Hierarchy: Garden→GSL
+semantic substrate; GESTALT control plane; APAO predictive assurance (robust safe sets, viability approximations,
+H-infinity observers, DR-MPC, assurance vectors/scalars, small-gain conditions); GAIA Titanium local deterministic
+safety; GAIA Diamond asynchronous distributed authorization; TRAIN universal safety substrate. These are
+profiles/instantiations, not competing architectures. Claim boundary: specification alone does NOT establish
+ASIL-D/SIL-3, production safety, BFT correctness outside model, collision/energy benefits, timing on unqualified
+hardware, or regulatory certification. MAPPED != PROVEN != IMPLEMENTED != VALIDATED.
+
+
+V15.0 EVIDENCE-LABEL REPAIR FOR REFERENCE PROFILE NUMBERS
+All percentages, latencies, risk reductions, yield changes, cost changes, or other performance figures in this reference-architecture section are ILLUSTRATIVE/UNVALIDATED unless an exact evidence or validation receipt is cited beside the claim. Labels such as simulation/back-test identify the intended evidence class but do not assert that the supporting code/data/receipt is present in this source suite. Generated summaries MUST preserve this qualification. Reference values may guide a future EvaluationPlan but do not become Garden knowledge merely by appearing here.
+
+SemanticAnchor: [RA-RELIABILITY-OS]
+8.12 DOMAIN CONTROLLERS + RELIABILITY OS
+SECTION 7 — DOMAIN CONTROLLERS (TRAIN) — Full Specification
+
+Each domain controller is a compiled
+instance of the UCDCL compiler.
+
+1. MEDICAL v1.0 — Clinical Decision Support
+State: patient vitals, lab results, medical history, drug interactions. Control: treatment recommendation (drug, dosage,
+procedure). Safe actions: pre-certified drug compatibility, allergy checks, protocol boundaries.
+Optimization: a* = argmax E[U(x,a) + γV(x')].
+Constraints: hard drug-interaction barriers, dosage limits, contraindication flags. Performance: adverse events reduced
+10-25% (simulation). Garden Mapping: Domain.Applied.HealthMedicine + Engine.Reason + Capability.Knowledge +
+Engine.Policy. Math: M3 (Prob/Stats), M4 (Optimization). Safety: Drug interaction hard barriers via Engine.Policy.
+
+2. AUTOMOTIVE v1.1 — Autonomous Driving Safety Layer
+State: ego position, velocity, heading; surrounding object states; road geometry. Control: steering, throttle, brake.
+ODD: geofenced, weather-limited, speed-limited.
+Safety barrier: h_coll(x) = d(x, x_obs) - d_safe(v, μ, weather) ≥ 0.
+K0 hardware enforces h_coll ≥ 0 with ≤10μs veto; infeasibility → the domain-qualified minimum-risk response, which may include braking when the ODD/safety case specifies it and must not assume universal blind halt. Performance: collision rate reduced
+30-60% (simulation, ODD-bounded). Garden Mapping: Domain.Applied.Mobility + Capability.Trust.Safety +
+Capability.Infrastructure.Hardware + Capability.State.TimeService. Math: M2 (Control/ODE), M4 (QP). Safety: CBF + K0
+hardware veto.
+
+3. POWER/GRID v1.1 — Frequency Regulation & N-1 SCED
+State: frequency deviation Δf, generator outputs, line flows. Control: generator setpoints, load shedding, storage
+dispatch.
+Swing equation: dΔf/dt = (1/M)(P_gen - P_load - DΔf).
+N-1 SCED: min Σ c_g(P_g) s.t. line flows within limits after any single line outage.
+CBF enforces Δf ∈ [-Δf_max, +Δf_max] under all N-1 contingencies.
+Performance: blackout risk reduced 10-25% (simulation). Garden Mapping: Domain.Applied.Energy + Capability.Trust.Safety
++ Engine.Policy + Domain.Earth.CarbonSystems. Math: M2 (Swing Eq), M4 (Optimization). Safety: CBF + N-1 SCED.
+
+4. CLOUD/DC v1.3 — Cooling & Workload Orchestration
+State: server inlet temperature vector T_t. Control: chiller setpoints, fan speeds, workload migration.
+Thermal dynamics: T_{t+1} = T_t + Δt·f_nl(T_t, P_comp, a_t, T_amb).
+CBF: T_t ≤ T_max component-wise. Performance: cooling energy reduced 8-20% (simulated data-centre pilot). Garden
+Mapping: Capability.Compute.Runtime + Domain.Applied.Energy + Capability.Trust.Safety + Capability.State.TimeService.
+Math: M2 (Thermal Dynamics), M4 (Control).
+
+5. FINANCIAL v1.0 — Portfolio Risk Management
+State: current holdings, market prices, volatility surface. Control: rebalancing trades. CVaR-constrained expected
+return maximisation expressed as minimisation of cost: min -E[R(a)] + λ·CVaR_α(Loss(a)). Barrier: VaR ≤ regulatory capital threshold; leverage ratio cap.
+Performance: tail loss reduced 10-25% (historical back-test). Garden Mapping: Domain.Society.Economics + Engine.Policy +
+Engine.Reason + Capability.Authority.Governance. Math: M3 (CVaR), M4 (Optimization).
+
+6. INDUSTRIAL v1.0 — Predictive Maintenance & Yield Optimisation
+State: machine health index q_t (0 = new, 1 = failure).
+Control: production speed, maintenance scheduling.
+Wear dynamics: q_{t+1} = q_t + α·wear(a_t, env) + β·noise.
+Barrier: q_t ≤ q_critical (prevent catastrophic failure). Cost: production loss vs. maintenance cost trade-off.
+Performance: yield +10-25% (simulation). Garden Mapping: Domain.Applied.Industry + Capability.Trust.Safety +
+Capability.State.TimeService + Engine.Research. Math: M2 (Wear Dynamics), M4 (Scheduling).
+
+7. MEDIA v1.11 — Generative Content Synthesis
+State: latent representation z_t of generated content. Control: generation step (diffusion / token prediction).
+Lagrangian MPC with curvature-optimal step sizing: min Σ L_content(z_t) + λ Σ ||a_t||²_curv. Curvature penalty ensures
+smooth latent trajectories, avoiding flicker and identity drift. PG-13 barriers enforced by K1 semantic evaluator.
+Performance: generation steps −30-50%, flicker −50-75%, identity drift −50-80%. Garden Mapping: Domain.Applied.Media +
+Engine.Reason + Capability.Knowledge + Engine.Explanation. Math: M4 (MPC), M3 (Stats).
+
+8. ROBOTICS v3.3 — Safe Manipulation & Navigation
+State: joint angles, velocities, end-effector pose. Control: joint torques.
+CLF-CBF-QP with recursive Slater persistence and anytime analytical fallback:
+a* = argmin ||a - a_nom||² s.t. ∇Vᵀf(x,a) ≤ -γV(x) + σ (CLF), ∇h_iᵀf(x,a) ≥ -αh_i(x) (CBF, all obstacles), a ∈ A_phys.
+Recursive Slater: guarantees feasibility persists across timesteps. Anytime fallback: if QP times out, analytical CBF
+solution in ≤50μs with bounded error. Byzantine cross-attestation: multiple kernels verify each other's safety outputs.
+Performance: collision −70-95%, task success +20-45%, energy efficiency +20-40%. Garden Mapping: Domain.Applied.Mobility
++ Domain.Applied.Industry + Capability.Trust.Safety + Capability.Compute.Execution + Capability.Infrastructure.Hardware
++ Capability.Trust.Security. Math: M2 (CLF/CBF/ODE), M4 (QP). Safety: CLF-CBF-QP + recursive Slater + K0 hardware veto +
+Byzantine cross-attestation.
+
+SECTION 8 — RELIABILITY OS v18.0 — Full
+Specification ───────────────────────────────────────────────────────────────────────────
+CORE PRINCIPLES (10):
+
+1. Route capabilities, not vendors: Applications request TextGeneration, Embedding, ToolExecution, etc. Control plane
+   selects providers.
+
+2. Reliability is policy enforcement: Enforce citation required, verification required, human review required, residency
+   required.
+
+3. Every query has a lifecycle: Received → Classified → PolicyChecked → Routed → Executed → Verified → Delivered →
+   Observed → Closed.
+
+4. Evaluation gates production: Draft → Review → Approved → Canary → Production → Retired.
+
+5. Ground truth is scarce: Record verified, unverified, disputed, time_sensitive.
+
+6. Operations override intelligence: Better ops > better model.
+
+7. Control plane and data plane separate: Control = routing/policy/evaluation. Data = execution/retrieval/tools.
+
+8. Every decision produces evidence: Execution receipt (model, version, tools, policies, costs, verification).
+
+9. Coverage > Benchmark scores: Alert if coverage falls below baseline.
+
+10. Outcome data is the moat: Queries + evaluations + reviews + outcomes over years cannot be copied.
+
+ARCHITECTURE SUBSYSTEMS (6):
+Execution OS: Router, gateway (retries, failover, rate limiting, caching), planner/executor, workflow engine.
+Reliability OS: Verification (citation, tool success, human review), ground truth ledger, KPI collection. Policy OS: IAM
+(SSO/RBAC), secrets, data residency, change management, approval policies. Capacity OS: Cost attribution, procurement
+(spot/reserved), billing, SLA, query budget guardrails. Evaluation OS: Datasets, benchmarks, shadow traffic, regression
+tracking, coverage metric. Operations OS: Incident management (SEV-1/2/3), rollbacks, dependency graph, observability.
+
+MATHEMATICAL FOUNDATIONS:
+Churn-Risk Minimisation (Primary Objective):
+a* = argmin ChurnRisk(a)
+ChurnRisk(a) = w_c·p_c(cost(a)) + w_q·p_q(quality(a)) + w_l·p_l(latency(a)) + w_r·p_r(reliability(a))
+             + HARD_GATE[privacy/compliance admissibility]; soft churn optimisation is evaluated only over candidates that already satisfy mandatory privacy/compliance constraints
+Weights w updated weekly from leading indicators.
+
+Capability-Based Routing:
+Schema references: SCHEMA-806969B5F1 — M_cand..
+Cold-start: m* = argmin cost[m] s.t. latency_p95[m] ≤ L_max(q)
+With observed data: m* = argmin ChurnRisk(m)
+
+Query Budget Guardrails:
+Reject if: cost_est > max_cost ∨ tokens_est > max_tokens ∨ tool_calls > max_tool_calls
+
+Evaluation Coverage:
+coverage = |bins with at least one test case| / |total bins|. Alert if coverage < 0.8. Cold-start requires 0.60.
+
+Incident Severity & Degradation:
+SEV = 1 if availability < 0.95, 2 else if error_rate > 0.05, 3 else if latency_p95 > 2×baseline_p95.
+Degrade when error_rate > 0.05 for 2 consecutive minutes. Recover when error_rate < 0.02 for 10 consecutive minutes.
+
+QUERY LIFECYCLE:
+Received → Classified → PolicyChecked → [Queue] → Routed → [Queue] → Executed → [Queue] → Verified → Delivered →
+Observed → Closed.
+S_{t+1} = transition(S_t, event, queue_depth).
+Backpressure: if queue depth exceeded, reject new queries. If PolicyChecked queue piles up → degrade mode (shed or defer OPTIONAL verification work only; every mandatory check for the active AAP/risk profile remains required, and resource exhaustion yields a bounded non-PASS/deferred outcome rather than fabricated verification).
+
+FAILURE HANDLERS:
+Transient (network timeout, rate limit): Exponential backoff (max 3 retries), then fallback. Degraded (low confidence,
+tool unavailable): Cached answer or downgraded model. Hard stop (policy violation, residency blocked): Reject,
+structured error, audit log. Silent failure (confidently wrong answer): Escalate to human review or discard.
+
+RELIABILITY EXECUTION RECEIPT (ReliabilityExecutionReceipt; distinct from Capability.Compute.Execution
+ExecutionReceipt):
+{
+ "query_id": "uuid",
+ "capability": "text_generation",
+ "provider": "deepseek",
+ "model_hash": "...",
+ "cost": 0.012,
+ "latency_ms": 842,
+ "policies_applied": ["citation_required"],
+ "verification_result": "passed",
+ "supply_chain": {"tool_versions": [...]},
+ "policy_version": "v3"
+}
+Capability.Compute.Execution ExecutionReceipt is the canonical GSL state-changing execution receipt;
+ReliabilityExecutionReceipt is an operational query/service receipt. They may reference each other but are not the same
+artifact.
+
+PART III — ADDITIONAL THEORY-LIKE RESEARCH
+
+SemanticAnchor: [TH-GENERALIZED-ATTRACTION]
+GENERALIZED ATTRACTION — CONCEPTUAL THEORY (NOT A REDEFINITION OF PHYSICAL GRAVITY)
+ Physical gravity retains its scientific meaning.
+ A separate conceptual function may represent nonphysical attraction:
+ Attraction(A,B,t) = f(similarity, value, novelty, trust, beauty, humor,
+ usefulness, history, social context, information context).
+
+Typed channels may include:
+ PhysicalGravity, SocialAttraction, SemanticAttraction, AestheticAttraction,
+ EconomicAttraction, InformationalAttraction.
+
+Writing a self-description has a real informational mechanism:
+ self-description -> GSL preferences/beliefs -> temporal profile -> better prediction
+ -> better options/recommendations.
+It is not evidence that dark energy reads or responds to the writing.
+
+SemanticAnchor: [TH-GSL-GENERATIVE]
+11.3 GSL-GENERATIVE v0.2 — FULL FORMAL RESEARCH FRAMEWORK
+
+STATUS: EXPLORATORY / NON-NORMATIVE / FALSIFIABLE RESEARCH PROFILE.
+
+Purpose
+ Investigate how typed variation, interaction, selection/retention, higher-order constraints and
+ generative reconfiguration can produce stable multilevel organization while retaining provenance,
+ diversity, safety, termination, counterexamples and explicit epistemic status.
+
+Core loop
+ Variation → Interaction → Selection/Retention → Higher-Order Constraints
+ → Generative Reconfiguration → Repeat.
+
+State abstraction
+ S_t = (T_t, G_t, C_t, R_t)
+
+ T_t = typed things, states, transformations and candidate mechanisms.
+ G_t = relation/dependency/interaction graph with multilevel boundaries.
+ C_t = active constraints, invariants, contextual conditions and higher-order control.
+ R_t = retained patterns, resources, memory, evidence and rejection history.
+
+Research transition
+ S[t+1] = 𝒯_t( Sel_t( I_t( V_t(S_t), S_t, A_t ), C_t ), θ_t )
+
+where:
+ V_t generates typed bounded variation candidates;
+ I_t evaluates interactions among candidates, current state and environment/actions A_t;
+ Sel_t retains/rejects candidates under declared objective vectors and hard constraints;
+ 𝒯_t performs the versioned generative reconfiguration;
+ θ_t binds model parameters, randomness, DesignEpoch, environment and resource budget.
+
+The equation is a research schema, not a proof that every biological, social, physical or computational system follows
+it.
+
+Levels
+ L0 substrate/primitive interactions;
+ L1 local structures and stable motifs;
+ L2 coordinated assemblies/processes;
+ L3 system/organizational constraints;
+ Ln optional higher-order levels declared by a domain model.
+
+Upward formation
+ lower-level interactions may nominate a higher-order pattern when persistence, compression,
+ predictive/causal value and counterexample tests support it.
+
+Downward constraint
+ an accepted higher-order constraint may restrict lower-level search/expression only through an
+ explicit causal/authority/interface path. Description at a higher level does not create causal power,
+ evidence or authority by itself.
+
+Core artifacts
+
+Schema references: SCHEMA-1AB0DC295D — GenerativeState.; SCHEMA-A49BEFA1C0 — VariationCandidate.; SCHEMA-59EFF91709 —
+                   InteractionTrace.; SCHEMA-2EB7DD5281 — RetentionRecord.; SCHEMA-FC112C7A53 — HigherOrderConstraint.;
+                   SCHEMA-3C4CC2132E — GenerativeTransition.; SCHEMA-8B91378AA9 — GenerativeExperimentPlan.;
+                   SCHEMA-15F88CEB7C — FalsificationReport..
+Operational research pipeline
+ ProblemSignature
+ → choose domain/levels and declare falsifiable hypothesis
+ → bind baseline, DO_NOTHING and rival models
+ → generate bounded typed VariationCandidates
+ → simulate/execute only under applicable authority and safety
+ → record InteractionTraces
+ → evaluate hard constraints and multi-objective outcomes
+ → retain Pareto alternatives/diversity and rejection memory
+ → nominate HigherOrderConstraints
+ → Proof/causal/empirical/applicability tests
+ → isolated GenerativeTransition branch
+ → descendant/dependency replay
+ → independent adversarial review
+ → retain as research result, reject, revise or propose Evolution promotion.
+
+Research hypotheses
+ H-GEN-01 Stable higher-level constraints can reduce lower-level search cost without eliminating
+ necessary diversity under specified domains.
+ H-GEN-02 Reconfiguration with retained rejection/counterexample memory can improve adaptation versus
+ memoryless variation under specified conditions.
+ H-GEN-03 Multilevel constraint feedback can produce architectural convergence or Pareto-equivalent
+ organization; convergence is not truth.
+ H-GEN-04 Excessive downward constraint can create brittleness, lock-in, monoculture or hidden failure.
+
+Validation compares the framework with simpler baselines, ordinary optimization/evolutionary algorithms, hierarchical
+control, graph rewriting, generative models and domain-specific mechanisms. Failure to outperform a simpler explanation
+is retained as evidence against added complexity.
+
+Invariant references: GEN-001..015.
+Primary mappings
+ GardenCore.Semantics.GSL, Domain.Mathematics, Engine.Proof, Capability.Trust.Safety, Capability.Knowledge,
+ Capability.Compute.Runtime, Capability.State.EventService,
+ Engine.Dependency, Engine.Search, Engine.Evolve, Capability.Authority.Governance, Engine.Policy, Engine.Research,
+ Engine.Reason,
+ with application architecture objects only under declared domain applicability.
+
+Open questions
+ formal definition of level and emergence;
+ identifiability of upward versus downward causation;
+ diversity/constraint trade-offs;
+ phase transition and stability bounds;
+ computational complexity and scalable approximations;
+ transfer across domains without context erasure;
+ empirical discriminators against simpler models.
+
+Inclusion does not make GSL-GENERATIVE a law of biology/physics, normative GSL v45.1 semantics, or permission for
+autonomous real-world self-reproduction.
+
+CROSS-DOCUMENT OWNERSHIP / BINDING SUMMARY
+
+OwnershipRef: DOC-OWN-001..012 in [A-INVARIANTS]. This specialist source owns complete [TH-*]/[RA-*] semantics only;
+System owns flow, Technical owns executable integration, Human owns reader purpose/meaning, and Annexure owns canonical
+identifiers/registries/invariants/tests/audit/history.
+
+END OF GARDEN v14.8.5 THEORIES & REFERENCE ARCHITECTURES
+
+END INHERITED SOURCE
+
+BEGIN CPI v1.1 CANDIDATE ADDITION
+SemanticAnchor: [RA-CPI]
+CPI v1.1 is an implementation-facing profile bundle, not a new foundational intelligence theorem. It retains GAC's context/correction/reuse discipline as a profile and compares existing public concepts without importing third-party code. GSL-KR records evidence and uncertainty, rather than treating storage as truth. Existing [RA-GSL-KR], [RA-GSL-AR], [RA-GESTALT-APAO], [RA-TRAIN], [RA-GAIA-TITANIUM], [RA-GAIA-DIAMOND] and [RA-RELIABILITY-OS] remain owners of their functions.
+Editorial normalization in section 6B corrects the legacy Diamond/Titanium kernel alias against the consolidated asynchronous contract. It creates no new authority and does not alter claimed patent rights or the physical algorithm.
+P01..P10 in the companion proof notes state conditional algebraic, predicate, graph and transition properties. They do not claim universal knowledge, convergence, performance savings or production safety. Review of their real-world assumptions remains mandatory.
+
+END CPI v1.1 CANDIDATE ADDITION
+
+
+========================================================================================================================
+[RA-CDDT] CROSS-DOMAIN DISCOVERY & TRANSFER — THEORY/REFERENCE NOTE
+========================================================================================================================
+CDDT is an Engine.Evolve research/discovery profile, not a new universal theory. It may use TFT/VSM/RPM/PPM or other theory
+semantics when genuinely applicable, but does not force every transfer into a transport/regulation model. Theories remain evidence-
+and applicability-bound. Candidate research queues are informative Knowledge/Research data, not canonical scientific truths or inventions.
+
+
+========================================================================================================================
+[RA-OCF] OPERATIONAL CLOSURE FOUNDATION — FOUNDATIONAL ARCHITECTURAL PRINCIPLE
+========================================================================================================================
+OCF is a foundational meta-design principle, not a new physics theory, cognitive substrate, authority source, or GSL object.
+Its thesis is operational: a broad architecture is recursively buildable only if every presently identified material responsibility either reaches a qualified mechanism or exposes the exact frontier preventing closure.
+
+OCF generalises CPI's implementation-facing discipline across all Garden owners. It preserves the distinction:
+DERIVATION = pinned semantics determine the output;
+DESIGN = several admissible implementations exist and require bounded comparison;
+DISCOVERY = reality, evidence, or an authorised preference is missing;
+BLOCKED = an external/resource/legal/physical/epistemic condition prevents present closure.
+
+Finite-chain preservation is conditional: if seed property P and assumptions A hold and every admitted transformation plus composition check preserves P and A, then P is preserved along the admitted finite chain. This does not show that P captures the intended world requirement, that A is true, or that search finds a qualifying candidate.
+
+
+========================================================================================================================
+[RA-MSC] MINIMUM FOUNDATION / MAXIMUM EVOLVABILITY PRINCIPLE
+========================================================================================================================
+Garden treats semantic/epistemic/authority/correction obligations as more stable than the mechanisms implementing them.
+Scientific theories and computational strategies remain versioned models with explicit scope, evidence, uncertainty and invalidators.
+This allows a better future model to replace an older model without changing what counts as evidence, authority, provenance or an honest
+unresolved result.
+
+“Final” therefore means finalised for a release/scope, not eternally unrevisable.
+
+========================================================================================================================
+[RA-TML] LIVING THEORY EVOLUTION
+========================================================================================================================
+A Garden theory is represented as a versioned explanatory/predictive model:
+  Theory = {claims, scope, assumptions, mechanisms, evidence, uncertainty, predictions, falsifiers, anomalies, dependencies, version}.
+Admission means supported for the declared scope, not eternal truth.
+Older models may remain useful inside regimes where their approximations are validated.
+Theory evolution is therefore cumulative but non-monotonic: knowledge can be strengthened, narrowed, superseded or refuted.
+
+========================================================================================================================
+[RA-V151-UPGRADES] RESEARCH PLACEMENT OF NEW UPGRADE CLASSES
+========================================================================================================================
+The new profiles are implementation/research strategies, not new universal theories:
+- deterministic action mediation concerns enforcement architecture;
+- privilege rings concern isolation/trust;
+- outcome-based memory evaluation concerns empirical evaluation;
+- causal world models extend predictive modeling only when identification supports causal claims;
+- temporal hypergraphs are a projection/indexing representation over existing GSL objects;
+- neuro-symbolic constraints are a bridge strategy;
+- embodied persistence is a world-model/grounding strategy;
+- self-improvement metrology is an Evolve/Audit measurement profile.
+All remain replaceable under TML/OCF when stronger methods become available.
+
+========================================================================================================================
+v15.1 EXTERNAL-DESIGN LEARNING / RIGHTS BOUNDARY
+========================================================================================================================
+Garden may learn from publicly described architectures, algorithms, benchmarks and safety patterns through CDDT/Research/TML.
+Under the current no-import posture, v15.1 imports no external code, weights, datasets, substantial prose, diagrams or service dependency.
+External ideas are treated as prior-art/provenance and independently restated as Garden requirements. Any future direct import requires a
+separate rights/admission review and does not alter ownership of independently created Garden material or pre-existing Garden rights.
+No patent validity, patentability or freedom-to-operate conclusion is created by this design document.
+
+
+========================================================================================================================
+[RA-CMUR] MULTI-MODEL DELIBERATION AS ERROR-DIVERSITY, NOT TRUTH-BY-VOTE
+========================================================================================================================
+CMUR treats multiple models as a way to search different failure modes, interpretations, counterexamples and implementation defects.
+Its value comes from diversity of error mechanisms and adversarial role separation, not from assuming that several LLMs are statistically
+independent or that consensus is true.
+
+Different models may share training data, architecture families, retrieval sources, benchmark contamination or social biases.
+Therefore Garden records correlation and requires external proof/experiment/measurement whenever the claim type demands it.
+
+The preferred use is:
+candidate generation by one process
+→ blind heterogeneous critique
+→ explicit disagreement
+→ targeted repair/evidence
+→ re-review
+→ ordinary Garden admission.
+
+
+====================================================================================================
+GARDEN v15.3 — FULL SUCCESSOR ADDENDUM
+Date: 2026-09-12
+Predecessor: Garden v15.2 FULL (2026-09-11)
+Release intent: no-loss successor integrating cross-layer integrity/causality/continuity hardening.
+GSL: v45.1 unchanged. Core topology, Human Sovereignty, authority hierarchy and existing protected roots unchanged.
+====================================================================================================
+
+[RA-CLIC] CROSS-LAYER INTEGRITY — ARCHITECTURAL NOTE
+
+CLIC is cross-layer hardening, not a new foundational physics or cognition theory. Its motivation is that mature failures increasingly occur in relations between correct components: semantic drift, attention omission, causal confusion, responsibility loss, correlated evidence, emergent feedback and irreversible option destruction.
+
+Architectural chain:
+Perspective -> Attention -> Interpretation -> Causal Model -> Prediction -> Choice -> Action -> Consequence -> Observation -> Learning.
+
+CLIC binds this chain to existing Garden theory/profile families:
+- semantic consistency: Algebra.Bridge + CPI composition/qualification;
+- causality: CDDT causal levels + Reason/Research;
+- attention/information value: AAP + CPI-P05/P09;
+- continuity: VSM boundary semantics + CPI-P10 + Transition;
+- emergence/failure dependence: Reliability OS + CPI-P11/RQ independence;
+- reversibility/option value: planning + external-effect reconciliation.
+
+The patch does not claim perfect causal identification, universal semantic preservation, complete personal-identity theory, guaranteed emergence detection or universal reversibility. It makes those uncertainties inspectable and testable within declared scope.
+
+CASI remains a deferred future candidate; its non-authority and prediction-not-observation principles are already independently preserved where applicable, without activating CASI objects/adapters.
+
+====================================================================================================
+GARDEN v15.4 — ALGEBRA, CAUSAL LEVERAGE & RESIDUAL INTEGRITY ADDENDUM
+====================================================================================================
+
+SemanticAnchor: [RA-GCL-V154]
+GENERALIZED CAUSAL LEVERAGE — THEORY / ARCHITECTURAL NOTE
+
+GCL describes causal amplification through organized systems: small informational differences can select among much
+larger pre-existing physical, computational, social, institutional or economic flows. It is not a new fundamental force
+and does not imply that information violates energy/momentum conservation.
+
+The theoretical relationship is:
+
+  SRT              supplies layered/stratified causal context;
+  CLIC-P02         distinguishes association, prediction, mechanism, intervention and counterfactual claims;
+  CLIC-P05         contributes reversibility, common-cause and systemic-effect analysis;
+  CDDT             supplies the canonical C0..C4 causal-status meanings and transfer discipline;
+  GCL              measures the magnitude/structure of attributed redirection relative to a declared intervention-size
+                   basis;
+  HumanCore/AAP    remain separate legitimacy, rights, safety and assurance constraints.
+
+A leverage vector is intentionally plural. Joules, kilograms, rupees, CPU-seconds, activated agents and institutional
+actions do not become one natural scalar merely because all changed downstream of the same message. Any scalarization is
+an explicit domain decision with its own assumptions and cannot replace the retained vector.
+
+GCL also clarifies why informational systems can be high-consequence without treating language as physically magical:
+information changes the state/decision of an already powered causal system, and that system redirects its existing
+resources.
+
+Research limitations:
+- causal attribution is only as strong as the identification/model/evidence;
+- counterfactual baselines can be uncertain or non-identifiable;
+- long causal chains create dependence and attribution ambiguity;
+- human/social effects can be reflexive and context-sensitive;
+- leverage magnitude alone says nothing about moral value or legitimate authority.
+
+SemanticAnchor: [RA-ALG-FRM-V154]
+ALGEBRA FORMALIZATION — ARCHITECTURAL NOTE
+
+The v15.4 formalization is not a claim that every Garden process is algebraically elegant or that familiar mathematical
+laws automatically hold. Its purpose is the opposite: make composition assumptions explicit so implementations cannot
+silently assume associativity, commutativity, idempotence, distributivity, total ordering or independence where Garden
+has not qualified them.
+
+The five formalized operational algebras and Bridge remain distinct because they preserve different semantics:
+Process composes work/effects, Policy composes normative decisions, Decision selects among admissible alternatives,
+Conformance composes requirements/coverage, Evidence composes epistemic support/conflict under dependence, and Bridge
+composes representations/operators while preserving loss/error boundaries.
+
+Cross-algebra interfaces are therefore typed translations/subroutine calls, not evidence that all six algebras are one
+homogeneous structure.
+
+
+
+====================================================================================================
+GARDEN v15.5 — RELEASE INTEGRITY, GCL ARITHMETIC & CLIC BINDING REPAIR
+====================================================================================================
+
+SemanticAnchor: [RA-V155]
+
+GCL v15.5 clarifies the mathematical status of causal leverage.
+
+The v15.4 expression
+  Delta_effect_vector / Size(intervention)
+was useful explanatory shorthand but was underspecified as an executable contract. The canonical v15.5 interpretation is
+therefore a typed assessment, not a universal scalar equation:
+
+  1. identify the intervention and counterfactual baseline;
+  2. measure the intervention using an explicit TypedVector of encoding/measurement dimensions;
+  3. estimate or observe a typed counterfactual effect-delta vector under a declared causal model;
+  4. optionally normalize the intervention vector only under a declared NormDefinition/qualified measurement rule;
+  5. only then, where mathematically and semantically valid, report basis-specific normalized leverage components.
+
+A byte count, AST-node count, speech duration, bandwidth cost and semantic edit distance are different measurement
+coordinates. No natural universal conversion among them is assumed. Cross-basis comparisons require a qualified mapping
+or remain incomparable.
+
+This also sharpens the algebra boundary. Garden's Process, Policy, Decision, Conformance, Evidence and Bridge algebras
+encode normative composition semantics. Typed analytical arithmetic inside Reason/Research does not become another
+Garden algebra merely because it performs mathematical operations. It still requires explicit types, units, uncertainty,
+error behavior and provenance. If the analytical operation is later used to define normative composition semantics, it
+must enter REG-ALGEBRA-001 through normal admission.
+
+CLIC v15.5 receives implementation bindings without changing its conceptual scope. Its five P01..P05 identifiers are
+profile projections across existing records, not claims that five new ontological entities or schemas exist.

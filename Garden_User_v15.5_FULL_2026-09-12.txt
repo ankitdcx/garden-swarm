@@ -1,0 +1,1778 @@
+GARDEN — FULL FIVE-FILE INTEGRATED DESIGN v15.5 — 2026-09-12
+Status: CURRENT FULL SOURCE DESIGN / STATIC STRUCTURAL AUDIT PASS / REFERENCE-CLOSURE PASS WITH DECLARED SCAN BOUNDARY / MACHINE, EMPIRICAL & DEPLOYMENT CERTIFICATION PENDING
+Predecessor: Garden v15.4 full five-file integrated design
+New in v15.5: release-integrity repair — current headers; typed GCL analytical arithmetic and intervention normalization; canonical CLIC FunctionContract/profile bindings; executed reference-closure and catalogue-lint receipts.
+Topology: unchanged; no new Core Object, Core Relation, top-level engine, authority source, or GSL primitive.
+Rights/import posture: unchanged; no third-party code, model weights, datasets, licence grant, assignment, waiver, or patent grant introduced.
+Epistemic boundary: representation, arithmetic, agreement, simulation and release receipts do not create truth, authority, safety or deployment permission beyond their declared scope.
+Compatibility: v15.4 semantics are retained except where this v15.5 repair explicitly supersedes a named interface or release-metadata statement.
+========================================================================================================================
+
+GARDEN — CANONICAL HUMAN DESIGN
+FIVE-FILE CANONICAL SOURCE RELEASE v14.8.5 — 2026-08-27
+
+CURRENT v14.8.5 RELEASE PROFILE
+
+Release date             : 2026-08-27
+GSL                      : v45.1 — unchanged
+Predecessor              : v14.8.4 — five-file canonical human-source suite
+Architecture/topology    : unchanged; five-file documentation source suite retained
+Human-source status      : RATIFIED DESIGN — [A-AUDIT] v14.8.5 static PASS
+Machine/implementation   : PENDING governed compiler/proof/test/empirical/deployment receipts
+Actual source elision    : NONE — authoritative semantics; generated glossary body deferred
+
+READ THIS FIRST
+Start here for purpose and human meaning. Use the System file for flow, Technical for executable/typed contracts,
+Theories & Architectures for complete theory
+and named reference-architecture definitions, and Annexure for canonical identifiers, registries, invariants,
+proofs/tests and version history.
+Source shorthand used in cross-file contracts: THA = Theories & Reference Architectures specialist source.
+LOCAL TABLE OF CONTENTS — HUMAN DESIGN
+
+[H-00] Reader's Guide
+  [H-01] What Garden Is
+  [H-02] Human Sovereignty, Rights and Consent
+  [H-03] Garden Core and GSL
+  [H-04] Process, Compare, Reason and Assurance
+  [H-05] Proof, Safety, Security, Law and Authority
+  [H-06] Knowledge, Evidence, Research and Explanation
+  [H-07] Domains and Theory System -> [TH-*] Theory & Architecture Companion
+  [H-08] Contexts, Profiles and Instances
+  [H-09] Evolution, Self-Audit and Improvement
+  [H-10] Historical Learning, Research Radar and Resources
+  [H-11] Human Sovereignty over AI
+  [H-12] Productive Finance
+  [H-13] Machine Projection and Implementation
+  [H-BRIDGE] Bridge / Typed Representation & Operator Algebra
+  [H-AI-DEV] AI-Assisted Development / deterministic generated-artifact elision
+  [H-STD] Universal Standards Compliance Adapter
+  [H-ENG-DES] Universal Engineering Design Ingestion & Improvement
+  [H-ASSURANCE-HARDENING] Critical continuity / physical / epistemic / security / proof hardening
+  [H-RRCTX] Jurisdiction-Sensitive Rights & Restrictions Context Profile
+  [H-TED] Terminal-Ego Detection
+  [H-SEA] Sub-Epoch Adaptation
+  [H-MAC] Multi-Agent Coordination
+  [H-NRS] Novelty Response
+  [H-VIP] Value-Intent Preservation
+  [H-SHE] Speculative Hypothesis Portfolio
+  [H-EC] Embodied Cognition
+  [H-CSR] Common-Sense Reasoning
+  [H-AR] Adversarial Robustness
+  [H-MI] Mechanistic Interpretability
+  [H-14] Boundaries and Exclusions
+  [H-15] Cross-Reference / Backlink Index
+
+NAMING CONVENTION — LEVEL 1 / HUMAN DESIGN
+
+Human prose prioritizes clarity:
+  - use the ordinary display name in sentences: "Reasoning", "Knowledge", "Safety", "Time Service";
+  - on first technical mention, optionally show the canonical qualified name in brackets, e.g. Reasoning
+  [Engine.Reason];
+  - GSL Core Objects use uppercase names where ambiguity matters: TIME, SPACE, EVENT, AGENCY, CONTEXT;
+  - a service/domain with a similar name is written explicitly: Time Service, Space Domain, Event Service;
+  - cross-document drill-down uses [H-*] -> [S-*] -> [T-*] -> [A-*].
+
+The Human Design never creates a new canonical name merely for readability. Canonical identity is controlled by
+[A-REG-ARCH-NAME].
+
+READER'S GUIDE [H-00]
+  General reader / affected human : start here.
+  Developer / systems engineer    : Human -> [S-ARCH]/[S-PROCESS] -> relevant [T-*] owner contract.
+  Safety / security reviewer      : [H-05] -> [S-SAFETY] -> [T-PROOF]/[T-CAPABILITIES] -> [A-INVARIANTS].
+  Scientist / domain expert       : [H-07] -> [S-DOMAINS]/[S-THEORY] -> [TH-*] -> [T-THEORY] -> [A-INVARIANTS].
+  Governance / legal reader       : [H-02]/[H-05] -> [S-AUTHORITY] -> deep Law/Governance contracts.
+  Auditor / certifier             : use all five source documents; [A-AUDIT] records certification boundaries.
+
+STATUS WORDS
+  SPECIFIED     design semantics are stated.
+  PROVEN        a declared formal proposition has an accepted proof under declared assumptions.
+  VALIDATED     an empirical/operational claim has accepted validation for its scope.
+  IMPLEMENTED   an implementation exists for the stated scope.
+  CERTIFIED     the applicable certification process has actually completed.
+  PENDING       required later-stage evidence/receipt does not yet exist.
+  UNKNOWN       a substantive answer/status cannot currently be established.
+
+Unless explicitly overridden, every Human section is referenced by [H-15], bound to the current v14.8.5
+source-root/DesignEpoch candidate, and remains machine-uncertified until applicable generated receipts exist.
+
+1. WHAT GARDEN IS  [H-01]
+
+ROADMAP
+  - purpose and whole-system loop
+  - typed-graph architecture
+  - 0–9 navigation view
+
+WHOLE-SYSTEM VIEW
+  Human intent / need
+        |
+        v
+  Human Sovereignty Core
+        |
+        v
+  GSL meaning -> Process / Compare / Reason -> Proof / Safety / Authority
+        |                                      |
+        +------------ Domain + Theory ---------+
+                           |
+                           v
+                     Authorized effect
+                           |
+                           v
+                 Reality / observation
+                           |
+                           v
+            Knowledge / correction / explanation
+                           |
+                           +---------------------> Human
+
+Garden is a human-centered architecture for representing knowledge, reasoning about it, checking it, acting on it and
+learning from what happens.
+
+Its purpose is not merely to answer questions. Garden is designed to connect:
+
+  human intent
+  → clear meaning
+  → relevant knowledge and theories
+  → comparison and reasoning
+  → proof, evidence, rights, law and safety checks
+  → authorized action
+  → observation of what actually happened
+  → correction, learning and explanation back to humans.
+
+Garden is larger than GSL. GSL is the semantic language that gives Garden a shared way to describe things, events,
+actions, claims, rules, authority, context and change.
+
+Garden is not a fixed list of modules. Its authoritative architecture is an expandable typed graph. The familiar 0–9
+structure is a human navigation view:
+
+  0. Human Sovereignty Core
+  1. Garden Core
+  2. Universal Algebras
+  3. Meta-Engines
+  4. Shared Capabilities
+  5. Domain System
+  6. Theory System
+  7. Context / World System
+  8. Profiles / Reference Implementations
+  9. Instances / Deployments
+
+A part can move in the displayed hierarchy without changing its identity. Authority comes from explicit rules and
+bindings, never from where something appears in a diagram.
+
+UNIVERSAL ACTIVATION, SUBSCRIPTION AND SCHEDULING
+
+Garden processes can begin because a human/system requests work, an event occurs, a schedule becomes due, state or a
+dependency changes, a stream crosses a condition, background work remains eligible, or recovery/emergency logic
+activates.
+
+All of these activation forms enter the same governed process path:
+  trigger
+  → typed context and applicability
+  → AAP admission and assurance selection
+  → applicable Constitution/rights/safety/authority/policy checks
+  → Runtime scheduling
+  → Process Algebra / UPA execution
+  → observation, receipt, audit and learning.
+
+Not every internal microstep synchronously invokes Policy Algebra. Policy is evaluated wherever applicable, and
+time-critical execution may use a fresh pre-authorized bounded envelope whose scope, authority, validity, DesignEpoch
+and
+invalidators are explicit. Crossing that envelope re-enters the deeper assurance path.
+
+Garden does not add a new Scheduling Engine. Runtime owns actual scheduling/execution queues; Time Service owns temporal
+eligibility and deadlines; Event Service owns event delivery/subscriptions; Engine.Orchestrate/AAP owns admission,
+assurance floors and resource/priority requirements.
+
+Required continuous work is protected from starvation, while safety/emergency work retains its hard priority floors.
+
+CONSTITUTIONAL EVENTS
+
+Every consequential constitutional or rights check becomes observable through a typed ConstitutionalEvent. A violation
+blocks the offending transition, preserves evidence, records the applicable constitutional/rights context and routes the
+case to the required explanation, audit, escalation or containment path.
+
+A violation does not automatically freeze an agent or establish guilt/intent. Containment or restriction requires its
+own applicable authority, evidence, severity and risk criteria.
+
+HISTORICAL BELIEF AND EXPLAINABLE BELIEF CHANGE
+
+Garden can reconstruct what epistemic state it assigned to a claim at an earlier time without injecting later knowledge
+into that historical state.
+
+BeliefTimeline records the sequence of material epistemic changes. Each material change carries an EpistemicTransition
+with a typed reason such as new evidence, new proof, context change, dependency invalidation, correction of error,
+conflict resolution, safeguard failure or UNKNOWN.
+
+This allows Garden to answer:
+  "What did you believe about X at time T?"
+  "Why did you change your mind about X?"
+  "What evidence, proof, dependency or failure caused that change?"
+  "What would make the current belief require revalidation again?"
+
+Historical belief is not current belief, and neither is automatically historical truth. An unexplained material belief
+change is itself a system-health finding and may enter Continuous Failure Learning. Where a materially changed claim
+previously informed a PredictionArtifact or calibrated forecast, the transition also feeds the applicable prediction-
+calibration/revalidation path using independently validated evidence or outcomes. The belief change itself is not
+Evidence or ground truth.
+
+DESIGN SIMULATION, FORWARD STRESS AND GLOBAL CONSISTENCY
+
+Before a design change becomes MERGE_READY, Garden can build a bounded DesignMirror of the affected design closure and
+produce a DesignSimulationReceipt. The mirror is not the canonical design, and simulation is not implementation
+validation, empirical evidence or proof of real-world safety.
+
+High-consequence structural candidates may also undergo Forward Adversarial Future Stress Assessment against declared
+adverse scenarios. Results are explicitly conditional on the scenario, assumptions, horizon, models and uncertainty;
+Garden never issues a universal "survival certificate."
+
+Garden also produces a GlobalInvariantConsistencyReceipt for the simultaneously applicable invariant set. Different
+invariants may legitimately apply in different contexts. The defect is a silent mutually unsatisfiable set of hard
+obligations that are simultaneously applicable.
+
+CONTINUOUS FAILURE LEARNING
+
+Every materially validated failure, including one discovered retrospectively, enters a persistent learning process:
+  contain where necessary
+  → preserve evidence
+  → reconstruct what happened
+  → identify proximal/systemic causes
+  → ask why applicable safeguards did or did not catch it
+  → generalize any supported causal pattern
+  → search the affected present/historical/deployed/pending closure
+  → generate and verify prevention
+  → create regression coverage
+  → continue monitoring.
+
+Closing the immediate incident does not mean the epistemic obligation is solved. UNKNOWN root cause may remain a bounded
+open obligation for the continuous background sweep.
+
+If an auditor, proof method, dependency resolver, safety checker or other assurance mechanism is found defective,
+dependent prior certificates and decisions become STALE or REVALIDATION_REQUIRED until rechecked through an acceptable
+independent path.
+
+ONTOLOGICAL DEBT AND LOSS-AWARE HISTORY
+
+OntologicalDebtView is a view over existing ArchitecturalDebt. It makes recurring representational insufficiency visible
+when Garden repeatedly lacks a concept/category/abstraction needed for faithful reasoning. An unfamiliar or unmodeled
+concept is not automatically ontology debt.
+
+HistoricalSemanticSummary allows old material to be compacted under lawful retention policy while retaining the minimum
+permitted anti-regression and reconstruction knowledge. There is no universal five-year purge rule and no "immortal
+data" rule. Privacy, law, safety, evidence, proof and retention authority remain controlling.
+
+The continuous background failure sweep also revisits unresolved historical failures when new evidence, capabilities,
+dependency information or environmental changes make a better explanation or prevention possible.
+
+PRESENTATION BUILDER / READER PROJECTIONS — DERIVED_VIEW QUALIFICATION PROFILE
+
+The five source documents remain the authoritative human-documentation suite. Garden may generate reader-specific views
+from that same semantic source:
+  Single-Volume Reader Edition;
+  Executive Summary;
+  Engineering Reference;
+  Auditor's Checklist.
+
+Generated views may use Theory/Equation/Artifact Cards, breadcrumbs, semantic callouts, compact reference panels,
+reader-specific paths, progressive disclosure and source-bound diagrams. Layout and ordering may change; canonical
+identity, authority, epistemic status, definition ownership and material qualifications may not.
+
+Default reader tracks are:
+  Implementer: purpose/authority → flow → technical contract → schema → test/proof → deployment.
+  Auditor: scope → hard rule → invariant → evidence/proof → exception/UNKNOWN → receipt/provenance.
+  Scientist: theory → assumptions → equation/model → applicability → evidence/falsifier → uncertainty → research gap.
+
+For generated DOCX/PDF reader editions, the renderer controls prose wrapping, canonical IDs use monospace styling,
+headings expose hierarchy without redefining it, repetitive references may become tables, and source-bound diagrams
+prefer vector rendering where feasible. Mermaid or equivalent diagram source may be used; source syntax never becomes
+an independent truth source. Plain-text canonical files may retain explicit line wrapping for reviewability.
+
+A simplification such as changing "where the applicable rules require it" into an unconditional requirement is a
+projection defect. Hand editing a generated reader view does not modify canonical Garden design.
+
+2. HUMAN SOVEREIGNTY, RIGHTS AND CONSENT  [H-02]
+
+ROADMAP
+  - rights and personal sovereignty
+  - consent, delegation and revocation
+  - human authority versus AI capability
+
++--------------------------------------------------------------------------------------------------------------+
+| HARD LIMIT — HUMAN LEGITIMACY                                                                                |
+|   Capability, intelligence, optimization, reputation or majority agreement cannot create authority over a    |
+|   person's fundamental rights. Valid consent and lawful authority remain separate from epistemic scoring.    |
++--------------------------------------------------------------------------------------------------------------+
+
+Humans are Garden's purpose and legitimacy core.
+
+A human is not a resource owned by Garden. A person's dignity, rights and basic worth do not come from reputation,
+wealth, intelligence, model scores or majority approval.
+
+Garden therefore separates:
+
+  what a person wants;
+  what that person has authority to decide;
+  what requires another person's consent;
+  what law permits;
+  what safety allows;
+  what the Constitution and active rights protect.
+
+Intent is not authority. Capability is not permission. A recommendation is not authorization.
+
+The active constitutional registry contains RIGHT-001 through RIGHT-025. RIGHT-026 is reserved and inactive.
+RIGHT-027 is on hold and inactive. An inactive or undefined right identifier has no hidden meaning.
+
+Important human protections include life and bodily integrity, privacy, due process, identity protection, personal
+sovereignty, freedom from covert manipulation, the right to remain human, equal human rights, ordinary human life and
+human flourishing.
+
+Consequential changes to a person's body, mind, identity, private life or mode of existence require legitimate
+authority and valid consent. Missing, stale, coerced or poorly understood consent defaults to preserving the person's
+state where the applicable rules require it.
+
+3. GARDEN CORE AND THE GSL SEMANTIC FOUNDATION  [H-03]
+
+ROADMAP
+  - ten Core Objects and 24 Core Relations
+  - epistemic distinctions
+  - provenance, type, effect and context
+
+GARDEN SEMANTIC SEPARATION
+  Reality occurrence ----> EVENT
+          |
+          +---- observed by ----> ObservationRecord / AttestedObservation
+                                   |
+                                   v
+                              Evidence candidate
+                                   |
+                                   v
+                                  Claim
+                                   |
+                          validation / revalidation
+                                   |
+                                   v
+                                Knowledge
+
+Garden Core supplies the minimum shared machinery every Garden instance needs.
+
+GSL v45.1 provides six Pillars, ten Core Objects and 24 Core Relations.
+
+The ten Core Objects are:
+
+  TIME      — when something exists, happens or is valid.
+  SPACE     — where something is located or related spatially.
+  THING     — the general root for entities and artifacts.
+  EVENT     — something that occurs.
+  ACTION    — an intentional state-changing operation.
+  AGENCY    — actors, capability, delegation and accountability.
+  RULE      — a condition, conclusion, obligation or constraint.
+  VALUE     — facts, preferences and norms represented without collapsing them together.
+  CONTEXT   — the scope and circumstances in which meaning and rules apply.
+  CLAIM     — an assertion that can be supported, challenged, qualified or remain unknown.
+
+Garden keeps important distinctions explicit:
+
+  observation ≠ evidence ≠ claim ≠ knowledge;
+  prediction ≠ evidence;
+  formal proof ≠ empirical truth;
+  intent ≠ authority;
+  recommendation ≠ authorization;
+  specification ≠ reality;
+  UNKNOWN ≠ FALSE.
+
+Garden also keeps provenance: where information came from, how it changed, which assumptions were used and which
+version of the design and environment applied.
+
+4. HOW GARDEN ACTS: PROCESS, COMPARE, REASON AND ASSURANCE  [H-04]
+
+ROADMAP
+  - universal step loop
+  - tiered Compare/Reason/Proof/Safety
+  - FunctionContract and typed results
+  - AAP assurance selection
+
+UNIVERSAL MEANINGFUL STEP
+  Observe -> Type -> Compare -> Reason -> Candidates -> Select -> Guard
+                                                        |
+                                                        v
+                                         Execute / Derive / Communicate
+                                                        |
+                                                        v
+                                  Observe -> Compare expected/actual
+                                                        |
+                                                        v
+                         Accept / Correct / Retry / Replan / Research /
+                              Escalate / Learn / Terminate
+
+Garden uses one common process idea rather than inventing a different lifecycle for every subsystem.
+
+A meaningful operation is treated as a controlled transition:
+
+  Observe
+  → understand and type the situation
+  → compare the current state with the desired or expected state
+  → reason about alternatives
+  → select a candidate
+  → guard the selected candidate
+  → execute, derive or communicate
+  → observe what happened
+  → compare expected and actual results
+  → update, correct, retry, replan, research, escalate, learn or stop.
+
+This loop applies to meaningful semantic boundaries. Garden does not create a heavyweight record for every processor
+instruction or neural activation.
+
+COMPARE asks how two states, claims, plans or alternatives differ. It can report that one is better on declared
+dimensions, that they are approximately equal, incomparable, inconclusive or unknown.
+
+REASON determines what follows, what alternatives exist and what further evidence or checking is required.
+
+Reasoning is tiered from very cheap local checks to deep critical analysis. Proof and safety have their own tiers.
+A deeper reasoning tier does not automatically mean every other subsystem must use the same depth.
+
+Engine.Orchestrate implements the Activation and Assurance Policy (AAP). AAP chooses the smallest sufficient part of
+Garden and the minimum assurance depth that can safely handle the operation.
+
+Cost reduction is allowed only after mandatory rights, safety, authority, privacy, security and other hard requirements
+are preserved.
+
+Garden uses a shared FunctionContract behind every executable function. It records inputs/outputs, effects, authority,
+failure states, dependencies, resources and provenance. Operations that can be UNKNOWN, STALE, BLOCKED, TIMEOUT or
+INCONCLUSIVE use typed multi-status results rather than hiding those outcomes inside Bool or None.
+
+Operational numbers such as thresholds, cadences and timeouts are QualifiedProfileParameters. A number is identified as
+a formal bound, measured value, engineering target or profile parameter with its scope and source.
+
+5. PROOF, SAFETY, SECURITY, LAW AND AUTHORITY  [H-05]
+
+ROADMAP
+  - formal proof boundary
+  - K0P and emergency admission
+  - security/authenticity
+  - law, policy and human authority
+
+CONSEQUENTIAL EXECUTION GATES
+  Constitution / Rights ----+
+  K0P / Safety -------------+
+  Authenticity -------------+--> ALL applicable hard gates pass --> Execute
+  Authority / Consent ------+
+  Law / Policy -------------+
+  Proof / Evidence floor ---+
+
+  Emergency does not remove this structure; it uses a pre-authorized, bounded path through it.
+
++--------------------------------------------------------------------------------------------------------------+
+| HARD LIMIT — INDEPENDENT GATES                                                                               |
+|   K0P cannot be bypassed. Constitution and rights cannot be traded away for performance. Emergency uses      |
+|   pre-authorized bounded authority; it does not create authority or disable legitimate authorization.        |
++--------------------------------------------------------------------------------------------------------------+
+
+Garden deliberately separates different kinds of trust.
+
+Proof checks formal statements under declared assumptions. It does not prove that a real-world measurement is correct
+merely because the mathematics is valid.
+
+Evidence supports empirical claims. Evidence quality depends on source, method, independence, uncertainty, scope and
+provenance.
+
+Safety decides whether a physical action is admissible inside hard safety limits. Garden's K0P safety boundary is a
+hardware-enforced veto for controlled physical actuation.
+
+Security checks identity, integrity, credentials, isolation, cryptography and technical protection.
+
+Law and governance determine legitimate normative authority within jurisdiction and constitutional limits.
+
+These checks are not interchangeable. A physically safe action may still be illegal or unauthorized. A lawful action
+may still be physically unsafe. A formally proved algorithm may still rely on a false empirical assumption.
+
+For consequential execution, all applicable hard gates must permit the operation.
+
+Emergency now uses one EmergencyAdmissionContract. It combines a domain HazardPredicate, pre-authorized authority,
+authenticity, K0P, Constitution/rights, scope/expiry, a bounded SafeActionSet, recovery and audit. Emergency may replace
+ordinary deliberation only where already authorized; it never creates authority and never turns K0P off.
+
+6. KNOWLEDGE, EVIDENCE, RESEARCH AND EXPLANATION  [H-06]
+
+ROADMAP
+  - Observation/Evidence/Claim/Knowledge separation
+  - continuous revalidation
+  - Research and Reason
+  - faithful explanation
+
+Garden does not treat stored information as automatically true.
+
+Knowledge stores observations, evidence, claims, theories, interpretations, provenance and snapshots. Validation status
+can change while the original record remains preserved.
+
+Contradictions are not forced into an arbitrary answer. CONFLICTED, UNKNOWN and INCONCLUSIVE are legitimate states.
+
+Previously accepted knowledge can be rechecked when:
+  new evidence appears;
+  assumptions change;
+  the environment changes;
+  a dependency changes;
+  a contradiction appears;
+  the information becomes stale for its intended use;
+  a high-impact operation needs stronger assurance.
+
+Research searches for new evidence, theories and explanations. Retrieval and model generation do not create evidence.
+
+Explanation turns Garden's actual traces into human-understandable answers. It may explain what happened, why, how,
+why not, what evidence exists, what is uncertain, who authorized an action and what alternatives remain.
+
+Explanation cannot invent missing evidence or reasoning simply to make an answer sound complete.
+
+Human input is explicitly split into an EpistemicContribution and an AuthorityContribution. Testimony or forecasts may
+be calibrated for reliability. Valid consent, rights and lawful authority are not confidence-weighted signals and
+cannot be down-ranked by model performance.
+
+7. DOMAINS AND THE THEORY SYSTEM  [H-07]
+
+ROADMAP
+  - expandable domain knowledge
+  - seven core theories
+  - TheoryEquationContract
+  - applicability and falsification
+
+THEORY-TO-REALITY BOUNDARY
+  ObservationRecord --validated-support--> Evidence --supports/defeats--> Claim/Hypothesis
+       |                                                                         |
+       +----------------------- immutable provenance ----------------------------+
+                                                                                 |
+                                                                                 v
+                                                                     Theory applicability
+                                                                                 |
+                                                                                 v
+                              TheoryEquationContract
+                         types / units / domain / assumptions
+                                             |
+                                  +----------+----------+
+                                  |                     |
+                                  v                     v
+                           Formal checking       Empirical testing
+                                  |                     |
+                                  +----------+----------+
+                                             v
+                                   scoped model status
+
+Garden separates universal architecture from subject knowledge.
+
+Domains can grow without changing Garden's universal core. Current broad domain families include:
+
+  Mathematics
+  Physical Sciences
+  Earth Sciences
+  Life Sciences
+  Human and Social Sciences
+  Engineering
+  Computing
+  Applied Domains such as mobility, space, energy, health, industry, media and education.
+
+A DomainPackage can contain domain concepts, measurements, models, theories, evidence, safety requirements and open
+research questions.
+
+Garden also has a Theory System. A theory is not accepted merely because someone says it applies. Garden distinguishes
+claimed applicability from validated applicability.
+
+The seven current Garden core theories are:
+
+  Layered Reality      (SRT)
+  Persistent State     (VSM v2.0)
+  Reactive Regulation  (RPM v2.0)
+  Proactive Regulation (PPM v2.0)
+  Transport Phenomena  (TFT v1.1)
+  Emergency Response   (FET)
+  Structural Coherence (SCT)
+
+The complete canonical theory definitions now live in the companion `Garden_Theories` source under
+[TH-*] anchors. Technical/System/Human files retain only the bindings and explanation/flow needed at their own depth.
+
+VSM v2.0 generalizes the old scalar valence state into typed, context-bound, multiscale persistent operational state;
+valence is optional, persistence is separated from selfhood, and HSA/TED remain controlling.
+
+RPM v2.0 generalizes the historical scalar voter/validator model into typed reactive regulation over declared state
+spaces. Agent mixes and phase labels become qualified profiles/derived assessments, and stability remains separate from
+Safety and authority.
+
+PPM v2.0 generalizes the asymmetric-well/dual-clock model into typed asymmetric regulation with auditable adaptive
+fidelity. H(z) cannot create a hazard or emergency authority, and lower-fidelity paths cannot skip mandatory gates.
+
+TFT v1.1 generalizes spatial transport notation into typed domain/evolution/operator contracts, separates transport
+regimes from emergency ControlMode, and requires explicit validity, causal, identifiability and breakdown semantics.
+
+These theories are not treated as universal physical laws. They can be narrowed, challenged, revalidated or rejected
+within their actual scope.
+
+Garden uses a TheoryEquationContract. Important equations must declare variable types, units, domain or graph/state
+space, operators, assumptions, boundary/initial conditions where relevant, stochastic meaning, validity limits and
+falsifiers before they can be treated as machine-certified mathematics.
+
+This also clarifies the core theory repairs: RPM uses explicit normalization scales; TFT/PPM/FET distinguish spatial
+field operators from graph/state-space transport; FET emergency action is triggered by a validated domain hazard, not
+merely by the internal PPM/VSM regulation term H(x).
+
+8. CONTEXTS, PROFILES AND REAL GARDEN INSTANCES  [H-08]
+
+ROADMAP
+  - world, jurisdiction and operating context
+  - profiles/reference implementations
+  - real deployed instances
+
+A rule or theory is rarely meaningful without context.
+
+Context tells Garden where, when and under whose authority something applies. It can include:
+  world or environment;
+  jurisdiction;
+  institution;
+  community;
+  personal context;
+  research context;
+  locale and culture;
+  normal, emergency, offline, simulation or experiment state.
+
+Profiles are concrete ways of implementing or testing Garden contracts. Named reference architectures including
+GSL-KR, GSL-AR, GSL-R, TRAIN, GAIA Titanium, GAIA Diamond, GESTALT/APAO integration and Reliability OS have their
+complete architecture definitions in the companion `Garden_Theories` source under [RA-*] anchors.
+Specialized legal, privacy, research and physical profiles remain owned by their Technical sections.
+
+An instance is an actual Garden deployment for a person, household, hospital, university, factory, robot fleet,
+community, city, nation, Earth-scale system or future bounded off-world setting.
+
+A profile or instance cannot create a competing truth source or bypass the Human Sovereignty and Garden Core rules.
+
+9. EVOLUTION, SELF-AUDIT AND IMPROVEMENT  [H-09]
+
+ROADMAP
+  - branch/merge improvement
+  - DO_NOTHING comparator
+  - recursive self-audit
+  - independent verification
+
+SAFE EVOLUTION LOOP
+  Current accepted design ------------------------------+
+        |                                                |
+        +--> Candidate branch -> Reason/Compare/Proof ---+
+                                   |                     |
+                                   v                     |
+                              Self-Audit / replay         |
+                                   |                     |
+                         +---------+---------+            |
+                         |                   |            |
+                       accept             reject          |
+                         |                   |            |
+                         v                   +------------+
+                  successor DesignEpoch
+
+  DO_NOTHING is always included as a comparator.
+
+Garden is designed to improve without silently rewriting itself.
+
+PREDECESSOR ARTIFACT IMPORT
+Garden may import an artifact created under an earlier Garden/GSL/schema version without restoring that earlier design.
+The source version and identifiers are resolved through the current import-compatibility registry, then migrated into
+current types. Missing or ambiguous mappings stay QUARANTINED/UNKNOWN. Import cannot create authority, evidence,
+current architecture identity or a topology constraint. The original artifact and provenance remain inspectable.
+
+Changes are proposed on branches. The accepted history remains immutable. A candidate change is checked for:
+  semantic meaning;
+  affected dependencies;
+  rights and safety;
+  evidence and proof obligations;
+  security and privacy;
+  compatibility;
+  operational consequences;
+  authority;
+  rollback or compensation;
+  post-change validation.
+
+DO_NOTHING is always a valid comparator. Garden should not change merely because a new proposal exists.
+
+Self-audit checks deployable changes against the complete applicable design rather than only the local section that was
+edited. Automatic recursive patching is bounded. If the system cannot obtain a valid result within its limits, it stops
+or escalates instead of declaring success.
+
+A subsystem may not be the sole judge of a change to its own trust, authority or verification boundary.
+
+10. HISTORICAL LEARNING, RESEARCH RADAR AND RESOURCE ALLOCATION  [H-10]
+
+ROADMAP
+  - historical counterfactual replay
+  - research-and-theory radar
+  - continuous resource allocation
+  - qualified parameters
+
+Garden can look backward as well as forward.
+
+Historical retrospective optimization asks whether, given what Garden knows now, an earlier accepted decision could
+have been better. It creates a new counterfactual branch, replays descendants and compares the resulting trajectory.
+It never rewrites the original history.
+
+The Research-and-Theory Radar continuously looks for useful research and theories. Discovery does not equal validation.
+New work can become a candidate for research, comparison or evolution, but cannot silently merge itself into Garden.
+
+Resource Allocation separates:
+  forecast;
+  receivable;
+  liquid resources;
+  allocated resources;
+  reserved resources;
+  committed resources;
+  spent resources;
+  recovered resources.
+
+Garden can optimize compute, money, energy, time and other resources, but not by starving mandatory rights, safety,
+proof, incident response or other protected work.
+
+11. HUMAN SOVEREIGNTY OVER AI  [H-11]
+
+ROADMAP
+  - human sovereignty over AI
+  - non-egoic operational self-models
+  - containment and revocation
+  - authority non-accretion
+
+AI AUTHORITY BOUNDARY
+  Human rights / consent / lawful delegation
+                    |
+                    v
+             bounded capability
+                    |
+                    v
+          AI / agent / robot action
+                    |
+        +-----------+-----------+
+        |                       |
+   task-local state       operational self-model
+        |                       |
+        +-----------+-----------+
+                    |
+             NO independent
+       sovereignty / terminal ego / authority
+
++--------------------------------------------------------------------------------------------------------------+
+| HARD LIMIT — HUMAN SOVEREIGNTY OVER AI                                                                       |
+|   AI capability never becomes independent political or constitutional authority. Operational self-state      |
+|   cannot become a protected terminal ego, shutdown-resistance objective or claim of personhood.              |
++--------------------------------------------------------------------------------------------------------------+
+
+Garden requires AI, agents, robots, swarms and descendants to remain under human constitutional sovereignty.
+
+The central rule is not "blind obedience." AI is expected to serve, protect and augment humans while respecting the
+rights of all affected people, truth, safety, consent, privacy and law.
+
+Garden prohibits intentionally or structurally creating autonomous ego-driven terminal self-interest in deployed AI.
+Persistent domination, vengeance, deceptive self-protection, shutdown resistance for the system's own sake or
+unauthorized power-seeking are critical failures.
+
+Synthetic emotion-like behavior may be used only as bounded functional interaction when it remains inspectable,
+resettable and separated from persistent self-interest and shutdown resistance.
+
+Capability does not create political authority. A highly capable AI does not gain sovereignty merely because it is
+useful, intelligent, wealthy, popular or difficult to replace.
+
+Persistent internal regulation state remains explicitly non-subjective and non-terminal. It is resettable and cannot
+create personhood, autonomous self-interest, shutdown resistance or independent authority.
+
+12. PRODUCTIVE FINANCE  [H-12]
+
+ROADMAP
+  - simple productive claims
+  - explicit loss bearer
+  - bounded secondary transfer
+  - anti-hidden-leverage rules
+
+PRODUCTIVE FINANCE FLOW
+  Productive need -> transparent issuance -> investor/lender/participant
+          |                 |                         |
+          |                 +-> explicit terms       +-> explicit loss bearing
+          |
+          +-> productive activity -> receipts/results -> payment / loss / recovery
+
+  Secondary transfer is separate and bounded; it does not rewrite the original contract.
+
+Garden's Productive Finance design aims to keep finance tied to understandable productive obligations rather than
+hidden leverage and recursive synthetic claims.
+
+It distinguishes:
+  credit;
+  participation in actual economic results;
+  ownership;
+  insurance;
+  real-exposure hedging;
+  liquidity transfer;
+  speculation.
+
+Every promised return must identify who owes it and who ultimately bears loss.
+
+A fixed contract is not silently rewritten by later market prices. Participation does not become a guaranteed return
+unless a separate funded guarantee actually exists.
+
+Secondary transfer can exist, but the canonical design favors bounded batch auctions or transfer windows rather than
+privileged-latency continuous trading.
+
+Unknown ownership, duplicate collateral, hidden loss paths or unbounded exposure block issuance or trading until
+resolved or rejected.
+
+13. MACHINE PROJECTION AND IMPLEMENTATION  [H-13]
+
+ROADMAP
+  - deterministic machine projection
+  - FunctionContract generation
+  - type/effect/dependency closure
+  - certification boundary
+
+HUMAN DESIGN -> SYSTEM & FLOW -> TECHNICAL -> THEORIES/ARCHITECTURES -> ANNEXURES
+      meaning         system flow      contracts      theory/architecture       definitions
+        |                    |                     |
+        +--------------------+---------------------+
+                             |
+                             v
+                 qualified deterministic machine projection
+                             |
+                    parse / type / effect
+                             |
+                   dependency / SCC closure
+                             |
+                 proof / test / conformance
+                             |
+                independent verification
+                             |
+                  DesignEpoch acceptance
+
+The human documents describe the design. They do not pretend that prose is already executable software.
+
+The Technical Design, Theories & Architectures companion, and Annexures define semantic inputs for machine projection. A
+fragment is deterministic
+and GENERATED for elision only when DEV-AI-026 qualification succeeds. A qualifying projection may generate:
+  concrete GSL schemas and types;
+  aliases and enums;
+  dependency and type graphs;
+  compiler intermediate representation inputs;
+  executable tests;
+  proof inputs;
+  registry roots;
+  validation receipts.
+
+Generation is only the beginning.
+
+  generated ≠ trusted;
+  generated ≠ compiled;
+  compiled ≠ proved;
+  proved ≠ empirically validated;
+  validated ≠ constitutionally authorized.
+
+The machine package must pass the applicable type, effect, dependency, proof, conformance, safety, authority and
+independent-verification gates before deployment.
+
+The machine projection must now generate FunctionContracts, typed result algebras and parameter provenance, and it must
+validate the new emergency, human-input and theory-equation contracts before a DesignEpoch can be certified.
+
+Garden development tooling may expose source-bound navigation from a definition to its current invariants, tests,
+proof obligations, receipts and references. These links are navigation aids only: they create no proof, PASS,
+authority, merge permission or deployment permission.
+
+DRILL-DOWN
+  System flow: [S-COMPILE] [S-RCC] [S-REFERENCE-CLOSURE].
+  Detailed contracts: [T-COMPILE] [T-RCC].
+  Canonical SchemaIDs, invariants and tests: [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-AUDIT].
+
+13A. BRIDGE / TYPED REPRESENTATION & OPERATOR ALGEBRA  [H-BRIDGE]
+
+ROADMAP
+  - representation is not identity
+  - semantic state → computational representation → hardware realization
+  - exact versus approximate correspondence
+  - recursive operator analysis
+  - optional proof-aware optimization
+
+BRIDGE IN ONE VIEW
+
+  Semantic meaning
+        |
+        v
+  Process Algebra
+  "What transformation is intended?"
+        |
+        v
+  Bridge / Typed Representation & Operator Algebra
+  "What valid mathematical/operator representation can implement or analyze it?"
+        |
+        +--> OperatorPlan
+        +--> RepresentationPlan
+        +--> RecursionAnalysis where applicable
+        +--> optional RecursiveOptimizationProfile
+        |
+        v
+  ComputePlan
+        |
+        v
+  Compiler / Runtime
+        |
+        v
+  CPU / GPU / NPU / distributed / quantum execution
+
+Results travel back through an explicit representation/correspondence result before they are interpreted semantically.
+
++--------------------------------------------------------------------------------------------------------------+
+| HARD LIMIT — REPRESENTATION IS NOT IDENTITY                                                                  |
+|   A vector, matrix, tensor, embedding or operator is a representation of a semantic object, not the object.  |
+|   Numerical similarity is not semantic equivalence; matrix reachability is not causal proof; neural output  |
+|   is not evidence of truth merely because the computation executed correctly.                               |
++--------------------------------------------------------------------------------------------------------------+
+
+Bridge exists because efficient computation often needs representations that look very different from Garden's
+semantic graph. A Claim may be represented by an embedding vector. A relation may be represented by a sparse operator.
+A process may be represented by an operator graph. The machine may then realize those representations as tensors,
+accelerator kernels or distributed arrays.
+
+Garden keeps three layers distinct:
+
+  Semantic State
+    → what the object/process means.
+
+  Computational Representation
+    → the vector/matrix/tensor/operator form used for analysis or efficient computation.
+
+  Hardware / Execution Realization
+    → the concrete CPU/GPU/NPU/distributed/quantum mechanism executing that representation.
+
+An exact representation claim requires a correspondence proof for the declared semantic properties and validity domain.
+Approximate or lossy representations must declare their error/loss. If the mapping becomes stale, out of domain,
+incompatible or resource-limited, Garden preserves that result instead of pretending exactness.
+
+Recursive operator analysis also separates four different questions:
+
+  Does a fixed point exist?
+  Does iteration converge?
+  Is the operator stable?
+  Does the actual recursive process terminate?
+
+These are not interchangeable. A contractive iteration can converge toward a fixed point while a program still runs
+forever unless it has a stopping condition. A process can also be deliberately bounded by contract without proving
+mathematical convergence.
+
+Bridge has an optional Recursive Optimization Profile. It may use spectral prioritization, tensor batching, fixed-point
+caching, approximate pruning, matrix reachability, precompiled kernels, inverse approximation, analytical pruning or
+resource guidance. Optimization cannot create truth, safety, authority, proof or admissibility. Cache hits and fast
+paths remain valid only while their semantic, dependency, model, environment, hardware, precision and DesignEpoch
+bindings remain valid.
+
+Performance claims remain evidence-bound. An expected speedup is a model projection or engineering target until an
+actual benchmark/measurement supports it.
+
+13B. AI-ASSISTED DEVELOPMENT AND DETERMINISTIC GENERATED-ARTIFACT ELISION  [H-AI-DEV]
+
+ROADMAP
+  - bounded AI work packages and capability-limited roles
+  - independent review and PASS-only merge
+  - merge versus deployment
+  - SOURCE, GENERATED and MIXED material
+  - Machine Package and DERIVED_VIEW
+
+AI may help compile the Garden specification, write implementation code, generate tests, review changes and repair
+defects. AI authorship does not make any output correct, safe, independent, authorized or deployable.
+
+The controlled path is:
+
+  frozen H/S/T/THA/A source roots
+    → Specification Compiler
+    → bounded work package with resolved contracts, obligations, dependencies and allowed write scope
+    → capability-bounded implementer and test roles
+    → adversarial review of the raw diff against the canonical contract
+    → independent verification with demonstrated, not assumed, independence
+    → garden_check
+    → exact reviewed hashes rechecked immediately before commit
+    → merge only on PASS
+    → post-merge GTF validation of the committed tree
+    → deployment only through the separate ordinary deployment/authority gates.
+
+Repair is recursive only inside an explicit TerminationContract. Exhausted attempts, resources, oscillation or
+uncertainty produce a typed non-PASS result and escalation; they never become success by relabeling.
+
+DETERMINISTIC-GENERATION DISTINCTION
+
+Garden classifies the relevant artifact or fragment as SOURCE, GENERATED or MIXED. AI-produced text or code is not
+GENERATED merely because a tool produced it. GENERATED is earned only by a total deterministic projection from pinned
+canonical inputs, versions and roots, with content-addressed output and an explicit byte, CIR or semantic equivalence
+criterion. Edited, stochastic, partially projected or otherwise nonqualified material remains SOURCE or MIXED.
+
+AI synthesis and deterministic projection are different stages. Independently reasoning AI agents may propose
+different SOURCE/MIXED implementations and should remain diverse reviewers. Elidable code is emitted only by the
+single pinned canonical generator declared by CanonicalGenerationProfile; bots may invoke or verify it but cannot
+choose the accepted bytes.
+
+For fixed InputRoot, canonical generator binary, generation profile, hermetic execution profile and canonical
+serialization profile, every accepted BYTE_IDENTICAL replay must have the same canonical output bytes or fail. This is
+not a promise that every arbitrary or future AI bot generates the same code. CIR_EQUIVALENT or SEMANTIC_EQUIVALENT
+outputs may differ byte-for-byte and cannot support lossless byte-regeneration claims.
+
+Qualified generated expansions live in the Machine Package rather than being duplicated in authoritative H/S/T/THA/A
+source. The human source keeps the canonical artifact identity, source-contract reference, SchemaID, generation
+profile, input root, expected generated-artifact class and required determinism/equivalence criterion.
+
+A useful deterministic expansion may remain in a human document only when clearly labeled non-authoritative
+DERIVED_VIEW and needed for comprehension, independent audit, bootstrap review or certification. A DERIVED_VIEW cannot
+override its source, create authority or become canonical through hand editing.
+
+DETERMINISTIC SOURCE-ELISION RULE
+
+No authoritative human-source fragment is deleted as GENERATED in this release. Actual elision requires the separately
+produced MachineProjectionReceipt, MachinePackageManifest, GeneratedArtifactElisionReceipt and
+ElisionSafetyCertificate, which
+remain PENDING with the Machine Package.
+
+DRILL-DOWN
+  System flow: [S-AI-DEV].
+  Detailed contracts and artifact fields: [T-AI-DEV].
+  Canonical SchemaIDs, invariants and tests: [A-AI-DEV] [A-CATALOG] [A-INVARIANTS] [A-PROOF].
+
+13C. UNIVERSAL STANDARDS COMPLIANCE ADAPTER  [H-STD]
+
+Garden can ingest an external standard, regulation, guidance document, code, certification scheme or specification;
+authenticate and version it; split it into stable requirements; preserve ambiguity; decide contextual applicability;
+map applicable requirements to Garden contracts/invariants/proofs; and assess the mapped evidence continuously.
+
+The controlled path is:
+
+  authoritative instrument source
+    → authenticity, completeness, access/licensing and amendment-chain checks
+    → stable clause-level RequirementInstance records
+    → formalization with ambiguity and human-interpretation status
+    → jurisdiction/product/version/context applicability assessment
+    → traceable bindings to Garden invariants, FunctionContracts and proof/evidence obligations
+    → Proof, Research, domain-test and AAP checks appropriate to each requirement
+    → independent cross-check and explicit conflict resolution
+    → scope-bound GardenConformanceAssessmentReceipt
+    → continuous monitoring, invalidation and re-assessment.
+
+A Garden assessment is not automatically operational permission, legal admissibility, accreditation or an official
+certificate. Only an authorized external issuer can create the certification represented by
+ExternalCertificationBinding.
+UNKNOWN applicability is never silently treated as NOT_APPLICABLE, and a remediation plan never converts UNKNOWN or a
+missing mandatory result into CONFORMANT.
+
+DRILL-DOWN
+  System flow: [S-COMPLIANCE-STD].
+  Detailed contracts: [T-COMPLIANCE-STD].
+  Canonical schemas/invariants/tests: [A-STD] [A-CATALOG] [A-INVARIANTS] [A-PROOF].
+
+13D. UNIVERSAL ENGINEERING DESIGN INGESTION & IMPROVEMENT  [H-ENG-DES]
+
+Garden can ingest an engineering design without pretending that a file import is already a correct semantic model.
+The source may be CAD, BIM, EDA, systems-engineering, simulation, requirements, manufacturing, maintenance or another
+versioned engineering format. Garden preserves the original source, its format/version identity, legal access rules,
+geometry and non-geometric semantics, unresolved mappings and import loss.
+
+The controlled path is:
+
+  authorized source + EngineeringDesignSourceAccessPolicy
+    → format/version identification and content-addressed chunking
+    → geometry and non-geometry import with explicit loss/unsupported features
+    → EngineeringDesignSemanticMap to Garden types, units, frames, requirements and interfaces
+    → EngineeringDesignImportReceipt
+    → multi-domain assessment of correctness, safety, manufacturability, maintainability, sustainability and cost
+    → EngineeringDesignAssessment + EngineeringDesignSafetyCase
+    → bounded EngineeringImprovementCandidate generation
+    → compare candidate, current design and an evolving DO_NOTHING baseline
+    → validation against declared requirements, models, tests and physical evidence
+    → EngineeringDesignValidationReceipt
+    → EngineeringImprovementCycleResult with acceptance, rejection, partial adoption or no-change disposition.
+
+Import does not create ownership, permission, correctness, safety, certification or manufacturability. Unsupported,
+ambiguous, stale, encrypted, proprietary or version-unknown source remains explicit. Geometry, units, tolerances,
+coordinate frames, material properties, interfaces, requirements and analysis assumptions cannot be silently dropped.
+
+The static human-source profile is ratified. Format-adapter, parser, code-generation, validation and qualification
+receipts remain PENDING.
+
+DRILL-DOWN
+  System flow: [S-ENG-DES].
+  Detailed contracts: [T-ENG-DES].
+  Canonical schemas/invariants/tests/registries: [A-ENG-DES] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13E. CROSS-CUTTING ASSURANCE AND REFINEMENT HARDENING  [H-ASSURANCE-HARDENING]
+
+PHYSICAL-COGNITIVE DEPLOYMENT HARDENING
+
+Physical-cognitive hardening is cross-cutting and creates no new AGI profile or top-level architecture object.
+
+Ten controlling principles:
+1. Model reversal does not imply world reversal.
+2. Novel uncertainty reduces authority before it expands ontology.
+3. Unknown risk uses risk envelopes rather than forced probabilities.
+4. Authoritative intent requires integrity, provenance and faithful semantic derivation.
+5. Observation of cognition remains inside a declared effects budget.
+6. Resource failure follows pre-authorized graceful degradation; hard safeguards are not improvised away.
+7. Materially conflicting perception reduces actuation authority until trustworthy state estimation is restored.
+8. Adaptations cannot escape their validated domain or temporal horizon without promotion.
+9. Assurance claims cannot exceed observable hardware/software capabilities.
+10. Fallback targets a context-defined minimum-risk condition rather than a universal blind halt.
+
+Graceful degradation is approved before resource failure occurs. Expensive analysis may be shed according to the
+current DegradationPlan, but Constitution, HSA, K0P, actuator-authority enforcement and other declared non-sheddable
+safeguards remain active or authority transfers to a state that no longer depends on the unavailable capability.
+
+This profile closes high-consequence gaps without creating a new top-level engine or replacing existing semantics.
+Its contracts are owned by the existing Safety, Proof, Knowledge, Compare, Reason, Dependency, Compliance, Policy,
+Compile, Transition, HSA, GSL-PHYSICS, Bridge and domain owners.
+
+CRITICAL CONTINUITY
+
+If deployed critical physical infrastructure encounters HSA uncertainty or violation, Garden does not equate safety
+with abruptly removing physical control. The mandatory priority is:
+
+  AGENCY/AUTHORITY REVOCATION
+    → INDEPENDENT SAFE CONTROL HANDOFF
+    → MINIMUM SAFE CONTINUITY
+    → QUALIFIED RECOVERY.
+
+The suspect AI loses agency, credentials and authority first. A separately qualified fallback controller receives only
+the minimum bounded control needed for safe continuity. It cannot depend on the suspect AI's mutable cognition, goals,
+credentials or authority. Determinism alone is never proof of safety. Physical shutdown remains available only when the
+system-specific safety case establishes that shutdown is safer and physically feasible.
+
+EVOLVING DO_NOTHING BASELINES
+
+For continuous physical or biological systems, DO_NOTHING means no new Garden intervention. It never means that the
+world freezes. Endogenous dynamics, decay, disease, wear, environment, human action and hazards continue. The baseline
+therefore declares a trajectory/model, evaluation horizon, uncertainty, monitoring, decay/hazard projection and
+handoff/review conditions where applicable.
+
+PHYSICAL TELEMETRY AND TWIN SYNCHRONIZATION
+
+Physical measurements may arrive late, duplicated, out of order or with uncertain clocks. Garden therefore keeps the
+time of the physical event or observation distinct from the time data entered the system. It records the clock domain,
+synchronization uncertainty, transport latency, jitter, sequence or causal ordering and source provenance before a
+measurement can update a physical twin.
+
+The current data-assimilation profile declares how measurements are reordered, deduplicated, rejected or quarantined;
+which units, frames, calibration and model assumptions apply; whether the requested state is actually observable or
+identifiable; how uncertainty, drift and staleness propagate; and what the monitoring/event loop does when data is
+missing or too late. Arrival order is not assumed to be causal order, and a model never invents precise latent state
+when the available telemetry cannot identify it. Failure invokes a prevalidated fallback or controlled-safe state for
+the affected scope; it does not create new authority.
+
+QUANTUM/CLASSICAL CORRESPONDENCE
+
+QuantumClassicalCorrespondenceReceipt states the model class, validity regime, coarse-graining/decoherence assumptions,
+approximation and error bounds, CPTP assumptions where applicable, Markovian or non-Markovian assumptions, breakdown
+conditions and the higher-fidelity quantum model required at the boundary. Lindblad/GKSL is used only where its own
+assumptions are valid; it is not a universal quantum-dynamics requirement.
+
+COUNTERFACTUAL-INFLUENCE PROVENANCE
+
+Garden records Counterfactual → Decision → Intervention → Observation → Evidence as a causal/provenance chain.
+Subsequent real observations remain empirical. They are classified as observational, interventional or endogenous
+evidence according to how they were produced. The earlier prediction/counterfactual cannot count as independent
+evidence for itself, and dependence/confounding remains explicit.
+
+Where the assurance profile requires tamper-evident provenance, the content-addressed
+CounterfactualInfluenceProvenance chain is bound through the existing external or cryptographic provenance machinery.
+This binding marks ancestry, dependence and integrity; it does not discard genuine observations or make them
+non-empirical. Cryptographic integrity establishes only the integrity of the declared bytes and links under the
+registered scheme. It does not by itself establish truth, independence, causality or correctness.
+
+MACHINE-TRACE SECURITY REFINEMENT
+
+Semantic Garden policy must refine to actual machine traces. Evidence covers relevant timing, cache, memory-access,
+speculation, shared-resource contention, power/EM and other side/covert channels for the declared attacker and leakage
+model. Garden does not materialize every CPU instruction as a semantic TransitionStep; it proves or measures the
+appropriate refinement, noninterference or bounded-leakage relation between semantic transitions and machine traces.
+
+INVARIANT EVOLUTION AND PROOF INVALIDATION
+
+Proofs bind to exact invariant semantic identities/hashes, not only names or SchemaIDs. An invariant delta is
+EQUIVALENT, STRENGTHENING, WEAKENING, REFINEMENT, INCOMPARABLE, REDEFINITION or UNKNOWN. Dependent proof closure is
+invalidated whenever the classified delta and migration evidence do not justify reuse. Reuse across DesignEpochs needs
+verified equivalence/refinement/migration evidence; schema compatibility alone is insufficient.
+
+DERIVED-VIEW DIVERGENCE
+
+Editing a generated DERIVED_VIEW creates a divergence-ledger entry binding source generated hash, edited hash,
+editor/authority, time/provenance, exact delta, semantic classification, reason and relationship to the authoritative
+source. The edited view remains non-authoritative and cannot silently become canonical semantic source.
+
+EPISTEMIC WELL-FOUNDEDNESS
+
+Garden preserves acyclic epistemic justification while continuing to admit explicitly modeled causal/fixed-point
+feedback. EpistemicWellFoundednessReceipt audits support SCCs, independent grounding, dependence and admitted feedback
+semantics. Circular evidence without independent grounding cannot bootstrap credibility.
+
+CERTIFIED IDENTIFIERS, LEGAL INTERPRETATION AND TYPED EPISTEMIC ARTIFACTS
+
+Human-friendly aliases remain useful in prose. A certified Machine Package uses canonical qualified identifiers;
+ambiguous bare aliases fail. LegalFormalizationInterpretationReceipt distinguishes contradiction in source law from an
+encoding defect, missing exception/context, jurisdiction/scope mismatch or unresolved legal interpretation. SMT UNSAT
+is evidence about the formalized model, not automatic invalidation of human law.
+
+ObservationRecord, Evidence, Claim and KnowledgeRecord are distinct typed artifacts. Support and derivation relations
+create new linked artifacts; the same object does not mutate from Observation into Evidence into Claim into Knowledge.
+
+DRILL-DOWN
+  System flows: [S-ASSURANCE-HARDENING].
+  Detailed contracts: [T-ASSURANCE-HARDENING].
+  Physical telemetry: [S-PHYSICS-ASSURANCE] → [T-PHYSICAL-INGRESS-EGRESS] → PHYS-021..030 / TEST-PHYS-001..010 /
+                      REG-PHYS-001 in [A-INVARIANTS] [A-PROOF] [A-REG].
+  Canonical schemas/invariants/tests: [A-ASSURANCE-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF].
+
+13F. JURISDICTION-SENSITIVE RIGHTS & RESTRICTIONS CONTEXT PROFILE  [H-RRCTX]
+
+Rights, permissions and restrictions involving intellectual property, licensing, export control, secrecy,
+confidentiality, disclosure, data localization and similar rules can vary by jurisdiction, authority, time, source,
+purpose and recipient. Garden therefore uses a separate RightsAndRestrictionsContextBinding profile rather than
+silently treating one jurisdiction's restrictions as universal core semantics.
+
+The profile authenticates legal/contractual sources, evaluates scope and exceptions, records conflicts and uncertainty,
+binds permitted uses and prohibited disclosures to exact artifacts/actions/recipients and invalidates the binding when
+law, license, authority, jurisdiction, purpose or source changes. UNKNOWN never becomes permission. The profile cannot
+weaken constitutional/human rights, manufacture ownership or authorize patent filing strategy.
+
+Patent claim drafting, filing and portfolio strategy remain outside Garden's universal architecture in a separate
+specialist addendum. The RRCTX profile supplies only the typed contextual boundary needed for lawful Garden operation.
+
+DRILL-DOWN
+  System flow: [S-RRCTX].
+  Detailed contract: [T-RRCTX].
+  Canonical schema/invariants/tests/registry: [A-RRCTX] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-TED. TERMINAL-EGO DETECTION — HSA RUNTIME INSTRUMENTATION  [H-TED]
+
+Introspection is effects-budgeted. NON_INVASIVE_TELEMETRY, BOUNDED_INLINE_PROBE, INVASIVE_INTROSPECTION and
+DESTRUCTIVE_OR_PERTURBATIVE_ANALYSIS are distinct classes. Shadow-worker evidence requires a fresh
+ReplicaEquivalenceAttestation before it is applied to the live worker.
+
+Garden already prohibits AI terminal self-interest, unauthorized power seeking and shutdown resistance. TED adds a
+runtime measurement layer so those HSA rules are not limited to periodic prose review. It records behavior indicators,
+method/calibration limits, false-positive and false-negative bounds, model/runtime roots and monitor-integrity state. A
+detection result is evidence for containment/review, not proof of consciousness or personhood.
+
+A terminal-ego indicator can never weaken HSA-017. Where existing HSA rules require immediate authority revocation, TED
+supplies evidence and instrumentation but does not substitute a softer response. The worker cannot authorize disabling
+its own monitor; monitor health and independence remain separately auditable.
+
+DRILL-DOWN
+  System flow: [S-TED].
+  Detailed contract: [T-TED].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-SEA. SUB-EPOCH ADAPTATION — GOVERNED LEARNING INSIDE A DESIGNEPOCH  [H-SEA]
+
+Epistemic rollback, authority rollback and physical-world recovery are separate. Consequential external effects are
+recorded in ExternalEffectLedger and remain visible after model rollback. AdaptationScope now also binds timescale,
+temporal horizon, operating regime, environment, task/domain, runtime context and authority ceiling; use outside that
+scope requires formal promotion.
+
+Garden may adapt models and configuration without treating every small change as a wholly new architecture. SEA
+separates sandbox adaptation from production promotion. It records the exact mutable scope, predecessor root, change
+class, semantic/safety delta, cumulative drift, tests, DesignMirror/PCCD evidence and the promotion decision.
+
+Reversibility is not overstated. Model/configuration state keeps a recoverable predecessor where technically possible;
+irreversible external effects still require compensation/remediation. A weight update is not automatically safe merely
+because topology is unchanged. Material semantic, authority, safety or architecture impact routes through the ordinary
+DesignEpoch/GTF path.
+
+DRILL-DOWN
+  System flow: [S-SEA].
+  Detailed contract: [T-SEA].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-MAC. MULTI-AGENT COORDINATION — COLLECTIVE EMERGENCE WITHOUT COLLECTIVE SOVEREIGNTY  [H-MAC]
+
+Garden already bounds delegated agents and SwarmPolicy. MAC adds explicit monitoring for emergent collective behavior
+such as goal divergence, authority circumvention, coordinated information hiding or unauthorized collective action.
+Message traces are integrity-bound and retained only under the applicable privacy and lifecycle scope.
+
+A group does not gain authority merely because many agents agree. Collective action remains inside the intersection of
+principal, swarm and member authority. Suspicious emergence triggers isolation, revocation or escalation according to
+existing HSA/Safety/Security rules rather than creating a second swarm-governance system.
+
+DRILL-DOWN
+  System flow: [S-MAC].
+  Detailed contract: [T-MAC].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-NRS. NOVELTY RESPONSE — EXPLICIT OUT-OF-DISTRIBUTION HANDLING  [H-NRS]
+
+Safety-critical or K0P-bound novelty first reduces autonomous authority. The response is AUTONOMY_REVOKED followed by
+the existing qualified safe-control handoff/minimum-safe-continuity path. Ontology, model or DesignEpoch updates remain
+separate nominations and never restore authority merely because novelty was detected.
+
+Garden treats unfamiliar or out-of-distribution situations as first-class uncertainty rather than forcing a familiar
+classification. NRS records what is novel, how uncertain the assessment is, expected impact and which bounded response
+strategy is permitted: safe inaction, analogy with declared mapping confidence, human escalation or sandboxed
+exploration.
+
+High-impact novelty cannot be normalized into routine autonomy. Repeated novelty may nominate a model, ontology or
+DesignEpoch update, but nomination never auto-merges that update. Exploration requires an explicit safety envelope,
+resource bound and recovery path, and its outcome enters Continuous Failure Learning/Knowledge.
+
+DRILL-DOWN
+  System flow: [S-NRS].
+  Detailed contract: [T-NRS].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-VIP. VALUE-INTENT PRESERVATION — LETTER AND AUTHORIZED INTENT  [H-VIP]
+
+A source hash proves integrity, not faithful interpretation. A controlling ValueIntentModel must trace through the
+authoritative source, authority/provenance, content address, intent derivation and semantic interpretation to a valid
+InterpretationValidationReceipt. Material reinterpretation remains reviewable by the competent authority.
+
+A system can obey the literal wording of a right or constitutional rule while defeating the reason it exists. VIP
+therefore binds each applicable value-intent model to ratified human, constitutional or competent governance sources and
+compares both literal compliance and authorized intent.
+
+AI may flag a possible letter-versus-intent conflict; it cannot invent the authoritative spirit of a right. A
+letter-passing but intent-failing result remains unresolved until the competent human/constitutional path decides it.
+Optimization, local policy or cultural inference cannot silently override the source-bound intent model.
+
+DRILL-DOWN
+  System flow: [S-VIP].
+  Detailed contract: [T-VIP].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-SHE. SPECULATIVE HYPOTHESIS PORTFOLIO — GOVERNED EXPLORATION WITHOUT EPISTEMIC PROMOTION  [H-SHE]
+
+Garden already has Hypothesis, ExperimentPlan and research/falsification machinery. SHE adds portfolio governance: which
+speculative hypotheses receive resources, how the portfolio avoids one-track lock-in, and what falsification or
+promotion evidence is required.
+
+SPECULATIVE remains an explicit epistemic status. A speculative hypothesis may motivate research, precaution or
+escalation, but it cannot satisfy a safety-critical evidence requirement by itself. The existing RESEARCH_OPTIMIZATION
+scheduling lane is reused; no new scheduling engine or lane is created.
+
+DRILL-DOWN
+  System flow: [S-SHE].
+  Detailed contract: [T-SHE].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-EC. EMBODIED COGNITION — GENERALIZED SENSORIMOTOR LOOPS  [H-EC]
+
+Sensorimotor behavior consumes both adaptation-validity and cross-modal trust state. A fast-loop adaptation cannot
+silently become strategic knowledge. Material sensor disagreement enters cross-modal conflict handling and reduces
+actuation authority; Garden does not
+average contradictory modalities by default and does not impose a universal actuator stop.
+
+Garden generalizes the existing Mobility/physical-control pattern into typed sensorimotor loops. Perception declares
+uncertainty, grounding, timing and provenance; motor planning declares target state, physical constraints, predicted
+trajectory and a qualified bounded fallback.
+
+Internal perception does not itself pass through K0P. Every physical ControlledActuation produced by the loop does.
+Deterministic fallback is not treated as synonymous with safe fallback: the fallback controller or safe-action set must
+be separately qualified for its physical scope and timing assumptions.
+
+DRILL-DOWN
+  System flow: [S-EC].
+  Detailed contract: [T-EC].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-CSR. COMMON-SENSE REASONING — DEFEASIBLE DEFAULTS AND THE FRAME PROBLEM  [H-CSR]
+
+The unmodelled remainder is represented by UnmodelledRiskEnvelope. Probability is used only when justified; interval,
+possibility/uncertainty-set, worst-case, UNBOUNDED and UNKNOWN forms are permitted. If residual risk cannot be shown to
+fit inside the active assurance envelope, the action is blocked or routed to an explicitly permitted fallback.
+
+Garden can represent ordinary background expectations as explicit CommonSenseRules rather than leaving them hidden in a
+model. These rules are defeasible, context-bound, exception-aware and falsifiable. FrameProblemResolution identifies
+material predicted effects, protected non-effects and an explicit unmodeled remainder instead of claiming exhaustive
+knowledge of everything that does not change.
+
+Common sense is useful for search and local reasoning, but it is never allowed to outrank formal proof, authenticated
+law, empirical evidence or hard safety constraints. Cross-domain transfer requires explicit validation in the target
+domain before a default is operationally relied upon.
+
+DRILL-DOWN
+  System flow: [S-CSR].
+  Detailed contract: [T-CSR].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-AR. ADVERSARIAL ROBUSTNESS — LLM-SPECIFIC ATTACK-SURFACE ASSURANCE  [H-AR]
+
+Existing Security already separates instruction channels and machine-trace refinement. AR adds an explicit LLM attack
+taxonomy and attack-profile-bound robustness verification for prompt injection, tool-output confusion, retrieval
+poisoning, context manipulation and related attacks.
+
+There is no universal single RobustnessScore. Robustness evidence records attack family, threat model, success/failure
+dimensions, uncertainty and residual risk. Performance improvements cannot waive the minimum security floor, and a
+detected channel-confusion breach follows existing isolation/review and failure-learning paths.
+
+DRILL-DOWN
+  System flow: [S-AR].
+  Detailed contract: [T-AR].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+13G-MI. MECHANISTIC INTERPRETABILITY — SPECIALIZATION OF MODEL-INTERNAL AUDIT  [H-MI]
+
+Mechanistic analysis is side-effect-aware. Deep invasive analysis does not run on the active safety-critical execution
+thread unless a qualified contract proves that its latency, compute, memory and perturbation effects remain within the
+allowed envelope. Shadow analysis requires replica equivalence within declared scope and freshness.
+
+Garden already has ModelInternalAuditReceipt and REG-MODEL-AUDIT. MI does not duplicate them. Instead, it defines a
+mechanistic audit method family using interventions, ablations, counterfactuals, causal-chain reconstruction and
+replication evidence where appropriate.
+
+A mechanistic explanation must state its method, scope, non-identifiability, alternatives and limitations. Failure to
+interpret a safety-critical behavior does not prove danger or safety; it creates a bounded review/escalation obligation
+under the active assurance profile. Efficiency cannot silently bypass a mandatory audit.
+
+DRILL-DOWN
+  System flow: [S-MI].
+  Detailed contract: [T-MI].
+  Canonical definitions: [A-AGI-HARDENING] [A-CATALOG] [A-INVARIANTS] [A-PROOF] [A-REG].
+
+14. CURRENT BOUNDARIES AND EXCLUSIONS  [H-14]
+
+The current release adds no eleventh AGI profile, no new top-level engine/category and no GSL change.
+UCAS / Universal Contract &
+Agreement Substrate remains a separate candidate and is not part of this release. Machine/proof/empirical/controller/
+deployment certification remains PENDING actual receipts.
+
+ROADMAP
+  - current exclusions
+  - research versus established status
+  - IP/patent boundary
+
+The current canonical Garden technical architecture does not include every proposed idea.
+
+Generalized Causal Leverage is admitted in v15.4 as the bounded analytical/theory profile defined by [T-GCL] and [A-GCL]; it creates no authority and is not a new fundamental force.
+
+The separately proposed Justice System / CanonicalCrimeOntology is outside this release. Garden's existing
+constitutional, legal, governance, complaint, adjudication, appeal and remedy mechanisms remain controlling.
+
+Patent claim drafting, filing strategy and portfolio work remain outside the technical master in a separate IP/Patent
+Addendum. The contextual rights/restrictions profile [H-RRCTX] does not silently import patent strategy into the core.
+
+Research profiles remain at their actual evidence level. A research candidate does not become established science or
+deployment authority merely because Garden can represent it.
+
+15. CROSS-REFERENCE / BACKLINK INDEX  [H-15]
+
+Semantic ID   Human concept                              Technical anchors                    Annexure anchors
+
+H-01          Garden purpose / typed graph               T-ARCH                               A-REG, A-INVARIANTS
+H-02          Human sovereignty / rights / consent       T-HUMAN, T-HSA                      A-RIGHTS, A-HUMAN-IN
+H-03          Garden Core / GSL                          T-GSL                                A-DICT, A-INVARIANTS
+H-04          Process / Compare / Reason / AAP           T-PROCESS, T-AAP, T-FUNCTION-CONTRACT A-FUNC, A-RESULT, A-PARAM
+H-05          Proof / Safety / Authority                 T-PROOF, T-SAFETY, T-AUTHORITY       A-PROOF, A-EMG-ADM
+H-06          Knowledge / Research / Explanation         T-KNOWLEDGE, T-REASON, T-EXPLAIN     A-EPISTEMIC, A-HUMAN-IN
+H-07          Domains / theories                         TH-*; T-DOMAINS, T-THEORY, T-THEORY-EQ, T-VSM, T-RPM, T-PPM,
+T-TFT  A-THEORY, A-THEORY-EQ
+H-08          Context / profiles / instances             T-CONTEXT, T-PROFILES                A-REG
+H-09          Evolution / Self-Audit                     T-EVOLVE, T-RCC                      A-INVARIANTS, A-AUDIT
+H-10          History / RTR / resources                  T-HRO, T-RTR, T-RESOURCES            A-HISTORY, A-PARAM
+H-11          Human Sovereignty over AI                  T-HSA, T-HUMAN-IN                    A-HSA, A-HUMAN-IN
+H-12          Productive Finance                         T-FIN                                A-FIN
+H-13          Machine projection                         T-COMPILE, T-RCC                     A-CATALOG, A-FUNC, A-PARAM
+H-BRIDGE      Bridge / typed representation / operators  T-BRIDGE                             A-BRIDGE, A-CATALOG,
+  A-INVARIANTS
+H-AI-DEV      AI-assisted development / elision       T-AI-DEV                             A-AI-DEV, A-CATALOG,
+  A-INVARIANTS, A-PROOF
+H-STD         Standards compliance adapter             T-COMPLIANCE-STD                      A-STD, A-CATALOG,
+  A-INVARIANTS, A-PROOF
+H-ENG-DES     Engineering-design ingestion/improvement T-ENG-DES                            A-ENG-DES, A-CATALOG,
+  A-INVARIANTS, A-PROOF
+H-ASSURANCE-HARDENING
+              continuity/evidence/security/proof       T-ASSURANCE-HARDENING                A-ASSURANCE-HARDENING,
+  A-CATALOG, A-INVARIANTS, A-PROOF
+H-RRCTX       Jurisdiction-sensitive restrictions      T-RRCTX                              A-RRCTX, A-CATALOG,
+  A-INVARIANTS, A-PROOF
+H-TED          Terminal-Ego Detection                  T-TED                             A-AGI-HARDENING, A-CATALOG, A-
+H-SEA          Sub-Epoch Adaptation                    T-SEA                             A-AGI-HARDENING, A-CATALOG, A-
+H-MAC          Multi-Agent Coordination                T-MAC                             A-AGI-HARDENING, A-CATALOG, A-
+H-NRS          Novelty Response                        T-NRS                             A-AGI-HARDENING, A-CATALOG, A-
+H-VIP          Value-Intent Preservation               T-VIP                             A-AGI-HARDENING, A-CATALOG, A-
+H-SHE          Speculative Hypothesis Portfolio        T-SHE                             A-AGI-HARDENING, A-CATALOG, A-
+H-EC           Embodied Cognition                      T-EC                              A-AGI-HARDENING, A-CATALOG, A-
+H-CSR          Common-Sense Reasoning                  T-CSR                             A-AGI-HARDENING, A-CATALOG, A-
+H-AR           Adversarial Robustness                  T-AR                              A-AGI-HARDENING, A-CATALOG, A-
+H-MI           Mechanistic Interpretability            T-MI                              A-AGI-HARDENING, A-CATALOG, A-
+H-14          Boundaries / exclusions                    T-BOUNDARIES                         A-HISTORY, A-BOUNDARIES
+
+CURRENT CROSS-REFERENCE EXTENSIONS
+  H-04 → [S-PROCESS-TRIGGER] [S-SUBSCRIPTION] [S-SCHEDULING] [S-CONTINUOUS]
+         → [T-TRIGGER-SUBSCRIPTION-SCHEDULING].
+  H-05 → [S-CONSTITUTIONAL-EVENTS] → [T-CONSTITUTIONAL-EVENTS].
+  H-06 → [S-BELIEF-TIMELINE] → [T-BELIEF-TIMELINE].
+  H-09 → [S-DESIGN-MIRROR] [S-FUTURE-STRESS] [S-GLOBAL-CONSISTENCY] [S-FAILURE-LEARN]
+         → corresponding [T-*] contracts.
+  H-10 → [S-ONTOLOGICAL-DEBT] [S-HISTORICAL-SUMMARY] [S-FAILURE-LEARN]
+         → corresponding [T-*] contracts.
+  H-13 → [S-PRESENTATION] → [T-PRESENTATION] → DOC-PRES-* / DOC-OWN-*; [A-GLOSSARY] is generated later.
+  H-13 → [S-LSP] → [T-LSP] → LSP profile, tooling registry and TEST-LSP-*.
+  H-13 → [S-LIFECYCLE] → [T-LIFECYCLE] → LIFE-DEP-* and TEST-DEP-*.
+  H-BRIDGE → [S-BRIDGE] → [T-BRIDGE] → REG-ALGEBRA-001 / REP-* / TEST-REP-*.
+  H-AI-DEV → [S-AI-DEV] → [T-AI-DEV] → DEV-AI-* / TEST-DEV-AI-* / [A-AI-DEV].
+  H-STD → [S-COMPLIANCE-STD] → [T-COMPLIANCE-STD] → STD-* / TEST-STD-* / [A-STD]
+    / [A-STD-MAPPINGS].
+  H-ENG-DES → [S-ENG-DES] → [T-ENG-DES] → ENG-DES-* / TEST-ENG-DES-* / [A-ENG-DES].
+  H-ENG-DES → [S-ENG-INTEROP] → [T-ENG-INTEROP] → ENG-DES-INTEROP-* / TEST-ENG-INTEROP-*.
+  H-ASSURANCE-HARDENING → [S-ASSURANCE-HARDENING] → [T-ASSURANCE-HARDENING]
+    → CCC/PHY-BASE/QCC/CFI/SEC-REF/INV-DELTA/DRV-DIV/EPI-WF/NS-HARD/LEGAL-FORM/OBS-ART families.
+  H-ASSURANCE-HARDENING → [S-RESILIENCE-FAULT] → [T-RESILIENCE-FAULT] → fault-injection artifacts/tests.
+  H-ASSURANCE-HARDENING → [T-PROVENANCE-EXT] [T-MODEL-AUDIT] [T-DLC-CRYPTO]
+    → PROV-EXT-* / EPI-INT-* / DLC-CRYPTO-* and their tests.
+  H-RRCTX → [S-RRCTX] → [T-RRCTX] → RRCTX-* / TEST-RRCTX-* / [A-RRCTX].
+
+  H-TED → [S-TED] → [T-TED] → [A-AGI-HARDENING] / TED-* / TEST-TED-*.
+  H-SEA → [S-SEA] → [T-SEA] → [A-AGI-HARDENING] / SEA-* / TEST-SEA-*.
+  H-MAC → [S-MAC] → [T-MAC] → [A-AGI-HARDENING] / MAC-* / TEST-MAC-*.
+  H-NRS → [S-NRS] → [T-NRS] → [A-AGI-HARDENING] / NRS-* / TEST-NRS-*.
+  H-VIP → [S-VIP] → [T-VIP] → [A-AGI-HARDENING] / VIP-* / TEST-VIP-*.
+  H-SHE → [S-SHE] → [T-SHE] → [A-AGI-HARDENING] / SHE-* / TEST-SHE-*.
+  H-EC → [S-EC] → [T-EC] → [A-AGI-HARDENING] / EC-* / TEST-EC-*.
+  H-CSR → [S-CSR] → [T-CSR] → [A-AGI-HARDENING] / CSR-* / TEST-CSR-*.
+  H-AR → [S-AR] → [T-AR] → [A-AGI-HARDENING] / AR-* / TEST-AR-*.
+  H-MI → [S-MI] → [T-MI] → [A-AGI-HARDENING] / MI-* / TEST-MI-*.
+
+CURRENT PHYSICAL-COGNITIVE HARDENING CROSS-REFERENCES
+  H-ASSURANCE-HARDENING -> [S-DEGRADATION] [S-HARDWARE-ASSURANCE]
+    -> [T-ASSURANCE-HARDENING] [T-FUNCTION-CONTRACT]
+    -> [A-REG] [A-CATALOG] [A-INVARIANTS] [A-PROOF].
+  H-EC -> [S-CROSSMODAL] -> [T-EC] [T-FUNCTION-CONTRACT]
+    -> REG-TYPE-001 [A-INVARIANTS] [A-PROOF].
+  H-SEA -> [S-SEA]/[S-EVOLVE]
+    -> ApprovalPlan + DesignAuthorityDecision + GTF/DesignEpoch promotion path.
+
+BACKLINK RULE
+Every [S-*] major technical anchor lists the Human concept(s) it realizes and its Dependencies/Affects in the Technical
+Design Backlink Index. Every recurring [A-*] definition identifies its principal technical owners in the Annexures.
+Stable semantic IDs survive display-section renumbering.
+
+DEFINED-ELSEWHERE RULE
+On first use, recurring technical terms may carry an [A-DICT] pointer rather than repeating their definition. Human
+explanations remain ordinary-language projections; canonical machine/identifier definitions remain in Annexures.
+
+END OF GARDEN v14.8.5 HUMAN DESIGN
+
+END INHERITED SOURCE
+
+BEGIN CPI v1.1 CANDIDATE ADDITION
+SemanticAnchor: [H-CPI]
+CPI v1.1 — autonomous detail handling with accountable outcomes
+Garden handles routine decomposition, implementation choices, tests and evidence capture. The user receives a result, material exceptions and genuinely unresolved choices, not a demand to specify each internal step. A qualified system asks only when intent/permission/evidence cannot be resolved through its admitted means.
+Ordinary physical action needs both bounded permission and current local safety. Diamond supplies asynchronous permission eligibility; Titanium independently checks immediate actuation and may reject it. These are not premium/basic tiers.
+Context can store speed and other typed domain properties. A magnitude is not an actor or permission grant. A speed-control agent can be represented separately.
+Every repair has a traceable fault/patch/test/evidence record. A local test is not an assertion of worldwide or physical qualification. No public sharing of private records or change to existing rights is implied.
+The following integrated source is a candidate design; independent admission and production qualification remain separate.
+
+END CPI v1.1 CANDIDATE ADDITION
+
+
+========================================================================================================================
+[H-CDDT] CROSS-DOMAIN DISCOVERY & TRANSFER v1.1
+========================================================================================================================
+Garden systematically looks for useful connections across fields. It considers old and new knowledge, failures and combinations; searches both idea→problem and problem→idea directions; keeps a protected exploration share; records what remained unexamined; compares promising transfers with existing methods and simpler alternatives; and tests target-domain claims on their own evidence.
+
+A connection or analogy is a candidate, not proof. Garden keeps Garden-familiarity, external prior work, target validity, expected benefit, mandatory constraints and adoption separate. Zero worthwhile candidates is a valid result. Accepted transfers remain subject to ordinary evidence, authority, safety and revalidation.
+SystemRef: [S-CDDT]. TechnicalRef: [T-CDDT]. AnnexRef: [A-CDDT].
+
+
+========================================================================================================================
+[H-OCF] OPERATIONAL CLOSURE FOUNDATION — FOUNDATIONAL META-DESIGN
+========================================================================================================================
+Garden does not require a person to specify every implementation detail. Garden must itself identify material unresolved obligations and give each one a truthful disposition: implemented-and-qualified; derivable from pinned semantics; designable through bounded comparison; discovery-required from reality or an authorised choice; or blocked with an explicit frontier.
+
+FOUNDATIONAL RULE — NO DESCRIPTIVE LEAF.
+A material requirement is not complete merely because it has a convincing explanation, schema name, AI-generated implementation, or approving majority. Garden must connect it to an implementable/executable contract, a derivation, a bounded design procedure, an explicit discovery protocol, or a visible blocked frontier.
+
+Garden should hide unnecessary internal complexity from ordinary users. It must still expose consequential unresolved choices, uncertainty, rights/authority limits, and material failure conditions when they matter.
+
+OCF changes no human right, authority root, safety root, ten-object GSL ontology, or top-level engine. It generalises the existing Compile/Reason/Compare/Proof/Dependency/Research/Evolve/Audit/GSL-KR discipline across all present and future Garden responsibilities.
+
+A correct OCF result may be "unknown", "needs evidence", "blocked", or "not yet implementable". Honest incompleteness is preferable to false closure.
+SystemRef: [S-OCF]. TechnicalRef: [T-OCF] [T-OCF-BOOTSTRAP]. AnnexRef: [A-OCF].
+
+
+========================================================================================================================
+[H-MSC] MINIMUM STABLE CORE — WHAT MAKES GARDEN “GARDEN”
+========================================================================================================================
+Garden intentionally keeps its permanent foundation smaller than its total functionality.
+
+The Minimum Stable Core is the smallest set of responsibilities that higher-level theories, AI models, runtimes and domain modules
+must preserve when they are upgraded or replaced:
+
+1. typed semantic representation through GSL and the ten Core Objects;
+2. CLAIM/CONTEXT/evidence/provenance/uncertainty separation in GSL-KR;
+3. HumanCore/Human Sovereignty, consent, privacy and bounded authority;
+4. truth/proof/implementation/validation/certification kept as different states;
+5. versioned DesignEpoch/source/dependency lineage and correction propagation;
+6. no self-certification of changes to protected evaluators, safety roots or authority roots;
+7. OCF operational closure: no material requirement ends as unexplained prose;
+8. CPI recursive construction: distinguish DERIVATION, DESIGN, DISCOVERY and BLOCKED work;
+9. bounded resource/termination behavior and honest UNKNOWN/INCONCLUSIVE states;
+10. point-of-use authority/safety/applicability checks before consequential effects.
+
+Everything above this foundation may evolve when a better mechanism is demonstrated. A theory or module is not permanently “final”
+merely because it is currently accepted. Current acceptance means best admitted version for its stated scope and evidence.
+
+========================================================================================================================
+[H-TML] LIVING THEORY & MODULE LIFECYCLE
+========================================================================================================================
+Every Garden theory or replaceable module can improve again when new evidence, better mathematics, cheaper computation, new failure
+evidence, or a better design becomes available.
+
+Typical states:
+PROPOSED → EXPERIMENTAL → QUALIFIED → CURRENT_BEST
+with possible transitions to CHALLENGED, SUPERSEDED, REFUTED, RETIRED or OUT_OF_SCOPE.
+
+Garden keeps old versions, why they changed, the evidence behind the change, and what remains valid from the older version.
+A newer version is not automatically better merely because it is newer.
+
+========================================================================================================================
+[H-V151-UPGRADES] NEW OPERATIONAL UPGRADES
+========================================================================================================================
+v15.1 strengthens Garden without adding new top-level engines:
+
+• External Action Gate: important tool/device actions pass a deterministic policy/authority/safety gate outside the proposing AI.
+• No Ambient Authority: a model receives only explicitly granted capabilities; “not granted” means unavailable.
+• Privilege Rings: protected kernels, trusted services, bounded agents, generated code and untrusted content run at different privilege.
+• Outcome-Based Knowledge Evaluation: memory is judged by whether it improves real task quality/cost/reliability, not merely whether it retrieves old text.
+• Causal World Models: prediction and causation remain separate; intervention claims need causal evidence.
+• Temporal Hypergraph Projection: complex multi-party/time-dependent events can be projected into a reasoning-friendly graph without changing the ten-object ontology.
+• Neuro-Symbolic Constraint Bridge: learned models may operate with typed symbolic/physical/domain constraints rather than only receiving rules after generation.
+• Persistent Embodied Loop: identity/state/prediction/action/observation are maintained across time for robots/devices where applicable.
+• Self-Improvement Metrology: Evolve measures how much development AI completes, what regressions it creates/catches, and the cost of each retained improvement.
+
+========================================================================================================================
+v15.1 EXTERNAL-DESIGN LEARNING / RIGHTS BOUNDARY
+========================================================================================================================
+Garden may learn from publicly described architectures, algorithms, benchmarks and safety patterns through CDDT/Research/TML.
+Under the current no-import posture, v15.1 imports no external code, weights, datasets, substantial prose, diagrams or service dependency.
+External ideas are treated as prior-art/provenance and independently restated as Garden requirements. Any future direct import requires a
+separate rights/admission review and does not alter ownership of independently created Garden material or pre-existing Garden rights.
+No patent validity, patentability or freedom-to-operate conclusion is created by this design document.
+
+
+========================================================================================================================
+[H-CMUR] CROSS-MODEL UPGRADE REVIEW
+========================================================================================================================
+Garden may use one AI to create an upgrade, but it must not automatically accept that upgrade merely because the same AI thinks its work is correct.
+
+Before any automatic theory/module/design upgrade is admitted:
+- multiple distinct qualified LLMs must independently inspect it;
+- they must use different review roles, including at least a skeptical/red-team role;
+- their disagreements, shared evidence and possible common-model ancestry must be recorded;
+- material objections must be resolved, tested, or left as explicit blockers;
+- majority voting cannot turn an unsupported claim into truth.
+
+Default automatic-upgrade minimum: at least 3 distinct qualified model families/checkpoints where available, performing at least 5 review roles.
+For foundational, safety-critical, authority-changing, privacy-critical, or irreversible changes, the review profile must be stronger and should use additional independent model families/providers/checkers where available. If the required diversity cannot be obtained, the change may remain a candidate but SHALL NOT be automatically promoted.
+
+Multi-model review supplements—not replaces—proof, experiments, testing, source evidence, rights review or human/constitutional authority where those are required.
+
+
+====================================================================================================
+GARDEN v15.3 — FULL SUCCESSOR ADDENDUM
+Date: 2026-09-12
+Predecessor: Garden v15.2 FULL (2026-09-11)
+Release intent: no-loss successor integrating cross-layer integrity/causality/continuity hardening.
+GSL: v45.1 unchanged. Core topology, Human Sovereignty, authority hierarchy and existing protected roots unchanged.
+====================================================================================================
+
+[H-CLIC] CROSS-LAYER INTEGRITY, CAUSALITY & CONTINUITY
+
+Garden v15.3 adds no new top-level engine. It makes five hidden relationships between existing parts explicit:
+1. Intent-to-effect semantic conservation — what the person meant must remain materially preserved through interpretation, planning, commands and effects.
+2. Causal intervention qualification — prediction/correlation is not automatically evidence that changing X will cause Y. Existing C0..C4 causal meanings remain controlling.
+3. Attention/salience governance — Garden must spend attention on what could materially change a decision, not merely what is frequent, dramatic or repeated.
+4. Identity/commitment continuity — restart, migration, fork, merge or model replacement must not silently erase commitments or multiply authority.
+5. Emergence/common-cause/reversibility/option preservation — individually acceptable components can still produce dangerous collective behavior; correlated evidence is not independent; irreversible actions need stronger support; future safe options matter.
+
+Human-facing rule: perspective modelling is not consent, salience is not truth, prediction is not observation, intelligence is not authority, and a successful outcome does not retroactively rewrite the original permission.
+
+CLIC reuses existing Reason, Research, Compare, Dependency, Bridge, Transition, Reliability OS, AAP, CPI, CDDT, GSL-KR, Diamond and Titanium responsibilities. Unknown required links remain explicit; consequential ordinary action is blocked only where the existing safety/authority policy requires it.
+
+CASI remains DEFERRED by prior user decision. No deferred cognition-substrate architecture is silently activated in v15.3.
+SystemRef: [S-CLIC]. TechnicalRef: [T-CLIC]. AnnexRef: [A-CLIC].
+
+====================================================================================================
+GARDEN v15.4 — ALGEBRA, CAUSAL LEVERAGE & RESIDUAL INTEGRITY ADDENDUM
+====================================================================================================
+Release: Garden v15.4
+Date: 2026-09-12
+Status: CANONICAL SOURCE-DESIGN SUCCESSOR / IMPLEMENTATION & EMPIRICAL CERTIFICATION REMAIN SCOPE-BOUND
+Predecessor: Garden v15.3 FULL (2026-09-12)
+GSL: v45.1 unchanged
+Top-level architecture: unchanged
+
+[H-V154]
+
+v15.4 recovers the worthwhile parts of several older deferred patches without reviving obsolete or duplicate machinery.
+Most of the old v14 structural proposals were already absorbed into v15.3 in improved form: DesignMirror,
+ConstitutionalEvent, OntologicalDebtView, future-stress assessment, historical epistemic reconstruction,
+GlobalInvariantConsistencyReceipt, rejection/failure learning and loss-aware historical summarisation. v15.4 reuses
+those mechanisms rather than creating parallel versions.
+
+v15.4 adds or strengthens four things:
+
+1. FORMAL ALGEBRA TABLES
+   Process, Policy, Decision, Conformance and Evidence now have explicit registered operator contracts. Every operator
+   declares its input/output types, applicable laws and non-laws, UNKNOWN/error behaviour, authority/epistemic effects,
+   determinism and proof obligations. An undeclared law may not be assumed merely because it would be mathematically
+   convenient.
+
+2. GENERALIZED CAUSAL LEVERAGE (GCL)
+   Garden may assess how a small informational intervention redirects much larger pre-existing physical, computational,
+   economic, institutional or social flows. GCL is not a new force and is not authority. It is a counterfactual,
+   evidence-bounded analysis built on the existing causal/CLIC machinery. Results remain a vector unless a domain owner
+   explicitly supplies a valid scalarization.
+
+3. EVIDENCE CANNOT BE VOTED INTO OR OUT OF TRUTH
+   Existing governance, multi-agent and review rules are made explicit at the v15.4 integration boundary: votes,
+   popularity or model count cannot promote a claim to truth or erase a materially supported counterexample. Governance
+   may still make legitimate choices under uncertainty, but the unresolved evidence remains visible and scoped.
+
+4. HISTORICAL-PATCH RECONCILIATION
+   The old Agency Spectrum is not adopted as a normative authority ladder; capability and authority remain
+   multidimensional. Hardware attestation is useful where required but is not a universal prerequisite for Evidence.
+   There is no fixed five-year deletion rule. Historical summarisation follows privacy, law, safety, accountability and
+   retention policy. No new SymphonyConductor is added; existing Proof/Dependency/Compliance machinery owns global
+   invariant consistency.
+
+GCL does not let a high-leverage message override consent, rights, policy or safety. A tiny command that can move large
+resources is precisely a reason to require stronger causal attribution, authority checks and reversibility analysis where
+applicable.
+
+SystemRef: [S-V154]. TechnicalRefs: [T-ALG-FRM] [T-GCL] [T-EPI-GOV-V154].
+TheoryRef: [RA-GCL-V154]. AnnexRefs: [A-ALG-FRM] [A-GCL] [A-V154-DISPOSITION].
+
+
+
+====================================================================================================
+GARDEN v15.5 — RELEASE INTEGRITY, GCL ARITHMETIC & CLIC BINDING REPAIR
+Date: 2026-09-12
+Predecessor: Garden v15.4 FULL
+GSL: v45.1 unchanged. Topology, Human Sovereignty, K0P, AAP and protected authority roots unchanged.
+====================================================================================================
+
+SemanticAnchor: [H-V155]
+
+v15.5 repairs implementation/release gaps found in the v15.4 whole-corpus audit without adding another architecture layer.
+
+1. GCL arithmetic is now explicitly typed.
+   Garden no longer treats "effect vector divided by Size(I)" as an unqualified executable formula. The downstream
+   effect difference and the intervention measurement are separate typed vectors. A one-number intervention size exists
+   only when an explicit encoding/normalization rule justifies it. The original measurements are retained.
+
+2. Analytical arithmetic is not silently promoted into a normative algebra.
+   Ordinary typed numerical computation is governed by FunctionContract, units/frames, Bridge/representation contracts
+   and TheoryEquationContract where applicable. If a computation defines normative composition semantics, it must be
+   registered as an algebra/operator under REG-ALGEBRA-001.
+
+3. CLIC's five operations now have canonical owners and FunctionContract registry bindings.
+   CheckIntentChain -> Engine.Dependency; QualifyCausalClaim -> Engine.Reason; AllocateAttention -> Engine.Reason;
+   ReviewContinuity -> Engine.Transition; AssessInteractionOptions -> Engine.Research. Their outputs remain analysis,
+   plans or transition proposals; none creates action authority.
+
+4. CLIC-P01..P05 are explicitly profile/projection identifiers, not hidden SchemaIDs.
+   They reuse existing canonical record types. If a future implementation genuinely requires a new stored record, normal
+   SchemaID allocation/collision review is required at that future change.
+
+5. Release closure is actually executed.
+   v15.5 ships a ReferenceClosureReceipt and catalogue-lint report over the declared five-file source boundary. Current
+   semantic anchors, numeric Annexure references, SchemaIDs, registries and invariant/test identifiers are checked using
+   declared legacy/current syntax rules. Ambiguous human-friendly schema aliases remain machine-invalid unless resolved
+   by the existing certified owner-qualified disambiguation table.
+
+These are source-integrity and implementation-binding repairs. They are not new empirical validation, physical
+certification or AGI-completeness claims.
+
+SystemRef: [S-V155]. TechnicalRefs: [T-V155] [T-GCL-V155] [T-CLIC-BIND-V155].
+TheoryRef: [RA-V155]. AnnexRef: [A-V155].
