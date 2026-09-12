@@ -1,0 +1,65 @@
+name: Integration proposal
+description: Propose a Garden integration, adapter, agent-framework example, MCP/A2A surface, or evaluation harness
+title: "[INTEGRATION] "
+labels: []
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Target ecosystem / framework
+      description: e.g. MCP, A2A, LangChain, AutoGen, CrewAI, LlamaIndex, Semantic Kernel, OpenHands, eval platform
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose
+      description: What useful Garden capability or evaluation workflow does the integration enable?
+    validations:
+      required: true
+  - type: textarea
+    id: authority
+    attributes:
+      label: Authority / effect boundary
+      description: State whether the integration is read-only, writes repository state, calls tools, or can create real-world effects. Explain why the scope is minimal.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data / privacy / credential boundary
+      description: What data is read or written? What credentials or private data are required? Prefer none for first integrations.
+    validations:
+      required: true
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Minimal implementation
+      description: Describe the smallest runnable example and its dependencies.
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Tests / acceptance criteria
+      description: Include conformance, failure, abuse, provenance, and version-drift tests as relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and failure modes
+      description: Prompt injection, authority amplification, stale source, dependency compromise, abuse, privacy leakage, etc.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundaries
+      options:
+        - label: This proposal does not claim that integration implies Garden deployment certification.
+          required: true
+        - label: This proposal does not infer authority from model capability, popularity, registry listing, or public source access.
+          required: true
+        - label: This proposal does not disclose the founder's private identity/context.
+          required: true
