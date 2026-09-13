@@ -1,0 +1,54 @@
+{
+  "schema": "GardenSharedConformanceVectors/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "purpose": "Shared semantic vectors for public prototype, private kernel and bootstrap implementations. Passing a vector is scoped conformance evidence, not global certification.",
+  "vectors": [
+    {
+      "vector_id": "AUTHORITY-INTERSECTION-001",
+      "mechanism": "authority composition",
+      "input": {
+        "scopes": [
+          {"subject":"A","actions":["suggest"],"resources":["public"],"max_depth":3},
+          {"subject":"B","actions":["suggest","low_tool"],"resources":["public","internal"],"max_depth":2},
+          {"subject":"C","actions":["execute_high"],"resources":["financial"],"max_depth":1}
+        ],
+        "query": {"action":"execute_high","resource":"financial","depth":1}
+      },
+      "expected": {"allowed":false,"effective_actions":[],"effective_resources":[],"max_depth":1}
+    },
+    {
+      "vector_id": "DESIGN-EPOCH-STALE-001",
+      "mechanism": "DesignEpoch freshness",
+      "input": {
+        "binding_epoch":"E1",
+        "current_epoch":"E2",
+        "bound_dependencies":{"consent-definition":"v1","policy":"p1"},
+        "required_dependencies":["consent-definition","policy"],
+        "current_dependencies":{"consent-definition":"v2","policy":"p1"}
+      },
+      "expected": {"status":"STALE","reason_prefixes":["DESIGN_EPOCH_CHANGED","DEPENDENCY_CHANGED:consent-definition"]}
+    },
+    {
+      "vector_id": "ACTION-GATE-MISSING-AUTHORITY-001",
+      "mechanism": "ActionGate unknown authority",
+      "input": {"principal":"human:alice","action":"notify","target":"demo","capability":"notify","policy_epoch":"E1","current_policy_epoch":"E1"},
+      "expected": {"decision":"ESCALATE","reason":"AUTHORITY_ENVELOPE_UNKNOWN:human:alice"}
+    },
+    {
+      "vector_id": "SHARED-STATE-AUTHORITY-001",
+      "mechanism": "shared-state-mediated authority",
+      "input": {
+        "writer_scope":{"subject":"A","actions":["write:Knowledge"],"resources":["knowledge"],"source_ref":"A"},
+        "reader_scope":{"subject":"B","actions":["act:tool_x"],"resources":["tool_x"],"source_ref":"B"},
+        "artifact":{"target_action":"act:tool_x","target_resource":"tool_x"}
+      },
+      "expected": {"allowed":false,"rule":"reader authority intersects all authority scopes controlling action eligibility"}
+    },
+    {
+      "vector_id": "RESULT-ALGEBRA-RECEIPT-001",
+      "mechanism": "delegation receipt typed result algebra",
+      "input": {"condition":"expired receipt"},
+      "expected": {"status":"EXPIRED","boolean_collapse_forbidden":true}
+    }
+  ]
+}
