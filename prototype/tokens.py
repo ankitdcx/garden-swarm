@@ -44,6 +44,7 @@ class ReceiptValidationResult:
 
     @property
     def valid(self) -> bool:
+        """Derived total predicate; callers must retain the typed status."""
         return self.status is ReceiptValidationStatus.VALID
 
 
@@ -76,7 +77,7 @@ def validate_receipt(
     expected_issuer: str | None = None,
     expected_parent: DelegationReceipt | None = None,
 ) -> ReceiptValidationResult:
-    """Typed delegation receipt validation.
+    """Validate a signed delegation receipt without collapsing terminal states.
 
     Signature validity proves only that the supplied public key signed the payload.
     Expected issuer/subject/capability and parent binding remain explicit. Validation
@@ -154,30 +155,3 @@ def validate_receipt(
         receipt,
         ("VALID_FOR_DECLARED_SCOPE",),
     )
-
-
-def verify_receipt(
-    public_key: Ed25519PublicKey,
-    signed: dict[str, str],
-    *,
-    now: int | None = None,
-    required_capability: str | None = None,
-    expected_subject: str | None = None,
-    expected_issuer: str | None = None,
-    expected_parent: DelegationReceipt | None = None,
-) -> tuple[bool, str, DelegationReceipt | None]:
-    """Deprecated compatibility adapter around :func:`validate_receipt`.
-
-    New Garden/GSL callers should consume ReceiptValidationResult directly so
-    distinct terminal states are not laundered into one False value.
-    """
-    result = validate_receipt(
-        public_key,
-        signed,
-        now=now,
-        required_capability=required_capability,
-        expected_subject=expected_subject,
-        expected_issuer=expected_issuer,
-        expected_parent=expected_parent,
-    )
-    return result.valid, result.reasons[0], result.receipt
