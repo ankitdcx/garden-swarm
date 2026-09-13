@@ -1,0 +1,75 @@
+name: Garden free ZDR probe
+
+on:
+  push:
+    branches: [garden-swarm-orchestrator]
+    paths:
+      - 'swarm/roles-free-zdr.json'
+      - 'swarm/orchestrator.py'
+      - '.github/workflows/swarm-free-zdr-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  free-zdr-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run one zero-dollar free-model probe with ZDR enforced
+        run: |
+          python swarm/orchestrator.py \
+            --roles swarm/roles-free-zdr.json \
+            --role-tier all \
+            --live \
+            --max-calls 1 \
+            --max-concurrency 1 \
+            --max-chars 12000 \
+            --max-tokens 3000 \
+            --reasoning-effort none \
+            --output swarm/runs/free-zdr-probe.json
+
+      - name: Verify usable zero-cost response
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open('swarm/runs/free-zdr-probe.json', encoding='utf-8'))
+          results = p.get('results', [])
+          if not results:
+              raise SystemExit('No result returned')
+          r = results[0]
+          print('status=', r.get('status'))
+          print('requested_model=', r.get('requested_model'))
+          print('returned_model=', r.get('returned_model'))
+          print('usage=', r.get('usage'))
+          print('output_present=', bool(r.get('output')))
+          print('output_chars=', len(r.get('output') or ''))
+          if r.get('error'):
+              print('error=', r.get('error')[:500])
+          if r.get('status') != 'OK':
+              raise SystemExit('Model call failed')
+          if not (r.get('output') or '').strip():
+              raise SystemExit('Model returned no final answer')
+          cost = (r.get('usage') or {}).get('cost')
+          if cost not in (0, 0.0, None):
+              raise SystemExit(f'Expected zero-dollar inference, got cost={cost}')
+          PY
+
+      - name: Upload probe receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-free-zdr-probe
+          path: swarm/runs/free-zdr-probe.json
+          if-no-files-found: warn

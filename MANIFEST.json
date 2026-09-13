@@ -1,0 +1,19 @@
+{
+  "schema": "GardenSwarmScaffoldManifest/v0.1",
+  "files": [
+    "swarm/.gitignore",
+    "swarm/README.md",
+    "swarm/__init__.py",
+    "swarm/orchestrator.py",
+    "swarm/roles.json",
+    "swarm/tests/test_orchestrator.py"
+  ],
+  "notes": [
+    "Dry-run is default.",
+    "Live mode requires OPENROUTER_API_KEY from environment.",
+    "No secret is stored in these files.",
+    "OpenRouter live requests enforce provider.zdr=true.",
+    "Web-grounded roles use the OpenRouter web plugin with Parallel turbo.",
+    "All outputs remain PROPOSALS_ONLY."
+  ]
+}

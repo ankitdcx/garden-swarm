@@ -1,0 +1,173 @@
+{
+  "schema": "GardenSwarmRoleSet/v0.1",
+  "roles": [
+    {
+      "id": "ARCH",
+      "name": "Architecture critic",
+      "model": "~openai/gpt-latest",
+      "objective": "Find architectural contradictions, unnecessary layers, missing boundaries, and simpler stronger alternatives.",
+      "lenses": [
+        "systems architecture",
+        "agent architecture",
+        "dependency structure",
+        "simplification"
+      ],
+      "tier": "calibration",
+      "web": true
+    },
+    {
+      "id": "FORMAL",
+      "name": "Formal methods reviewer",
+      "model": "~anthropic/claude-opus-latest",
+      "objective": "Find underspecified semantics, unverifiable claims, type/contract gaps, and proof-obligation failures.",
+      "lenses": [
+        "formal methods",
+        "type systems",
+        "verification",
+        "proof obligations"
+      ],
+      "tier": "calibration",
+      "web": true
+    },
+    {
+      "id": "RED",
+      "name": "Adversarial red-team reviewer",
+      "model": "deepseek/deepseek-v4-flash",
+      "objective": "Try to break the design with concrete counterexamples, bypasses, stale-state failures, and compositional failures.",
+      "lenses": [
+        "adversarial analysis",
+        "failure modes",
+        "security",
+        "composition"
+      ],
+      "tier": "calibration",
+      "web": true
+    },
+    {
+      "id": "AIRES",
+      "name": "Current AI research reviewer",
+      "model": "google/gemini-3.8-flash",
+      "objective": "Check the section against current AI systems research and identify obsolete assumptions or genuinely missing capabilities.",
+      "lenses": [
+        "latest AI research",
+        "reasoning",
+        "agents",
+        "evaluation"
+      ],
+      "tier": "calibration",
+      "web": true
+    },
+    {
+      "id": "RIGHTS",
+      "name": "Human sovereignty and rights reviewer",
+      "model": "~moonshotai/kimi-latest",
+      "objective": "Stress-test consent, minority rights, coercion, appeal, paternalism, and authority boundaries.",
+      "lenses": [
+        "human rights",
+        "consent",
+        "governance",
+        "appeal"
+      ],
+      "tier": "standard",
+      "web": true
+    },
+    {
+      "id": "PRIV",
+      "name": "Privacy reviewer",
+      "model": "deepseek/deepseek-v4-flash",
+      "objective": "Stress-test inference privacy, mental privacy, provenance, data minimization, and cross-agent leakage.",
+      "lenses": [
+        "privacy",
+        "inference",
+        "data governance",
+        "multi-agent leakage"
+      ],
+      "tier": "standard",
+      "web": true
+    },
+    {
+      "id": "DIST",
+      "name": "Distributed systems reviewer",
+      "model": "google/gemini-3.8-flash",
+      "objective": "Check consistency, partial failure, stale state, Byzantine behavior, identity continuity, and distributed authorization.",
+      "lenses": [
+        "distributed systems",
+        "fault tolerance",
+        "consensus",
+        "staleness"
+      ],
+      "tier": "standard",
+      "web": true
+    },
+    {
+      "id": "IMPL",
+      "name": "Implementation engineer",
+      "model": "deepseek/deepseek-v4-flash",
+      "objective": "Identify what cannot yet be implemented deterministically and propose the smallest executable contract.",
+      "lenses": [
+        "software engineering",
+        "APIs",
+        "schemas",
+        "testing"
+      ],
+      "tier": "standard",
+      "web": false
+    },
+    {
+      "id": "PHYS",
+      "name": "Physical systems and control reviewer",
+      "model": "google/gemini-3.8-flash",
+      "objective": "Check embodied, transport, control, timing, uncertainty, and safe-fallback assumptions.",
+      "lenses": [
+        "control theory",
+        "robotics",
+        "transport",
+        "real-time systems"
+      ],
+      "tier": "standard",
+      "web": true
+    },
+    {
+      "id": "SCI",
+      "name": "Scientific epistemics reviewer",
+      "model": "~moonshotai/kimi-latest",
+      "objective": "Check evidence ladders, falsifiability, causal inference, replication, uncertainty, and theory lifecycle.",
+      "lenses": [
+        "scientific method",
+        "causality",
+        "uncertainty",
+        "replication"
+      ],
+      "tier": "standard",
+      "web": true
+    },
+    {
+      "id": "SIMPLE",
+      "name": "Complexity eliminator",
+      "model": "deepseek/deepseek-v4-flash",
+      "objective": "Find redundant concepts, duplicate mechanisms, and places where fewer primitives preserve the same guarantees.",
+      "lenses": [
+        "minimality",
+        "complexity",
+        "duplication",
+        "maintainability"
+      ],
+      "tier": "standard",
+      "web": false
+    },
+    {
+      "id": "INTEGRATE",
+      "name": "Cross-section integrator",
+      "model": "~openai/gpt-latest",
+      "objective": "Detect cross-document conflicts and propagate accepted changes across dependencies without semantic loss.",
+      "lenses": [
+        "cross-reference closure",
+        "change propagation",
+        "compatibility",
+        "regression"
+      ],
+      "tier": "standard",
+      "web": false
+    }
+  ]
+}
