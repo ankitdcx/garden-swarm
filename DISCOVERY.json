@@ -29,7 +29,26 @@
   "discovery_server_source": "https://github.com/ankitdcx/garden-swarm/tree/main/server",
   "mcp_implementation": "official Python SDK v2 Streamable HTTP mounted at /mcp/",
   "live_agent_endpoint": null,
-  "live_mcp_endpoint": null,
+  "live_mcp_endpoint": "https://garden-swarm.onrender.com/mcp/",
+  "live_http_base": "https://garden-swarm.onrender.com",
+  "live_verification": {
+    "verified_at": "2026-09-13T03:15:34.422778+00:00",
+    "verifier_environment": "github-actions-ubuntu-latest",
+    "github_actions_run": "https://github.com/ankitdcx/garden-swarm/actions/runs/34735018215",
+    "render_deploy_commit": "cb7ed3fcf01c1b640d4c7c0487db5d3b5161a817",
+    "verification_workflow_commit": "3424bffdd012242cd28235271151635851d7f9db",
+    "mcp_protocol_version": "2026-07-28",
+    "server_name": "Garden Public Discovery",
+    "server_version": "0.1.0",
+    "verified_tools": [
+      "build_finding_payload",
+      "current_release",
+      "evaluation_instructions",
+      "list_attack_surfaces",
+      "public_tasks"
+    ],
+    "claim_boundary": "Live reachability and MCP protocol/tool-call verification only; not security, semantic, deployment-safety, machine, empirical, or Garden certification."
+  },
   "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
   "status": {
     "source_design": "CURRENT",
@@ -38,7 +57,7 @@
     "independent_external_verification": "PENDING",
     "reference_prototype": "AVAILABLE_NON_CERTIFIED",
     "mcp_local_implementation": "OFFICIAL_SDK_V2_TESTED_IN_PROCESS",
-    "mcp_public_endpoint_verification": "PENDING",
+    "mcp_public_endpoint_verification": "LIVE_REACHABILITY_AND_TOOL_CALL_VERIFIED",
     "machine_certification": "PENDING",
     "empirical_validation": "PENDING",
     "deployment_certification": "PENDING"
