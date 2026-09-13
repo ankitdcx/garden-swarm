@@ -1,0 +1,16 @@
+{
+  "schema": "GardenRepoDesignReviewMatrix/v1",
+  "selection_rule": "One bounded repository-design target per daily review slot. At least three independent reviewer families must complete independent and cross-examination rounds before a substantive repo-design delta can be admitted.",
+  "targets": [
+    {"target_id":"GSL-GOVERNANCE","kind":"repo-design","files":["gsl/DESIGN_EPOCH.json","gsl/CHANGE_POLICY.json","gsl/AUTHORITY_REGISTRY.json","gsl/REPO_PROFILE.json","gsl/REFERENCE_POLICY.json"]},
+    {"target_id":"FUNCTION-CONTRACT-COVERAGE","kind":"repo-design","files":["gsl/FUNCTION_CONTRACTS.json","gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json","gsl/FUNCTION_CONTRACT_GENERATION.json","scripts/verify_gsl_application.py"]},
+    {"target_id":"CI-CONFORMANCE","kind":"repo-design","files":[".github/workflows/integrity.yml","scripts/verify_gsl_application.py","scripts/audit_repo_gsl.py","scripts/build_reference_closure.py"]},
+    {"target_id":"MCP-DISCOVERY","kind":"repo-design","files":["server/mcp_service.py","server/app.py","gsl/AGENT_ENVELOPES.json","DISCOVERY.json","SKILLS.json"]},
+    {"target_id":"SWARM-ORCHESTRATION","kind":"repo-design","files":["swarm/orchestrator.py","swarm/synthesize.py","swarm/roles-free.json","ATTACK_SURFACE.md"]},
+    {"target_id":"REVIEW-AGENTS","kind":"repo-design","files":["tools/free_model_rotation.py","tools/free_design_review.py","tools/free_repo_review.py","tools/gemini_free_review.py",".github/workflows/hourly-free-agent-review.yml"]},
+    {"target_id":"PROTOTYPE-GATES","kind":"repo-design","files":["prototype/actiongate.py","prototype/authority.py","prototype/design_epoch.py","prototype/tokens.py","prototype/hardening.py"]},
+    {"target_id":"VERSIONING-ARCHIVE","kind":"repo-design","files":["VERSION","SOURCE_MANIFEST.json","CHANGELOG.md","PUBLIC_RELEASE.md","scripts/verify_public_release.py"]},
+    {"target_id":"REFERENCE-PROVENANCE","kind":"repo-design","files":["gsl/PROVENANCE.json","gsl/REFERENCE_POLICY.json","scripts/build_reference_closure.py","AGENTS.md"]},
+    {"target_id":"TEST-OWNERSHIP-FALSIFICATION","kind":"repo-design","files":["prototype/tests/test_prototype.py","tests/adversarial/test_known_attacks.py","ATTACK_SURFACE.md","EVALUATION_LOG.md"]}
+  ]
+}
