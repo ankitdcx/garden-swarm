@@ -21,3 +21,16 @@ jobs:
           python-version: "3.12"
       - name: Verify public release
         run: python scripts/verify_public_release.py
+      - name: Audit whole repository into Garden/GSL profile
+        run: python scripts/audit_repo_gsl.py --strict-frontier --output /tmp/garden-repo-gsl-audit.json
+      - name: Run Garden/GSL application conformance pipeline
+        run: python scripts/verify_gsl_application.py --output /tmp/garden-gsl-conformance-receipt.json
+      - name: Upload immutable conformance receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-public-gsl-conformance-${{ github.run_id }}
+          path: |
+            /tmp/garden-repo-gsl-audit.json
+            /tmp/garden-gsl-conformance-receipt.json
+          if-no-files-found: error
+          retention-days: 30
