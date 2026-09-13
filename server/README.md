@@ -66,4 +66,4 @@ Only a hard-coded allowlist of public repository resources is readable. A config
 
 A2A v1.0 discovery uses `/.well-known/agent-card.json` and declares protocol endpoints in `supportedInterfaces[]`. Garden should publish that card only when a real conformant A2A endpoint exists.
 
-Do not rename `garden-discovery.json` to `agent-card.json` merely for visibility: that would falsely claim A2A conformance.
+Do not rename `garden-discovery.json` to the A2A agent-card filename merely for visibility: that would falsely claim A2A conformance.
