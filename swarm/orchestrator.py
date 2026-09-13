@@ -183,7 +183,7 @@ this chunk. Such claims require a later cross-reference pass.
 """
 
 
-def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effort: str | None = None) -> RunResult:
+def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effort: str | None = None, public_free: bool = False) -> RunResult:
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         return RunResult(item.id, role.id, role.name, role.model, None, "ERROR",
@@ -197,8 +197,9 @@ def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effor
         ],
         "temperature": 0.2,
         "max_tokens": max_tokens,
-        "provider": {"zdr": True},
     }
+    if not public_free:
+        payload["provider"] = {"zdr": True}
     if reasoning_effort:
         payload["reasoning"] = {"effort": reasoning_effort, "exclude": True}
     if role.web:
@@ -266,6 +267,7 @@ def receipt(mode: str, roles: list[Role], items: list[WorkItem],
             "max_calls": args.max_calls,
             "max_concurrency": args.max_concurrency,
             "reasoning_effort": args.reasoning_effort,
+            "public_free": args.public_free,
         },
         "results": [asdict(r) for r in results],
         "admission_status": "PROPOSALS_ONLY",
@@ -284,6 +286,8 @@ def main() -> int:
     p.add_argument("--max-calls", type=int, default=4)
     p.add_argument("--max-concurrency", type=int, default=2)
     p.add_argument("--reasoning-effort", choices=["none", "minimal", "low", "medium", "high"])
+    p.add_argument("--public-free", action="store_true",
+                   help="Allow non-ZDR free endpoints only for the published canonical Garden v15.5 source")
     p.add_argument("--live", action="store_true")
     p.add_argument("--output", default="swarm/runs/latest-plan.json")
     args = p.parse_args()
@@ -292,6 +296,15 @@ def main() -> int:
     roles = load_roles(root / args.roles, args.role_tier)
     items = build_work_items(root, args.sources or DEFAULT_SOURCE_FILES, args.max_chars)
     pairs = [(role, item) for item in items for role in roles]
+
+    if args.public_free:
+        source_names = set(args.sources or DEFAULT_SOURCE_FILES)
+        if source_names != set(DEFAULT_SOURCE_FILES):
+            raise SystemExit("--public-free is restricted to the published canonical Garden v15.5 files")
+        if any(role.web for role in roles):
+            raise SystemExit("--public-free forbids web plugins")
+        if any(not (role.model == "openrouter/free" or role.model.endswith(":free")) for role in roles):
+            raise SystemExit("--public-free requires free-model routes only")
 
     results: list[RunResult] = []
     if args.live:
@@ -302,7 +315,7 @@ def main() -> int:
             max_workers=args.max_concurrency
         ) as pool:
             futures = [
-                pool.submit(call_openrouter, role, item, args.max_tokens, args.reasoning_effort)
+                pool.submit(call_openrouter, role, item, args.max_tokens, args.reasoning_effort, args.public_free)
                 for role, item in selected
             ]
             for f in concurrent.futures.as_completed(futures):
