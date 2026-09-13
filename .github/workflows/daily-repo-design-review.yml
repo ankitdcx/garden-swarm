@@ -17,7 +17,7 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 55
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
@@ -38,18 +38,24 @@ jobs:
           --base-sha ${{ github.event.pull_request.base.sha }}
           --head-sha ${{ github.event.pull_request.head.sha }}
 
-      - name: Prefer four independent free reviewer families
-        run: python -m tools.select_matrix_reviewers --count 4
+      - name: Select redundant free reviewer pool
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            python -m tools.select_matrix_reviewers --count 6
+          else
+            python -m tools.select_matrix_reviewers --count 4
+          fi
 
       - name: Review one bounded repository-design target
         shell: bash
         run: |
           set -euo pipefail
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # prepare_pr_review_target inserts the exact PR change set as target 0.
-            python -m tools.matrix_repo_review --slot 0
+            python -m tools.matrix_repo_review_v2 --slot 0
           else
-            python -m tools.matrix_repo_review
+            python -m tools.matrix_repo_review_v2
           fi
 
       - name: Enforce three-family minimum, peer cross-examination and no auto-admission
@@ -89,6 +95,7 @@ jobs:
           print(json.dumps({
               'target_id': bundle['target']['target_id'],
               'status': bundle['status'],
+              'selected_families': len(selection['selected']),
               'independent_families': bundle['independent_reviewer_family_count'],
               'final_families': bundle['final_disposition_family_count'],
               'semantic_delta_admitted': False,
