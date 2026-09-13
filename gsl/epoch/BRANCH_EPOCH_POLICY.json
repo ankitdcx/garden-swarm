@@ -1,0 +1,11 @@
+{
+  "schema": "GardenBranchDesignEpochPolicy/v1",
+  "repository": "ankitdcx/garden-swarm",
+  "current_design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "main_rule": "main is bound by gsl/epoch/DESIGN_EPOCH.json and cannot self-promote that binding to ACCEPTED.",
+  "feature_branch_rule": "A feature branch inherits the pull request base DesignEpoch unless it carries a proposal under gsl/epoch/proposals/. Inheritance does not grant authority to change the epoch.",
+  "proposal_rule": "A branch epoch proposal is always CANDIDATE, must name predecessor_design_epoch_ref, candidate_design_epoch_ref, exact canonical/source roots, invalidators, and migration evidence. It cannot change the protected-base authority used to admit its own PR.",
+  "merge_rule": "Ordinary implementation PRs must target the base DesignEpoch. A PR proposing a new DesignEpoch is constitutional and remains candidate until the protected-base constitutional gate and human canonical-promotion boundary are satisfied.",
+  "staleness_rule": "If the base DesignEpoch advances before merge, branch findings/tests/deltas bound to the predecessor become STALE and must be re-derived or explicitly migrated.",
+  "canonical_promotion_authority": "HUMAN_ONLY"
+}
