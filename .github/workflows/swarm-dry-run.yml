@@ -1,0 +1,52 @@
+name: Garden swarm dry run
+
+on:
+  push:
+    branches:
+      - garden-swarm-orchestrator
+    paths:
+      - 'swarm/**'
+      - 'MANIFEST.json'
+      - '.github/workflows/swarm-dry-run.yml'
+      - 'Garden_*_v15.5_FULL_2026-09-12.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run swarm unit tests
+        run: python -m unittest discover -s swarm/tests -v
+
+      - name: Build dry-run plan
+        run: python swarm/orchestrator.py --role-tier calibration
+
+      - name: Verify no live calls were made
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('swarm/runs/latest-plan.json')
+          data = json.loads(p.read_text())
+          assert data['mode'] == 'DRY_RUN', data['mode']
+          assert data['results'] == [], 'dry run unexpectedly contains live results'
+          print('Dry-run receipt verified:', p)
+          PY
+
+      - name: Upload dry-run receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-swarm-dry-run-receipt
+          path: swarm/runs/latest-plan.json
+          if-no-files-found: error
