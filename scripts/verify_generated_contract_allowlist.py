@@ -15,7 +15,7 @@ def main() -> int:
     failures: list[str] = []
     direct: set[str] = set()
     for path in sorted((ROOT / "gsl" / "contracts").glob("FUNCTION_CONTRACTS*.json")):
-        if path.name in {"FUNCTION_CONTRACT_GENERATION.json", "FUNCTION_CONTRACT_GENERATION_ALLOWLIST.json"}:
+        if path.name.startswith("FUNCTION_CONTRACT_GENERATION"):
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         if payload.get("schema") != "GardenFunctionContractRegistry/v1":
@@ -26,16 +26,29 @@ def main() -> int:
                 direct.add(qname)
 
     generated = json.loads((ROOT / "gsl/contracts/FUNCTION_CONTRACT_GENERATION.json").read_text(encoding="utf-8"))
-    allowed = json.loads((ROOT / "gsl/contracts/FUNCTION_CONTRACT_GENERATION_ALLOWLIST.json").read_text(encoding="utf-8"))
-    if generated.get("design_epoch_ref") != DESIGN_EPOCH_REF or allowed.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+    if generated.get("design_epoch_ref") != DESIGN_EPOCH_REF:
         failures.append("GENERATED_CONTRACT_REGISTRY_STALE")
-    if allowed.get("schema") != "GardenGeneratedFunctionContractAllowlist/v1":
-        failures.append("ALLOWLIST_SCHEMA_INVALID")
-
     rules = generated.get("generation_rules") or []
-    allowlists = {str(k): set(v or []) for k, v in (allowed.get("allowlists") or {}).items()}
-    observed_generated: set[str] = set()
 
+    allowlists: dict[str, set[str]] = {}
+    allowlist_paths = sorted((ROOT / "gsl/contracts").glob("FUNCTION_CONTRACT_GENERATION_ALLOWLIST*.json"))
+    if not allowlist_paths:
+        failures.append("GENERATED_CONTRACT_ALLOWLIST_MISSING")
+    for path in allowlist_paths:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("schema") != "GardenGeneratedFunctionContractAllowlist/v1":
+            failures.append(f"ALLOWLIST_SCHEMA_INVALID:{path.name}")
+            continue
+        if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+            failures.append(f"ALLOWLIST_STALE:{path.name}")
+        for rule_id, names in (payload.get("allowlists") or {}).items():
+            bucket = allowlists.setdefault(str(rule_id), set())
+            for qname in names or []:
+                if qname in bucket:
+                    failures.append(f"DUPLICATE_GENERATED_ALLOWLIST:{rule_id}:{qname}")
+                bucket.add(str(qname))
+
+    observed_generated: set[str] = set()
     for dirname in EXECUTABLE_DIRS:
         for path in sorted((ROOT / dirname).glob("*.py")):
             if path.name == "__init__.py":
@@ -68,13 +81,13 @@ def main() -> int:
 
     declared_generated = set().union(*allowlists.values()) if allowlists else set()
     orphaned = sorted(declared_generated - observed_generated)
-    if orphaned:
-        failures.extend(f"ORPHAN_GENERATED_ALLOWLIST:{qname}" for qname in orphaned)
+    failures.extend(f"ORPHAN_GENERATED_ALLOWLIST:{qname}" for qname in orphaned)
 
     result = {
         "schema": "GeneratedFunctionContractAllowlistReceipt/v1",
         "design_epoch_ref": DESIGN_EPOCH_REF,
         "direct_contract_count": len(direct),
+        "allowlist_shard_count": len(allowlist_paths),
         "explicit_generated_binding_count": len(observed_generated),
         "failures": failures,
         "result": "PASS" if not failures else "FAIL",
