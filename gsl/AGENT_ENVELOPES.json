@@ -1,0 +1,59 @@
+{
+  "schema": "GardenAgentEnvelopeRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "envelopes": [
+    {
+      "envelope_id": "AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1",
+      "subject": "service:garden-public-mcp",
+      "principal": "repository:ankitdcx/garden-swarm",
+      "scope": "PUBLIC_DISCOVERY_READ_ONLY",
+      "resources": [
+        "SOURCE_MANIFEST.json",
+        "ATTACK_SURFACE.md",
+        "EVALUATE_IN_60_MINUTES.md",
+        "TASKS.md",
+        "EVALUATION_LOG.md"
+      ],
+      "data_scope": "PUBLIC_REPOSITORY_ONLY",
+      "tool_allowlist": [
+        "current_release",
+        "list_attack_surfaces",
+        "evaluation_instructions",
+        "public_tasks",
+        "build_finding_payload"
+      ],
+      "network_scope": ["public MCP transport only; no arbitrary outbound retrieval"],
+      "credential_scope": [],
+      "actuator_scope": [],
+      "persistence_scope": ["none through MCP tools"],
+      "delegation": {
+        "allowed": false,
+        "max_depth": 0
+      },
+      "authority": {
+        "github_write": false,
+        "deployment": false,
+        "canonical_promotion": false,
+        "real_world_actuation": false
+      },
+      "validity": {
+        "mode": "DESIGN_EPOCH_BOUND",
+        "expires_on_epoch_change": true,
+        "invalidators": [
+          "canonical source root change",
+          "tool surface change",
+          "credential/network scope change",
+          "MCP transport policy change"
+        ]
+      },
+      "revocation_root": "repository governance / human operator",
+      "provenance": [
+        "server/mcp_service.py",
+        "agent/MCP_READONLY_PROFILE.md",
+        "AGT-008",
+        "AGT-011",
+        "AGT-012"
+      ]
+    }
+  ]
+}
