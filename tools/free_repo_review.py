@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """One bounded free-model review of a rotating public executable Garden package."""
 from __future__ import annotations
-import argparse, hashlib, json, os, re
+import argparse, hashlib, json, os
 from pathlib import Path
 from urllib import request
+
+from tools._free_review_common import parse_handoff_or_receipt
 
 CHAT = "https://openrouter.ai/api/v1/chat/completions"
 PACKAGES = [
@@ -18,23 +20,6 @@ PACKAGES = [
 
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
-
-
-def parse_object(text: str) -> dict:
-    text = (text or "").strip()
-    if text.startswith("```"):
-        lines = text.splitlines()[1:]
-        if lines and lines[-1].strip() == "```": lines = lines[:-1]
-        text = "\n".join(lines).strip()
-    try:
-        value = json.loads(text)
-    except json.JSONDecodeError:
-        m = re.search(r"\{.*\}", text, re.S)
-        if not m: raise
-        value = json.loads(m.group(0))
-    if not isinstance(value, dict) or not value.get("search_trace"):
-        raise ValueError("valid JSON object with non-empty search_trace required")
-    return value
 
 
 def main() -> int:
@@ -54,7 +39,8 @@ def main() -> int:
     sections, trace = [], []
     for rel in files:
         path = root / rel
-        if not path.is_file(): continue
+        if not path.is_file():
+            continue
         text = path.read_text(encoding="utf-8")
         coverage = "FULL"
         if len(text) > 14000:
@@ -71,17 +57,23 @@ Precomputed supplied trace: {json.dumps(trace)}
 {source}
 --- END PACKAGE ---"""
     key = os.environ.get("OPENROUTER_API_KEY")
-    if not key: raise SystemExit("OPENROUTER_API_KEY required")
+    if not key:
+        raise SystemExit("OPENROUTER_API_KEY required")
     payload = {"model": model_id, "messages": [{"role":"user","content":prompt}], "temperature":0.15, "max_tokens":2800, "provider":{"allow_fallbacks":True}}
     req = request.Request(CHAT, method="POST", data=json.dumps(payload).encode(), headers={"Authorization":f"Bearer {key}","Content-Type":"application/json","HTTP-Referer":"https://github.com/ankitdcx/garden-swarm","X-Title":"Garden Free Review Bus"})
-    with request.urlopen(req, timeout=300) as r: data = json.loads(r.read().decode())
+    with request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read().decode())
     usage = data.get("usage") or {}
-    if usage.get("cost") not in (None, 0, 0.0): raise SystemExit(f"non-zero cost refused: {usage.get('cost')}")
-    handoff = parse_object(data["choices"][0]["message"].get("content", ""))
-    handoff.update({"schema":"GardenAgentHandoff/v1", "agent":model_id, "agent_family":model["family"], "role":model["role"], "task_id":task_id})
-    receipt = {"schema":"GardenFreeRepoReviewReceipt/v1", "model":model, "package":package, "source_sha256":digest(source), "usage":usage, "handoff":handoff, "admission_status":"PROPOSALS_ONLY"}
-    out = root / args.output; out.parent.mkdir(parents=True, exist_ok=True); out.write_text(json.dumps(receipt, indent=2)+"\n")
-    print(json.dumps({"model":model_id,"package":package,"cost":usage.get("cost"),"status":handoff.get("status")}))
+    if usage.get("cost") not in (None, 0, 0.0):
+        raise SystemExit(f"non-zero cost refused: {usage.get('cost')}")
+    raw = data["choices"][0]["message"].get("content", "")
+    handoff, output_status = parse_handoff_or_receipt(raw, trace=trace, model_id=model_id, family=model["family"], role=model["role"], task_id=task_id)
+    receipt = {"schema":"GardenFreeRepoReviewReceipt/v1", "model":model, "package":package, "source_sha256":digest(source), "usage":usage, "output_status":output_status, "handoff":handoff, "admission_status":"PROPOSALS_ONLY"}
+    out = root / args.output
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(receipt, indent=2)+"\n")
+    print(json.dumps({"model":model_id,"package":package,"cost":usage.get("cost"),"status":handoff.get("status"),"output_status":output_status}))
     return 0
 
-if __name__ == "__main__": raise SystemExit(main())
+if __name__ == "__main__":
+    raise SystemExit(main())
