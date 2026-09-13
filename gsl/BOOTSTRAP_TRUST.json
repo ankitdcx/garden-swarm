@@ -1,0 +1,26 @@
+{
+  "schema": "BootstrapTrustRootCeremonyProfile/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "status": "CEREMONY_INFRASTRUCTURE_COMPLETE_ACCEPTANCE_NOT_SELF_ISSUED",
+  "purpose": "Close the bootstrap procedure for the first accepted repository DesignEpoch without inventing a second trust-root architecture.",
+  "existing_owner_refs": ["TrustRootCeremonyReceipt","SAP-008","P24","DCC-018","GSL-SELF-009"],
+  "requirements": {
+    "human_principal": "human:garden-originator",
+    "transcript": "content-addressed auxiliary artifact outside canonical five-file source",
+    "frozen_verifier_bindings": "at least one frozen verifier and an independently implemented verifier or equivalent independent verification path",
+    "immutable_test_corpus": true,
+    "source_root_pinned": true,
+    "design_epoch_pinned": true,
+    "authority_non_amplification": true,
+    "canonical_promotion_separate": true
+  },
+  "acceptance_rule": "Repository DesignEpoch remains SPECIFIED_DESIGNEPOCH_CANDIDATE until a BootstrapTrustRootCeremonyReceipt/v1 with PASS, frozen verifier bindings, immutable test-corpus root and required independent verification is published. This profile cannot self-create that PASS.",
+  "current_closure": {
+    "human_approval_registry": "gsl/HUMAN_APPROVALS.json",
+    "machine_conformance_pipeline": ".github/workflows/integrity.yml",
+    "reference_closure_generator": "scripts/build_reference_closure.py",
+    "source_identity": "SOURCE_MANIFEST.json",
+    "remaining_external_fact": "independent ceremony/verifier evidence sufficient for first accepted DesignEpoch"
+  },
+  "canonical_promotion_authority": "HUMAN_ONLY"
+}
