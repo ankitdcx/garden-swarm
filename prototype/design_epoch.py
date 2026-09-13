@@ -16,6 +16,7 @@ class ArtifactBinding:
     artifact_id: str
     design_epoch: str
     dependencies: Mapping[str, str]
+    required_dependencies: frozenset[str] | None = None
 
 
 @dataclass(frozen=True)
@@ -30,28 +31,44 @@ def validate_binding(
     current_design_epoch: str,
     current_dependencies: Mapping[str, str],
 ) -> ValidationResult:
-    reasons: list[str] = []
+    stale_reasons: list[str] = []
 
     if binding.design_epoch != current_design_epoch:
-        reasons.append(
+        stale_reasons.append(
             f"DESIGN_EPOCH_CHANGED:{binding.design_epoch}->{current_design_epoch}"
         )
 
+    # A binding cannot be called CURRENT unless it declares the dependency
+    # closure it claims to cover. If it is already definitely stale, preserve
+    # that stronger fact while still reporting the closure defect.
+    if binding.required_dependencies is None:
+        reason = "DEPENDENCY_CLOSURE_NOT_DECLARED"
+        if stale_reasons:
+            return ValidationResult(BindingStatus.STALE, tuple(stale_reasons + [reason]))
+        return ValidationResult(BindingStatus.UNKNOWN, (reason,))
+
+    omitted_required = sorted(binding.required_dependencies - set(binding.dependencies))
+    if omitted_required:
+        closure_reasons = [f"DEPENDENCY_CLOSURE_INCOMPLETE:{name}" for name in omitted_required]
+        if stale_reasons:
+            return ValidationResult(BindingStatus.STALE, tuple(stale_reasons + closure_reasons))
+        return ValidationResult(BindingStatus.UNKNOWN, tuple(closure_reasons))
+
     missing = sorted(set(binding.dependencies) - set(current_dependencies))
     if missing:
-        return ValidationResult(
-            BindingStatus.UNKNOWN,
-            tuple(f"DEPENDENCY_STATE_UNKNOWN:{name}" for name in missing),
-        )
+        unknown_reasons = [f"DEPENDENCY_STATE_UNKNOWN:{name}" for name in missing]
+        if stale_reasons:
+            return ValidationResult(BindingStatus.STALE, tuple(stale_reasons + unknown_reasons))
+        return ValidationResult(BindingStatus.UNKNOWN, tuple(unknown_reasons))
 
     for name, bound_version in binding.dependencies.items():
         current_version = current_dependencies[name]
         if current_version != bound_version:
-            reasons.append(
+            stale_reasons.append(
                 f"DEPENDENCY_CHANGED:{name}:{bound_version}->{current_version}"
             )
 
-    if reasons:
-        return ValidationResult(BindingStatus.STALE, tuple(reasons))
+    if stale_reasons:
+        return ValidationResult(BindingStatus.STALE, tuple(stale_reasons))
 
     return ValidationResult(BindingStatus.CURRENT, ("BINDING_CURRENT",))

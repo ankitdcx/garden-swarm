@@ -28,8 +28,22 @@
     {
       "id": "build-finding-payload",
       "mode": "read_only",
-      "inputs": ["structured evaluation"],
-      "outputs": ["GitHub-issue-ready payload"],
+      "mcp_tool": "build_finding_payload",
+      "inputs": [
+        "claim",
+        "coverage",
+        "evidence_or_failure",
+        "severity",
+        "source_anchors",
+        "affected_invariant",
+        "existing_mitigation_checked",
+        "better_alternative",
+        "test",
+        "uncertainty",
+        "publishable_issue_title"
+      ],
+      "required_inputs": ["claim", "coverage", "evidence_or_failure", "severity"],
+      "outputs": ["title", "body", "note"],
       "instructions": "AGENTS.md"
     }
   ],
