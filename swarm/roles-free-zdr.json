@@ -1,0 +1,14 @@
+{
+  "schema": "GardenSwarmFreeZDRRoleSet/v0.1",
+  "roles": [
+    {
+      "id": "FREE-ZDR-ARCH",
+      "name": "Free ZDR architecture critic",
+      "model": "openrouter/free",
+      "objective": "Find architectural contradictions, missing boundaries, unnecessary layers, and simpler stronger alternatives in the supplied Garden source.",
+      "lenses": ["systems architecture", "agent architecture", "dependency structure", "simplification"],
+      "tier": "calibration",
+      "web": false
+    }
+  ]
+}
