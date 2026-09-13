@@ -4,6 +4,7 @@ import base64
 import json
 import time
 from dataclasses import asdict, dataclass
+from enum import Enum
 from hashlib import sha256
 
 from cryptography.exceptions import InvalidSignature
@@ -18,6 +19,32 @@ class DelegationReceipt:
     expires_at: int
     nonce: str
     parent_digest: str | None = None
+
+
+class ReceiptValidationStatus(str, Enum):
+    VALID = "VALID"
+    INVALID_SIGNATURE_OR_PAYLOAD = "INVALID_SIGNATURE_OR_PAYLOAD"
+    EXPIRED = "EXPIRED"
+    ISSUER_MISMATCH = "ISSUER_MISMATCH"
+    SUBJECT_MISMATCH = "SUBJECT_MISMATCH"
+    CAPABILITY_NOT_DELEGATED = "CAPABILITY_NOT_DELEGATED"
+    PARENT_RECEIPT_REQUIRED = "PARENT_RECEIPT_REQUIRED"
+    PARENT_DIGEST_MISMATCH = "PARENT_DIGEST_MISMATCH"
+    ISSUER_NOT_PARENT_SUBJECT = "ISSUER_NOT_PARENT_SUBJECT"
+    CAPABILITY_AMPLIFICATION = "CAPABILITY_AMPLIFICATION"
+    EXPIRY_AMPLIFICATION = "EXPIRY_AMPLIFICATION"
+    UNKNOWN = "UNKNOWN"
+
+
+@dataclass(frozen=True)
+class ReceiptValidationResult:
+    status: ReceiptValidationStatus
+    receipt: DelegationReceipt | None
+    reasons: tuple[str, ...]
+
+    @property
+    def valid(self) -> bool:
+        return self.status is ReceiptValidationStatus.VALID
 
 
 def _canonical_payload(receipt: DelegationReceipt) -> bytes:
@@ -39,7 +66,7 @@ def sign_receipt(private_key: Ed25519PrivateKey, receipt: DelegationReceipt) -> 
     }
 
 
-def verify_receipt(
+def validate_receipt(
     public_key: Ed25519PublicKey,
     signed: dict[str, str],
     *,
@@ -48,12 +75,12 @@ def verify_receipt(
     expected_subject: str | None = None,
     expected_issuer: str | None = None,
     expected_parent: DelegationReceipt | None = None,
-) -> tuple[bool, str, DelegationReceipt | None]:
-    """Verify one signed delegation receipt and, when present, its parent binding.
+) -> ReceiptValidationResult:
+    """Typed delegation receipt validation.
 
     Signature validity proves only that the supplied public key signed the payload.
-    `expected_issuer` binds that key/use-site to an expected identity. A chained
-    receipt must be checked against its already-verified parent receipt.
+    Expected issuer/subject/capability and parent binding remain explicit. Validation
+    never grants authority beyond the validated receipt and its parent chain.
     """
     try:
         payload = base64.urlsafe_b64decode(signed["payload"].encode("ascii"))
@@ -69,33 +96,88 @@ def verify_receipt(
             parent_digest=decoded.get("parent_digest"),
         )
     except (KeyError, ValueError, json.JSONDecodeError, InvalidSignature):
-        return False, "INVALID_SIGNATURE_OR_PAYLOAD", None
+        return ReceiptValidationResult(
+            ReceiptValidationStatus.INVALID_SIGNATURE_OR_PAYLOAD,
+            None,
+            ("INVALID_SIGNATURE_OR_PAYLOAD",),
+        )
 
     current_time = int(time.time()) if now is None else now
     if receipt.expires_at <= current_time:
-        return False, "EXPIRED", receipt
-
+        return ReceiptValidationResult(ReceiptValidationStatus.EXPIRED, receipt, ("EXPIRED",))
     if expected_issuer is not None and receipt.issuer != expected_issuer:
-        return False, "ISSUER_MISMATCH", receipt
-
+        return ReceiptValidationResult(ReceiptValidationStatus.ISSUER_MISMATCH, receipt, ("ISSUER_MISMATCH",))
     if expected_subject is not None and receipt.subject != expected_subject:
-        return False, "SUBJECT_MISMATCH", receipt
-
+        return ReceiptValidationResult(ReceiptValidationStatus.SUBJECT_MISMATCH, receipt, ("SUBJECT_MISMATCH",))
     if required_capability is not None and required_capability not in receipt.capabilities:
-        return False, "CAPABILITY_NOT_DELEGATED", receipt
-
+        return ReceiptValidationResult(
+            ReceiptValidationStatus.CAPABILITY_NOT_DELEGATED,
+            receipt,
+            ("CAPABILITY_NOT_DELEGATED",),
+        )
     if receipt.parent_digest is not None and expected_parent is None:
-        return False, "PARENT_RECEIPT_REQUIRED", receipt
+        return ReceiptValidationResult(
+            ReceiptValidationStatus.PARENT_RECEIPT_REQUIRED,
+            receipt,
+            ("PARENT_RECEIPT_REQUIRED",),
+        )
 
     if expected_parent is not None:
         expected_digest = receipt_digest(expected_parent)
         if receipt.parent_digest != expected_digest:
-            return False, "PARENT_DIGEST_MISMATCH", receipt
+            return ReceiptValidationResult(
+                ReceiptValidationStatus.PARENT_DIGEST_MISMATCH,
+                receipt,
+                ("PARENT_DIGEST_MISMATCH",),
+            )
         if receipt.issuer != expected_parent.subject:
-            return False, "ISSUER_NOT_PARENT_SUBJECT", receipt
+            return ReceiptValidationResult(
+                ReceiptValidationStatus.ISSUER_NOT_PARENT_SUBJECT,
+                receipt,
+                ("ISSUER_NOT_PARENT_SUBJECT",),
+            )
         if not set(receipt.capabilities).issubset(set(expected_parent.capabilities)):
-            return False, "CAPABILITY_AMPLIFICATION", receipt
+            return ReceiptValidationResult(
+                ReceiptValidationStatus.CAPABILITY_AMPLIFICATION,
+                receipt,
+                ("CAPABILITY_AMPLIFICATION",),
+            )
         if receipt.expires_at > expected_parent.expires_at:
-            return False, "EXPIRY_AMPLIFICATION", receipt
+            return ReceiptValidationResult(
+                ReceiptValidationStatus.EXPIRY_AMPLIFICATION,
+                receipt,
+                ("EXPIRY_AMPLIFICATION",),
+            )
 
-    return True, "VALID_FOR_DECLARED_SCOPE", receipt
+    return ReceiptValidationResult(
+        ReceiptValidationStatus.VALID,
+        receipt,
+        ("VALID_FOR_DECLARED_SCOPE",),
+    )
+
+
+def verify_receipt(
+    public_key: Ed25519PublicKey,
+    signed: dict[str, str],
+    *,
+    now: int | None = None,
+    required_capability: str | None = None,
+    expected_subject: str | None = None,
+    expected_issuer: str | None = None,
+    expected_parent: DelegationReceipt | None = None,
+) -> tuple[bool, str, DelegationReceipt | None]:
+    """Deprecated compatibility adapter around :func:`validate_receipt`.
+
+    New Garden/GSL callers should consume ReceiptValidationResult directly so
+    distinct terminal states are not laundered into one False value.
+    """
+    result = validate_receipt(
+        public_key,
+        signed,
+        now=now,
+        required_capability=required_capability,
+        expected_subject=expected_subject,
+        expected_issuer=expected_issuer,
+        expected_parent=expected_parent,
+    )
+    return result.valid, result.reasons[0], result.receipt
