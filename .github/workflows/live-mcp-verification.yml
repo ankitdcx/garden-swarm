@@ -1,0 +1,92 @@
+name: Garden live MCP verification
+
+on:
+  push:
+    branches: [live-mcp-verification-20260913]
+    paths:
+      - '.github/workflows/live-mcp-verification.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GARDEN_BASE_URL: https://garden-swarm.onrender.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install MCP client dependencies
+        run: python -m pip install 'mcp>=2,<3' 'httpx>=0.28,<1'
+      - name: Verify public HTTPS and MCP
+        run: |
+          python - <<'PY'
+          import asyncio, json, os, urllib.request
+          from datetime import datetime, timezone
+          from mcp import Client
+
+          base = os.environ['GARDEN_BASE_URL'].rstrip('/')
+
+          def get_json(path):
+              with urllib.request.urlopen(base + path, timeout=30) as r:
+                  assert r.status == 200, (path, r.status)
+                  return json.loads(r.read().decode('utf-8'))
+
+          health = get_json('/healthz')
+          assert health['status'] == 'ok'
+          summary = get_json('/v1/summary')
+          assert summary['project'] == 'Garden'
+          assert summary['release'] == 'v15.5'
+          assert summary['status']['machine_certification'] == 'PENDING'
+
+          async def verify_mcp():
+              async with Client(base + '/mcp/') as client:
+                  tools = await client.list_tools()
+                  names = sorted(tool.name for tool in tools.tools)
+                  expected = {
+                      'current_release',
+                      'list_attack_surfaces',
+                      'evaluation_instructions',
+                      'public_tasks',
+                      'build_finding_payload',
+                  }
+                  assert expected.issubset(set(names)), names
+                  result = await client.call_tool('current_release', {})
+                  assert result.is_error is False
+                  assert result.structured_content['project'] == 'Garden'
+                  assert result.structured_content['status']['machine_certification'] == 'PENDING'
+                  return {
+                      'protocol_version': str(client.protocol_version),
+                      'server_name': getattr(client.server_info, 'name', None),
+                      'server_version': getattr(client.server_info, 'version', None),
+                      'tools': names,
+                      'current_release': result.structured_content,
+                  }
+
+          mcp_result = asyncio.run(verify_mcp())
+          receipt = {
+              'schema': 'GardenLiveMCPVerificationReceipt/v0.1',
+              'verified_at': datetime.now(timezone.utc).isoformat(),
+              'verifier_environment': 'github-actions-ubuntu-latest',
+              'base_url': base,
+              'health': health,
+              'summary_release': summary['release'],
+              'mcp': mcp_result,
+              'source_commit_under_test': os.environ.get('GITHUB_SHA'),
+              'claim_boundary': 'Live reachability and protocol/tool-call verification only; not security, semantic, deployment-safety, or Garden certification.'
+          }
+          with open('live-mcp-verification-receipt.json', 'w', encoding='utf-8') as f:
+              json.dump(receipt, f, indent=2, ensure_ascii=False)
+              f.write('\n')
+          print(json.dumps(receipt, indent=2, ensure_ascii=False))
+          PY
+      - name: Upload verification receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-live-mcp-verification-receipt
+          path: live-mcp-verification-receipt.json
