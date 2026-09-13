@@ -16,6 +16,7 @@ class ArtifactBinding:
     artifact_id: str
     design_epoch: str
     dependencies: Mapping[str, str]
+    required_dependencies: frozenset[str] | None = None
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,22 @@ def validate_binding(
     current_dependencies: Mapping[str, str],
 ) -> ValidationResult:
     reasons: list[str] = []
+
+    # A binding cannot be called CURRENT unless it declares the dependency
+    # closure it claims to cover. Otherwise omission is indistinguishable from
+    # intentional independence.
+    if binding.required_dependencies is None:
+        return ValidationResult(
+            BindingStatus.UNKNOWN,
+            ("DEPENDENCY_CLOSURE_NOT_DECLARED",),
+        )
+
+    omitted_required = sorted(binding.required_dependencies - set(binding.dependencies))
+    if omitted_required:
+        return ValidationResult(
+            BindingStatus.UNKNOWN,
+            tuple(f"DEPENDENCY_CLOSURE_INCOMPLETE:{name}" for name in omitted_required),
+        )
 
     if binding.design_epoch != current_design_epoch:
         reasons.append(
