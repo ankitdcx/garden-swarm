@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Mapping, Optional, Sequence
+from typing import Mapping, Optional
+
+from prototype.authority import AuthorityEnvelope, can_execute
 
 
 class Decision(str, Enum):
@@ -33,6 +35,7 @@ class ActionProposal:
 class GateContext:
     current_policy_epoch: str
     capabilities_by_principal: Mapping[str, frozenset[str]]
+    authority_by_subject: Mapping[str, AuthorityEnvelope] = field(default_factory=dict)
     revoked_delegations: set[tuple[str, str]] = field(default_factory=set)
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     high_impact_actions: frozenset[str] = frozenset()
@@ -41,8 +44,9 @@ class GateContext:
 def evaluate_action(proposal: ActionProposal, context: GateContext) -> GateResult:
     """Small deterministic reference gate.
 
-    This is intentionally not a complete Garden runtime. It demonstrates the
-    admission semantics that missing/stale/unknown authority does not become ALLOW.
+    This is intentionally not a complete Garden runtime. It demonstrates that
+    capability, authority, resource scope, delegation depth, and hard-gate state
+    remain distinct. Missing/stale/unknown authority never becomes ALLOW.
     """
 
     reasons: list[str] = []
@@ -60,6 +64,24 @@ def evaluate_action(proposal: ActionProposal, context: GateContext) -> GateResul
     for parent, child in zip(proposal.delegation_chain, proposal.delegation_chain[1:]):
         if (parent, child) in context.revoked_delegations:
             return GateResult(Decision.REJECT, ("DELEGATION_REVOKED",))
+
+    authority_chain: list[AuthorityEnvelope] = []
+    for subject in proposal.delegation_chain:
+        envelope = context.authority_by_subject.get(subject)
+        if envelope is None:
+            return GateResult(Decision.ESCALATE, (f"AUTHORITY_ENVELOPE_UNKNOWN:{subject}",))
+        if envelope.subject != subject:
+            return GateResult(Decision.REJECT, (f"AUTHORITY_SUBJECT_MISMATCH:{subject}",))
+        authority_chain.append(envelope)
+
+    depth = max(0, len(proposal.delegation_chain) - 1)
+    if not can_execute(
+        authority_chain,
+        action=proposal.action,
+        resource=proposal.target,
+        depth=depth,
+    ):
+        return GateResult(Decision.REJECT, ("AUTHORITY_SCOPE_DENIED",))
 
     unknown_gates = [name for name, state in context.hard_gates.items() if state is None]
     failed_gates = [name for name, state in context.hard_gates.items() if state is False]
@@ -91,6 +113,20 @@ def _demo() -> None:
     context = GateContext(
         current_policy_epoch="E1",
         capabilities_by_principal={"human:alice": frozenset({"notify"})},
+        authority_by_subject={
+            "human:alice": AuthorityEnvelope(
+                subject="human:alice",
+                actions=frozenset({"notify"}),
+                resources=frozenset({"demo-channel"}),
+                max_depth=1,
+            ),
+            "agent:A": AuthorityEnvelope(
+                subject="agent:A",
+                actions=frozenset({"notify"}),
+                resources=frozenset({"demo-channel"}),
+                max_depth=1,
+            ),
+        },
         hard_gates={"rights": True, "policy": True, "safety": True},
     )
     proposal = ActionProposal(
