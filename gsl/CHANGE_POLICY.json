@@ -1,0 +1,26 @@
+{
+  "schema": "GardenRepositoryChangePolicy/v1",
+  "status": "BOOTSTRAP_CANDIDATE_ENABLE_AFTER_BASE_MERGE",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "ordinary_change_requirements": [
+    "observed changed paths exactly bound to a RepoChangeEnvelope",
+    "repo profile resolves each changed artifact",
+    "required Garden modules are not silently omitted",
+    "material code/workflow/config changes carry source obligation references",
+    "authority_ref resolves from protected base authority registry",
+    "tests/evidence are bound where applicable",
+    "CIConformancePipelineReceipt overall PASS"
+  ],
+  "constitutional_paths": [
+    "gsl/AUTHORITY_REGISTRY.json",
+    "gsl/CHANGE_POLICY.json",
+    "gsl/DESIGN_EPOCH.json",
+    "gsl/AGENT_ENVELOPES.json",
+    "gsl/FUNCTION_CONTRACT_GENERATION.json",
+    ".github/workflows/integrity.yml"
+  ],
+  "constitutional_rule": "A change touching constitutional_paths cannot be authorized by request-supplied booleans or by the changed registry/policy itself. It requires an externally verifiable human approval or a trusted base-bound approval receipt. Until that verifier exists, such a change must remain candidate/ESCALATE.",
+  "canonical_rule": "Published Garden v15.5 source files are immutable in place. Canonical successor promotion is outside repository-agent authority and remains human-controlled.",
+  "documentation_rule": "Purely explanatory documentation may be source-obligation-exempt only when it does not alter normative semantics, authority, policy, executable behavior or release claims; the envelope must explicitly classify that exemption.",
+  "fail_closed_states": ["FAIL", "UNKNOWN", "INCONCLUSIVE", "TIMEOUT", "RESOURCE_UNKNOWN", "STALE", "MALFORMED", "ESCALATE"]
+}

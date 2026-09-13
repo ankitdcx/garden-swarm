@@ -1,0 +1,75 @@
+{
+  "schema": "GardenGeneratedFunctionContractRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "resolution_rule": "Direct owner-qualified FunctionContracts take precedence. Otherwise exactly one generation rule must match the implementation path and visibility. Generated contracts inherit the template and bind the exact owner-qualified callable, AST signature/return annotation and implementation SHA-256 in CI.",
+  "templates": {
+    "PROTOTYPE_INTERNAL_HELPER": {
+      "closed_effect_vector": ["LOCAL_COMPUTE", "OPTIONAL_STDOUT"],
+      "authority_requirement": "Internal helper cannot create authority beyond its owning prototype module.",
+      "failure_mode_set": ["MALFORMED_INPUT", "INTERNAL_ERROR"],
+      "result_algebra": "Derived from annotated result; no truth/authority promotion implied.",
+      "bool_restriction": "Bool is permitted only when CI classifies the callable as a total deterministic predicate; otherwise an explicit typed result is required.",
+      "dependency_and_invalidator_bindings": ["owning prototype FunctionContract", "DesignEpoch"],
+      "resource_and_termination_bounds": "Bounded by finite supplied inputs; no background authority.",
+      "provenance": ["FUNC-001..010", "prototype reference implementation"]
+    },
+    "PUBLIC_DISCOVERY_HTTP": {
+      "closed_effect_vector": ["READ_PUBLIC_REPOSITORY", "SERVE_HTTP_RESPONSE"],
+      "authority_requirement": "Read-only public discovery. No GitHub write, deployment, canonical promotion or real-world actuation authority.",
+      "failure_mode_set": ["RESOURCE_NOT_FOUND", "RESOURCE_UNAVAILABLE", "VALIDATION_ERROR", "INTERNAL_ERROR"],
+      "result_algebra": "Typed HTTP/API result with explicit non-success status; no non-PASS state may be relabeled PASS.",
+      "bool_restriction": "No Bool success laundering for multi-terminal operations.",
+      "dependency_and_invalidator_bindings": ["SOURCE_MANIFEST.json", "gsl/DESIGN_EPOCH.json", "public API resource map"],
+      "resource_and_termination_bounds": "Finite local file read/serialization per request.",
+      "provenance": ["server/app.py", "public discovery boundary"]
+    },
+    "PUBLIC_DISCOVERY_MCP": {
+      "closed_effect_vector": ["READ_PUBLIC_REPOSITORY", "SERVE_MCP_RESPONSE"],
+      "authority_requirement": "Must remain within AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1; no delegation or external action authority.",
+      "failure_mode_set": ["RESOURCE_UNAVAILABLE", "INVALID_INPUT", "ENVELOPE_MISMATCH", "INTERNAL_ERROR"],
+      "result_algebra": "Typed MCP/tool result or explicit error.",
+      "bool_restriction": "No Bool success laundering for multi-terminal operations.",
+      "dependency_and_invalidator_bindings": ["gsl/AGENT_ENVELOPES.json", "gsl/DESIGN_EPOCH.json", "SOURCE_MANIFEST.json"],
+      "resource_and_termination_bounds": "Finite local file read/serialization; transport managed by MCP SDK.",
+      "provenance": ["server/mcp_service.py", "AGT-008", "AGT-011", "AGT-012"]
+    },
+    "SWARM_ORCHESTRATION": {
+      "closed_effect_vector": ["READ_PUBLIC_SOURCE", "OPTIONAL_EXTERNAL_MODEL_CALL", "WRITE_LOCAL_RECEIPT", "LOCAL_COMPUTE"],
+      "authority_requirement": "Model outputs are CANDIDATES/PROPOSALS_ONLY and cannot admit, merge, promote canon or gain external action authority.",
+      "failure_mode_set": ["MODEL_UNAVAILABLE", "RATE_LIMITED", "INVALID_OUTPUT", "RESOURCE_LIMIT", "MALFORMED_INPUT"],
+      "result_algebra": "GardenSwarmRunReceipt/CandidateSynthesis with explicit failure and proposal-only status.",
+      "bool_restriction": "No Bool collapse of provider/review/admission states.",
+      "dependency_and_invalidator_bindings": ["Garden v15.5 source root", "role registry", "provider policy", "QualifiedProfileParameters"],
+      "resource_and_termination_bounds": "Bounded by max calls, concurrency, chars, tokens and provider timeout parameters.",
+      "provenance": ["swarm/", "GSL-COMPARE", "Reason", "Evidence", "AAP"]
+    },
+    "MODEL_REVIEW_TOOL": {
+      "closed_effect_vector": ["READ_PUBLIC_SOURCE", "EXTERNAL_MODEL_CALL", "WRITE_LOCAL_RECEIPT", "LOCAL_COMPUTE"],
+      "authority_requirement": "Free/public reviewer has proposal-only authority and receives no private source, merge, deployment or canonical-promotion authority.",
+      "failure_mode_set": ["RATE_LIMITED", "PROVIDER_UNAVAILABLE", "INVALID_OUTPUT", "MISSING_KEY", "NONZERO_COST_REFUSED", "MALFORMED_INPUT"],
+      "result_algebra": "Structured GardenAgentHandoff/review/availability receipt; failure remains visible.",
+      "bool_restriction": "No Bool collapse of provider/review states.",
+      "dependency_and_invalidator_bindings": ["public source identity", "free-provider policy", "review schema", "QualifiedProfileParameters"],
+      "resource_and_termination_bounds": "Bounded by configured chunk/token/time/call limits.",
+      "provenance": ["tools/", "PROPOSALS_ONLY", "whole-source cross-reference boundary"]
+    },
+    "REPO_CONFORMANCE_TOOL": {
+      "closed_effect_vector": ["READ_REPOSITORY", "WRITE_LOCAL_RECEIPT", "LOCAL_COMPUTE", "OPTIONAL_STDOUT"],
+      "authority_requirement": "Verifier/audit tool cannot grant canonical, merge, deployment or external action authority.",
+      "failure_mode_set": ["PASS", "FAIL", "UNKNOWN", "MALFORMED", "RESOURCE_UNAVAILABLE"],
+      "result_algebra": "Typed verifier/conformance receipt with fail-closed process exit status.",
+      "bool_restriction": "No Bool-only output where failure class matters.",
+      "dependency_and_invalidator_bindings": ["DesignEpoch", "source/repo hashes", "governing registry/profile"],
+      "resource_and_termination_bounds": "Finite traversal over tracked repository files/declared records.",
+      "provenance": ["scripts/", "Conformance Algebra", "Audit", "Compliance"]
+    }
+  },
+  "generation_rules": [
+    {"rule_id":"GEN-PROTOTYPE-PRIVATE","pattern":"prototype/*.py","visibility":"PRIVATE_ONLY","template_id":"PROTOTYPE_INTERNAL_HELPER"},
+    {"rule_id":"GEN-SERVER-APP","pattern":"server/app.py","visibility":"ALL","template_id":"PUBLIC_DISCOVERY_HTTP"},
+    {"rule_id":"GEN-SERVER-MCP","pattern":"server/mcp_service.py","visibility":"ALL","template_id":"PUBLIC_DISCOVERY_MCP"},
+    {"rule_id":"GEN-SWARM","pattern":"swarm/*.py","visibility":"ALL","template_id":"SWARM_ORCHESTRATION"},
+    {"rule_id":"GEN-TOOLS","pattern":"tools/*.py","visibility":"ALL","template_id":"MODEL_REVIEW_TOOL"},
+    {"rule_id":"GEN-SCRIPTS","pattern":"scripts/*.py","visibility":"ALL","template_id":"REPO_CONFORMANCE_TOOL"}
+  ]
+}
