@@ -1,2 +1,20 @@
-# Initial review ownership. This is a repository review rule, not Garden governance authority.
+# Garden repository review ownership. This is a repository review rule, not a grant of Garden authority.
 * @ankitdcx
+
+# Constitutional Garden/GSL governance
+/gsl/AUTHORITY_REGISTRY.json @ankitdcx
+/gsl/CHANGE_POLICY.json @ankitdcx
+/gsl/DESIGN_EPOCH.json @ankitdcx
+/gsl/AGENT_ENVELOPES.json @ankitdcx
+/gsl/FUNCTION_CONTRACT_GENERATION.json @ankitdcx
+/gsl/REPO_PROFILE.json @ankitdcx
+/gsl/SOURCE_OBLIGATIONS.json @ankitdcx
+/gsl/HUMAN_APPROVALS.json @ankitdcx
+/gsl/DEV_AI.json @ankitdcx
+/gsl/BOOTSTRAP_TRUST.json @ankitdcx
+/.github/workflows/integrity.yml @ankitdcx
+
+# Canonical predecessor source is immutable in place
+/Garden_*_v15.5_FULL_*.txt @ankitdcx
+/SOURCE_MANIFEST.json @ankitdcx
+/VERSION @ankitdcx
