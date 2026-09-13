@@ -24,8 +24,23 @@ def git_json(ref: str, path: str) -> dict[str, Any]:
     return json.loads(run("git", "show", f"{ref}:{path}"))
 
 
+def git_path_exists(ref: str, path: str) -> bool:
+    proc = subprocess.run(["git", "cat-file", "-e", f"{ref}:{path}"], cwd=ROOT, text=True, capture_output=True)
+    return proc.returncode == 0
+
+
 def head_json(path: str) -> dict[str, Any]:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
+def protected_json(base: str, canonical_path: str, bootstrap_flat_path: str | None = None) -> dict[str, Any]:
+    if git_path_exists(base, canonical_path):
+        return git_json(base, canonical_path)
+    if base == BOOTSTRAP_BASE and bootstrap_flat_path and git_path_exists(base, bootstrap_flat_path):
+        return git_json(base, bootstrap_flat_path)
+    if base == BOOTSTRAP_BASE:
+        return head_json(canonical_path)
+    raise RuntimeError(f"protected-base governance artifact missing: {canonical_path}")
 
 
 def changed_rows(base: str, head: str) -> list[dict[str, str]]:
@@ -35,17 +50,8 @@ def changed_rows(base: str, head: str) -> list[dict[str, str]]:
         if not line.strip():
             continue
         parts = line.split("\t")
-        status = parts[0]
-        path = parts[-1]
-        rows.append({"status": status, "path": path})
+        rows.append({"status": parts[0], "path": parts[-1]})
     return rows
-
-
-def classified_rule(path: str, profile: dict[str, Any]) -> dict[str, Any] | None:
-    for rule in profile.get("rules") or []:
-        if fnmatch.fnmatchcase(path, str(rule.get("pattern", ""))):
-            return rule
-    return None
 
 
 def change_content_root(base: str, head: str, rows: list[dict[str, str]]) -> str:
@@ -54,10 +60,7 @@ def change_content_root(base: str, head: str, rows: list[dict[str, str]]) -> str
         path = row["path"]
         if path.startswith(EXCLUDED_CHANGE_PREFIXES):
             continue
-        if row["status"].startswith("D"):
-            object_id = "DELETED"
-        else:
-            object_id = run("git", "rev-parse", f"{head}:{path}").strip()
+        object_id = "DELETED" if row["status"].startswith("D") else run("git", "rev-parse", f"{head}:{path}").strip()
         material.append({"path": path, "status": row["status"], "object": object_id})
     payload = json.dumps(sorted(material, key=lambda x: x["path"]), sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
@@ -73,13 +76,35 @@ def load_envelope(rows: list[dict[str, str]]) -> tuple[str, dict[str, Any]]:
     return candidates[0], head_json(candidates[0])
 
 
-def load_base_or_bootstrap(base: str, path: str) -> dict[str, Any]:
-    try:
-        return git_json(base, path)
-    except subprocess.CalledProcessError:
-        if base != BOOTSTRAP_BASE:
-            raise
-        return head_json(path)
+def load_protected_profile_rules(base: str) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
+    if git_path_exists(base, "gsl/profile/REPO_PROFILE.json"):
+        profile = git_json(base, "gsl/profile/REPO_PROFILE.json")
+        tree = run("git", "ls-tree", "-r", "--name-only", base, "gsl/profile").splitlines()
+        shard_paths = sorted(
+            path for path in tree
+            if Path(path).name.startswith("REPO_PROFILE_") and path.endswith(".json")
+        )
+        rules: list[dict[str, Any]] = []
+        for path in shard_paths:
+            shard = git_json(base, path)
+            if shard.get("schema") != "GardenRepoConformanceProfileShard/v1":
+                raise RuntimeError(f"invalid protected-base profile shard: {path}")
+            if shard.get("design_epoch_ref") != profile.get("design_epoch_ref"):
+                raise RuntimeError(f"stale protected-base profile shard: {path}")
+            rules.extend(shard.get("rules") or [])
+        rules.extend(profile.get("rules") or [])
+        return profile, rules, shard_paths
+    if base == BOOTSTRAP_BASE:
+        profile = git_json(base, "gsl/REPO_PROFILE.json")
+        return profile, list(profile.get("rules") or []), []
+    raise RuntimeError("protected-base repository profile missing")
+
+
+def classified_rule(path: str, rules: list[dict[str, Any]]) -> dict[str, Any] | None:
+    for rule in rules:
+        if fnmatch.fnmatchcase(path, str(rule.get("pattern", ""))):
+            return rule
+    return None
 
 
 def approval_by_id(payload: dict[str, Any], approval_id: str | None) -> dict[str, Any] | None:
@@ -107,11 +132,11 @@ def main() -> int:
         envelope_path, envelope = "<missing>", {}
         failures.append(f"CHANGE_ENVELOPE_INVALID:{exc}")
 
-    base_policy = git_json(base, "gsl/CHANGE_POLICY.json")
-    base_authority = git_json(base, "gsl/AUTHORITY_REGISTRY.json")
-    base_profile = git_json(base, "gsl/REPO_PROFILE.json")
-    obligations = load_base_or_bootstrap(base, "gsl/SOURCE_OBLIGATIONS.json")
-    approvals = load_base_or_bootstrap(base, "gsl/HUMAN_APPROVALS.json")
+    base_policy = protected_json(base, "gsl/policy/CHANGE_POLICY.json", "gsl/CHANGE_POLICY.json")
+    base_authority = protected_json(base, "gsl/envelopes/AUTHORITY_REGISTRY.json", "gsl/AUTHORITY_REGISTRY.json")
+    base_profile, profile_rules, profile_shards = load_protected_profile_rules(base)
+    obligations = protected_json(base, "gsl/profile/SOURCE_OBLIGATIONS.json")
+    approvals = protected_json(base, "gsl/policy/HUMAN_APPROVALS.json")
 
     if envelope.get("schema") != "RepoChangeEnvelope/v1":
         failures.append("CHANGE_ENVELOPE_SCHEMA_INVALID")
@@ -161,7 +186,7 @@ def main() -> int:
     material_change = False
     profile_rows = []
     for path in observed_paths:
-        rule = classified_rule(path, base_profile)
+        rule = classified_rule(path, profile_rules)
         if rule is None:
             failures.append(f"UNCLASSIFIED_CHANGED_PATH:{path}")
             continue
@@ -212,6 +237,7 @@ def main() -> int:
         "function_contract_resolution": "DEFER_TO_CI_CONFORMANCE_PIPELINE",
         "source_obligation_resolution": sorted(supplied_obligations),
         "governance_tier": derived_tier,
+        "protected_profile_shards": profile_shards,
         "required_modules": sorted(required_modules),
         "result": "PASS" if not failures else "FAIL",
     }
