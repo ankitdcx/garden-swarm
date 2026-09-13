@@ -52,6 +52,7 @@ jobs:
             /tmp/version-epoch-receipt.json
             /tmp/test-matrix-receipt.json
             /tmp/repo-change-gate-receipt.json
+            /tmp/expected-repo-manifest.json
             gsl/receipts/CONFORMANCE_RECEIPT.json
             gsl/receipts/REFERENCE_CLOSURE_RECEIPT.json
           if-no-files-found: warn
