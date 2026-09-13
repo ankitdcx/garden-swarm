@@ -1,0 +1,54 @@
+{
+  "schema": "GardenLiveMCPVerificationReceipt/v0.1",
+  "verified_at": "2026-09-13T03:15:34.422778+00:00",
+  "verifier_environment": "github-actions-ubuntu-latest",
+  "base_url": "https://garden-swarm.onrender.com",
+  "mcp_endpoint": "https://garden-swarm.onrender.com/mcp/",
+  "health": {
+    "status": "ok",
+    "service": "garden-public-discovery",
+    "version": "0.2.0"
+  },
+  "summary_release": "v15.5",
+  "mcp": {
+    "protocol_version": "2026-07-28",
+    "server_name": "Garden Public Discovery",
+    "server_version": "0.1.0",
+    "tools": [
+      "build_finding_payload",
+      "current_release",
+      "evaluation_instructions",
+      "list_attack_surfaces",
+      "public_tasks"
+    ],
+    "current_release": {
+      "project": "Garden",
+      "release": "Garden-v15.5-2026-09-12",
+      "gsl": "v45.1",
+      "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
+      "status": {
+        "source_design": "CURRENT",
+        "static_structural_audit": "AUTHOR_SOURCE_SELF_AUDIT_PASS_WITH_DECLARED_BOUNDARY",
+        "reference_closure": "RELEASE_DECLARED_PASS_WITH_DECLARED_BOUNDARY",
+        "independent_external_verification": "PENDING",
+        "machine_certification": "PENDING",
+        "empirical_validation": "PENDING",
+        "deployment_certification": "PENDING"
+      }
+    }
+  },
+  "render": {
+    "service": "garden-swarm",
+    "region": "singapore",
+    "plan": "free",
+    "deploy_id": "dep-daj18mlg1s2s7392ibb0",
+    "deployed_commit": "cb7ed3fcf01c1b640d4c7c0487db5d3b5161a817"
+  },
+  "github_verification": {
+    "workflow_run": "https://github.com/ankitdcx/garden-swarm/actions/runs/34735018215",
+    "workflow_commit": "3424bffdd012242cd28235271151635851d7f9db",
+    "artifact_id": 10310602022,
+    "artifact_zip_sha256": "13eb243e811a4f733cfc9539ae58a1a25f5ff70a5617429db933f480af40c4b0"
+  },
+  "claim_boundary": "This receipt establishes public HTTPS reachability and successful MCP protocol negotiation, tool listing, and current_release invocation for the recorded deployment. It is not security certification, semantic correctness proof, deployment-safety certification, machine certification, empirical validation, independent validation of the Garden design, or A2A conformance."
+}
