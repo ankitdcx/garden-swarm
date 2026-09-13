@@ -1,0 +1,66 @@
+{
+  "schema": "GardenRepositoryProvenance/v1",
+  "provenance_id": "PROV-GARDEN-SWARM-v15.5-2026-09-13",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "source_roots": {
+    "canonical_source_manifest": "SOURCE_MANIFEST.json",
+    "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598"
+  },
+  "artifact_classes": [
+    "CANONICAL_SOURCE",
+    "IMPLEMENTATION",
+    "TEST",
+    "WORKFLOW",
+    "CONFIGURATION",
+    "TOOLING",
+    "DOCUMENTATION",
+    "RECEIPT",
+    "DATA"
+  ],
+  "transformation_chain": [
+    {
+      "stage": "canonical-source-publication",
+      "inputs": ["Garden v15.5 five-file source"],
+      "outputs": ["SOURCE_MANIFEST.json", "published canonical files"],
+      "transformation_identity": "exact public source publication with SHA-256 roots"
+    },
+    {
+      "stage": "reference-prototype",
+      "inputs": ["canonical source mechanisms"],
+      "outputs": ["prototype/"],
+      "transformation_identity": "bounded non-certified executable reference implementation"
+    },
+    {
+      "stage": "agent-and-evaluation-surface",
+      "inputs": ["canonical source", "prototype", "evaluation policies"],
+      "outputs": ["AGENTS.md", "SKILLS.json", "ATTACK_SURFACE.md", "server/", "swarm/", "tools/"],
+      "transformation_identity": "public discovery/review/proposal surface"
+    }
+  ],
+  "verifier_records": [
+    {
+      "verifier_ref": "scripts/verify_public_release.py",
+      "class": "STRUCTURAL_CONFORMANCE",
+      "independence": "repository-owned deterministic verifier",
+      "establishes": ["declared public release structural checks only"],
+      "does_not_establish": ["semantic proof", "external certification", "deployment permission"]
+    },
+    {
+      "verifier_ref": "scripts/verify_gsl_application.py",
+      "class": "GSL_APPLICATION_CONFORMANCE",
+      "independence": "repository-owned deterministic verifier",
+      "establishes": ["bounded executable repository checks listed in CIConformancePipelineReceipt/v1"],
+      "does_not_establish": ["full Garden semantic certification", "empirical validation", "canonical promotion"]
+    }
+  ],
+  "cryptographic_roots": {
+    "canonical": "SHA-256 via SOURCE_MANIFEST.json",
+    "repository_artifacts": "SHA-256 computed in repo conformance/CI receipts"
+  },
+  "traversal": {
+    "backward": "artifact -> conformance receipt -> governing registry/profile -> DesignEpoch -> canonical source root",
+    "forward": "canonical source root -> DesignEpoch -> governed registries -> implementation/workflow/artifact -> verifier receipt"
+  },
+  "redaction_policy": "This public repository provenance contains no private payload lineage. Any future protected lineage must declare class-level redaction/gap rather than silently appearing absent.",
+  "status": "CANDIDATE_UNTIL_CI_RECEIPTS_PASS"
+}
