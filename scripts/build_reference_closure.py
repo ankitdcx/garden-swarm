@@ -169,7 +169,7 @@ def main() -> int:
         "unresolved_count": len(unresolved),
         "unresolved": unresolved,
         "status": "PASS" if not unresolved else "FAIL",
-        "semantic_reference_closure_proved": false if False else False
+        "semantic_reference_closure_proved": False
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
