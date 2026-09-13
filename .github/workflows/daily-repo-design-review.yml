@@ -1,0 +1,102 @@
+name: Garden daily repository-design quorum
+
+on:
+  schedule:
+    # 17:20 Asia/Kolkata; daily repo-design review is separate from hourly Garden design review.
+    - cron: '50 11 * * *'
+  pull_request:
+    paths:
+      - 'tools/rotate_design_review_target.py'
+      - 'tools/matrix_repo_review.py'
+      - 'agents/design-review-matrix.json'
+      - 'agents/repo-review-matrix.json'
+      - '.github/workflows/hourly-free-agent-review.yml'
+      - '.github/workflows/daily-repo-design-review.yml'
+      - 'tests/test_review_matrix_rotation.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-daily-repo-design-review-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify scheduler and repo-review machinery offline
+        run: python -m unittest tests.test_review_matrix_rotation -v
+
+      - name: Prefer four independent free reviewer families
+        run: python -m tools.select_matrix_reviewers --count 4
+
+      - name: Review one bounded repository-design target
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            # Self-review/bootstrap target. This PR cannot use a different target to approve its own machinery.
+            python -m tools.matrix_repo_review --slot 0
+          else
+            python -m tools.matrix_repo_review
+          fi
+
+      - name: Enforce three-family minimum, peer cross-examination and no auto-admission
+        run: |
+          python - <<'PY'
+          import json
+          bundle = json.load(open('agents/outbox/daily/repo-review-bundle.json', encoding='utf-8'))
+          matrix = json.load(open('agents/repo-review-matrix.json', encoding='utf-8'))
+          selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
+          minimum = int(matrix['minimum_independent_reviewer_families'])
+          preferred = int(matrix['preferred_independent_reviewer_families'])
+          assert minimum >= 3
+          assert preferred >= minimum
+          assert len(selection['selected']) >= minimum
+          assert len({x['family'] for x in selection['selected']}) == len(selection['selected'])
+          assert all(str(x['model']).endswith(':free') for x in selection['selected'])
+          assert bundle['schema'] == 'GardenRepoDesignReviewBundle/v1'
+          assert bundle['semantic_delta_admitted'] is False
+          assert bundle['target']['target_id'] in {row['target_id'] for row in matrix['targets']}
+          assert bundle['status'] in {
+              'INSUFFICIENT_INDEPENDENT_REVIEW',
+              'INSUFFICIENT_PEER_CROSS_EXAMINATION',
+              'COST_VERIFICATION_FAILED',
+              'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR',
+          }
+          if bundle['status'] != 'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR':
+              raise SystemExit(f"repository-design review did not satisfy admission quorum: {bundle['status']}")
+          assert bundle['independent_reviewer_family_count'] >= minimum
+          assert bundle['final_disposition_family_count'] >= minimum
+          assert bundle['zero_cost_verified'] is True
+          print(json.dumps({
+              'target_id': bundle['target']['target_id'],
+              'status': bundle['status'],
+              'independent_families': bundle['independent_reviewer_family_count'],
+              'final_families': bundle['final_disposition_family_count'],
+              'semantic_delta_admitted': False,
+          }, sort_keys=True))
+          PY
+
+      - name: Upload immutable repository-review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-daily-repo-design-review-${{ github.run_id }}
+          path: |
+            agents/repo-review-matrix.json
+            agents/runtime/free-selection.json
+            agents/outbox/daily/repo-review-bundle.json
+            agents/outbox/daily/repo-matrix-review/*.json
+          if-no-files-found: warn
+          retention-days: 30
