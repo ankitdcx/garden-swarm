@@ -33,13 +33,17 @@ def head_json(path: str) -> dict[str, Any]:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
-def protected_json(base: str, canonical_path: str, bootstrap_flat_path: str | None = None) -> dict[str, Any]:
+def protected_json(base: str, canonical_path: str, legacy_flat_path: str | None = None) -> dict[str, Any]:
+    """Resolve governance only from the protected base.
+
+    During the one-time flat->nested namespace migration, a protected base may
+    still contain the legacy flat path. That is a safe compatibility source
+    because it is read from BASE, never from the proposed head.
+    """
     if git_path_exists(base, canonical_path):
         return git_json(base, canonical_path)
-    if base == BOOTSTRAP_BASE and bootstrap_flat_path and git_path_exists(base, bootstrap_flat_path):
-        return git_json(base, bootstrap_flat_path)
-    if base == BOOTSTRAP_BASE:
-        return head_json(canonical_path)
+    if legacy_flat_path and git_path_exists(base, legacy_flat_path):
+        return git_json(base, legacy_flat_path)
     raise RuntimeError(f"protected-base governance artifact missing: {canonical_path}")
 
 
@@ -94,7 +98,7 @@ def load_protected_profile_rules(base: str) -> tuple[dict[str, Any], list[dict[s
             rules.extend(shard.get("rules") or [])
         rules.extend(profile.get("rules") or [])
         return profile, rules, shard_paths
-    if base == BOOTSTRAP_BASE:
+    if git_path_exists(base, "gsl/REPO_PROFILE.json"):
         profile = git_json(base, "gsl/REPO_PROFILE.json")
         return profile, list(profile.get("rules") or []), []
     raise RuntimeError("protected-base repository profile missing")
@@ -135,8 +139,8 @@ def main() -> int:
     base_policy = protected_json(base, "gsl/policy/CHANGE_POLICY.json", "gsl/CHANGE_POLICY.json")
     base_authority = protected_json(base, "gsl/envelopes/AUTHORITY_REGISTRY.json", "gsl/AUTHORITY_REGISTRY.json")
     base_profile, profile_rules, profile_shards = load_protected_profile_rules(base)
-    obligations = protected_json(base, "gsl/profile/SOURCE_OBLIGATIONS.json")
-    approvals = protected_json(base, "gsl/policy/HUMAN_APPROVALS.json")
+    obligations = protected_json(base, "gsl/profile/SOURCE_OBLIGATIONS.json", "gsl/SOURCE_OBLIGATIONS.json")
+    approvals = protected_json(base, "gsl/policy/HUMAN_APPROVALS.json", "gsl/HUMAN_APPROVALS.json")
 
     if envelope.get("schema") != "RepoChangeEnvelope/v1":
         failures.append("CHANGE_ENVELOPE_SCHEMA_INVALID")
