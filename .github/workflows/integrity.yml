@@ -21,8 +21,8 @@ jobs:
           python-version: "3.12"
       - name: Verify public release
         run: python scripts/verify_public_release.py
-      - name: Verify free-review module entrypoints offline
-        run: python -m unittest discover -s tests -p 'test_free_review_entrypoints.py' -v
+      - name: Verify free-review and Design Review Matrix boundaries offline
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Audit whole repository into Garden/GSL profile
         run: python scripts/audit_repo_gsl.py --strict-frontier --output /tmp/garden-repo-gsl-audit.json
       - name: Run Garden/GSL application conformance pipeline
