@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 from mcp.server import MCPServer
 from mcp.server.transport_security import TransportSecuritySettings
 
-ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1]))
+ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
 
 mcp = MCPServer(
     "Garden Public Discovery",
@@ -17,30 +17,49 @@ mcp = MCPServer(
 )
 
 
+def _validated_root(root: Path) -> Path:
+    resolved = root.resolve()
+    manifest = resolved / "SOURCE_MANIFEST.json"
+    version = resolved / "VERSION"
+    if not manifest.is_file() or not version.is_file():
+        raise RuntimeError("GARDEN_REPO_ROOT must contain SOURCE_MANIFEST.json and VERSION")
+    return resolved
+
+
+ROOT = _validated_root(ROOT)
+
+
 def _read(rel: str) -> str:
-    path = ROOT / rel
-    if not path.exists():
+    path = (ROOT / rel).resolve()
+    try:
+        path.relative_to(ROOT)
+    except ValueError as exc:
+        raise RuntimeError(f"Public Garden resource escaped configured root: {rel}") from exc
+    if not path.is_file():
         raise RuntimeError(f"Public Garden resource unavailable: {rel}")
     return path.read_text(encoding="utf-8")
 
 
-def _public_host() -> str | None:
+def _public_host_and_port() -> tuple[str | None, int | None]:
     explicit = os.getenv("PUBLIC_BASE_URL", "").strip()
     if explicit:
         parsed = urlparse(explicit if "://" in explicit else f"https://{explicit}")
         if parsed.hostname:
-            return parsed.hostname
+            return parsed.hostname, parsed.port
     render = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
-    return render or None
+    return (render or None), None
 
 
 def transport_security() -> TransportSecuritySettings:
     hosts = ["127.0.0.1:*", "localhost:*", "testserver:*"]
     origins = ["http://127.0.0.1:*", "http://localhost:*", "http://testserver:*"]
-    public_host = _public_host()
+    public_host, public_port = _public_host_and_port()
     if public_host:
-        hosts.extend([public_host, f"{public_host}:*"])
-        origins.append(f"https://{public_host}")
+        hosts.append(f"{public_host}:{public_port}" if public_port else public_host)
+        origin = f"https://{public_host}"
+        if public_port and public_port != 443:
+            origin += f":{public_port}"
+        origins.append(origin)
     return TransportSecuritySettings(
         enable_dns_rebinding_protection=True,
         allowed_hosts=hosts,
@@ -97,29 +116,39 @@ def public_tasks() -> str:
 @mcp.tool()
 def build_finding_payload(
     claim: str,
+    coverage: str,
     evidence_or_failure: str,
     severity: str,
-    test: str = "",
     source_anchors: str = "",
+    affected_invariant: str = "",
+    existing_mitigation_checked: str = "",
+    better_alternative: str = "",
+    test: str = "",
     uncertainty: str = "",
+    publishable_issue_title: str = "",
 ) -> dict[str, str]:
     """Build a publication-ready adversarial finding payload without posting it."""
     allowed = {"NOTE", "LOW", "MEDIUM", "HIGH", "CRITICAL"}
     normalized = severity.upper().strip()
     if normalized not in allowed:
         raise ValueError(f"severity must be one of {sorted(allowed)}")
+    title = publishable_issue_title.strip() or f"[Adversarial finding] {claim.strip()[:160]}"
     body = "\n\n".join(
         [
             f"**Claim / mechanism**\n{claim.strip()}",
+            f"**Coverage**\n{coverage.strip()}",
             f"**Source anchors**\n{source_anchors.strip() or 'Not supplied'}",
             f"**Evidence or failure**\n{evidence_or_failure.strip()}",
             f"**Severity**\n{normalized}",
+            f"**Affected invariant / anchor**\n{affected_invariant.strip() or 'Not supplied'}",
+            f"**Existing mitigation checked**\n{existing_mitigation_checked.strip() or 'Not supplied'}",
+            f"**Better alternative / fix**\n{better_alternative.strip() or 'Not supplied'}",
             f"**Regression test**\n{test.strip() or 'Not supplied'}",
             f"**Uncertainty / what would overturn this**\n{uncertainty.strip() or 'Not supplied'}",
         ]
     )
     return {
-        "title_hint": f"[Adversarial finding] {claim.strip()[:160]}",
+        "title": title,
         "body": body,
         "note": "Payload only. No GitHub write, external action, or authority grant occurs.",
     }
