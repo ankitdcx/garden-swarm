@@ -32,6 +32,8 @@ def iter_files(root: Path) -> list[Path]:
         parts = path.relative_to(root).parts
         if ".git" in parts or "__pycache__" in parts:
             continue
+        if any(part.endswith(".egg-info") for part in parts):
+            continue
         if path.suffix in {".pyc", ".pyo"}:
             continue
         out.append(path)
