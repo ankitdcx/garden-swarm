@@ -1,125 +1,16 @@
-name: Garden hourly free multi-model review
+name: Garden legacy free review bus (manual only)
 
 on:
-  schedule:
-    - cron: '5 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: garden-hourly-free-agent-review
-  cancel-in-progress: false
-
 jobs:
-  review:
+  notice:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GEMINI_MODEL: gemini-3.5-flash
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Select diverse live free-model families
-        run: python tools/free_model_rotation.py
-
-      - name: Run exactly one free OpenRouter review this hour
-        id: free_review
-        continue-on-error: true
-        run: python tools/run_hourly_free_review.py
-
-      - name: Record unavailable free endpoint without paid fallback
-        if: steps.free_review.outcome == 'failure'
+      - name: Legacy bus superseded
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          sel = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
-          slot = int(sel['hour_slot'])
-          out = Path('agents/outbox/hourly'); out.mkdir(parents=True, exist_ok=True)
-          receipt = {
-              'schema': 'GardenFreeReviewAvailabilityReceipt/v1',
-              'hour_slot': slot,
-              'lane': 'design' if slot % 2 == 0 else 'repo',
-              'status': 'FREE_ENDPOINT_UNAVAILABLE_OR_UNUSABLE',
-              'reason': 'The selected free call did not yield an admissible structured result; no same-hour retry and no paid fallback attempted.',
-              'selected': sel.get('selected', []),
-              'admission_status': 'NO_MODEL_FINDING'
-          }
-          (out / 'availability.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps(receipt))
-          PY
-
-      - name: Run direct Gemini free-tier reviewer conservatively
-        run: python tools/run_gemini_free_review.py
-
-      - name: Enforce OpenRouter free-only and proposal-only boundary
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
-          selected = selection['selected']
-          assert len(selected) == 2
-          assert len({x['family'] for x in selected}) == 2
-          assert all(x['model'].endswith(':free') for x in selected)
-          availability = Path('agents/outbox/hourly/availability.json')
-          reviews = [Path('agents/outbox/hourly/design-review.json'), Path('agents/outbox/hourly/repo-review.json')]
-          existing = [p for p in reviews if p.exists()]
-          if availability.exists():
-              p = json.load(open(availability, encoding='utf-8'))
-              assert p['status'] in {'RATE_LIMITED', 'FREE_ENDPOINT_UNAVAILABLE_OR_UNUSABLE'}
-              assert not existing
-              print('FREE_MODEL_UNAVAILABLE_NO_PAID_FALLBACK')
-          else:
-              assert len(existing) == 1, existing
-              p = json.load(open(existing[0], encoding='utf-8'))
-              assert p['admission_status'].startswith('PROPOSALS_ONLY')
-              cost = (p.get('usage') or {}).get('cost')
-              assert cost in (None, 0, 0.0), (existing[0], cost)
-              assert p['handoff']['schema'] == 'GardenAgentHandoff/v1'
-              assert p['handoff'].get('search_trace')
-              print('FREE_ONLY_PASS', existing[0])
-          PY
-
-      - name: Build combined run receipt
-        run: |
-          python - <<'PY'
-          import json, os
-          from datetime import datetime, timezone
-          from pathlib import Path
-          def maybe(p):
-              path = Path(p)
-              return json.load(open(path, encoding='utf-8')) if path.exists() else None
-          receipt = {
-              'schema': 'GardenHourlyMultiModelReviewReceipt/v2',
-              'created_at': datetime.now(timezone.utc).isoformat(),
-              'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
-              'commit': os.environ.get('GITHUB_SHA'),
-              'selection': maybe('agents/runtime/free-selection.json'),
-              'design_review': maybe('agents/outbox/hourly/design-review.json'),
-              'repo_review': maybe('agents/outbox/hourly/repo-review.json'),
-              'openrouter_availability': maybe('agents/outbox/hourly/availability.json'),
-              'gemini_review': maybe('agents/outbox/hourly/gemini-review.json'),
-              'admission_status': 'PROPOSALS_ONLY_NEEDS_CHATGPT_AND_WHOLE_SOURCE_CROSS_REFERENCE',
-          }
-          Path('agents/outbox/hourly').mkdir(parents=True, exist_ok=True)
-          with open('agents/outbox/hourly/combined-receipt.json','w',encoding='utf-8') as f:
-              json.dump(receipt, f, indent=2, ensure_ascii=False); f.write('\n')
-          PY
-
-      - name: Upload immutable review receipts
-        uses: actions/upload-artifact@v4
-        with:
-          name: garden-hourly-free-agent-review-${{ github.run_id }}
-          path: |
-            agents/runtime/free-selection.json
-            agents/outbox/hourly/*.json
-          if-no-files-found: error
-          retention-days: 30
+          echo 'Scheduled Garden review is owned by review-quorum.yml.'
+          echo 'This legacy workflow is intentionally manual-only so it cannot review a different target or bypass the >=3-family quorum.'
