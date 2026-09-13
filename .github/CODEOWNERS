@@ -1,7 +1,17 @@
 # Garden repository review ownership. This is a repository review rule, not a grant of Garden authority.
 * @ankitdcx
 
-# Constitutional Garden/GSL governance
+# Canonical Garden/GSL governance namespaces
+/gsl/epoch/ @ankitdcx
+/gsl/contracts/ @ankitdcx
+/gsl/envelopes/ @ankitdcx
+/gsl/policy/ @ankitdcx
+/gsl/provenance/ @ankitdcx
+/gsl/profile/ @ankitdcx
+/gsl/changes/ @ankitdcx
+/gsl/receipts/ @ankitdcx
+
+# Temporary flat compatibility mirrors remain owned until removed.
 /gsl/AUTHORITY_REGISTRY.json @ankitdcx
 /gsl/CHANGE_POLICY.json @ankitdcx
 /gsl/DESIGN_EPOCH.json @ankitdcx
@@ -12,7 +22,10 @@
 /gsl/HUMAN_APPROVALS.json @ankitdcx
 /gsl/DEV_AI.json @ankitdcx
 /gsl/BOOTSTRAP_TRUST.json @ankitdcx
+
+# Workflows capable of establishing repository conformance evidence
 /.github/workflows/integrity.yml @ankitdcx
+/.github/workflows/hourly-free-agent-review.yml @ankitdcx
 
 # Canonical predecessor source is immutable in place
 /Garden_*_v15.5_FULL_*.txt @ankitdcx
