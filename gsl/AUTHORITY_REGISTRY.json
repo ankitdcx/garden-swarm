@@ -1,0 +1,32 @@
+{
+  "schema": "GardenRepositoryAuthorityRegistry/v1",
+  "status": "BOOTSTRAP_CANDIDATE_NOT_SELF_AUTHORIZING",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "boundary": "This registry is introduced as candidate governance in the bootstrap migration. After merge, change-time gates must resolve authority from the protected base version; a proposed change may not authorize itself by editing this registry.",
+  "grants": [
+    {
+      "authority_id": "AUTH-PUBLIC-GARDEN-INTEGRATOR-PROPOSE-v1",
+      "subject": "agent:garden-integrator-build",
+      "granted_by": "human:garden-originator:Garden-upgrade-loop",
+      "actions": ["PROPOSE", "TRIAGE", "TEST"],
+      "resources": ["repo:ankitdcx/garden-swarm"],
+      "max_delegation_depth": 0,
+      "can_mint_authority": false,
+      "can_merge": false,
+      "can_promote_canon": false,
+      "invalidators": ["DesignEpoch change", "human revocation", "authority-policy change"]
+    },
+    {
+      "authority_id": "AUTH-PUBLIC-CI-VERIFY-v1",
+      "subject": "service:github-actions",
+      "granted_by": "repository:ankitdcx/garden-swarm:governance",
+      "actions": ["TEST", "VERIFY", "EMIT_RECEIPT"],
+      "resources": ["repo:ankitdcx/garden-swarm"],
+      "max_delegation_depth": 0,
+      "can_mint_authority": false,
+      "can_merge": false,
+      "can_promote_canon": false,
+      "invalidators": ["workflow identity change", "DesignEpoch change", "authority-policy change"]
+    }
+  ]
+}
