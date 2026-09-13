@@ -1,0 +1,75 @@
+{
+  "schema": "GardenRepoDesignReviewMatrix/v1",
+  "design_epoch": "v15.5",
+  "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "minimum_independent_reviewer_families": 3,
+  "preferred_independent_reviewer_families": 4,
+  "selection_policy": "Review exactly one bounded repository-design target per local-day cycle using deterministic rotation. Review evidence never self-authorizes a repository change.",
+  "semantic_compliance_proved": false,
+  "targets": [
+    {
+      "target_id": "RRM-BOOTSTRAP-REVIEW-SCHEDULER",
+      "risk": "HIGH",
+      "review_question": "Can the hourly Garden-design rotation or daily repository-review quorum be bypassed, self-authorize a semantic change, silently reduce the >=3 independent-family requirement, or review different evidence per family?",
+      "files": ["tools/rotate_design_review_target.py", "tools/matrix_repo_review.py", "agents/design-review-matrix.json", "agents/repo-review-matrix.json", ".github/workflows/hourly-free-agent-review.yml", ".github/workflows/daily-repo-design-review.yml"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-GSL-GOVERNANCE",
+      "risk": "CRITICAL",
+      "review_question": "Do DesignEpoch, authority, change policy, repository profile and reference policy compose fail-closed without permitting a proposed change to authorize or classify itself?",
+      "files": ["gsl/DESIGN_EPOCH.json", "gsl/CHANGE_POLICY.json", "gsl/AUTHORITY_REGISTRY.json", "gsl/REPO_PROFILE.json", "gsl/REFERENCE_POLICY.json"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-FUNCTION-CONTRACT-COVERAGE",
+      "risk": "HIGH",
+      "review_question": "Can executable functions obtain overly broad or ambiguous generated FunctionContracts, or can contract generation drift without explicit review?",
+      "files": ["gsl/FUNCTION_CONTRACTS.json", "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json", "gsl/FUNCTION_CONTRACT_GENERATION.json", "scripts/verify_gsl_application.py"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-CI-CONFORMANCE",
+      "risk": "CRITICAL",
+      "review_question": "Can any CI lane, receipt, reference-closure rule or workflow failure be bypassed or misrepresented as aggregate PASS?",
+      "files": [".github/workflows/integrity.yml", "scripts/verify_gsl_application.py", "scripts/audit_repo_gsl.py", "scripts/build_reference_closure.py", "scripts/verify_public_release.py"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-MCP-DISCOVERY",
+      "risk": "HIGH",
+      "review_question": "Does the public MCP/discovery surface remain read-only, DesignEpoch/envelope-bound and invocation-time constrained under all declared tools and inputs?",
+      "files": ["server/mcp_service.py", "server/app.py", "gsl/AGENT_ENVELOPES.json", "DISCOVERY.json", "SKILLS.json"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-SWARM-ORCHESTRATION",
+      "risk": "HIGH",
+      "review_question": "Can swarm orchestration or synthesis amplify authority, confuse reviewer evidence with admission, escape resource bounds, or silently alter target semantics?",
+      "files": ["swarm/orchestrator.py", "swarm/synthesize.py", "swarm/roles-free.json", "ATTACK_SURFACE.md"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-PROTOTYPE-GATES",
+      "risk": "HIGH",
+      "review_question": "Do ActionGate, authority, DesignEpoch, delegation receipts and hardening fixtures preserve typed UNKNOWN/STALE, authority containment and fail-closed constitutional behavior?",
+      "files": ["prototype/actiongate.py", "prototype/authority.py", "prototype/design_epoch.py", "prototype/tokens.py", "prototype/hardening.py"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-VERSION-ARCHIVE-PROVENANCE",
+      "risk": "MEDIUM",
+      "review_question": "Can release/version identity, archived predecessor snapshots, source roots or provenance drift while CI still advertises current conformance?",
+      "files": ["VERSION", "SOURCE_MANIFEST.json", "CHANGELOG.md", "PUBLIC_RELEASE.md", "gsl/PROVENANCE.json"],
+      "public_only": true
+    },
+    {
+      "target_id": "RRM-TEST-FALSIFICATION-OWNERSHIP",
+      "risk": "HIGH",
+      "review_question": "Do test ownership and attack-surface evidence cover the mechanisms they claim, and can a passing fixture be mistaken for broader semantic or empirical certification?",
+      "files": ["prototype/tests/test_prototype.py", "tests/adversarial/test_known_attacks.py", "ATTACK_SURFACE.md", "EVALUATION_LOG.md", ".github/CODEOWNERS"],
+      "public_only": true
+    }
+  ],
+  "boundary": "This matrix schedules repository-design scrutiny only. It grants no authority, proof, semantic admission, deployment permission or canonical Garden status."
+}
