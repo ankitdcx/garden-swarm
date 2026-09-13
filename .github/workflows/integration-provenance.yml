@@ -1,0 +1,45 @@
+name: Multi-agent integration provenance
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    paths:
+      - 'swarm/**'
+      - 'prototype/**'
+      - 'server/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'gsl/**'
+      - 'agents/**'
+      - 'tests/**'
+      - '.github/workflows/**'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - '.github/ISSUE_TEMPLATE/task-claim.yml'
+      - 'Makefile'
+      - 'pyproject.toml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  integration-provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run integration provenance unit tests
+        run: |
+          python -m unittest discover -s swarm/tests -v
+          python -m unittest discover -s tests -p 'test_multi_agent_pr_check.py' -v
+
+      - name: Check declared work intent against concurrent PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python tools/check_multi_agent_pr.py
