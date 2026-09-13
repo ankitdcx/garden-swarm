@@ -5,14 +5,6 @@ on:
     # 17:20 Asia/Kolkata; daily repo-design review is separate from hourly Garden design review.
     - cron: '50 11 * * *'
   pull_request:
-    paths:
-      - 'tools/rotate_design_review_target.py'
-      - 'tools/matrix_repo_review.py'
-      - 'agents/design-review-matrix.json'
-      - 'agents/repo-review-matrix.json'
-      - '.github/workflows/hourly-free-agent-review.yml'
-      - '.github/workflows/daily-repo-design-review.yml'
-      - 'tests/test_review_matrix_rotation.py'
   workflow_dispatch:
 
 permissions:
@@ -25,17 +17,26 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Verify scheduler and repo-review machinery offline
         run: python -m unittest tests.test_review_matrix_rotation -v
+
+      - name: Bind pull requests to their exact base-head change set
+        if: github.event_name == 'pull_request'
+        run: >-
+          python -m tools.prepare_pr_review_target
+          --base-sha ${{ github.event.pull_request.base.sha }}
+          --head-sha ${{ github.event.pull_request.head.sha }}
 
       - name: Prefer four independent free reviewer families
         run: python -m tools.select_matrix_reviewers --count 4
@@ -45,7 +46,7 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Self-review/bootstrap target. This PR cannot use a different target to approve its own machinery.
+            # prepare_pr_review_target inserts the exact PR change set as target 0.
             python -m tools.matrix_repo_review --slot 0
           else
             python -m tools.matrix_repo_review
@@ -68,6 +69,12 @@ jobs:
           assert bundle['schema'] == 'GardenRepoDesignReviewBundle/v1'
           assert bundle['semantic_delta_admitted'] is False
           assert bundle['target']['target_id'] in {row['target_id'] for row in matrix['targets']}
+          if '${{ github.event_name }}' == 'pull_request':
+              target_receipt = json.load(open('agents/runtime/pr-review/target-receipt.json', encoding='utf-8'))
+              assert bundle['target']['target_id'] == 'RRM-PR-CHANGE-SET'
+              assert bundle['target']['base_sha'] == target_receipt['base_sha']
+              assert bundle['target']['head_sha'] == target_receipt['head_sha']
+              assert bundle['target']['full_diff_sha256'] == target_receipt['full_diff_sha256']
           assert bundle['status'] in {
               'INSUFFICIENT_INDEPENDENT_REVIEW',
               'INSUFFICIENT_PEER_CROSS_EXAMINATION',
@@ -96,6 +103,7 @@ jobs:
           path: |
             agents/repo-review-matrix.json
             agents/runtime/free-selection.json
+            agents/runtime/pr-review/*
             agents/outbox/daily/repo-review-bundle.json
             agents/outbox/daily/repo-matrix-review/*.json
           if-no-files-found: warn
