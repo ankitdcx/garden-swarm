@@ -35,7 +35,7 @@ jobs:
             --max-calls 1 \
             --max-concurrency 1 \
             --max-chars 12000 \
-            --max-tokens 1600 \
+            --max-tokens 5000 \
             --output swarm/runs/free-zdr-probe.json
 
       - name: Show probe status without exposing prompt content
@@ -48,6 +48,8 @@ jobs:
               print('requested_model=', r.get('requested_model'))
               print('returned_model=', r.get('returned_model'))
               print('usage=', r.get('usage'))
+              print('output_present=', bool(r.get('output')))
+              print('output_chars=', len(r.get('output') or ''))
               if r.get('error'):
                   print('error=', r.get('error')[:500])
           PY
