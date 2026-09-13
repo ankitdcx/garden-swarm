@@ -17,8 +17,11 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load(path: str) -> dict[str, Any]:
-    return json.loads((ROOT / path).read_text(encoding="utf-8"))
+def load(path: str | Path) -> dict[str, Any]:
+    p = Path(path)
+    if not p.is_absolute():
+        p = ROOT / p
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def public_functions(path: Path) -> set[str]:
@@ -54,11 +57,7 @@ def mcp_tools(path: Path) -> set[str]:
 
 
 def stage(name: str, passed: bool, evidence: Any) -> dict[str, Any]:
-    return {
-        "stage": name,
-        "result": "PASS" if passed else "FAIL",
-        "evidence": evidence,
-    }
+    return {"stage": name, "result": "PASS" if passed else "FAIL", "evidence": evidence}
 
 
 def validate_source_identity() -> dict[str, Any]:
@@ -103,11 +102,32 @@ def validate_skill_manifest() -> dict[str, Any]:
     return stage("GARDEN_SKILL_MANIFEST", not errors, {"errors": errors, "computed_hash": actual})
 
 
-def validate_function_contracts() -> dict[str, Any]:
-    registry = load("gsl/FUNCTION_CONTRACTS.json")
-    contracts = registry.get("contracts") or []
-    by_name = {str(c.get("owner_qualified_name")): c for c in contracts}
+def load_function_contracts() -> tuple[list[dict[str, Any]], list[str]]:
+    contracts: list[dict[str, Any]] = []
     errors: list[str] = []
+    for path in sorted((ROOT / "gsl").glob("FUNCTION_CONTRACTS*.json")):
+        payload = load(path)
+        if payload.get("schema") != "GardenFunctionContractRegistry/v1":
+            errors.append(f"{path.name}: unsupported registry schema")
+            continue
+        if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+            errors.append(f"{path.name}: stale DesignEpoch binding")
+        contracts.extend(payload.get("contracts") or [])
+    return contracts, errors
+
+
+def validate_function_contracts() -> dict[str, Any]:
+    contracts, errors = load_function_contracts()
+    by_name: dict[str, dict[str, Any]] = {}
+    for contract in contracts:
+        qname = str(contract.get("owner_qualified_name", ""))
+        if not qname:
+            errors.append("FunctionContract missing owner_qualified_name")
+        elif qname in by_name:
+            errors.append(f"multiple FunctionContracts resolve {qname}")
+        else:
+            by_name[qname] = contract
+
     bindings: list[dict[str, str]] = []
     seen: set[str] = set()
     for path in sorted((ROOT / "prototype").glob("*.py")):
@@ -123,6 +143,14 @@ def validate_function_contracts() -> dict[str, Any]:
                 continue
             if contract.get("implementation_source") != path.relative_to(ROOT).as_posix():
                 errors.append(f"source binding mismatch: {qname}")
+            for required in (
+                "contract_id", "inputs", "outputs", "closed_effect_vector",
+                "authority_requirement", "failure_mode_set", "result_algebra",
+                "bool_restriction", "dependency_and_invalidator_bindings",
+                "resource_and_termination_bounds", "provenance",
+            ):
+                if required not in contract:
+                    errors.append(f"{qname}: FunctionContract missing {required}")
             bindings.append({
                 "contract_id": str(contract.get("contract_id")),
                 "owner_qualified_name": qname,
@@ -132,8 +160,6 @@ def validate_function_contracts() -> dict[str, Any]:
     extras = sorted(set(by_name) - seen)
     if extras:
         errors.extend(f"contract has no public prototype callable: {name}" for name in extras)
-    if registry.get("design_epoch_ref") != DESIGN_EPOCH_REF:
-        errors.append("FunctionContract registry is stale for current DesignEpoch")
     return stage("FUNCTION_CONTRACT_COVERAGE", not errors, {"errors": errors, "bindings": bindings})
 
 
@@ -172,11 +198,47 @@ def validate_typed_receipt_result() -> dict[str, Any]:
     return stage("RESULT_ALGEBRA_RECEIPT_VALIDATION", not errors, {"errors": errors})
 
 
+def validate_parameters() -> dict[str, Any]:
+    payload = load("gsl/PARAMETERS.json")
+    errors: list[str] = []
+    if payload.get("schema") != "QualifiedProfileParameterRegistry/v1":
+        errors.append("unsupported parameter registry schema")
+    if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+        errors.append("parameter registry is stale for current DesignEpoch")
+    ids: list[str] = []
+    required = {"parameter_id", "classification", "owner", "scope", "value", "units", "source", "version", "uncertainty", "invalidators"}
+    for row in payload.get("parameters") or []:
+        ids.append(str(row.get("parameter_id")))
+        missing = required - set(row)
+        if missing:
+            errors.append(f"{row.get('parameter_id')}: missing {sorted(missing)}")
+        if row.get("classification") not in {"FORMAL_BOUND", "MEASURED_VALUE", "ENGINEERING_TARGET", "PROFILE_PARAMETER"}:
+            errors.append(f"{row.get('parameter_id')}: invalid classification")
+    if len(ids) != len(set(ids)):
+        errors.append("duplicate QualifiedProfileParameter id")
+    return stage("QUALIFIED_PROFILE_PARAMETERS", not errors, {"errors": errors, "count": len(ids)})
+
+
+def validate_provenance() -> dict[str, Any]:
+    payload = load("gsl/PROVENANCE.json")
+    errors = []
+    if payload.get("schema") != "GardenRepositoryProvenance/v1":
+        errors.append("unsupported provenance schema")
+    if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+        errors.append("provenance is stale for current DesignEpoch")
+    if payload.get("source_roots", {}).get("canonical_source_root_sha256") != SOURCE_ROOT:
+        errors.append("provenance canonical source root mismatch")
+    if not payload.get("transformation_chain") or not payload.get("verifier_records"):
+        errors.append("provenance requires transformation chain and verifier records")
+    return stage("TYPED_PROVENANCE", not errors, {"errors": errors})
+
+
 def validate_declared_references() -> dict[str, Any]:
     paths: set[str] = {
         "SOURCE_MANIFEST.json", "SKILLS.json", "AGENTS.md", "ATTACK_SURFACE.md",
         "QUICKSTART.md", "gsl/DESIGN_EPOCH.json", "gsl/FUNCTION_CONTRACTS.json",
-        "gsl/AGENT_ENVELOPES.json",
+        "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json", "gsl/AGENT_ENVELOPES.json",
+        "gsl/PARAMETERS.json", "gsl/PROVENANCE.json", "gsl/REPO_PROFILE.json",
     }
     skills = load("SKILLS.json")
     paths.update(str(v) for v in skills.get("source_document_roots", {}).values())
@@ -198,13 +260,14 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--output", default="/tmp/garden-gsl-conformance-receipt.json")
     args = p.parse_args()
-
     stages = [
         validate_source_identity(),
         validate_skill_manifest(),
         validate_function_contracts(),
         validate_mcp_envelope(),
         validate_typed_receipt_result(),
+        validate_parameters(),
+        validate_provenance(),
         validate_declared_references(),
     ]
     overall = "PASS" if all(x["result"] == "PASS" for x in stages) else "FAIL"
