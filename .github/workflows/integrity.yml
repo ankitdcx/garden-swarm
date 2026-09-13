@@ -36,6 +36,8 @@ jobs:
             cat /tmp/reference-closure-receipt.json
           fi
           exit "$status"
+      - name: Build durable self-excluding receipt snapshots
+        run: python scripts/build_durable_gsl_receipts.py
       - name: Gate pull-request diff as a Garden/GSL transition
         if: github.event_name == 'pull_request'
         env:
@@ -57,5 +59,7 @@ jobs:
             /tmp/garden-gsl-conformance-receipt.json
             /tmp/reference-closure-receipt.json
             /tmp/repo-change-gate-receipt.json
+            gsl/receipts/CONFORMANCE_RECEIPT.json
+            gsl/receipts/REFERENCE_CLOSURE_RECEIPT.json
           if-no-files-found: warn
           retention-days: 30
