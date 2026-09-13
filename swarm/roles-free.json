@@ -1,5 +1,5 @@
 {
-  "schema": "GardenSwarmFreeRoleSet/v0.2",
+  "schema": "GardenSwarmFreeRoleSet/v0.3",
   "privacy_class": "PUBLIC_SOURCE_ONLY_NON_ZDR",
   "roles": [
     {
@@ -14,7 +14,7 @@
     {
       "id": "FREE-FORMAL",
       "name": "Free formal-methods critic",
-      "model": "poolside/laguna-s-2.1:free",
+      "model": "dots-studio/dots-3-note-preview:free",
       "objective": "Find underspecified semantics, unverifiable claims, type or contract gaps, and proof-obligation failures in the supplied public Garden source.",
       "lenses": ["formal methods", "type systems", "verification", "proof obligations"],
       "tier": "calibration",
