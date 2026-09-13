@@ -1,0 +1,73 @@
+name: Garden free public calibration
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [garden-swarm-orchestrator]
+    paths:
+      - 'swarm/roles-free.json'
+      - 'swarm/orchestrator.py'
+      - '.github/workflows/swarm-free-public-calibration.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  four-role-calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run four free agents on public Garden source only
+        run: |
+          python swarm/orchestrator.py \
+            --roles swarm/roles-free.json \
+            --role-tier all \
+            --public-free \
+            --live \
+            --max-calls 4 \
+            --max-concurrency 2 \
+            --max-chars 12000 \
+            --max-tokens 4000 \
+            --reasoning-effort none \
+            --output swarm/runs/free-public-calibration.json
+
+      - name: Validate zero-cost calibration
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open('swarm/runs/free-public-calibration.json', encoding='utf-8'))
+          results = p.get('results', [])
+          print('results=', len(results))
+          usable = 0
+          for r in results:
+              output = (r.get('output') or '').strip()
+              usage = r.get('usage') or {}
+              print(r.get('role_id'), 'status=', r.get('status'),
+                    'model=', r.get('returned_model') or r.get('requested_model'),
+                    'output_chars=', len(output), 'cost=', usage.get('cost'))
+              if r.get('status') == 'OK' and output:
+                  usable += 1
+              if r.get('status') == 'OK' and usage.get('cost') not in (0, 0.0, None):
+                  raise SystemExit('A supposedly free successful call reported non-zero cost')
+          print('usable_agents=', usable)
+          if usable < 2:
+              raise SystemExit('Need at least two usable independent free-agent outputs')
+          PY
+
+      - name: Upload calibration receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-free-public-calibration
+          path: swarm/runs/free-public-calibration.json
+          if-no-files-found: warn
