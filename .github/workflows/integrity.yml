@@ -13,8 +13,10 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out repository with base history
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -34,6 +36,17 @@ jobs:
             cat /tmp/reference-closure-receipt.json
           fi
           exit "$status"
+      - name: Gate pull-request diff as a Garden/GSL transition
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set +e
+          python scripts/gate_repo_change.py --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output /tmp/repo-change-gate-receipt.json
+          status=$?
+          cat /tmp/repo-change-gate-receipt.json
+          exit "$status"
       - name: Upload immutable conformance receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,5 +56,6 @@ jobs:
             /tmp/garden-repo-gsl-audit.json
             /tmp/garden-gsl-conformance-receipt.json
             /tmp/reference-closure-receipt.json
+            /tmp/repo-change-gate-receipt.json
           if-no-files-found: warn
           retention-days: 30
