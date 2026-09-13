@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 from server.mcp_service import mcp, streamable_http_app
 
-ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1]))
+ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
 _RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
 PUBLIC_BASE_URL = (
     os.getenv("PUBLIC_BASE_URL", "").rstrip("/")
@@ -26,6 +26,26 @@ READABLE = {
     "agi_summary": "GARDEN_FOR_AGI.md",
 }
 
+
+def _validated_root(root: Path) -> Path:
+    """Require a Garden public-source snapshot rather than trusting an arbitrary root."""
+    resolved = root.resolve()
+    manifest = resolved / "SOURCE_MANIFEST.json"
+    version = resolved / "VERSION"
+    if not manifest.is_file() or not version.is_file():
+        raise RuntimeError(
+            "GARDEN_REPO_ROOT must contain SOURCE_MANIFEST.json and VERSION"
+        )
+    try:
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT has an unreadable source manifest") from exc
+    if not data.get("release") or not isinstance(data.get("canonical_files"), list):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest is not a recognized Garden release manifest")
+    return resolved
+
+
+ROOT = _validated_root(ROOT)
 _mcp_http_app = streamable_http_app()
 
 
@@ -71,8 +91,12 @@ def _read_text(key: str) -> str:
     rel = READABLE.get(key)
     if not rel:
         raise HTTPException(status_code=404, detail="Unknown public resource")
-    path = ROOT / rel
-    if not path.exists():
+    path = (ROOT / rel).resolve()
+    try:
+        path.relative_to(ROOT)
+    except ValueError as exc:
+        raise HTTPException(status_code=503, detail="Repository resource escaped configured root") from exc
+    if not path.is_file():
         raise HTTPException(status_code=503, detail=f"Repository resource unavailable: {rel}")
     return path.read_text(encoding="utf-8")
 
