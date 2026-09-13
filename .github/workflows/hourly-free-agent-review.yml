@@ -15,9 +15,11 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      GARDEN_DEEPSEEK_MAX_USD_PER_HOUR: ${{ secrets.GARDEN_DEEPSEEK_MAX_USD_PER_HOUR }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,11 +29,17 @@ jobs:
       - name: Rotate to one different Design Review Matrix target this hour
         run: python -m tools.rotate_design_review_target
 
+      - name: Run independent DeepSeek lane when explicitly budget-enabled
+        run: python -m tools.deepseek_matrix_review --phase independent
+
       - name: Prefer four independent free reviewer families
         run: python -m tools.select_matrix_reviewers --count 4
 
       - name: Review exactly one persistent Design Review Matrix target
         run: python -m tools.matrix_design_review
+
+      - name: Cross-examine DeepSeek against the same-target blind findings when enabled
+        run: python -m tools.deepseek_matrix_review --phase final
 
       - name: Enforce independent-review, zero-cost, and no-auto-admission boundaries
         run: |
@@ -106,6 +114,8 @@ jobs:
               'target_id': bundle['target']['target_id'],
               'bundle_sha256': bundle['bundle_sha256'],
               'review_status': bundle['status'],
+              'deepseek_independent_receipt': 'agents/outbox/hourly/deepseek-independent.json',
+              'deepseek_final_receipt': 'agents/outbox/hourly/deepseek-final.json',
               'semantic_delta_admitted': False,
               'admission_status': 'PROPOSALS_ONLY_NEEDS_GSL_INTEGRATOR_AND_WHOLE_SOURCE_CROSS_REFERENCE',
           }
@@ -123,6 +133,8 @@ jobs:
             agents/runtime/design-target-selection.json
             agents/runtime/free-selection.json
             agents/outbox/hourly/design-review-bundle.json
+            agents/outbox/hourly/deepseek-independent.json
+            agents/outbox/hourly/deepseek-final.json
             agents/outbox/hourly/combined-receipt.json
             agents/outbox/hourly/matrix-review/*.json
           if-no-files-found: error
