@@ -1,0 +1,9 @@
+{
+  "schema": "GardenRepositorySurfaceManifest/v1",
+  "status": "BOOTSTRAP_PLACEHOLDER_REGENERATE_BEFORE_MERGE",
+  "repository": "ankitdcx/garden-swarm",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "repository_content_root": "PENDING",
+  "tracked_artifact_count": 0,
+  "artifacts": []
+}
