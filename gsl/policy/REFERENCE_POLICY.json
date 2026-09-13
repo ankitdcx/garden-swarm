@@ -24,6 +24,13 @@
       "owner": "swarm/orchestrator.py",
       "owner_evidence": "latest-plan.json",
       "require_tracked_file": false
+    },
+    {
+      "reference": "latest-plan.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "swarm/orchestrator.py",
+      "owner_evidence": "latest-plan.json",
+      "require_tracked_file": false
     }
   ],
   "rule": "A generated/runtime reference is exempt from tracked-file closure only when its class is allowlisted, its owner is tracked, and owner_evidence occurs in the owner source. A policy row cannot exempt itself merely by naming a class. Unknown or unevidenced untracked references fail closure."
