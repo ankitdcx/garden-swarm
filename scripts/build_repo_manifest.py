@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "gsl" / "profile" / "REPO_MANIFEST.json"
+EXPECTED_ON_FAILURE = Path("/tmp/expected-repo-manifest.json")
 EXCLUDED = {"gsl/profile/REPO_MANIFEST.json"}
 EXCLUDED_PREFIXES = ("gsl/receipts/",)
 
@@ -70,9 +71,8 @@ def main() -> int:
         ok = actual == expected
         print(json.dumps({"status":"PASS" if ok else "FAIL","root":payload["repository_content_root"],"count":payload["tracked_artifact_count"]}, sort_keys=True))
         if not ok:
-            print("---EXPECTED-REPO-MANIFEST---")
-            print(expected, end="")
-            print("---END-EXPECTED-REPO-MANIFEST---")
+            EXPECTED_ON_FAILURE.write_text(expected, encoding="utf-8")
+            print(f"expected manifest written to {EXPECTED_ON_FAILURE}")
         return 0 if ok else 1
     print(expected, end="")
     return 0
