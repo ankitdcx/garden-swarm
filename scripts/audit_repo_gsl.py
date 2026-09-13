@@ -9,11 +9,12 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+PROFILE_ROOT = ROOT / "gsl" / "profile"
 ALLOWED_MODULES = {
     "SOURCE_IDENTITY", "GSL_TYPING", "DESIGN_EPOCH", "SOURCE_OBLIGATION",
     "DEPENDENCY", "FUNCTION_CONTRACT", "COMPARE", "REASON", "PROOF", "AAP",
     "AUTHORITY", "ACTION_GATE", "PROCESS_ALGEBRA", "POLICY_ALGEBRA",
-    "DECISION_ALGEBRA", "CONFORMANCE_ALGRA", "CONFORMANCE_ALGEBRA", "EVIDENCE_ALGEBRA",
+    "DECISION_ALGEBRA", "CONFORMANCE_ALGEBRA", "EVIDENCE_ALGEBRA",
     "BRIDGE_ALGEBRA", "AUDIT", "COMPLIANCE", "HUMAN_SOVEREIGNTY", "SECURITY",
     "PRIVACY", "SAFETY", "PIPELINE_CONFIG_DELTA", "THEORY_PROFILE", "PROVENANCE",
 }
@@ -37,23 +38,36 @@ def iter_files(root: Path) -> list[Path]:
     return sorted(out, key=lambda p: p.relative_to(root).as_posix())
 
 
+def load_profile(primary: Path) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
+    payload = json.loads(primary.read_text(encoding="utf-8"))
+    if payload.get("schema") != "GardenRepoConformanceProfile/v1":
+        raise SystemExit("unsupported GardenRepoConformanceProfile schema")
+    if payload.get("semantic_compliance_proved") is not False:
+        raise SystemExit("classification profile cannot self-claim semantic compliance")
+    rules = list(payload.get("rules") or [])
+    shard_paths: list[str] = []
+    for path in sorted(PROFILE_ROOT.glob("REPO_PROFILE_*.json")):
+        shard = json.loads(path.read_text(encoding="utf-8"))
+        if shard.get("schema") != "GardenRepoConformanceProfileShard/v1":
+            raise SystemExit(f"unsupported repo profile shard schema: {path.name}")
+        if shard.get("design_epoch_ref") != payload.get("design_epoch_ref"):
+            raise SystemExit(f"stale repo profile shard: {path.name}")
+        rules = list(shard.get("rules") or []) + rules
+        shard_paths.append(path.relative_to(ROOT).as_posix())
+    return payload, rules, shard_paths
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--profile", default=str(ROOT / "gsl" / "profile" / "REPO_PROFILE.json"))
+    p.add_argument("--profile", default=str(PROFILE_ROOT / "REPO_PROFILE.json"))
     p.add_argument("--output", default="/tmp/garden-repo-gsl-audit.json")
     p.add_argument("--strict-frontier", action="store_true")
     args = p.parse_args()
 
-    profile = json.loads(Path(args.profile).read_text(encoding="utf-8"))
-    if profile.get("schema") != "GardenRepoConformanceProfile/v1":
-        raise SystemExit("unsupported GardenRepoConformanceProfile schema")
-    if profile.get("semantic_compliance_proved") is not False:
-        raise SystemExit("classification profile cannot self-claim semantic compliance")
-
-    rules = profile.get("rules") or []
+    profile, rules, shards = load_profile(Path(args.profile))
     ids = [str(r.get("rule_id")) for r in rules]
     if len(ids) != len(set(ids)):
-        raise SystemExit("duplicate repo-profile rule id")
+        raise SystemExit("duplicate repo-profile rule id across profile shards")
 
     profile_errors: list[str] = []
     for rule in rules:
@@ -90,6 +104,7 @@ def main() -> int:
     report = {
         "schema": "GardenRepoConformanceReport/v1",
         "profile_id": profile.get("profile_id"),
+        "profile_shards": shards,
         "design_epoch_ref": profile.get("design_epoch_ref"),
         "artifact_count": len(artifacts),
         "explicit_artifact_count": len(artifacts) - len(frontier),
@@ -107,6 +122,7 @@ def main() -> int:
         "artifact_count": len(artifacts),
         "frontier_artifact_count": len(frontier),
         "profile_error_count": len(profile_errors),
+        "profile_shard_count": len(shards),
         "output": str(out),
     }, sort_keys=True))
     if profile_errors:
