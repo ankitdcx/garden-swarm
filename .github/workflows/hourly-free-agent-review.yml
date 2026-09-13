@@ -1,0 +1,99 @@
+name: Garden hourly free multi-model review
+
+on:
+  schedule:
+    - cron: '5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'agents/**'
+      - 'tools/free_model_rotation.py'
+      - 'tools/free_design_review.py'
+      - 'tools/free_repo_review.py'
+      - '.github/workflows/hourly-free-agent-review.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-hourly-free-agent-review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Select two diverse live free-model families
+        run: python tools/free_model_rotation.py
+
+      - name: Review one rotating canonical Garden chunk
+        run: python tools/free_design_review.py
+
+      - name: Review one rotating executable repository package
+        run: python tools/free_repo_review.py
+
+      - name: Enforce free-only and proposal-only receipts
+        run: |
+          python - <<'PY'
+          import json
+          paths = [
+              'agents/outbox/hourly/design-review.json',
+              'agents/outbox/hourly/repo-review.json',
+          ]
+          selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
+          selected = selection['selected']
+          assert len(selected) == 2
+          assert len({x['family'] for x in selected}) == 2
+          assert all(x['model'].endswith(':free') for x in selected)
+          for path in paths:
+              p = json.load(open(path, encoding='utf-8'))
+              assert p['admission_status'].startswith('PROPOSALS_ONLY')
+              cost = (p.get('usage') or {}).get('cost')
+              assert cost in (None, 0, 0.0), (path, cost)
+              handoff = p['handoff']
+              assert handoff['schema'] == 'GardenAgentHandoff/v1'
+              assert handoff.get('search_trace'), path
+          print('FREE_ONLY_PASS', [x['model'] for x in selected])
+          PY
+
+      - name: Build combined run receipt
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          def load(p):
+              return json.load(open(p, encoding='utf-8'))
+          receipt = {
+              'schema': 'GardenHourlyMultiModelReviewReceipt/v1',
+              'created_at': datetime.now(timezone.utc).isoformat(),
+              'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
+              'commit': os.environ.get('GITHUB_SHA'),
+              'selection': load('agents/runtime/free-selection.json'),
+              'design_review': load('agents/outbox/hourly/design-review.json'),
+              'repo_review': load('agents/outbox/hourly/repo-review.json'),
+              'admission_status': 'PROPOSALS_ONLY_NEEDS_CHATGPT_AND_WHOLE_SOURCE_CROSS_REFERENCE',
+          }
+          with open('agents/outbox/hourly/combined-receipt.json','w',encoding='utf-8') as f:
+              json.dump(receipt, f, indent=2, ensure_ascii=False); f.write('\n')
+          PY
+
+      - name: Upload immutable review receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-hourly-free-agent-review-${{ github.run_id }}
+          path: |
+            agents/runtime/free-selection.json
+            agents/outbox/hourly/design-review.json
+            agents/outbox/hourly/repo-review.json
+            agents/outbox/hourly/combined-receipt.json
+          if-no-files-found: error
+          retention-days: 30
