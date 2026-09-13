@@ -33,12 +33,14 @@ def _clean_json(text: str) -> dict[str, Any] | None:
             return None
 
 
-def call_openrouter_structured(*, model: dict[str, Any], prompt: str, max_tokens: int = 6400) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+def call_openrouter_structured(*, model: dict[str, Any], prompt: str, max_tokens: int = 5200) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """Call one OpenRouter :free reviewer with fail-closed structured-output handling.
 
-    JSON mode is requested first. If a provider rejects JSON mode with HTTP 400,
-    one format-compatibility retry is allowed without changing the evidence pack.
-    A retry is the same reviewer family, never an additional independent reviewer.
+    Hidden reasoning is explicitly bounded so reasoning-heavy free models cannot
+    consume the entire completion allowance before emitting the required JSON.
+    JSON mode is requested first; a single same-family compatibility retry may
+    omit response_format if a provider rejects it. A retry never counts as a
+    second independent reviewer.
     """
     model_id = str(model["model"])
     if not model_id.endswith(":free"):
@@ -52,6 +54,7 @@ def call_openrouter_structured(*, model: dict[str, Any], prompt: str, max_tokens
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.05,
         "max_tokens": max_tokens,
+        "reasoning": {"max_tokens": 900, "exclude": True},
         "provider": {"allow_fallbacks": False},
     }
 
@@ -109,6 +112,7 @@ def call_openrouter_structured(*, model: dict[str, Any], prompt: str, max_tokens
             "cost": 0 if cost is None else cost,
             "usage": usage,
             "format_mode": mode,
+            "reasoning_policy": {"max_tokens": 900, "exclude": True},
             "finish_reason": choice.get("finish_reason"),
             "raw_output_excerpt": content[:1000],
         }
@@ -116,7 +120,6 @@ def call_openrouter_structured(*, model: dict[str, Any], prompt: str, max_tokens
             return value, attempt
         last_detail = content[:1000]
         if mode == "JSON_MODE":
-            # A second call is permitted only as format recovery for the same reviewer family.
             continue
         return None, attempt
 
