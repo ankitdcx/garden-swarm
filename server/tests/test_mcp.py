@@ -38,13 +38,18 @@ def test_mcp_finding_builder_is_payload_only():
                 'build_finding_payload',
                 {
                     'claim': 'Example claim',
+                    'coverage': 'full public v15.5 source checked',
                     'evidence_or_failure': 'Example counterexample',
                     'severity': 'LOW',
+                    'source_anchors': 'T-EXAMPLE',
                     'test': 'Reproduce the example',
+                    'publishable_issue_title': 'Example finding',
                 },
             )
             assert result.is_error is False
             assert result.structured_content is not None
+            assert result.structured_content['title'] == 'Example finding'
+            assert 'full public v15.5 source checked' in result.structured_content['body']
             assert 'No GitHub write' in result.structured_content['note']
 
     asyncio.run(run())
