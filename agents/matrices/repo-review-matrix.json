@@ -2,6 +2,7 @@
   "schema": "GardenRepoDesignReviewMatrix/v1",
   "selection_rule": "One bounded repository-design target per daily review slot. At least three independent reviewer families must complete independent and cross-examination rounds before a substantive repo-design delta can be admitted.",
   "targets": [
+    {"target_id":"REVIEW-QUORUM-INFRASTRUCTURE","kind":"repo-design-bootstrap","files":["tools/review_quorum.py","tools/free_model_rotation.py","agents/matrices/design-review-matrix.json","agents/matrices/repo-review-matrix.json",".github/workflows/review-quorum.yml"]},
     {"target_id":"GSL-GOVERNANCE","kind":"repo-design","files":["gsl/DESIGN_EPOCH.json","gsl/CHANGE_POLICY.json","gsl/AUTHORITY_REGISTRY.json","gsl/REPO_PROFILE.json","gsl/REFERENCE_POLICY.json"]},
     {"target_id":"FUNCTION-CONTRACT-COVERAGE","kind":"repo-design","files":["gsl/FUNCTION_CONTRACTS.json","gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json","gsl/FUNCTION_CONTRACT_GENERATION.json","scripts/verify_gsl_application.py"]},
     {"target_id":"CI-CONFORMANCE","kind":"repo-design","files":[".github/workflows/integrity.yml","scripts/verify_gsl_application.py","scripts/audit_repo_gsl.py","scripts/build_reference_closure.py"]},
