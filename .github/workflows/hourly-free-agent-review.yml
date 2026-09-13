@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 15
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.5-flash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -126,3 +128,5 @@ jobs:
             agents/outbox/hourly/*.json
           if-no-files-found: error
           retention-days: 30
+      - name: Run Gemini free reviewer
+        run: python tools/run_gemini_free_review.py
