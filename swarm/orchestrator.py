@@ -183,7 +183,7 @@ this chunk. Such claims require a later cross-reference pass.
 """
 
 
-def call_openrouter(role: Role, item: WorkItem, max_tokens: int) -> RunResult:
+def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effort: str | None = None) -> RunResult:
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         return RunResult(item.id, role.id, role.name, role.model, None, "ERROR",
@@ -199,6 +199,8 @@ def call_openrouter(role: Role, item: WorkItem, max_tokens: int) -> RunResult:
         "max_tokens": max_tokens,
         "provider": {"zdr": True},
     }
+    if reasoning_effort:
+        payload["reasoning"] = {"effort": reasoning_effort, "exclude": True}
     if role.web:
         payload["plugins"] = [{"id": "web", "engine": "parallel",
                                "mode": "turbo", "max_results": 5}]
@@ -263,6 +265,7 @@ def receipt(mode: str, roles: list[Role], items: list[WorkItem],
             "max_tokens": args.max_tokens,
             "max_calls": args.max_calls,
             "max_concurrency": args.max_concurrency,
+            "reasoning_effort": args.reasoning_effort,
         },
         "results": [asdict(r) for r in results],
         "admission_status": "PROPOSALS_ONLY",
@@ -280,6 +283,7 @@ def main() -> int:
     p.add_argument("--max-tokens", type=int, default=3000)
     p.add_argument("--max-calls", type=int, default=4)
     p.add_argument("--max-concurrency", type=int, default=2)
+    p.add_argument("--reasoning-effort", choices=["none", "minimal", "low", "medium", "high"])
     p.add_argument("--live", action="store_true")
     p.add_argument("--output", default="swarm/runs/latest-plan.json")
     args = p.parse_args()
@@ -298,7 +302,7 @@ def main() -> int:
             max_workers=args.max_concurrency
         ) as pool:
             futures = [
-                pool.submit(call_openrouter, role, item, args.max_tokens)
+                pool.submit(call_openrouter, role, item, args.max_tokens, args.reasoning_effort)
                 for role, item in selected
             ]
             for f in concurrent.futures.as_completed(futures):
