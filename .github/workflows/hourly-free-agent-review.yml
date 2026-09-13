@@ -24,8 +24,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Select at least three independent free reviewer families
-        run: python -m tools.select_matrix_reviewers --count 3
+      - name: Prefer four independent free reviewer families
+        run: python -m tools.select_matrix_reviewers --count 4
 
       - name: Review exactly one persistent Design Review Matrix target
         run: python -m tools.matrix_design_review
@@ -34,7 +34,6 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          from pathlib import Path
 
           matrix = json.load(open('agents/design-review-matrix.json', encoding='utf-8'))
           selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
@@ -42,7 +41,9 @@ jobs:
 
           selected = selection['selected']
           minimum = int(matrix['minimum_independent_reviewer_families'])
+          preferred = int(matrix['preferred_independent_reviewer_families'])
           assert minimum >= 3
+          assert preferred >= minimum
           assert len(selected) >= minimum
           assert len({row['family'] for row in selected}) == len(selected)
           assert all(str(row['model']).endswith(':free') for row in selected)
@@ -74,6 +75,8 @@ jobs:
           print(json.dumps({
               'target_id': bundle['target']['target_id'],
               'status': bundle['status'],
+              'selected_families': len(selected),
+              'preferred_families': preferred,
               'independent_families': bundle['independent_reviewer_family_count'],
               'final_families': bundle['final_disposition_family_count'],
               'explicit_zero_cost': explicit_zero,
