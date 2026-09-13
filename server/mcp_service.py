@@ -71,6 +71,26 @@ def _load_mcp_envelope() -> dict[str, Any]:
         raise RuntimeError("Garden public MCP envelope grants prohibited authority")
     if (envelope.get("delegation") or {}).get("allowed") is not False:
         raise RuntimeError("Garden public MCP envelope must forbid delegation")
+    if envelope.get("runtime_enforcement") is None:
+        raise RuntimeError("Garden public MCP envelope lacks invocation-time enforcement declaration")
+    return envelope
+
+
+def _assert_tool_invocation(tool_name: str, *, resource: str | None = None, text_values: tuple[str, ...] = ()) -> dict[str, Any]:
+    """Re-evaluate the current AgentEnvelope at call time, not only at startup."""
+    envelope = _load_mcp_envelope()
+    allowlist = set(envelope.get("tool_allowlist") or [])
+    if tool_name not in allowlist:
+        raise RuntimeError(f"MCP tool no longer authorized by current AgentEnvelope: {tool_name}")
+    if resource is not None and resource not in set(envelope.get("resources") or []):
+        raise RuntimeError(f"MCP resource outside current AgentEnvelope: {resource}")
+    constraints = (envelope.get("tool_constraints") or {}).get(tool_name) or {}
+    if text_values:
+        max_total = constraints.get("max_total_text_chars")
+        if max_total is None:
+            raise RuntimeError(f"MCP text-bearing tool lacks declared input bound: {tool_name}")
+        if sum(len(value) for value in text_values) > int(max_total):
+            raise ValueError(f"MCP invocation exceeds AgentEnvelope text bound for {tool_name}")
     return envelope
 
 
@@ -116,6 +136,7 @@ def streamable_http_app():
 @mcp.tool()
 def current_release() -> dict[str, Any]:
     """Return Garden's current public release identity and assurance boundary."""
+    _assert_tool_invocation("current_release", resource="SOURCE_MANIFEST.json")
     manifest = json.loads(_read("SOURCE_MANIFEST.json"))
     return {
         "project": "Garden",
@@ -133,18 +154,21 @@ def current_release() -> dict[str, Any]:
 @mcp.tool()
 def list_attack_surfaces() -> str:
     """Return the public mechanism-indexed adversarial attack menu."""
+    _assert_tool_invocation("list_attack_surfaces", resource="ATTACK_SURFACE.md")
     return _read("ATTACK_SURFACE.md")
 
 
 @mcp.tool()
 def evaluation_instructions() -> str:
     """Return Garden's structured independent-evaluation protocol."""
+    _assert_tool_invocation("evaluation_instructions", resource="EVALUATE_IN_60_MINUTES.md")
     return _read("EVALUATE_IN_60_MINUTES.md")
 
 
 @mcp.tool()
 def public_tasks() -> str:
     """Return the public Garden task queue."""
+    _assert_tool_invocation("public_tasks", resource="TASKS.md")
     return _read("TASKS.md")
 
 
@@ -163,7 +187,14 @@ def build_finding_payload(
     publishable_issue_title: str = "",
 ) -> dict[str, str]:
     """Build a publication-ready adversarial finding payload without posting it."""
-    allowed = {"NOTE", "LOW", "MEDIUM", "HIGH", "CRITICAL"}
+    values = (
+        claim, coverage, evidence_or_failure, severity, source_anchors,
+        affected_invariant, existing_mitigation_checked, better_alternative,
+        test, uncertainty, publishable_issue_title,
+    )
+    envelope = _assert_tool_invocation("build_finding_payload", text_values=values)
+    constraints = (envelope.get("tool_constraints") or {}).get("build_finding_payload") or {}
+    allowed = set(constraints.get("severity_allowlist") or [])
     normalized = severity.upper().strip()
     if normalized not in allowed:
         raise ValueError(f"severity must be one of {sorted(allowed)}")
