@@ -43,9 +43,9 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            python -m tools.select_matrix_reviewers --count 6
+            python -m tools.select_reviewers_flexible --preferred 6 --minimum 3
           else
-            python -m tools.select_matrix_reviewers --count 4
+            python -m tools.select_reviewers_flexible --preferred 4 --minimum 3
           fi
 
       - name: Review one bounded repository-design target
