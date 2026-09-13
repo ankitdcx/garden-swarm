@@ -1,8 +1,8 @@
 # Garden Public Discovery Server
 
-This is a minimal **read-only** HTTP service for Garden public discovery and evaluation.
+This is a minimal **read-only** HTTP service for Garden public discovery and evaluation. It also mounts the Garden **MCP v2 Streamable HTTP** implementation at `/mcp/` using the official Python SDK.
 
-It is a stepping stone toward TASK-021. It is **not yet an A2A-conformant agent** and **not yet an MCP-conformant server**.
+It is **not yet an A2A-conformant agent**. The MCP source implementation and in-process tests exist, but public live-endpoint verification remains pending until an externally reachable deployment is independently exercised.
 
 ## Why it exists
 
@@ -21,7 +21,7 @@ uvicorn server.app:app --host 0.0.0.0 --port 8000
 
 OpenAPI is automatically exposed at `/openapi.json` and `/docs`.
 
-## Public endpoints
+## Public discovery endpoints
 
 - `GET /healthz`
 - `GET /v1/summary`
@@ -32,6 +32,20 @@ OpenAPI is automatically exposed at `/openapi.json` and `/docs`.
 - `GET /v1/agi-summary`
 - `POST /v1/issue-payload`
 - `GET /.well-known/garden-discovery.json`
+
+## MCP surface
+
+Clients connect to `/mcp/`. Implemented read-only tools include:
+
+- `current_release`
+- `list_attack_surfaces`
+- `evaluation_instructions`
+- `public_tasks`
+- `build_finding_payload`
+
+Resources include the source manifest, attack-surface menu and evaluation log. MCP output grants no GitHub write authority, deployment permission, certification or real-world actuation authority.
+
+A source implementation plus passing local tests is not the same as a verified public endpoint. TASK-021 remains open until an external client successfully connects to the deployed HTTPS endpoint and the result is recorded.
 
 ## Security boundary
 
@@ -46,12 +60,10 @@ This server intentionally has:
 - no real-world actuation;
 - no deployment/certification authority.
 
-Only a hard-coded allowlist of public repository resources is readable.
+Only a hard-coded allowlist of public repository resources is readable. A configured `GARDEN_REPO_ROOT` must identify a Garden release snapshot containing `SOURCE_MANIFEST.json` and `VERSION`, and resolved reads must remain inside that root.
 
-## A2A / MCP next step
+## A2A next step
 
 A2A v1.0 discovery uses `/.well-known/agent-card.json` and declares protocol endpoints in `supportedInterfaces[]`. Garden should publish that card only when a real conformant A2A endpoint exists.
-
-For MCP, remote deployment should use a current Streamable HTTP implementation and be tested against the then-current protocol/registry requirements before registration.
 
 Do not rename `garden-discovery.json` to `agent-card.json` merely for visibility: that would falsely claim A2A conformance.
