@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 55
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.5-flash
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,7 +40,7 @@ jobs:
           --base-sha ${{ github.event.pull_request.base.sha }}
           --head-sha ${{ github.event.pull_request.head.sha }}
 
-      - name: Select redundant free reviewer pool
+      - name: Select redundant free OpenRouter backup pool
         shell: bash
         run: |
           set -euo pipefail
@@ -48,7 +50,7 @@ jobs:
             python -m tools.select_reviewers_flexible --preferred 4 --minimum 3
           fi
 
-      - name: Review one bounded repository-design target
+      - name: Review one bounded repository-design target with multi-provider quorum
         shell: bash
         run: |
           set -euo pipefail
@@ -69,10 +71,10 @@ jobs:
           preferred = int(matrix['preferred_independent_reviewer_families'])
           assert minimum >= 3
           assert preferred >= minimum
-          assert len(selection['selected']) >= minimum
+          assert len(selection['selected']) >= minimum - 1
           assert len({x['family'] for x in selection['selected']}) == len(selection['selected'])
           assert all(str(x['model']).endswith(':free') for x in selection['selected'])
-          assert bundle['schema'] == 'GardenRepoDesignReviewBundle/v1'
+          assert bundle['schema'] == 'GardenRepoDesignReviewBundle/v2'
           assert bundle['semantic_delta_admitted'] is False
           assert bundle['target']['target_id'] in {row['target_id'] for row in matrix['targets']}
           if '${{ github.event_name }}' == 'pull_request':
@@ -91,13 +93,13 @@ jobs:
               raise SystemExit(f"repository-design review did not satisfy admission quorum: {bundle['status']}")
           assert bundle['independent_reviewer_family_count'] >= minimum
           assert bundle['final_disposition_family_count'] >= minimum
-          assert bundle['zero_cost_verified'] is True
+          assert bundle['openrouter_zero_cost_verified'] is True
           print(json.dumps({
               'target_id': bundle['target']['target_id'],
               'status': bundle['status'],
-              'selected_families': len(selection['selected']),
-              'independent_families': bundle['independent_reviewer_family_count'],
-              'final_families': bundle['final_disposition_family_count'],
+              'independent_families': bundle['independent_reviewer_families'],
+              'final_families': bundle['final_disposition_families'],
+              'openrouter_zero_cost': bundle['openrouter_zero_cost_verified'],
               'semantic_delta_admitted': False,
           }, sort_keys=True))
           PY
