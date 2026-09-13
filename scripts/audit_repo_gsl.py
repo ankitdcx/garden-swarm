@@ -13,7 +13,7 @@ ALLOWED_MODULES = {
     "SOURCE_IDENTITY", "GSL_TYPING", "DESIGN_EPOCH", "SOURCE_OBLIGATION",
     "DEPENDENCY", "FUNCTION_CONTRACT", "COMPARE", "REASON", "PROOF", "AAP",
     "AUTHORITY", "ACTION_GATE", "PROCESS_ALGEBRA", "POLICY_ALGEBRA",
-    "DECISION_ALGEBRA", "CONFORMANCE_ALGEBRA", "EVIDENCE_ALGEBRA",
+    "DECISION_ALGEBRA", "CONFORMANCE_ALGRA", "CONFORMANCE_ALGEBRA", "EVIDENCE_ALGEBRA",
     "BRIDGE_ALGEBRA", "AUDIT", "COMPLIANCE", "HUMAN_SOVEREIGNTY", "SECURITY",
     "PRIVACY", "SAFETY", "PIPELINE_CONFIG_DELTA", "THEORY_PROFILE", "PROVENANCE",
 }
@@ -39,7 +39,7 @@ def iter_files(root: Path) -> list[Path]:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--profile", default=str(ROOT / "gsl" / "REPO_PROFILE.json"))
+    p.add_argument("--profile", default=str(ROOT / "gsl" / "profile" / "REPO_PROFILE.json"))
     p.add_argument("--output", default="/tmp/garden-repo-gsl-audit.json")
     p.add_argument("--strict-frontier", action="store_true")
     args = p.parse_args()
