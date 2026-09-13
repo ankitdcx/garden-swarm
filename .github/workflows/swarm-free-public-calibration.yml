@@ -7,6 +7,8 @@ on:
     paths:
       - 'swarm/roles-free.json'
       - 'swarm/orchestrator.py'
+      - 'swarm/synthesize.py'
+      - 'swarm/tests/**'
       - '.github/workflows/swarm-free-public-calibration.yml'
 
 permissions:
@@ -26,6 +28,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Run swarm unit tests
+        run: python -m unittest discover -s swarm/tests -v
 
       - name: Run four free agents on public Garden source only
         run: |
@@ -64,10 +69,28 @@ jobs:
               raise SystemExit('Need at least two usable independent free-agent outputs')
           PY
 
-      - name: Upload calibration receipt
+      - name: Build candidate synthesis without admitting findings
+        run: |
+          python swarm/synthesize.py \
+            swarm/runs/free-public-calibration.json \
+            --output swarm/runs/free-public-synthesis.json
+
+      - name: Verify synthesis remains candidate-only
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open('swarm/runs/free-public-synthesis.json', encoding='utf-8'))
+          assert p['admission_status'] == 'CANDIDATES_ONLY_NOT_ADMITTED'
+          assert all(x['status'] == 'NEEDS_CROSS_REFERENCE' for x in p.get('candidates', []))
+          print('candidate_count=', p.get('candidate_count'))
+          PY
+
+      - name: Upload calibration receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: garden-free-public-calibration
-          path: swarm/runs/free-public-calibration.json
+          path: |
+            swarm/runs/free-public-calibration.json
+            swarm/runs/free-public-synthesis.json
           if-no-files-found: warn
