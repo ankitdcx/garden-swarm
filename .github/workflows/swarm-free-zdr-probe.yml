@@ -5,6 +5,7 @@ on:
     branches: [garden-swarm-orchestrator]
     paths:
       - 'swarm/roles-free-zdr.json'
+      - 'swarm/orchestrator.py'
       - '.github/workflows/swarm-free-zdr-probe.yml'
   workflow_dispatch:
 
@@ -35,23 +36,34 @@ jobs:
             --max-calls 1 \
             --max-concurrency 1 \
             --max-chars 12000 \
-            --max-tokens 5000 \
+            --max-tokens 3000 \
+            --reasoning-effort low \
             --output swarm/runs/free-zdr-probe.json
 
-      - name: Show probe status without exposing prompt content
+      - name: Verify usable zero-cost response
         run: |
           python - <<'PY'
-          import json
+          import json, sys
           p = json.load(open('swarm/runs/free-zdr-probe.json', encoding='utf-8'))
-          for r in p.get('results', []):
-              print('status=', r.get('status'))
-              print('requested_model=', r.get('requested_model'))
-              print('returned_model=', r.get('returned_model'))
-              print('usage=', r.get('usage'))
-              print('output_present=', bool(r.get('output')))
-              print('output_chars=', len(r.get('output') or ''))
-              if r.get('error'):
-                  print('error=', r.get('error')[:500])
+          results = p.get('results', [])
+          if not results:
+              raise SystemExit('No result returned')
+          r = results[0]
+          print('status=', r.get('status'))
+          print('requested_model=', r.get('requested_model'))
+          print('returned_model=', r.get('returned_model'))
+          print('usage=', r.get('usage'))
+          print('output_present=', bool(r.get('output')))
+          print('output_chars=', len(r.get('output') or ''))
+          if r.get('error'):
+              print('error=', r.get('error')[:500])
+          if r.get('status') != 'OK':
+              raise SystemExit('Model call failed')
+          if not (r.get('output') or '').strip():
+              raise SystemExit('Model returned no final answer')
+          cost = (r.get('usage') or {}).get('cost')
+          if cost not in (0, 0.0, None):
+              raise SystemExit(f'Expected zero-dollar inference, got cost={cost}')
           PY
 
       - name: Upload probe receipt
