@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 15
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.5-flash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
