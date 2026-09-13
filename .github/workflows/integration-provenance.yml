@@ -42,4 +42,4 @@ jobs:
       - name: Check declared work intent against concurrent PRs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python tools/check_multi_agent_pr.py
+        run: python -m tools.check_multi_agent_pr
