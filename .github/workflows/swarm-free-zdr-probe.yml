@@ -37,13 +37,13 @@ jobs:
             --max-concurrency 1 \
             --max-chars 12000 \
             --max-tokens 3000 \
-            --reasoning-effort low \
+            --reasoning-effort none \
             --output swarm/runs/free-zdr-probe.json
 
       - name: Verify usable zero-cost response
         run: |
           python - <<'PY'
-          import json, sys
+          import json
           p = json.load(open('swarm/runs/free-zdr-probe.json', encoding='utf-8'))
           results = p.get('results', [])
           if not results:
