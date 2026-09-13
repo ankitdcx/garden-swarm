@@ -12,7 +12,10 @@ def main() -> int:
     sel = json.loads(SEL.read_text(encoding="utf-8"))
     slot = int(sel["hour_slot"])
     lane = "design" if slot % 2 == 0 else "repo"
-    cmd = [sys.executable, f"tools/free_{lane}_review.py"]
+    # Execute as a module so repository-root package imports such as
+    # tools._free_review_common resolve deterministically. Direct script
+    # execution sets sys.path[0] to tools/ and can fail before inference.
+    cmd = [sys.executable, "-m", f"tools.free_{lane}_review"]
     proc = subprocess.run(cmd, text=True, capture_output=True)
     print(proc.stdout, end="")
     if proc.returncode == 0:
