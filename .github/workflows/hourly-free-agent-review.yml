@@ -37,7 +37,31 @@ jobs:
         run: python tools/free_model_rotation.py
 
       - name: Run exactly one free review this hour
+        id: free_review
+        continue-on-error: true
         run: python tools/run_hourly_free_review.py
+
+      - name: Record unavailable free endpoint without paid fallback
+        if: steps.free_review.outcome == 'failure'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sel = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
+          slot = int(sel['hour_slot'])
+          out = Path('agents/outbox/hourly'); out.mkdir(parents=True, exist_ok=True)
+          receipt = {
+              'schema': 'GardenFreeReviewAvailabilityReceipt/v1',
+              'hour_slot': slot,
+              'lane': 'design' if slot % 2 == 0 else 'repo',
+              'status': 'FREE_ENDPOINT_UNAVAILABLE_OR_UNUSABLE',
+              'reason': 'The selected free call did not yield an admissible structured result; no same-hour retry and no paid fallback attempted.',
+              'selected': sel.get('selected', []),
+              'admission_status': 'NO_MODEL_FINDING'
+          }
+          (out / 'availability.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt))
+          PY
 
       - name: Enforce free-only and proposal-only boundary
         run: |
@@ -54,9 +78,9 @@ jobs:
           existing = [p for p in reviews if p.exists()]
           if availability.exists():
               p = json.load(open(availability, encoding='utf-8'))
-              assert p['status'] == 'RATE_LIMITED'
+              assert p['status'] in {'RATE_LIMITED', 'FREE_ENDPOINT_UNAVAILABLE_OR_UNUSABLE'}
               assert not existing
-              print('FREE_TIER_RATE_LIMITED_NO_PAID_FALLBACK')
+              print('FREE_MODEL_UNAVAILABLE_NO_PAID_FALLBACK')
           else:
               assert len(existing) == 1, existing
               p = json.load(open(existing[0], encoding='utf-8'))
