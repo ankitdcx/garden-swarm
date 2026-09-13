@@ -28,10 +28,14 @@ def tracked_files() -> set[str]:
 
 
 def local_file_candidate(value: str) -> str | None:
-    value = value.strip().strip("'\".,:;()[]{}")
+    # A machine file reference is path-like, not an arbitrary sentence containing
+    # a filename. Preserve leading dots because `.github/...` is a real path.
+    value = value.strip().strip("'\"").rstrip(",:;)]}")
     if not value or value.startswith(("http://", "https://", "garden://", "/")):
         return None
-    if "{" in value or "}" in value or "*" in value:
+    if any(ch.isspace() for ch in value):
+        return None
+    if any(ch in value for ch in ("{", "}", "*", "|")):
         return None
     if not value.lower().endswith(FILE_SUFFIXES):
         return None
@@ -88,6 +92,47 @@ def mcp_tool_names(path: Path) -> set[str]:
     return out
 
 
+def generated_reference_policy() -> dict[str, dict[str, Any]]:
+    payload = json.loads((ROOT / "gsl" / "REFERENCE_POLICY.json").read_text(encoding="utf-8"))
+    if payload.get("schema") != "GardenRepositoryReferencePolicy/v1":
+        raise SystemExit("unsupported GardenRepositoryReferencePolicy schema")
+    return {
+        str(row["reference"]): row
+        for row in payload.get("generated_or_runtime_references") or []
+    }
+
+
+def resolve_reference(
+    ref: str,
+    *,
+    source: str,
+    tracked: set[str],
+    basenames: dict[str, list[str]],
+    generated: dict[str, dict[str, Any]],
+) -> tuple[str | None, str, dict[str, Any] | None]:
+    if ref in tracked:
+        return ref, "TRACKED_EXACT", None
+
+    source_relative = (Path(source).parent / ref).as_posix()
+    if source_relative in tracked:
+        return source_relative, "TRACKED_SOURCE_RELATIVE", None
+
+    same_name = basenames.get(Path(ref).name, [])
+    if len(same_name) == 1 and "/" not in ref:
+        return same_name[0], "TRACKED_UNIQUE_BASENAME", None
+
+    candidates = [ref, ref.removeprefix("./"), ref.removeprefix("/")]
+    for candidate in candidates:
+        if candidate in generated:
+            row = generated[candidate]
+            owner = str(row.get("owner", ""))
+            if not owner or owner not in tracked:
+                return None, "GENERATED_OWNER_MISSING", row
+            return owner, str(row.get("class", "GENERATED_OR_RUNTIME")), row
+
+    return None, "UNRESOLVED", None
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--output", default="/tmp/reference_closure_receipt.json")
@@ -97,6 +142,7 @@ def main() -> int:
     basenames: dict[str, list[str]] = {}
     for rel in tracked:
         basenames.setdefault(Path(rel).name, []).append(rel)
+    generated = generated_reference_policy()
 
     canonical = {
         rel for rel in tracked
@@ -124,12 +170,21 @@ def main() -> int:
             continue
 
         for ref in sorted(set(found)):
-            if ref in tracked:
-                resolved = ref
-            else:
-                same_name = basenames.get(Path(ref).name, [])
-                resolved = same_name[0] if len(same_name) == 1 and "/" not in ref else None
-            row = {"source": rel, "reference": ref, "resolved": resolved}
+            resolved, resolution_kind, policy = resolve_reference(
+                ref,
+                source=rel,
+                tracked=tracked,
+                basenames=basenames,
+                generated=generated,
+            )
+            row: dict[str, Any] = {
+                "source": rel,
+                "reference": ref,
+                "resolved": resolved,
+                "resolution_kind": resolution_kind,
+            }
+            if policy is not None:
+                row["reference_policy"] = policy
             refs.append(row)
             if resolved is None:
                 unresolved.append({"source": rel, "reference": ref})
@@ -152,17 +207,20 @@ def main() -> int:
         "repository": "ankitdcx/garden-swarm",
         "design_epoch_ref": envelope.get("design_epoch_ref"),
         "coverage": [
-            "tracked JSON string values that look like local repository file references",
+            "path-like tracked JSON string references",
             "Markdown/text inline-code and Markdown-link local file references",
+            "source-relative and unique-basename resolution",
+            "declared generated/runtime references with tracked generating owner",
             "MCP tool allowlist against actual @mcp.tool decorators"
         ],
         "excluded_from_claim": [
             "semantic equivalence of identifiers",
-            "natural-language references that are not machine-detectable file references",
+            "natural-language references that are not machine-detectable path-like references",
             "canonical five-file semantic reference closure (owned by the canonical release receipt)",
-            "external URLs and generated API paths"
+            "external URLs"
         ],
-        "scanner_version": "garden-repo-reference-closure/1",
+        "scanner_version": "garden-repo-reference-closure/2",
+        "reference_policy_sha256": sha256(ROOT / "gsl" / "REFERENCE_POLICY.json"),
         "scanned_sources": scanned,
         "reference_count": len(refs),
         "references": refs,
