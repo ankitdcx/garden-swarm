@@ -1,0 +1,22 @@
+{
+  "schema": "GardenAgentTask/v1",
+  "task_id": "HOURLY-REVIEW",
+  "status": "ACTIVE",
+  "public_source_only": true,
+  "max_openrouter_calls_per_run": 2,
+  "objectives": [
+    "falsify or strengthen one bounded canonical Garden mechanism",
+    "falsify or strengthen one bounded executable repository mechanism",
+    "separate specification defect from implementation gap and coverage limitation",
+    "return a concrete regression test or falsifier when proposing a change"
+  ],
+  "forbidden": [
+    "paid model routes",
+    "paid fallbacks",
+    "web-search plugins with charges",
+    "private garden-main source",
+    "private user data",
+    "automatic writes to agents/shared",
+    "automatic canonical release admission"
+  ]
+}
