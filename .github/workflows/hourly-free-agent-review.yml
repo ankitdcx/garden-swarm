@@ -15,9 +15,11 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.5-flash
       DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       GARDEN_DEEPSEEK_MAX_USD_PER_HOUR: ${{ secrets.GARDEN_DEEPSEEK_MAX_USD_PER_HOUR }}
     steps:
@@ -29,14 +31,20 @@ jobs:
       - name: Rotate to one different Design Review Matrix target this hour
         run: python -m tools.rotate_design_review_target
 
+      - name: Run independent Gemini lane on the exact target
+        run: python -m tools.gemini_matrix_review --phase independent
+
       - name: Run independent DeepSeek lane when explicitly budget-enabled
         run: python -m tools.deepseek_matrix_review --phase independent
 
-      - name: Prefer four independent free reviewer families
+      - name: Prefer four independent free OpenRouter families
         run: python -m tools.select_matrix_reviewers --count 4
 
       - name: Review exactly one persistent Design Review Matrix target
         run: python -m tools.matrix_design_review
+
+      - name: Cross-examine Gemini against the same-target blind findings
+        run: python -m tools.gemini_matrix_review --phase final
 
       - name: Cross-examine DeepSeek against the same-target blind findings when enabled
         run: python -m tools.deepseek_matrix_review --phase final
@@ -88,10 +96,10 @@ jobs:
               'target_id': bundle['target']['target_id'],
               'hour_slot': target_selection['hour_slot'],
               'status': bundle['status'],
-              'selected_families': len(selected),
+              'openrouter_selected_families': len(selected),
               'preferred_families': preferred,
-              'independent_families': bundle['independent_reviewer_family_count'],
-              'final_families': bundle['final_disposition_family_count'],
+              'openrouter_independent_families': bundle['independent_reviewer_family_count'],
+              'openrouter_final_families': bundle['final_disposition_family_count'],
               'explicit_zero_cost': explicit_zero,
               'semantic_delta_admitted': False,
           }, sort_keys=True))
@@ -102,20 +110,27 @@ jobs:
           python - <<'PY'
           import json, os
           from datetime import datetime, timezone
+          from pathlib import Path
+
+          def maybe(path):
+              p = Path(path)
+              return json.loads(p.read_text(encoding='utf-8')) if p.is_file() else None
 
           bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
           target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
           receipt = {
-              'schema': 'GardenHourlyDesignReviewReceipt/v1',
+              'schema': 'GardenHourlyDesignReviewReceipt/v2',
               'created_at': datetime.now(timezone.utc).isoformat(),
               'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
               'commit': os.environ.get('GITHUB_SHA'),
               'hour_slot': target_selection['hour_slot'],
               'target_id': bundle['target']['target_id'],
               'bundle_sha256': bundle['bundle_sha256'],
-              'review_status': bundle['status'],
-              'deepseek_independent_receipt': 'agents/outbox/hourly/deepseek-independent.json',
-              'deepseek_final_receipt': 'agents/outbox/hourly/deepseek-final.json',
+              'openrouter_review_status': bundle['status'],
+              'gemini_independent': maybe('agents/outbox/hourly/gemini-independent.json'),
+              'gemini_final': maybe('agents/outbox/hourly/gemini-final.json'),
+              'deepseek_independent': maybe('agents/outbox/hourly/deepseek-independent.json'),
+              'deepseek_final': maybe('agents/outbox/hourly/deepseek-final.json'),
               'semantic_delta_admitted': False,
               'admission_status': 'PROPOSALS_ONLY_NEEDS_GSL_INTEGRATOR_AND_WHOLE_SOURCE_CROSS_REFERENCE',
           }
@@ -133,6 +148,8 @@ jobs:
             agents/runtime/design-target-selection.json
             agents/runtime/free-selection.json
             agents/outbox/hourly/design-review-bundle.json
+            agents/outbox/hourly/gemini-independent.json
+            agents/outbox/hourly/gemini-final.json
             agents/outbox/hourly/deepseek-independent.json
             agents/outbox/hourly/deepseek-final.json
             agents/outbox/hourly/combined-receipt.json
