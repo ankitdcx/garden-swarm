@@ -1,0 +1,44 @@
+{
+  "schema": "GardenRepositoryDesignBinding/v1",
+  "binding_id": "DESIGN-BINDING-GARDEN-SWARM-v15.5-2026-09-13",
+  "status": "SPECIFIED_DESIGNEPOCH_CANDIDATE",
+  "accepted": false,
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "canonical_release": "Garden-v15.5-2026-09-12",
+  "gsl": "v45.1",
+  "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "source_document_roots": {
+    "Garden_User_v15.5_FULL_2026-09-12.txt": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435",
+    "Garden_System_v15.5_FULL_2026-09-12.txt": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
+    "Garden_Technical_v15.5_FULL_2026-09-12.txt": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
+    "Garden_Annexure_v15.5_FULL_2026-09-12.txt": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+    "Garden_Theories_v15.5_FULL_2026-09-12.txt": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93"
+  },
+  "semantic_roots": {
+    "schema_invariant_test_catalog": "Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+    "system_flow": "Garden_System_v15.5_FULL_2026-09-12.txt",
+    "executable_contracts": "Garden_Technical_v15.5_FULL_2026-09-12.txt",
+    "theory_reference": "Garden_Theories_v15.5_FULL_2026-09-12.txt",
+    "human_sovereignty": "Garden_User_v15.5_FULL_2026-09-12.txt"
+  },
+  "repository_scope": "ankitdcx/garden-swarm",
+  "acceptance_boundary": "This binding says which Garden/GSL design the repository intends to implement. It does not self-issue an ACCEPTED DesignEpoch, certification, or deployment authority.",
+  "acceptance_requirements_pending": [
+    "Bootstrap/frozen-verifier acceptance closure where applicable",
+    "repo-wide FunctionContract and result-algebra closure",
+    "CIConformancePipelineReceipt enforcement",
+    "typed authority/envelope and provenance closure",
+    "reference-closure receipt for the repository surface"
+  ],
+  "invalidators": [
+    "canonical source root changes",
+    "Garden/GSL successor promotion",
+    "material semantic contract change",
+    "authority or constitutional policy change"
+  ],
+  "provenance": [
+    "SOURCE_MANIFEST.json",
+    "Garden v15.5 five-file canonical source",
+    "2026-09-13 repo-wide GSL compliance audit"
+  ]
+}
