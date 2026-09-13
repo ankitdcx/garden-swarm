@@ -4,15 +4,6 @@ on:
   schedule:
     - cron: '5 * * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'agents/**'
-      - 'tools/free_model_rotation.py'
-      - 'tools/free_design_review.py'
-      - 'tools/free_repo_review.py'
-      - 'tools/run_hourly_free_review.py'
-      - '.github/workflows/hourly-free-agent-review.yml'
 
 permissions:
   contents: read
@@ -38,7 +29,7 @@ jobs:
       - name: Select diverse live free-model families
         run: python tools/free_model_rotation.py
 
-      - name: Run exactly one free review this hour
+      - name: Run exactly one free OpenRouter review this hour
         id: free_review
         continue-on-error: true
         run: python tools/run_hourly_free_review.py
@@ -65,7 +56,10 @@ jobs:
           print(json.dumps(receipt))
           PY
 
-      - name: Enforce free-only and proposal-only boundary
+      - name: Run direct Gemini free-tier reviewer conservatively
+        run: python tools/run_gemini_free_review.py
+
+      - name: Enforce OpenRouter free-only and proposal-only boundary
         run: |
           python - <<'PY'
           import json
@@ -104,14 +98,15 @@ jobs:
               path = Path(p)
               return json.load(open(path, encoding='utf-8')) if path.exists() else None
           receipt = {
-              'schema': 'GardenHourlyMultiModelReviewReceipt/v1',
+              'schema': 'GardenHourlyMultiModelReviewReceipt/v2',
               'created_at': datetime.now(timezone.utc).isoformat(),
               'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
               'commit': os.environ.get('GITHUB_SHA'),
               'selection': maybe('agents/runtime/free-selection.json'),
               'design_review': maybe('agents/outbox/hourly/design-review.json'),
               'repo_review': maybe('agents/outbox/hourly/repo-review.json'),
-              'availability': maybe('agents/outbox/hourly/availability.json'),
+              'openrouter_availability': maybe('agents/outbox/hourly/availability.json'),
+              'gemini_review': maybe('agents/outbox/hourly/gemini-review.json'),
               'admission_status': 'PROPOSALS_ONLY_NEEDS_CHATGPT_AND_WHOLE_SOURCE_CROSS_REFERENCE',
           }
           Path('agents/outbox/hourly').mkdir(parents=True, exist_ok=True)
@@ -128,5 +123,3 @@ jobs:
             agents/outbox/hourly/*.json
           if-no-files-found: error
           retention-days: 30
-      - name: Run Gemini free reviewer
-        run: python tools/run_gemini_free_review.py
