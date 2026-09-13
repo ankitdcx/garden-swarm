@@ -2,7 +2,7 @@ name: Garden live MCP verification
 
 on:
   push:
-    branches: [live-mcp-verification-20260913]
+    branches: [main]
     paths:
       - '.github/workflows/live-mcp-verification.yml'
   workflow_dispatch:
