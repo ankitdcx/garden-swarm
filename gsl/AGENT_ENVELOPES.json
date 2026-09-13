@@ -22,6 +22,17 @@
         "public_tasks",
         "build_finding_payload"
       ],
+      "tool_constraints": {
+        "build_finding_payload": {
+          "max_total_text_chars": 52000,
+          "severity_allowlist": ["NOTE", "LOW", "MEDIUM", "HIGH", "CRITICAL"],
+          "effects": ["PURE_PAYLOAD_CONSTRUCTION"]
+        },
+        "current_release": {"effects": ["READ_PUBLIC_RESOURCE"]},
+        "list_attack_surfaces": {"effects": ["READ_PUBLIC_RESOURCE"]},
+        "evaluation_instructions": {"effects": ["READ_PUBLIC_RESOURCE"]},
+        "public_tasks": {"effects": ["READ_PUBLIC_RESOURCE"]}
+      },
       "network_scope": ["public MCP transport only; no arbitrary outbound retrieval"],
       "credential_scope": [],
       "actuator_scope": [],
@@ -46,6 +57,7 @@
           "MCP transport policy change"
         ]
       },
+      "runtime_enforcement": "Every tool invocation reloads and validates the current envelope before executing; startup validation is not sufficient.",
       "revocation_root": "repository governance / human operator",
       "provenance": [
         "server/mcp_service.py",
