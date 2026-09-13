@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "garden-swarm-public"
+version = "15.5.0"
+description = "Garden public discovery, reference prototype, swarm, and governed tooling surface"
+requires-python = ">=3.12"
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+packages = ["prototype", "server", "swarm", "tools", "scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["prototype/tests", "server/tests", "swarm/tests", "tests/adversarial"]
+addopts = "-ra"
+markers = [
+  "contract: FunctionContract/conformance tests",
+  "adversarial: mechanism falsification and attack-surface tests",
+  "integration: cross-component tests",
+]
+
+[tool.garden.package-boundary]
+prototype = "reference executable semantics and FunctionContract fixtures"
+server = "public read-only discovery/MCP service"
+swarm = "multi-agent orchestration and synthesis"
+tools = "provider/model-review adapters and bounded operational tooling"
+scripts = "repository build, verification, generation, and CI entrypoints"
