@@ -1,0 +1,42 @@
+{
+  "schema": "GardenSwarmFreeRoleSet/v0.1",
+  "privacy_class": "PUBLIC_SOURCE_ONLY_NON_ZDR",
+  "roles": [
+    {
+      "id": "FREE-ARCH",
+      "name": "Free architecture critic",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "objective": "Find architectural contradictions, missing boundaries, unnecessary layers, and simpler stronger alternatives in the supplied public Garden source.",
+      "lenses": ["systems architecture", "agent architecture", "dependency structure", "simplification"],
+      "tier": "calibration",
+      "web": false
+    },
+    {
+      "id": "FREE-FORMAL",
+      "name": "Free formal-methods critic",
+      "model": "thinkingmachines/inkling:free",
+      "objective": "Find underspecified semantics, unverifiable claims, type or contract gaps, and proof-obligation failures in the supplied public Garden source.",
+      "lenses": ["formal methods", "type systems", "verification", "proof obligations"],
+      "tier": "calibration",
+      "web": false
+    },
+    {
+      "id": "FREE-RED",
+      "name": "Free adversarial critic",
+      "model": "nex-agi/nex-n2.5-pro:free",
+      "objective": "Try to break the supplied public Garden design with concrete counterexamples, bypasses, stale-state failures, and compositional failures.",
+      "lenses": ["adversarial analysis", "failure modes", "security", "composition"],
+      "tier": "calibration",
+      "web": false
+    },
+    {
+      "id": "FREE-IMPL",
+      "name": "Free implementation critic",
+      "model": "cohere/north-mini-code:free",
+      "objective": "Identify what cannot yet be implemented deterministically and propose the smallest executable contracts and regression tests.",
+      "lenses": ["software engineering", "APIs", "schemas", "testing"],
+      "tier": "calibration",
+      "web": false
+    }
+  ]
+}
