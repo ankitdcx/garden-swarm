@@ -6,7 +6,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from prototype.actiongate import ActionProposal, Decision, GateContext, evaluate_action
 from prototype.authority import AuthorityEnvelope, can_execute, compose_authority
 from prototype.design_epoch import ArtifactBinding, BindingStatus, validate_binding
-from prototype.tokens import DelegationReceipt, receipt_digest, sign_receipt, verify_receipt
+from prototype.tokens import (
+    DelegationReceipt,
+    ReceiptValidationStatus,
+    receipt_digest,
+    sign_receipt,
+    validate_receipt,
+)
 
 
 def _authority(subject: str, actions: set[str], resources: set[str], depth: int = 2) -> AuthorityEnvelope:
@@ -39,7 +45,7 @@ def test_actiongate_allows_current_authorized_action():
     assert evaluate_action(proposal, ctx).decision is Decision.ALLOW
 
 
-def test_actiongate_rejects_stale_policy_epoch():
+def test_actiongate_rejects_stale_policy_epoch_without_laundering_reason():
     ctx = GateContext(
         current_policy_epoch="E2",
         capabilities_by_principal={"human:alice": frozenset({"notify"})},
@@ -212,7 +218,7 @@ def test_undeclared_dependency_closure_is_unknown():
     assert result.reasons == ("DEPENDENCY_CLOSURE_NOT_DECLARED",)
 
 
-def test_signed_delegation_receipt_rejects_mutation_and_expiry():
+def test_signed_delegation_receipt_rejects_mutation_and_expiry_with_typed_states():
     private = Ed25519PrivateKey.generate()
     public = private.public_key()
     receipt = DelegationReceipt(
@@ -224,7 +230,7 @@ def test_signed_delegation_receipt_rejects_mutation_and_expiry():
     )
     signed = sign_receipt(private, receipt)
 
-    ok, reason, decoded = verify_receipt(
+    result = validate_receipt(
         public,
         signed,
         now=1_900_000_000,
@@ -232,9 +238,8 @@ def test_signed_delegation_receipt_rejects_mutation_and_expiry():
         expected_subject="agent:A",
         expected_issuer="human:alice",
     )
-    assert ok is True
-    assert decoded is not None
-    assert reason == "VALID_FOR_DECLARED_SCOPE"
+    assert result.status is ReceiptValidationStatus.VALID
+    assert result.receipt is not None
 
     payload = json.loads(base64.urlsafe_b64decode(signed["payload"]).decode("utf-8"))
     payload["capabilities"].append("execute_high")
@@ -242,16 +247,14 @@ def test_signed_delegation_receipt_rejects_mutation_and_expiry():
     tampered["payload"] = base64.urlsafe_b64encode(
         json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).decode("ascii")
-    ok, reason, _ = verify_receipt(public, tampered, now=1_900_000_000)
-    assert ok is False
-    assert reason == "INVALID_SIGNATURE_OR_PAYLOAD"
+    result = validate_receipt(public, tampered, now=1_900_000_000)
+    assert result.status is ReceiptValidationStatus.INVALID_SIGNATURE_OR_PAYLOAD
 
-    ok, reason, _ = verify_receipt(public, signed, now=2_100_000_000)
-    assert ok is False
-    assert reason == "EXPIRED"
+    result = validate_receipt(public, signed, now=2_100_000_000)
+    assert result.status is ReceiptValidationStatus.EXPIRED
 
 
-def test_receipt_rejects_wrong_expected_issuer():
+def test_receipt_rejects_wrong_expected_issuer_with_typed_state():
     private = Ed25519PrivateKey.generate()
     receipt = DelegationReceipt(
         issuer="agent:mallory",
@@ -261,11 +264,10 @@ def test_receipt_rejects_wrong_expected_issuer():
         nonce="n-x",
     )
     signed = sign_receipt(private, receipt)
-    ok, reason, _ = verify_receipt(
+    result = validate_receipt(
         private.public_key(), signed, now=1_900_000_000, expected_issuer="human:alice"
     )
-    assert ok is False
-    assert reason == "ISSUER_MISMATCH"
+    assert result.status is ReceiptValidationStatus.ISSUER_MISMATCH
 
 
 def test_chained_receipt_requires_verified_parent_and_rejects_substitution():
@@ -287,12 +289,11 @@ def test_chained_receipt_requires_verified_parent_and_rejects_substitution():
     child_key = Ed25519PrivateKey.generate()
     signed_child = sign_receipt(child_key, child)
 
-    ok, reason, _ = verify_receipt(
+    result = validate_receipt(
         child_key.public_key(), signed_child, now=1_900_000_000,
         expected_issuer="agent:A", expected_subject="agent:B",
     )
-    assert ok is False
-    assert reason == "PARENT_RECEIPT_REQUIRED"
+    assert result.status is ReceiptValidationStatus.PARENT_RECEIPT_REQUIRED
 
     substitute_parent = DelegationReceipt(
         issuer="human:alice",
@@ -301,18 +302,16 @@ def test_chained_receipt_requires_verified_parent_and_rejects_substitution():
         expires_at=2_000_000_000,
         nonce="different-parent",
     )
-    ok, reason, _ = verify_receipt(
+    result = validate_receipt(
         child_key.public_key(), signed_child, now=1_900_000_000,
         expected_issuer="agent:A", expected_subject="agent:B",
         expected_parent=substitute_parent,
     )
-    assert ok is False
-    assert reason == "PARENT_DIGEST_MISMATCH"
+    assert result.status is ReceiptValidationStatus.PARENT_DIGEST_MISMATCH
 
-    ok, reason, _ = verify_receipt(
+    result = validate_receipt(
         child_key.public_key(), signed_child, now=1_900_000_000,
         required_capability="notify", expected_issuer="agent:A",
         expected_subject="agent:B", expected_parent=parent,
     )
-    assert ok is True
-    assert reason == "VALID_FOR_DECLARED_SCOPE"
+    assert result.status is ReceiptValidationStatus.VALID
