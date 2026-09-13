@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+from fnmatch import fnmatchcase
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598"
 DESIGN_EPOCH_REF = f"Garden-v15.5@{SOURCE_ROOT}"
+EXECUTABLE_DIRS = ("prototype", "server", "swarm", "tools", "scripts")
 
 
 def digest(path: Path) -> str:
@@ -24,14 +26,37 @@ def load(path: str | Path) -> dict[str, Any]:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-def public_functions(path: Path) -> set[str]:
+def top_level_functions(path: Path) -> list[ast.FunctionDef | ast.AsyncFunctionDef]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    return {
-        node.name
-        for node in tree.body
+    return [
+        node for node in tree.body
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-        and not node.name.startswith("_")
-    }
+    ]
+
+
+def public_functions(path: Path) -> set[str]:
+    return {node.name for node in top_level_functions(path) if not node.name.startswith("_")}
+
+
+def annotation_text(node: ast.AST | None) -> str:
+    if node is None:
+        return "UNANNOTATED"
+    try:
+        return ast.unparse(node)
+    except Exception:
+        return "UNPARSEABLE_ANNOTATION"
+
+
+def signature_record(node: ast.FunctionDef | ast.AsyncFunctionDef) -> dict[str, Any]:
+    args = []
+    all_args = list(node.args.posonlyargs) + list(node.args.args) + list(node.args.kwonlyargs)
+    for arg in all_args:
+        args.append({"name": arg.arg, "type": annotation_text(arg.annotation)})
+    if node.args.vararg:
+        args.append({"name": "*" + node.args.vararg.arg, "type": annotation_text(node.args.vararg.annotation)})
+    if node.args.kwarg:
+        args.append({"name": "**" + node.args.kwarg.arg, "type": annotation_text(node.args.kwarg.annotation)})
+    return {"inputs": args, "output": annotation_text(node.returns)}
 
 
 def decorator_name(node: ast.AST) -> str:
@@ -46,11 +71,8 @@ def decorator_name(node: ast.AST) -> str:
 
 
 def mcp_tools(path: Path) -> set[str]:
-    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     tools: set[str] = set()
-    for node in tree.body:
-        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            continue
+    for node in top_level_functions(path):
         if any(decorator_name(d) == "mcp.tool" for d in node.decorator_list):
             tools.add(node.name)
     return tools
@@ -102,8 +124,8 @@ def validate_skill_manifest() -> dict[str, Any]:
     return stage("GARDEN_SKILL_MANIFEST", not errors, {"errors": errors, "computed_hash": actual})
 
 
-def load_function_contracts() -> tuple[list[dict[str, Any]], list[str]]:
-    contracts: list[dict[str, Any]] = []
+def load_direct_contracts() -> tuple[dict[str, dict[str, Any]], list[str]]:
+    by_name: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
     for path in sorted((ROOT / "gsl").glob("FUNCTION_CONTRACTS*.json")):
         payload = load(path)
@@ -112,55 +134,115 @@ def load_function_contracts() -> tuple[list[dict[str, Any]], list[str]]:
             continue
         if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
             errors.append(f"{path.name}: stale DesignEpoch binding")
-        contracts.extend(payload.get("contracts") or [])
-    return contracts, errors
+        for contract in payload.get("contracts") or []:
+            qname = str(contract.get("owner_qualified_name", ""))
+            if not qname:
+                errors.append(f"{path.name}: FunctionContract missing owner_qualified_name")
+            elif qname in by_name:
+                errors.append(f"multiple direct FunctionContracts resolve {qname}")
+            else:
+                by_name[qname] = contract
+    return by_name, errors
+
+
+def validate_contract_shape(qname: str, contract: dict[str, Any], errors: list[str]) -> None:
+    for required in (
+        "contract_id", "closed_effect_vector", "authority_requirement", "failure_mode_set",
+        "result_algebra", "bool_restriction", "dependency_and_invalidator_bindings",
+        "resource_and_termination_bounds", "provenance",
+    ):
+        if required not in contract:
+            errors.append(f"{qname}: FunctionContract missing {required}")
+
+
+def generation_rule_matches(rule: dict[str, Any], rel: str, function_name: str) -> bool:
+    if not fnmatchcase(rel, str(rule.get("pattern", ""))):
+        return False
+    visibility = str(rule.get("visibility", "ALL"))
+    if visibility == "PRIVATE_ONLY":
+        return function_name.startswith("_")
+    if visibility == "PUBLIC_ONLY":
+        return not function_name.startswith("_")
+    return visibility == "ALL"
+
+
+def executable_python_files() -> list[Path]:
+    files: list[Path] = []
+    for dirname in EXECUTABLE_DIRS:
+        for path in (ROOT / dirname).glob("*.py"):
+            if path.name == "__init__.py":
+                continue
+            files.append(path)
+    return sorted(files, key=lambda p: p.relative_to(ROOT).as_posix())
 
 
 def validate_function_contracts() -> dict[str, Any]:
-    contracts, errors = load_function_contracts()
-    by_name: dict[str, dict[str, Any]] = {}
-    for contract in contracts:
-        qname = str(contract.get("owner_qualified_name", ""))
-        if not qname:
-            errors.append("FunctionContract missing owner_qualified_name")
-        elif qname in by_name:
-            errors.append(f"multiple FunctionContracts resolve {qname}")
-        else:
-            by_name[qname] = contract
+    direct, errors = load_direct_contracts()
+    generated = load("gsl/FUNCTION_CONTRACT_GENERATION.json")
+    if generated.get("schema") != "GardenGeneratedFunctionContractRegistry/v1":
+        errors.append("generated FunctionContract registry schema unsupported")
+    if generated.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+        errors.append("generated FunctionContract registry is stale")
+    templates = generated.get("templates") or {}
+    rules = generated.get("generation_rules") or []
+    bindings: list[dict[str, Any]] = []
+    seen_direct: set[str] = set()
 
-    bindings: list[dict[str, str]] = []
-    seen: set[str] = set()
-    for path in sorted((ROOT / "prototype").glob("*.py")):
-        if path.name == "__init__.py":
-            continue
-        module = f"prototype.{path.stem}"
-        for fn in sorted(public_functions(path)):
-            qname = f"{module}.{fn}"
-            seen.add(qname)
-            contract = by_name.get(qname)
-            if contract is None:
-                errors.append(f"unregistered callable: {qname}")
+    for path in executable_python_files():
+        rel = path.relative_to(ROOT).as_posix()
+        module = rel[:-3].replace("/", ".")
+        file_hash = digest(path)
+        for node in top_level_functions(path):
+            qname = f"{module}.{node.name}"
+            if qname in direct:
+                seen_direct.add(qname)
+                contract = direct[qname]
+                validate_contract_shape(qname, contract, errors)
+                if contract.get("implementation_source") != rel:
+                    errors.append(f"source binding mismatch: {qname}")
+                bindings.append({
+                    "resolution": "DIRECT",
+                    "contract_id": contract.get("contract_id"),
+                    "owner_qualified_name": qname,
+                    "implementation_source": rel,
+                    "implementation_sha256": file_hash,
+                    "signature": signature_record(node),
+                })
                 continue
-            if contract.get("implementation_source") != path.relative_to(ROOT).as_posix():
-                errors.append(f"source binding mismatch: {qname}")
-            for required in (
-                "contract_id", "inputs", "outputs", "closed_effect_vector",
-                "authority_requirement", "failure_mode_set", "result_algebra",
-                "bool_restriction", "dependency_and_invalidator_bindings",
-                "resource_and_termination_bounds", "provenance",
-            ):
-                if required not in contract:
-                    errors.append(f"{qname}: FunctionContract missing {required}")
+
+            matched = [r for r in rules if generation_rule_matches(r, rel, node.name)]
+            if len(matched) != 1:
+                errors.append(f"{qname}: expected exactly one generated FunctionContract rule, found {len(matched)}")
+                continue
+            rule = matched[0]
+            template_id = str(rule.get("template_id", ""))
+            template = templates.get(template_id)
+            if not isinstance(template, dict):
+                errors.append(f"{qname}: missing generation template {template_id}")
+                continue
+            synthetic = {
+                "contract_id": f"GEN:{template_id}:{qname}",
+                **template,
+            }
+            validate_contract_shape(qname, synthetic, errors)
             bindings.append({
-                "contract_id": str(contract.get("contract_id")),
+                "resolution": "GENERATED",
+                "generation_rule_id": rule.get("rule_id"),
+                "template_id": template_id,
+                "contract_id": synthetic["contract_id"],
                 "owner_qualified_name": qname,
-                "implementation_source": path.relative_to(ROOT).as_posix(),
-                "implementation_sha256": digest(path),
+                "implementation_source": rel,
+                "implementation_sha256": file_hash,
+                "signature": signature_record(node),
             })
-    extras = sorted(set(by_name) - seen)
-    if extras:
-        errors.extend(f"contract has no public prototype callable: {name}" for name in extras)
-    return stage("FUNCTION_CONTRACT_COVERAGE", not errors, {"errors": errors, "bindings": bindings})
+
+    extras = sorted(set(direct) - seen_direct)
+    errors.extend(f"direct FunctionContract has no governed callable: {name}" for name in extras)
+    return stage(
+        "FUNCTION_CONTRACT_COVERAGE_WHOLE_EXECUTABLE_SURFACE",
+        not errors,
+        {"errors": errors, "binding_count": len(bindings), "bindings": bindings},
+    )
 
 
 def validate_mcp_envelope() -> dict[str, Any]:
@@ -235,10 +317,10 @@ def validate_provenance() -> dict[str, Any]:
 
 def validate_declared_references() -> dict[str, Any]:
     paths: set[str] = {
-        "SOURCE_MANIFEST.json", "SKILLS.json", "AGENTS.md", "ATTACK_SURFACE.md",
-        "QUICKSTART.md", "gsl/DESIGN_EPOCH.json", "gsl/FUNCTION_CONTRACTS.json",
-        "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json", "gsl/AGENT_ENVELOPES.json",
-        "gsl/PARAMETERS.json", "gsl/PROVENANCE.json", "gsl/REPO_PROFILE.json",
+        "SOURCE_MANIFEST.json", "SKILLS.json", "AGENTS.md", "ATTACK_SURFACE.md", "QUICKSTART.md",
+        "gsl/DESIGN_EPOCH.json", "gsl/FUNCTION_CONTRACTS.json",
+        "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json", "gsl/FUNCTION_CONTRACT_GENERATION.json",
+        "gsl/AGENT_ENVELOPES.json", "gsl/PARAMETERS.json", "gsl/PROVENANCE.json", "gsl/REPO_PROFILE.json",
     }
     skills = load("SKILLS.json")
     paths.update(str(v) for v in skills.get("source_document_roots", {}).values())
