@@ -1,0 +1,72 @@
+name: Garden three-family review quorum
+
+on:
+  pull_request:
+    paths:
+      - 'tools/review_quorum.py'
+      - 'tools/free_model_rotation.py'
+      - 'agents/matrices/**'
+      - '.github/workflows/review-quorum.yml'
+  schedule:
+    - cron: '20 * * * *'
+    - cron: '40 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-review-quorum-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Select one shared review target and run blind plus cross-examination quorum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p agents/outbox/quorum
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            # Bootstrap/self-review: target 0 is REVIEW-QUORUM-INFRASTRUCTURE.
+            python -m tools.review_quorum --lane repo --slot 0 --output agents/outbox/quorum/review-quorum.json
+          elif [[ "${{ github.event_name }}" == "schedule" && "${{ github.event.schedule }}" == "40 11 * * *" ]]; then
+            python -m tools.review_quorum --lane repo --output agents/outbox/quorum/review-quorum.json
+          else
+            python -m tools.review_quorum --lane design --output agents/outbox/quorum/review-quorum.json
+          fi
+
+      - name: Enforce three independent families and peer cross-examination
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('agents/outbox/quorum/review-quorum.json').read_text(encoding='utf-8'))
+          assert p['schema'] == 'GardenReviewQuorumReceipt/v1'
+          assert p['review_requirement']['minimum_independent_families'] >= 3
+          assert p['review_requirement']['blind_first_round'] is True
+          assert p['review_requirement']['peer_cross_examination_required'] is True
+          assert len(set(p['independent_families'])) >= 3, p['independent_families']
+          assert len(set(p['final_families'])) >= 3, p['final_families']
+          assert p['quorum_status'] == 'PASS', p['quorum_status']
+          assert p['admission_status'] == 'REVIEW_QUORUM_ONLY_NEEDS_WHOLE_SOURCE_GSL_ADMISSION'
+          print(json.dumps({'target': p['target']['target_id'], 'families': p['final_families'], 'quorum': p['quorum_status']}))
+          PY
+
+      - name: Upload immutable quorum evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-review-quorum-${{ github.run_id }}
+          path: agents/outbox/quorum/review-quorum.json
+          if-no-files-found: error
+          retention-days: 30
