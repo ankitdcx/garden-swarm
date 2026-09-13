@@ -1,0 +1,10 @@
+{
+  "schema": "GardenGeneratedFunctionContractAllowlist/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "rule": "Self-hosted verifier binding introduced with the explicit generated-contract allowlist gate.",
+  "allowlists": {
+    "GEN-SCRIPTS": [
+      "scripts.verify_generated_contract_allowlist.main"
+    ]
+  }
+}
