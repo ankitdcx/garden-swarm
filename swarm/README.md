@@ -11,7 +11,8 @@ Design rules:
 - source files are hashed before review;
 - model outputs are proposals, not accepted Garden changes;
 - disagreements and blockers are preserved rather than majority-voted away;
-- any possible gap that may be covered elsewhere must be marked for cross-reference checking.
+- any possible gap that may be covered elsewhere must be marked for cross-reference checking;
+- concurrent code-agent changes must not treat Git's textual merge result as proof of semantic compatibility.
 
 Initial calibration uses a small heterogeneous panel. After calibration, increase role count and section coverage.
 
@@ -34,6 +35,14 @@ python swarm/orchestrator.py --live --max-calls 4
 ```
 
 The first live run should stay small. Review the receipts before scaling.
+
+## Concurrent code-agent integration
+
+`swarm/integration_provenance.py` implements the bounded collision/composition guard described in `agents/INTEGRATION_PROVENANCE.md`.
+
+It compares `AgentWorkIntent/v1` records across paths, symbols, semantic domains, invariants, and contracts. A collision requires `IntegrationReceipt/v1` evidence before the guard returns `PASS`. The GitHub PR workflow additionally checks that declared paths cover the actual diff and fails closed on direct path overlap with legacy PRs that have no declared intent.
+
+This mechanism is proposal/integration evidence only. It does not merge branches, modify canonical Garden source, or grant agent authority.
 
 ## Full design
 

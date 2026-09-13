@@ -22,6 +22,8 @@ Read `TASKS.md` and the open task issues. If your work is large, open an issue f
 
 For a first contribution, `EVALUATE_IN_60_MINUTES.md` is the recommended entry point.
 
+For concurrent agent/code work, also read `agents/INTEGRATION_PROVENANCE.md`. Declare the base SHA, actual paths, symbols, semantic domains, and affected invariants/contracts before treating parallel work as independent. A different filename does not prove a different responsibility.
+
 ## Finding format
 
 For design/audit findings, use:
@@ -41,6 +43,8 @@ A pull request should state:
 5. known limitations or unresolved uncertainty;
 6. whether the change affects rights, privacy, authority, safety, IP, or interoperability.
 
+For guarded multi-agent changes, the PR must also contain an `AgentWorkIntent/v1` block whose declared paths cover the actual diff. If another active intent overlaps by path, symbol, semantic domain, invariant, or contract, an `IntegrationReceipt/v1` is required before CI can treat the composition as acceptable. Textual merge success alone is not semantic evidence.
+
 Do not silently rewrite canonical meaning for readability. Semantic changes must be explicit.
 
 ## Canonical source integrity
@@ -49,7 +53,7 @@ The five Garden v15.5 source files listed in `SOURCE_MANIFEST.json` are byte-ide
 
 ## AI-generated contributions
 
-AI-generated work is welcome, but model output is not evidence merely because a model produced it. The contributor remains responsible for checking claims, provenance, tests, and scope.
+AI-generated work is welcome, but model output is not evidence merely because a model produced it. The contributor remains responsible for checking claims, provenance, tests, scope, and interaction with concurrent work.
 
 ## Safety and privacy
 
