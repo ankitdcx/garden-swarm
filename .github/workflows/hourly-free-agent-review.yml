@@ -11,6 +11,7 @@ on:
       - 'tools/free_model_rotation.py'
       - 'tools/free_design_review.py'
       - 'tools/free_repo_review.py'
+      - 'tools/run_hourly_free_review.py'
       - '.github/workflows/hourly-free-agent-review.yml'
 
 permissions:
@@ -32,37 +33,39 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Select two diverse live free-model families
+      - name: Select diverse live free-model families
         run: python tools/free_model_rotation.py
 
-      - name: Review one rotating canonical Garden chunk
-        run: python tools/free_design_review.py
+      - name: Run exactly one free review this hour
+        run: python tools/run_hourly_free_review.py
 
-      - name: Review one rotating executable repository package
-        run: python tools/free_repo_review.py
-
-      - name: Enforce free-only and proposal-only receipts
+      - name: Enforce free-only and proposal-only boundary
         run: |
           python - <<'PY'
           import json
-          paths = [
-              'agents/outbox/hourly/design-review.json',
-              'agents/outbox/hourly/repo-review.json',
-          ]
+          from pathlib import Path
           selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
           selected = selection['selected']
           assert len(selected) == 2
           assert len({x['family'] for x in selected}) == 2
           assert all(x['model'].endswith(':free') for x in selected)
-          for path in paths:
-              p = json.load(open(path, encoding='utf-8'))
+          availability = Path('agents/outbox/hourly/availability.json')
+          reviews = [Path('agents/outbox/hourly/design-review.json'), Path('agents/outbox/hourly/repo-review.json')]
+          existing = [p for p in reviews if p.exists()]
+          if availability.exists():
+              p = json.load(open(availability, encoding='utf-8'))
+              assert p['status'] == 'RATE_LIMITED'
+              assert not existing
+              print('FREE_TIER_RATE_LIMITED_NO_PAID_FALLBACK')
+          else:
+              assert len(existing) == 1, existing
+              p = json.load(open(existing[0], encoding='utf-8'))
               assert p['admission_status'].startswith('PROPOSALS_ONLY')
               cost = (p.get('usage') or {}).get('cost')
-              assert cost in (None, 0, 0.0), (path, cost)
-              handoff = p['handoff']
-              assert handoff['schema'] == 'GardenAgentHandoff/v1'
-              assert handoff.get('search_trace'), path
-          print('FREE_ONLY_PASS', [x['model'] for x in selected])
+              assert cost in (None, 0, 0.0), (existing[0], cost)
+              assert p['handoff']['schema'] == 'GardenAgentHandoff/v1'
+              assert p['handoff'].get('search_trace')
+              print('FREE_ONLY_PASS', existing[0])
           PY
 
       - name: Build combined run receipt
@@ -70,18 +73,22 @@ jobs:
           python - <<'PY'
           import json, os
           from datetime import datetime, timezone
-          def load(p):
-              return json.load(open(p, encoding='utf-8'))
+          from pathlib import Path
+          def maybe(p):
+              path = Path(p)
+              return json.load(open(path, encoding='utf-8')) if path.exists() else None
           receipt = {
               'schema': 'GardenHourlyMultiModelReviewReceipt/v1',
               'created_at': datetime.now(timezone.utc).isoformat(),
               'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
               'commit': os.environ.get('GITHUB_SHA'),
-              'selection': load('agents/runtime/free-selection.json'),
-              'design_review': load('agents/outbox/hourly/design-review.json'),
-              'repo_review': load('agents/outbox/hourly/repo-review.json'),
+              'selection': maybe('agents/runtime/free-selection.json'),
+              'design_review': maybe('agents/outbox/hourly/design-review.json'),
+              'repo_review': maybe('agents/outbox/hourly/repo-review.json'),
+              'availability': maybe('agents/outbox/hourly/availability.json'),
               'admission_status': 'PROPOSALS_ONLY_NEEDS_CHATGPT_AND_WHOLE_SOURCE_CROSS_REFERENCE',
           }
+          Path('agents/outbox/hourly').mkdir(parents=True, exist_ok=True)
           with open('agents/outbox/hourly/combined-receipt.json','w',encoding='utf-8') as f:
               json.dump(receipt, f, indent=2, ensure_ascii=False); f.write('\n')
           PY
@@ -92,8 +99,6 @@ jobs:
           name: garden-hourly-free-agent-review-${{ github.run_id }}
           path: |
             agents/runtime/free-selection.json
-            agents/outbox/hourly/design-review.json
-            agents/outbox/hourly/repo-review.json
-            agents/outbox/hourly/combined-receipt.json
+            agents/outbox/hourly/*.json
           if-no-files-found: error
           retention-days: 30
