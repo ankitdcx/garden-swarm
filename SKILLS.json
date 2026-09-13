@@ -1,8 +1,72 @@
 {
-  "project": "Garden",
-  "release": "v15.5",
-  "status": "public-source-design-with-non-certified-reference-prototype",
-  "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
+  "schema": "GardenSkillManifest/v1",
+  "manifest_id": "GARDEN-SWARM-PUBLIC-SKILLS-v15.5",
+  "manifest_version": "1.0.0",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "source_document_roots": {
+    "manifest": "SOURCE_MANIFEST.json",
+    "user": "Garden_User_v15.5_FULL_2026-09-12.txt",
+    "system": "Garden_System_v15.5_FULL_2026-09-12.txt",
+    "technical": "Garden_Technical_v15.5_FULL_2026-09-12.txt",
+    "annexure": "Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+    "theories": "Garden_Theories_v15.5_FULL_2026-09-12.txt"
+  },
+  "rule_and_invariant_refs": [
+    "FUNC-001..010",
+    "DEPOCH-001..010",
+    "PARAM-001..010",
+    "RESULT-ALG-001..008",
+    "AGT-008",
+    "AGT-011",
+    "AGT-012",
+    "DEV-AI-005",
+    "DEV-AI-008",
+    "DEV-AI-024",
+    "REF-CLOSE-011..013",
+    "PROV-001..006"
+  ],
+  "test_and_proof_refs": [
+    "prototype/tests/",
+    "tests/adversarial/",
+    "gsl/FUNCTION_CONTRACTS.json",
+    "gsl/DESIGN_EPOCH.json",
+    "gsl/AGENT_ENVELOPES.json"
+  ],
+  "role_semantics": {
+    "independent_evaluator": "May read public source, execute local reference tests, and propose falsifiable findings; cannot admit or promote Garden.",
+    "public_mcp_client": "May invoke only tools in AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1; receives no write/deployment/canonical authority.",
+    "agent_reviewer": "Model output is proposal/evidence only and requires whole-source cross-reference before admission."
+  },
+  "tool_and_policy_constraints": {
+    "github_write_required_for_posting": true,
+    "no_private_data": true,
+    "no_credentials": true,
+    "no_arbitrary_code_execution_service": true,
+    "no_deployment_authority": true,
+    "no_real_world_actuation": true,
+    "no_claim_of_live_a2a_conformance": true,
+    "mcp_envelope_ref": "AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1",
+    "canonical_promotion_authority": false
+  },
+  "required_outputs_and_checks": [
+    "Preserve UNKNOWN/STALE/INCONCLUSIVE rather than laundering to PASS.",
+    "Distinguish evidence, proof, implementation, authorization and certification.",
+    "Record source anchors/coverage/provenance for findings.",
+    "Run repo GSL conformance checks before merge for affected governed surfaces.",
+    "Do not edit published canonical v15.5 files in place."
+  ],
+  "manifest_hash": "f353af7efa991c1be816be3f573c00df5f32a8e81428d402bc881b6989c4c6b2",
+  "effective_from": "2026-09-13",
+  "expiry_or_supersession": "Expires on DesignEpoch/source-root change or explicit successor manifest.",
+  "provenance": [
+    "SOURCE_MANIFEST.json",
+    "gsl/DESIGN_EPOCH.json",
+    "gsl/FUNCTION_CONTRACTS.json",
+    "gsl/AGENT_ENVELOPES.json",
+    "AGENTS.md",
+    "ATTACK_SURFACE.md",
+    "QUICKSTART.md"
+  ],
   "agent_tasks": [
     {
       "id": "evaluate-mechanism",
@@ -15,7 +79,7 @@
       "id": "run-reference-prototype",
       "mode": "local_code",
       "inputs": ["prototype fixture"],
-      "outputs": ["ALLOW|REJECT|ESCALATE or CURRENT|STALE|UNKNOWN", "reasons"],
+      "outputs": ["typed result", "reasons", "coverage boundary"],
       "instructions": "QUICKSTART.md"
     },
     {
@@ -46,18 +110,5 @@
       "outputs": ["title", "body", "note"],
       "instructions": "AGENTS.md"
     }
-  ],
-  "boundaries": {
-    "github_write_required_for_posting": true,
-    "no_private_data": true,
-    "no_credentials": true,
-    "no_arbitrary_code_execution_service": true,
-    "no_deployment_authority": true,
-    "no_real_world_actuation": true,
-    "no_claim_of_live_a2a_or_mcp_conformance": true
-  },
-  "canonical_source": "SOURCE_MANIFEST.json",
-  "developer_entry": "QUICKSTART.md",
-  "attack_menu": "ATTACK_SURFACE.md",
-  "agent_instructions": "AGENTS.md"
+  ]
 }
