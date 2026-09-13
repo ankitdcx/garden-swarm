@@ -1,6 +1,9 @@
+import json
+
+import pytest
 from fastapi.testclient import TestClient
 
-from server.app import app
+from server.app import _validated_root, app
 
 client = TestClient(app)
 
@@ -53,3 +56,15 @@ def test_discovery_protocol_status_is_bounded():
     assert data['a2a_status'] == 'NOT_YET_A2A_CONFORMANT'
     assert data['mcp_status'] == 'OFFICIAL_SDK_IMPLEMENTED_LOCAL_TEST_PENDING_PUBLIC_ENDPOINT_VERIFICATION'
     assert data['mcp'].endswith('/mcp/')
+
+
+def test_repository_root_requires_garden_release_sentinels(tmp_path):
+    with pytest.raises(RuntimeError):
+        _validated_root(tmp_path)
+
+    (tmp_path / 'VERSION').write_text('Garden v15.5\n', encoding='utf-8')
+    (tmp_path / 'SOURCE_MANIFEST.json').write_text(
+        json.dumps({'release': 'Garden-v15.5-test', 'canonical_files': []}),
+        encoding='utf-8',
+    )
+    assert _validated_root(tmp_path) == tmp_path.resolve()
