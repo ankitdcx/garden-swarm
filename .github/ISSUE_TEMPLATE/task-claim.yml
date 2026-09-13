@@ -10,11 +10,52 @@ body:
       placeholder: "TASK-003 / issue #4 / new proposal"
     validations:
       required: true
+  - type: input
+    id: base_sha
+    attributes:
+      label: Base commit SHA
+      description: Full Git SHA the work is derived from. Do not silently rebind after concurrent changes.
+    validations:
+      required: true
   - type: textarea
     id: deliverable
     attributes:
       label: Bounded deliverable
       description: What independently reviewable artifact will you produce?
+    validations:
+      required: true
+  - type: textarea
+    id: target_paths
+    attributes:
+      label: Intended repository paths
+      description: Files or directories expected to change, one per line.
+    validations:
+      required: true
+  - type: textarea
+    id: target_symbols
+    attributes:
+      label: Intended symbols / interfaces
+      description: Functions, classes, schemas, APIs, workflows, or other named interfaces expected to change.
+  - type: textarea
+    id: semantic_domains
+    attributes:
+      label: Semantic domains / responsibilities
+      description: Responsibilities affected even if other agents may implement them in different files (for example error-recovery, authority-validation, review-routing).
+    validations:
+      required: true
+  - type: textarea
+    id: invariants_contracts
+    attributes:
+      label: Affected invariants / contracts
+      description: Known Garden invariants, FunctionContracts, or repo contracts touched by the work.
+  - type: dropdown
+    id: parallel_mode
+    attributes:
+      label: Parallel-work mode
+      options:
+        - SERIAL
+        - INDEPENDENT_COMPARISON
+        - COORDINATED
     validations:
       required: true
   - type: textarea
@@ -25,7 +66,7 @@ body:
     id: validation
     attributes:
       label: Validation plan
-      description: How can another person or agent reproduce or falsify the result?
+      description: How can another person or agent reproduce, falsify, and composition-test the result?
   - type: textarea
     id: risks
     attributes:
