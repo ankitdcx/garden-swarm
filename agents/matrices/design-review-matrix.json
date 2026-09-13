@@ -1,0 +1,32 @@
+{
+  "schema": "GardenDesignReviewMatrix/v1",
+  "source_release": "Garden v15.5",
+  "source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "selection_rule": "Exactly one bounded target per hourly review slot. Reviewers receive the identical evidence pack. Targets rotate deterministically and may be extended by governed updates; no target may be admitted with fewer than three independent reviewer families.",
+  "targets": [
+    {"target_id":"GSL-KR","kind":"module","anchors":["GSL-KR","Knowledge"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"GSL-COMPARE","kind":"module","anchors":["GSL-COMPARE","DO_NOTHING"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"AAP","kind":"module","anchors":["Activation & Assurance Policy","AAP"],"files":["Garden_System_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"ACTIONGATE-AUTHORITY","kind":"module","anchors":["ActionGate","AuthorityEnvelope","MAC-001"],"files":["Garden_System_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"DESIGN-EPOCH","kind":"module","anchors":["DesignEpoch","DEPOCH-"],"files":["Garden_System_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"FUNCTION-CONTRACTS","kind":"module","anchors":["FunctionContract","FUNC-"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"RESULT-ALGEBRA","kind":"algebra","anchors":["RESULT-ALG","Result Algebra"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"PROCESS-POLICY-DECISION-ALGEBRAS","kind":"algebra-family","anchors":["Process Algebra","Policy Algebra","Decision Algebra","Conformance Algebra","Evidence Algebra","Bridge Algebra"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"HUMAN-SOVEREIGNTY","kind":"module","anchors":["Human Sovereignty","HSA","rights"],"files":["Garden_User_v15.5_FULL_2026-09-12.txt","Garden_System_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"PRIVACY-PROVENANCE","kind":"module-family","anchors":["Privacy","PROV-","Provenance"],"files":["Garden_User_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"REFERENCE-CLOSURE","kind":"module","anchors":["ReferenceClosureReceipt","REF-CLOSE-"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"DEV-AI","kind":"module","anchors":["DEV-AI-","AI-assisted development","CIConformancePipelineReceipt"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"GCL","kind":"equation-family","anchors":["GCL","causal leverage","NormalizedCausalLeverage"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"CLIC","kind":"module-equation-family","anchors":["CLIC","causal leverage"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"VSM","kind":"theory","anchors":["Valence Self Model","VSM-","z(t)"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"TFT","kind":"theory","anchors":["Transport Field Theory","TFT","TheoryEquationContract"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"CASI","kind":"architecture","anchors":["CASI","Cognitive Architecture Substrate Interchange"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"CDDT","kind":"module","anchors":["CDDT","Cross-Domain Discovery"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"PHYSICAL-COGNITIVE-LAWS","kind":"theory-family","anchors":["model reversal","novelty","graceful degradation","embodied fallback"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"GSL-PHYSICS","kind":"module","anchors":["GSL-PHYSICS","physics"],"files":["Garden_Theories_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"KNOWLEDGE-EPISTEMIC-TIMELINE","kind":"module-family","anchors":["BeliefTimeline","EpistemicTransition","HistoricalSemanticSummary"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"CONTINUOUS-FAILURE-LEARNING","kind":"module","anchors":["Continuous Failure Learning","RejectionMemory","RejectionRecord"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"FEDERATION-INTEROPERABILITY","kind":"architecture","anchors":["federation","interoperability","Adapter"],"files":["Garden_System_v15.5_FULL_2026-09-12.txt","Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Theories_v15.5_FULL_2026-09-12.txt"]},
+    {"target_id":"RESOURCE-TERMINATION-BOUNDS","kind":"cross-cutting","anchors":["resource","termination","bounds"],"files":["Garden_Technical_v15.5_FULL_2026-09-12.txt","Garden_Annexure_v15.5_FULL_2026-09-12.txt"]}
+  ]
+}
