@@ -10,6 +10,15 @@ from mcp.server import MCPServer
 from mcp.server.transport_security import TransportSecuritySettings
 
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
+DESIGN_EPOCH_REF = "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598"
+MCP_ENVELOPE_ID = "AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1"
+DECLARED_MCP_TOOLS = frozenset({
+    "current_release",
+    "list_attack_surfaces",
+    "evaluation_instructions",
+    "public_tasks",
+    "build_finding_payload",
+})
 
 mcp = MCPServer(
     "Garden Public Discovery",
@@ -40,6 +49,34 @@ def _read(rel: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _load_mcp_envelope() -> dict[str, Any]:
+    payload = json.loads(_read("gsl/AGENT_ENVELOPES.json"))
+    if payload.get("schema") != "GardenAgentEnvelopeRegistry/v1":
+        raise RuntimeError("Garden MCP AgentEnvelope registry schema is not recognized")
+    if payload.get("design_epoch_ref") != DESIGN_EPOCH_REF:
+        raise RuntimeError("Garden MCP AgentEnvelope is stale for the active DesignEpoch")
+    envelopes = payload.get("envelopes") or []
+    envelope = next((x for x in envelopes if x.get("envelope_id") == MCP_ENVELOPE_ID), None)
+    if envelope is None:
+        raise RuntimeError("Garden public MCP AgentEnvelope is missing")
+    allowlist = frozenset(str(x) for x in envelope.get("tool_allowlist") or [])
+    if allowlist != DECLARED_MCP_TOOLS:
+        raise RuntimeError(
+            f"Garden public MCP tool/envelope mismatch: tools={sorted(DECLARED_MCP_TOOLS)} "
+            f"allowlist={sorted(allowlist)}"
+        )
+    authority = envelope.get("authority") or {}
+    prohibited = ("github_write", "deployment", "canonical_promotion", "real_world_actuation")
+    if any(bool(authority.get(name)) for name in prohibited):
+        raise RuntimeError("Garden public MCP envelope grants prohibited authority")
+    if (envelope.get("delegation") or {}).get("allowed") is not False:
+        raise RuntimeError("Garden public MCP envelope must forbid delegation")
+    return envelope
+
+
+MCP_AGENT_ENVELOPE = _load_mcp_envelope()
+
+
 def _public_host_and_port() -> tuple[str | None, int | None]:
     explicit = os.getenv("PUBLIC_BASE_URL", "").strip()
     if explicit:
@@ -68,11 +105,7 @@ def transport_security() -> TransportSecuritySettings:
 
 
 def streamable_http_app():
-    """Return the official MCP v2 Streamable HTTP ASGI app.
-
-    Mounted by server.app at /mcp. The host application's lifespan owns the
-    MCP session manager, as required by the official SDK for mounted ASGI apps.
-    """
+    """Return the official MCP v2 Streamable HTTP ASGI app under the declared read-only envelope."""
     return mcp.streamable_http_app(
         streamable_http_path="/",
         json_response=True,
@@ -88,6 +121,8 @@ def current_release() -> dict[str, Any]:
         "project": "Garden",
         "release": manifest.get("release", "Garden-v15.5-2026-09-12"),
         "gsl": manifest.get("gsl", "v45.1"),
+        "design_epoch_ref": DESIGN_EPOCH_REF,
+        "agent_envelope_ref": MCP_ENVELOPE_ID,
         "core_principle": "Capability != Authority != Sovereignty != Moral Permission",
         "status": manifest.get("status", {}),
         "repository": "https://github.com/ankitdcx/garden-swarm",
