@@ -1,0 +1,24 @@
+{
+  "schema": "GardenDevAIRepositoryProfile/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "development_modes": ["HUMAN_ONLY","AI_ASSISTED","AUTONOMOUS_AGENT","UNKNOWN"],
+  "unknown_rule": "UNKNOWN never inherits HUMAN_ONLY or independently-reviewed guarantees.",
+  "exact_review_binding": {
+    "schema": "ExactReviewBinding/v1",
+    "required": ["review_id","reviewer_ref","reviewer_kind","role","target_content_root","result","evidence_ref"],
+    "result_domain": ["PASS_SCOPED","BLOCKER","INCONCLUSIVE"]
+  },
+  "ai_independence_assessment": {
+    "schema": "AIIndependenceAssessment/v1",
+    "required": ["assessment_id","review_ids","independent_clusters","correlation_notes","result"],
+    "result_domain": ["PASS","INSUFFICIENT_INDEPENDENCE","NOT_REQUIRED_HUMAN_APPROVAL","UNKNOWN"]
+  },
+  "machine_projection_receipt": {
+    "schema": "MachineProjectionReceipt/v1",
+    "required": ["projection_id","target_content_root","observed_changed_paths","function_contract_resolution","source_obligation_resolution","result"],
+    "result_domain": ["PASS","FAIL","STALE","MALFORMED"]
+  },
+  "constitutional_admission": "Constitutional changes require an applicable trusted human approval from the protected base or sufficiently independent exact review as allowed by the protected base policy; request-supplied booleans never satisfy this requirement.",
+  "ordinary_ai_assisted_admission": "AI-assisted material changes require at least one ExactReviewBinding plus executable tests/evidence; HIGH/CRITICAL or semantic changes require additional independence unless trusted human approval explicitly covers the change.",
+  "provenance": ["DEV-AI-005","DEV-AI-008","DEV-AI-011","DEV-AI-016","DEV-AI-024"]
+}

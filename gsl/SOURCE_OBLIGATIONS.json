@@ -1,0 +1,18 @@
+{
+  "schema": "GardenRepositorySourceObligationRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "coverage_boundary": "Repository obligations are qualified references into the immutable v15.5 source. This registry is a traceability index, not a replacement for canonical source text.",
+  "obligations": [
+    {"obligation_id":"OBL-PUBLIC-GSL-TYPING","source_refs":["FUNC-001..010","GSL-SELF-006"],"applies_to":["prototype/**","server/**","swarm/**","tools/**","scripts/**"]},
+    {"obligation_id":"OBL-PUBLIC-DESIGN-EPOCH","source_refs":["DEPOCH-001..010","DCC-001..002"],"applies_to":["**"]},
+    {"obligation_id":"OBL-PUBLIC-AUTHORITY","source_refs":["AGT-008","AGT-011","AGT-012","MAC-001","AGT-013","H-04"],"applies_to":["prototype/authority.py","prototype/actiongate.py","server/**","swarm/**","gsl/AUTHORITY_REGISTRY.json","gsl/AGENT_ENVELOPES.json"]},
+    {"obligation_id":"OBL-PUBLIC-RESULT-ALGEBRA","source_refs":["RESULT-ALG-001..008","FUNC-004","FUNC-006"],"applies_to":["prototype/**","server/**","swarm/**","tools/**","scripts/**"]},
+    {"obligation_id":"OBL-PUBLIC-PARAMETERS","source_refs":["PARAM-001..010"],"applies_to":["gsl/PARAMETERS.json","tools/**","swarm/**",".github/workflows/**"]},
+    {"obligation_id":"OBL-PUBLIC-DEV-AI","source_refs":["DEV-AI-005","DEV-AI-008","DEV-AI-011","DEV-AI-016","DEV-AI-024"],"applies_to":[".github/workflows/**","tools/**","gsl/changes/**"]},
+    {"obligation_id":"OBL-PUBLIC-REFERENCE-CLOSURE","source_refs":["REF-CLOSE-011","REF-CLOSE-012","REF-CLOSE-013"],"applies_to":["scripts/build_reference_closure.py","gsl/receipts/**","README.md","AGENTS.md","SKILLS.json"]},
+    {"obligation_id":"OBL-PUBLIC-PROVENANCE","source_refs":["PROV-001..006"],"applies_to":["gsl/PROVENANCE.json","gsl/changes/**","gsl/receipts/**"]},
+    {"obligation_id":"OBL-PUBLIC-HUMAN-SOVEREIGNTY","source_refs":["Human Sovereignty root","HSA","Capability != Authority != Sovereignty != Moral Permission"],"applies_to":["gsl/AUTHORITY_REGISTRY.json","gsl/CHANGE_POLICY.json","gsl/HUMAN_APPROVALS.json","canonical promotion"]},
+    {"obligation_id":"OBL-PUBLIC-EVOLUTION-GATE","source_refs":["Engine.Evolve","ActionGate","DesignEpoch","AAP","Policy/Compliance"],"applies_to":["gsl/changes/**","scripts/gate_repo_change.py",".github/workflows/integrity.yml"]},
+    {"obligation_id":"OBL-PUBLIC-BOOTSTRAP-TRUST","source_refs":["SAP-008","P24","DCC-018","GSL-SELF-009","TrustRootCeremonyReceipt"],"applies_to":["gsl/BOOTSTRAP_TRUST.json","gsl/DESIGN_EPOCH.json"]}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "GardenHumanApprovalRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "boundary": "Approvals are narrow scopes, not reusable sovereignty tokens. This registry cannot grant canonical-promotion authority to an agent.",
+  "approvals": [
+    {
+      "approval_id": "HUMAN-APPROVAL-GSL-FULL-COMPLIANCE-2026-09-13",
+      "principal_ref": "human:garden-originator",
+      "scope": "Complete the pending Garden/GSL repository-compliance work for ankitdcx/garden-swarm and ankitdcx/garden-main, including constitutional change-gate/bootstrap infrastructure, while preserving Garden v15.5 immutability and human-only canonical promotion.",
+      "base_commit": "d42f31b426a75fa90ddce561ae4a1c44418efb11",
+      "allowed_repository": "ankitdcx/garden-swarm",
+      "one_time_bootstrap": true,
+      "canonical_promotion_authorized": false,
+      "evidence_ref": "conversation:2026-09-13:user-explicit-instruction:merge-audit-and-complete-pending-items",
+      "status": "APPROVED_FOR_DECLARED_SCOPE",
+      "invalidators": ["scope expansion","canonical promotion request","DesignEpoch source-root change","human revocation"]
+    }
+  ]
+}

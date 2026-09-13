@@ -1,0 +1,22 @@
+{
+  "schema": "GardenFunctionContractRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "registry_shard": "RESULT_ALGEBRA_MIGRATION",
+  "contracts": [
+    {
+      "contract_id": "FC-PROTOTYPE-TOKENS-VALIDATE-v1",
+      "owner_qualified_name": "prototype.tokens.validate_receipt",
+      "implementation_source": "prototype/tokens.py",
+      "inputs": ["Ed25519PublicKey", "signed payload", "validation context"],
+      "outputs": ["ReceiptValidationResult"],
+      "closed_effect_vector": [],
+      "authority_requirement": "Validation cannot create or enlarge authority; issuer/key, subject, capability and parent-chain bindings remain explicit caller obligations.",
+      "failure_mode_set": ["INVALID_SIGNATURE_OR_PAYLOAD", "EXPIRED", "ISSUER_MISMATCH", "SUBJECT_MISMATCH", "CAPABILITY_NOT_DELEGATED", "PARENT_RECEIPT_REQUIRED", "PARENT_DIGEST_MISMATCH", "ISSUER_NOT_PARENT_SUBJECT", "CAPABILITY_AMPLIFICATION", "EXPIRY_AMPLIFICATION", "UNKNOWN"],
+      "result_algebra": "ReceiptValidationStatus[VALID|INVALID_SIGNATURE_OR_PAYLOAD|EXPIRED|ISSUER_MISMATCH|SUBJECT_MISMATCH|CAPABILITY_NOT_DELEGATED|PARENT_RECEIPT_REQUIRED|PARENT_DIGEST_MISMATCH|ISSUER_NOT_PARENT_SUBJECT|CAPABILITY_AMPLIFICATION|EXPIRY_AMPLIFICATION|UNKNOWN]",
+      "bool_restriction": "No Bool collapse on the normative typed API; ReceiptValidationResult.valid is a derived convenience predicate only.",
+      "dependency_and_invalidator_bindings": ["Ed25519", "parent receipt binding", "expiry", "expected issuer/subject/capability", "DesignEpoch-bound authority consumers"],
+      "resource_and_termination_bounds": "Finite decode, signature and set checks.",
+      "provenance": ["RESULT-ALG-001..008", "FUNC-004", "FUNC-006", "delegation containment"]
+    }
+  ]
+}

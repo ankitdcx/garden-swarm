@@ -1,0 +1,30 @@
+{
+  "schema": "GardenRepositoryReferencePolicy/v2",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "source_obligation_refs": ["OBL-PUBLIC-REFERENCE-CLOSURE", "REF-CLOSE-011", "REF-CLOSE-012", "REF-CLOSE-013"],
+  "allowed_classes": ["GENERATED_HTTP_RESOURCE", "GENERATED_HTTP_ROUTE", "RUNTIME_GENERATED_RECEIPT"],
+  "generated_or_runtime_references": [
+    {
+      "reference": "garden-discovery.json",
+      "class": "GENERATED_HTTP_RESOURCE",
+      "owner": "server/app.py",
+      "owner_evidence": "garden-discovery.json",
+      "require_tracked_file": false
+    },
+    {
+      "reference": ".well-known/garden-discovery.json",
+      "class": "GENERATED_HTTP_ROUTE",
+      "owner": "server/app.py",
+      "owner_evidence": "/.well-known/garden-discovery.json",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "swarm/runs/latest-plan.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "swarm/orchestrator.py",
+      "owner_evidence": "latest-plan.json",
+      "require_tracked_file": false
+    }
+  ],
+  "rule": "A generated/runtime reference is exempt from tracked-file closure only when its class is allowlisted, its owner is tracked, and owner_evidence occurs in the owner source. A policy row cannot exempt itself merely by naming a class. Unknown or unevidenced untracked references fail closure."
+}
