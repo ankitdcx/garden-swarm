@@ -47,6 +47,7 @@ def main() -> int:
         run_stage("REPO_SURFACE_MANIFEST", [sys.executable, "scripts/build_repo_manifest.py", "--check"]),
         run_stage("REPO_PROFILE_AUDIT", [sys.executable, "scripts/audit_repo_gsl.py", "--strict-frontier", "--output", "/tmp/garden-repo-gsl-audit.json"], "/tmp/garden-repo-gsl-audit.json"),
         run_stage("GSL_APPLICATION", [sys.executable, "scripts/verify_gsl_application.py", "--output", "/tmp/garden-gsl-application-receipt.json"], "/tmp/garden-gsl-application-receipt.json"),
+        run_stage("GENERATED_FUNCTION_CONTRACT_ALLOWLIST", [sys.executable, "scripts/verify_generated_contract_allowlist.py"]),
         run_stage("REFERENCE_CLOSURE", [sys.executable, "scripts/build_reference_closure.py", "--output", "/tmp/reference-closure-receipt.json"], "/tmp/reference-closure-receipt.json"),
         run_stage("TEST_MATRIX", [sys.executable, "scripts/run_test_matrix.py", "--output", "/tmp/test-matrix-receipt.json"], "/tmp/test-matrix-receipt.json"),
         run_stage("DURABLE_RECEIPTS", [sys.executable, "scripts/build_durable_gsl_receipts.py", "--check"]),
