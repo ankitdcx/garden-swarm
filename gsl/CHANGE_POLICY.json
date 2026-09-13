@@ -1,15 +1,18 @@
 {
   "schema": "GardenRepositoryChangePolicy/v1",
-  "status": "BOOTSTRAP_CANDIDATE_ENABLE_AFTER_BASE_MERGE",
+  "status": "ACTIVE_AFTER_BOOTSTRAP_MERGE",
   "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
   "ordinary_change_requirements": [
-    "observed changed paths exactly bound to a RepoChangeEnvelope",
-    "repo profile resolves each changed artifact",
+    "observed changed paths exactly bound to one RepoChangeEnvelope",
+    "repo profile resolves each changed artifact from the protected base",
     "required Garden modules are not silently omitted",
     "material code/workflow/config changes carry source obligation references",
     "authority_ref resolves from protected base authority registry",
+    "Compare/DO_NOTHING and typed Reason are present for material changes",
     "tests/evidence are bound where applicable",
-    "CIConformancePipelineReceipt overall PASS"
+    "AI-assisted work carries ExactReviewBinding and AIIndependenceAssessment",
+    "CIConformancePipelineReceipt overall PASS",
+    "RepoChangeGateReceipt decision ALLOW"
   ],
   "constitutional_paths": [
     "gsl/AUTHORITY_REGISTRY.json",
@@ -17,10 +20,16 @@
     "gsl/DESIGN_EPOCH.json",
     "gsl/AGENT_ENVELOPES.json",
     "gsl/FUNCTION_CONTRACT_GENERATION.json",
+    "gsl/REPO_PROFILE.json",
+    "gsl/SOURCE_OBLIGATIONS.json",
+    "gsl/HUMAN_APPROVALS.json",
+    "gsl/DEV_AI.json",
+    "gsl/BOOTSTRAP_TRUST.json",
     ".github/workflows/integrity.yml"
   ],
-  "constitutional_rule": "A change touching constitutional_paths cannot be authorized by request-supplied booleans or by the changed registry/policy itself. It requires an externally verifiable human approval or a trusted base-bound approval receipt. Until that verifier exists, such a change must remain candidate/ESCALATE.",
+  "constitutional_rule": "A change touching constitutional_paths cannot be authorized by request-supplied booleans or by the changed registry/policy itself. The change gate derives the tier from the protected base and requires an applicable protected-base human approval or sufficient trusted independent review. The one-time d42f31b bootstrap is limited to HUMAN-APPROVAL-GSL-FULL-COMPLIANCE-2026-09-13.",
   "canonical_rule": "Published Garden v15.5 source files are immutable in place. Canonical successor promotion is outside repository-agent authority and remains human-controlled.",
   "documentation_rule": "Purely explanatory documentation may be source-obligation-exempt only when it does not alter normative semantics, authority, policy, executable behavior or release claims; the envelope must explicitly classify that exemption.",
+  "protected_base_rule": "Authority, policy, source-obligation and approval claims used to admit a change resolve from the PR base commit. Head changes cannot enlarge their own admission authority.",
   "fail_closed_states": ["FAIL", "UNKNOWN", "INCONCLUSIVE", "TIMEOUT", "RESOURCE_UNKNOWN", "STALE", "MALFORMED", "ESCALATE"]
 }
