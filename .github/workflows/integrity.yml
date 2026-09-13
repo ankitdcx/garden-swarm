@@ -26,8 +26,16 @@ jobs:
       - name: Run Garden/GSL application conformance pipeline
         run: python scripts/verify_gsl_application.py --output /tmp/garden-gsl-conformance-receipt.json
       - name: Build repository reference-closure receipt
-        run: python scripts/build_reference_closure.py --output /tmp/reference-closure-receipt.json
+        run: |
+          set +e
+          python scripts/build_reference_closure.py --output /tmp/reference-closure-receipt.json
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            cat /tmp/reference-closure-receipt.json
+          fi
+          exit "$status"
       - name: Upload immutable conformance receipts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: garden-public-gsl-conformance-${{ github.run_id }}
@@ -35,5 +43,5 @@ jobs:
             /tmp/garden-repo-gsl-audit.json
             /tmp/garden-gsl-conformance-receipt.json
             /tmp/reference-closure-receipt.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
