@@ -1,0 +1,34 @@
+{
+  "schema": "GardenGSLNamespace/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "canonical_groups": {
+    "epoch": ["gsl/epoch/DESIGN_EPOCH.json", "gsl/epoch/BOOTSTRAP_TRUST.json"],
+    "contracts": ["gsl/contracts/FUNCTION_CONTRACTS.json", "gsl/contracts/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json", "gsl/contracts/FUNCTION_CONTRACT_GENERATION.json", "gsl/contracts/PARAMETERS.json"],
+    "envelopes": ["gsl/envelopes/AGENT_ENVELOPES.json", "gsl/envelopes/AUTHORITY_REGISTRY.json"],
+    "policy": ["gsl/policy/CHANGE_POLICY.json", "gsl/policy/DEV_AI.json", "gsl/policy/HUMAN_APPROVALS.json", "gsl/policy/REFERENCE_POLICY.json"],
+    "provenance": ["gsl/provenance/PROVENANCE.json"],
+    "profile": ["gsl/profile/REPO_PROFILE.json", "gsl/profile/SOURCE_OBLIGATIONS.json", "gsl/profile/CONFORMANCE_VECTORS.json"],
+    "receipts": ["gsl/receipts/"],
+    "changes": ["gsl/changes/"],
+    "audits": ["gsl/audits/"]
+  },
+  "temporary_compatibility_mirrors": {
+    "gsl/DESIGN_EPOCH.json": "gsl/epoch/DESIGN_EPOCH.json",
+    "gsl/BOOTSTRAP_TRUST.json": "gsl/epoch/BOOTSTRAP_TRUST.json",
+    "gsl/FUNCTION_CONTRACTS.json": "gsl/contracts/FUNCTION_CONTRACTS.json",
+    "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json": "gsl/contracts/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json",
+    "gsl/FUNCTION_CONTRACT_GENERATION.json": "gsl/contracts/FUNCTION_CONTRACT_GENERATION.json",
+    "gsl/PARAMETERS.json": "gsl/contracts/PARAMETERS.json",
+    "gsl/AGENT_ENVELOPES.json": "gsl/envelopes/AGENT_ENVELOPES.json",
+    "gsl/AUTHORITY_REGISTRY.json": "gsl/envelopes/AUTHORITY_REGISTRY.json",
+    "gsl/CHANGE_POLICY.json": "gsl/policy/CHANGE_POLICY.json",
+    "gsl/DEV_AI.json": "gsl/policy/DEV_AI.json",
+    "gsl/HUMAN_APPROVALS.json": "gsl/policy/HUMAN_APPROVALS.json",
+    "gsl/REFERENCE_POLICY.json": "gsl/policy/REFERENCE_POLICY.json",
+    "gsl/PROVENANCE.json": "gsl/provenance/PROVENANCE.json",
+    "gsl/REPO_PROFILE.json": "gsl/profile/REPO_PROFILE.json",
+    "gsl/SOURCE_OBLIGATIONS.json": "gsl/profile/SOURCE_OBLIGATIONS.json",
+    "gsl/CONFORMANCE_VECTORS.json": "gsl/profile/CONFORMANCE_VECTORS.json"
+  },
+  "mirror_rule": "Compatibility mirrors are byte-identical read aliases only. Canonical authority lives at the grouped path. CI must reject any mirror divergence, and mirrors are removed after all consumers migrate in this PR."
+}
