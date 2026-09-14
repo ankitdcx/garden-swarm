@@ -30,6 +30,9 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertLessEqual(self.policy["routine_hourly_cost_ceiling_usd"], 0.05)
         self.assertLessEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.025)
 
+    def test_model_catalog_reference_is_explicit(self):
+        self.assertEqual(self.policy["catalog_reference_date"], "2026-09-14")
+
     def test_routine_family_set_is_exactly_deepseek_and_qwen(self):
         reviewers = self.policy["routine_reviewers"]
         self.assertEqual([row["family"] for row in reviewers], ["deepseek", "qwen"])
