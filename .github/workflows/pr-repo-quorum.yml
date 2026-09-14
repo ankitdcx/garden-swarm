@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify PR-quorum parser boundaries offline
-        run: python -m pytest -q tests/test_pr_repo_quorum.py
+        run: python -m unittest tests.test_pr_repo_quorum -v
       - name: Run blind plus peer cross-examination on exact PR diff
         if: github.event_name == 'pull_request'
         run: python -m tools.pr_repo_quorum
