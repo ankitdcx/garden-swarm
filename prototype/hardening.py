@@ -70,15 +70,8 @@ class HardeningResult:
 EventWriter = Callable[[ConstitutionalEvent], bool]
 
 
-def effective_event_kind(event: ConstitutionalEvent) -> ConstitutionalEventKind:
-    """Return a conservative default kind without hiding an explicit producer value.
-
-    PASS is an ordinary CHECK. VETO defaults to VIOLATION for this reference fixture.
-    UNKNOWN/INCONCLUSIVE remain CHECK unless a producer explicitly classifies a
-    provisional event otherwise. Stronger mappings must be declared by the owner
-    contract rather than inferred here.
-    """
-
+def _effective_event_kind(event: ConstitutionalEvent) -> ConstitutionalEventKind:
+    """Return a conservative default kind without hiding an explicit producer value."""
     if event.kind is not None:
         return event.kind
     if event.check_result is ConstitutionalCheck.VETO:
@@ -86,21 +79,12 @@ def effective_event_kind(event: ConstitutionalEvent) -> ConstitutionalEventKind:
     return ConstitutionalEventKind.CHECK
 
 
-def validate_constitutional_event(event: ConstitutionalEvent) -> tuple[str, ...]:
-    """Validate the cross-field coherence already implied by v15.5 conformance tests.
-
-    The canonical test surface says PASS emits kind=CHECK and a detected violation
-    emits kind=VIOLATION. We reject the directly contradictory VIOLATION+PASS state,
-    but do not invent stronger equivalences for VETO, INCONCLUSIVE or UNKNOWN.
-    """
-
-    errors: list[str] = []
-    kind = effective_event_kind(event)
+def _validate_constitutional_event(event: ConstitutionalEvent) -> tuple[str, ...]:
+    """Validate only cross-field coherence already implied by v15.5 conformance tests."""
+    kind = _effective_event_kind(event)
     if event.check_result is ConstitutionalCheck.PASS and kind is not ConstitutionalEventKind.CHECK:
-        errors.append("PASS_REQUIRES_CHECK_KIND")
-    if kind is ConstitutionalEventKind.VIOLATION and event.check_result is ConstitutionalCheck.PASS:
-        errors.append("VIOLATION_CANNOT_HAVE_PASS_RESULT")
-    return tuple(errors)
+        return ("PASS_REQUIRES_CHECK_KIND",)
+    return ()
 
 
 def enforce_constitutional_event(event: ConstitutionalEvent, writer: EventWriter) -> HardeningResult:
@@ -110,8 +94,7 @@ def enforce_constitutional_event(event: ConstitutionalEvent, writer: EventWriter
     INCONCLUSIVE never authorizes consequential continuation. PASS still requires a
     durable event record. Contradictory typed states fail closed for review.
     """
-
-    coherence_errors = validate_constitutional_event(event)
+    coherence_errors = _validate_constitutional_event(event)
     if coherence_errors:
         return HardeningResult(
             HardeningDecision.ESCALATE,
@@ -146,20 +129,18 @@ def enforce_constitutional_event(event: ConstitutionalEvent, writer: EventWriter
     return HardeningResult(HardeningDecision.ALLOW, ("CONSTITUTIONAL_CHECK_PASS_RECORDED",))
 
 
-def validate_containment_admission(
+def _validate_containment_admission(
     event: ConstitutionalEvent,
     admission: VerifiedContainmentAdmission | None,
     *,
     current_design_epoch: str,
 ) -> HardeningResult:
-    """Require a separately verified admission before a containment effect executes.
+    """Validate binding of a separately verified containment admission.
 
-    The ConstitutionalEvent, its VETO, and any violation classification are never
-    sufficient containment authority. This helper validates only the binding of an
-    already-verified external admission to the immutable event and current epoch;
-    it does not create or independently verify authority.
+    This private fixture helper does not mint or verify authority. The caller must
+    obtain `VerifiedContainmentAdmission` from the separately governed authority/
+    execution-admission path. The event itself is never sufficient authority.
     """
-
     reasons: list[str] = []
     if admission is None:
         reasons.append("SEPARATE_CONTAINMENT_ADMISSION_REQUIRED")
