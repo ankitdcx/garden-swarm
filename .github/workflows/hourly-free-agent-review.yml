@@ -1,4 +1,4 @@
-name: Garden hourly free multi-model review
+name: Garden hourly multi-model review
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: garden-hourly-free-agent-review
+  group: garden-hourly-multi-model-review
   cancel-in-progress: false
 
 jobs:
@@ -26,38 +26,42 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Verify deterministic target rotation offline
-        run: python -m unittest tests.test_design_target_rotation -v
+      - name: Verify deterministic target rotation and paid routing offline
+        run: |
+          python -m unittest tests.test_design_target_rotation -v
+          python -m unittest tests.test_paid_review_routing -v
 
       - name: Rotate to one bounded Design Review Matrix target this hour
         run: python -m tools.rotate_design_review_target
 
-      - name: Select one rotating OpenRouter free reviewer family
-        run: python -m tools.select_matrix_reviewers --count 1
+      - name: Select bounded paid DeepSeek and Qwen reviewer families
+        run: python -m tools.select_paid_matrix_reviewers
 
-      - name: Run one bounded blind OpenRouter review on the active target
-        run: python -m tools.run_matrix_review_execution_budget
+      - name: Run blind paid OpenRouter reviews under hard budget controls
+        run: python -m tools.run_paid_matrix_review
 
-      - name: Run target-matched Gemini free-tier reviewer when quota schedule allows
-        run: python tools/run_gemini_free_review.py
+      - name: Run target-matched Gemini independent reviewer
+        run: python -m tools.run_gemini_free_review
 
-      - name: Enforce target binding, free-route, quota, and no-auto-admission boundaries
+      - name: Enforce target binding, privacy, budget, and no-auto-admission boundaries
         run: |
           python - <<'PY'
           import json
 
           matrix = json.load(open('agents/design-review-matrix.json', encoding='utf-8'))
           target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
-          selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
-          bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
+          selection = json.load(open('agents/runtime/paid-selection.json', encoding='utf-8'))
+          bundle = json.load(open('agents/outbox/hourly/paid-review-bundle.json', encoding='utf-8'))
           gemini = json.load(open('agents/outbox/hourly/gemini-review.json', encoding='utf-8'))
 
           selected = selection['selected']
           minimum = int(matrix['minimum_independent_reviewer_families'])
           assert minimum >= 3
-          assert len(selected) == 1
-          assert len({row['family'] for row in selected}) == 1
-          assert all(row['model'].endswith(':free') for row in selected)
+          assert [row['family'] for row in selected] == ['deepseek', 'qwen']
+          assert len({row['family'] for row in selected}) == 2
+          assert all(not row['model'].endswith(':free') for row in selected)
+          assert selection['provider_policy']['data_collection'] == 'deny'
+          assert selection['semantic_delta_admitted'] is False
 
           assert target_selection['schema'] == 'GardenDesignTargetSelectionReceipt/v1'
           assert target_selection['selection_mode'] == 'DETERMINISTIC_HOURLY_ROUND_ROBIN'
@@ -68,16 +72,19 @@ jobs:
           assert target_selection['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
           assert target_selection['semantic_delta_admitted'] is False
 
-          assert bundle['schema'] == 'GardenDesignReviewBundle/v1'
-          assert bundle['target']['target_id'] == target_selection['target_id']
-          assert bundle['minimum_independent_reviewer_families'] == minimum
+          assert bundle['schema'] == 'GardenPaidDesignReviewBundle/v1'
+          assert bundle['target_id'] == target_selection['target_id']
+          assert bundle['selected_families'] == ['deepseek', 'qwen']
+          assert bundle['actual_cost_usd'] <= bundle['routine_hourly_cost_ceiling_usd']
           assert bundle['semantic_delta_admitted'] is False
+          assert bundle['requires_separate_gemini_lane'] is True
+          assert bundle['requires_separate_chatgpt_lane'] is True
+          assert bundle['requires_cross_examination'] is True
           assert bundle['status'] in {
-              'INSUFFICIENT_INDEPENDENT_REVIEW',
-              'COST_VERIFICATION_FAILED',
+              'PAID_BLIND_REVIEW_COMPLETE_PROPOSALS_ONLY',
+              'PARTIAL_PAID_REVIEW_PROPOSALS_ONLY',
+              'HOURLY_COST_CEILING_EXCEEDED',
           }
-          assert bundle['independent_reviewer_family_count'] <= 1
-          assert bundle['final_disposition_family_count'] <= bundle['independent_reviewer_family_count']
 
           if gemini.get('schema') == 'GardenGeminiMatrixReviewReceipt/v1':
               assert gemini['target_id'] == target_selection['target_id']
@@ -88,17 +95,12 @@ jobs:
               assert gemini.get('schema') in {'GardenGeminiAvailabilityReceipt/v1', 'GardenGeminiAvailabilityReceipt/v2'}
               assert gemini.get('admission_status') == 'NO_MODEL_FINDING'
 
-          called = [row for row in bundle['provider_attempts'] if row.get('status') == 'CALLED']
-          assert len(called) <= 1
-          assert all((row.get('usage') or {}).get('cost') in (None, 0, 0.0) for row in called)
-          assert all(row.get('cost') in (0, 0.0) for row in called)
-
           print(json.dumps({
               'target_id': target_selection['target_id'],
-              'selected_openrouter_family': selected[0]['family'],
-              'openrouter_calls': len(called),
-              'openrouter_review_status': bundle['status'],
-              'openrouter_independent_families': bundle['independent_reviewer_family_count'],
+              'paid_families_selected': [row['family'] for row in selected],
+              'paid_families_completed': bundle['completed_families'],
+              'openrouter_actual_cost_usd': bundle['actual_cost_usd'],
+              'openrouter_hourly_cost_ceiling_usd': bundle['routine_hourly_cost_ceiling_usd'],
               'gemini_status': gemini.get('status') or (gemini.get('independent_finding') or {}).get('disposition'),
               'semantic_admission_minimum_families': minimum,
               'semantic_delta_admitted': False,
@@ -111,11 +113,11 @@ jobs:
           import json, os
           from datetime import datetime, timezone
 
-          bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
+          bundle = json.load(open('agents/outbox/hourly/paid-review-bundle.json', encoding='utf-8'))
           target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
           gemini = json.load(open('agents/outbox/hourly/gemini-review.json', encoding='utf-8'))
           receipt = {
-              'schema': 'GardenHourlyDesignReviewReceipt/v3',
+              'schema': 'GardenHourlyDesignReviewReceipt/v4',
               'created_at': datetime.now(timezone.utc).isoformat(),
               'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
               'commit': os.environ.get('GITHUB_SHA'),
@@ -124,15 +126,14 @@ jobs:
               'target_index': target_selection['target_index'],
               'target_count': target_selection['target_count'],
               'selection_receipt': 'agents/runtime/design-target-selection.json',
-              'openrouter_execution_budget_calls': 1,
-              'semantic_admission_minimum_independent_families': 3,
-              'openrouter_bundle_sha256': bundle['bundle_sha256'],
-              'openrouter_review_status': bundle['status'],
-              'openrouter_review': bundle,
+              'paid_selection_receipt': 'agents/runtime/paid-selection.json',
+              'openrouter_paid_review': bundle,
+              'openrouter_actual_cost_usd': bundle['actual_cost_usd'],
               'gemini_review': gemini,
               'chatgpt_review_expected_separately': True,
+              'cross_examination_expected_separately': True,
               'semantic_delta_admitted': False,
-              'admission_status': 'PROPOSALS_ONLY_NEEDS_INDEPENDENT_GEMINI_CHATGPT_AND_GSL_INTEGRATOR',
+              'admission_status': 'PROPOSALS_ONLY_NEEDS_CHATGPT_CROSS_EXAM_GSL_AND_CHALLENGER',
           }
           with open('agents/outbox/hourly/combined-receipt.json', 'w', encoding='utf-8') as f:
               json.dump(receipt, f, indent=2, ensure_ascii=False)
@@ -145,11 +146,12 @@ jobs:
           name: garden-hourly-design-review-${{ github.run_id }}
           path: |
             agents/design-review-matrix.json
+            agents/openrouter-paid-review-policy.json
             agents/runtime/design-target-selection.json
-            agents/runtime/free-selection.json
-            agents/outbox/hourly/design-review-bundle.json
+            agents/runtime/paid-selection.json
+            agents/outbox/hourly/paid-review-bundle.json
             agents/outbox/hourly/combined-receipt.json
             agents/outbox/hourly/gemini-review.json
-            agents/outbox/hourly/matrix-review/*.json
+            agents/outbox/hourly/paid-review/*.json
           if-no-files-found: error
           retention-days: 30
