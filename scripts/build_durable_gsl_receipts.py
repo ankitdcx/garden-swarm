@@ -21,26 +21,6 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def canonical_digest(payload: dict) -> str:
-    return sha256_bytes(json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8"))
-
-
-def stable_reference_detail_digest(payload: dict) -> str:
-    """Digest reference evidence without self-hashing generated durable receipts."""
-    stable = dict(payload)
-    scanned_sources = stable.get("scanned_sources")
-    if isinstance(scanned_sources, list):
-        stable["scanned_sources"] = [
-            row
-            for row in scanned_sources
-            if not (
-                isinstance(row, dict)
-                and str(row.get("path", "")).startswith(EXCLUDED_PREFIX)
-            )
-        ]
-    return canonical_digest(stable)
-
-
 def repo_content_root() -> tuple[str, list[dict[str, str]]]:
     tracked = run("git", "ls-files").stdout.splitlines()
     rows: list[dict[str, str]] = []
@@ -78,7 +58,7 @@ def generate_payloads() -> tuple[dict, dict]:
         "application_conformance_overall": app_payload.get("overall"),
         "repo_frontier_artifact_count": audit_payload.get("frontier_artifact_count"),
         "repo_profile_error_count": audit_payload.get("profile_error_count", 0),
-        "detail_digest_sha256": canonical_digest(app_payload),
+        "detail_digest_sha256": sha256_bytes(json.dumps(app_payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")),
         "reproduction": [
             "python scripts/verify_gsl_application.py --output /tmp/garden-gsl-conformance-receipt.json",
             "python scripts/audit_repo_gsl.py --strict-frontier --output /tmp/garden-repo-gsl-audit.json",
@@ -96,7 +76,7 @@ def generate_payloads() -> tuple[dict, dict]:
         "coverage": ref_payload.get("coverage"),
         "reference_count": ref_payload.get("reference_count"),
         "unresolved_count": ref_payload.get("unresolved_count"),
-        "detail_digest_sha256": stable_reference_detail_digest(ref_payload),
+        "detail_digest_sha256": sha256_bytes(json.dumps(ref_payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")),
         "reproduction": [
             "python scripts/build_reference_closure.py --output /tmp/reference-closure-receipt.json",
             "python scripts/build_durable_gsl_receipts.py --check"
