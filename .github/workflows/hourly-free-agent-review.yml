@@ -36,7 +36,7 @@ jobs:
         run: python -m tools.select_matrix_reviewers --count 1
 
       - name: Run one bounded blind OpenRouter review on the active target
-        run: python -m tools.matrix_design_review
+        run: python -m tools.run_matrix_review_execution_budget
 
       - name: Run target-matched Gemini free-tier reviewer when quota schedule allows
         run: python tools/run_gemini_free_review.py
