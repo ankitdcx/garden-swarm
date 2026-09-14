@@ -24,18 +24,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Verify deterministic target rotation offline
+        run: python -m unittest tests.test_design_target_rotation -v
+
+      - name: Rotate to one bounded Design Review Matrix target this hour
+        run: python -m tools.rotate_design_review_target
+
       - name: Prefer four independent free reviewer families
         run: python -m tools.select_matrix_reviewers --count 4
 
-      - name: Review exactly one persistent Design Review Matrix target
+      - name: Review exactly one rotated Design Review Matrix target
         run: python -m tools.matrix_design_review
 
-      - name: Enforce independent-review, zero-cost, and no-auto-admission boundaries
+      - name: Enforce target binding, independent-review, zero-cost, and no-auto-admission boundaries
         run: |
           python - <<'PY'
           import json
 
           matrix = json.load(open('agents/design-review-matrix.json', encoding='utf-8'))
+          target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
           selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
           bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
 
@@ -48,8 +55,17 @@ jobs:
           assert len({row['family'] for row in selected}) == len(selected)
           assert all(str(row['model']).endswith(':free') for row in selected)
 
+          assert target_selection['schema'] == 'GardenDesignTargetSelectionReceipt/v1'
+          assert target_selection['selection_mode'] == 'DETERMINISTIC_HOURLY_ROUND_ROBIN'
+          assert target_selection['target_id'] == matrix['active_target_id']
+          assert target_selection['target_count'] == len(matrix['targets'])
+          assert target_selection['target_index'] == target_selection['hour_slot'] % target_selection['target_count']
+          assert target_selection['design_epoch'] == matrix['design_epoch']
+          assert target_selection['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
+          assert target_selection['semantic_delta_admitted'] is False
+
           assert bundle['schema'] == 'GardenDesignReviewBundle/v1'
-          assert bundle['target']['target_id'] == matrix['active_target_id']
+          assert bundle['target']['target_id'] == target_selection['target_id']
           assert bundle['semantic_delta_admitted'] is False
           assert bundle['design_epoch'] == matrix['design_epoch']
           assert bundle['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
@@ -60,10 +76,8 @@ jobs:
               'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR',
           }
 
-          # A successful external call counts toward review only when OpenRouter
-          # explicitly reports zero cost. Missing cost metadata is not inferred as zero.
           called = [row for row in bundle['provider_attempts'] if row.get('status') == 'CALLED']
-          explicit_zero = all((row.get('usage') or {}).get('cost') in (0, 0.0) for row in called)
+          explicit_zero = bool(called) and all((row.get('usage') or {}).get('cost') in (0, 0.0) for row in called)
           if not explicit_zero:
               assert bundle['status'] != 'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR'
           if bundle['status'] == 'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR':
@@ -74,6 +88,9 @@ jobs:
 
           print(json.dumps({
               'target_id': bundle['target']['target_id'],
+              'hour_slot': target_selection['hour_slot'],
+              'target_index': target_selection['target_index'],
+              'target_count': target_selection['target_count'],
               'status': bundle['status'],
               'selected_families': len(selected),
               'preferred_families': preferred,
@@ -91,12 +108,17 @@ jobs:
           from datetime import datetime, timezone
 
           bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
+          target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
           receipt = {
               'schema': 'GardenHourlyDesignReviewReceipt/v1',
               'created_at': datetime.now(timezone.utc).isoformat(),
               'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
               'commit': os.environ.get('GITHUB_SHA'),
+              'hour_slot': target_selection['hour_slot'],
               'target_id': bundle['target']['target_id'],
+              'target_index': target_selection['target_index'],
+              'target_count': target_selection['target_count'],
+              'selection_receipt': 'agents/runtime/design-target-selection.json',
               'bundle_sha256': bundle['bundle_sha256'],
               'review_status': bundle['status'],
               'semantic_delta_admitted': False,
@@ -113,6 +135,7 @@ jobs:
           name: garden-hourly-design-review-${{ github.run_id }}
           path: |
             agents/design-review-matrix.json
+            agents/runtime/design-target-selection.json
             agents/runtime/free-selection.json
             agents/outbox/hourly/design-review-bundle.json
             agents/outbox/hourly/combined-receipt.json
