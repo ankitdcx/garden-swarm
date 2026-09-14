@@ -1,0 +1,58 @@
+name: One-use post-merge branch cleanup
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/one-use-post-merge-cleanup.yml'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Retire merged license branch and this temporary branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SELF_BRANCH: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import os, subprocess, urllib.parse, urllib.request
+          token = os.environ['GH_TOKEN']
+          repo = os.environ['REPO']
+          self_branch = os.environ['SELF_BRANCH']
+          target = 'policy/garden-outside-use-remedy-final-20260914'
+          api = f'https://api.github.com/repos/{repo}'
+
+          def delete_ref(branch):
+              encoded = urllib.parse.quote(f'heads/{branch}', safe='')
+              req = urllib.request.Request(
+                  f'{api}/git/refs/{encoded}', method='DELETE', headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  if r.status not in (200, 204):
+                      raise RuntimeError(f'delete {branch}: HTTP {r.status}')
+
+          subprocess.run(['git','fetch','origin','main:refs/remotes/origin/main'], check=True)
+          subprocess.run(['git','fetch','origin',f'refs/heads/{target}:refs/remotes/origin/{target}'], check=True)
+          head = subprocess.check_output(['git','rev-parse',f'refs/remotes/origin/{target}'], text=True).strip()
+          if subprocess.run(['git','merge-base','--is-ancestor',head,'refs/remotes/origin/main']).returncode != 0:
+              raise SystemExit(f'REFUSED: {target} is not contained in main: {head}')
+          delete_ref(target)
+          print('deleted_merged_branch=', target, head)
+
+          if self_branch.startswith('ops/one-use-post-merge-cleanup-'):
+              delete_ref(self_branch)
+              print('self_branch_deleted=', self_branch)
+          PY
