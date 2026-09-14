@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Select at least three distinct OpenRouter :free families for one matrix target."""
+"""Select distinct OpenRouter :free families for one matrix review execution.
+
+The Garden semantic-admission quorum is enforced downstream, not by this execution-budget selector.
+"""
 from __future__ import annotations
 
 import argparse
@@ -17,8 +20,11 @@ def main() -> int:
     parser.add_argument("--slot", type=int)
     parser.add_argument("--count", type=int, default=3)
     args = parser.parse_args()
-    if args.count < 3:
-        raise SystemExit("Garden matrix review requires at least three independent reviewer families")
+    # This count is the provider-call selection budget for this execution, not
+    # the Garden semantic-admission quorum. The latter remains >=3 independent
+    # completed families and is enforced by the review/integration gates.
+    if args.count < 1:
+        raise SystemExit("reviewer selection count must be at least one")
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         raise SystemExit("OPENROUTER_API_KEY is required")
@@ -36,6 +42,7 @@ def main() -> int:
         "hour_slot": slot,
         "free_catalog_count": len(models),
         "required_family_count": args.count,
+        "selection_scope": "EXECUTION_BUDGET_ONLY_NOT_ADMISSION_QUORUM",
         "selected": selected,
         "cost_policy": "OpenRouter :free routes only; reviewer calls must independently report usage.cost == 0 before review completion is eligible.",
     }
