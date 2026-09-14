@@ -5,10 +5,10 @@ from prototype.hardening import (
     ConstitutionalEventKind,
     HardeningDecision,
     VerifiedContainmentAdmission,
+    _validate_constitutional_event,
+    _validate_containment_admission,
     enforce_constitutional_event,
     validate_authority_lease,
-    validate_constitutional_event,
-    validate_containment_admission,
 )
 
 
@@ -40,7 +40,7 @@ def test_pass_requires_check_kind():
         "evt-coherence", "action:coherence", ConstitutionalCheck.PASS, "E1",
         kind=ConstitutionalEventKind.VIOLATION,
     )
-    errors = validate_constitutional_event(event)
+    errors = _validate_constitutional_event(event)
     assert "PASS_REQUIRES_CHECK_KIND" in errors
     result = enforce_constitutional_event(event, lambda _: True)
     assert result.decision is HardeningDecision.ESCALATE
@@ -52,7 +52,7 @@ def test_pass_with_check_kind_remains_valid():
         "evt-pass", "action:pass", ConstitutionalCheck.PASS, "E1",
         kind=ConstitutionalEventKind.CHECK,
     )
-    assert validate_constitutional_event(event) == ()
+    assert _validate_constitutional_event(event) == ()
     result = enforce_constitutional_event(event, lambda _: True)
     assert result.decision is HardeningDecision.ALLOW
 
@@ -69,7 +69,7 @@ def test_constitutional_event_alone_never_authorizes_containment():
         "evt-contain", "action:contain", ConstitutionalCheck.VETO, "E1",
         kind=ConstitutionalEventKind.VIOLATION,
     )
-    containment = validate_containment_admission(event, None, current_design_epoch="E1")
+    containment = _validate_containment_admission(event, None, current_design_epoch="E1")
     assert containment.decision is HardeningDecision.BLOCK
     assert "SEPARATE_CONTAINMENT_ADMISSION_REQUIRED" in containment.reasons
     assert enforce_constitutional_event(event, lambda _: True).decision is HardeningDecision.BLOCK
@@ -81,17 +81,17 @@ def test_verified_containment_admission_must_bind_event_and_epoch():
         kind=ConstitutionalEventKind.VIOLATION,
     )
     wrong_event = VerifiedContainmentAdmission("admit-1", "evt-other", "decision:1", "E1")
-    assert validate_containment_admission(
+    assert _validate_containment_admission(
         event, wrong_event, current_design_epoch="E1"
     ).decision is HardeningDecision.BLOCK
 
     stale = VerifiedContainmentAdmission("admit-2", event.event_id, "decision:2", "E0")
-    assert validate_containment_admission(
+    assert _validate_containment_admission(
         event, stale, current_design_epoch="E1"
     ).decision is HardeningDecision.BLOCK
 
     current = VerifiedContainmentAdmission("admit-3", event.event_id, "decision:3", "E1")
-    containment = validate_containment_admission(event, current, current_design_epoch="E1")
+    containment = _validate_containment_admission(event, current, current_design_epoch="E1")
     assert containment.decision is HardeningDecision.ALLOW
     # A separately admitted containment action does not mutate/release the vetoed transition.
     assert enforce_constitutional_event(event, lambda _: True).decision is HardeningDecision.BLOCK
