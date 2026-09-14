@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 from urllib import error, request
 
-from tools.free_model_rotation import catalog, choose
+from tools.free_model_rotation import catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents/outbox/pr-review/quorum.json"
@@ -35,6 +35,36 @@ def run(*argv: str) -> str:
 
 def canonical_hash(value: Any) -> str:
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+
+
+def select_candidates(models: list[dict[str, Any]], slot: int, desired: int = CANDIDATE_FAMILIES) -> list[dict[str, Any]]:
+    """Select distinct live free publisher namespaces rather than a stale hard-coded family list."""
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in models:
+        model_id = str(row.get("id", ""))
+        if not model_id.endswith(":free") or "/" not in model_id:
+            continue
+        publisher = model_id.split("/", 1)[0].strip().lower()
+        if publisher:
+            grouped.setdefault(publisher, []).append(row)
+    if len(grouped) < MIN_FAMILIES:
+        raise SystemExit(f"Only {len(grouped)} distinct live free publisher families available; need {MIN_FAMILIES}")
+    families = sorted(grouped)
+    start = slot % len(families)
+    ordered = families[start:] + families[:start]
+    selected: list[dict[str, Any]] = []
+    for family in ordered[: min(desired, len(ordered))]:
+        hits = sorted(grouped[family], key=lambda x: int(x.get("context_length") or 0), reverse=True)
+        winner = hits[0]
+        selected.append({
+            "family": family,
+            "role": "independent_free_reviewer",
+            "model": winner["id"],
+            "context_length": winner.get("context_length"),
+        })
+    if len(selected) < MIN_FAMILIES:
+        raise SystemExit(f"Selected only {len(selected)} distinct free families; need {MIN_FAMILIES}")
+    return selected
 
 
 def exact_change_pack(base: str, head: str) -> tuple[dict[str, Any], str]:
@@ -185,7 +215,7 @@ def main() -> int:
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         raise SystemExit("OPENROUTER_API_KEY required")
-    selected = choose(catalog(key), int(time.time() // 3600), count=CANDIDATE_FAMILIES)
+    selected = select_candidates(catalog(key), int(time.time() // 3600), desired=CANDIDATE_FAMILIES)
     attempts: list[dict[str, Any]] = []
     blind: list[dict[str, Any]] = []
     model_by_family = {str(m["family"]): m for m in selected}
@@ -230,6 +260,7 @@ def main() -> int:
         "minimum_independent_families": MIN_FAMILIES,
         "preferred_final_families": PREFERRED_FINALS,
         "candidate_family_count": len(selected),
+        "selected_families": [x["family"] for x in selected],
         "blind_families": blind_families,
         "final_families": final_families,
         "blind_reviews": blind,
@@ -242,7 +273,7 @@ def main() -> int:
     receipt["receipt_sha256"] = canonical_hash({k: v for k, v in receipt.items() if k != "receipt_sha256"})
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n")
-    print(json.dumps({"status": status, "target_hash": target["full_diff_sha256"], "blind_families": blind_families, "final_families": final_families}, sort_keys=True))
+    print(json.dumps({"status": status, "target_hash": target["full_diff_sha256"], "selected_families": receipt["selected_families"], "blind_families": blind_families, "final_families": final_families}, sort_keys=True))
     return 0 if status == "PASS_REVIEW_QUORUM" else 1
 
 
