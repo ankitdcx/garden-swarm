@@ -176,7 +176,13 @@ def main() -> int:
             encoding="utf-8",
         )
 
-    charged = [float(row["cost"]) for row in attempts if row.get("status") == "CALLED" and row.get("cost") is not None]
+    # Account for every observed non-negative provider charge, including a call
+    # that itself exceeded the per-model ceiling. Never under-report spend.
+    charged = [
+        float(row["cost"])
+        for row in attempts
+        if isinstance(row.get("cost"), (int, float)) and float(row["cost"]) >= 0
+    ]
     total_cost = sum(charged)
     hourly_ceiling = float(selection["routine_hourly_cost_ceiling_usd"])
     if total_cost > hourly_ceiling:
