@@ -1,6 +1,12 @@
 name: One-use public IP provenance DeepSeek review
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'PATENT_AND_USE_NOTICE.md'
+      - '.github/workflows/one-use-ip-provenance-deepseek-review.yml'
   pull_request:
     paths:
       - 'PATENT_AND_USE_NOTICE.md'
@@ -38,7 +44,7 @@ Do not invent legal facts. Review the exact public text below for:
 3. provenance/date statements that are overconfident or should be qualified;
 4. contradictions with the repository licence;
 5. wording that could falsely imply legal certification;
-6. any material issue that should block merging this public notice.
+6. any material issue that should block merging/publishing this public notice.
 
 This is a public-document consistency/confidentiality audit, not legal advice. Return strict JSON with keys:
 verdict (PASS or BLOCK), blocking_findings (array), nonblocking_findings (array), confidentiality_risk (LOW/MEDIUM/HIGH), patent_status_overclaim (true/false), summary.
@@ -83,7 +89,6 @@ PATENT_AND_USE_NOTICE.md:\n{notice}\n\nLICENSE:\n{license_text}\n'''
               raise SystemExit(f'DeepSeek call exceeded $0.025 ceiling: {cost}')
 
           content = data.get('choices', [{}])[0].get('message', {}).get('content', '').strip()
-          # tolerate fenced JSON but require parseable object
           if content.startswith('```'):
               lines = content.splitlines()
               if lines and lines[0].startswith('```'):
