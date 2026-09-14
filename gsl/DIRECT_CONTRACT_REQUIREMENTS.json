@@ -1,0 +1,19 @@
+{
+  "schema": "GardenDirectContractRequirements/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "rule": "These semantically consequential callables must resolve through individually authored direct FunctionContracts. A generated path/template contract is insufficient for their decision responsibility.",
+  "required_owner_qualified_names": [
+    "swarm.synthesize.synthesize",
+    "swarm.integration_provenance.compare_intents",
+    "swarm.integration_provenance.assess_intents",
+    "swarm.orchestrator.call_openrouter",
+    "scripts.check_constitutional_change.evaluate"
+  ],
+  "selection_basis": [
+    "candidate composition or deduplication",
+    "semantic collision/integration disposition",
+    "external model invocation boundary",
+    "constitutional repository change disposition"
+  ],
+  "does_not_require_direct_contract": "Mechanical parsing, formatting, bounded hashing, CLI plumbing and other helpers may continue to use generated contracts unless separately promoted into this registry."
+}
