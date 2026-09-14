@@ -4,7 +4,7 @@
   "status": "ACTIVE",
   "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
   "public_source_only": true,
-  "max_openrouter_calls_per_run": 1,
+  "max_openrouter_calls_per_run": 6,
   "semantic_admission_min_independent_families": 3,
   "objectives": [
     "falsify or strengthen one bounded canonical Garden mechanism",
@@ -22,7 +22,8 @@
     "automatic canonical release admission"
   ],
   "notes": [
-    "Execution budget and semantic-admission quorum are distinct: one OpenRouter free call per run does not lower the >=3-family admission requirement.",
+    "The zero-cost hourly board may use up to six OpenRouter calls: three blind independent :free-family reviews followed, only after quorum, by up to three same-family peer cross-examinations.",
+    "Execution budget and semantic-admission quorum are distinct: failed, malformed, stale, mismatched or non-zero-cost calls never count toward the >=3-family admission requirement.",
     "Runtime selections and receipts are generated under agents/runtime or agents/outbox and are not canonical Garden design artifacts."
   ]
 }
