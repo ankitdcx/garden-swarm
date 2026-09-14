@@ -2,7 +2,11 @@ from prototype.hardening import (
     AuthorityLease,
     ConstitutionalCheck,
     ConstitutionalEvent,
+    ConstitutionalEventKind,
     HardeningDecision,
+    VerifiedContainmentAdmission,
+    _validate_constitutional_event,
+    _validate_containment_admission,
     enforce_constitutional_event,
     validate_authority_lease,
 )
@@ -29,6 +33,68 @@ def test_pass_does_not_allow_if_required_event_record_is_missing():
     event = ConstitutionalEvent("evt-3", "action:3", ConstitutionalCheck.PASS, "E1")
     result = enforce_constitutional_event(event, lambda _: False)
     assert result.decision is HardeningDecision.ESCALATE
+
+
+def test_pass_requires_check_kind():
+    event = ConstitutionalEvent(
+        "evt-coherence", "action:coherence", ConstitutionalCheck.PASS, "E1",
+        kind=ConstitutionalEventKind.VIOLATION,
+    )
+    errors = _validate_constitutional_event(event)
+    assert "PASS_REQUIRES_CHECK_KIND" in errors
+    result = enforce_constitutional_event(event, lambda _: True)
+    assert result.decision is HardeningDecision.ESCALATE
+    assert not any(reason.startswith("CONSTITUTIONAL_CHECK_PASS_RECORDED") for reason in result.reasons)
+
+
+def test_pass_with_check_kind_remains_valid():
+    event = ConstitutionalEvent(
+        "evt-pass", "action:pass", ConstitutionalCheck.PASS, "E1",
+        kind=ConstitutionalEventKind.CHECK,
+    )
+    assert _validate_constitutional_event(event) == ()
+    result = enforce_constitutional_event(event, lambda _: True)
+    assert result.decision is HardeningDecision.ALLOW
+
+
+def test_unknown_and_inconclusive_never_allow_consequential_continuation():
+    for check in (ConstitutionalCheck.UNKNOWN, ConstitutionalCheck.INCONCLUSIVE):
+        event = ConstitutionalEvent(f"evt-{check.value}", "action:x", check, "E1")
+        result = enforce_constitutional_event(event, lambda _: True)
+        assert result.decision is HardeningDecision.ESCALATE
+
+
+def test_constitutional_event_alone_never_authorizes_containment():
+    event = ConstitutionalEvent(
+        "evt-contain", "action:contain", ConstitutionalCheck.VETO, "E1",
+        kind=ConstitutionalEventKind.VIOLATION,
+    )
+    containment = _validate_containment_admission(event, None, current_design_epoch="E1")
+    assert containment.decision is HardeningDecision.BLOCK
+    assert "SEPARATE_CONTAINMENT_ADMISSION_REQUIRED" in containment.reasons
+    assert enforce_constitutional_event(event, lambda _: True).decision is HardeningDecision.BLOCK
+
+
+def test_verified_containment_admission_must_bind_event_and_epoch():
+    event = ConstitutionalEvent(
+        "evt-contain-2", "action:contain", ConstitutionalCheck.VETO, "E1",
+        kind=ConstitutionalEventKind.VIOLATION,
+    )
+    wrong_event = VerifiedContainmentAdmission("admit-1", "evt-other", "decision:1", "E1")
+    assert _validate_containment_admission(
+        event, wrong_event, current_design_epoch="E1"
+    ).decision is HardeningDecision.BLOCK
+
+    stale = VerifiedContainmentAdmission("admit-2", event.event_id, "decision:2", "E0")
+    assert _validate_containment_admission(
+        event, stale, current_design_epoch="E1"
+    ).decision is HardeningDecision.BLOCK
+
+    current = VerifiedContainmentAdmission("admit-3", event.event_id, "decision:3", "E1")
+    containment = _validate_containment_admission(event, current, current_design_epoch="E1")
+    assert containment.decision is HardeningDecision.ALLOW
+    # A separately admitted containment action does not mutate/release the vetoed transition.
+    assert enforce_constitutional_event(event, lambda _: True).decision is HardeningDecision.BLOCK
 
 
 def test_stale_design_epoch_blocks_pre_authorized_lease():
