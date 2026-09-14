@@ -3,7 +3,7 @@ name: Garden free public calibration
 on:
   workflow_dispatch:
   push:
-    branches: [garden-swarm-orchestrator]
+    branches: [main]
     paths:
       - 'swarm/roles-free.json'
       - 'swarm/orchestrator.py'
@@ -14,12 +14,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: garden-free-public-calibration
+  cancel-in-progress: false
+
 jobs:
   four-role-calibration:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +35,8 @@ jobs:
         run: python -m unittest discover -s swarm/tests -v
 
       - name: Run four free agents on public Garden source only
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           python swarm/orchestrator.py \
             --roles swarm/roles-free.json \
@@ -66,7 +70,10 @@ jobs:
                   raise SystemExit('A supposedly free successful call reported non-zero cost')
           print('usable_agents=', usable)
           if usable < 2:
-              raise SystemExit('Need at least two usable independent free-agent outputs')
+              raise SystemExit(
+                  'Need at least two usable independent free-agent outputs; '
+                  'do not treat a provider/quota shortfall as review closure'
+              )
           PY
 
       - name: Build candidate synthesis without admitting findings

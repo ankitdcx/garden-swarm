@@ -5,3 +5,27 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pip"
+    directory: "/prototype"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      prototype-python:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pip"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      server-python:
+        patterns:
+          - "*"
