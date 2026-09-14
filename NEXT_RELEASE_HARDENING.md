@@ -196,7 +196,63 @@ These should not be promoted merely because they appeared repeatedly in comments
 - **"Create a new containment authority source."** Rejected: containment must reuse the existing authority/action/admission architecture.
 - **Duplicate INCONCLUSIVE/UNKNOWN owner semantics.** Rejected unless cross-reference analysis proves the existing Constitution/Policy/AAP owners are not machine-resolvable at the gate.
 
-## 5. Non-goals
+## 5. Mechanically derived ReviewPacket and reviewer-ordering hardening
+
+Status: **CANDIDATE / NOT RATIFIED / NEEDS REQUIRED REVIEW**
+
+Source evidence: bounded ChatGPT blind/cross-examination evidence on issue #49 identified a process gap after directly checking the committed public review workflow and accessible repository state. The earlier one-family execution-budget versus three-family admission-quorum failure is **not** part of this candidate because PR #71 already repaired that defect on `main`.
+
+### Problem
+
+The current hourly review machinery produces target-selection, provider-selection/reviewer outputs and combined receipts, but it does not yet create a single mechanically derived `GardenReviewPacket/v1` that binds the complete scope a reviewer is expected to inspect. Without that packet, a model can neither prove that the reviewed diff/symbol/dependency surface was complete nor distinguish an intentional exclusion from silent curation.
+
+This is review-assurance infrastructure only. Recording it here does not ratify a new Garden source rule, does not alter v15.5, and does not authorize semantic admission.
+
+### Candidate owner/bindings
+
+Prefer a review-orchestration/evidence owner in `garden-swarm`; do not create a new authority source.
+
+A packet should bind, at minimum:
+
+- exact public/private repository commit(s) in scope, without exposing private source material to public providers;
+- immutable canonical Garden version, source root and DesignEpoch;
+- reproducible base..head diff and mechanically derived changed paths;
+- changed symbols and dependency/reference closure;
+- mechanically affected schemas, FunctionContracts, registries, invariants and tests;
+- exact CI/test/environment receipts relevant to the change;
+- linked unresolved/reopened findings and applicable freeze state;
+- target/source hashes for the bounded review target;
+- every non-mechanical inclusion or exclusion as an explicit `PacketConstructionDecision` with provenance and reason;
+- immutable packet hash/artifact identity carried into blind-review and cross-examination receipts.
+
+The packet is evidence scope, not authority. It MUST NOT self-classify a semantic change as admitted, mint trusted authority, satisfy independent-review quorum, or override ActionGate/DesignEpoch/human boundaries.
+
+### Reviewer-ordering requirement to test
+
+The packet must exist before Round-1 blind review begins. Peer conclusions must remain unavailable to that reviewer until its blind finding is persisted. Cross-examination then consumes the same exact packet identity plus eligible peer evidence.
+
+### DO_NOTHING comparison
+
+DO_NOTHING preserves the present failure mode: reviews may be exact-target-bound yet still lack a machine-verifiable proof that the surrounding changed code/design/evidence scope was complete. This makes omissions difficult to distinguish from deliberate exclusions and weakens later semantic-impact, Challenger and integration decisions. A deterministic packet improves auditability without granting any new authority.
+
+### Required regression tests
+
+1. Reject packet construction when repo commit/base/head, canonical source root/DesignEpoch, target or source-hash binding is absent/stale/mismatched.
+2. Recompute diff, changed-path set, changed-symbol extraction and dependency/reference closure deterministically.
+3. Reject unexplained manual exclusions and incomplete mechanically affected-object closure.
+4. Bind CI/test receipts to the exact commit, DesignEpoch and execution environment; stale traces do not count.
+5. Require mechanically relevant unresolved/reopened findings and freeze state to be linked.
+6. Verify public packet projections never disclose private `garden-main` source beyond explicitly permitted hashes/identifiers; unknown provider policy remains DENY.
+7. Verify Round 1 cannot start until the exact packet artifact exists and peer conclusions remain inaccessible until the blind receipt is persisted.
+8. Verify cross-examination rejects a peer finding bound to any different packet hash/commit/DesignEpoch/target.
+
+### Conflicts / duplicates
+
+- The execution-budget/admission-quorum mismatch is already resolved by merged PR #71 and is intentionally not requeued here.
+- Existing Design Review Matrix target binding, source manifests, integration-provenance receipts and GSL reference closure are inputs to this candidate, not substitutes for the complete ReviewPacket.
+- If later evidence shows an existing artifact already provides every required field and ordering guarantee, prefer equivalence/subsumption and close this candidate rather than create duplicate machinery.
+
+## 6. Non-goals
 
 These candidates do not propose:
 
