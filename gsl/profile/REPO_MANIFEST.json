@@ -46,14 +46,19 @@
       "sha256": "c4aed7cf542077ddebd4225bd9462b024643d6506768b97223fca500137ad1db"
     },
     {
+      "bytes": 1410,
+      "path": ".github/workflows/constitutional-path-guard.yml",
+      "sha256": "8109efea5e1b3d0d3697e844a7b4179dc306432640f8d8bb77f6f5bcdd87401d"
+    },
+    {
       "bytes": 828,
       "path": ".github/workflows/discovery-server.yml",
       "sha256": "77b8dcbc26b1787fe29af73ac008752733e8b8c1ecb8dc1079e63599933a74c0"
     },
     {
-      "bytes": 6673,
+      "bytes": 7476,
       "path": ".github/workflows/hourly-free-agent-review.yml",
-      "sha256": "d4d9261e8735979fa5f11ef3e65c2c9bf828dd82f3ba39b3c154c066a62e7336"
+      "sha256": "660ae9dd414cd941a56e8635185573d4ff94c3e2400047d8a44612893c18dd4d"
     },
     {
       "bytes": 1131,
@@ -89,6 +94,11 @@
       "bytes": 2406,
       "path": ".github/workflows/swarm-free-zdr-probe.yml",
       "sha256": "07a7c90ab7d04945e9cb34bb3910d3c81d15a5c7822d92298237d85afcba6321"
+    },
+    {
+      "bytes": 171,
+      "path": ".gitignore",
+      "sha256": "aa6837b632a8723a4eadd904fc7c619d7bd9b4cb24f0c274cceff9cf37a6c584"
     },
     {
       "bytes": 5725,
@@ -316,9 +326,9 @@
       "sha256": "e8072e84b7d558bcb50055ee91388f6901075ccefad2b2f05a7b200b105e0471"
     },
     {
-      "bytes": 734,
+      "bytes": 1425,
       "path": "agents/inbox/hourly-review.json",
-      "sha256": "bbfb3a72554ccb21fe871cd97543fd698a0c10268462834c899db4931a77f085"
+      "sha256": "494c641ce55ee2d3a0a640cba0174161ff34153b2137c27a1217f3d06fbb6414"
     },
     {
       "bytes": 500,
@@ -396,6 +406,11 @@
       "sha256": "464f79365f6552d76253162d4b2a8b7e042200a76af3452ac9ca960fb24e966a"
     },
     {
+      "bytes": 1067,
+      "path": "gsl/DIRECT_CONTRACT_REQUIREMENTS.json",
+      "sha256": "1179327514c09ab4c7fe16eeb374332569f1d54f3a7d7d5266cc796417c94cd3"
+    },
+    {
       "bytes": 7138,
       "path": "gsl/FUNCTION_CONTRACTS.json",
       "sha256": "d0f8767de401e68ad98acea5e32f41a4b679fead2834d62108b20f8cecfd0c5f"
@@ -406,9 +421,19 @@
       "sha256": "f04b6123c632729bcb86931f0b1092566a2f5e6c89ea0bc352564c066bcc5a6e"
     },
     {
+      "bytes": 1648,
+      "path": "gsl/FUNCTION_CONTRACTS_GOVERNANCE.json",
+      "sha256": "a22549834d97e59eae1fa725c4a5a288a8d3be3f8222f6510deddd6279d2e670"
+    },
+    {
       "bytes": 1807,
       "path": "gsl/FUNCTION_CONTRACTS_RESULT_ALGEBRA.json",
       "sha256": "3b3ca3b90bf37f8c7d0917fce078674d67dab4a363fbb9fd52fe31ddcc64c34f"
+    },
+    {
+      "bytes": 5077,
+      "path": "gsl/FUNCTION_CONTRACTS_SWARM.json",
+      "sha256": "cb7b350d40e58f0ac9b5ccbe607ef4c0b039a3b2ca1c72d305b34239b3b00725"
     },
     {
       "bytes": 6566,
@@ -666,6 +691,11 @@
       "sha256": "87a7f16146838ae2b543ce782a1a205431109c80b8fd737fd8ac91f1f51b94d9"
     },
     {
+      "bytes": 2323,
+      "path": "scripts/check_constitutional_change.py",
+      "sha256": "53a0858e5a8267b97480ad5cfea5f4272692ec929b384927628e3c9ed1164da0"
+    },
+    {
       "bytes": 13264,
       "path": "scripts/gate_repo_change.py",
       "sha256": "1b03fa7ba18093db300626f9a2b3f0e6609f8a7a90d8530e4b238f14e14b18cc"
@@ -831,6 +861,16 @@
       "sha256": "97491926b76e460d9d27806de32a3639fb8c6e1b6d5d65371ee9559d4f0d8067"
     },
     {
+      "bytes": 1916,
+      "path": "tests/test_actiongate_result_mapping.py",
+      "sha256": "9b20a1847d1c2a8beda62953cab3b564c8b693d51bfea6bced21dcd743eba31f"
+    },
+    {
+      "bytes": 967,
+      "path": "tests/test_constitutional_change_guard.py",
+      "sha256": "a42350055f667fc63d19868223f73b7954ee3161c2d3ad22cf2220d70ea75ecf"
+    },
+    {
       "bytes": 4258,
       "path": "tests/test_design_review_matrix.py",
       "sha256": "db20ba0987f6b00cbd8ef0643764af0ce928cdbf98bfd8cf82e0c9be4d779b93"
@@ -841,6 +881,11 @@
       "sha256": "95ee3cf4d0e798271a1661d42612c6f66914b62e0d621326fd0fe5ea3e2879e4"
     },
     {
+      "bytes": 1448,
+      "path": "tests/test_direct_contract_requirements.py",
+      "sha256": "741833dba1b63481011078b3aa5f996a27dedd55e9a5ea14643cd2dd89702fd1"
+    },
+    {
       "bytes": 1981,
       "path": "tests/test_free_review_entrypoints.py",
       "sha256": "c241bae4226e4aa2a46cd439982cb02ad7fc346cfb7b6a6cd87fd08a0bf0ea4d"
@@ -849,6 +894,11 @@
       "bytes": 4134,
       "path": "tests/test_multi_agent_pr_check.py",
       "sha256": "31d7b3fa713a8efa7542e6700779fa92bac9ab6d74b895e93ee0a7fb8a74916d"
+    },
+    {
+      "bytes": 1321,
+      "path": "tools/README.md",
+      "sha256": "75fa6e95d8e1ca50786b979d4309d9b389ec09b59956b0fc50100d3766b26ce9"
     },
     {
       "bytes": 167,
@@ -871,9 +921,9 @@
       "sha256": "fb41e4553db65998ea8f76c88caf6af1c7ba14b5528dc62cf31941d5bb8d6b90"
     },
     {
-      "bytes": 2743,
+      "bytes": 3475,
       "path": "tools/free_model_rotation.py",
-      "sha256": "3060e65f8c2721d76c0709fcabd8d4164e35c8660f3fc400c500d410ff75185a"
+      "sha256": "ab7e6e48b68d4771b986d7c1435b1f9067cd486db2cbf962a96fc942e8a3643f"
     },
     {
       "bytes": 4776,
@@ -923,11 +973,12 @@
     "gsl/receipts/*"
   ],
   "repository": "ankitdcx/garden-swarm",
-  "repository_content_root": "ca15e727de66ddc8312dd845c8da78a30205ee393f06f391e7b1f819f490c5a2",
+  "repository_content_root": "07aaf9587233304e5f2e5a12312419ff5df58179fe4d3cabc72ed01980dab70a",
   "root_algorithm": "sha256(canonical-json(sorted tracked path/bytes/sha256 rows excluding manifest and gsl/receipts/*))",
   "schema": "GardenRepositorySurfaceManifest/v1",
   "top_level_counts": {
-    ".github": 18,
+    ".github": 19,
+    ".gitignore": 1,
     "AGENTS.md": 1,
     "ANNOUNCEMENT.md": 1,
     "ATTACK_SURFACE.md": 1,
@@ -971,17 +1022,17 @@
     "agents": 6,
     "docs": 6,
     "evidence": 1,
-    "gsl": 41,
+    "gsl": 44,
     "llms.txt": 1,
     "prototype": 11,
     "pyproject.toml": 1,
     "relay": 1,
     "render.yaml": 1,
-    "scripts": 13,
+    "scripts": 14,
     "server": 8,
     "swarm": 13,
-    "tests": 8,
-    "tools": 13
+    "tests": 11,
+    "tools": 14
   },
-  "tracked_artifact_count": 183
+  "tracked_artifact_count": 193
 }
