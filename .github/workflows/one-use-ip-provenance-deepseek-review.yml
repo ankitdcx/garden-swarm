@@ -1,0 +1,123 @@
+name: One-use public IP provenance DeepSeek review
+
+on:
+  pull_request:
+    paths:
+      - 'PATENT_AND_USE_NOTICE.md'
+      - '.github/workflows/one-use-ip-provenance-deepseek-review.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deepseek-public-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Review only already-public IP/provenance material with DeepSeek
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          from pathlib import Path
+
+          key = os.environ.get('OPENROUTER_API_KEY')
+          if not key:
+              raise SystemExit('OPENROUTER_API_KEY unavailable')
+
+          notice = Path('PATENT_AND_USE_NOTICE.md').read_text(encoding='utf-8')
+          license_text = Path('LICENSE').read_text(encoding='utf-8')
+          prompt = f'''You are an independent adversarial reviewer of PUBLIC Garden repository material only.
+Do not assume patentability, ownership, priority, validity, infringement, or enforceability merely because the text says so.
+Do not invent legal facts. Review the exact public text below for:
+1. unsupported patent/grant/priority claims;
+2. accidental disclosure of NEW enabling technical detail beyond the already-public provenance summary;
+3. provenance/date statements that are overconfident or should be qualified;
+4. contradictions with the repository licence;
+5. wording that could falsely imply legal certification;
+6. any material issue that should block merging this public notice.
+
+This is a public-document consistency/confidentiality audit, not legal advice. Return strict JSON with keys:
+verdict (PASS or BLOCK), blocking_findings (array), nonblocking_findings (array), confidentiality_risk (LOW/MEDIUM/HIGH), patent_status_overclaim (true/false), summary.
+
+PATENT_AND_USE_NOTICE.md:\n{notice}\n\nLICENSE:\n{license_text}\n'''
+
+          body = {
+              'model': 'deepseek/deepseek-v4-flash-0731',
+              'messages': [{'role': 'user', 'content': prompt}],
+              'temperature': 0.1,
+              'max_tokens': 1800,
+              'provider': {
+                  'sort': 'price',
+                  'allow_fallbacks': True,
+                  'data_collection': 'deny',
+                  'max_price': {'prompt': 0.25, 'completion': 0.75},
+              },
+          }
+          req = urllib.request.Request(
+              'https://openrouter.ai/api/v1/chat/completions',
+              method='POST',
+              data=json.dumps(body).encode('utf-8'),
+              headers={
+                  'Authorization': f'Bearer {key}',
+                  'Content-Type': 'application/json',
+                  'HTTP-Referer': 'https://github.com/ankitdcx/garden-swarm',
+                  'X-Title': 'Garden One-Use Public IP Provenance Review',
+              },
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=300) as response:
+                  data = json.loads(response.read().decode('utf-8'))
+          except urllib.error.HTTPError as exc:
+              detail = exc.read().decode('utf-8', errors='replace')
+              raise SystemExit(f'DeepSeek HTTP {exc.code}: {detail[:1000]}')
+
+          usage = data.get('usage') or {}
+          cost = usage.get('cost')
+          if cost is None:
+              raise SystemExit('DeepSeek call returned no verifiable cost')
+          if float(cost) > 0.025:
+              raise SystemExit(f'DeepSeek call exceeded $0.025 ceiling: {cost}')
+
+          content = data.get('choices', [{}])[0].get('message', {}).get('content', '').strip()
+          # tolerate fenced JSON but require parseable object
+          if content.startswith('```'):
+              lines = content.splitlines()
+              if lines and lines[0].startswith('```'):
+                  lines = lines[1:]
+              if lines and lines[-1].strip() == '```':
+                  lines = lines[:-1]
+              content = '\n'.join(lines).strip()
+              if content.lower().startswith('json\n'):
+                  content = content[5:]
+          review = json.loads(content)
+          required = {'verdict','blocking_findings','nonblocking_findings','confidentiality_risk','patent_status_overclaim','summary'}
+          if not required.issubset(review):
+              raise SystemExit(f'DeepSeek review missing keys: {sorted(required-set(review))}')
+          receipt = {
+              'schema': 'GardenPublicIPProvenanceDeepSeekReview/v1',
+              'model': 'deepseek/deepseek-v4-flash-0731',
+              'provider_policy': {'data_collection': 'deny'},
+              'cost_usd': float(cost),
+              'commit': os.environ.get('GITHUB_SHA'),
+              'review': review,
+              'semantic_delta_admitted': False,
+              'legal_opinion': False,
+          }
+          Path('ip-provenance-deepseek-review.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, sort_keys=True))
+          if review['verdict'] == 'BLOCK' or review['blocking_findings']:
+              raise SystemExit('DeepSeek public IP/provenance review returned blocking findings')
+          PY
+
+      - name: Upload DeepSeek review receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-ip-provenance-deepseek-${{ github.run_id }}
+          path: ip-provenance-deepseek-review.json
+          if-no-files-found: warn
+          retention-days: 30
