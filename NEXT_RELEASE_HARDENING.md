@@ -94,7 +94,109 @@ Preserve these scenarios even when the current design already contains the inten
 
 A successor should add these as executable tests where the runtime/security harness exists rather than treating prose coverage as execution evidence.
 
-## 4. Non-goals
+## 4. ConstitutionalEvent typed-boundary hardening
+
+Status: **ACCEPTED FOR SUCCESSOR CANDIDATE TRIAGE / NOT RATIFIED**
+
+Source lineage: repeated bounded reviews on issue #49 were independently cross-referenced against the complete v15.5 owner contracts before admission to this candidate queue. Failed/stale/model-unavailable attempts are not evidence for this section.
+
+### Whole-source triage
+
+v15.5 already establishes the main semantics and they should not be duplicated under new owners:
+
+- a constitutional/right violation or VETO blocks the affected transition;
+- a consequential PASS emits `ConstitutionalEvent(kind=CHECK)` and ordinary flow may continue;
+- unresolved constitutional applicability routes to a low-authority safe state/escalation rather than optimistic admission;
+- containment/restriction has its own authority, evidence, severity/risk and applicability requirements;
+- event history is immutable and later resolution is linked rather than rewriting history;
+- authorization, commitment and execution are distinct stages, and irreversible effects already use governed prepare/commit/compensation paths.
+
+The successor work below therefore closes machine-traceability and type-coherence gaps rather than creating a new constitutional owner, containment authority, or execution engine.
+
+### 4.1 Non-authorizing event and typed containment-action linkage
+
+#### Problem
+
+`ConstitutionalEvent` carries `containment_criteria_result?`, evidence/routing fields and `resolution_ref?`, while the owner contract separately says containment/restriction follows its own authority and applicability rules. The schema does not currently make the separate authorization linkage explicit enough for a machine checker to prove that a restriction was independently authorized.
+
+#### Candidate rule
+
+A `ConstitutionalEvent`, including `kind=VIOLATION`, `check_result=VETO`, `containment_criteria_result`, evidence references, routing fields or event existence, **MUST NOT by itself authorize containment/restriction**.
+
+If containment/restriction is actually executed in response to the event, the execution path MUST carry a machine-verifiable typed reference to the separately authorized containment/action/admission decision under the applicable authority, evidence, severity/risk, safety, privacy, scope and freshness rules. Reuse an existing canonical action/authorization/`ContainmentAction`/admission receipt where it is the correct owner; do not invent a duplicate authority source. `resolution_ref` may satisfy this linkage only if its type and contract explicitly bind and verify that separate authorization.
+
+#### Regression tests
+
+1. `VETO + containment_criteria_result=SATISFIED + no valid separate authorization/action receipt` -> offending transition remains blocked; no containment/restriction executes.
+2. A valid separately authorized containment action may execute only within its own scope/expiry/evidence and safety constraints.
+3. Event evidence, routing or severity alone cannot mint containment authority.
+4. Revoked/stale/mismatched containment authorization -> no containment execution; the constitutional block remains independently effective.
+
+### 4.2 ConstitutionalEvent cross-field coherence
+
+#### Problem
+
+The current schema independently enumerates `kind: CHECK | VIOLATION` and `check_result: PASS | VETO | INCONCLUSIVE | UNKNOWN`. Existing tests establish the intended PASS path, but the type itself can represent contradictory tuples such as `kind=VIOLATION, check_result=PASS` unless a checker adds an unstated convention.
+
+#### Candidate minimum rules
+
+1. `check_result=PASS` MUST imply `kind=CHECK`.
+2. `kind=VIOLATION` MUST NOT coexist with `check_result=PASS`.
+3. `recorded/observable event` is not a blocking predicate by itself; a PASS/CHECK event remains eligible for ordinary flow absent an independent blocking gate.
+4. Stronger mappings for `VETO`, `INCONCLUSIVE` or `UNKNOWN` MUST come from their existing owner contracts or an explicit machine-resolvable binding; they must not be guessed from enum position or local implementation convention.
+
+#### Regression tests
+
+1. Construct `kind=VIOLATION, check_result=PASS` -> schema/conformance rejection.
+2. PASS/CHECK event recorded and observable -> ordinary flow may continue if all other gates pass.
+3. `INCONCLUSIVE` or `UNKNOWN` cannot be silently promoted to PASS by a local event consumer.
+
+### 4.3 Non-amplifying event observability
+
+#### Problem
+
+The Human source requires consequential constitutional checks to be observable, and the event carries evidence/context references. Privacy already taints protected data and forbids unauthorized PII processing, while Security/Authority remain separate gates. The Event-Service query/route surface should make that inheritance machine-resolvable so `observable` cannot be implemented as unrestricted payload disclosure.
+
+#### Candidate rule
+
+ConstitutionalEvent observability is an **authority-preserving projection**, not disclosure or dereference authority.
+
+- observing, routing, subscribing to or querying an event MUST NOT grant authority to read/dereference protected `evidence_refs`, rights context, identity data or other protected payloads;
+- referenced data retains its source access-control, consent, taint, minimization, confidentiality, redaction, retention and jurisdictional constraints;
+- an event projection may expose only fields authorized for that observer and purpose;
+- an authorized audit path may retain access required by its separate authority without broadening ordinary subscriber access;
+- event visibility never creates containment authority or guilt/intent semantics.
+
+Prefer an explicit Event-Service/Security/Privacy binding over a ConstitutionalEvent-specific duplicate access-control subsystem.
+
+#### Regression tests
+
+1. Unauthorized subscriber can receive the permitted event projection but cannot dereference protected evidence/context.
+2. Authorized auditor can access only the evidence allowed by its valid scope and purpose.
+3. Redaction/minimization of event projection does not mutate the immutable underlying event/evidence lineage.
+4. Subscription/query capability alone cannot be exchanged for evidence-read or containment capability.
+
+### 4.4 Existing-semantics regression probes — no new owner rule yet
+
+The following hourly ideas are worth preserving as tests/cross-reference probes, but current whole-source review does **not** justify a new independent invariant family for them:
+
+1. **INCONCLUSIVE/UNKNOWN fail-closed behavior.** HumanCore.Constitution already routes unresolved applicability to low-authority safe state/escalation; Policy also forbids converting UNKNOWN/CONFLICT into PERMIT. A successor should make the ConstitutionalEvent binding machine-resolvable rather than duplicate the rule.
+2. **VETO before consequential effect commit.** Constitution already blocks execution and Compute.Execution already uses authorization plus prepare/commit/compensation barriers. Add a conformance vector if needed; do not create a second execution-order owner unless an executable counterexample demonstrates a gap.
+3. **Containment outcome must not release the original constitutional block.** Treat as a regression property of the existing independent VETO and containment contracts.
+4. **Persistence/logging failure must not fail open.** Once the independent constitutional gate returns VETO, later event/evidence persistence failure must not turn that VETO into permission. Test this as fault injection against the existing gate/recording separation.
+5. **Fresh-identifier replay/effect equivalence.** Preserve as an adversarial probe. Reuse existing idempotency, ActionHash, re-evaluation and transition/effect semantics where sufficient; add a new semantic rule only if a materially equivalent retry can actually bypass current gates.
+
+### 4.5 Rejected/duplicate interpretations from the hourly stream
+
+These should not be promoted merely because they appeared repeatedly in comments:
+
+- **"Any recorded ConstitutionalEvent blocks."** Rejected: v15.5 explicitly permits PASS/CHECK ordinary continuation; only a violation/VETO or another independent blocking gate blocks.
+- **"Every violation automatically freezes the agent."** Rejected: directly contradicts CON-EVT-003 and the Human source.
+- **"A ConstitutionalEvent proves guilt or intent."** Rejected: directly contradicts the owner contract.
+- **"Create a new containment authority source."** Rejected: containment must reuse the existing authority/action/admission architecture.
+- **Duplicate INCONCLUSIVE/UNKNOWN owner semantics.** Rejected unless cross-reference analysis proves the existing Constitution/Policy/AAP owners are not machine-resolvable at the gate.
+
+## 5. Non-goals
 
 These candidates do not propose:
 
