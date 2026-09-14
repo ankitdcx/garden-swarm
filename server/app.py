@@ -28,7 +28,7 @@ READABLE = {
 
 
 def _validated_root(root: Path) -> Path:
-    """Require a Garden public-source snapshot rather than trusting an arbitrary root."""
+    """Require a self-consistent Garden public-source snapshot."""
     resolved = root.resolve()
     manifest = resolved / "SOURCE_MANIFEST.json"
     version = resolved / "VERSION"
@@ -40,8 +40,36 @@ def _validated_root(root: Path) -> Path:
         data = json.loads(manifest.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise RuntimeError("GARDEN_REPO_ROOT has an unreadable source manifest") from exc
-    if not data.get("release") or not isinstance(data.get("canonical_files"), list):
+
+    release = data.get("release")
+    gsl = data.get("gsl")
+    canonical_files = data.get("canonical_files")
+    if not isinstance(release, str) or not isinstance(gsl, str) or not isinstance(canonical_files, list):
         raise RuntimeError("GARDEN_REPO_ROOT source manifest is not a recognized Garden release manifest")
+    if not release.startswith("Garden-v"):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized")
+    try:
+        release_version, release_date = release.removeprefix("Garden-v").split("-", 1)
+    except ValueError as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized") from exc
+    if not release_version or not release_date or not all(part.isdigit() for part in release_version.split(".")):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized")
+
+    try:
+        version_lines = {
+            line.strip()
+            for line in version.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+    except OSError as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT has an unreadable VERSION file") from exc
+    required_version_lines = {
+        f"Garden v{release_version}",
+        f"GSL {gsl}",
+        f"Release date: {release_date}",
+    }
+    if not required_version_lines.issubset(version_lines):
+        raise RuntimeError("GARDEN_REPO_ROOT VERSION does not match SOURCE_MANIFEST.json")
     return resolved
 
 
