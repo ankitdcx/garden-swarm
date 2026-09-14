@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
-"""Run Gemini only every third hourly cycle to preserve free-tier quota."""
-from __future__ import annotations
-import json, subprocess, sys, time
-from pathlib import Path
+"""Run the direct Gemini reviewer every hourly Garden review cycle.
 
-OUT = Path("agents/outbox/hourly/gemini-review.json")
+The child module writes a typed availability receipt and exits cleanly when the
+free-tier provider is unavailable or quota-limited, so other reviewer lanes are
+not aborted.
+"""
+from __future__ import annotations
+
+import subprocess
+import sys
 
 
 def main() -> int:
-    slot = int(time.time() // 3600)
-    if slot % 3 == 0:
-        return subprocess.call([sys.executable, "tools/gemini_free_review.py"])
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    receipt = {
-        "schema": "GardenGeminiAvailabilityReceipt/v1",
-        "provider": "google-gemini-developer-api",
-        "model": "gemini-3.5-flash",
-        "hour_slot": slot,
-        "lane": "none",
-        "status": "SKIPPED_FREE_QUOTA_PRESERVATION",
-        "reason": "Gemini intentionally runs every third hourly cycle (8 calls/day).",
-        "admission_status": "NO_MODEL_FINDING",
-    }
-    OUT.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(receipt))
-    return 0
+    # Module execution keeps the repository root on sys.path and avoids the
+    # historical `ModuleNotFoundError: No module named 'tools'` failure caused
+    # by executing tools/gemini_free_review.py as a script path.
+    return subprocess.call([sys.executable, "-m", "tools.gemini_free_review"])
 
 
 if __name__ == "__main__":
