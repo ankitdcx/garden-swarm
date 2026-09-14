@@ -22,13 +22,36 @@ jobs:
       - name: Compute observed changed paths
         shell: bash
         run: |
+          set -euo pipefail
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             git diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > /tmp/changed-paths.txt
-          elif [ "${{ github.event_name }}" = "push" ] && git rev-parse HEAD^ >/dev/null 2>&1; then
-            git diff --name-only HEAD^ HEAD > /tmp/changed-paths.txt
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            before="${{ github.event.before }}"
+            after="${{ github.event.after }}"
+            zero="0000000000000000000000000000000000000000"
+
+            git cat-file -e "${after}^{commit}" 2>/dev/null || {
+              echo "FAIL: push after-SHA is not available as a commit: ${after}" >&2
+              exit 2
+            }
+
+            if [ "${before}" = "${zero}" ]; then
+              git diff-tree --root --no-commit-id --name-only -r "${after}" > /tmp/changed-paths.txt
+            else
+              git cat-file -e "${before}^{commit}" 2>/dev/null || {
+                echo "FAIL: push before-SHA is not available as a commit: ${before}" >&2
+                exit 2
+              }
+              if ! git merge-base --is-ancestor "${before}" "${after}"; then
+                echo "FAIL: non-fast-forward/rewritten push cannot be safely bounded by the constitutional guard" >&2
+                exit 2
+              fi
+              git diff --name-only "${before}" "${after}" > /tmp/changed-paths.txt
+            fi
           else
             : > /tmp/changed-paths.txt
           fi
+          sort -u /tmp/changed-paths.txt -o /tmp/changed-paths.txt
           cat /tmp/changed-paths.txt
       - name: Enforce constitutional candidate boundary
         run: python scripts/check_constitutional_change.py --paths-file /tmp/changed-paths.txt --output /tmp/constitutional-change-guard.json
@@ -37,6 +60,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: constitutional-change-guard-${{ github.run_id }}
-          path: /tmp/constitutional-change-guard.json
+          path: |
+            /tmp/constitutional-change-guard.json
+            /tmp/changed-paths.txt
           if-no-files-found: warn
           retention-days: 30

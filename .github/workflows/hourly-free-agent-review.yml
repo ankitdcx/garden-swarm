@@ -16,10 +16,6 @@ jobs:
   review:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GEMINI_MODEL: gemini-3.5-flash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,9 +34,14 @@ jobs:
         run: python -m tools.select_paid_matrix_reviewers
 
       - name: Run blind paid OpenRouter reviews under hard budget controls
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.run_paid_matrix_review
 
       - name: Run target-matched Gemini independent reviewer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.5-flash
         run: python -m tools.run_gemini_free_review
 
       - name: Enforce target binding, privacy, budget, and no-auto-admission boundaries

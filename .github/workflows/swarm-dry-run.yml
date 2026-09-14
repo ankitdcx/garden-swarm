@@ -2,8 +2,7 @@ name: Garden swarm dry run
 
 on:
   push:
-    branches:
-      - garden-swarm-orchestrator
+    branches: [main]
     paths:
       - 'swarm/**'
       - 'MANIFEST.json'
