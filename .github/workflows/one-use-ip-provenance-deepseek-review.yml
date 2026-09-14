@@ -35,7 +35,7 @@ jobs:
       - name: Run bounded public-only DeepSeek review
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        run: python tools/run_one_use_ip_provenance_deepseek_review.py
+        run: python -m tools.run_one_use_ip_provenance_deepseek_review
 
       - name: Upload DeepSeek review receipt
         if: always()
