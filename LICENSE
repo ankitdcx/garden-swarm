@@ -1,0 +1,118 @@
+GARDEN CONDITIONAL USE LICENSE v0.1
+
+This is a custom conditional-use license. It is not an OSI-approved open-source
+license.
+
+1. Scope
+
+Subject to applicable law and only to the extent the relevant rights are legally
+protectable and licensable, this license applies to the copyrightable material,
+software, specifications, documentation, protected inventions, designs, and
+implementations disclosed in this repository ("Covered Garden Material").
+
+Nothing in this license creates an intellectual-property right that does not
+otherwise exist under applicable law.
+
+2. Permission for Garden use only
+
+You may copy, modify, implement, run, distribute, and otherwise use Covered
+Garden Material only as part of a Garden implementation that:
+
+(a) is actually governed by the applicable ratified Garden rules rather than
+merely using the Garden name;
+
+(b) preserves the applicable Garden requirements for human sovereignty, rights,
+privacy, consent, bounded authority, evidence/provenance, auditability, and
+other mandatory constitutional or safety rules; and
+
+(c) complies with the Garden economic contribution/tax rule in Section 3.
+
+Permission under this license is conditional on continued compliance with these
+requirements.
+
+3. Garden economic contribution / tax rule
+
+For a natural person's annual income or earnings, let M be the median individual
+income in the person's applicable local economic geography, as determined under
+the applicable Garden economic rules.
+
+The required Garden income contribution/tax schedule is:
+
+- income at or below 1 x M: 0%;
+- income above 1 x M and below 20 x M: a progressive effective rate that rises
+  from 0% toward 50%;
+- income at or above 20 x M: 50%.
+
+The intermediate schedule must be implemented so that after-contribution income
+strictly increases as gross income increases; earning more must not reduce
+after-contribution income. The more precise current ratified Garden economic
+rule controls the intermediate curve, income definition, measurement period,
+economic-geography definition, collection mechanism, exemptions, and audit
+rules, provided it preserves the endpoints above unless a later valid Garden
+constitutional process changes them.
+
+The applicable local economic geography should be a stable labour/economic
+market area rather than an arbitrary small administrative boundary, using the
+current Garden methodology for population sufficiency and smoothed/rolling
+income measurement.
+
+For organizations, cooperatives, projects, or other entities, compliance is
+determined under the applicable Garden economic and beneficial-ownership rules.
+This license does not create a separate corporation-level tax where Garden rules
+allocate the obligation differently.
+
+This Section is a condition of the permission granted by this license. It does
+not by itself claim governmental taxing power outside whatever lawful Garden
+governance or contractual structure actually applies.
+
+4. No outside-Garden use
+
+No permission is granted under this license for operational, commercial,
+production, deployment, or other exploitation of Covered Garden Material
+outside a Garden implementation satisfying Sections 2 and 3.
+
+Payment of the Garden contribution/tax does not convert an outside-Garden use
+into a permitted use.
+
+5. Inspection, criticism, and evaluation
+
+This license does not restrict rights that already exist independently under
+applicable law. Public reading, citation, criticism, comparison, research, and
+evaluation of the published material remain permitted to the extent allowed by
+law and the repository's notices, provided those activities do not themselves
+amount to an otherwise unlicensed practice or exploitation of protected Garden
+rights.
+
+6. No authority grant
+
+This license grants no political, constitutional, governance, enforcement,
+deployment, certification, or real-world authority. Intellectual-property
+permission and Garden governance authority are separate.
+
+7. Attribution and notices
+
+Redistributions or permitted Garden implementations must preserve this LICENSE
+and applicable copyright, patent, provenance, and use notices supplied with the
+Covered Garden Material.
+
+8. Termination
+
+Permission under this license terminates automatically for a use that ceases to
+satisfy Sections 2 or 3, or that becomes an outside-Garden use prohibited by
+Section 4. Termination does not erase obligations or liabilities that arose
+before termination.
+
+9. No warranty
+
+THE COVERED GARDEN MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, NON-INFRINGEMENT, SAFETY, CORRECTNESS, CERTIFICATION, OR
+FITNESS FOR DEPLOYMENT.
+
+10. Legal boundary
+
+Patentability, copyright scope, enforceability, independent creation, lawful
+exceptions, exhaustion, compulsory licensing, interoperability rights, fair
+use/fair dealing, and other legal questions depend on applicable law and actual
+rights. This license must not be read as creating exclusive rights in abstract
+ideas or facts where the law does not provide such rights.

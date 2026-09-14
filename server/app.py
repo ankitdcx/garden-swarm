@@ -157,7 +157,7 @@ def summary() -> dict:
             "endpoint": f"{PUBLIC_BASE_URL}/mcp/" if PUBLIC_BASE_URL else "/mcp/",
             "public_conformance": "PENDING_LIVE_ENDPOINT_VERIFICATION",
         },
-        "privacy": "Founder private identity is not required for public operation or evaluation.",
+        "privacy": "Personal identity is not required for public operation or evaluation.",
     }
 
 
