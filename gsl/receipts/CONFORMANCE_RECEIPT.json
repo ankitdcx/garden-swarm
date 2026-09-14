@@ -1,0 +1,20 @@
+{
+  "application_conformance_overall": "PASS",
+  "boundary": "Scoped repository conformance evidence only; not canonical Garden promotion, empirical validation or deployment certification.",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "detail_digest_sha256": "021f2f6f5bed92c58c5b0ba1dee175cf9062fa23a022e5646aa639e226c9f239",
+  "publication_mode": "COMMITTED_DURABLE_SNAPSHOT",
+  "repo_frontier_artifact_count": 0,
+  "repo_profile_error_count": 0,
+  "repository": "ankitdcx/garden-swarm",
+  "repository_content_root": "4f7f1113489e88e9776f9f77515cd9dba5c2b88cf820cb1f9cdaf8cc94c95712",
+  "repository_content_root_algorithm": "sha256(canonical-json(sorted tracked path/sha256 rows excluding gsl/receipts/*))",
+  "reproduction": [
+    "python scripts/verify_gsl_application.py --output /tmp/garden-gsl-conformance-receipt.json",
+    "python scripts/audit_repo_gsl.py --strict-frontier --output /tmp/garden-repo-gsl-audit.json",
+    "python scripts/build_durable_gsl_receipts.py --check"
+  ],
+  "result": "PASS",
+  "schema": "CIConformancePipelineReceipt/v1",
+  "tracked_artifact_count_excluding_receipts": 194
+}

@@ -1,0 +1,24 @@
+{
+  "coverage": [
+    "path-like tracked JSON string references",
+    "Markdown/text inline-code and Markdown-link local file references",
+    "Python local module imports and from-import symbol resolution",
+    "source-relative and unique-basename resolution",
+    "generated/runtime references only when class allowlisted, owner tracked, and owner evidence present",
+    "MCP tool allowlist against actual @mcp.tool decorators"
+  ],
+  "detail_digest_sha256": "1d0633722288d4b1d941554941dfddbe20da1038116dbf97c1f9ae90109eb811",
+  "publication_mode": "COMMITTED_DURABLE_SNAPSHOT",
+  "reference_count": 642,
+  "repository": "ankitdcx/garden-swarm",
+  "repository_content_root": "4f7f1113489e88e9776f9f77515cd9dba5c2b88cf820cb1f9cdaf8cc94c95712",
+  "reproduction": [
+    "python scripts/build_reference_closure.py --output /tmp/reference-closure-receipt.json",
+    "python scripts/build_durable_gsl_receipts.py --check"
+  ],
+  "scanner_version": "garden-repo-reference-closure/3",
+  "schema": "ReferenceClosureReceipt/v1",
+  "semantic_reference_closure_proved": false,
+  "status": "PASS",
+  "unresolved_count": 0
+}
