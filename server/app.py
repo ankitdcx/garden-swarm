@@ -10,6 +10,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from server.mcp_service import mcp, streamable_http_app
+from server.root_validation import validate_garden_root
 
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
 _RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
@@ -28,20 +29,8 @@ READABLE = {
 
 
 def _validated_root(root: Path) -> Path:
-    """Require a Garden public-source snapshot rather than trusting an arbitrary root."""
-    resolved = root.resolve()
-    manifest = resolved / "SOURCE_MANIFEST.json"
-    version = resolved / "VERSION"
-    if not manifest.is_file() or not version.is_file():
-        raise RuntimeError(
-            "GARDEN_REPO_ROOT must contain SOURCE_MANIFEST.json and VERSION"
-        )
-    try:
-        data = json.loads(manifest.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise RuntimeError("GARDEN_REPO_ROOT has an unreadable source manifest") from exc
-    if not data.get("release") or not isinstance(data.get("canonical_files"), list):
-        raise RuntimeError("GARDEN_REPO_ROOT source manifest is not a recognized Garden release manifest")
+    """Require a self-consistent Garden public-source snapshot."""
+    resolved, _ = validate_garden_root(root)
     return resolved
 
 

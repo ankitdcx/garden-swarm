@@ -9,6 +9,8 @@ from urllib.parse import urlparse
 from mcp.server import MCPServer
 from mcp.server.transport_security import TransportSecuritySettings
 
+from server.root_validation import validate_garden_root
+
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
 DESIGN_EPOCH_REF = "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598"
 MCP_ENVELOPE_ID = "AGENT-ENVELOPE-GARDEN-PUBLIC-MCP-v1"
@@ -27,11 +29,7 @@ mcp = MCPServer(
 
 
 def _validated_root(root: Path) -> Path:
-    resolved = root.resolve()
-    manifest = resolved / "SOURCE_MANIFEST.json"
-    version = resolved / "VERSION"
-    if not manifest.is_file() or not version.is_file():
-        raise RuntimeError("GARDEN_REPO_ROOT must contain SOURCE_MANIFEST.json and VERSION")
+    resolved, _ = validate_garden_root(root)
     return resolved
 
 

@@ -58,13 +58,44 @@ def test_discovery_protocol_status_is_bounded():
     assert data['mcp'].endswith('/mcp/')
 
 
+def _write_release_fixture(tmp_path):
+    (tmp_path / 'VERSION').write_text(
+        'Garden v15.5\nGSL v45.1\nRelease date: 2026-09-12\n',
+        encoding='utf-8',
+    )
+    (tmp_path / 'SOURCE_MANIFEST.json').write_text(
+        json.dumps({
+            'release': 'Garden-v15.5-2026-09-12',
+            'gsl': 'v45.1',
+            'canonical_files': [],
+        }),
+        encoding='utf-8',
+    )
+
+
 def test_repository_root_requires_garden_release_sentinels(tmp_path):
     with pytest.raises(RuntimeError):
         _validated_root(tmp_path)
 
-    (tmp_path / 'VERSION').write_text('Garden v15.5\n', encoding='utf-8')
-    (tmp_path / 'SOURCE_MANIFEST.json').write_text(
-        json.dumps({'release': 'Garden-v15.5-test', 'canonical_files': []}),
+    _write_release_fixture(tmp_path)
+    assert _validated_root(tmp_path) == tmp_path.resolve()
+
+
+def test_repository_root_rejects_version_manifest_mismatch(tmp_path):
+    _write_release_fixture(tmp_path)
+    (tmp_path / 'VERSION').write_text(
+        'Garden v15.4\nGSL v45.1\nRelease date: 2026-09-12\n',
         encoding='utf-8',
     )
-    assert _validated_root(tmp_path) == tmp_path.resolve()
+    with pytest.raises(RuntimeError, match='VERSION does not match'):
+        _validated_root(tmp_path)
+
+
+def test_repository_root_rejects_missing_gsl_version_line(tmp_path):
+    _write_release_fixture(tmp_path)
+    (tmp_path / 'VERSION').write_text(
+        'Garden v15.5\nRelease date: 2026-09-12\n',
+        encoding='utf-8',
+    )
+    with pytest.raises(RuntimeError, match='VERSION does not match'):
+        _validated_root(tmp_path)
