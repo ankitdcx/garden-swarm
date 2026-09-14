@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 25
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.5-flash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,6 +37,9 @@ jobs:
 
       - name: Review exactly one rotated Design Review Matrix target
         run: python -m tools.matrix_design_review
+
+      - name: Run independent Gemini free-tier reviewer when quota-preservation schedule allows
+        run: python tools/run_gemini_free_review.py
 
       - name: Enforce target binding, independent-review, zero-cost, and no-auto-admission boundaries
         run: |
@@ -106,9 +111,12 @@ jobs:
           python - <<'PY'
           import json, os
           from datetime import datetime, timezone
+          from pathlib import Path
 
           bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
           target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
+          gemini_path = Path('agents/outbox/hourly/gemini-review.json')
+          gemini = json.load(open(gemini_path, encoding='utf-8')) if gemini_path.exists() else None
           receipt = {
               'schema': 'GardenHourlyDesignReviewReceipt/v1',
               'created_at': datetime.now(timezone.utc).isoformat(),
@@ -121,6 +129,7 @@ jobs:
               'selection_receipt': 'agents/runtime/design-target-selection.json',
               'bundle_sha256': bundle['bundle_sha256'],
               'review_status': bundle['status'],
+              'gemini_review': gemini,
               'semantic_delta_admitted': False,
               'admission_status': 'PROPOSALS_ONLY_NEEDS_GSL_INTEGRATOR_AND_WHOLE_SOURCE_CROSS_REFERENCE',
           }
@@ -139,6 +148,7 @@ jobs:
             agents/runtime/free-selection.json
             agents/outbox/hourly/design-review-bundle.json
             agents/outbox/hourly/combined-receipt.json
+            agents/outbox/hourly/gemini-review.json
             agents/outbox/hourly/matrix-review/*.json
           if-no-files-found: error
           retention-days: 30
