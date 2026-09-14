@@ -10,7 +10,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from server.mcp_service import mcp, streamable_http_app
-from server.root_validation import validate_garden_root
 
 ROOT = Path(os.getenv("GARDEN_REPO_ROOT", Path(__file__).resolve().parents[1])).resolve()
 _RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
@@ -30,7 +29,47 @@ READABLE = {
 
 def _validated_root(root: Path) -> Path:
     """Require a self-consistent Garden public-source snapshot."""
-    resolved, _ = validate_garden_root(root)
+    resolved = root.resolve()
+    manifest = resolved / "SOURCE_MANIFEST.json"
+    version = resolved / "VERSION"
+    if not manifest.is_file() or not version.is_file():
+        raise RuntimeError(
+            "GARDEN_REPO_ROOT must contain SOURCE_MANIFEST.json and VERSION"
+        )
+    try:
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT has an unreadable source manifest") from exc
+
+    release = data.get("release")
+    gsl = data.get("gsl")
+    canonical_files = data.get("canonical_files")
+    if not isinstance(release, str) or not isinstance(gsl, str) or not isinstance(canonical_files, list):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest is not a recognized Garden release manifest")
+    if not release.startswith("Garden-v"):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized")
+    try:
+        release_version, release_date = release.removeprefix("Garden-v").split("-", 1)
+    except ValueError as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized") from exc
+    if not release_version or not release_date or not all(part.isdigit() for part in release_version.split(".")):
+        raise RuntimeError("GARDEN_REPO_ROOT source manifest release identifier is not recognized")
+
+    try:
+        version_lines = {
+            line.strip()
+            for line in version.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+    except OSError as exc:
+        raise RuntimeError("GARDEN_REPO_ROOT has an unreadable VERSION file") from exc
+    required_version_lines = {
+        f"Garden v{release_version}",
+        f"GSL {gsl}",
+        f"Release date: {release_date}",
+    }
+    if not required_version_lines.issubset(version_lines):
+        raise RuntimeError("GARDEN_REPO_ROOT VERSION does not match SOURCE_MANIFEST.json")
     return resolved
 
 
