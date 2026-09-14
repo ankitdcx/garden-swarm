@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Select distinct OpenRouter :free families for one matrix review execution."""
+"""Select distinct OpenRouter :free families for one matrix review execution.
+
+The Garden semantic-admission quorum is enforced downstream, not by this execution-budget selector.
+"""
 from __future__ import annotations
 
 import argparse
