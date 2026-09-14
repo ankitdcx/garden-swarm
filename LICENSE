@@ -1,4 +1,4 @@
-GARDEN CONDITIONAL USE LICENSE v0.1
+GARDEN CONDITIONAL USE LICENSE v0.2
 
 This is a custom conditional-use license. It is not an OSI-approved open-source
 license.
@@ -74,7 +74,36 @@ outside a Garden implementation satisfying Sections 2 and 3.
 Payment of the Garden contribution/tax does not convert an outside-Garden use
 into a permitted use.
 
-5. Inspection, criticism, and evaluation
+5. Unauthorized outside-Garden use and agreed economic remedy
+
+By exercising any permission under this license, or otherwise assenting to these
+terms while accessing, copying, implementing, modifying, distributing, or using
+Covered Garden Material, a person or entity agrees that any outside-Garden use
+of Covered Garden Material or legally protected Garden rights without applicable
+approval is unauthorized.
+
+For such unauthorized outside-Garden use, and to the maximum extent permitted by
+applicable law, the user agrees to pay an amount equal to 1000% (ten times) of
+all savings, gains, revenues, cost reductions, profits, economic advantages, or
+other measurable benefits derived from or attributable to the unauthorized use
+of Covered Garden Material or protected Garden rights. The calculation should
+include direct and indirect benefits that can be established with reasonable
+evidence and should avoid double counting the same economic benefit.
+
+This 1000% amount is intended as an agreed contractual remedy for unauthorized
+use where such a remedy is legally enforceable; it does not create intellectual-
+property rights in unprotectable abstract ideas, facts, methods, or concepts. If
+a court or other competent authority determines that the 1000% measure is
+unenforceable, excessive, or constitutes an impermissible penalty, the amount
+shall be reduced to the maximum lawful enforceable amount, without waiving any
+other remedy available under contract, copyright, patent, trade-secret, unjust-
+enrichment, restitution, or other applicable law.
+
+Nothing in this Section grants permission for outside-Garden use merely because
+a user is willing to pay the stated amount. Outside-Garden use remains
+unlicensed unless separately approved by an authorized Garden licensing process.
+
+6. Inspection, criticism, and evaluation
 
 This license does not restrict rights that already exist independently under
 applicable law. Public reading, citation, criticism, comparison, research, and
@@ -83,33 +112,33 @@ law and the repository's notices, provided those activities do not themselves
 amount to an otherwise unlicensed practice or exploitation of protected Garden
 rights.
 
-6. No authority grant
+7. No authority grant
 
 This license grants no political, constitutional, governance, enforcement,
 deployment, certification, or real-world authority. Intellectual-property
 permission and Garden governance authority are separate.
 
-7. Attribution and notices
+8. Attribution and notices
 
 Redistributions or permitted Garden implementations must preserve this LICENSE
 and applicable copyright, patent, provenance, and use notices supplied with the
 Covered Garden Material.
 
-8. Termination
+9. Termination
 
 Permission under this license terminates automatically for a use that ceases to
 satisfy Sections 2 or 3, or that becomes an outside-Garden use prohibited by
 Section 4. Termination does not erase obligations or liabilities that arose
 before termination.
 
-9. No warranty
+10. No warranty
 
 THE COVERED GARDEN MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
 PARTICULAR PURPOSE, NON-INFRINGEMENT, SAFETY, CORRECTNESS, CERTIFICATION, OR
 FITNESS FOR DEPLOYMENT.
 
-10. Legal boundary
+11. Legal boundary
 
 Patentability, copyright scope, enforceability, independent creation, lawful
 exceptions, exhaustion, compulsory licensing, interoperability rights, fair
