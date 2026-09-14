@@ -4,7 +4,7 @@ These tools are bounded public-source review utilities. They do not have canonic
 
 ## Gemini pair
 
-- `gemini_free_review.py` performs the direct Google Gemini Developer API review and writes a proposal-only `gemini-review.json` receipt.
+- `gemini_free_review.py` performs the direct Google Gemini Developer API review and writes a proposal-only generated review receipt under the ignored agent outbox runtime area.
 - `run_gemini_free_review.py` is only the quota-preserving scheduler/wrapper. It either invokes `gemini_free_review.py` on the configured cadence or writes an explicit `SKIPPED_FREE_QUOTA_PRESERVATION` availability receipt.
 
 The two files are intentionally separate so provider logic and quota policy can evolve independently. The wrapper must never be interpreted as a second independent Gemini reviewer.
