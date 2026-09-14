@@ -1,0 +1,45 @@
+{
+  "schema": "GardenOpenRouterPaidReviewPolicy/v1",
+  "purpose": "ROUTINE_HOURLY_PUBLIC_DESIGN_REVIEW",
+  "design_epoch": "v15.5",
+  "catalog_reference_date": "2026-09-14",
+  "public_only": true,
+  "semantic_delta_admitted": false,
+  "budget_pools_usd": {
+    "routine": 9.0,
+    "challenger": 3.0,
+    "escalation": 5.0,
+    "emergency_reserve": 3.0
+  },
+  "routine_hourly_cost_ceiling_usd": 0.05,
+  "routine_model_call_cost_ceiling_usd": 0.025,
+  "max_prompt_characters": 140000,
+  "max_output_tokens": 1800,
+  "provider_policy": {
+    "sort": "price",
+    "allow_fallbacks": true,
+    "data_collection": "deny",
+    "max_price_usd_per_million_tokens": {
+      "prompt": 0.25,
+      "completion": 0.75
+    }
+  },
+  "routine_reviewers": [
+    {
+      "family": "deepseek",
+      "role": "adversarial_reasoning",
+      "model": "deepseek/deepseek-v4-flash-0731"
+    },
+    {
+      "family": "qwen",
+      "role": "architecture_and_code",
+      "model": "qwen/qwen3.7-flash"
+    }
+  ],
+  "notes": [
+    "Routine paid reviewers produce proposal evidence only.",
+    "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
+    "ChatGPT and Gemini remain separate independent lanes.",
+    "Escalation and emergency pools are not spendable by this routine runner."
+  ]
+}
