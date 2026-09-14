@@ -1,0 +1,68 @@
+{
+  "schema": "GardenFunctionContractRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "coverage_scope": ["semantically consequential swarm entry points"],
+  "binding_rule": "Direct contracts are required here for swarm functions that classify collisions, compose candidate findings, or call external model providers. Generated contracts remain permitted for mechanical helpers.",
+  "contracts": [
+    {
+      "contract_id": "FC-SWARM-SYNTHESIZE-v1",
+      "owner_qualified_name": "swarm.synthesize.synthesize",
+      "implementation_source": "swarm/synthesize.py",
+      "inputs": ["GardenSwarmRunReceipt-like mapping"],
+      "outputs": ["GardenSwarmCandidateSynthesis/v0.1 mapping"],
+      "closed_effect_vector": ["LOCAL_COMPUTE"],
+      "authority_requirement": "Synthesis may normalize, preserve provenance and exact-deduplicate candidates only. It may not establish truth, severity, admission, canonical promotion, merge authority or majority-vote acceptance.",
+      "failure_mode_set": ["MALFORMED_RESULT", "INVALID_JSON", "EMPTY_OUTPUT", "OUTPUT_NOT_OBJECT"],
+      "result_algebra": "CANDIDATES_ONLY_NOT_ADMITTED; every surviving candidate is forced to NEEDS_CROSS_REFERENCE.",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": ["GardenSwarmRunReceipt/v0.1", "whole-corpus cross-reference gate", "source identity and role/model provenance"],
+      "resource_and_termination_bounds": "Finite traversal over supplied results/findings; exact-hash deduplication only.",
+      "provenance": ["swarm/synthesize.py", "GSL-COMPARE", "Reason", "Evidence", "no-majority-vote rule"]
+    },
+    {
+      "contract_id": "FC-SWARM-INTEGRATION-COMPARE-INTENTS-v1",
+      "owner_qualified_name": "swarm.integration_provenance.compare_intents",
+      "implementation_source": "swarm/integration_provenance.py",
+      "inputs": ["AgentWorkIntent", "AgentWorkIntent"],
+      "outputs": ["potential-collision comparison mapping"],
+      "closed_effect_vector": ["LOCAL_COMPUTE"],
+      "authority_requirement": "Comparison grants no integration or merge authority; semantic overlap can only increase review requirements.",
+      "failure_mode_set": ["MALFORMED_INTENT"],
+      "result_algebra": "POTENTIAL_COLLISION | NO_OVERLAP with explicit reasons and required-receipt bit.",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": ["AgentWorkIntent/v1", "path/symbol/domain/invariant/contract overlap semantics"],
+      "resource_and_termination_bounds": "Finite set/path comparisons over supplied intents.",
+      "provenance": ["agents/INTEGRATION_PROVENANCE.md", "swarm/integration_provenance.py"]
+    },
+    {
+      "contract_id": "FC-SWARM-INTEGRATION-ASSESS-INTENTS-v1",
+      "owner_qualified_name": "swarm.integration_provenance.assess_intents",
+      "implementation_source": "swarm/integration_provenance.py",
+      "inputs": ["current AgentWorkIntent", "other AgentWorkIntents", "optional IntegrationReceipt"],
+      "outputs": ["IntegrationGuardReceipt/v1 mapping"],
+      "closed_effect_vector": ["LOCAL_COMPUTE"],
+      "authority_requirement": "PASS means only that declared supplied intents satisfy this guard. Missing/stale/undeclared work cannot be inferred away and the guard grants no merge/canonical authority.",
+      "failure_mode_set": ["REQUIRES_INTEGRATION_RECEIPT", "BLOCKED", "MALFORMED_INTENT", "INVALID_RECEIPT"],
+      "result_algebra": "PASS | REQUIRES_INTEGRATION_RECEIPT | BLOCKED with explicit uncertainty.",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": ["AgentWorkIntent/v1", "IntegrationReceipt/v1", "base SHA"],
+      "resource_and_termination_bounds": "Finite over supplied intents and one optional receipt.",
+      "provenance": ["agents/INTEGRATION_PROVENANCE.md", "swarm/integration_provenance.py"]
+    },
+    {
+      "contract_id": "FC-SWARM-ORCHESTRATOR-CALL-OPENROUTER-v1",
+      "owner_qualified_name": "swarm.orchestrator.call_openrouter",
+      "implementation_source": "swarm/orchestrator.py",
+      "inputs": ["Role", "WorkItem", "max_tokens", "reasoning_effort", "public_free"],
+      "outputs": ["RunResult"],
+      "closed_effect_vector": ["READ_PUBLIC_SOURCE", "EXTERNAL_MODEL_CALL", "LOCAL_COMPUTE"],
+      "authority_requirement": "External model output is PROPOSALS_ONLY and never receives merge, deployment, canonical-promotion or private-source authority.",
+      "failure_mode_set": ["MISSING_KEY", "HTTP_ERROR", "PROVIDER_UNAVAILABLE", "INVALID_PROVIDER_RESPONSE"],
+      "result_algebra": "RunResult[OK|ERROR] preserving returned model, usage, annotations and error text.",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": ["OpenRouter provider policy", "Role", "WorkItem source SHA", "public-free/ZDR mode"],
+      "resource_and_termination_bounds": "One provider call with bounded timeout and configured max tokens.",
+      "provenance": ["swarm/orchestrator.py", "PROPOSALS_ONLY"]
+    }
+  ]
+}

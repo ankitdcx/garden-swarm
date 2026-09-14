@@ -1,0 +1,8 @@
+# Generated agent/runtime state and receipts are CI artifacts, not repository source.
+agents/runtime/
+agents/outbox/
+swarm/runs/
+
+# Local Python noise.
+__pycache__/
+*.pyc

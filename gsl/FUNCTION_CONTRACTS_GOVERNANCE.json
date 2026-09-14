@@ -1,0 +1,23 @@
+{
+  "schema": "GardenFunctionContractRegistry/v1",
+  "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "coverage_scope": ["repository governance decision points"],
+  "binding_rule": "Repository functions that decide whether a constitutional change may proceed require an individually authored direct FunctionContract rather than only a generated path template.",
+  "contracts": [
+    {
+      "contract_id": "FC-REPO-CONSTITUTIONAL-CHANGE-GUARD-v1",
+      "owner_qualified_name": "scripts.check_constitutional_change.evaluate",
+      "implementation_source": "scripts/check_constitutional_change.py",
+      "inputs": ["observed changed repository paths"],
+      "outputs": ["GardenConstitutionalChangeGuardReceipt/v1 mapping"],
+      "closed_effect_vector": ["READ_REPOSITORY_POLICY", "LOCAL_COMPUTE"],
+      "authority_requirement": "The guard cannot approve a constitutional change. With no external/trusted-base approval verifier implemented, any constitutional-path change must return ESCALATE.",
+      "failure_mode_set": ["ESCALATE", "MALFORMED_CHANGE_POLICY", "RESOURCE_UNAVAILABLE"],
+      "result_algebra": "PASS only when no declared constitutional path changed; otherwise ESCALATE with explicit touched paths and no approval authority.",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": ["gsl/CHANGE_POLICY.json constitutional_paths", "observed Git diff path set"],
+      "resource_and_termination_bounds": "Finite set intersection over observed changed paths.",
+      "provenance": ["gsl/CHANGE_POLICY.json", "constitutional_rule"]
+    }
+  ]
+}

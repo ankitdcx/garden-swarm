@@ -1,0 +1,42 @@
+name: Garden constitutional path guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compute observed changed paths
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > /tmp/changed-paths.txt
+          elif [ "${{ github.event_name }}" = "push" ] && git rev-parse HEAD^ >/dev/null 2>&1; then
+            git diff --name-only HEAD^ HEAD > /tmp/changed-paths.txt
+          else
+            : > /tmp/changed-paths.txt
+          fi
+          cat /tmp/changed-paths.txt
+      - name: Enforce constitutional candidate boundary
+        run: python scripts/check_constitutional_change.py --paths-file /tmp/changed-paths.txt --output /tmp/constitutional-change-guard.json
+      - name: Upload guard receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: constitutional-change-guard-${{ github.run_id }}
+          path: /tmp/constitutional-change-guard.json
+          if-no-files-found: warn
+          retention-days: 30
