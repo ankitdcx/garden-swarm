@@ -67,6 +67,7 @@ What remains unknown, unproved, unimplemented, or unvalidated?
 - [ ] I did not silently change canonical v15.5 source semantics.
 - [ ] I added or updated regression tests/checks where applicable.
 - [ ] I declared the actual and semantic work set for guarded multi-agent changes.
+- [ ] I checked that existing workflows still trigger and pass for the changed paths.
 - [ ] I did not treat textual merge success as proof of semantic compatibility.
 - [ ] I did not include secrets, credentials, or unnecessary personal data.
 - [ ] I read `CONTRIBUTING.md` and `PATENT_AND_USE_NOTICE.md`.

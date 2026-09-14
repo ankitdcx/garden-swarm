@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
     paths:
+      - 'server/**'
+      - 'SOURCE_MANIFEST.json'
+      - 'VERSION'
+      - 'TASKS.md'
+      - 'EVALUATE_IN_60_MINUTES.md'
+      - 'EVALUATION_LOG.md'
+      - 'GARDEN_FOR_AGI.md'
       - '.github/workflows/live-mcp-verification.yml'
   workflow_dispatch:
 
@@ -15,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      GARDEN_BASE_URL: https://garden-swarm.onrender.com
+      GARDEN_BASE_URL: ${{ vars.GARDEN_BASE_URL || 'https://garden-swarm.onrender.com' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,16 +33,27 @@ jobs:
       - name: Verify public HTTPS and MCP
         run: |
           python - <<'PY'
-          import asyncio, json, os, urllib.request
+          import asyncio, json, os, urllib.error, urllib.request
           from datetime import datetime, timezone
           from mcp import Client
 
           base = os.environ['GARDEN_BASE_URL'].rstrip('/')
 
           def get_json(path):
-              with urllib.request.urlopen(base + path, timeout=30) as r:
-                  assert r.status == 200, (path, r.status)
-                  return json.loads(r.read().decode('utf-8'))
+              url = base + path
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as r:
+                      if r.status != 200:
+                          raise RuntimeError(f'HTTP_VERIFICATION_FAILED:{path}:status={r.status}')
+                      return json.loads(r.read().decode('utf-8'))
+              except urllib.error.HTTPError as exc:
+                  raise RuntimeError(
+                      f'HTTP_VERIFICATION_FAILED:{path}:status={exc.code}'
+                  ) from exc
+              except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                  raise RuntimeError(
+                      f'SERVICE_UNREACHABLE:{url}:{type(exc).__name__}:{exc}'
+                  ) from exc
 
           health = get_json('/healthz')
           assert health['status'] == 'ok'
@@ -68,9 +86,13 @@ jobs:
                       'current_release': result.structured_content,
                   }
 
-          mcp_result = asyncio.run(verify_mcp())
+          try:
+              mcp_result = asyncio.run(asyncio.wait_for(verify_mcp(), timeout=60))
+          except TimeoutError as exc:
+              raise RuntimeError('MCP_VERIFICATION_TIMEOUT:60s') from exc
+
           receipt = {
-              'schema': 'GardenLiveMCPVerificationReceipt/v0.1',
+              'schema': 'GardenLiveMCPVerificationReceipt/v0.2',
               'verified_at': datetime.now(timezone.utc).isoformat(),
               'verifier_environment': 'github-actions-ubuntu-latest',
               'base_url': base,

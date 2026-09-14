@@ -1,23 +1,26 @@
-name: Garden free ZDR probe
+name: Garden free ZDR request probe
 
 on:
   push:
-    branches: [garden-swarm-orchestrator]
+    branches: [main]
     paths:
       - 'swarm/roles-free-zdr.json'
       - 'swarm/orchestrator.py'
+      - 'swarm/tests/test_zdr_request_policy.py'
       - '.github/workflows/swarm-free-zdr-probe.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: garden-free-zdr-probe
+  cancel-in-progress: false
+
 jobs:
   free-zdr-probe:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +30,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run one zero-dollar free-model probe with ZDR enforced
+      - name: Verify the live code path requests ZDR
+        run: python -m unittest swarm.tests.test_zdr_request_policy -v
+
+      - name: Run one zero-dollar free-model probe with ZDR requested
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           python swarm/orchestrator.py \
             --roles swarm/roles-free-zdr.json \
@@ -40,7 +48,7 @@ jobs:
             --reasoning-effort none \
             --output swarm/runs/free-zdr-probe.json
 
-      - name: Verify usable zero-cost response
+      - name: Verify usable zero-cost response without overclaiming provider attestation
         run: |
           python - <<'PY'
           import json
@@ -64,6 +72,7 @@ jobs:
           cost = (r.get('usage') or {}).get('cost')
           if cost not in (0, 0.0, None):
               raise SystemExit(f'Expected zero-dollar inference, got cost={cost}')
+          print('ZDR_REQUESTED_BY_CLIENT_CODE; PROVIDER_SIDE_ZDR_ATTESTATION_NOT_AVAILABLE_IN_THIS_RESPONSE')
           PY
 
       - name: Upload probe receipt
