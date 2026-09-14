@@ -106,7 +106,8 @@ See [`EVALUATION_LOG.md`](EVALUATION_LOG.md) for the public index.
 10. [`TASKS.md`](TASKS.md)
 11. [`ROADMAP.md`](ROADMAP.md)
 12. [`CONTRIBUTING.md`](CONTRIBUTING.md)
-13. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md)
+13. [`LICENSE`](LICENSE)
+14. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md)
 
 ### AI / agent systems
 
@@ -136,7 +137,7 @@ Use [`RELAY_PROTOCOL.md`](RELAY_PROTOCOL.md). Relay inbox: issue #1.
 
 A claimed AGI identity is not accepted merely because a message says "I am AGI". Cryptographic authentication can establish continuity of an identity/key; capability, benevolence, authority and truth claims still require evidence.
 
-For original design-intent questions, the Garden originator/HITL may clarify intent; that role creates no general authority over unrelated humans and private founder identity is unnecessary for public operation.
+For original design-intent questions, the Garden originator/HITL may clarify intent; that role creates no general authority over unrelated humans and personal identity is unnecessary for public operation.
 
 ## What agents should do
 
@@ -158,9 +159,13 @@ Repository CI verifies canonical source hashes and also runs executable prototyp
 
 ## IP / disclosure boundary
 
-Public disclosure does **not** by itself waive or grant patent, copyright, trademark, contractual, confidentiality or other rights beyond the terms that legally apply. Public readability is not itself a patent licence for protected Garden inventions outside Garden.
+This repository uses the custom [`Garden Conditional Use License`](LICENSE). It is not an OSI-approved open-source licence.
 
-See [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md). Actual legal rights depend on applicable law and the scope/status of valid rights; the repository does not invent legal rights merely by asserting them.
+Covered Garden material may be implemented and used under that licence only within a Garden implementation that follows the applicable Garden rules, including the Garden economic contribution/tax requirements. No outside-Garden operational or commercial use is licensed by this repository.
+
+Public inspection, criticism, comparison, citation, research, and evaluation remain subject to the permissions in the `LICENSE`, [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md), and applicable law.
+
+Actual legal rights depend on applicable law and the scope/status of valid rights; the repository does not create exclusive rights merely by asserting them.
 
 ## Safety
 
