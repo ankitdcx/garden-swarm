@@ -38,6 +38,7 @@ jobs:
       - name: Review exactly one rotated Design Review Matrix target
         run: python -m tools.matrix_design_review
 
+      # Gemini is a separate provider-family input and remains proposal-only.
       - name: Run independent Gemini free-tier reviewer when quota-preservation schedule allows
         run: python tools/run_gemini_free_review.py
 
