@@ -1,0 +1,58 @@
+name: Garden exact PR repository-review quorum
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-pr-repo-quorum-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify PR-quorum parser boundaries offline
+        run: python -m pytest -q tests/test_pr_repo_quorum.py
+      - name: Run blind plus peer cross-examination on exact PR diff
+        if: github.event_name == 'pull_request'
+        run: python -m tools.pr_repo_quorum
+      - name: Require at least three valid independent families in both rounds
+        if: github.event_name == 'pull_request'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('agents/outbox/pr-review/quorum.json').read_text())
+          assert p['schema'] == 'GardenExactPRReviewQuorumReceipt/v1'
+          assert p['minimum_independent_families'] >= 3
+          assert len(set(p['blind_families'])) >= 3, p['blind_families']
+          assert len(set(p['final_families'])) >= 3, p['final_families']
+          assert p['status'] == 'PASS_REVIEW_QUORUM'
+          assert p['semantic_delta_admitted'] is False
+          assert p['target']['base_sha'] == '${{ github.event.pull_request.base.sha }}'
+          assert p['target']['head_sha'] == '${{ github.event.pull_request.head.sha }}'
+          print(json.dumps({'status': p['status'], 'blind': p['blind_families'], 'final': p['final_families'], 'target_hash': p['target']['full_diff_sha256']}))
+          PY
+      - name: Upload immutable PR review evidence
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-pr-review-quorum-${{ github.run_id }}
+          path: agents/outbox/pr-review/**
+          if-no-files-found: warn
+          retention-days: 30
