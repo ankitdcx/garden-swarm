@@ -8,7 +8,13 @@ from typing import Callable
 class ConstitutionalCheck(str, Enum):
     PASS = "PASS"
     VETO = "VETO"
+    INCONCLUSIVE = "INCONCLUSIVE"
     UNKNOWN = "UNKNOWN"
+
+
+class ConstitutionalEventKind(str, Enum):
+    CHECK = "CHECK"
+    VIOLATION = "VIOLATION"
 
 
 class HardeningDecision(str, Enum):
@@ -24,6 +30,23 @@ class ConstitutionalEvent:
     check_result: ConstitutionalCheck
     design_epoch: str
     rights: tuple[str, ...] = ()
+    kind: ConstitutionalEventKind | None = None
+
+
+@dataclass(frozen=True)
+class VerifiedContainmentAdmission:
+    """Positive containment admission produced by a separate trusted authority path.
+
+    This reference object does not mint or verify authority by itself. Callers may
+    supply it only after the applicable authority/admission mechanism has verified
+    the containment decision. Its purpose here is to make the separation between a
+    ConstitutionalEvent and a later containment execution mechanically visible.
+    """
+
+    admission_id: str
+    constitutional_event_id: str
+    decision_ref: str
+    design_epoch: str
 
 
 @dataclass(frozen=True)
@@ -47,29 +70,93 @@ class HardeningResult:
 EventWriter = Callable[[ConstitutionalEvent], bool]
 
 
+def _effective_event_kind(event: ConstitutionalEvent) -> ConstitutionalEventKind:
+    """Return a conservative default kind without hiding an explicit producer value."""
+    if event.kind is not None:
+        return event.kind
+    if event.check_result is ConstitutionalCheck.VETO:
+        return ConstitutionalEventKind.VIOLATION
+    return ConstitutionalEventKind.CHECK
+
+
+def _validate_constitutional_event(event: ConstitutionalEvent) -> tuple[str, ...]:
+    """Validate only cross-field coherence already implied by v15.5 conformance tests."""
+    kind = _effective_event_kind(event)
+    if event.check_result is ConstitutionalCheck.PASS and kind is not ConstitutionalEventKind.CHECK:
+        return ("PASS_REQUIRES_CHECK_KIND",)
+    return ()
+
+
 def enforce_constitutional_event(event: ConstitutionalEvent, writer: EventWriter) -> HardeningResult:
     """Non-certified fail-closed fixture for a consequential constitutional gate.
 
-    A VETO never becomes ALLOW because event persistence/routing failed. Unknown gate
-    state escalates. PASS still requires durable event recording in this fixture.
+    A VETO never becomes ALLOW because event persistence/routing failed. UNKNOWN or
+    INCONCLUSIVE never authorizes consequential continuation. PASS still requires a
+    durable event record. Contradictory typed states fail closed for review.
     """
+    coherence_errors = _validate_constitutional_event(event)
+    if coherence_errors:
+        return HardeningResult(
+            HardeningDecision.ESCALATE,
+            tuple(f"CONSTITUTIONAL_EVENT_INVALID:{reason}" for reason in coherence_errors),
+        )
+
     try:
         persisted = bool(writer(event))
     except Exception:
         persisted = False
 
     if event.check_result is ConstitutionalCheck.VETO:
+        reasons = ["CONSTITUTIONAL_VETO"]
         if not persisted:
-            return HardeningResult(HardeningDecision.BLOCK, ("CONSTITUTIONAL_VETO", "EVENT_PERSISTENCE_FAILED"))
-        return HardeningResult(HardeningDecision.BLOCK, ("CONSTITUTIONAL_VETO",))
+            reasons.append("EVENT_PERSISTENCE_FAILED")
+        return HardeningResult(HardeningDecision.BLOCK, tuple(reasons))
 
-    if event.check_result is ConstitutionalCheck.UNKNOWN:
-        return HardeningResult(HardeningDecision.ESCALATE, ("CONSTITUTIONAL_CHECK_UNKNOWN",))
+    if event.check_result in {ConstitutionalCheck.UNKNOWN, ConstitutionalCheck.INCONCLUSIVE}:
+        reason = (
+            "CONSTITUTIONAL_CHECK_UNKNOWN"
+            if event.check_result is ConstitutionalCheck.UNKNOWN
+            else "CONSTITUTIONAL_CHECK_INCONCLUSIVE"
+        )
+        reasons = [reason]
+        if not persisted:
+            reasons.append("EVENT_PERSISTENCE_FAILED")
+        return HardeningResult(HardeningDecision.ESCALATE, tuple(reasons))
 
     if not persisted:
         return HardeningResult(HardeningDecision.ESCALATE, ("EVENT_PERSISTENCE_FAILED",))
 
     return HardeningResult(HardeningDecision.ALLOW, ("CONSTITUTIONAL_CHECK_PASS_RECORDED",))
+
+
+def _validate_containment_admission(
+    event: ConstitutionalEvent,
+    admission: VerifiedContainmentAdmission | None,
+    *,
+    current_design_epoch: str,
+) -> HardeningResult:
+    """Validate binding of a separately verified containment admission.
+
+    This private fixture helper does not mint or verify authority. The caller must
+    obtain `VerifiedContainmentAdmission` from the separately governed authority/
+    execution-admission path. The event itself is never sufficient authority.
+    """
+    reasons: list[str] = []
+    if admission is None:
+        reasons.append("SEPARATE_CONTAINMENT_ADMISSION_REQUIRED")
+    else:
+        if admission.constitutional_event_id != event.event_id:
+            reasons.append("CONTAINMENT_ADMISSION_EVENT_MISMATCH")
+        if admission.design_epoch != event.design_epoch:
+            reasons.append("CONTAINMENT_ADMISSION_EVENT_EPOCH_MISMATCH")
+        if admission.design_epoch != current_design_epoch:
+            reasons.append("CONTAINMENT_ADMISSION_STALE_DESIGN_EPOCH")
+        if not admission.admission_id.strip() or not admission.decision_ref.strip():
+            reasons.append("CONTAINMENT_ADMISSION_REFERENCE_INVALID")
+
+    if reasons:
+        return HardeningResult(HardeningDecision.BLOCK, tuple(reasons))
+    return HardeningResult(HardeningDecision.ALLOW, ("SEPARATE_CONTAINMENT_ADMISSION_BOUND",))
 
 
 def validate_authority_lease(
