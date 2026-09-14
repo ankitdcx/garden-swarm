@@ -1,0 +1,19 @@
+name: Garden delete final invalid public branch
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  delete:
+    if: github.head_ref == 'maintenance/delete-final-invalid-public-branch-20260914'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete invalid GSL closure branch
+        run: git push origin --delete gsl-full-compliance-20260913
+      - name: Delete cleanup branch
+        run: git push origin --delete "${GITHUB_HEAD_REF}"
