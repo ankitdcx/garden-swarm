@@ -14,6 +14,8 @@ This file is the public reconciliation map for worthy Garden source-design candi
 
 4. **Rationalization & Verification Hardening / ReasoningStrategyPortfolio historical proposal** — must not be silently lost. Status: **reconciliation required**. Compare the earlier ratified design proposal against v15.5 Reason, GSL-COMPARE, AAP, FunctionContracts and verification owners. Mark it fully subsumed with evidence if nothing survives; otherwise requeue only the genuinely missing semantic requirements. NO_CHANGE is preferred over duplicate architecture.
 
+5. **GAIA terminology clarification** — for the Garden v15.6 candidate line, define **GAIA = Garden Artificial Intelligence Architecture**. The expansion applies to GAIA Titanium and GAIA Diamond. `Artificial` is preferred to `Autonomous` because GAIA covers the broader AI/safety/assurance architecture and is not limited to autonomous components. This is terminology-only: no behavioral, authority, HSA, safety-contract, topology, or DesignEpoch change is implied. The private v15.6 candidate registry owns the machine-readable delta; `docs/GAIA.md` records the public candidate explanation.
+
 ## Worthy work that is *not* automatically a Garden source-design delta
 
 - **WP-009H shared DesignEpoch convergence vectors** — important implementation/conformance hardening; already merged in the private build repository. It becomes a source-design delta only if convergence testing exposes a missing semantic requirement.
