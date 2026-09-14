@@ -2,6 +2,7 @@
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
   "purpose": "ROUTINE_HOURLY_PUBLIC_DESIGN_REVIEW",
   "design_epoch": "v15.5",
+  "catalog_reference_date": "2026-09-14",
   "public_only": true,
   "semantic_delta_admitted": false,
   "budget_pools_usd": {
