@@ -1,0 +1,50 @@
+name: Garden final public branch sweep
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  sweep:
+    if: github.head_ref == 'maintenance/final-public-ref-sweep-20260914'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Delete all non-main branches except other currently-open PR heads
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SELF: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, urllib.request
+          token=os.environ['GH_TOKEN']; repo=os.environ['REPO']; self_branch=os.environ['SELF']
+          def api(url):
+              req=urllib.request.Request(url,headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req) as r: return json.loads(r.read().decode())
+          open_prs=api(f'https://api.github.com/repos/{repo}/pulls?state=open&per_page=100')
+          keep={'main'} | {p['head']['ref'] for p in open_prs if p['head']['ref'] != self_branch}
+          subprocess.run(['git','fetch','origin','+refs/heads/*:refs/remotes/origin/*','--prune'],check=True)
+          refs=subprocess.check_output(['git','for-each-ref','--format=%(refname:strip=3)','refs/remotes/origin'],text=True).splitlines()
+          results=[]
+          for b in sorted(set(refs)):
+              if b in {'HEAD', self_branch} or b in keep: continue
+              p=subprocess.run(['git','push','origin','--delete',b],text=True,capture_output=True)
+              results.append({'branch':b,'status':'DELETED' if p.returncode==0 else 'DELETE_FAILED','detail':(p.stderr or p.stdout)[-500:]})
+          with open('/tmp/final-public-ref-sweep.json','w') as f:
+              json.dump({'schema':'GardenFinalPublicBranchSweepReceipt/v1','kept_open_pr_heads':sorted(keep-{'main'}),'results':results},f,indent=2)
+          print(json.dumps({'deleted':sum(x['status']=='DELETED' for x in results),'failed':sum(x['status']!='DELETED' for x in results),'kept':sorted(keep)}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-public-ref-sweep-${{ github.run_id }}
+          path: /tmp/final-public-ref-sweep.json
+          retention-days: 30
+      - name: Delete cleanup branch itself
+        run: git push origin --delete "${GITHUB_HEAD_REF}"
