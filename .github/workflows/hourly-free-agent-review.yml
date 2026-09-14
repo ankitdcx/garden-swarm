@@ -15,7 +15,7 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -32,20 +32,19 @@ jobs:
       - name: Rotate to one bounded Design Review Matrix target this hour
         run: python -m tools.rotate_design_review_target
 
-      - name: Select one rotating OpenRouter free reviewer family
-        run: python -m tools.select_matrix_reviewers --count 1
+      - name: Select three independent OpenRouter free reviewer families
+        run: python -m tools.select_matrix_reviewers --count 3
 
-      - name: Run one quota-bounded OpenRouter review on the active target
-        run: python -m tools.quota_bounded_matrix_review
+      - name: Run blind reviews and peer cross-examination on the active target
+        run: python -m tools.matrix_design_review
 
       - name: Run target-matched Gemini free-tier reviewer when quota schedule allows
         run: python tools/run_gemini_free_review.py
 
-      - name: Enforce target binding, free-route, and no-auto-admission boundaries
+      - name: Enforce target binding, free-route, independence, and no-auto-admission boundaries
         run: |
           python - <<'PY'
           import json
-          from pathlib import Path
 
           matrix = json.load(open('agents/design-review-matrix.json', encoding='utf-8'))
           target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
@@ -56,8 +55,9 @@ jobs:
           selected = selection['selected']
           minimum = int(matrix['minimum_independent_reviewer_families'])
           assert minimum >= 3
-          assert len(selected) == 1
-          assert selected[0]['model'].endswith(':free')
+          assert len(selected) == 3
+          assert len({row['family'] for row in selected}) == len(selected)
+          assert all(row['model'].endswith(':free') for row in selected)
 
           assert target_selection['schema'] == 'GardenDesignTargetSelectionReceipt/v1'
           assert target_selection['selection_mode'] == 'DETERMINISTIC_HOURLY_ROUND_ROBIN'
@@ -70,9 +70,20 @@ jobs:
 
           assert bundle['schema'] == 'GardenDesignReviewBundle/v1'
           assert bundle['target']['target_id'] == target_selection['target_id']
+          assert bundle['minimum_independent_reviewer_families'] == minimum
           assert bundle['semantic_delta_admitted'] is False
-          assert bundle['status'] == 'INSUFFICIENT_INDEPENDENT_REVIEW'
-          assert bundle['execution_policy']['openrouter_max_calls_this_run'] == 1
+          assert bundle['status'] in {
+              'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR',
+              'INSUFFICIENT_INDEPENDENT_REVIEW',
+              'INSUFFICIENT_PEER_CROSS_EXAMINATION',
+              'COST_VERIFICATION_FAILED',
+          }
+          assert bundle['independent_reviewer_family_count'] <= len(selected)
+          assert bundle['final_disposition_family_count'] <= bundle['independent_reviewer_family_count']
+          if bundle['status'] == 'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR':
+              assert bundle['independent_reviewer_family_count'] >= minimum
+              assert bundle['final_disposition_family_count'] >= minimum
+              assert bundle['zero_cost_verified'] is True
 
           if gemini.get('schema') == 'GardenGeminiMatrixReviewReceipt/v1':
               assert gemini['target_id'] == target_selection['target_id']
@@ -80,16 +91,21 @@ jobs:
               assert gemini['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
               assert gemini['semantic_delta_admitted'] is False
           else:
-              assert gemini.get('schema') == 'GardenGeminiAvailabilityReceipt/v1' or gemini.get('schema') == 'GardenGeminiAvailabilityReceipt/v2'
+              assert gemini.get('schema') in {'GardenGeminiAvailabilityReceipt/v1', 'GardenGeminiAvailabilityReceipt/v2'}
               assert gemini.get('admission_status') == 'NO_MODEL_FINDING'
 
           called = [row for row in bundle['provider_attempts'] if row.get('status') == 'CALLED']
-          assert len(called) <= 1
-          assert all((row.get('usage') or {}).get('cost') in (0, 0.0) for row in called)
+          assert len(called) <= 6  # 3 blind + up to 3 peer cross-examination calls
+          assert all((row.get('usage') or {}).get('cost') in (None, 0, 0.0) for row in called)
+          assert all(row.get('cost') in (0, 0.0) for row in called)
+
           print(json.dumps({
               'target_id': target_selection['target_id'],
+              'selected_openrouter_families': [row['family'] for row in selected],
               'openrouter_calls': len(called),
               'openrouter_review_status': bundle['status'],
+              'openrouter_independent_families': bundle['independent_reviewer_family_count'],
+              'openrouter_final_families': bundle['final_disposition_family_count'],
               'gemini_status': gemini.get('status') or (gemini.get('independent_finding') or {}).get('disposition'),
               'semantic_delta_admitted': False,
           }, sort_keys=True))
@@ -115,6 +131,7 @@ jobs:
               'target_count': target_selection['target_count'],
               'selection_receipt': 'agents/runtime/design-target-selection.json',
               'openrouter_bundle_sha256': bundle['bundle_sha256'],
+              'openrouter_review_status': bundle['status'],
               'openrouter_review': bundle,
               'gemini_review': gemini,
               'semantic_delta_admitted': False,
