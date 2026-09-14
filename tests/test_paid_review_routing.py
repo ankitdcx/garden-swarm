@@ -1,10 +1,12 @@
 import json
 import os
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 from tools import run_paid_matrix_review as paid
+from tools import select_paid_matrix_reviewers as selector
 
 
 class _Response:
@@ -45,6 +47,13 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertTrue(provider["allow_fallbacks"])
         self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["prompt"], 0.25)
         self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["completion"], 0.75)
+
+    def test_selector_is_offline_and_does_not_require_provider_key(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(selector, "OUTPUT", Path(tmp) / "selection.json"), patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(selector.main(), 0)
+            receipt = json.loads((Path(tmp) / "selection.json").read_text(encoding="utf-8"))
+        self.assertEqual([row["family"] for row in receipt["selected"]], ["deepseek", "qwen"])
+        self.assertFalse(receipt["semantic_delta_admitted"])
 
     def test_paid_call_transmits_hard_provider_price_ceiling(self):
         selection = {

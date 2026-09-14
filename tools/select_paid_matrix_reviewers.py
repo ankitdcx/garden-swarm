@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 
 POLICY = Path("agents/openrouter-paid-review-policy.json")
@@ -11,8 +10,6 @@ OUTPUT = Path("agents/runtime/paid-selection.json")
 
 
 def main() -> int:
-    if not os.environ.get("OPENROUTER_API_KEY"):
-        raise SystemExit("OPENROUTER_API_KEY is required")
     policy = json.loads(POLICY.read_text(encoding="utf-8"))
     if policy.get("schema") != "GardenOpenRouterPaidReviewPolicy/v1":
         raise SystemExit("unsupported paid-review policy schema")
