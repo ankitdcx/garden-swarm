@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "completed_at": "2026-09-15T06:04:19Z",
+      "conclusion": "success",
+      "details_url": "https://github.com/ankitdcx/garden-swarm/actions/runs/34935313733/job/104271842635",
+      "id": 104271842635,
+      "name": "integration-provenance",
+      "started_at": "2026-09-15T06:04:09Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-09-15T06:04:14Z",
+      "conclusion": "success",
+      "details_url": "https://github.com/ankitdcx/garden-swarm/actions/runs/34935313671/job/104271842500",
+      "id": 104271842500,
+      "name": "guard",
+      "started_at": "2026-09-15T06:04:09Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-09-15T06:04:18Z",
+      "conclusion": "success",
+      "details_url": "https://github.com/ankitdcx/garden-swarm/actions/runs/34935313605/job/104271842053",
+      "id": 104271842053,
+      "name": "verify",
+      "started_at": "2026-09-15T06:04:09Z",
+      "status": "completed"
+    }
+  ],
+  "merged_main_sha": "12c973e2b22f97dec57e1d87d55ba5a9410598ca",
+  "repository": "ankitdcx/garden-swarm",
+  "schema": "GitHubCIObservationReceipt/v1",
+  "scope": "Observed GitHub check metadata for repair PR #176, not artifact content, independent semantic review, or canonical admission",
+  "source_api": "https://api.github.com/repos/ankitdcx/garden-swarm/commits/4e987b353db8abf084decb46dc79426179797589/check-runs",
+  "subject_head_sha": "4e987b353db8abf084decb46dc79426179797589"
+}
