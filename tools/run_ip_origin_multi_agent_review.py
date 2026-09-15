@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -50,17 +51,74 @@ PROTECTION_BY_CODE = {
     "L": "CONTRACT_LICENSE",
     "A": "ABSTRACT_IDEA_NO_AUTOMATIC_EXCLUSIVITY",
 }
+CODE_BY_PROTECTION = {v: k for k, v in PROTECTION_BY_CODE.items()}
 CONFIDENCE_BY_CODE = {"L": "LOW", "M": "MEDIUM", "H": "HIGH"}
+CODE_BY_CONFIDENCE = {v: k for k, v in CONFIDENCE_BY_CODE.items()}
 
 
 def _reasoning_for_family(family: str) -> dict[str, Any] | None:
-    """Use the least-reasoning transport each selected endpoint accepts.
-
-    GLM's current OpenRouter endpoint rejects explicit reasoning=none. Give it
-    low reasoning effort; other approved families use no hidden reasoning so
-    the fixed completion budget is reserved for parseable structured output.
-    """
+    """Use the least-reasoning transport each selected endpoint accepts."""
     return {"effort": "low"} if family == "glm" else {"effort": "none"}
+
+
+def _origin_code(value: Any) -> str:
+    text = str(value).strip()
+    upper = text.upper()
+    if upper in ORIGIN_BY_CODE:
+        return upper
+    if upper in CODE_BY_ORIGIN:
+        return CODE_BY_ORIGIN[upper]
+    raise ValueError(f"bad origin code {text}")
+
+
+def _confidence_code(value: Any) -> str:
+    text = str(value).strip()
+    upper = text.upper()
+    if upper in CONFIDENCE_BY_CODE:
+        return upper
+    if upper in CODE_BY_CONFIDENCE:
+        return CODE_BY_CONFIDENCE[upper]
+    raise ValueError(f"bad confidence code {text}")
+
+
+def _protection_codes(value: Any) -> list[str]:
+    """Normalize harmless model formatting while rejecting unknown semantics.
+
+    Accepted equivalent forms include ``CSA``, ``C,S,A``, ``C S A``,
+    ``["C","S","A"]`` and full registered protection labels. Order is
+    preserved and duplicates collapse. Unknown tokens still fail closed.
+    """
+    if value is None:
+        return []
+    if isinstance(value, list):
+        raw_tokens = [str(x).strip() for x in value]
+    else:
+        text = str(value).strip()
+        if not text or text.upper() in {"NONE", "NA", "N/A", "-"}:
+            return []
+        if re.search(r"[\s,;|/]", text):
+            raw_tokens = [x for x in re.split(r"[\s,;|/]+", text) if x]
+        else:
+            raw_tokens = [text]
+
+    codes: list[str] = []
+    for token in raw_tokens:
+        upper = token.strip().upper()
+        if not upper:
+            continue
+        expanded: list[str]
+        if upper in PROTECTION_BY_CODE:
+            expanded = [upper]
+        elif upper in CODE_BY_PROTECTION:
+            expanded = [CODE_BY_PROTECTION[upper]]
+        elif len(upper) > 1 and all(c in PROTECTION_BY_CODE for c in upper):
+            expanded = list(upper)
+        else:
+            raise ValueError(f"bad protection token {token}")
+        for code in expanded:
+            if code not in codes:
+                codes.append(code)
+    return codes
 
 
 def load_records() -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
@@ -93,12 +151,20 @@ Boundaries: Garden-origin means provenance for a specific mechanism/combination/
 Return ONLY compact JSON with exactly one row per candidate, in the same ID set:
 {{"r":[[id,origin,protections,confidence],...]}}
 origin code: S=supported Garden origin, P=plausible Garden origin, U=uncertain, E=likely pre-existing, D=duplicate/alias.
-protections: a string containing zero or more unique codes from P=patent candidate, C=copyright expression, S=trade-secret candidate, T=trademark candidate, D=design-right candidate, L=contract/licence, A=abstract idea/no automatic exclusivity. Use "" if none.
+protections: use zero or more unique codes P=patent candidate, C=copyright expression, S=trade-secret candidate, T=trademark candidate, D=design-right candidate, L=contract/licence, A=abstract idea/no automatic exclusivity. Compact strings such as "CSA" are preferred; harmless delimiters or an array of these codes are accepted. Use "" if none.
 confidence: L/M/H.
 No explanations, markdown, extra keys, or prose.
 
 Candidates:\n{json.dumps(compact_candidates, ensure_ascii=False, separators=(',', ':'))}
 """
+
+
+def _specialist_row(row: Any) -> tuple[str, Any, Any, Any]:
+    if isinstance(row, list) and len(row) == 4:
+        return str(row[0]), row[1], row[2], row[3]
+    if isinstance(row, dict):
+        return str(row.get("id", "")), row.get("origin"), row.get("protections"), row.get("confidence")
+    raise ValueError("specialist row must be compact list or equivalent object")
 
 
 def _validate_specialist(raw: dict[str, Any], expected: set[str]) -> list[dict[str, Any]]:
@@ -108,17 +174,12 @@ def _validate_specialist(raw: dict[str, Any], expected: set[str]) -> list[dict[s
     seen: set[str] = set()
     out: list[dict[str, Any]] = []
     for row in rows:
-        if not isinstance(row, list) or len(row) != 4:
-            raise ValueError("specialist row must be [id,origin,protections,confidence]")
-        rid, origin_code, protection_codes, confidence_code = map(str, row)
+        rid, origin_value, protection_value, confidence_value = _specialist_row(row)
         if rid not in expected or rid in seen:
             raise ValueError(f"bad id {rid}")
-        if origin_code not in ORIGIN_BY_CODE:
-            raise ValueError(f"bad origin code {origin_code} for {rid}")
-        if confidence_code not in CONFIDENCE_BY_CODE:
-            raise ValueError(f"bad confidence code {confidence_code} for {rid}")
-        if len(set(protection_codes)) != len(protection_codes) or any(c not in PROTECTION_BY_CODE for c in protection_codes):
-            raise ValueError(f"bad protection codes {protection_codes} for {rid}")
+        origin_code = _origin_code(origin_value)
+        confidence_code = _confidence_code(confidence_value)
+        protection_codes = _protection_codes(protection_value)
         seen.add(rid)
         out.append({
             "id": rid,
@@ -138,10 +199,24 @@ Challenge overclaim, prior-art blindness, duplicate/alias counting, protection-c
 
 Return ONLY compact JSON:
 {{"d":[[id,reason,origin,protections,confidence],...],"u":[id,...]}}
-Only include disputed/corrected candidates in d. reason <= 6 words. origin/protections/confidence use the same codes as the specialist protocol. u lists materially unresolved IDs. Empty arrays are valid. No extra keys or prose.
+Only include disputed/corrected candidates in d. reason <= 6 words. origin/protections/confidence use the same codes as the specialist protocol. Harmless protection-code delimiters are accepted. u lists materially unresolved IDs. Empty arrays are valid. No extra keys or prose.
 Allowed IDs: {json.dumps(ids,separators=(',',':'))}
 Specialist judgments: {json.dumps(batch_reviews,ensure_ascii=False,separators=(',',':'))}
 """
+
+
+def _cross_row(row: Any) -> tuple[str, str, Any, Any, Any]:
+    if isinstance(row, list) and len(row) == 5:
+        return str(row[0]), str(row[1]), row[2], row[3], row[4]
+    if isinstance(row, dict):
+        return (
+            str(row.get("id", "")),
+            str(row.get("reason", "")),
+            row.get("origin"),
+            row.get("protections"),
+            row.get("confidence"),
+        )
+    raise ValueError("cross row must be compact list or equivalent object")
 
 
 def _validate_cross(raw: dict[str, Any], expected: set[str]) -> dict[str, Any]:
@@ -152,15 +227,12 @@ def _validate_cross(raw: dict[str, Any], expected: set[str]) -> dict[str, Any]:
     clean_d = []
     seen = set()
     for row in disputes:
-        if not isinstance(row, list) or len(row) != 5:
-            raise ValueError("cross row must be [id,reason,origin,protections,confidence]")
-        rid, reason, origin_code, protection_codes, confidence_code = map(str, row)
+        rid, reason, origin_value, protection_value, confidence_value = _cross_row(row)
         if rid not in expected or rid in seen:
             raise ValueError(f"bad cross id {rid}")
-        if origin_code not in ORIGIN_BY_CODE or confidence_code not in CONFIDENCE_BY_CODE:
-            raise ValueError(f"bad cross codes {rid}")
-        if len(set(protection_codes)) != len(protection_codes) or any(c not in PROTECTION_BY_CODE for c in protection_codes):
-            raise ValueError(f"bad cross protections {rid}")
+        origin_code = _origin_code(origin_value)
+        confidence_code = _confidence_code(confidence_value)
+        protection_codes = _protection_codes(protection_value)
         seen.add(rid)
         clean_d.append({
             "id": rid,
@@ -272,7 +344,7 @@ def main() -> int:
 
     supplement_count = len((supplement or {}).get("additional_records") or [])
     receipt = {
-        "schema": "GardenIPOriginMultiAgentReview/v5",
+        "schema": "GardenIPOriginMultiAgentReview/v6",
         "inventory_commit": os.environ.get("GITHUB_SHA"),
         "base_record_count": len(records) - supplement_count,
         "supplement_record_count": supplement_count,
