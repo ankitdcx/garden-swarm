@@ -1,9 +1,8 @@
 name: Garden hourly free specialist sweep
 
 on:
-  schedule:
-    # GitHub cron is UTC; minute 50 UTC maps to minute 20 in Asia/Kolkata.
-    - cron: '50 * * * *'
+  # Scheduled work is owned by the single Garden Coordinator.
+  # Keep this legacy worker available only for explicit dispatch.
   workflow_dispatch:
 
 permissions:

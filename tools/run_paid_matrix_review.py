@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run bounded multi-family paid OpenRouter reviews under hard Garden budget controls."""
 from __future__ import annotations
-import json, os, time
+import json, math, os, time
 from pathlib import Path
 from typing import Any
 from urllib import error, request
@@ -20,6 +20,8 @@ def _key_usage_daily(key:str)->tuple[float|None,dict[str,Any]]:
     value=payload.get("usage_daily")
     try: usage_daily=float(value)
     except (TypeError,ValueError): return None,{"status":"DAILY_USAGE_UNVERIFIED","raw_usage_daily":value}
+    if isinstance(value, bool) or not math.isfinite(usage_daily) or usage_daily < 0:
+        return None,{"status":"DAILY_USAGE_UNVERIFIED","reason":"usage must be finite and nonnegative"}
     return usage_daily,{"status":"VERIFIED","usage_daily":usage_daily,"limit_remaining":payload.get("limit_remaining"),"limit":payload.get("limit"),"limit_reset":payload.get("limit_reset")}
 
 def _call(*,model:dict[str,Any],prompt:str,selection:dict[str,Any],reasoning:dict[str,Any]|None=None)->tuple[dict[str,Any]|None,dict[str,Any]]:
@@ -47,7 +49,12 @@ def _call(*,model:dict[str,Any],prompt:str,selection:dict[str,Any],reasoning:dic
     except Exception as exc: return None,{"status":"PROVIDER_ERROR","family":family,"model":model_id,"cost":None,"detail":f"{type(exc).__name__}: {exc}","usage_daily_before_call":usage_daily,"daily_budget_receipt":usage_receipt}
     usage=data.get("usage") or {}; cost=usage.get("cost")
     if cost is None: return None,{"status":"COST_UNVERIFIED","family":family,"model":model_id,"cost":None,"usage":usage,"usage_daily_before_call":usage_daily,"daily_budget_receipt":usage_receipt}
-    cost=float(cost)
+    try:
+        if isinstance(cost, bool): raise ValueError("boolean cost")
+        cost=float(cost)
+        if not math.isfinite(cost) or cost < 0: raise ValueError("invalid cost")
+    except (TypeError, ValueError):
+        return None,{"status":"COST_UNVERIFIED","family":family,"model":model_id,"cost":None,"reason":"cost must be finite and nonnegative","usage_daily_before_call":usage_daily,"daily_budget_receipt":usage_receipt}
     if cost>per_call_ceiling: return None,{"status":"MODEL_COST_CEILING_EXCEEDED","family":family,"model":model_id,"cost":cost,"usage":usage,"usage_daily_before_call":usage_daily,"daily_budget_receipt":usage_receipt}
     try: content=data["choices"][0]["message"].get("content","")
     except Exception: content=""
