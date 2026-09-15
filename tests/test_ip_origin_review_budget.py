@@ -41,6 +41,11 @@ class IPOriginReviewBudgetTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing ids"):
             review._validate_specialist({"r": [["A", "U", "", "L"]]}, {"A", "B"})
 
+    def test_family_reasoning_transport_matches_endpoint_contract(self):
+        self.assertEqual(review._reasoning_for_family("glm"), {"effort": "low"})
+        for family in ("deepseek", "qwen", "mistral"):
+            self.assertEqual(review._reasoning_for_family(family), {"effort": "none"})
+
 
 if __name__ == "__main__":
     unittest.main()

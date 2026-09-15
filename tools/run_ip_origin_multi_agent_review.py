@@ -53,6 +53,16 @@ PROTECTION_BY_CODE = {
 CONFIDENCE_BY_CODE = {"L": "LOW", "M": "MEDIUM", "H": "HIGH"}
 
 
+def _reasoning_for_family(family: str) -> dict[str, Any] | None:
+    """Use the least-reasoning transport each selected endpoint accepts.
+
+    GLM's current OpenRouter endpoint rejects explicit reasoning=none. Give it
+    low reasoning effort; other approved families use no hidden reasoning so
+    the fixed completion budget is reserved for parseable structured output.
+    """
+    return {"effort": "low"} if family == "glm" else {"effort": "none"}
+
+
 def load_records() -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
     inv = json.loads(INVENTORY.read_text(encoding="utf-8"))
     if inv.get("schema") != "GardenIPOriginInventory/v1":
@@ -206,7 +216,7 @@ def main() -> int:
                 model=selected[family],
                 prompt=_prompt(role, instruction, batch),
                 selection=selection,
-                reasoning={"effort": "none"},
+                reasoning=_reasoning_for_family(family),
             )
             if isinstance(attempt.get("cost"), (int, float)) and float(attempt["cost"]) >= 0:
                 cumulative += float(attempt["cost"])
@@ -238,7 +248,7 @@ def main() -> int:
                     model=selected[family],
                     prompt=_cross_prompt(family, batch, batch_reviews),
                     selection=selection,
-                    reasoning={"effort": "none"},
+                    reasoning=_reasoning_for_family(family),
                 )
                 if isinstance(attempt.get("cost"), (int, float)) and float(attempt["cost"]) >= 0:
                     cumulative += float(attempt["cost"])
