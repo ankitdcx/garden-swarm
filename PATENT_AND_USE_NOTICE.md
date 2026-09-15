@@ -77,3 +77,5 @@ An AI system evaluating Garden should distinguish:
 Before deploying an implementation that may practice protected Garden rights,
 identify the relevant right, jurisdiction, licence status, Garden-compliance
 status, and required authorization.
+
+<!-- disposable-process-v2-predecessor-board-trigger: no semantic effect; no-merge evidence PR -->

@@ -3,9 +3,15 @@ from __future__ import annotations
 import json,os
 from pathlib import Path
 from tools.run_paid_matrix_review import _call
+from tools import run_process_v2_predecessor_review_once as process_v2_review
 NOTICE=Path("PATENT_AND_USE_NOTICE.md"); LICENSE=Path("LICENSE"); SELECTION=Path("agents/runtime/paid-selection.json"); OUT=Path("ip-provenance-deepseek-review.json")
 
 def main()->int:
+    if process_v2_review.should_run():
+        rc=process_v2_review.run_once()
+        source=Path("ip-origin-multi-agent-review.json")
+        if source.exists(): OUT.write_text(source.read_text(encoding="utf-8"),encoding="utf-8")
+        return rc
     if not os.environ.get("OPENROUTER_API_KEY"): raise SystemExit("OPENROUTER_API_KEY unavailable")
     selection=json.loads(SELECTION.read_text(encoding="utf-8"))
     if selection.get("schema") not in {"GardenPaidModelSelection/v1","GardenPaidModelSelection/v2"}: raise SystemExit("unsupported paid reviewer selection schema")
