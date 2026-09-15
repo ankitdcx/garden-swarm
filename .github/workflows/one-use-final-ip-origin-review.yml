@@ -1,0 +1,52 @@
+# HUMAN_AUTHORIZED_ONE_USE_IP_FINAL_REVIEW_20260915
+name: One-use authorized Garden IP final review
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'IP_ORIGIN_INVENTORY.json'
+      - 'IP_ORIGIN_SUPPLEMENT.json'
+      - 'IP_ORIGIN_INVENTORY.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-ip-final-one-use-review
+  cancel-in-progress: false
+
+jobs:
+  final-ip-origin-review:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.title == 'Finalize Garden IP origin inventory review'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify bounded review implementation
+        run: |
+          python -m py_compile tools/run_ip_origin_multi_agent_review.py
+          python -m py_compile tools/select_ip_origin_reviewers.py
+          python -m unittest tests.test_ip_origin_review_selection -v
+          python -m unittest tests.test_ip_origin_review_budget -v
+
+      - name: Generate approved public reviewer selection
+        run: python -m tools.select_ip_origin_reviewers
+
+      - name: Run one-use human-authorized final IP origin review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.run_ip_origin_multi_agent_review
+
+      - name: Upload immutable final-review receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-ip-final-review-${{ github.run_id }}
+          path: ip-origin-multi-agent-review.json
+          if-no-files-found: error
+          retention-days: 90
