@@ -21,7 +21,13 @@ OUT_DIR = Path("agents/outbox/hourly/paid-review")
 BUNDLE = Path("agents/outbox/hourly/paid-review-bundle.json")
 
 
-def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+def _call(
+    *,
+    model: dict[str, Any],
+    prompt: str,
+    selection: dict[str, Any],
+    reasoning: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     model_id = str(model["model"])
     family = str(model["family"])
     if family not in {"deepseek", "qwen"}:
@@ -58,6 +64,8 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
             },
         },
     }
+    if reasoning is not None:
+        body["reasoning"] = reasoning
     req = request.Request(
         CHAT,
         method="POST",
