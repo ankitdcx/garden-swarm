@@ -1,23 +1,18 @@
 name: Garden IP origin multi-agent review
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-    paths:
-      - 'IP_ORIGIN_INVENTORY.json'
-      - 'IP_ORIGIN_SUPPLEMENT.json'
-      - 'IP_ORIGIN_INVENTORY.md'
+  workflow_dispatch:
+  # Provider work is dispatched only by the paused single Coordinator.
 
 permissions:
   contents: read
 
 concurrency:
-  group: garden-ip-origin-review-${{ github.event.pull_request.number }}
+  group: garden-provider-review
   cancel-in-progress: true
 
 jobs:
   openrouter-ip-origin-review:
-    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:

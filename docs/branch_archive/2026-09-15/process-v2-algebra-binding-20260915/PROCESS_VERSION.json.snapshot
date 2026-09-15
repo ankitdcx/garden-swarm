@@ -1,0 +1,26 @@
+{
+  "schema": "GardenProcessVersion/v1",
+  "process_version": "GardenProcess-v2.0-candidate",
+  "status": "CANDIDATE_REVIEW_UNDER_PREDECESSOR",
+  "predecessor_process": "GardenProcess-v1-current",
+  "effective_only_after_admission": true,
+  "self_authorization_forbidden": true,
+  "canonical_garden_version": "v15.5",
+  "canonical_garden_unchanged": true,
+  "protected_surfaces": [
+    "review_independence",
+    "review_packet_completeness",
+    "evidence_classification",
+    "cycle_state_transitions",
+    "merge_protocol",
+    "freeze_rules",
+    "repair_priority",
+    "reviewer_allocation",
+    "budget_and_escalation",
+    "human_availability_and_authority",
+    "semantic_admission",
+    "canonical_promotion",
+    "pipeline_health"
+  ],
+  "rule": "A semantic change to any protected process surface requires a new ProcessVersion. ProcessVersion N+1 is reviewed and admitted under N and cannot authorize itself. Pure implementation fixes that preserve already-admitted process semantics may use the governed non-semantic track."
+}

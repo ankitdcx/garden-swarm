@@ -1,0 +1,184 @@
+name: Garden Process v2 packet-first blind review (candidate)
+
+on:
+  schedule:
+    - cron: '35 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+
+concurrency:
+  group: garden-process-v2-packet-review
+  cancel-in-progress: false
+
+jobs:
+  packet-blind-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Gate candidate process activation
+        id: gate
+        run: |
+          ACTIVE=$(python - <<'PY'
+          import json
+          p=json.load(open('PROCESS_VERSION.json',encoding='utf-8'))
+          print('true' if p.get('status') == 'CURRENT' and p.get('process_version','').startswith('GardenProcess-v2') else 'false')
+          PY
+          )
+          echo "active=$ACTIVE" >> "$GITHUB_OUTPUT"
+          if [ "$ACTIVE" != "true" ]; then
+            echo "Process v2 remains dormant until admitted under the predecessor process."
+          fi
+
+      - name: Verify packet/process plumbing offline
+        if: steps.gate.outputs.active == 'true'
+        run: |
+          python -m unittest tests.test_process_v2_controls -v
+          python -m unittest tests.test_design_target_rotation -v
+          python -m unittest tests.test_free_review_entrypoints -v
+          python -m unittest tests.test_paid_review_routing -v
+
+      - name: Write exact-head pre-review test receipt
+        if: steps.gate.outputs.active == 'true'
+        run: |
+          mkdir -p agents/runtime
+          python - <<'PY'
+          import hashlib,json,os,platform
+          commands=[
+            'python -m unittest tests.test_process_v2_controls -v',
+            'python -m unittest tests.test_design_target_rotation -v',
+            'python -m unittest tests.test_free_review_entrypoints -v',
+            'python -m unittest tests.test_paid_review_routing -v'
+          ]
+          payload={
+            'schema':'GardenPreReviewTestReceipt/v1',
+            'repo_commit':os.environ['GITHUB_SHA'],
+            'workflow_run_id':os.environ.get('GITHUB_RUN_ID'),
+            'environment':f"python={platform.python_version()};platform={platform.platform()}",
+            'commands':commands,
+            'status':'PASS',
+            'result_digest':hashlib.sha256(('PASS\n'+'\n'.join(commands)).encode()).hexdigest()
+          }
+          json.dump(payload,open('agents/runtime/pre-review-test-receipt.json','w'),indent=2); open('agents/runtime/pre-review-test-receipt.json','a').write('\n')
+          PY
+
+      - name: Rotate bounded review target
+        if: steps.gate.outputs.active == 'true'
+        run: python -m tools.rotate_design_review_target
+
+      - name: Snapshot current governed open issue ledger
+        if: steps.gate.outputs.active == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p agents/runtime
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/issues?state=open&per_page=100" | jq -s 'add' > agents/runtime/review-ledger-snapshot.json
+
+      - name: Build coherent-complete ReviewPacket
+        if: steps.gate.outputs.active == 'true'
+        run: python -m tools.build_review_packet
+
+      - name: Validate packet and completeness receipt
+        if: steps.gate.outputs.active == 'true'
+        run: python -m tools.validate_review_packet agents/runtime/review-packet.json agents/runtime/packet-completeness-receipt.json
+
+      - name: Select diverse free OpenRouter blind reviewers
+        if: steps.gate.outputs.active == 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          COUNT=$(python - <<'PY'
+          import json
+          p=json.load(open('agents/openrouter-paid-review-policy.json',encoding='utf-8'))
+          print(int(p['free_swarm']['distinct_families_per_hour']))
+          PY
+          )
+          python -m tools.select_matrix_reviewers --count "$COUNT"
+
+      - name: Run free blind reviewers on identical packet
+        if: steps.gate.outputs.active == 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.run_packet_free_reviews
+
+      - name: Select bounded routine paid reviewers
+        if: steps.gate.outputs.active == 'true'
+        run: python -m tools.select_paid_matrix_reviewers
+
+      - name: Run routine paid blind reviewers on identical packet
+        if: steps.gate.outputs.active == 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.run_packet_paid_reviews
+
+      - name: Run Gemini blind reviewer on identical packet
+        if: steps.gate.outputs.active == 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.5-flash
+        run: python -m tools.run_packet_gemini_review
+
+      - name: Build packet-bound blind-phase receipt
+        if: steps.gate.outputs.active == 'true'
+        run: |
+          python - <<'PY'
+          import json,os,time
+          packet=json.load(open('agents/runtime/review-packet.json',encoding='utf-8'))
+          complete=json.load(open('agents/runtime/packet-completeness-receipt.json',encoding='utf-8'))
+          free=json.load(open('agents/outbox/hourly/packet-blind-free-bundle.json',encoding='utf-8'))
+          paid=json.load(open('agents/outbox/hourly/packet-blind-paid-bundle.json',encoding='utf-8'))
+          gemini=json.load(open('agents/outbox/hourly/packet-blind-gemini.json',encoding='utf-8'))
+          for x in [complete,free,paid,gemini]:
+            assert x['cycle_id']==packet['cycle_id'] and x['packet_hash']==packet['packet_hash']
+          receipt={
+            'schema':'GardenBlindPhaseReceipt/v1',
+            'created_at_unix':int(time.time()),
+            'cycle_id':packet['cycle_id'],
+            'packet_hash':packet['packet_hash'],
+            'repo_commit':os.environ['GITHUB_SHA'],
+            'process_version':packet['process_version'],
+            'packet_completeness':complete,
+            'free_openrouter':free,
+            'paid_openrouter':paid,
+            'gemini':gemini,
+            'chatgpt_blind_review_expected_separately':True,
+            'authoritative_cross_exam_expected_after_all_blind_findings':True,
+            'peer_cross_exam_performed_in_this_workflow':False,
+            'semantic_delta_admitted':False,
+            'status':'BLIND_PROVIDER_PHASE_COMPLETE_PROPOSALS_ONLY'
+          }
+          json.dump(receipt,open('agents/outbox/hourly/process-v2-blind-phase.json','w'),indent=2); open('agents/outbox/hourly/process-v2-blind-phase.json','a').write('\n')
+          PY
+
+      - name: Upload immutable packet and blind evidence
+        if: always() && steps.gate.outputs.active == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-process-v2-blind-${{ github.run_id }}
+          path: |
+            PROCESS_VERSION.json
+            agents/process-control-policy.json
+            agents/runtime/design-target-selection.json
+            agents/runtime/pre-review-test-receipt.json
+            agents/runtime/review-ledger-snapshot.json
+            agents/runtime/review-packet.json
+            agents/runtime/packet-completeness-receipt.json
+            agents/runtime/free-selection.json
+            agents/runtime/paid-selection.json
+            agents/outbox/hourly/packet-blind-free/*.json
+            agents/outbox/hourly/packet-blind-free-bundle.json
+            agents/outbox/hourly/packet-blind-paid/*.json
+            agents/outbox/hourly/packet-blind-paid-bundle.json
+            agents/outbox/hourly/packet-blind-gemini.json
+            agents/outbox/hourly/process-v2-blind-phase.json
+          if-no-files-found: error
+          retention-days: 30

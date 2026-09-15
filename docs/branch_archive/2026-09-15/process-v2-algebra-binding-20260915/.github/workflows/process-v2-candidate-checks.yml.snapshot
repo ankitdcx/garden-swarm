@@ -1,0 +1,57 @@
+name: Garden Process v2 candidate checks
+
+on:
+  pull_request:
+    paths:
+      - 'PROCESS_VERSION.json'
+      - 'CONTINUOUS_UPGRADE_PROCESS.md'
+      - 'agents/process-control-policy.json'
+      - 'agents/process-record-schemas.json'
+      - 'tools/build_review_packet.py'
+      - 'tools/packet_review_common.py'
+      - 'tools/run_packet_free_reviews.py'
+      - 'tools/run_packet_paid_reviews.py'
+      - 'tools/run_packet_gemini_review.py'
+      - 'tools/validate_evidence_class.py'
+      - 'tools/validate_review_packet.py'
+      - 'tests/test_process_v2_controls.py'
+      - '.github/workflows/process-v2-candidate-checks.yml'
+      - '.github/workflows/process-v2-hourly-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  process-v2-controls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile Process v2 tools
+        run: |
+          python -m py_compile \
+            tools/build_review_packet.py \
+            tools/packet_review_common.py \
+            tools/run_packet_free_reviews.py \
+            tools/run_packet_paid_reviews.py \
+            tools/run_packet_gemini_review.py \
+            tools/validate_evidence_class.py \
+            tools/validate_review_packet.py
+      - name: Run Process v2 control tests
+        run: python -m unittest tests.test_process_v2_controls -v
+      - name: Assert candidate cannot self-authorize
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('PROCESS_VERSION.json',encoding='utf-8'))
+          q=json.load(open('agents/process-control-policy.json',encoding='utf-8'))
+          assert p['status']=='CANDIDATE_REVIEW_UNDER_PREDECESSOR'
+          assert p['effective_only_after_admission'] is True
+          assert p['self_authorization_forbidden'] is True
+          assert p['canonical_garden_unchanged'] is True
+          assert q['process_change_control']['activation_requires_separate_admission'] is True
+          print('Process v2 candidate remains predecessor-reviewed and dormant until separate admission')
+          PY

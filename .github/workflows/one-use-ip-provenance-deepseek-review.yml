@@ -1,17 +1,14 @@
 name: One-use public IP provenance DeepSeek review
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-    paths:
-      - 'PATENT_AND_USE_NOTICE.md'
+  workflow_dispatch:
+  # Provider work is dispatched only by the paused single Coordinator.
 
 permissions:
   contents: read
 
 jobs:
   deepseek-public-review:
-    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
