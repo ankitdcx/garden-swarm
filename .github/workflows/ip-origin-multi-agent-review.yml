@@ -5,6 +5,7 @@ on:
     types: [opened, reopened, synchronize]
     paths:
       - 'IP_ORIGIN_INVENTORY.json'
+      - 'IP_ORIGIN_SUPPLEMENT.json'
       - 'IP_ORIGIN_INVENTORY.md'
 
 permissions:
