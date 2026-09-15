@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from tools.run_paid_matrix_review import _call
+from tools import run_process_v2_predecessor_review_once as process_v2_review
 
 INVENTORY = Path("IP_ORIGIN_INVENTORY.json")
 SUPPLEMENT = Path("IP_ORIGIN_SUPPLEMENT.json")
@@ -78,6 +79,8 @@ def _validate(raw: dict[str, Any], expected: set[str]) -> list[dict[str, Any]]:
 
 
 def main() -> int:
+    if process_v2_review.should_run():
+        return process_v2_review.run_once()
     if not os.environ.get("OPENROUTER_API_KEY"): raise SystemExit("OPENROUTER_API_KEY unavailable")
     records, supplement = load_records()
     selection = json.loads(SELECTION.read_text(encoding="utf-8"))
