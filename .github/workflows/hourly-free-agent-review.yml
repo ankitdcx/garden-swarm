@@ -1,9 +1,8 @@
 name: Garden hourly multi-model review
 
 on:
-  schedule:
-    # GitHub cron is UTC; minute 35 UTC maps to minute 05 in Asia/Kolkata.
-    - cron: '35 * * * *'
+  # Scheduled work is owned by the single Garden Coordinator.
+  # Keep this legacy worker available only for explicit dispatch.
   workflow_dispatch:
 
 permissions:

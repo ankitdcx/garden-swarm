@@ -2,8 +2,7 @@ name: Garden branch lifecycle
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '35 18 * * *'
+  # Hygiene is a due obligation of the single Garden Coordinator.
 
 permissions:
   contents: read
