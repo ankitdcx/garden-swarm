@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Multi-family OpenRouter review of the public Garden IP origin inventory.
+"""Budget-correct multi-family OpenRouter review for the public Garden IP-origin inventory.
 
-Proposal evidence only. This evaluates provenance/origin plausibility, duplicate
-lineage, and candidate protection routes. It never files patents, grants rights,
-or turns an abstract idea into exclusive property.
+Proposal evidence only. Every batch receives all four specialist roles across the
+approved family set, followed by one independent cross-examination per family.
+The role-to-family assignment rotates by batch so no family owns one role forever.
+No filing, grant, ownership, infringement, enforceability, or semantic admission
+is created by this review.
 """
 from __future__ import annotations
 
@@ -17,29 +19,29 @@ from tools.run_paid_matrix_review import _call
 INVENTORY = Path("IP_ORIGIN_INVENTORY.json")
 SELECTION = Path("agents/runtime/paid-selection.json")
 OUT = Path("ip-origin-multi-agent-review.json")
-BATCH_SIZE = 15
-WORKFLOW_COST_CEILING_USD = 1.00
+BATCH_SIZE = 20
+WORKFLOW_COST_CEILING_USD = 0.80
 
-ROLE_PROMPTS = {
-    "novelty_prior_art": (
-        "Evaluate whether each candidate looks genuinely new versus known pre-existing ideas. "
-        "Do not equate a new name or combination with novelty. Identify likely prior-art building blocks "
-        "and distinguish a potentially new technical combination from an old principle."
+ROLE_PROMPTS = [
+    (
+        "novelty_prior_art",
+        "Decide whether each candidate contains a plausibly new Garden-origin technical delta versus known pre-existing ideas. "
+        "Do not treat a new name or old ingredients as novelty; identify the closest known basis and narrow combination if any.",
     ),
-    "patent_scope": (
-        "Evaluate candidate patent relevance only: technical character, concrete mechanism, likely novelty/non-obviousness risk, "
-        "and whether the record needs a narrower claim. Do not say a patent exists unless the inventory says FILED or GRANTED."
+    (
+        "patent_scope",
+        "Screen only for candidate patent relevance: technical character, concrete mechanism, novelty/non-obviousness risk, and claim-narrowing need. "
+        "Never state that a patent exists unless the inventory explicitly says FILED or GRANTED.",
     ),
-    "copyright_other_rights": (
-        "Classify likely protection routes: copyright in expression/code/schema text, patent candidate, trade-secret candidate, "
-        "trademark/design-right candidate, contract/licence only, or abstract concept with no automatic exclusivity. "
-        "Separate the underlying idea from its written/code expression."
+    (
+        "copyright_other_rights",
+        "Separate the underlying idea from expression. Classify plausible routes among patent candidate, copyright expression, trade secret, trademark, design right, contract/licence, or abstract idea with no automatic exclusivity.",
     ),
-    "duplicate_lineage": (
-        "Look for aliases, renamed descendants, decompositions, and overlapping families. Prefer one canonical origin family with "
-        "lineage links instead of double-counting the same mechanism. Flag historical portfolio inflation or duplicate IDs."
+    (
+        "duplicate_lineage",
+        "Find aliases, renamed descendants, decompositions, merged families, and historical renumbering. Prefer one canonical provenance family with lineage links and reject double-counting.",
     ),
-}
+]
 
 ALLOWED_ORIGIN = {
     "GARDEN_ORIGIN_SUPPORTED",
@@ -50,200 +52,162 @@ ALLOWED_ORIGIN = {
 }
 
 
-def _review_prompt(role: str, batch: list[dict[str, Any]]) -> str:
+def _prompt(role: str, instruction: str, batch: list[dict[str, Any]]) -> str:
     return f"""You are one independent reviewer in a Garden IP-origin audit.
-Role: {role}
-Task: {ROLE_PROMPTS[role]}
+ROLE={role}
+{instruction}
 
-Important boundaries:
-- 'Garden-origin' means the supplied historical provenance supports Garden as the source of this specific candidate mechanism or expression. It is NOT a legal conclusion that every abstract idea is exclusively owned.
-- Existing scientific laws, equations, standard algorithms, public standards, and known third-party technologies are not Garden inventions merely because Garden uses them.
-- A new technical combination or implementation may still be a candidate even when its ingredients are old.
-- Patent/copyright status is never upgraded by this review. No filing, grant, infringement, or enforceability is established.
-- Be adversarial. Reject duplicate counting and renamed prior art.
+Boundaries:
+- Garden-origin is a provenance conclusion, not automatic legal exclusivity.
+- Known science, equations, standards, generic algorithms, and third-party technology are not Garden inventions merely because Garden uses them.
+- A concrete new combination may still be a candidate when ingredients are old.
+- No model may create patent/copyright filing, grant, ownership, infringement, enforceability, or legal-opinion status.
+- Be adversarial and concise.
 
-Return ONLY JSON with top-level key 'items'. 'items' must contain one object per candidate ID with:
-id, origin_status, protection_candidates, closest_known_preexisting_basis, duplicate_or_lineage_notes, confidence, decisive_next_check.
-origin_status must be one of {sorted(ALLOWED_ORIGIN)}.
-confidence must be LOW, MEDIUM, or HIGH.
-protection_candidates must be an array drawn from PATENT_CANDIDATE, COPYRIGHT_EXPRESSION, TRADE_SECRET_CANDIDATE, TRADEMARK_CANDIDATE, DESIGN_RIGHT_CANDIDATE, CONTRACT_LICENSE, ABSTRACT_IDEA_NO_AUTOMATIC_EXCLUSIVITY.
+Return ONLY JSON: {{"items":[...]}} with exactly one item per ID. Each item must contain only:
+id, origin_status, protection_candidates, prior_art_basis, confidence, note.
+origin_status in {sorted(ALLOWED_ORIGIN)}; confidence LOW/MEDIUM/HIGH.
+protection_candidates is an array drawn from PATENT_CANDIDATE, COPYRIGHT_EXPRESSION, TRADE_SECRET_CANDIDATE, TRADEMARK_CANDIDATE, DESIGN_RIGHT_CANDIDATE, CONTRACT_LICENSE, ABSTRACT_IDEA_NO_AUTOMATIC_EXCLUSIVITY.
+Keep prior_art_basis and note under 20 words each.
 
 Candidates:\n{json.dumps(batch, ensure_ascii=False, separators=(',', ':'))}
 """
 
 
-def _validate(raw: dict[str, Any], expected_ids: set[str]) -> list[dict[str, Any]]:
+def _validate(raw: dict[str, Any], expected: set[str]) -> list[dict[str, Any]]:
     items = raw.get("items")
     if not isinstance(items, list):
-        raise ValueError("missing items array")
+        raise ValueError("missing items")
     seen: set[str] = set()
-    out: list[dict[str, Any]] = []
     for row in items:
         if not isinstance(row, dict):
-            raise ValueError("item is not object")
+            raise ValueError("item not object")
         rid = str(row.get("id", ""))
-        if rid not in expected_ids or rid in seen:
-            raise ValueError(f"invalid/duplicate id: {rid}")
+        if rid not in expected or rid in seen:
+            raise ValueError(f"bad id {rid}")
         if row.get("origin_status") not in ALLOWED_ORIGIN:
-            raise ValueError(f"invalid origin status for {rid}")
+            raise ValueError(f"bad origin_status {rid}")
         if row.get("confidence") not in {"LOW", "MEDIUM", "HIGH"}:
-            raise ValueError(f"invalid confidence for {rid}")
+            raise ValueError(f"bad confidence {rid}")
         if not isinstance(row.get("protection_candidates"), list):
-            raise ValueError(f"invalid protection candidates for {rid}")
+            raise ValueError(f"bad protection_candidates {rid}")
         seen.add(rid)
-        out.append(row)
-    if seen != expected_ids:
-        raise ValueError(f"missing ids: {sorted(expected_ids - seen)}")
-    return out
+    if seen != expected:
+        raise ValueError(f"missing ids {sorted(expected-seen)}")
+    return items
 
 
 def main() -> int:
     if not os.environ.get("OPENROUTER_API_KEY"):
         raise SystemExit("OPENROUTER_API_KEY unavailable")
-
-    inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
-    if inventory.get("schema") != "GardenIPOriginInventory/v1":
+    inv = json.loads(INVENTORY.read_text(encoding="utf-8"))
+    if inv.get("schema") != "GardenIPOriginInventory/v1":
         raise SystemExit("unsupported inventory schema")
-    records = inventory.get("records")
+    records = inv.get("records")
     if not isinstance(records, list) or not records:
-        raise SystemExit("inventory has no records")
-    ids = [str(r.get("id", "")) for r in records]
-    if len(ids) != len(set(ids)) or any(not i for i in ids):
-        raise SystemExit("inventory IDs must be unique/non-empty")
+        raise SystemExit("inventory empty")
+    ids = [str(x.get("id", "")) for x in records]
+    if any(not x for x in ids) or len(ids) != len(set(ids)):
+        raise SystemExit("inventory ids invalid")
 
     selection = json.loads(SELECTION.read_text(encoding="utf-8"))
-    selected_rows = [row for row in selection.get("selected", []) if isinstance(row, dict) and row.get("family")]
-    selected = {str(row["family"]): row for row in selected_rows}
-    approved_source = selection.get("approved_families") or list(selected)
-    approved = {str(x) for x in approved_source if x}
-    families = [family for family in selected if family in approved]
-    if len(families) < 2:
-        raise SystemExit("IP origin review requires at least two approved independent reviewer families")
-    if "deepseek" not in families or "qwen" not in families:
-        raise SystemExit("IP origin review requires DeepSeek and Qwen as anchor families")
+    selected_rows = [x for x in selection.get("selected", []) if isinstance(x, dict) and x.get("family")]
+    selected = {str(x["family"]): x for x in selected_rows}
+    approved = [str(x) for x in (selection.get("approved_families") or list(selected)) if str(x) in selected]
+    if "deepseek" not in approved or "qwen" not in approved or len(approved) < 4:
+        raise SystemExit("IP-origin backfill requires DeepSeek, Qwen and at least four approved families")
     if selection.get("provider_policy", {}).get("data_collection") != "deny":
-        raise SystemExit("provider data_collection must be deny")
+        raise SystemExit("data_collection must be deny")
 
+    per_call = float(selection["routine_model_call_cost_ceiling_usd"])
+    cumulative = 0.0
     calls: list[dict[str, Any]] = []
     findings: list[dict[str, Any]] = []
-    cumulative = 0.0
     complete = True
-    per_call = float(selection["routine_model_call_cost_ceiling_usd"])
+    batches = [records[i:i+BATCH_SIZE] for i in range(0, len(records), BATCH_SIZE)]
 
-    batches = [records[i:i + BATCH_SIZE] for i in range(0, len(records), BATCH_SIZE)]
     for batch_index, batch in enumerate(batches):
-        expected = {str(r["id"]) for r in batch}
-        batch_reviews: dict[str, list[dict[str, Any]]] = {}
+        expected = {str(x["id"]) for x in batch}
+        batch_reviews: dict[str, Any] = {}
 
-        for role in ROLE_PROMPTS:
-            for family in families:
-                if WORKFLOW_COST_CEILING_USD - cumulative < per_call:
-                    complete = False
-                    calls.append({
-                        "batch": batch_index,
-                        "role": role,
-                        "family": family,
-                        "status": "WORKFLOW_BUDGET_GUARD",
-                    })
-                    continue
-                raw, attempt = _call(
-                    model=selected[family],
-                    prompt=_review_prompt(role, batch),
-                    selection=selection,
-                    reasoning={"effort": "none"},
-                )
-                cost = attempt.get("cost")
-                if isinstance(cost, (int, float)) and cost >= 0:
-                    cumulative += float(cost)
-                attempt.update({"batch": batch_index, "role": role})
-                calls.append(attempt)
-                if raw is None:
-                    complete = False
-                    continue
-                try:
-                    validated = _validate(raw, expected)
-                except Exception as exc:
-                    complete = False
-                    calls.append({
-                        "batch": batch_index,
-                        "role": role,
-                        "family": family,
-                        "status": "INVALID_OUTPUT",
-                        "detail": str(exc),
-                        "cost": 0.0,
-                    })
-                    continue
-                key = f"{family}:{role}"
-                batch_reviews[key] = validated
-                for item in validated:
-                    findings.append({"batch": batch_index, "family": family, "role": role, **item})
+        # One specialist role per family, rotated across batches. With four current
+        # families and four roles this covers all roles in each batch while preserving
+        # independent family diversity and a bounded call count.
+        for family_index, family in enumerate(approved):
+            role, instruction = ROLE_PROMPTS[(family_index + batch_index) % len(ROLE_PROMPTS)]
+            if WORKFLOW_COST_CEILING_USD - cumulative < per_call:
+                complete = False
+                calls.append({"batch":batch_index,"family":family,"role":role,"status":"WORKFLOW_BUDGET_GUARD"})
+                continue
+            raw, attempt = _call(
+                model=selected[family],
+                prompt=_prompt(role, instruction, batch),
+                selection=selection,
+                reasoning={"effort":"none"},
+            )
+            if isinstance(attempt.get("cost"), (int,float)) and float(attempt["cost"]) >= 0:
+                cumulative += float(attempt["cost"])
+            attempt.update({"batch":batch_index,"role":role})
+            calls.append(attempt)
+            if raw is None:
+                complete = False
+                continue
+            try:
+                items = _validate(raw, expected)
+            except Exception as exc:
+                complete = False
+                calls.append({"batch":batch_index,"family":family,"role":role,"status":"INVALID_OUTPUT","detail":str(exc),"cost":0.0})
+                continue
+            batch_reviews[f"{family}:{role}"] = items
+            findings.extend({"batch":batch_index,"family":family,"role":role,**item} for item in items)
 
-        # Every approved family independently cross-examines the complete role-review digest.
+        # Every approved family cross-examines the complete specialist digest.
         if batch_reviews:
             digest = json.dumps(batch_reviews, ensure_ascii=False, separators=(",", ":"))
-            for family in families:
+            for family in approved:
                 if WORKFLOW_COST_CEILING_USD - cumulative < per_call:
                     complete = False
-                    calls.append({
-                        "batch": batch_index,
-                        "role": "cross_exam",
-                        "family": family,
-                        "status": "WORKFLOW_BUDGET_GUARD",
-                    })
+                    calls.append({"batch":batch_index,"family":family,"role":"cross_exam","status":"WORKFLOW_BUDGET_GUARD"})
                     continue
-                other_families = [f for f in families if f != family]
-                prompt = f"""You are the {family} cross-examiner in a Garden IP-origin audit.
-Review the independent role outputs below, especially disagreements with the other approved families {other_families}.
-Do not create ownership or patent rights. Identify overclaim, duplicate counting, prior-art blindness, correlated reasoning, and unsupported confidence.
-Return ONLY JSON with keys: batch, disagreements, corrections, unresolved, confidence.
+                prompt = f"""You are the {family} cross-examiner for one Garden IP-origin batch.
+Challenge overclaim, prior-art blindness, duplicate/alias counting, protection-category mistakes, and unsupported confidence in the specialist outputs below.
+Do not create legal rights. Return ONLY JSON with keys batch, disputed_ids, corrections, unresolved_ids, confidence. Keep corrections concise.
 
 {digest}"""
-                raw, attempt = _call(
-                    model=selected[family],
-                    prompt=prompt,
-                    selection=selection,
-                    reasoning={"effort": "none"},
-                )
-                cost = attempt.get("cost")
-                if isinstance(cost, (int, float)) and cost >= 0:
-                    cumulative += float(cost)
-                attempt.update({"batch": batch_index, "role": "cross_exam"})
+                raw, attempt = _call(model=selected[family], prompt=prompt, selection=selection, reasoning={"effort":"none"})
+                if isinstance(attempt.get("cost"), (int,float)) and float(attempt["cost"]) >= 0:
+                    cumulative += float(attempt["cost"])
+                attempt.update({"batch":batch_index,"role":"cross_exam"})
                 calls.append(attempt)
                 if raw is None:
                     complete = False
                     continue
-                findings.append({"batch": batch_index, "family": family, "role": "cross_exam", "review": raw})
+                findings.append({"batch":batch_index,"family":family,"role":"cross_exam","review":raw})
 
     receipt = {
-        "schema": "GardenIPOriginMultiAgentReview/v2",
-        "inventory_commit": os.environ.get("GITHUB_SHA"),
-        "inventory_record_count": len(records),
-        "families": families,
-        "role_agents_per_batch": len(ROLE_PROMPTS) * len(families),
-        "cross_examiners_per_batch": len(families),
-        "batch_size": BATCH_SIZE,
-        "workflow_cost_ceiling_usd": WORKFLOW_COST_CEILING_USD,
-        "actual_cost_usd": round(cumulative, 8),
-        "provider_policy": {"data_collection": "deny"},
-        "complete": complete,
-        "calls": calls,
-        "findings": findings,
-        "semantic_delta_admitted": False,
-        "patent_status_admitted": False,
-        "legal_opinion": False,
+        "schema":"GardenIPOriginMultiAgentReview/v3",
+        "inventory_commit":os.environ.get("GITHUB_SHA"),
+        "inventory_record_count":len(records),
+        "families":approved,
+        "specialist_calls_per_batch":len(approved),
+        "cross_examiners_per_batch":len(approved),
+        "batch_size":BATCH_SIZE,
+        "batch_count":len(batches),
+        "maximum_planned_calls":len(batches)*len(approved)*2,
+        "workflow_cost_ceiling_usd":WORKFLOW_COST_CEILING_USD,
+        "actual_cost_usd":round(cumulative,8),
+        "provider_policy":{"data_collection":"deny"},
+        "complete":complete,
+        "calls":calls,
+        "findings":findings,
+        "semantic_delta_admitted":False,
+        "patent_status_admitted":False,
+        "legal_opinion":False,
     }
-    OUT.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({
-        "records": len(records),
-        "families": families,
-        "role_agents_per_batch": receipt["role_agents_per_batch"],
-        "cross_examiners_per_batch": receipt["cross_examiners_per_batch"],
-        "calls": len(calls),
-        "actual_cost_usd": receipt["actual_cost_usd"],
-        "complete": complete,
-    }, sort_keys=True))
+    OUT.write_text(json.dumps(receipt, indent=2, ensure_ascii=False)+"\n", encoding="utf-8")
+    print(json.dumps({k:receipt[k] for k in ["inventory_record_count","families","batch_count","maximum_planned_calls","actual_cost_usd","complete"]}, sort_keys=True))
     if not complete:
-        raise SystemExit("multi-agent IP origin review incomplete; receipt uploaded for inspection")
+        raise SystemExit("IP-origin review incomplete; receipt retained for exact resume/repair")
     return 0
 
 
