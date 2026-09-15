@@ -78,6 +78,35 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(body["provider"]["data_collection"], "deny")
         self.assertEqual(body["provider"]["max_price"], {"prompt": 0.25, "completion": 0.75})
         self.assertTrue(body["provider"]["allow_fallbacks"])
+        self.assertNotIn("reasoning", body)
+
+    def test_paid_call_can_disable_reasoning_for_structured_one_use_review(self):
+        selection = {
+            "max_prompt_characters": 10000,
+            "max_output_tokens": 100,
+            "routine_model_call_cost_ceiling_usd": 0.025,
+            "provider_policy": self.policy["provider_policy"],
+        }
+        model = self.policy["routine_reviewers"][0]
+        response = {
+            "choices": [{"message": {"content": "{\"ok\": true}"}}],
+            "usage": {"cost": 0.001},
+        }
+        with patch.dict(os.environ, {"OPENROUTER_API_KEY": "test-key"}), patch(
+            "tools.run_paid_matrix_review.request.urlopen", return_value=_Response(response)
+        ) as mocked:
+            raw, attempt = paid._call(
+                model=model,
+                prompt="bounded structured public target",
+                selection=selection,
+                reasoning={"effort": "none"},
+            )
+        self.assertEqual(raw, {"ok": True})
+        self.assertEqual(attempt["status"], "CALLED")
+        req = mocked.call_args.args[0]
+        body = json.loads(req.data.decode("utf-8"))
+        self.assertEqual(body["reasoning"], {"effort": "none"})
+        self.assertEqual(body["provider"]["data_collection"], "deny")
 
     def test_gemini_wrapper_uses_module_execution(self):
         source = Path("tools/run_gemini_free_review.py").read_text(encoding="utf-8")

@@ -48,7 +48,15 @@ verdict (PASS or BLOCK), blocking_findings (array), nonblocking_findings (array)
 
 PATENT_AND_USE_NOTICE.md:\n{notice}\n\nLICENSE:\n{license_text}\n"""
 
-    raw, attempt = _call(model=deepseek, prompt=prompt, selection=selection)
+    # This reviewer requires a small final JSON object. Disable hidden reasoning
+    # for this one bounded call so the fixed output-token budget cannot be
+    # exhausted entirely by reasoning tokens before a parseable answer appears.
+    raw, attempt = _call(
+        model=deepseek,
+        prompt=prompt,
+        selection=selection,
+        reasoning={"effort": "none"},
+    )
     if raw is None:
         raise SystemExit("DeepSeek review did not return usable JSON: " + json.dumps(attempt, sort_keys=True))
     required = {
