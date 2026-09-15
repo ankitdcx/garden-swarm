@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select diverse OpenRouter :free model families for the hourly Garden review."""
+"""Select diverse OpenRouter :free model families for Garden review work."""
 from __future__ import annotations
 import argparse, json, os
 from datetime import datetime, timezone
@@ -8,23 +8,21 @@ from urllib import request
 
 CATALOG = "https://openrouter.ai/api/v1/models"
 
-# Order is intentionally weighted toward strong current zero-cost reasoning/code
-# families while still rotating across genuinely different model lineages. Paid
-# families remain listed so they are automatically eligible if OpenRouter later
-# exposes a :free route; this selector itself will never choose a paid model.
+# The ordering rotates by hour. Roles are intentionally different so additional
+# free calls add orthogonal work rather than duplicate votes.
 FAMILIES = [
-    ("nvidia", ("nvidia/",), "adversary"),
-    ("poolside", ("poolside/",), "implementation"),
-    ("cohere", ("cohere/",), "grounding"),
-    ("gemma", ("google/gemma",), "open_weight_baseline"),
-    ("openai_oss", ("openai/gpt-oss",), "reasoning_baseline"),
-    ("dots", ("dots-studio/",), "formal"),
-    ("inkling", ("thinking-machines/",), "grounding"),
-    ("deepseek", ("deepseek/",), "formal"),
-    ("qwen", ("qwen/",), "implementation"),
-    ("llama", ("meta-llama/", "meta/"), "open_weight_baseline"),
-    ("mistral", ("mistralai/",), "compliance"),
-    ("glm", ("z-ai/", "zhipu/", "zhipuai/", "thudm/"), "formal"),
+    ("nvidia", ("nvidia/",), "adversarial_security"),
+    ("poolside", ("poolside/",), "implementation_correctness"),
+    ("cohere", ("cohere/",), "evidence_grounding"),
+    ("gemma", ("google/gemma",), "test_design_and_edge_cases"),
+    ("openai_oss", ("openai/gpt-oss",), "formal_reasoning_baseline"),
+    ("dots", ("dots-studio/",), "invariants_and_proof_obligations"),
+    ("inkling", ("thinking-machines/",), "uncertainty_and_counterevidence"),
+    ("deepseek", ("deepseek/",), "adversarial_reasoning"),
+    ("qwen", ("qwen/",), "architecture_and_code"),
+    ("llama", ("meta-llama/", "meta/"), "systems_integration"),
+    ("mistral", ("mistralai/",), "privacy_compliance_and_failure_modes"),
+    ("glm", ("z-ai/", "zhipu/", "zhipuai/", "thudm/"), "semantic_formalization"),
 ]
 
 
@@ -42,13 +40,14 @@ def choose(models: list[dict], slot: int, count: int = 2) -> list[dict]:
         hits = [m for m in models if any(str(m.get("id", "")).startswith(p) for p in prefixes)]
         if not hits:
             continue
-        # Prefer the largest available context inside a family; this normally
-        # selects the strongest long-context review endpoint while preserving
-        # deterministic family rotation and zero-cost enforcement.
         hits.sort(key=lambda m: int(m.get("context_length") or 0), reverse=True)
         model = hits[0]
-        out.append({"family": family, "role": role, "model": model["id"],
-                    "context_length": model.get("context_length")})
+        out.append({
+            "family": family,
+            "role": role,
+            "model": model["id"],
+            "context_length": model.get("context_length"),
+        })
         if len(out) == count:
             return out
     raise SystemExit(f"Could not resolve {count} diverse :free model families from the live catalog")
@@ -66,13 +65,18 @@ def main() -> int:
     slot = args.slot if args.slot is not None else int(datetime.now(timezone.utc).timestamp() // 3600)
     models = catalog(key)
     picked = choose(models, slot, count=args.count)
-    payload = {"schema": "GardenFreeModelSelection/v1", "hour_slot": slot,
-               "free_catalog_count": len(models), "selected": picked}
+    payload = {
+        "schema": "GardenFreeModelSelection/v1",
+        "hour_slot": slot,
+        "free_catalog_count": len(models),
+        "selected": picked,
+    }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(payload))
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

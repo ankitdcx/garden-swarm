@@ -1,6 +1,6 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "purpose": "ROUTINE_HOURLY_PUBLIC_DESIGN_REVIEW",
+  "purpose": "ROUTINE_HOURLY_PUBLIC_MULTI_TRACK_REVIEW",
   "design_epoch": "v15.5",
   "catalog_reference_date": "2026-09-15",
   "public_only": true,
@@ -19,9 +19,22 @@
   "free_swarm": {
     "enabled": true,
     "distinct_families_per_hour": 4,
+    "minimum_available_families": 3,
     "cross_examination": true,
+    "max_parallelism": 4,
+    "max_free_calls_per_hour": 8,
     "cost_policy": "OpenRouter :free routes only; every successful free call must report zero cost."
   },
+  "work_tracks": [
+    "canonical_design",
+    "implementation_correctness",
+    "test_and_verification",
+    "security_and_privacy",
+    "integration_and_provenance",
+    "operations_and_budget",
+    "authority_and_actiongate",
+    "adversarial_falsification"
+  ],
   "provider_policy": {
     "sort": "price",
     "allow_fallbacks": true,
@@ -55,10 +68,20 @@
   ],
   "notes": [
     "Routine paid reviewers and the free swarm produce proposal evidence only.",
+    "The free swarm is deliberately broad and multi-track; it reviews both bounded canonical-design targets and bounded public implementation/governance targets.",
     "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
     "Free-swarm breadth is used before paid reviewers; free reviewers never satisfy paid-family requirements.",
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "ChatGPT and Gemini remain separate independent lanes.",
     "Escalation and emergency pools are not spendable by this routine runner."
-  ]
+  ],
+  "specialist_free_sweep": {
+    "enabled": true,
+    "preferred_families_per_hour": 8,
+    "minimum_families_per_hour": 3,
+    "cross_examination": true,
+    "target_slot_offset": 5,
+    "max_free_calls_per_hour": 16,
+    "cost_policy": "OpenRouter :free routes only; no paid fallback."
+  }
 }
