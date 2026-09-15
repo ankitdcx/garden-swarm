@@ -1,0 +1,89 @@
+name: One-use lineage-confirmed stale branch cleanup 2026-09-15
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '.github/workflows/one-use-lineage-stale-branch-cleanup-20260915.yml'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete exact-head refs with explicit successor evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          SELF_BRANCH: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request, urllib.error
+
+          repo = os.environ['REPO']; owner = os.environ['OWNER']; token = os.environ['GH_TOKEN']; self_branch = os.environ['SELF_BRANCH']
+          api = f'https://api.github.com/repos/{repo}'
+          candidates = [
+            {'branch':'fix/hourly-ist-sequence-20260915','sha':'5f08301e88d75dd8acf0c207a847fe86be33d2d2','source_pr':129,'successor_pr':130,'needle':'rebased'},
+            {'branch':'pr/openrouter-many-agent-1usd-day-20260915','sha':'1acff3745946a44d742c9876231cb7f56ad5ba84','source_pr':118,'successor_pr':127,'needle':'#118'},
+            {'branch':'pr/openrouter-multitrack-specialist-system-20260915','sha':'d5be64be56c6db6d28833225fa59f727a54f4f2e','source_pr':126,'successor_pr':127,'needle':'#126'},
+            {'branch':'pr/openrouter-multitrack-specialist-system-20260915-copy','sha':'d5be64be56c6db6d28833225fa59f727a54f4f2e','source_pr':126,'successor_pr':127,'needle':'#126'},
+            {'branch':'pr/openrouter-multitrack-specialist-system-20260915-final','sha':'d5be64be56c6db6d28833225fa59f727a54f4f2e','source_pr':126,'successor_pr':127,'needle':'#126'},
+            {'branch':'guard/config-surface-coupling-20260915','sha':'6ee296c02b1a3a34e53267dbdf36bdcb5c7d0ed3','source_pr':139,'successor_pr':139,'needle':'CONFIG-SURFACE-COUPLING'},
+          ]
+          def get(url):
+            req=urllib.request.Request(url,headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
+            with urllib.request.urlopen(req,timeout=30) as r: return json.loads(r.read().decode())
+          def delete(branch):
+            encoded=urllib.parse.quote(f'heads/{branch}',safe='')
+            req=urllib.request.Request(f'{api}/git/refs/{encoded}',method='DELETE',headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
+            with urllib.request.urlopen(req,timeout=30) as r:
+              if r.status not in (200,204): raise RuntimeError(r.status)
+          deleted=[]; retained=[]
+          for c in candidates:
+            try:
+              b=get(f"{api}/branches/{urllib.parse.quote(c['branch'],safe='')}")
+            except urllib.error.HTTPError as e:
+              if e.code==404: retained.append({'branch':c['branch'],'reason':'ALREADY_ABSENT'}); continue
+              retained.append({'branch':c['branch'],'reason':'BRANCH_READ_FAILED','detail':repr(e)}); continue
+            head=b['commit']['sha']
+            if head!=c['sha']:
+              retained.append({'branch':c['branch'],'reason':'HEAD_MOVED','head_sha':head,'expected_sha':c['sha']}); continue
+            q=urllib.parse.urlencode({'state':'open','head':f"{owner}:{c['branch']}",'per_page':100})
+            if get(f'{api}/pulls?{q}'):
+              retained.append({'branch':c['branch'],'reason':'OPEN_PR','head_sha':head}); continue
+            src=get(f"{api}/pulls/{c['source_pr']}")
+            succ=get(f"{api}/pulls/{c['successor_pr']}")
+            source_exact=(src.get('head') or {}).get('sha')==head
+            successor_merged=bool(succ.get('merged_at'))
+            successor_text=((succ.get('title') or '')+'\n'+(succ.get('body') or ''))
+            successor_support=(c['needle'].lower() in successor_text.lower())
+            if c['source_pr']==c['successor_pr']:
+              valid=source_exact and successor_merged
+            else:
+              valid=source_exact and src.get('state')=='closed' and not src.get('merged_at') and successor_merged and successor_support
+            # duplicate aliases at same exact source PR head are permitted only because the source SHA and merged-successor evidence match exactly.
+            if not valid:
+              retained.append({'branch':c['branch'],'reason':'LINEAGE_EVIDENCE_MISMATCH','head_sha':head,'source_pr':c['source_pr'],'successor_pr':c['successor_pr']}); continue
+            delete(c['branch'])
+            deleted.append({'branch':c['branch'],'head_sha':head,'source_pr':c['source_pr'],'successor_pr':c['successor_pr'],'reason':'EXACT_HEAD_EXPLICIT_SUCCESSOR_LINEAGE'})
+          receipt={'schema':'GardenOneUseBranchCleanupReceipt/v1','repository':repo,'policy':'exact-head + no-open-PR + explicit merged successor lineage','deleted':deleted,'retained':retained}
+          with open('one-use-lineage-stale-branch-cleanup-receipt.json','w') as f: json.dump(receipt,f,indent=2,sort_keys=True)
+          print(json.dumps(receipt,indent=2,sort_keys=True))
+          if self_branch.startswith('maintenance/one-use-lineage-stale-branch-cleanup-'):
+            try: delete(self_branch); print('self_branch_deleted=',self_branch)
+            except Exception as e: print('self_branch_delete_warning=',repr(e))
+          PY
+      - name: Upload cleanup receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-use-lineage-stale-branch-cleanup-receipt-${{ github.run_id }}
+          path: one-use-lineage-stale-branch-cleanup-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
