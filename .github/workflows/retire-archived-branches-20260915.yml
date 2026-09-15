@@ -1,0 +1,130 @@
+name: Retire archived branches once
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/retire-archived-branches-20260915.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  retire:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'cleanup/retire-archived-branches-20260915'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Verify archived bytes and retire with atomic head leases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SELF_BRANCH: ${{ github.head_ref }}
+          SELF_SHA: ${{ github.event.pull_request.head.sha }}
+          CLEANUP_CONFIG: '{"repository":"ankitdcx/garden-swarm","main_sha":"27bb008c8916017b754e0d0f59d30bd2ffdd3f0b","branches":[{"name":"cleanup/preserve-old-branches-20260915-v2","sha":"644d590c6d5334436a1cec40d9b4cb1f2debcefc"},{"name":"cleanup/preserve-old-branches-20260915-v3","sha":"31cefc4c0d699fa44b6d07a4c15ffe02b91d5b17"},{"name":"cleanup/preserve-old-branches-20260915","sha":"9eb3a653061da79a15847daa19f67f88d0b9a663"},{"name":"ip/final-origin-backfill-data-20260915","sha":"e6df01ff0abf058ca3a06e09303a9d417d97bb45"},{"name":"ip/public-patent-provenance-current-main-20260915","sha":"43519810efa124a2a79dbb5b1bcb0516cb9d7013"},{"name":"ip/public-patent-provenance-current-v2-20260915","sha":"1ff567d43e4e46ce3a863e4c42b5bb882115668d"},{"name":"process-v2-algebra-binding-20260915","sha":"3abb4d2befc7fa72c180e535938641117d2768d1"},{"name":"process-v2-governed-20260915","sha":"864602d19303556082babdee1b46b2297b7c50ce"},{"name":"repair/project-audit-scheduler-cost-20260915","sha":"2442d02ffee587a2b0faca3606715c475543a80f"}]}'
+        run: |
+          python - <<'PY'
+          """One-use, user-authorized retirement of exact archived/merged branch heads."""
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import urllib.request
+          
+          
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          
+          
+          def live_heads():
+              return {line.split()[1].removeprefix('refs/heads/'): line.split()[0]
+                      for line in git('ls-remote', '--heads', 'origin').splitlines()}
+          
+          
+          def main():
+              config = json.loads(os.environ['CLEANUP_CONFIG'])
+              repo = os.environ['GITHUB_REPOSITORY']
+              assert repo == config['repository']
+              base = config['main_sha']
+              assert git('rev-parse', 'HEAD') == base, 'main moved: regenerate cleanup plan'
+              manifest = json.loads(Path('reviews/branch_archive/2026-09-15/manifest.json').read_text())
+              archived = {b['branch']: b for b in manifest['branches']}
+              heads = live_heads()
+              assert heads.get('main') == base, 'main moved: stop'
+              pulls = []
+              for page in range(1, 20):
+                  req = urllib.request.Request(
+                      f'https://api.github.com/repos/{repo}/pulls?state=open&per_page=100&page={page}',
+                      headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                               'Accept': 'application/vnd.github+json'})
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      rows = json.load(response)
+                  pulls.extend(rows)
+                  if len(rows) < 100:
+                      break
+              else:
+                  raise RuntimeError('open PR pagination not exhausted')
+              open_heads = {p['head']['ref'] for p in pulls
+                            if p['head']['repo'] and p['head']['repo']['full_name'] == repo}
+              delete = []
+              already_absent = []
+              for row in config['branches']:
+                  name, sha = row['name'], row['sha']
+                  assert name not in ('main', 'Main', os.environ['SELF_BRANCH'])
+                  assert re.fullmatch('[0-9a-f]{40}', sha)
+                  if name not in heads:
+                      already_absent.append(row)
+                      continue
+                  assert heads[name] == sha, f'branch moved: {name}'
+                  assert name not in open_heads, f'open PR: {name}'
+                  if name in archived:
+                      record = archived[name]
+                      assert record['sha'] == sha
+                      for f in record['files']:
+                          assert git('hash-object', '--', f['archive_path']) == f['blob_sha'], 'archive hash mismatch'
+                      if not record['files']:
+                          subprocess.run(['git', 'merge-base', '--is-ancestor', sha, base], check=True)
+                  else:
+                      subprocess.run(['git', 'merge-base', '--is-ancestor', sha, base], check=True)
+                  delete.append(row)
+              # Retire this temporary carrier too; its only new content is this cleanup workflow.
+              self_branch, self_sha = os.environ['SELF_BRANCH'], os.environ['SELF_SHA']
+              assert self_branch == 'cleanup/retire-archived-branches-20260915'
+              assert heads.get(self_branch) == self_sha
+              delete.append({'name': self_branch, 'sha': self_sha})
+              assert live_heads().get('main') == base
+              command = ['git', 'push', '--atomic']
+              command.extend(f"--force-with-lease=refs/heads/{r['name']}:{r['sha']}" for r in delete)
+              command.append('origin')
+              command.extend(f":refs/heads/{r['name']}" for r in delete)
+              subprocess.run(command, check=True)
+              remaining = live_heads()
+              assert remaining.get('main') == base, 'main changed concurrently'
+              assert not any(r['name'] in remaining for r in delete)
+              receipt = {'schema': 'BranchRetirementReceipt/v1', 'repository': repo,
+                         'main_sha': base, 'deleted': delete, 'already_absent': already_absent,
+                         'remaining_heads': remaining, 'status': 'VERIFIED',
+                         'canonical_effect': 'NONE', 'provider_calls': 0}
+              Path('branch-retirement-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+              print(json.dumps(receipt, indent=2))
+          
+          
+          if __name__ == '__main__':
+              main()
+          PY
+      - name: Preserve deletion receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: branch-retirement-${{ github.run_id }}
+          path: branch-retirement-receipt.json
+          retention-days: 90
+          if-no-files-found: warn
