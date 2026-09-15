@@ -11,6 +11,9 @@ from tools.coordinator_status import evaluate
 from tools.constitutional_path_coverage import evaluate as coverage
 
 ROOT = Path(__file__).resolve().parents[1]
+ONE_USE_AUTHORIZED_WORKFLOW = 'one-use-final-ip-origin-review.yml'
+ONE_USE_MARKER = 'HUMAN_AUTHORIZED_ONE_USE_IP_FINAL_REVIEW_20260915'
+ONE_USE_TITLE = "Finalize Garden IP origin inventory review"
 
 
 class AutomationAuditTests(unittest.TestCase):
@@ -22,8 +25,16 @@ class AutomationAuditTests(unittest.TestCase):
             with self.subTest(workflow=path.name):
                 triggers = text.split('\non:\n',1)[1].split('\npermissions:',1)[0]
                 self.assertNotIn('push:',triggers)
-                self.assertNotIn('pull_request:',triggers)
                 self.assertNotIn('schedule:',triggers)
+                if path.name == ONE_USE_AUTHORIZED_WORKFLOW:
+                    self.assertIn('pull_request:',triggers)
+                    self.assertIn(ONE_USE_MARKER,text)
+                    self.assertIn(f"github.event.pull_request.title == '{ONE_USE_TITLE}'",text)
+                    self.assertIn('github.event.pull_request.head.repo.full_name == github.repository',text)
+                    self.assertIn('group: garden-ip-final-one-use-review',text)
+                    self.assertNotIn('GEMINI_API_KEY',text)
+                    continue
+                self.assertNotIn('pull_request:',triggers)
                 self.assertIn('group: garden-provider-review',text)
                 self.assertLess(text.index('tools.check_dispatch_admission'),text.index('OPENROUTER_API_KEY'))
 
