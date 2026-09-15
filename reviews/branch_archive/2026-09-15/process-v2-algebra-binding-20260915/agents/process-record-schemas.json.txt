@@ -1,0 +1,37 @@
+{
+  "schema": "GardenProcessRecordSchemas/v2",
+  "process_version": "GardenProcess-v2.0-candidate",
+  "records": {
+    "GardenReviewPacket/v1": {
+      "required": ["cycle_id", "packet_hash", "public_repo", "private_repo", "canonical_version", "design_epoch", "canonical_source_root_sha256", "process_version", "target", "diffs", "changed_files", "changed_symbols", "closure", "affected_objects", "ci_test_evidence", "linked_findings", "active_freezes", "exclusions", "closure_frontier"]
+    },
+    "PacketCompletenessReceipt/v1": {
+      "required": ["criterion", "cycle_id", "packet_hash", "status", "closure_algorithm", "manual_unexplained_exclusions", "blockers"],
+      "criterion": "COHERENT_COMPLETE"
+    },
+    "EvidenceClassChallenge/v1": {
+      "required": ["challenge_id", "finding_ref", "original_validated_class", "challenger_claimed_class", "evidence", "reason", "cycle_id", "packet_hash"],
+      "rule": "A challenge may not downgrade or relabel validated evidence merely by assertion; it must carry same-or-higher-class validated evidence showing the original classification or binding was wrong."
+    },
+    "RepairObligation/v1": {
+      "required": ["obligation_id", "severity", "first_seen_cycle", "age_cycles", "last_attempt_cycle", "attempt_count", "blocker", "repo_shas", "paths", "symbols", "reproduction_evidence", "expected_repair", "required_tests", "status"],
+      "status_values": ["OPEN", "IN_REPAIR", "BLOCKED", "VERIFIED_FIXED", "PARTIALLY_FIXED", "REGRESSED", "FALSE_POSITIVE_ORIGINAL_FINDING", "STALE_EVIDENCE", "NEEDS_MORE_EVIDENCE"]
+    },
+    "PipelineHealthReceipt/v1": {
+      "required": ["lane_id", "last_successful_cycle", "cycles_attempted_24h", "cycles_completed_24h", "late_or_missed_cycles", "stale_or_wrong_cycle_evidence_count", "backlog_depth", "failure_reasons", "independently_verified_closures", "false_closures", "stale_evidence_events", "packet_incomplete_rate", "state"],
+      "state_values": ["HEALTHY", "DEGRADED", "REDUCED_OPERATION", "FAILED"]
+    },
+    "HumanAvailabilityWindow/v2": {
+      "required": ["state", "observed_at", "promotion_allowed", "semantic_delta_capacity"],
+      "state_values": ["HUMAN_AVAILABLE", "HUMAN_TEMPORARILY_UNAVAILABLE", "HUMAN_PERMANENTLY_UNAVAILABLE"]
+    },
+    "EscalationBudget/v1": {
+      "required": ["routine_daily_ceiling_usd", "automatic_expensive_escalation_daily_ceiling_usd", "explicit_pre_authorization_required"],
+      "defaults": {"routine_daily_ceiling_usd": 1.0, "automatic_expensive_escalation_daily_ceiling_usd": 0.0, "explicit_pre_authorization_required": true}
+    },
+    "PipelineSimplificationReview/v1": {
+      "required": ["window_days", "candidate_removals", "duplicate_lanes", "never_fired_rules", "orphan_record_types", "high_cost_low_value_checks", "load_bearing_rare_controls", "recommended_process_delta", "rollback_conditions"],
+      "default_window_days": 90
+    }
+  }
+}
