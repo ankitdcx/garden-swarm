@@ -1,0 +1,119 @@
+name: One-use final branch hygiene 2026-09-15
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '.github/workflows/one-use-final-branch-hygiene-20260915.yml'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Delete exact-head merged or explicitly superseded refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          SELF_BRANCH: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+
+          repo = os.environ['REPO']
+          owner = os.environ['OWNER']
+          token = os.environ['GH_TOKEN']
+          self_branch = os.environ['SELF_BRANCH']
+          api = f'https://api.github.com/repos/{repo}'
+
+          candidates = {
+              'ops/ip-deepseek-simple-reviewer-v2-20260914': {'pr': 108, 'mode': 'SUPERSEDED'},
+              'repair/one-use-ip-reviewer-selection-20260915': {'pr': 119, 'mode': 'MERGED'},
+              'repair/one-use-ip-reviewer-reasoning-budget-20260915': {'pr': 123, 'mode': 'SUPERSEDED'},
+              'repair/one-use-ip-reviewer-reasoning-budget-20260915-v2': {'pr': 124, 'mode': 'MERGED'},
+              'ip/public-patent-provenance-final-20260914': {'pr': 105, 'mode': 'SUPERSEDED'},
+          }
+
+          def request_json(url):
+              req = urllib.request.Request(url, headers={
+                  'Authorization': f'Bearer {token}',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28',
+              })
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  return json.loads(response.read().decode('utf-8'))
+
+          def delete_ref(branch):
+              encoded = urllib.parse.quote(f'heads/{branch}', safe='')
+              req = urllib.request.Request(
+                  f'{api}/git/refs/{encoded}',
+                  method='DELETE',
+                  headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  if response.status not in (200, 204):
+                      raise RuntimeError(f'delete {branch}: HTTP {response.status}')
+
+          deleted, retained = [], []
+          for branch, rule in candidates.items():
+              try:
+                  branch_data = request_json(f"{api}/branches/{urllib.parse.quote(branch, safe='')}")
+                  head_sha = branch_data['commit']['sha']
+                  q = urllib.parse.urlencode({'state': 'open', 'head': f'{owner}:{branch}', 'per_page': 100})
+                  if request_json(f'{api}/pulls?{q}'):
+                      retained.append({'branch': branch, 'reason': 'OPEN_PR', 'head_sha': head_sha})
+                      continue
+                  pr = request_json(f"{api}/pulls/{rule['pr']}")
+                  exact = (pr.get('head') or {}).get('sha') == head_sha
+                  if rule['mode'] == 'MERGED':
+                      valid = exact and bool(pr.get('merged_at'))
+                      reason = 'EXACT_HEAD_MERGED_PR'
+                  else:
+                      valid = exact and pr.get('state') == 'closed' and not pr.get('merged_at') and 'SUPERSEDED' in ((pr.get('title') or '') + '\n' + (pr.get('body') or ''))
+                      reason = 'EXACT_HEAD_EXPLICITLY_SUPERSEDED_PR'
+                  if not valid:
+                      retained.append({'branch': branch, 'reason': 'EVIDENCE_MISMATCH', 'head_sha': head_sha, 'pr': rule['pr'], 'mode': rule['mode']})
+                      continue
+                  delete_ref(branch)
+                  deleted.append({'branch': branch, 'head_sha': head_sha, 'pr': rule['pr'], 'reason': reason})
+              except Exception as exc:
+                  retained.append({'branch': branch, 'reason': 'CHECK_FAILED', 'detail': repr(exc)})
+
+          receipt = {
+              'schema': 'GardenOneUseBranchCleanupReceipt/v1',
+              'repository': repo,
+              'policy': 'delete only exact-head merged PR refs or exact-head closed-unmerged refs with explicit superseded evidence',
+              'deleted': deleted,
+              'retained': retained,
+          }
+          with open('one-use-final-branch-hygiene-receipt.json', 'w', encoding='utf-8') as handle:
+              json.dump(receipt, handle, indent=2, sort_keys=True)
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+
+          if self_branch.startswith('maintenance/one-use-final-branch-hygiene-'):
+              try:
+                  delete_ref(self_branch)
+                  print('self_branch_deleted=', self_branch)
+              except Exception as exc:
+                  print('self_branch_delete_warning=', repr(exc))
+          PY
+      - name: Upload cleanup receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-use-final-branch-hygiene-receipt-${{ github.run_id }}
+          path: one-use-final-branch-hygiene-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
