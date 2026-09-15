@@ -25,15 +25,17 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Compile bounded multi-agent reviewer and selector
+      - name: Compile and verify bounded review topology
         run: |
           python -m py_compile tools/run_ip_origin_multi_agent_review.py
           python -m py_compile tools/select_ip_origin_reviewers.py
+          python -m unittest tests.test_ip_origin_review_selection -v
+          python -m unittest tests.test_ip_origin_review_budget -v
 
       - name: Generate approved multi-family IP-origin selection
         run: python -m tools.select_ip_origin_reviewers
 
-      - name: Run approved-family role reviews and cross-exams per batch
+      - name: Run budget-correct specialist reviews and all-family cross-exams
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.run_ip_origin_multi_agent_review
