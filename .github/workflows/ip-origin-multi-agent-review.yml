@@ -1,0 +1,46 @@
+name: Garden IP origin multi-agent review
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'IP_ORIGIN_INVENTORY.json'
+      - 'IP_ORIGIN_INVENTORY.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-ip-origin-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  openrouter-ip-origin-review:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compile bounded multi-agent reviewer
+        run: python -m py_compile tools/run_ip_origin_multi_agent_review.py
+
+      - name: Generate approved DeepSeek + Qwen selection
+        run: python -m tools.select_paid_matrix_reviewers
+
+      - name: Run 8 role-agents plus 2 cross-examiners per batch
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.run_ip_origin_multi_agent_review
+
+      - name: Upload immutable multi-agent review receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-ip-origin-review-${{ github.run_id }}
+          path: ip-origin-multi-agent-review.json
+          if-no-files-found: warn
+          retention-days: 90
