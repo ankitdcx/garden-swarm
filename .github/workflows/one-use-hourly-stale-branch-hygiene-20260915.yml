@@ -1,0 +1,162 @@
+name: One-use hourly stale branch hygiene 2026-09-15
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '.github/workflows/one-use-hourly-stale-branch-hygiene-20260915.yml'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Delete exact-head mechanically safe stale refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          SELF_BRANCH: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request, urllib.error
+
+          repo = os.environ['REPO']
+          owner = os.environ['OWNER']
+          token = os.environ['GH_TOKEN']
+          self_branch = os.environ['SELF_BRANCH']
+          api = f'https://api.github.com/repos/{repo}'
+
+          candidates = {
+              'canonical-design-sweep-coverage-20260915': 'bd343652a8215916d0ca5a7ecc36f949563db797',
+              'fix/hourly-ist-sequence-20260915': '5f08301e88d75dd8acf0c207a847fe86be33d2d2',
+              'fix/hourly-ist-sequence-current-main-20260915': 'c397a15eb60a59f57415030e85f71e87a8084c8c',
+              'fix/ip-origin-review-selection-compat-20260915-v2': '79d3e46c68774736ce7865ea728ea11ad1019acc',
+              'fix/ip-origin-review-selection-compat-20260915-v3': '07b7fa29fa0466a8054645cb158396cda256674c',
+              'fix/ip-origin-review-selection-compat-20260915': 'c7d742c8f9bda83cbd9cc3061ebdeefd65568a4e',
+              'ip/expand-origin-review-all-families-20260915': '612137a575d6d3dcd8ade1e4dc5b16500c9d2abc',
+              'ip/fix-multi-family-origin-review-20260915': 'ec4bbe06a7f9875d673c9bf2467575e6238ebee6',
+              'ip/install-origin-multi-agent-review-20260915': '4da3dacc736711ec6454f224446ea98bb5aa6f4f',
+              'ip/install-origin-multi-agent-review-v2-20260915': '02d7f8a1ff66fbd4c57c4b40c2f7b168f44c30b9',
+              'ip/origin-inventory-seed-20260915': 'c7d742c8f9bda83cbd9cc3061ebdeefd65568a4e',
+              'ip/origin-inventory-seed-v2-20260915': '6d2790005666f82a0eed3dce8f2891b6905d68bc',
+              'ip/public-patent-provenance-current-20260915': '0ad619050d433084bd7f0ee5b90299f35b2c2202',
+              'pr/openrouter-many-agent-1usd-day-20260915': '1acff3745946a44d742c9876231cb7f56ad5ba84',
+              'pr/openrouter-multitrack-specialist-system-20260915-copy': 'd5be64be56c6db6d28833225fa59f727a54f4f2e',
+              'pr/openrouter-multitrack-specialist-system-20260915-final': 'd5be64be56c6db6d28833225fa59f727a54f4f2e',
+              'pr/openrouter-multitrack-specialist-system-20260915': 'd5be64be56c6db6d28833225fa59f727a54f4f2e',
+              'pr/openrouter-multitrack-specialist-system-current-main-20260915': '77d1ca1a09caf6ecbe5bbbf46700145630df347b',
+          }
+
+          def request_json(url):
+              req = urllib.request.Request(url, headers={
+                  'Authorization': f'Bearer {token}',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28',
+              })
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  return json.loads(response.read().decode('utf-8'))
+
+          def delete_ref(branch):
+              encoded = urllib.parse.quote(f'heads/{branch}', safe='')
+              req = urllib.request.Request(
+                  f'{api}/git/refs/{encoded}', method='DELETE', headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  })
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  if response.status not in (200, 204):
+                      raise RuntimeError(f'delete {branch}: HTTP {response.status}')
+
+          def superseded_text(pr):
+              text = ((pr.get('title') or '') + '\n' + (pr.get('body') or '')).upper()
+              return ('SUPERSEDED' in text) or ('NO LONGER NEEDED' in text)
+
+          main_sha = request_json(f'{api}/branches/main')['commit']['sha']
+          closed_pulls = request_json(f'{api}/pulls?state=closed&per_page=100&sort=updated&direction=desc')
+          safe_commit_evidence = {}
+          for pr in closed_pulls:
+              sha = (pr.get('head') or {}).get('sha')
+              if not sha:
+                  continue
+              if pr.get('merged_at'):
+                  safe_commit_evidence.setdefault(sha, []).append({'pr': pr['number'], 'reason': 'MERGED_PR_HEAD'})
+              elif superseded_text(pr):
+                  safe_commit_evidence.setdefault(sha, []).append({'pr': pr['number'], 'reason': 'EXPLICITLY_SUPERSEDED_PR_HEAD'})
+
+          deleted, retained = [], []
+          for branch, expected_sha in candidates.items():
+              try:
+                  branch_data = request_json(f"{api}/branches/{urllib.parse.quote(branch, safe='')}")
+                  head_sha = branch_data['commit']['sha']
+              except urllib.error.HTTPError as exc:
+                  if exc.code == 404:
+                      retained.append({'branch': branch, 'reason': 'ALREADY_ABSENT'})
+                      continue
+                  retained.append({'branch': branch, 'reason': 'BRANCH_READ_FAILED', 'detail': repr(exc)})
+                  continue
+
+              if head_sha != expected_sha:
+                  retained.append({'branch': branch, 'reason': 'HEAD_MOVED', 'expected_sha': expected_sha, 'head_sha': head_sha})
+                  continue
+
+              q = urllib.parse.urlencode({'state': 'open', 'head': f'{owner}:{branch}', 'per_page': 100})
+              if request_json(f'{api}/pulls?{q}'):
+                  retained.append({'branch': branch, 'reason': 'OPEN_PR', 'head_sha': head_sha})
+                  continue
+
+              evidence = None
+              if head_sha == main_sha:
+                  evidence = {'reason': 'IDENTICAL_TO_CURRENT_MAIN'}
+              else:
+                  compare = request_json(f'{api}/compare/{head_sha}...{main_sha}')
+                  if (compare.get('merge_base_commit') or {}).get('sha') == head_sha:
+                      evidence = {'reason': 'ANCESTOR_OF_CURRENT_MAIN'}
+                  elif head_sha in safe_commit_evidence:
+                      evidence = {'reason': 'CLOSED_PR_COMMIT_EVIDENCE', 'support': safe_commit_evidence[head_sha]}
+
+              if not evidence:
+                  retained.append({'branch': branch, 'reason': 'NO_MECHANICAL_SAFE_DELETE_EVIDENCE', 'head_sha': head_sha})
+                  continue
+
+              try:
+                  delete_ref(branch)
+                  deleted.append({'branch': branch, 'head_sha': head_sha, **evidence})
+              except Exception as exc:
+                  retained.append({'branch': branch, 'reason': 'DELETE_FAILED', 'head_sha': head_sha, 'detail': repr(exc)})
+
+          receipt = {
+              'schema': 'GardenOneUseBranchCleanupReceipt/v1',
+              'repository': repo,
+              'main_sha_observed': main_sha,
+              'policy': 'exact-head + no-open-PR + identical/ancestor/closed-PR commit evidence; fail closed otherwise',
+              'deleted': deleted,
+              'retained': retained,
+          }
+          with open('one-use-hourly-stale-branch-hygiene-receipt.json', 'w', encoding='utf-8') as handle:
+              json.dump(receipt, handle, indent=2, sort_keys=True)
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+
+          if self_branch.startswith('maintenance/one-use-hourly-stale-branch-hygiene-'):
+              try:
+                  delete_ref(self_branch)
+                  print('self_branch_deleted=', self_branch)
+              except Exception as exc:
+                  print('self_branch_delete_warning=', repr(exc))
+          PY
+      - name: Upload cleanup receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-use-hourly-stale-branch-hygiene-receipt-${{ github.run_id }}
+          path: one-use-hourly-stale-branch-hygiene-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
