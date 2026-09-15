@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select the fixed bounded paid OpenRouter reviewer set for routine Garden review."""
+"""Select the bounded paid OpenRouter reviewer set for routine Garden review."""
 from __future__ import annotations
 
 import json
@@ -19,19 +19,27 @@ def main() -> int:
         raise SystemExit("routine reviewer policy may not self-admit semantic deltas")
 
     selected = list(policy.get("routine_reviewers") or [])
+    if len(selected) < 2:
+        raise SystemExit("routine paid reviewer set must contain at least two independent families")
     families = [str(row.get("family")) for row in selected]
-    if families != ["deepseek", "qwen"]:
-        raise SystemExit("routine paid reviewer set must be exactly DeepSeek + Qwen")
     if len(set(families)) != len(families):
         raise SystemExit("routine paid reviewer families must be distinct")
+    if any(not str(row.get("model", "")).strip() for row in selected):
+        raise SystemExit("routine paid reviewer is missing a model")
     if any(str(row.get("model", "")).endswith(":free") for row in selected):
         raise SystemExit("paid routine selector may not silently substitute free routes")
 
+    daily_ceiling = float(policy.get("daily_openrouter_cost_ceiling_usd", 0))
+    if not (0 < daily_ceiling <= 1.0):
+        raise SystemExit("daily OpenRouter cost ceiling must be >0 and <= $1.00")
+
     payload = {
-        "schema": "GardenPaidModelSelection/v1",
+        "schema": "GardenPaidModelSelection/v2",
         "purpose": policy["purpose"],
         "design_epoch": policy["design_epoch"],
         "selected": selected,
+        "approved_families": families,
+        "daily_openrouter_cost_ceiling_usd": daily_ceiling,
         "routine_hourly_cost_ceiling_usd": policy["routine_hourly_cost_ceiling_usd"],
         "routine_model_call_cost_ceiling_usd": policy["routine_model_call_cost_ceiling_usd"],
         "max_prompt_characters": policy["max_prompt_characters"],

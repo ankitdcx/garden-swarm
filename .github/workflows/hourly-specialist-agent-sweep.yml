@@ -1,0 +1,124 @@
+name: Garden hourly free specialist sweep
+
+on:
+  schedule:
+    - cron: '20 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garden-hourly-free-specialist-sweep
+  cancel-in-progress: false
+
+jobs:
+  specialist-sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify multi-track review plumbing offline
+        run: |
+          python -m unittest tests.test_design_target_rotation -v
+          python -m unittest tests.test_design_review_matrix -v
+          python -m unittest tests.test_multi_track_review_policy -v
+
+      - name: Select a different bounded public target from the main hourly lane
+        id: slot
+        run: |
+          SLOT=$(python - <<'PY'
+          import json, time
+          policy = json.load(open('agents/openrouter-paid-review-policy.json', encoding='utf-8'))
+          offset = int(policy['specialist_free_sweep']['target_slot_offset'])
+          print(int(time.time() // 3600) + offset)
+          PY
+          )
+          echo "slot=$SLOT" >> "$GITHUB_OUTPUT"
+          python -m tools.rotate_design_review_target \
+            --slot "$SLOT" \
+            --receipt agents/runtime/specialist-target-selection.json
+
+      - name: Select the largest available diverse free specialist swarm
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          read PREFERRED MINIMUM <<EOF
+          $(python - <<'PY'
+          import json
+          policy = json.load(open('agents/openrouter-paid-review-policy.json', encoding='utf-8'))
+          cfg = policy['specialist_free_sweep']
+          print(int(cfg['preferred_families_per_hour']), int(cfg['minimum_families_per_hour']))
+          PY
+          )
+          EOF
+          python -m tools.select_matrix_reviewers \
+            --slot "${{ steps.slot.outputs.slot }}" \
+            --count "$PREFERRED" \
+            --minimum-count "$MINIMUM"
+
+      - name: Run blind specialist reviews then peer cross-examination
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.matrix_design_review
+
+      - name: Enforce free-only, public-only, multi-family evidence boundaries
+        run: |
+          python - <<'PY'
+          import json
+
+          policy = json.load(open('agents/openrouter-paid-review-policy.json', encoding='utf-8'))
+          cfg = policy['specialist_free_sweep']
+          selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
+          target = json.load(open('agents/runtime/specialist-target-selection.json', encoding='utf-8'))
+          bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
+
+          selected = selection['selected']
+          assert selection['schema'] == 'GardenFreeModelSelection/v2'
+          assert selection['selected_family_count'] == len(selected)
+          assert int(cfg['minimum_families_per_hour']) <= len(selected) <= int(cfg['preferred_families_per_hour'])
+          assert len({row['family'] for row in selected}) == len(selected)
+          assert all(row['model'].endswith(':free') for row in selected)
+          assert bundle['schema'] == 'GardenDesignReviewBundle/v1'
+          assert bundle['target']['target_id'] == target['target_id']
+          assert bundle['target']['public_only'] is True
+          assert bundle['semantic_delta_admitted'] is False
+          assert bundle['status'] in {
+              'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR',
+              'INSUFFICIENT_INDEPENDENT_REVIEW',
+              'INSUFFICIENT_PEER_CROSS_EXAMINATION',
+              'COST_VERIFICATION_FAILED',
+          }
+          if bundle['status'] == 'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR':
+              assert bundle['zero_cost_verified'] is True
+
+          print(json.dumps({
+              'target_id': target['target_id'],
+              'target_index': target['target_index'],
+              'selected_families': [row['family'] for row in selected],
+              'selected_roles': [row['role'] for row in selected],
+              'independent_completed': bundle['independent_reviewer_family_count'],
+              'cross_exam_completed': bundle['final_disposition_family_count'],
+              'status': bundle['status'],
+              'semantic_delta_admitted': False,
+          }, sort_keys=True))
+          PY
+
+      - name: Upload immutable specialist-sweep evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: garden-hourly-free-specialist-sweep-${{ github.run_id }}
+          path: |
+            agents/design-review-matrix.json
+            agents/openrouter-paid-review-policy.json
+            agents/runtime/specialist-target-selection.json
+            agents/runtime/free-selection.json
+            agents/outbox/hourly/design-review-bundle.json
+            agents/outbox/hourly/matrix-review/*.json
+          if-no-files-found: warn
+          retention-days: 30
