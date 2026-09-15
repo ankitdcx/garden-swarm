@@ -77,6 +77,41 @@
     "allowed_state_claims": ["ALREADY_PRESENT", "PARTIALLY_PRESENT", "GENUINE_GAP", "CONTRADICTS_GARDEN", "NEEDS_EVIDENCE", "CANDIDATE_ALTERNATIVE"],
     "forbidden_state_claims": ["BETTER_ALTERNATIVE"]
   },
+  "process_algebra": {
+    "registry_ref": "REG-ALGEBRA-001",
+    "canonical_refs": ["Garden_System_v15.5:[S-PROCESS]#5.1", "Garden_System_v15.5:[S-PROCESS]#5.1B"],
+    "usage_receipt_schema": "GardenEvolutionAlgebraUsageReceipt/v1",
+    "validation_receipt_schema": "GardenEvolutionAlgebraValidationReceipt/v1",
+    "semantic_compliance_proved": false,
+    "semantic_compliance_rule": "Never claim full semantic compliance while any REQUIRED algebra is FRONTIER or while the action lacks a validated usage receipt.",
+    "registered_process_operators": ["SEQUENCE", "BRANCH", "PARALLEL", "COMPOSE", "RETRY", "ROLLBACK", "COMPENSATE", "RECONSTRUCT", "ITERATE", "RECURSE", "TERMINATE", "DO_NOTHING"],
+    "registered_process_non_laws": ["PARALLEL_EFFECT_COMMUTATIVITY_NOT_UNIVERSAL"],
+    "stage_operator_binding": {
+      "ordered_stage_transition": "SEQUENCE",
+      "blind_peer_fanout": "PARALLEL",
+      "multi_stage_composition": "COMPOSE",
+      "semantic_vs_light_path": "BRANCH",
+      "bounded_repair_attempt": "RETRY",
+      "failed_integration_reversal": "ROLLBACK",
+      "external_side_effect_remediation": "COMPENSATE",
+      "rebuild_state_from_bound_evidence": "RECONSTRUCT",
+      "continuous_cycle": "ITERATE",
+      "nested_dependency_repair": "RECURSE",
+      "blocked_or_invalid_end": "TERMINATE",
+      "no_positive_verified_value": "DO_NOTHING"
+    },
+    "target_kinds": ["PUBLIC_REPO", "PRIVATE_IMPLEMENTATION", "CANONICAL_DESIGN"],
+    "target_terminal_rules": {
+      "PUBLIC_REPO": "Only exact-head governed integration may mutate repository main.",
+      "PRIVATE_IMPLEMENTATION": "Only exact-head governed integration may mutate implementation main.",
+      "CANONICAL_DESIGN": "Never mutate the immutable predecessor; compose a successor candidate and require separately protected canonical promotion."
+    },
+    "policy_algebra": "APPLY_WHEN_AUTHORITY_OR_APPROVAL_GATE_IS_EXECUTED; do not relabel ordinary ActionGate checks as Policy Algebra without registered operator binding.",
+    "conformance_algebra": "REQUIRED_FOR_REQUIREMENT_CLOSURE_AND_EXACT_HEAD_CONFORMANCE",
+    "decision_algebra": "FRONTIER_UNTIL_EXECUTABLE_OPERATOR_SIGNATURES_ARE_BOUND",
+    "evidence_algebra": "FRONTIER_UNTIL_EXECUTABLE_OPERATOR_SIGNATURES_ARE_BOUND",
+    "bridge_algebra": "CONDITIONAL_ONLY_WHEN_A_REGISTERED_SEMANTIC_REPRESENTATION_TRANSFORMATION_IS_ACTUALLY_INVOKED"
+  },
   "process_change_control": {
     "protected": true,
     "successor_reviewed_under_predecessor": true,
