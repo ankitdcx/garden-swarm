@@ -1,0 +1,38 @@
+name: Garden Process v2 candidate checks
+
+on:
+  pull_request:
+    paths:
+      - 'PROCESS_VERSION.json'
+      - 'CONTINUOUS_UPGRADE_PROCESS.md'
+      - 'agents/process-control-policy.json'
+      - 'tools/validate_evidence_class.py'
+      - 'tools/validate_review_packet.py'
+      - 'tests/test_process_v2_controls.py'
+      - '.github/workflows/process-v2-candidate-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  process-v2-controls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Process v2 control tests
+        run: python -m unittest tests.test_process_v2_controls -v
+      - name: Assert candidate cannot self-authorize
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('PROCESS_VERSION.json',encoding='utf-8'))
+          assert p['status']=='CANDIDATE_REVIEW_UNDER_PREDECESSOR'
+          assert p['effective_only_after_admission'] is True
+          assert p['self_authorization_forbidden'] is True
+          assert p['canonical_garden_unchanged'] is True
+          print('Process v2 candidate remains predecessor-reviewed and non-self-authorizing')
+          PY

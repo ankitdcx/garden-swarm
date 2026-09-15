@@ -1,0 +1,85 @@
+{
+  "schema": "GardenProcessControlPolicy/v2",
+  "process_version": "GardenProcess-v2.0-candidate",
+  "cycle_states": [
+    "PACKET_BUILDING",
+    "PACKET_READY",
+    "BLIND_REVIEW",
+    "BLIND_REVIEW_COMPLETE",
+    "CROSS_EXAM",
+    "BUILDER_READY",
+    "INTEGRATED",
+    "POST_FIX_VERIFIED"
+  ],
+  "packet_completeness": {
+    "criterion": "COHERENT_COMPLETE",
+    "canonical_serialization_required": true,
+    "shared_packet_hash_required": true,
+    "manual_exclusion_without_reason": "REJECT",
+    "ambiguous_closure": "PACKET_INCOMPLETE"
+  },
+  "evidence": {
+    "classes": ["E0", "E1", "E2", "E3", "E4"],
+    "producer_assigns": true,
+    "deterministic_validation_required": true,
+    "validated_class_immutable": true,
+    "challenge_schema": "EvidenceClassChallenge/v1"
+  },
+  "review_independence": {
+    "same_packet_required": true,
+    "blind_until_independent_finding_persisted": true,
+    "same_base_specialists_add_independent_family_count": false,
+    "minimum_effective_independent_families_for_semantic_admission": 3,
+    "exploration_capacity_fraction": 0.20,
+    "internal_acceptance_allocation_weight_cap": 0.10
+  },
+  "merge_protocol": {
+    "mode": "REBASE_AND_REVERIFY_MERGE_QUEUE",
+    "stale_exact_head_evidence": "INVALID",
+    "force_push": false,
+    "branch_protection_bypass": false
+  },
+  "repair_priority": {
+    "critical_preempts_new_work": true,
+    "high_age_boost_starts_cycles": 3,
+    "high_backlog_pressure_cycles": 6,
+    "medium_age_boost_starts_cycles": 12,
+    "backlog_pressure": {
+      "critical_count_gte": 1,
+      "aged_high_count_gte": 2,
+      "medium_or_higher_total_gte": 12
+    }
+  },
+  "pipeline_health": {
+    "states": ["HEALTHY", "DEGRADED", "REDUCED_OPERATION", "FAILED"],
+    "self_certified_closure_counts_allowed": false,
+    "repeated_packet_incomplete_is_health_signal": true,
+    "wrong_cycle_evidence_is_health_defect": true
+  },
+  "human_availability": {
+    "states": ["HUMAN_AVAILABLE", "HUMAN_TEMPORARILY_UNAVAILABLE", "HUMAN_PERMANENTLY_UNAVAILABLE"],
+    "temporary_unavailability_semantic_delta_cap": 10,
+    "permanent_unavailability_semantic_delta_cap": 10,
+    "permanent_unavailability_continuity_review_days": 90,
+    "silent_authority_transfer_forbidden": true
+  },
+  "budget": {
+    "routine_openrouter_daily_ceiling_usd": 1.0,
+    "automatic_expensive_escalation_daily_ceiling_usd": 0.0,
+    "separate_escalation_budget_required": true
+  },
+  "research": {
+    "allowed_state_claims": ["ALREADY_PRESENT", "PARTIALLY_PRESENT", "GENUINE_GAP", "CONTRADICTS_GARDEN", "NEEDS_EVIDENCE", "CANDIDATE_ALTERNATIVE"],
+    "forbidden_state_claims": ["BETTER_ALTERNATIVE"]
+  },
+  "process_change_control": {
+    "protected": true,
+    "successor_reviewed_under_predecessor": true,
+    "self_authorization_forbidden": true
+  },
+  "simplification": {
+    "review_schema": "PipelineSimplificationReview/v1",
+    "period_days": 90,
+    "removal_is_first_class_improvement": true
+  }
+}
