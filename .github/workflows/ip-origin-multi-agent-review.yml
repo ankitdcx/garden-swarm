@@ -30,10 +30,10 @@ jobs:
           python -m py_compile tools/run_ip_origin_multi_agent_review.py
           python -m py_compile tools/select_ip_origin_reviewers.py
 
-      - name: Generate approved DeepSeek + Qwen IP-origin selection
+      - name: Generate approved multi-family IP-origin selection
         run: python -m tools.select_ip_origin_reviewers
 
-      - name: Run 8 role-agents plus 2 cross-examiners per batch
+      - name: Run approved-family role reviews and cross-exams per batch
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.run_ip_origin_multi_agent_review

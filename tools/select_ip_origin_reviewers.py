@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select the bounded DeepSeek + Qwen paid reviewer pair for public IP-origin review."""
+"""Select all approved paid reviewer families for public Garden IP-origin review."""
 from __future__ import annotations
 
 import json
@@ -8,7 +8,7 @@ from typing import Any
 
 POLICY = Path("agents/openrouter-paid-review-policy.json")
 OUTPUT = Path("agents/runtime/paid-selection.json")
-REQUIRED_FAMILIES = ("deepseek", "qwen")
+ANCHOR_FAMILIES = ("deepseek", "qwen")
 
 
 def build_selection(policy: dict[str, Any]) -> dict[str, Any]:
@@ -19,18 +19,25 @@ def build_selection(policy: dict[str, Any]) -> dict[str, Any]:
     if policy.get("semantic_delta_admitted") is not False:
         raise ValueError("IP-origin review may not self-admit semantic deltas")
 
-    by_family = {
-        str(row.get("family")): row
-        for row in (policy.get("routine_reviewers") or [])
-        if isinstance(row, dict)
-    }
-    missing = [family for family in REQUIRED_FAMILIES if family not in by_family]
+    selected = [row for row in (policy.get("routine_reviewers") or []) if isinstance(row, dict)]
+    by_family = {str(row.get("family")): row for row in selected if row.get("family")}
+    missing = [family for family in ANCHOR_FAMILIES if family not in by_family]
     if missing:
-        raise ValueError(f"missing required IP-origin reviewer families: {missing}")
+        raise ValueError(f"missing required IP-origin anchor families: {missing}")
+    if len(by_family) < 2:
+        raise ValueError("IP-origin review requires at least two independent families")
 
-    selected = [by_family[family] for family in REQUIRED_FAMILIES]
-    if any(str(row.get("model", "")).endswith(":free") for row in selected):
-        raise ValueError("IP-origin paid selector may not silently substitute free routes")
+    # Preserve policy order while removing accidental duplicate family rows.
+    ordered: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for row in selected:
+        family = str(row.get("family", ""))
+        if not family or family in seen:
+            continue
+        if str(row.get("model", "")).endswith(":free"):
+            raise ValueError("IP-origin paid selector may not silently substitute free routes")
+        seen.add(family)
+        ordered.append(row)
 
     daily_ceiling = float(policy.get("daily_openrouter_cost_ceiling_usd", 0))
     if not (0 < daily_ceiling <= 1.0):
@@ -43,8 +50,9 @@ def build_selection(policy: dict[str, Any]) -> dict[str, Any]:
         "schema": "GardenPaidModelSelection/v2",
         "purpose": "PUBLIC_IP_ORIGIN_REVIEW",
         "design_epoch": policy["design_epoch"],
-        "selected": selected,
-        "approved_families": list(REQUIRED_FAMILIES),
+        "selected": ordered,
+        "approved_families": [str(row["family"]) for row in ordered],
+        "anchor_families": list(ANCHOR_FAMILIES),
         "daily_openrouter_cost_ceiling_usd": daily_ceiling,
         "routine_hourly_cost_ceiling_usd": policy["routine_hourly_cost_ceiling_usd"],
         "routine_model_call_cost_ceiling_usd": policy["routine_model_call_cost_ceiling_usd"],
