@@ -1,158 +1,158 @@
 {
-  "schema": "BranchArchiveManifest/v1",
-  "date": "2026-09-15",
-  "repository": "ankitdcx/garden-swarm",
-  "base_sha": "0075300a863be901e30351d85eb372818e159b26",
-  "canonical_effect": "NONE",
   "authority_effect": "NONE",
-  "scope": "Exact changed-file blobs from each retiring branch; .txt snapshots are inactive historical data. Original Git commit SHA preserves full-tree lineage. This is preservation, not functional adoption, review approval, or freeze lifting.",
+  "base_sha": "0075300a863be901e30351d85eb372818e159b26",
   "branches": [
     {
+      "ahead_of_initial_main": 1,
       "branch": "ip/final-origin-backfill-data-20260915",
-      "sha": "e6df01ff0abf058ca3a06e09303a9d417d97bb45",
       "disposition": "PENDING_INDEPENDENT_REVIEW",
-      "ahead_of_initial_main": 1,
       "files": [
         {
-          "original_path": "IP_ORIGIN_INVENTORY.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.json.txt",
-          "blob_sha": "ed09372f5ea17507c0aee407a5d1db471a5e04a6"
+          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.json.snapshot",
+          "blob_sha": "ed09372f5ea17507c0aee407a5d1db471a5e04a6",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/e6df01ff0abf058ca3a06e09303a9d417d97bb45/IP_ORIGIN_INVENTORY.json"
         },
         {
-          "original_path": "IP_ORIGIN_INVENTORY.md",
-          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.md.txt",
-          "blob_sha": "51e0f748a3ce5bbca3636c5d956860e9e21e45a4"
+          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.md.snapshot",
+          "blob_sha": "51e0f748a3ce5bbca3636c5d956860e9e21e45a4",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/e6df01ff0abf058ca3a06e09303a9d417d97bb45/IP_ORIGIN_INVENTORY.md"
         },
         {
-          "original_path": "IP_ORIGIN_SUPPLEMENT.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_SUPPLEMENT.json.txt",
-          "blob_sha": "50960d9d26df45e4a9dd8074f2d8aa4236301ce4"
+          "archive_path": "reviews/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_SUPPLEMENT.json.snapshot",
+          "blob_sha": "50960d9d26df45e4a9dd8074f2d8aa4236301ce4",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/e6df01ff0abf058ca3a06e09303a9d417d97bb45/IP_ORIGIN_SUPPLEMENT.json"
         }
-      ]
+      ],
+      "sha": "e6df01ff0abf058ca3a06e09303a9d417d97bb45"
     },
     {
+      "ahead_of_initial_main": 1,
       "branch": "ip/public-patent-provenance-current-main-20260915",
-      "sha": "43519810efa124a2a79dbb5b1bcb0516cb9d7013",
       "disposition": "MERGED_PR_169",
-      "ahead_of_initial_main": 1,
       "files": [
         {
-          "original_path": "PATENT_AND_USE_NOTICE.md",
-          "archive_path": "reviews/branch_archive/2026-09-15/ip__public-patent-provenance-current-main-20260915/PATENT_AND_USE_NOTICE.md.txt",
-          "blob_sha": "df575cc3227dc5baf62aec60f387eafb206d6129"
+          "archive_path": "reviews/branch_archive/2026-09-15/ip__public-patent-provenance-current-main-20260915/PATENT_AND_USE_NOTICE.md.snapshot",
+          "blob_sha": "df575cc3227dc5baf62aec60f387eafb206d6129",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/43519810efa124a2a79dbb5b1bcb0516cb9d7013/PATENT_AND_USE_NOTICE.md"
         }
-      ]
+      ],
+      "sha": "43519810efa124a2a79dbb5b1bcb0516cb9d7013"
     },
     {
+      "ahead_of_initial_main": 1,
       "branch": "ip/public-patent-provenance-current-v2-20260915",
-      "sha": "1ff567d43e4e46ce3a863e4c42b5bb882115668d",
       "disposition": "SUPERSEDED_BY_PR_169",
-      "ahead_of_initial_main": 1,
       "files": [
         {
-          "original_path": "PATENT_AND_USE_NOTICE.md",
-          "archive_path": "reviews/branch_archive/2026-09-15/ip__public-patent-provenance-current-v2-20260915/PATENT_AND_USE_NOTICE.md.txt",
-          "blob_sha": "df575cc3227dc5baf62aec60f387eafb206d6129"
+          "archive_path": "reviews/branch_archive/2026-09-15/ip__public-patent-provenance-current-v2-20260915/PATENT_AND_USE_NOTICE.md.snapshot",
+          "blob_sha": "df575cc3227dc5baf62aec60f387eafb206d6129",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/1ff567d43e4e46ce3a863e4c42b5bb882115668d/PATENT_AND_USE_NOTICE.md"
         }
-      ]
+      ],
+      "sha": "1ff567d43e4e46ce3a863e4c42b5bb882115668d"
     },
     {
+      "ahead_of_initial_main": 1,
       "branch": "process-v2-algebra-binding-20260915",
-      "sha": "3abb4d2befc7fa72c180e535938641117d2768d1",
       "disposition": "RETIRED_SUPERSEDED_PROCESS",
-      "ahead_of_initial_main": 1,
       "files": [
         {
-          "original_path": ".github/workflows/process-v2-candidate-checks.yml",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/.github/workflows/process-v2-candidate-checks.yml.txt",
-          "blob_sha": "69d6889ce31ba7747d802fd84827350883f466d8"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/.github/workflows/process-v2-candidate-checks.yml.snapshot",
+          "blob_sha": "69d6889ce31ba7747d802fd84827350883f466d8",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/.github/workflows/process-v2-candidate-checks.yml"
         },
         {
-          "original_path": ".github/workflows/process-v2-hourly-review.yml",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/.github/workflows/process-v2-hourly-review.yml.txt",
-          "blob_sha": "9161c903b250b69ab42af947220a57bbf285c2b5"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/.github/workflows/process-v2-hourly-review.yml.snapshot",
+          "blob_sha": "9161c903b250b69ab42af947220a57bbf285c2b5",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/.github/workflows/process-v2-hourly-review.yml"
         },
         {
-          "original_path": "CONTINUOUS_UPGRADE_PROCESS.md",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/CONTINUOUS_UPGRADE_PROCESS.md.txt",
-          "blob_sha": "db30f897c21af90bb4ed0cf973480b943dff4197"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/CONTINUOUS_UPGRADE_PROCESS.md.snapshot",
+          "blob_sha": "db30f897c21af90bb4ed0cf973480b943dff4197",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/CONTINUOUS_UPGRADE_PROCESS.md"
         },
         {
-          "original_path": "PROCESS_VERSION.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/PROCESS_VERSION.json.txt",
-          "blob_sha": "9285fb22d46dad7d66c3ccf918f9c11f811020be"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/PROCESS_VERSION.json.snapshot",
+          "blob_sha": "9285fb22d46dad7d66c3ccf918f9c11f811020be",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/PROCESS_VERSION.json"
         },
         {
-          "original_path": "agents/process-control-policy.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/agents/process-control-policy.json.txt",
-          "blob_sha": "107fadb793d0b2c320ad124b28efbac05db4393c"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/agents/process-control-policy.json.snapshot",
+          "blob_sha": "107fadb793d0b2c320ad124b28efbac05db4393c",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/agents/process-control-policy.json"
         },
         {
-          "original_path": "agents/process-record-schemas.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/agents/process-record-schemas.json.txt",
-          "blob_sha": "9343122519d6e564b4af0ba52c2c431fa4bc50cf"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/agents/process-record-schemas.json.snapshot",
+          "blob_sha": "9343122519d6e564b4af0ba52c2c431fa4bc50cf",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/agents/process-record-schemas.json"
         },
         {
-          "original_path": "tests/test_process_v2_controls.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tests/test_process_v2_controls.py.txt",
-          "blob_sha": "8e500cdf766f5d2a6547188f83e92ca289abe3ea"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tests/test_process_v2_controls.py.snapshot",
+          "blob_sha": "8e500cdf766f5d2a6547188f83e92ca289abe3ea",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tests/test_process_v2_controls.py"
         },
         {
-          "original_path": "tools/build_review_packet.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/build_review_packet.py.txt",
-          "blob_sha": "efec281e4cf7029a534f4fef9b142d0800f26573"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/build_review_packet.py.snapshot",
+          "blob_sha": "efec281e4cf7029a534f4fef9b142d0800f26573",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/build_review_packet.py"
         },
         {
-          "original_path": "tools/packet_review_common.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/packet_review_common.py.txt",
-          "blob_sha": "60e1dfeda285a003242cc7e3b4315860593e1568"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/packet_review_common.py.snapshot",
+          "blob_sha": "60e1dfeda285a003242cc7e3b4315860593e1568",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/packet_review_common.py"
         },
         {
-          "original_path": "tools/run_packet_free_reviews.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_free_reviews.py.txt",
-          "blob_sha": "f7b62e91a2c2e16edb8297e10822679faf29a8b1"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_free_reviews.py.snapshot",
+          "blob_sha": "f7b62e91a2c2e16edb8297e10822679faf29a8b1",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/run_packet_free_reviews.py"
         },
         {
-          "original_path": "tools/run_packet_gemini_review.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_gemini_review.py.txt",
-          "blob_sha": "a021fd424dee0c1c7a41b5884f0651b1391ffce1"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_gemini_review.py.snapshot",
+          "blob_sha": "a021fd424dee0c1c7a41b5884f0651b1391ffce1",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/run_packet_gemini_review.py"
         },
         {
-          "original_path": "tools/run_packet_paid_reviews.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_paid_reviews.py.txt",
-          "blob_sha": "944143c9792cc3f237fa0e960a0a2f7b4fc779bf"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/run_packet_paid_reviews.py.snapshot",
+          "blob_sha": "944143c9792cc3f237fa0e960a0a2f7b4fc779bf",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/run_packet_paid_reviews.py"
         },
         {
-          "original_path": "tools/validate_evidence_class.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/validate_evidence_class.py.txt",
-          "blob_sha": "1202b7d3b6080d32fb8b37d926600ced8156c155"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/validate_evidence_class.py.snapshot",
+          "blob_sha": "1202b7d3b6080d32fb8b37d926600ced8156c155",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/validate_evidence_class.py"
         },
         {
-          "original_path": "tools/validate_review_packet.py",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/validate_review_packet.py.txt",
-          "blob_sha": "b4e0f7c92b23afff707b919904e49da93f4e550b"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-algebra-binding-20260915/tools/validate_review_packet.py.snapshot",
+          "blob_sha": "b4e0f7c92b23afff707b919904e49da93f4e550b",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/3abb4d2befc7fa72c180e535938641117d2768d1/tools/validate_review_packet.py"
         }
-      ]
+      ],
+      "sha": "3abb4d2befc7fa72c180e535938641117d2768d1"
     },
     {
+      "ahead_of_initial_main": 1,
       "branch": "process-v2-governed-20260915",
-      "sha": "864602d19303556082babdee1b46b2297b7c50ce",
       "disposition": "RETIRED_SUPERSEDED_PROCESS",
-      "ahead_of_initial_main": 1,
       "files": [
         {
-          "original_path": "IP_ORIGIN_INVENTORY.json",
-          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-governed-20260915/IP_ORIGIN_INVENTORY.json.txt",
-          "blob_sha": "ed09372f5ea17507c0aee407a5d1db471a5e04a6"
+          "archive_path": "reviews/branch_archive/2026-09-15/process-v2-governed-20260915/IP_ORIGIN_INVENTORY.json.snapshot",
+          "blob_sha": "ed09372f5ea17507c0aee407a5d1db471a5e04a6",
+          "source_url": "https://github.com/ankitdcx/garden-swarm/blob/864602d19303556082babdee1b46b2297b7c50ce/IP_ORIGIN_INVENTORY.json"
         }
-      ]
+      ],
+      "sha": "864602d19303556082babdee1b46b2297b7c50ce"
     },
     {
-      "branch": "repair/project-audit-scheduler-cost-20260915",
-      "sha": "2442d02ffee587a2b0faca3606715c475543a80f",
-      "disposition": "ALREADY_MERGED",
       "ahead_of_initial_main": 0,
-      "files": []
+      "branch": "repair/project-audit-scheduler-cost-20260915",
+      "disposition": "ALREADY_MERGED",
+      "files": [],
+      "sha": "2442d02ffee587a2b0faca3606715c475543a80f"
     }
-  ]
+  ],
+  "canonical_effect": "NONE",
+  "date": "2026-09-15",
+  "repository": "ankitdcx/garden-swarm",
+  "schema": "BranchArchiveManifest/v1",
+  "scope": "Exact changed-file blobs from each retiring branch. Opaque .snapshot files preserve historical bytes, not active local references. Source URLs bind original paths and full-tree commits. Archival preservation is not functional adoption or reference/semantic certification."
 }

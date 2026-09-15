@@ -2,7 +2,7 @@
 
 The user paused the Coordinator because of repeated request-limit errors and explicitly requested cleanup of all old branches. Keep all automated provider work paused until the user resumes it.
 
-This archive preserves exact changed-file bytes from retiring branches, under inert .txt filenames. It does not install their workflows, revive Process v2, admit their deltas, qualify old packets, or lift freezes. The manifest binds original paths, branch heads and Git blob hashes. Source commits retain full-tree lineage.
+This archive preserves exact changed-file bytes from retiring branches, under inert .snapshot filenames. It does not install their workflows, revive Process v2, admit their deltas, qualify old packets, or lift freezes. The manifest binds original paths, branch heads and Git blob hashes. Source commits retain full-tree lineage.
 
 - `ip/final-origin-backfill-data-20260915`: PENDING_INDEPENDENT_REVIEW; 3 preserved files.
 - `ip/public-patent-provenance-current-main-20260915`: MERGED_PR_169; 1 preserved files.
@@ -21,3 +21,5 @@ This archive preserves exact changed-file bytes from retiring branches, under in
 
 
 Deletion is a separate operation after this archive is merged. Branch names must still match the recorded SHA; moved or protected branches and branches with open PRs must be retained. No paid model calls are required for cleanup.
+
+Snapshot payloads are intentionally opaque historical records. The ordinary current-repository reference scanner does not certify their internal links; use their exact source URLs and blob manifest for reconstruction. No current-source reference rule is weakened.
