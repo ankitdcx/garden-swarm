@@ -2,9 +2,10 @@
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
   "purpose": "ROUTINE_HOURLY_PUBLIC_DESIGN_REVIEW",
   "design_epoch": "v15.5",
-  "catalog_reference_date": "2026-09-14",
+  "catalog_reference_date": "2026-09-15",
   "public_only": true,
   "semantic_delta_admitted": false,
+  "daily_openrouter_cost_ceiling_usd": 1.0,
   "budget_pools_usd": {
     "routine": 9.0,
     "challenger": 3.0,
@@ -12,9 +13,15 @@
     "emergency_reserve": 3.0
   },
   "routine_hourly_cost_ceiling_usd": 0.05,
-  "routine_model_call_cost_ceiling_usd": 0.025,
+  "routine_model_call_cost_ceiling_usd": 0.0125,
   "max_prompt_characters": 140000,
   "max_output_tokens": 1800,
+  "free_swarm": {
+    "enabled": true,
+    "distinct_families_per_hour": 4,
+    "cross_examination": true,
+    "cost_policy": "OpenRouter :free routes only; every successful free call must report zero cost."
+  },
   "provider_policy": {
     "sort": "price",
     "allow_fallbacks": true,
@@ -34,10 +41,22 @@
       "family": "qwen",
       "role": "architecture_and_code",
       "model": "qwen/qwen3.7-flash"
+    },
+    {
+      "family": "glm",
+      "role": "formal_semantics",
+      "model": "z-ai/glm-5.3-flash"
+    },
+    {
+      "family": "mistral",
+      "role": "implementation_and_compliance",
+      "model": "mistralai/mistral-small-2603"
     }
   ],
   "notes": [
-    "Routine paid reviewers produce proposal evidence only.",
+    "Routine paid reviewers and the free swarm produce proposal evidence only.",
+    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
+    "Free-swarm breadth is used before paid reviewers; free reviewers never satisfy paid-family requirements.",
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "ChatGPT and Gemini remain separate independent lanes.",
     "Escalation and emergency pools are not spendable by this routine runner."

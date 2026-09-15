@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run bounded DeepSeek + Qwen paid reviews under hard Garden budget controls.
+"""Run bounded multi-family paid OpenRouter reviews under hard Garden budget controls.
 
 This runner is proposal-only. It never admits a semantic delta, spends from
 Challenger/Escalation/Emergency pools, or reviews non-public material.
@@ -16,15 +16,51 @@ from urllib import error, request
 from tools import matrix_design_review as review
 
 CHAT = "https://openrouter.ai/api/v1/chat/completions"
+KEY_INFO = "https://openrouter.ai/api/v1/key"
 SELECTION = Path("agents/runtime/paid-selection.json")
 OUT_DIR = Path("agents/outbox/hourly/paid-review")
 BUNDLE = Path("agents/outbox/hourly/paid-review-bundle.json")
 
 
+def _key_usage_daily(key: str) -> tuple[float | None, dict[str, Any]]:
+    req = request.Request(
+        KEY_INFO,
+        method="GET",
+        headers={
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with request.urlopen(req, timeout=60) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        return None, {"status": f"HTTP_{exc.code}", "detail": detail[:1000]}
+    except Exception as exc:
+        return None, {"status": "PROVIDER_ERROR", "detail": f"{type(exc).__name__}: {exc}"}
+    payload = data.get("data") if isinstance(data, dict) and isinstance(data.get("data"), dict) else data
+    if not isinstance(payload, dict):
+        return None, {"status": "INVALID_KEY_USAGE_RESPONSE"}
+    value = payload.get("usage_daily")
+    try:
+        usage_daily = float(value)
+    except (TypeError, ValueError):
+        return None, {"status": "DAILY_USAGE_UNVERIFIED", "raw_usage_daily": value}
+    return usage_daily, {
+        "status": "VERIFIED",
+        "usage_daily": usage_daily,
+        "limit_remaining": payload.get("limit_remaining"),
+        "limit": payload.get("limit"),
+        "limit_reset": payload.get("limit_reset"),
+    }
+
+
 def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     model_id = str(model["model"])
     family = str(model["family"])
-    if family not in {"deepseek", "qwen"}:
+    approved = {str(x) for x in selection.get("approved_families") or []}
+    if family not in approved:
         raise RuntimeError(f"unapproved paid reviewer family: {family}")
     if model_id.endswith(":free"):
         raise RuntimeError(f"free route is not a paid routine reviewer: {model_id}")
@@ -40,6 +76,33 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         return None, {"status": "KEY_UNAVAILABLE", "family": family, "model": model_id, "cost": None}
+
+    daily_ceiling = float(selection.get("daily_openrouter_cost_ceiling_usd", 0))
+    per_call_ceiling = float(selection["routine_model_call_cost_ceiling_usd"])
+    if daily_ceiling > 0:
+        usage_daily, usage_receipt = _key_usage_daily(key)
+        if usage_daily is None:
+            return None, {
+                "status": "DAILY_USAGE_UNVERIFIED",
+                "family": family,
+                "model": model_id,
+                "cost": None,
+                "daily_budget_receipt": usage_receipt,
+            }
+        if usage_daily + per_call_ceiling > daily_ceiling:
+            return None, {
+                "status": "DAILY_BUDGET_RESERVED_EXHAUSTED",
+                "family": family,
+                "model": model_id,
+                "cost": 0.0,
+                "usage_daily_before_call": usage_daily,
+                "daily_openrouter_cost_ceiling_usd": daily_ceiling,
+                "reserved_max_call_cost_usd": per_call_ceiling,
+                "daily_budget_receipt": usage_receipt,
+            }
+    else:
+        usage_daily = None
+        usage_receipt = {"status": "NO_DAILY_CEILING_CONFIGURED"}
 
     provider_policy = selection["provider_policy"]
     max_price = provider_policy["max_price_usd_per_million_tokens"]
@@ -80,6 +143,8 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
             "model": model_id,
             "cost": None,
             "detail": detail[:1000],
+            "usage_daily_before_call": usage_daily,
+            "daily_budget_receipt": usage_receipt,
         }
     except Exception as exc:
         return None, {
@@ -88,6 +153,8 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
             "model": model_id,
             "cost": None,
             "detail": f"{type(exc).__name__}: {exc}",
+            "usage_daily_before_call": usage_daily,
+            "daily_budget_receipt": usage_receipt,
         }
 
     usage = data.get("usage") or {}
@@ -99,15 +166,19 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
             "model": model_id,
             "cost": None,
             "usage": usage,
+            "usage_daily_before_call": usage_daily,
+            "daily_budget_receipt": usage_receipt,
         }
     cost = float(cost)
-    if cost > float(selection["routine_model_call_cost_ceiling_usd"]):
+    if cost > per_call_ceiling:
         return None, {
             "status": "MODEL_COST_CEILING_EXCEEDED",
             "family": family,
             "model": model_id,
             "cost": cost,
             "usage": usage,
+            "usage_daily_before_call": usage_daily,
+            "daily_budget_receipt": usage_receipt,
         }
 
     try:
@@ -121,6 +192,8 @@ def _call(*, model: dict[str, Any], prompt: str, selection: dict[str, Any]) -> t
         "model": model_id,
         "cost": cost,
         "usage": usage,
+        "usage_daily_before_call": usage_daily,
+        "daily_budget_receipt": usage_receipt,
     }
 
 
@@ -131,26 +204,46 @@ def main() -> int:
         raise SystemExit("paid public reviewer refused non-public target")
     source, trace = review.extract_target(root, target)
     selection = json.loads(SELECTION.read_text(encoding="utf-8"))
-    if selection.get("schema") != "GardenPaidModelSelection/v1":
+    if selection.get("schema") != "GardenPaidModelSelection/v2":
         raise SystemExit("unsupported paid reviewer selection schema")
     if selection.get("design_epoch") != matrix.get("design_epoch"):
         raise SystemExit("paid reviewer selection DesignEpoch mismatch")
 
     selected = list(selection.get("selected") or [])
     families = [str(row.get("family")) for row in selected]
-    if families != ["deepseek", "qwen"]:
-        raise SystemExit("paid routine execution requires exactly DeepSeek + Qwen")
+    approved = [str(x) for x in selection.get("approved_families") or []]
+    if families != approved or len(set(families)) != len(families) or len(families) < 2:
+        raise SystemExit("paid routine execution requires the approved distinct family set")
 
     attempts: list[dict[str, Any]] = []
     findings: list[dict[str, Any]] = []
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    hourly_ceiling = float(selection["routine_hourly_cost_ceiling_usd"])
+    per_call_ceiling = float(selection["routine_model_call_cost_ceiling_usd"])
+    charged_total = 0.0
+
     for model in selected:
         family = str(model["family"])
+        if charged_total + per_call_ceiling > hourly_ceiling:
+            attempts.append({
+                "phase": "INDEPENDENT",
+                "status": "HOURLY_BUDGET_RESERVED_EXHAUSTED",
+                "family": family,
+                "model": model["model"],
+                "cost": 0.0,
+                "charged_total_before_call": charged_total,
+                "hourly_cost_ceiling_usd": hourly_ceiling,
+                "reserved_max_call_cost_usd": per_call_ceiling,
+            })
+            continue
+
         prompt = review.independent_prompt(target=target, source=source, trace=trace, model=model)
         raw, attempt = _call(model=model, prompt=prompt, selection=selection)
         attempt["phase"] = "INDEPENDENT"
         attempts.append(attempt)
+        if isinstance(attempt.get("cost"), (int, float)) and float(attempt["cost"]) >= 0:
+            charged_total += float(attempt["cost"])
         if raw is None:
             continue
         try:
@@ -176,18 +269,15 @@ def main() -> int:
             encoding="utf-8",
         )
 
-    # Account for every observed non-negative provider charge, including a call
-    # that itself exceeded the per-model ceiling. Never under-report spend.
     charged = [
         float(row["cost"])
         for row in attempts
         if isinstance(row.get("cost"), (int, float)) and float(row["cost"]) >= 0
     ]
     total_cost = sum(charged)
-    hourly_ceiling = float(selection["routine_hourly_cost_ceiling_usd"])
     if total_cost > hourly_ceiling:
         status = "HOURLY_COST_CEILING_EXCEEDED"
-    elif len({row["reviewer_family"] for row in findings}) == 2:
+    elif len({row["reviewer_family"] for row in findings}) == len(families):
         status = "PAID_BLIND_REVIEW_COMPLETE_PROPOSALS_ONLY"
     else:
         status = "PARTIAL_PAID_REVIEW_PROPOSALS_ONLY"
@@ -203,6 +293,7 @@ def main() -> int:
         "completed_families": sorted({row["reviewer_family"] for row in findings}),
         "provider_attempts": attempts,
         "independent_findings": findings,
+        "daily_openrouter_cost_ceiling_usd": float(selection["daily_openrouter_cost_ceiling_usd"]),
         "routine_hourly_cost_ceiling_usd": hourly_ceiling,
         "actual_cost_usd": round(total_cost, 8),
         "status": status,
@@ -216,9 +307,11 @@ def main() -> int:
     print(json.dumps({
         "target_id": target["target_id"],
         "status": status,
+        "selected_families": families,
         "completed_families": bundle["completed_families"],
         "actual_cost_usd": bundle["actual_cost_usd"],
         "hourly_cost_ceiling_usd": hourly_ceiling,
+        "daily_openrouter_cost_ceiling_usd": bundle["daily_openrouter_cost_ceiling_usd"],
         "semantic_delta_admitted": False,
     }, sort_keys=True))
     return 0
