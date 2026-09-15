@@ -130,3 +130,5 @@ EXACT CANDIDATE DIFF END
             agents/runtime/predecessor-review/*.json
           if-no-files-found: error
           retention-days: 30
+
+# one-use trigger revision: preserve exact review semantics; change only workflow metadata
