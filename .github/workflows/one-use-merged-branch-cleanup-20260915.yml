@@ -1,0 +1,129 @@
+name: One-use merged branch cleanup 2026-09-15
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '.github/workflows/one-use-merged-branch-cleanup-20260915.yml'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Delete only exact-head merged branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          SELF_BRANCH: ${{ github.head_ref }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+
+          repo = os.environ['REPO']
+          owner = os.environ['OWNER']
+          token = os.environ['GH_TOKEN']
+          self_branch = os.environ['SELF_BRANCH']
+          api = f'https://api.github.com/repos/{repo}'
+          merged_candidates = [
+              'ops/install-one-use-ip-deepseek-20260914',
+              'ops/ip-deepseek-push-trigger-20260914',
+              'repair/branch-lifecycle-check-20260914-v2',
+              'repair/paid-selector-keyless-20260914',
+          ]
+          run_owned_empty = {
+              'maintenance/one-use-merged-branch-cleanup-20260915': '61b4b5ad564622936a78cdf51194cb08d0772fe2',
+          }
+
+          def request_json(url):
+              req = urllib.request.Request(url, headers={
+                  'Authorization': f'Bearer {token}',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28',
+              })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.loads(r.read().decode('utf-8'))
+
+          def delete_ref(branch):
+              encoded = urllib.parse.quote(f'heads/{branch}', safe='')
+              req = urllib.request.Request(
+                  f'{api}/git/refs/{encoded}', method='DELETE', headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  if r.status not in (200, 204):
+                      raise RuntimeError(f'delete {branch}: HTTP {r.status}')
+
+          deleted, retained = [], []
+          for branch in merged_candidates:
+              try:
+                  b = request_json(f"{api}/branches/{urllib.parse.quote(branch, safe='')}")
+              except Exception as exc:
+                  retained.append({'branch': branch, 'reason': 'MISSING_OR_UNREADABLE', 'detail': repr(exc)})
+                  continue
+              head_sha = b['commit']['sha']
+              q = urllib.parse.urlencode({'state':'all','head':f'{owner}:{branch}','per_page':100})
+              prs = request_json(f'{api}/pulls?{q}')
+              if any(p.get('state') == 'open' for p in prs):
+                  retained.append({'branch': branch, 'reason': 'OPEN_PR', 'head_sha': head_sha})
+                  continue
+              matched = [p for p in prs if p.get('merged_at') and (p.get('head') or {}).get('sha') == head_sha]
+              if not matched:
+                  retained.append({'branch': branch, 'reason': 'NO_EXACT_HEAD_MERGED_PR', 'head_sha': head_sha})
+                  continue
+              delete_ref(branch)
+              deleted.append({'branch': branch, 'head_sha': head_sha, 'reason': 'EXACT_HEAD_MERGED_PR', 'merged_prs': [p['number'] for p in matched]})
+
+          for branch, expected_sha in run_owned_empty.items():
+              try:
+                  b = request_json(f"{api}/branches/{urllib.parse.quote(branch, safe='')}")
+              except Exception as exc:
+                  retained.append({'branch': branch, 'reason': 'MISSING_OR_UNREADABLE', 'detail': repr(exc)})
+                  continue
+              head_sha = b['commit']['sha']
+              q = urllib.parse.urlencode({'state':'open','head':f'{owner}:{branch}','per_page':100})
+              if request_json(f'{api}/pulls?{q}'):
+                  retained.append({'branch': branch, 'reason': 'OPEN_PR', 'head_sha': head_sha})
+                  continue
+              if head_sha != expected_sha:
+                  retained.append({'branch': branch, 'reason': 'RUN_OWNED_HEAD_MOVED', 'head_sha': head_sha})
+                  continue
+              delete_ref(branch)
+              deleted.append({'branch': branch, 'head_sha': head_sha, 'reason': 'RUN_OWNED_EMPTY_BRANCH'})
+
+          receipt = {
+              'schema': 'GardenOneUseBranchCleanupReceipt/v1',
+              'repository': repo,
+              'policy': 'exact merged PR head only; plus explicitly run-owned empty branch at immutable expected SHA',
+              'deleted': deleted,
+              'retained': retained,
+          }
+          with open('one-use-branch-cleanup-receipt.json', 'w', encoding='utf-8') as f:
+              json.dump(receipt, f, indent=2, sort_keys=True)
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+
+          if self_branch.startswith('maintenance/one-use-merged-branch-cleanup-'):
+              try:
+                  delete_ref(self_branch)
+                  print('self_branch_deleted=', self_branch)
+              except Exception as exc:
+                  print('self_branch_delete_warning=', repr(exc))
+          PY
+      - name: Upload cleanup receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-use-branch-cleanup-receipt-${{ github.run_id }}
+          path: one-use-branch-cleanup-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
