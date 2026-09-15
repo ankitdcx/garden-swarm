@@ -20,7 +20,18 @@
     "human_availability_and_authority",
     "semantic_admission",
     "canonical_promotion",
-    "pipeline_health"
+    "pipeline_health",
+    "process_algebra_binding"
   ],
+  "process_algebra_binding": {
+    "registry_ref": "REG-ALGEBRA-001",
+    "canonical_refs": [
+      "Garden_System_v15.5:[S-PROCESS]#5.1",
+      "Garden_System_v15.5:[S-PROCESS]#5.1B"
+    ],
+    "required": true,
+    "semantic_compliance_proved": false,
+    "rule": "Every governed update action must declare its registered Process Algebra operator composition and bind an algebra-usage receipt. FRONTIER never counts as semantic compliance."
+  },
   "rule": "A semantic change to any protected process surface requires a new ProcessVersion. ProcessVersion N+1 is reviewed and admitted under N and cannot authorize itself. Pure implementation fixes that preserve already-admitted process semantics may use the governed non-semantic track."
 }

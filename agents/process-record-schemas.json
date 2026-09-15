@@ -32,6 +32,12 @@
     "PipelineSimplificationReview/v1": {
       "required": ["window_days", "candidate_removals", "duplicate_lanes", "never_fired_rules", "orphan_record_types", "high_cost_low_value_checks", "load_bearing_rare_controls", "recommended_process_delta", "rollback_conditions"],
       "default_window_days": 90
+    },
+    "AlgebraBoundUpdateReceipt/v1": {
+      "required": ["action_id", "cycle_id", "process_version", "design_epoch", "canonical_source_root_sha256", "target_kind", "process_operator_trace", "algebra_usage_receipt_ref", "algebra_validation_receipt_ref", "conformance_refs", "policy_gate_refs", "semantic_compliance_proved", "result"],
+      "target_kind_values": ["PUBLIC_REPO", "PRIVATE_IMPLEMENTATION", "CANONICAL_DESIGN"],
+      "result_values": ["APPLIED", "DO_NOTHING", "TERMINATED", "ROLLED_BACK", "COMPENSATED", "FRONTIER_BLOCKED"],
+      "rule": "This receipt binds an update action to registered Garden algebra use. It grants no authority and may not set semantic_compliance_proved=true while any required algebra remains FRONTIER."
     }
   }
 }

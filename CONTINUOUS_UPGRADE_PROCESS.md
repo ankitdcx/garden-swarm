@@ -83,7 +83,7 @@ Routine public OpenRouter review keeps the existing ~USD 1/day ceiling. Expensiv
 
 ## Process change control
 
-Semantic changes to review independence, packet completeness, evidence rules, state transitions, merge/freeze rules, budgets, human authority, admission/promotion or pipeline-health semantics require a ProcessVersion bump. ProcessVersion N+1 is reviewed under N and cannot self-authorize. Pure implementation fixes preserving admitted process semantics may use the non-semantic track.
+Semantic changes to review independence, packet completeness, evidence rules, state transitions, merge/freeze rules, budgets, human authority, admission/promotion, pipeline-health semantics, or Process Algebra binding require a ProcessVersion bump. ProcessVersion N+1 is reviewed under N and cannot self-authorize. Pure implementation fixes preserving admitted process semantics may use the non-semantic track.
 
 ## Pipeline health
 
@@ -94,3 +94,44 @@ No lane certifies its own closure counts. Unhealthy lanes reduce operation or fa
 ## Simplification
 
 Quarterly `PipelineSimplificationReview/v1` looks for zero-yield lanes, duplicate gates, rules that never fire, record types with no consumers, obsolete paths and high-cost/low-value checks. Removal is a first-class improvement. Rare but load-bearing safety/privacy/authority controls are not removed merely because they rarely fire.
+
+## Garden Process Algebra binding
+
+The upgrade pipeline is not a separate orchestration framework. It is a governed Garden Process Algebra instance bound to canonical `REG-ALGEBRA-001`, `[S-PROCESS]#5.1`, and `[S-PROCESS]#5.1B`.
+
+Every update action must emit or reference a validated `GardenEvolutionAlgebraUsageReceipt/v1` and an `AlgebraBoundUpdateReceipt/v1`. These receipts describe operator use; they grant no authority and do not prove Garden certification.
+
+The Process operators are used as follows:
+
+- `SEQUENCE(A,B)` — ordered state transitions and gates.
+- `PARALLEL({P_i})` — blind peer reviewers operating on one identical `packet_hash`.
+- `COMPOSE(A,B)` — composition of validated stages without assuming extra algebra laws.
+- `BRANCH(c,A,B)` — semantic-vs-LIGHT routing, pass-vs-repair routing, and target-kind routing.
+- `RETRY(P,bound)` — bounded repair attempts.
+- `ROLLBACK(P)` — reverse a failed governed integration or promoted successor when rollback policy permits.
+- `COMPENSATE(P)` — remediate external side effects that cannot be erased by rollback.
+- `RECONSTRUCT(x)` — rebuild process state only from bound evidence/receipts; reconstruction never recreates authority from untrusted history.
+- `ITERATE(P,k)` — bounded continuous upgrade cycles.
+- `RECURSE(P)` — nested dependency repair only under explicit termination/resource bounds.
+- `TERMINATE(reason)` — stop on invalid authority, unresolved critical conflict, failed completeness, or exhausted safe retry bounds.
+- `DO_NOTHING` — required valid result when no change has positive verified value.
+
+No associativity, commutativity, idempotence, distributivity or reordering law is inferred unless canonically registered. In particular, parallel reviewer effects are **not** assumed commutative.
+
+### One update process, three targets
+
+All updates use the same algebraic control flow:
+
+`Observe/Discover -> Packetize -> PARALLEL(blind review) -> Cross-Examine -> BRANCH(semantic, full semantic path, LIGHT path) -> Build/Repair -> Verify -> BRANCH(pass, target-specific integration, RETRY/ROLLBACK/TERMINATE) -> Post-Fix Verify -> ITERATE or DO_NOTHING`
+
+The target-specific terminal rule is the only major difference:
+
+1. `PUBLIC_REPO` — exact-head governed merge into the public repository.
+2. `PRIVATE_IMPLEMENTATION` — exact-head governed merge into the private implementation repository.
+3. `CANONICAL_DESIGN` — never edit the immutable predecessor; compose a complete successor candidate, then require separately protected human canonical promotion.
+
+Policy Algebra applies only where a registered authority/approval operator is actually executed. Ordinary ActionGate checks must not be silently relabeled as Policy Algebra.
+
+Conformance Algebra is required for requirement/reference/test/obligation closure and exact-head conformance. Decision and Evidence Algebra remain explicit `FRONTIER` where their executable operator signatures are not yet bound. Bridge Algebra is conditional and applies only when a registered semantic-to-representation transformation is actually invoked.
+
+Therefore Process v2 is **algebra-bound by construction**, but it must continue to report `semantic_compliance_proved=false` until every required frontier for the action is closed and a valid algebra validation receipt exists. `FRONTIER` never counts as compliance.
