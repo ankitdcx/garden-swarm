@@ -1,0 +1,84 @@
+name: One-use retire stale final-review branches 2026-09-15
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/one-use-retire-stale-final-review-branches-20260915.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  retire:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'cleanup/retire-stale-final-review-branches-20260915b'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Verify exact dispositions and delete with atomic leases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SELF_BRANCH: ${{ github.head_ref }}
+          SELF_SHA: ${{ github.event.pull_request.head.sha }}
+          CLEANUP_CONFIG: '{"repository":"ankitdcx/garden-swarm","main_sha":"0704ef3fca457538236b0f8527f569f44d8b5453","branches":[{"name":"ip/final-origin-inventory-review-20260915","sha":"0c54b4ff04a0fdefe137517bd4dda1448d4eff33","reason":"CLOSED_SUPERSEDED","pr":181},{"name":"ip/final-origin-inventory-review-v2-20260915","sha":"5e6fd15a343f763cd4429ff5a39cca54edc37824","reason":"CLOSED_SUPERSEDED","pr":183},{"name":"ip/final-origin-inventory-review-v3-20260915","sha":"e72615a048371a7374695890848dac492d8c7906","reason":"CLOSED_SUPERSEDED","pr":185},{"name":"ip/glm-reasoning-compat-20260915","sha":"f68695d5a92eaf69e883ff5f9e12f319be44fa8b","reason":"MERGED_PR","pr":184},{"name":"ip/normalize-review-code-syntax-20260915","sha":"642809f9dea09b0712c00596afbed9fb84a55169","reason":"MERGED_PR","pr":186},{"name":"ip/one-use-final-review-installer-20260915","sha":"386bdd4c858e6524b7e1e57421c73de16e53f4ba","reason":"CLOSED_SUPERSEDED","pr":179},{"name":"ip/one-use-final-review-installer-v2-20260915","sha":"b059f272c0b12b8d60bb60bb6d43ac35f00a84d7","reason":"MERGED_PR","pr":180},{"name":"ip/token-safe-final-review-20260915","sha":"250ba27a3f4cf770a5ac09ad415476feecae899d","reason":"MERGED_PR","pr":182}]}'
+        run: |
+          python - <<'PY'
+          import json, os, re, subprocess, urllib.request
+          from pathlib import Path
+
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          def live_heads():
+              return {line.split()[1].removeprefix('refs/heads/'): line.split()[0]
+                      for line in git('ls-remote','--heads','origin').splitlines()}
+          def api(path):
+              req=urllib.request.Request('https://api.github.com'+path, headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req, timeout=30) as r: return json.load(r)
+
+          cfg=json.loads(os.environ['CLEANUP_CONFIG']); repo=os.environ['GITHUB_REPOSITORY']; base=cfg['main_sha']
+          assert repo==cfg['repository']; assert git('rev-parse','HEAD')==base
+          heads=live_heads(); assert heads.get('main')==base
+          open_prs=[]
+          for page in range(1,20):
+              rows=api(f'/repos/{repo}/pulls?state=open&per_page=100&page={page}'); open_prs += rows
+              if len(rows)<100: break
+          open_heads={p['head']['ref'] for p in open_prs if p.get('head',{}).get('repo') and p['head']['repo']['full_name']==repo}
+          delete=[]; absent=[]
+          for row in cfg['branches']:
+              name,sha,reason=row['name'],row['sha'],row['reason']; assert re.fullmatch('[0-9a-f]{40}',sha)
+              if name not in heads: absent.append(row); continue
+              assert heads[name]==sha, f'branch moved: {name}'
+              assert name not in open_heads, f'open PR: {name}'
+              pr=api(f'/repos/{repo}/pulls/{row["pr"]}')
+              assert pr['head']['ref']==name and pr['head']['sha']==sha
+              if reason=='MERGED_PR': assert pr.get('merged_at'), f'not merged: {name}'
+              elif reason=='CLOSED_SUPERSEDED':
+                  text=((pr.get('title') or '')+' '+(pr.get('body') or '')).lower()
+                  assert pr['state']=='closed' and not pr.get('merged_at') and 'supersed' in text, f'not explicit superseded: {name}'
+              else: raise AssertionError(reason)
+              delete.append({'name':name,'sha':sha,'reason':reason,'pr':row['pr']})
+          self_branch,self_sha=os.environ['SELF_BRANCH'],os.environ['SELF_SHA']
+          assert self_branch=='cleanup/retire-stale-final-review-branches-20260915b' and heads.get(self_branch)==self_sha
+          delete.append({'name':self_branch,'sha':self_sha,'reason':'RUN_OWNED_TEMPORARY'})
+          assert live_heads().get('main')==base
+          cmd=['git','push','--atomic']+[f"--force-with-lease=refs/heads/{r['name']}:{r['sha']}" for r in delete]+['origin']+[f":refs/heads/{r['name']}" for r in delete]
+          subprocess.run(cmd,check=True)
+          remaining=live_heads(); assert remaining.get('main')==base and not any(r['name'] in remaining for r in delete)
+          receipt={'schema':'BranchRetirementReceipt/v1','repository':repo,'main_sha':base,'deleted':delete,'already_absent':absent,'remaining_heads':remaining,'status':'VERIFIED','canonical_effect':'NONE','provider_calls':0}
+          Path('branch-retirement-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n'); print(json.dumps(receipt,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: branch-retirement-${{ github.run_id }}
+          path: branch-retirement-receipt.json
+          retention-days: 90
+          if-no-files-found: error
