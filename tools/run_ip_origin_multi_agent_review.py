@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Multi-agent OpenRouter review of the public Garden IP origin inventory.
+"""Multi-family OpenRouter review of the public Garden IP origin inventory.
 
-This is proposal evidence only. It evaluates provenance/origin plausibility,
-duplicate lineage, and candidate protection routes. It does not file patents,
-grant rights, or turn an abstract idea into exclusive property.
+Proposal evidence only. This evaluates provenance/origin plausibility, duplicate
+lineage, and candidate protection routes. It never files patents, grants rights,
+or turns an abstract idea into exclusive property.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ ROLE_PROMPTS = {
         "and distinguish a potentially new technical combination from an old principle."
     ),
     "patent_scope": (
-        "Evaluate only candidate patent relevance: technical character, concrete mechanism, likely novelty/non-obviousness risk, "
+        "Evaluate candidate patent relevance only: technical character, concrete mechanism, likely novelty/non-obviousness risk, "
         "and whether the record needs a narrower claim. Do not say a patent exists unless the inventory says FILED or GRANTED."
     ),
     "copyright_other_rights": (
@@ -100,6 +100,7 @@ def _validate(raw: dict[str, Any], expected_ids: set[str]) -> list[dict[str, Any
 def main() -> int:
     if not os.environ.get("OPENROUTER_API_KEY"):
         raise SystemExit("OPENROUTER_API_KEY unavailable")
+
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     if inventory.get("schema") != "GardenIPOriginInventory/v1":
         raise SystemExit("unsupported inventory schema")
@@ -111,9 +112,15 @@ def main() -> int:
         raise SystemExit("inventory IDs must be unique/non-empty")
 
     selection = json.loads(SELECTION.read_text(encoding="utf-8"))
-    selected = {str(x.get("family")): x for x in selection.get("selected", [])}
-    if set(selected) != {"deepseek", "qwen"}:
-        raise SystemExit("review requires approved DeepSeek + Qwen families")
+    selected_rows = [row for row in selection.get("selected", []) if isinstance(row, dict) and row.get("family")]
+    selected = {str(row["family"]): row for row in selected_rows}
+    approved_source = selection.get("approved_families") or list(selected)
+    approved = {str(x) for x in approved_source if x}
+    families = [family for family in selected if family in approved]
+    if len(families) < 2:
+        raise SystemExit("IP origin review requires at least two approved independent reviewer families")
+    if "deepseek" not in families or "qwen" not in families:
+        raise SystemExit("IP origin review requires DeepSeek and Qwen as anchor families")
     if selection.get("provider_policy", {}).get("data_collection") != "deny":
         raise SystemExit("provider data_collection must be deny")
 
@@ -121,19 +128,24 @@ def main() -> int:
     findings: list[dict[str, Any]] = []
     cumulative = 0.0
     complete = True
+    per_call = float(selection["routine_model_call_cost_ceiling_usd"])
 
-    batches = [records[i:i+BATCH_SIZE] for i in range(0, len(records), BATCH_SIZE)]
+    batches = [records[i:i + BATCH_SIZE] for i in range(0, len(records), BATCH_SIZE)]
     for batch_index, batch in enumerate(batches):
         expected = {str(r["id"]) for r in batch}
         batch_reviews: dict[str, list[dict[str, Any]]] = {}
+
         for role in ROLE_PROMPTS:
-            for family in ("deepseek", "qwen"):
-                remaining = WORKFLOW_COST_CEILING_USD - cumulative
-                per_call = float(selection["routine_model_call_cost_ceiling_usd"])
-                if remaining < per_call:
+            for family in families:
+                if WORKFLOW_COST_CEILING_USD - cumulative < per_call:
                     complete = False
-                    calls.append({"batch": batch_index, "role": role, "family": family, "status": "WORKFLOW_BUDGET_GUARD"})
-                    break
+                    calls.append({
+                        "batch": batch_index,
+                        "role": role,
+                        "family": family,
+                        "status": "WORKFLOW_BUDGET_GUARD",
+                    })
+                    continue
                 raw, attempt = _call(
                     model=selected[family],
                     prompt=_review_prompt(role, batch),
@@ -152,28 +164,46 @@ def main() -> int:
                     validated = _validate(raw, expected)
                 except Exception as exc:
                     complete = False
-                    calls.append({"batch": batch_index, "role": role, "family": family, "status": "INVALID_OUTPUT", "detail": str(exc), "cost": 0.0})
+                    calls.append({
+                        "batch": batch_index,
+                        "role": role,
+                        "family": family,
+                        "status": "INVALID_OUTPUT",
+                        "detail": str(exc),
+                        "cost": 0.0,
+                    })
                     continue
                 key = f"{family}:{role}"
                 batch_reviews[key] = validated
                 for item in validated:
                     findings.append({"batch": batch_index, "family": family, "role": role, **item})
-            else:
-                continue
-            break
 
-        # Opposite-family cross examination of the role-agent outputs.
+        # Every approved family independently cross-examines the complete role-review digest.
         if batch_reviews:
             digest = json.dumps(batch_reviews, ensure_ascii=False, separators=(",", ":"))
-            for family, other in (("deepseek", "qwen"), ("qwen", "deepseek")):
-                remaining = WORKFLOW_COST_CEILING_USD - cumulative
-                per_call = float(selection["routine_model_call_cost_ceiling_usd"])
-                if remaining < per_call:
+            for family in families:
+                if WORKFLOW_COST_CEILING_USD - cumulative < per_call:
                     complete = False
-                    calls.append({"batch": batch_index, "role": "cross_exam", "family": family, "status": "WORKFLOW_BUDGET_GUARD"})
+                    calls.append({
+                        "batch": batch_index,
+                        "role": "cross_exam",
+                        "family": family,
+                        "status": "WORKFLOW_BUDGET_GUARD",
+                    })
                     continue
-                prompt = f"""You are the {family} cross-examiner in a Garden IP-origin audit. Review the independent role outputs below, especially disagreements with the opposite family ({other}). Do not create ownership or patent rights. Identify overclaim, duplicate counting, prior-art blindness, and unsupported confidence. Return ONLY JSON with keys: batch, disagreements, corrections, unresolved, confidence.\n\n{digest}"""
-                raw, attempt = _call(model=selected[family], prompt=prompt, selection=selection, reasoning={"effort": "none"})
+                other_families = [f for f in families if f != family]
+                prompt = f"""You are the {family} cross-examiner in a Garden IP-origin audit.
+Review the independent role outputs below, especially disagreements with the other approved families {other_families}.
+Do not create ownership or patent rights. Identify overclaim, duplicate counting, prior-art blindness, correlated reasoning, and unsupported confidence.
+Return ONLY JSON with keys: batch, disagreements, corrections, unresolved, confidence.
+
+{digest}"""
+                raw, attempt = _call(
+                    model=selected[family],
+                    prompt=prompt,
+                    selection=selection,
+                    reasoning={"effort": "none"},
+                )
                 cost = attempt.get("cost")
                 if isinstance(cost, (int, float)) and cost >= 0:
                     cumulative += float(cost)
@@ -185,12 +215,12 @@ def main() -> int:
                 findings.append({"batch": batch_index, "family": family, "role": "cross_exam", "review": raw})
 
     receipt = {
-        "schema": "GardenIPOriginMultiAgentReview/v1",
+        "schema": "GardenIPOriginMultiAgentReview/v2",
         "inventory_commit": os.environ.get("GITHUB_SHA"),
         "inventory_record_count": len(records),
-        "families": ["deepseek", "qwen"],
-        "role_agents_per_batch": 8,
-        "cross_examiners_per_batch": 2,
+        "families": families,
+        "role_agents_per_batch": len(ROLE_PROMPTS) * len(families),
+        "cross_examiners_per_batch": len(families),
         "batch_size": BATCH_SIZE,
         "workflow_cost_ceiling_usd": WORKFLOW_COST_CEILING_USD,
         "actual_cost_usd": round(cumulative, 8),
@@ -205,6 +235,9 @@ def main() -> int:
     OUT.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({
         "records": len(records),
+        "families": families,
+        "role_agents_per_batch": receipt["role_agents_per_batch"],
+        "cross_examiners_per_batch": receipt["cross_examiners_per_batch"],
         "calls": len(calls),
         "actual_cost_usd": receipt["actual_cost_usd"],
         "complete": complete,
