@@ -9,7 +9,7 @@ permissions:
 
 concurrency:
   group: garden-provider-review
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   openrouter-ip-origin-review:
@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Enforce paused and single-dispatch boundary
+        run: python -m tools.check_dispatch_admission
 
       - name: Compile and verify bounded review topology
         run: |
@@ -42,5 +45,5 @@ jobs:
         with:
           name: garden-ip-origin-review-${{ github.run_id }}
           path: ip-origin-multi-agent-review.json
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 90

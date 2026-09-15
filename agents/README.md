@@ -17,7 +17,7 @@ The hourly free lane rotates model families rather than treating one vendor as a
 - Dots / Inkling — additional open-weight reasoning baselines when free endpoints exist
 - Gemini hosted — optional direct free-tier reviewer only when a separate `GEMINI_API_KEY` is configured on a billing-disabled/free-tier project
 
-The bus uses at most **two OpenRouter free calls per scheduled hour**, so a free OpenRouter account stays at or below 48 scheduled calls/day. It refuses model IDs that are not explicitly `:free` and treats any non-zero reported inference cost as a failure.
+Execution limits and lifetime-versus-daily budget scope are defined only in [openrouter-paid-review-policy.json](openrouter-paid-review-policy.json). Family counts describe review-cycle diversity, not a per-dispatch call allowance. The Coordinator is paused. Legacy batch workers are blocked until the shared quota ledger and incremental dispatch path are qualified.
 
 ## Durable state
 
@@ -30,12 +30,7 @@ Git remains the durable design/task state. GitHub Actions artifacts preserve exa
 
 ## Hourly division of labor
 
-Each scheduled run dispatches two OpenRouter free reviewers:
-
-1. **Design lane** — one rotating model audits one deterministic chunk of the five-file canonical v15.5 source.
-2. **Executable lane** — a different rotating model audits one bounded package of prototype/server/swarm code and tests.
-
-The next ChatGPT Garden Upgrade Loop consumes the latest run evidence, cross-references claims against the whole canonical source, and may make bounded repository improvements. It never treats model consensus as admission.
+The single Coordinator must accumulate independent reviews and cross-examinations over separate bounded dispatches. Findings stay proposals until the required cross-reference, quorum and independent admission checks pass. Artifact upload alone is not durable governed publication.
 
 ## Privacy
 

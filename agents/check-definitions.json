@@ -1,0 +1,31 @@
+{
+  "schema": "GardenRepositoryCheckDefinitions/v1",
+  "checks": [
+    {
+      "check_id": "CHECK-REVIEW-BOUNDARIES-001",
+      "implementation": "tools/verify_review_boundaries.py",
+      "entrypoint": "tools.verify_review_boundaries.verify",
+      "inputs": [
+        "agents/design-review-matrix.json",
+        "agents/openrouter-paid-review-policy.json",
+        "agents/runtime/design-target-selection.json",
+        "agents/runtime/free-selection.json",
+        "agents/outbox/hourly/design-review-bundle.json",
+        "agents/runtime/paid-selection.json",
+        "agents/outbox/hourly/paid-review-bundle.json",
+        "agents/outbox/hourly/gemini-review.json"
+      ],
+      "termination_contract": "Finite validation over supplied bounded JSON; no network or retry.",
+      "counterexample_class": [
+        "target mismatch",
+        "paid route in free selection",
+        "privacy downgrade",
+        "invalid cost",
+        "automatic semantic admission",
+        "duplicate reviewer family"
+      ],
+      "pass_boundary": "Input boundary conformance only; does not establish quorum, independent approval or canonical admission.",
+      "tests": "tests/test_review_boundaries.py"
+    }
+  ]
+}

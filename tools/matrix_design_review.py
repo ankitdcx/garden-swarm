@@ -287,6 +287,7 @@ def main() -> int:
     independent: list[dict[str, Any]] = []
     independent_by_family: dict[str, dict[str, Any]] = {}
 
+    halted = False
     # All independent calls finish before any reviewer sees a peer finding.
     for model in selected:
         family = str(model["family"])
@@ -294,7 +295,8 @@ def main() -> int:
         attempt.update({"phase": "INDEPENDENT", "family": family})
         attempts.append(attempt)
         if raw is None:
-            continue
+            halted = True
+            break
         try:
             finding = validate_independent(raw, target_id=target["target_id"], family=family, model_id=str(model["model"]))
         except Exception as exc:
@@ -305,7 +307,7 @@ def main() -> int:
         (OUT_DIR / f"{family}-independent.json").write_text(json.dumps(finding, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     finals: list[dict[str, Any]] = []
-    if len(independent_by_family) >= minimum:
+    if not halted and len(independent_by_family) >= minimum:
         for model in selected:
             family = str(model["family"])
             own = independent_by_family.get(family)
@@ -316,7 +318,8 @@ def main() -> int:
             attempt.update({"phase": "PEER_CROSS_EXAMINATION", "family": family})
             attempts.append(attempt)
             if raw is None:
-                continue
+                halted = True
+                break
             try:
                 final = validate_final(raw, target_id=target["target_id"], family=family, model_id=str(model["model"]))
             except Exception as exc:

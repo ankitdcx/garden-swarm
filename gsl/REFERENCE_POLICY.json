@@ -25,6 +25,42 @@
       "class": "RUNTIME_GENERATED_RECEIPT",
       "owner": "swarm/orchestrator.py",
       "require_tracked_file": false
+    },
+    {
+      "reference": "agents/runtime/design-target-selection.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/rotate_design_review_target.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "agents/runtime/free-selection.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/select_matrix_reviewers.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "agents/outbox/hourly/design-review-bundle.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/matrix_design_review.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "agents/runtime/paid-selection.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/select_paid_matrix_reviewers.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "agents/outbox/hourly/paid-review-bundle.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/run_paid_matrix_review.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "agents/outbox/hourly/gemini-review.json",
+      "class": "RUNTIME_GENERATED_RECEIPT",
+      "owner": "tools/run_gemini_free_review.py",
+      "require_tracked_file": false
     }
   ],
   "rule": "A generated/runtime reference is not a dangling source-file reference merely because no tracked file exists. It must instead resolve to an explicit generating owner/class. Unknown untracked references remain failures."

@@ -1,0 +1,23 @@
+{
+  "DesignEpoch": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "ProcessVersion": "1.4",
+  "QUALIFIED": 0,
+  "STALE": 0,
+  "TIER_A": 251,
+  "TIER_B": 14,
+  "TIER_C": 1,
+  "TOTAL": 266,
+  "UNREVIEWED": 266,
+  "coverage_complete": true,
+  "inventory_sha256": "171f574f183c5491ab496be0da289007f58aec6abc9f9f71205d26abc6221da4",
+  "schema": "CanonicalSectionCountReceipt/v1",
+  "source_root": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "sweep_completion_valid": false,
+  "producer_binding": {
+    "repository": "ankitdcx/garden-main",
+    "commit": "e58ae360e328130016ec9b5cd7659263cc5eff10",
+    "command": "python scripts/build_canonical_section_units.py with full observed repo head",
+    "observed_at": "2026-09-15T05:56:28.366029+00:00",
+    "scope": "Fresh bootstrap enumeration; does not assert absence of historical reviews or persistent review-ledger integration."
+  }
+}

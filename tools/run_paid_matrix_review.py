@@ -76,7 +76,7 @@ def main()->int:
             attempts.append({"phase":"INDEPENDENT","status":"HOURLY_BUDGET_RESERVED_EXHAUSTED","family":family,"model":model["model"],"cost":0.0,"charged_total_before_call":charged_total,"hourly_cost_ceiling_usd":hourly_ceiling,"reserved_max_call_cost_usd":per_call_ceiling}); continue
         prompt=review.independent_prompt(target=target,source=source,trace=trace,model=model); raw,attempt=_call(model=model,prompt=prompt,selection=selection); attempt["phase"]="INDEPENDENT"; attempts.append(attempt)
         if isinstance(attempt.get("cost"),(int,float)) and float(attempt["cost"])>=0: charged_total+=float(attempt["cost"])
-        if raw is None: continue
+        if raw is None: break
         try: finding=review.validate_independent(raw,target_id=target["target_id"],family=family,model_id=str(model["model"]))
         except Exception as exc:
             attempts.append({"phase":"INDEPENDENT_PARSE","status":"INVALID_OUTPUT","family":family,"model":model["model"],"cost":0.0,"detail":str(exc)}); continue

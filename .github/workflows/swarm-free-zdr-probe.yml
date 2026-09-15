@@ -1,20 +1,13 @@
 name: Garden free ZDR request probe
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'swarm/roles-free-zdr.json'
-      - 'swarm/orchestrator.py'
-      - 'swarm/tests/test_zdr_request_policy.py'
-      - '.github/workflows/swarm-free-zdr-probe.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: garden-free-zdr-probe
+  group: garden-provider-review
   cancel-in-progress: false
 
 jobs:
@@ -29,6 +22,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Enforce paused and single-dispatch boundary
+        run: python -m tools.check_dispatch_admission
 
       - name: Verify the live code path requests ZDR
         run: python -m unittest swarm.tests.test_zdr_request_policy -v

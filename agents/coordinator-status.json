@@ -1,0 +1,55 @@
+{
+  "schema": "CoordinatorStatusReceipt/v1",
+  "observed_at": "2026-09-15T05:56:28.366029+00:00",
+  "scheduler_state": "PAUSED",
+  "reason": "USER_PAUSED_AFTER_REQUEST_LIMIT_ERRORS",
+  "observation_source": "User confirmation and read-only scheduled-task lookup; no successful dispatch history available",
+  "process_version": "1.4",
+  "process_engine_location": "https://github.com/ankitdcx/garden-main/blob/e58ae360e328130016ec9b5cd7659263cc5eff10/implementation/garden_kernel/process_engine.py",
+  "repo_heads": {
+    "garden-main": "e58ae360e328130016ec9b5cd7659263cc5eff10",
+    "garden-swarm": "27bb008c8916017b754e0d0f59d30bd2ffdd3f0b"
+  },
+  "lanes": [
+    {
+      "lane": "swarm-free-public-calibration",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    },
+    {
+      "lane": "swarm-free-zdr-probe",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    },
+    {
+      "lane": "hourly-specialist-agent-sweep",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    },
+    {
+      "lane": "ip-origin-multi-agent-review",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    },
+    {
+      "lane": "hourly-free-agent-review",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    },
+    {
+      "lane": "one-use-ip-provenance-deepseek-review",
+      "last_successful_dispatch_at": null,
+      "cycle_id": null,
+      "outcome": "UNKNOWN_NO_BOUND_DISPATCH_RECEIPT"
+    }
+  ],
+  "active_heartbeat_max_age_seconds": 7200,
+  "freshness_rule": "PAUSED is intentional, not a liveness failure. When RUNNING, missing/old/future heartbeat evidence is UNKNOWN/STALE, never healthy. This snapshot cannot detect its own staleness without a reader.",
+  "automatic_resume_authorized": false,
+  "canonical_effect": "NONE"
+}

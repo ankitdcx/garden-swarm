@@ -15,16 +15,19 @@ CONTRACTS = ROOT / "agents/config-surface-contracts.json"
 
 
 def current_shape(policy):
-    return {
-        "routine_reviewers": [
-            {"family": row["family"], "role": row["role"], "model": row["model"]}
-            for row in policy["routine_reviewers"]
-        ],
-        "routine_model_call_cost_ceiling_usd": policy["routine_model_call_cost_ceiling_usd"],
-        "routine_hourly_cost_ceiling_usd": policy["routine_hourly_cost_ceiling_usd"],
-        "daily_openrouter_cost_ceiling_usd": policy["daily_openrouter_cost_ceiling_usd"],
-        "provider_policy": {"data_collection": policy["provider_policy"]["data_collection"]},
-    }
+    contracts = json.loads(CONTRACTS.read_text())
+    surface = contracts['surfaces'][0]
+    shape = {}
+    for field in surface['watched_fields']:
+        value = policy
+        parts = field.split('.')
+        for part in parts:
+            value = value[part]
+        out = shape
+        for part in parts[:-1]:
+            out = out.setdefault(part, {})
+        out[parts[-1]] = value
+    return shape
 
 
 def shape_hash(policy):
@@ -51,6 +54,16 @@ class ConfigSurfaceCouplingTests(unittest.TestCase):
                 self.assertEqual(consumer["accepted_shape_sha256"], observed)
                 self.assertTrue((ROOT / consumer["path"]).is_file())
                 self.assertTrue(consumer["binding"])
+
+    def test_free_and_specialist_mutations_invalidate_fingerprint(self):
+        import copy
+        watched = set(self.surface['watched_fields'])
+        for section in ('free_swarm', 'specialist_free_sweep', 'execution_limits'):
+            for field in self.policy[section]:
+                self.assertIn(section + '.' + field, watched)
+                mutated = copy.deepcopy(self.policy)
+                mutated[section][field] = 'INVALID_CHANGED_VALUE'
+                self.assertNotEqual(shape_hash(mutated), self.surface['accepted_shape_sha256'])
 
     def test_routine_and_ip_selectors_follow_authoritative_policy_shape(self):
         expected = [row["family"] for row in self.policy["routine_reviewers"]]

@@ -9,20 +9,108 @@
         "routine_model_call_cost_ceiling_usd",
         "routine_hourly_cost_ceiling_usd",
         "daily_openrouter_cost_ceiling_usd",
-        "provider_policy.data_collection"
+        "provider_policy.data_collection",
+        "free_swarm.enabled",
+        "free_swarm.distinct_families_per_hour",
+        "free_swarm.minimum_available_families",
+        "free_swarm.cross_examination",
+        "free_swarm.max_parallelism",
+        "free_swarm.max_free_calls_per_hour",
+        "free_swarm.cost_policy",
+        "specialist_free_sweep.enabled",
+        "specialist_free_sweep.preferred_families_per_hour",
+        "specialist_free_sweep.minimum_families_per_hour",
+        "specialist_free_sweep.cross_examination",
+        "specialist_free_sweep.target_slot_offset",
+        "specialist_free_sweep.max_free_calls_per_hour",
+        "specialist_free_sweep.cost_policy",
+        "execution_limits.max_concurrent_model_calls",
+        "execution_limits.max_model_calls_per_dispatch",
+        "execution_limits.daily_free_call_cap",
+        "execution_limits.hourly_free_call_cap",
+        "execution_limits.scope",
+        "execution_limits.enforcement_status",
+        "execution_limits.family_counts",
+        "budget_pool_scope",
+        "budget_pools_usd"
       ],
-      "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80",
+      "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
       "consumers": [
-        {"path": "tools/select_paid_matrix_reviewers.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "POLICY_DERIVED_EXACT"},
-        {"path": "tools/select_ip_origin_reviewers.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "POLICY_DERIVED_EXACT_WITH_ANCHORS"},
-        {"path": "tools/run_paid_matrix_review.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "SELECTION_APPROVED_FAMILIES"},
-        {"path": "tools/run_ip_origin_multi_agent_review.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "SELECTION_APPROVED_FAMILIES_WITH_ANCHORS"},
-        {"path": "tools/run_one_use_ip_provenance_deepseek_review.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "POLICY_SELECTION_SUBSET"},
-        {"path": ".github/workflows/hourly-free-agent-review.yml", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "ROUTINE_SELECTION_WORKFLOW"},
-        {"path": ".github/workflows/ip-origin-multi-agent-review.yml", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "IP_SELECTION_WORKFLOW"},
-        {"path": ".github/workflows/one-use-ip-provenance-deepseek-review.yml", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "ONE_USE_SELECTION_WORKFLOW"},
-        {"path": "tests/test_paid_review_routing.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "ROUTINE_COMPATIBILITY_TEST"},
-        {"path": "tests/test_ip_origin_review_selection.py", "accepted_shape_sha256": "acae6e9da62fbe057a8b766ce91a635dbd576d5d2ee922883e80d3ba2c99cb80", "binding": "IP_COMPATIBILITY_TEST"}
+        {
+          "path": "tools/select_paid_matrix_reviewers.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "POLICY_DERIVED_EXACT"
+        },
+        {
+          "path": "tools/select_ip_origin_reviewers.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "POLICY_DERIVED_EXACT_WITH_ANCHORS"
+        },
+        {
+          "path": "tools/run_paid_matrix_review.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "SELECTION_APPROVED_FAMILIES"
+        },
+        {
+          "path": "tools/run_ip_origin_multi_agent_review.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "SELECTION_APPROVED_FAMILIES_WITH_ANCHORS"
+        },
+        {
+          "path": "tools/run_one_use_ip_provenance_deepseek_review.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "POLICY_SELECTION_SUBSET"
+        },
+        {
+          "path": ".github/workflows/hourly-free-agent-review.yml",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "ROUTINE_SELECTION_WORKFLOW"
+        },
+        {
+          "path": ".github/workflows/ip-origin-multi-agent-review.yml",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "IP_SELECTION_WORKFLOW"
+        },
+        {
+          "path": ".github/workflows/one-use-ip-provenance-deepseek-review.yml",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "ONE_USE_SELECTION_WORKFLOW"
+        },
+        {
+          "path": "tests/test_paid_review_routing.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "ROUTINE_COMPATIBILITY_TEST"
+        },
+        {
+          "path": "tests/test_ip_origin_review_selection.py",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33",
+          "binding": "IP_COMPATIBILITY_TEST"
+        },
+        {
+          "path": ".github/workflows/hourly-specialist-agent-sweep.yml",
+          "binding": "POLICY_DERIVED_EXECUTION_BOUNDARY",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33"
+        },
+        {
+          "path": "tools/matrix_design_review.py",
+          "binding": "POLICY_DERIVED_EXECUTION_BOUNDARY",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33"
+        },
+        {
+          "path": "tools/select_matrix_reviewers.py",
+          "binding": "POLICY_DERIVED_EXECUTION_BOUNDARY",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33"
+        },
+        {
+          "path": "tools/verify_review_boundaries.py",
+          "binding": "POLICY_DERIVED_EXECUTION_BOUNDARY",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33"
+        },
+        {
+          "path": "tools/check_dispatch_admission.py",
+          "binding": "POLICY_DERIVED_EXECUTION_BOUNDARY",
+          "accepted_shape_sha256": "75639aeb0c38f6a35336eb6b94336ea620703b64f23420b65a36dc475aa39e33"
+        }
       ],
       "rule": "Changing the watched producer shape invalidates this fingerprint. Every registered consumer must explicitly acknowledge the new fingerprint in the same governed change, and executable compatibility probes must still pass. This acknowledgement is not proof by itself; it prevents silent producer/consumer drift."
     }
