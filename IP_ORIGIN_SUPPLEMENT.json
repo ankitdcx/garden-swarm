@@ -1,0 +1,101 @@
+{
+  "schema": "GardenIPOriginSupplement/v1",
+  "baseline": "Garden v15.5",
+  "status": "FINAL_BACKFILL_CANDIDATE_PENDING_MULTI_AGENT_REVIEW",
+  "purpose": "Evidence-bound historical lineage, additional archive-recovered Garden candidates, and non-patent IP asset categories complementing IP_ORIGIN_INVENTORY.json.",
+  "interpretation_rules": [
+    "Historical F/P identifiers are snapshot-scoped unless a stable mapping is independently established.",
+    "Portfolio headline counts are lineage snapshots and must never be added together as independent inventions.",
+    "SOURCE_DETAIL_NOT_RECOVERED is preferable to inventing a missing old family or subfamily label.",
+    "Garden-origin is a provenance classification, not automatic legal exclusivity.",
+    "Known science, standards, equations, generic algorithms, and third-party technology are prior basis, not Garden inventions merely because Garden uses them.",
+    "A concrete new technical combination may remain a Garden-origin candidate even when its ingredients are old.",
+    "No model review creates filing, grant, ownership, infringement, enforceability, certification, or legal-opinion status."
+  ],
+  "historical_snapshots": [
+    {"date":"2026-05-05","label":"TRAIN early core","reported":"13 core families / 78+ sub-patents; later 13 core + 6 governance continuations-in-part","status":"HISTORICAL_SNAPSHOT"},
+    {"date":"2026-05-05","label":"Cognitive Dynamics extension","reported":"Consumer Extraction explicitly associated with P183","status":"PARTIAL_EXACT_RECOVERY"},
+    {"date":"2026-05-06T02:50","label":"19-family architecture","reported":"Hardware families 1-13; governance G1-G6; F14 Multi-Agent; F15 Reasoning; F16 Inference; F17 Media; F18 Robotics; F19 Universal Substrate","status":"PARTIAL_EXACT_RECOVERY"},
+    {"date":"2026-05-06T04:46","label":"29-family consolidated snapshot","reported":"29 families / 209 sub-patents; F1 UCIS-TRAIN; F14 Single-Pass Chip Development; F15 ST-HCG; F16 Governance; F17 Multi-Agent Inference; F18 Calibrated Reasoning; F19 Unified Inference-Time Safety; F20 Media; F21 Robotics; F27 Global OS; F28 Compiler; F29 Theory Extensions","status":"PARTIAL_EXACT_RECOVERY"},
+    {"date":"2026-05-06","label":"normalization snapshots","reported":"28+ families/180+ sub-patents; later 54 canonical families/200+; later 48 canonical families/200+","status":"RENAMED_AND_RENUMBERED_LINEAGE"},
+    {"date":"2026-05-07","label":"prosecutability and expansion snapshots","reported":"63+ families/293+ sub-patents; hardened 48+ families/193+; separate 340+ one-line sub-patent listing; later 60+ families/230+","status":"MULTIPLE_NON_ADDITIVE_SNAPSHOTS"},
+    {"date":"2026-06-24","label":"TRAIN v9.0","reported":"67+ families / 307+ sub-patents across Physical Safety, Solver Morphism, Epistemic Dual-Kernel, Deterministic Inspection, Integration/Governance","status":"HISTORICAL_SNAPSHOT"},
+    {"date":"2026-06-24","label":"GARDEN-REAL v1.x","reported":"75+ families / 337+ sub-patents","status":"HISTORICAL_SNAPSHOT"},
+    {"date":"2026-08","label":"consolidated public source","reported":"60+ families / 230+ sub-patents; F100 and F110-F124 lineage retained","status":"HISTORICAL_SNAPSHOT"},
+    {"date":"2026-09-05","label":"CDDT formal catalogue","reported":"60 formal technical claim families / 180 draft claims; 460 source entries -> 445 grouped idea/programme entries are not 445 inventions","status":"FORMAL_FAMILY_CATALOGUE"}
+  ],
+  "numbering_drift_evidence": [
+    "On 2026-05-06, F14 appears as Multi-Agent in an earlier snapshot and as Single-Pass Chip Development in a later snapshot.",
+    "F16/F17/F18/F19 labels also moved between inference, governance, multi-agent, reasoning, media, robotics, and universal-substrate snapshots.",
+    "F110-F117 mappings were later repurposed/normalized as integration-constrained embodiments; snapshot provenance controls interpretation.",
+    "Therefore no bare F-number is treated as globally stable without its date/snapshot binding."
+  ],
+  "source_detail_not_recovered": [
+    {"range":"early P1-P182","status":"SOURCE_DETAIL_NOT_RECOVERED","note":"Historical aggregate/range evidence survives, but a complete exact one-to-one label map was not recovered. P183 is explicitly recovered."},
+    {"range":"all early F1-F109 across every May snapshot","status":"SOURCE_DETAIL_NOT_RECOVERED","note":"Many exact titles are recovered below, but not every identifier in every renumbered snapshot."},
+    {"range":"CDDT 445 grouped idea/programme entries","status":"NOT_PROMOTED_AS_INVENTIONS","note":"Only the 60 formal technical families are currently promoted; other entries require a specific technical delta before addition."}
+  ],
+  "additional_records": [
+    {"id":"MAA-001","name":"Hazard-monotonic emergency action selection","group":"archive-recovered-candidate","historical_snapshot":"February 2026 GAIA safety-control lineage","evidence_quality":"ARCHIVE_RECOVERY","note":"Typed hazard-delta dominance inside already-authorized emergency action sets; never creates authority."},
+    {"id":"MAA-002","name":"Versioned unsafe-region / infeasibility memory for planning reuse","group":"archive-recovered-candidate","historical_snapshot":"Early GAIA iterations","evidence_quality":"ARCHIVE_RECOVERY","note":"Scoped state/action/trajectory no-go knowledge with model/version binding and revalidation."},
+    {"id":"MAA-003","name":"Adversarial precedent revalidation","group":"archive-recovered-candidate","historical_snapshot":"May 2026 Digital Garden governance lineage","evidence_quality":"ARCHIVE_RECOVERY","note":"Bounded revalidation triggers for high-impact normative precedent; no automatic reopening authority."},
+    {"id":"MAA-004","name":"Change-complexity and assurance-burden accounting","group":"archive-recovered-candidate","historical_snapshot":"Early GAIA refinement loop","evidence_quality":"ARCHIVE_RECOVERY","note":"Typed semantic/dependency/migration/verification burden fed into Compare/GCL rather than raw LOC."},
+    {"id":"MAA-005","name":"Temporal authority snapshot / anti-retroactive authorization binding","group":"archive-recovered-candidate","historical_snapshot":"June-July 2026 transaction/event architecture","evidence_quality":"ARCHIVE_RECOVERY","note":"Consequential admission binds authority snapshot to acceptance/commit boundary, separate from event valid time."},
+
+    {"id":"TRAIN-HIST-20260506-0446-F1","name":"UCIS-TRAIN","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F1","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F14","name":"Single-Pass Chip Development","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F14","evidence_quality":"EXACT_TITLE_RECOVERED","numbering_warning":"Earlier same-day snapshot used F14 for Multi-Agent."},
+    {"id":"TRAIN-HIST-20260506-0446-F15","name":"Stochastic Hazard Circuit Graph (ST-HCG)","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F15","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F16","name":"Governance & Authorization","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F16","evidence_quality":"EXACT_TITLE_RECOVERED","numbering_warning":"Other same-day snapshot used F16 for Inference Compiler."},
+    {"id":"TRAIN-HIST-20260506-0446-F17","name":"Multi-Agent Inference","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F17","evidence_quality":"EXACT_TITLE_RECOVERED","numbering_warning":"Earlier same-day snapshot used F17 for Media Controller."},
+    {"id":"TRAIN-HIST-20260506-0446-F18","name":"Calibrated Reasoning","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F18","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F19","name":"Unified Inference-Time Safety","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F19","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F20","name":"Media","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F20","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F21","name":"Robotics","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F21","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F27","name":"Global OS","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F27","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F28","name":"Compiler","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F28","evidence_quality":"EXACT_TITLE_RECOVERED"},
+    {"id":"TRAIN-HIST-20260506-0446-F29","name":"Theory Extensions","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T04:46 29-family snapshot","historical_id":"F29","evidence_quality":"EXACT_TITLE_RECOVERED"},
+
+    {"id":"TRAIN-HIST-20260506-0250-F14","name":"Multi-Agent","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T02:50 19-family snapshot","historical_id":"F14","evidence_quality":"EXACT_SUBFAMILY_RECOVERY","subfamilies":["14.1 Sparse activation with event-triggered routing","14.2 Shared forward backbone for multi-agent LLMs","14.3 Global safety broadcast with amortized risk computation","14.4 Lazy consensus with instability-gated fusion","14.5 Centroid-variance instability metric for multi-agent systems","14.6 Asynchronous event-driven tool orchestration with non-blocking decoding","14.7 Compressed multi-channel kernel memory with low-rank projection and EMA sketching","14.8 Post-sample hard safety gate with single resample fallback"]},
+    {"id":"TRAIN-HIST-20260506-0250-F17","name":"Media Controller","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-06T02:50 19-family snapshot","historical_id":"F17","evidence_quality":"EXACT_SUBFAMILY_RECOVERY","subfamilies":["17.1 trajectory control","17.2 residual-aware continuation","17.3 semantic stopping","17.4 multi-head critic","17.5 curvature steps","17.6 collapse detection","17.7 rollback","17.8 entropy-SNR","17.9 information-gain gating","17.10 risk-aware decoding","17.11 cross-modal consistency","17.12 adaptive CFG","17.13 safe cache","17.14 budget scheduler","17.15 modality-specific controls","17.16 optimal stopping","17.17 session preference","17.18 drift detection","17.19 coherence rollback","17.20 session loop"]},
+    {"id":"TRAIN-HIST-20260505-P183","name":"Consumer Cognitive Dynamics Extraction","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-05-05 Cognitive Dynamics extension","historical_id":"P183","evidence_quality":"EXACT_IDENTIFIER_RECOVERED"},
+
+    {"id":"TRAIN-HIST-20260624-F1","name":"Partial Fault Isolation with Deterministic Continuation","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F1","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":4},
+    {"id":"TRAIN-HIST-20260624-F5","name":"Hardware Watchdog with Physically Independent Safety Actuation","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F5","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":5},
+    {"id":"TRAIN-HIST-20260624-F8","name":"Hardware-Enforced Contraction Dynamics (SCF Regulator)","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F8","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":11},
+    {"id":"TRAIN-HIST-20260624-F9","name":"Physical Containment Barriers for Fault Propagation","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F9","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":5},
+    {"id":"TRAIN-HIST-20260624-F11","name":"Two-Field Physical Invariant System","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F11","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":6},
+    {"id":"TRAIN-HIST-20260624-F22","name":"Stochastic Hazard Circuit Graph (ST-HCG)","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F22","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":5,"alias_note":"Same concept had different historical family number in earlier snapshots."},
+    {"id":"TRAIN-HIST-20260624-F97","name":"Physical Constraint-Enforced Computation Boundary Layer","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F97","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":3},
+    {"id":"TRAIN-HIST-20260624-F98","name":"Constraint-Preserving Solver Morphism Engine","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F98","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":4},
+    {"id":"TRAIN-HIST-20260624-F99","name":"Non-Reprogrammable Constraint Enforcement Substrate","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F99","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":4},
+    {"id":"TRAIN-HIST-20260624-F101","name":"U-Space Uncertainty Algebra","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F101","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":2},
+    {"id":"TRAIN-HIST-20260624-F125","name":"Three-kernel unidirectional pipeline / telemetry carve-out","group":"TRAIN-versioned-snapshot","historical_snapshot":"2026-06-24 TRAIN v9.0","historical_id":"F125","evidence_quality":"EXACT_TITLE_RECOVERED","reported_subpatents":2}
+  ],
+  "copyright_assets": [
+    "Garden five-file source-design texts and their original expression",
+    "Original Garden/GSL code, EBNF, schemas, pseudocode and machine-readable definitions where expressive authorship exists",
+    "Original diagrams, tables, flowcharts, explanatory text and generated reader editions where sufficiently original",
+    "Artifact Catalogue, registries, invariant/proof/test catalogues and curated compilations to the extent compilation expression is protectable",
+    "Repository documentation, examples and tests to the extent original expression is present"
+  ],
+  "trademark_candidates": ["Garden","GSL","GSL-KR","GSL-AR","GSL-R","GSL-PHYSICS","GSL-QUANTUM","GSL-COMPARE","GSL-EXPLAIN","GNR","GESTALT","APAO","TRAIN","GAIA Titanium","GAIA Diamond","Reliability OS","Jeevit","Ekaki","Garden Common Fund","Productive Capital Exchange","ZKEPP","POU","RTR","CDDT","CPI","OCF","CLIC","GCL","TED","SEA","MAC","NRS","VIP","SHE","EC","CSR","AR","MI"],
+  "trade_secret_candidates_if_still_confidential": [
+    "Non-public implementation details and source not already disclosed",
+    "Model weights/checkpoints/training data if Garden-controlled and confidential",
+    "Private security/cryptographic implementation details",
+    "Private test suites, fuzzing corpora, attack sets, calibration and deployment configurations",
+    "Private supplier, economic, resource-allocation, health, privacy, financial or personal-profile data"
+  ],
+  "screening_input_not_admitted": {
+    "strong_candidate_input": ["GAIA Titanium deterministic real-time safety kernel","TRAIN entropy-channel safety substrate","GCL typed causal leverage arithmetic","CLIC-P01 semantic conservation","FunctionContract + typed result algebra","Counterfactual influence provenance","Standards compliance adapter","Engineering design ingestion","Deterministic generated-artifact elision","Self-improvement metrology","Critical-continuity handoff","TED effects-budgeted introspection"],
+    "crowded_or_narrow_claim_input": ["AAP","Algebra.Bridge","NRS","VIP","EC","CSR","MAC","AR","MI"],
+    "prior_art_heavy_or_abstract_input": ["generic persistent state/VSM","generic reactive/proactive control","generic workflow/process algebra","generic knowledge graph","generic multi-agent coordination","generic financial tokenization","academic quantum-classical correspondence","Generalized Attraction","GSL-GENERATIVE as abstract framework","generic Reliability OS patterns"],
+    "status": "INPUT_ONLY_REQUIRES_MULTI_AGENT_AND_PRIOR_ART_EVIDENCE"
+  },
+  "review_boundary": {
+    "required_public_review": "GardenIPOriginMultiAgentReview/v4",
+    "current_approved_families": ["deepseek","qwen","glm","mistral"],
+    "budget": "shared global OpenRouter ceiling <= USD 1.00 per Asia/Kolkata day; not an additional IP budget",
+    "admission": "review findings are evidence only; final origin/protection classifications remain evidence-bound and revisable"
+  }
+}
