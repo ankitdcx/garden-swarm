@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   openrouter-ip-origin-review:
-    if: github.event.pull_request.head.repo.full_name == github.repository && !contains(github.event.pull_request.title, 'Trigger one-use Process v2 predecessor review')
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && !contains(github.event.pull_request.title, 'Trigger one-use Process v2 predecessor review') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -52,7 +52,7 @@ jobs:
           retention-days: 90
 
   process-v2-predecessor-review:
-    if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.title, 'Trigger one-use Process v2 predecessor review')
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.title, 'Trigger one-use Process v2 predecessor review') }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
@@ -121,7 +121,8 @@ EXACT CANDIDATE DIFF END
               attempts.append(attempt)
               family = str(model['family'])
               if not isinstance(raw, dict) or raw.get('schema') != 'GardenProcessPredecessorReview/v1':
-                  if isinstance(raw, dict): attempts.append({'family':family,'model':model['model'],'status':'INVALID_SCHEMA'})
+                  if isinstance(raw, dict):
+                      attempts.append({'family':family,'model':model['model'],'status':'INVALID_SCHEMA'})
                   continue
               receipt = {
                   'schema':'GardenProcessPredecessorReviewReceipt/v1',
