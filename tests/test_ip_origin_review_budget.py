@@ -46,6 +46,28 @@ class IPOriginReviewBudgetTests(unittest.TestCase):
         for family in ("deepseek", "qwen", "mistral"):
             self.assertEqual(review._reasoning_for_family(family), {"effort": "none"})
 
+    def test_protection_code_normalization_accepts_harmless_delimiters(self):
+        self.assertEqual(review._protection_codes("C,S,A"), ["C", "S", "A"])
+        self.assertEqual(review._protection_codes("C S A"), ["C", "S", "A"])
+        self.assertEqual(review._protection_codes(["C", "S", "A"]), ["C", "S", "A"])
+        self.assertEqual(
+            review._protection_codes(["COPYRIGHT_EXPRESSION", "PATENT_CANDIDATE"]),
+            ["C", "P"],
+        )
+
+    def test_protection_code_normalization_still_rejects_unknown_tokens(self):
+        with self.assertRaisesRegex(ValueError, "bad protection token"):
+            review._protection_codes("C,X")
+
+    def test_specialist_object_form_is_only_syntactic_normalization(self):
+        result = review._validate_specialist(
+            {"r": [{"id": "A", "origin": "ORIGIN_UNCERTAIN", "protections": "C,S", "confidence": "MEDIUM"}]},
+            {"A"},
+        )
+        self.assertEqual(result[0]["origin_status"], "ORIGIN_UNCERTAIN")
+        self.assertEqual(result[0]["protection_candidates"], ["COPYRIGHT_EXPRESSION", "TRADE_SECRET_CANDIDATE"])
+        self.assertEqual(result[0]["confidence"], "MEDIUM")
+
 
 if __name__ == "__main__":
     unittest.main()
