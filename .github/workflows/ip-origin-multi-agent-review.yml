@@ -28,10 +28,10 @@ jobs:
       - name: Compile bounded multi-agent reviewer
         run: python -m py_compile tools/run_ip_origin_multi_agent_review.py
 
-      - name: Generate approved DeepSeek + Qwen selection
+      - name: Generate approved multi-family OpenRouter selection
         run: python -m tools.select_paid_matrix_reviewers
 
-      - name: Run 8 role-agents plus 2 cross-examiners per batch
+      - name: Run approved-family role reviews and cross-exams per batch
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.run_ip_origin_multi_agent_review
