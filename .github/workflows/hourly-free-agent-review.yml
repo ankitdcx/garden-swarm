@@ -2,7 +2,8 @@ name: Garden hourly multi-model review
 
 on:
   schedule:
-    - cron: '5 * * * *'
+    # GitHub cron is UTC; minute 35 UTC maps to minute 05 in Asia/Kolkata.
+    - cron: '35 * * * *'
   workflow_dispatch:
 
 permissions:
