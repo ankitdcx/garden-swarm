@@ -1,0 +1,46 @@
+--- a/gsl/CHANGE_POLICY.json
++++ b/gsl/CHANGE_POLICY.json
+@@ -12,15 +12,31 @@
+     "CIConformancePipelineReceipt overall PASS"
+   ],
+   "constitutional_paths": [
++    ".github/workflows/constitutional-path-guard.yml",
++    ".github/workflows/integrity.yml",
++    "agents/config-surface-contracts.json",
++    "agents/design-review-matrix.json",
++    "gsl/AGENT_ENVELOPES.json",
+     "gsl/AUTHORITY_REGISTRY.json",
+     "gsl/CHANGE_POLICY.json",
+     "gsl/DESIGN_EPOCH.json",
+-    "gsl/AGENT_ENVELOPES.json",
++    "gsl/FUNCTION_CONTRACTS.json",
++    "gsl/FUNCTION_CONTRACTS_GOVERNANCE.json",
+     "gsl/FUNCTION_CONTRACT_GENERATION.json",
+-    ".github/workflows/integrity.yml"
++    "prototype/hardening.py",
++    "scripts/check_constitutional_change.py"
+   ],
+   "constitutional_rule": "A change touching constitutional_paths cannot be authorized by request-supplied booleans or by the changed registry/policy itself. It requires an externally verifiable human approval or a trusted base-bound approval receipt. Until that verifier exists, such a change must remain candidate/ESCALATE.",
+   "canonical_rule": "Published Garden v15.5 source files are immutable in place. Canonical successor promotion is outside repository-agent authority and remains human-controlled.",
+   "documentation_rule": "Purely explanatory documentation may be source-obligation-exempt only when it does not alter normative semantics, authority, policy, executable behavior or release claims; the envelope must explicitly classify that exemption.",
+-  "fail_closed_states": ["FAIL", "UNKNOWN", "INCONCLUSIVE", "TIMEOUT", "RESOURCE_UNKNOWN", "STALE", "MALFORMED", "ESCALATE"]
++  "fail_closed_states": [
++    "FAIL",
++    "UNKNOWN",
++    "INCONCLUSIVE",
++    "TIMEOUT",
++    "RESOURCE_UNKNOWN",
++    "STALE",
++    "MALFORMED",
++    "ESCALATE"
++  ]
+ }
+--- a/.github/workflows/integrity.yml
++++ b/.github/workflows/integrity.yml
+@@ -45,5 +45,5 @@
+             /tmp/garden-repo-gsl-audit.json
+             /tmp/garden-gsl-conformance-receipt.json
+             /tmp/reference-closure-receipt.json
+-          if-no-files-found: warn
++          if-no-files-found: error
+           retention-days: 30

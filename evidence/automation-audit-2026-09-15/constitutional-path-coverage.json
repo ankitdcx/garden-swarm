@@ -1,0 +1,42 @@
+{
+  "schema": "ConstitutionalPathCoverageReceipt/v1",
+  "declared_paths": [
+    ".github/workflows/integrity.yml",
+    "gsl/AGENT_ENVELOPES.json",
+    "gsl/AUTHORITY_REGISTRY.json",
+    "gsl/CHANGE_POLICY.json",
+    "gsl/DESIGN_EPOCH.json",
+    "gsl/FUNCTION_CONTRACT_GENERATION.json"
+  ],
+  "computed_required_paths": [
+    ".github/workflows/constitutional-path-guard.yml",
+    ".github/workflows/integrity.yml",
+    "agents/config-surface-contracts.json",
+    "agents/design-review-matrix.json",
+    "gsl/AGENT_ENVELOPES.json",
+    "gsl/AUTHORITY_REGISTRY.json",
+    "gsl/CHANGE_POLICY.json",
+    "gsl/DESIGN_EPOCH.json",
+    "gsl/FUNCTION_CONTRACTS.json",
+    "gsl/FUNCTION_CONTRACTS_GOVERNANCE.json",
+    "gsl/FUNCTION_CONTRACT_GENERATION.json",
+    "prototype/hardening.py",
+    "scripts/check_constitutional_change.py"
+  ],
+  "missing_paths": [
+    ".github/workflows/constitutional-path-guard.yml",
+    "agents/config-surface-contracts.json",
+    "agents/design-review-matrix.json",
+    "gsl/FUNCTION_CONTRACTS.json",
+    "gsl/FUNCTION_CONTRACTS_GOVERNANCE.json",
+    "prototype/hardening.py",
+    "scripts/check_constitutional_change.py"
+  ],
+  "contract_dependencies": [
+    "FC-PROTOTYPE-HARDENING-CONSTITUTIONAL-EVENT-v1",
+    "FC-REPO-CONSTITUTIONAL-CHANGE-GUARD-v1"
+  ],
+  "status": "MIGRATION_REQUIRED",
+  "authority_effect": "NONE",
+  "activation": "Candidate evidence only; changing protected policy still requires the existing external/trusted-base approval verifier."
+}

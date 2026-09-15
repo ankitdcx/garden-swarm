@@ -2,20 +2,12 @@ name: Garden free public calibration
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'swarm/roles-free.json'
-      - 'swarm/orchestrator.py'
-      - 'swarm/synthesize.py'
-      - 'swarm/tests/**'
-      - '.github/workflows/swarm-free-public-calibration.yml'
 
 permissions:
   contents: read
 
 concurrency:
-  group: garden-free-public-calibration
+  group: garden-provider-review
   cancel-in-progress: false
 
 jobs:
@@ -31,6 +23,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Enforce paused and single-dispatch boundary
+        run: python -m tools.check_dispatch_admission
+
       - name: Run swarm unit tests
         run: python -m unittest discover -s swarm/tests -v
 
@@ -44,7 +39,7 @@ jobs:
             --public-free \
             --live \
             --max-calls 4 \
-            --max-concurrency 2 \
+            --max-concurrency 1 \
             --max-chars 12000 \
             --max-tokens 4000 \
             --reasoning-effort none \

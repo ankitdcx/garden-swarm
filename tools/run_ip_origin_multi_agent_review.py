@@ -94,6 +94,7 @@ def main() -> int:
     if len(batches)*len(approved)*2 > 64:
         raise SystemExit("combined IP inventory exceeds 64-call backfill envelope; split lineage rather than weaken budget guard")
 
+    halted = False
     for batch_index,batch in enumerate(batches):
         expected={str(x["id"]) for x in batch}; batch_reviews={}
         for family_index,family in enumerate(approved):
@@ -103,13 +104,14 @@ def main() -> int:
             raw,attempt=_call(model=selected[family],prompt=_prompt(role,instruction,batch),selection=selection,reasoning={"effort":"none"})
             if isinstance(attempt.get("cost"),(int,float)) and float(attempt["cost"])>=0: cumulative+=float(attempt["cost"])
             attempt.update({"batch":batch_index,"role":role}); calls.append(attempt)
-            if raw is None: complete=False; continue
+            if raw is None:
+                complete=False; halted=True; break
             try: items=_validate(raw,expected)
             except Exception as exc:
                 complete=False; calls.append({"batch":batch_index,"family":family,"role":role,"status":"INVALID_OUTPUT","detail":str(exc),"cost":0.0}); continue
             batch_reviews[f"{family}:{role}"]=items
             findings.extend({"batch":batch_index,"family":family,"role":role,**item} for item in items)
-        if batch_reviews:
+        if batch_reviews and not halted:
             digest=json.dumps(batch_reviews,ensure_ascii=False,separators=(",",":"))
             for family in approved:
                 if WORKFLOW_COST_CEILING_USD-cumulative < per_call:
@@ -118,8 +120,12 @@ def main() -> int:
                 raw,attempt=_call(model=selected[family],prompt=prompt,selection=selection,reasoning={"effort":"none"})
                 if isinstance(attempt.get("cost"),(int,float)) and float(attempt["cost"])>=0: cumulative+=float(attempt["cost"])
                 attempt.update({"batch":batch_index,"role":"cross_exam"}); calls.append(attempt)
-                if raw is None: complete=False; continue
+                if raw is None:
+                    complete=False; halted=True; break
                 findings.append({"batch":batch_index,"family":family,"role":"cross_exam","review":raw})
+
+        if halted:
+            break
 
     receipt={"schema":"GardenIPOriginMultiAgentReview/v4","inventory_commit":os.environ.get("GITHUB_SHA"),"base_record_count":len(records)-(len((supplement or {}).get("additional_records") or [])),"supplement_record_count":len((supplement or {}).get("additional_records") or []),"combined_record_count":len(records),"families":approved,"specialist_calls_per_batch":len(approved),"cross_examiners_per_batch":len(approved),"batch_size":BATCH_SIZE,"batch_count":len(batches),"maximum_planned_calls":len(batches)*len(approved)*2,"workflow_cost_ceiling_usd":WORKFLOW_COST_CEILING_USD,"actual_cost_usd":round(cumulative,8),"provider_policy":{"data_collection":"deny"},"complete":complete,"calls":calls,"findings":findings,"semantic_delta_admitted":False,"patent_status_admitted":False,"legal_opinion":False}
     OUT.write_text(json.dumps(receipt,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")

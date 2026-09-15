@@ -1,0 +1,46 @@
+name: Garden pipeline aggregate
+
+on:
+  workflow_run:
+    workflows: [Garden public-release integrity, Garden constitutional path guard, Multi-agent integration provenance]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      head_sha:
+        description: Full commit SHA to aggregate
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: garden-ci-aggregate-${{ github.event.workflow_run.head_sha || inputs.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Aggregate trusted GitHub run metadata without executing candidate code
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CANDIDATE_SHA: ${{ github.event.workflow_run.head_sha || inputs.head_sha }}
+          CANDIDATE_REPOSITORY: ${{ github.repository }}
+        run: python -m tools.aggregate_ci_receipts --head-sha "$CANDIDATE_SHA" --repository "$CANDIDATE_REPOSITORY" --output aggregate-ci-receipt.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pipeline-aggregate-${{ github.run_id }}
+          path: aggregate-ci-receipt.json
+          if-no-files-found: error
+          retention-days: 90

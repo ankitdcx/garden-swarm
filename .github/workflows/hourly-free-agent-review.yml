@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: garden-hourly-multi-model-review
+  group: garden-provider-review
   cancel-in-progress: false
 
 jobs:
@@ -21,6 +21,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Enforce paused and single-dispatch boundary
+        run: python -m tools.check_dispatch_admission
 
       - name: Verify deterministic target rotation and OpenRouter routing offline
         run: |
@@ -62,94 +65,8 @@ jobs:
           GEMINI_MODEL: gemini-3.5-flash
         run: python -m tools.run_gemini_free_review
 
-      - name: Enforce target binding, privacy, budget, and no-auto-admission boundaries
-        run: |
-          python - <<'PY'
-          import json
-
-          matrix = json.load(open('agents/design-review-matrix.json', encoding='utf-8'))
-          policy = json.load(open('agents/openrouter-paid-review-policy.json', encoding='utf-8'))
-          target_selection = json.load(open('agents/runtime/design-target-selection.json', encoding='utf-8'))
-          free_selection = json.load(open('agents/runtime/free-selection.json', encoding='utf-8'))
-          free_bundle = json.load(open('agents/outbox/hourly/design-review-bundle.json', encoding='utf-8'))
-          selection = json.load(open('agents/runtime/paid-selection.json', encoding='utf-8'))
-          bundle = json.load(open('agents/outbox/hourly/paid-review-bundle.json', encoding='utf-8'))
-          gemini = json.load(open('agents/outbox/hourly/gemini-review.json', encoding='utf-8'))
-
-          minimum = int(matrix['minimum_independent_reviewer_families'])
-          assert minimum >= 3
-
-          assert free_selection['schema'] == 'GardenFreeModelSelection/v2'
-          assert len(free_selection['selected']) == int(policy['free_swarm']['distinct_families_per_hour'])
-          assert len({row['family'] for row in free_selection['selected']}) == len(free_selection['selected'])
-          assert all(row['model'].endswith(':free') for row in free_selection['selected'])
-          assert free_bundle['schema'] == 'GardenDesignReviewBundle/v1'
-          assert free_bundle['target']['target_id'] == target_selection['target_id']
-          assert free_bundle['semantic_delta_admitted'] is False
-          assert free_bundle['zero_cost_verified'] is True or free_bundle['status'] in {
-              'INSUFFICIENT_INDEPENDENT_REVIEW',
-              'INSUFFICIENT_PEER_CROSS_EXAMINATION',
-          }
-
-          selected = selection['selected']
-          expected_families = [row['family'] for row in policy['routine_reviewers']]
-          assert selection['schema'] == 'GardenPaidModelSelection/v2'
-          assert [row['family'] for row in selected] == expected_families
-          assert selection['approved_families'] == expected_families
-          assert len(set(expected_families)) == len(expected_families)
-          assert all(not row['model'].endswith(':free') for row in selected)
-          assert selection['provider_policy']['data_collection'] == 'deny'
-          assert selection['daily_openrouter_cost_ceiling_usd'] == 1.0
-          assert selection['semantic_delta_admitted'] is False
-
-          assert target_selection['schema'] == 'GardenDesignTargetSelectionReceipt/v1'
-          assert target_selection['selection_mode'] == 'DETERMINISTIC_HOURLY_ROUND_ROBIN'
-          assert target_selection['target_id'] == matrix['active_target_id']
-          assert target_selection['target_count'] == len(matrix['targets'])
-          assert target_selection['target_index'] == target_selection['hour_slot'] % target_selection['target_count']
-          assert target_selection['design_epoch'] == matrix['design_epoch']
-          assert target_selection['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
-          assert target_selection['semantic_delta_admitted'] is False
-
-          assert bundle['schema'] == 'GardenPaidDesignReviewBundle/v1'
-          assert bundle['target_id'] == target_selection['target_id']
-          assert bundle['selected_families'] == expected_families
-          assert bundle['actual_cost_usd'] <= bundle['routine_hourly_cost_ceiling_usd']
-          assert bundle['daily_openrouter_cost_ceiling_usd'] == 1.0
-          assert bundle['semantic_delta_admitted'] is False
-          assert bundle['requires_separate_gemini_lane'] is True
-          assert bundle['requires_separate_chatgpt_lane'] is True
-          assert bundle['requires_cross_examination'] is True
-          assert bundle['status'] in {
-              'PAID_BLIND_REVIEW_COMPLETE_PROPOSALS_ONLY',
-              'PARTIAL_PAID_REVIEW_PROPOSALS_ONLY',
-              'HOURLY_COST_CEILING_EXCEEDED',
-          }
-
-          if gemini.get('schema') == 'GardenGeminiMatrixReviewReceipt/v1':
-              assert gemini['target_id'] == target_selection['target_id']
-              assert gemini['design_epoch'] == matrix['design_epoch']
-              assert gemini['canonical_source_root_sha256'] == matrix['canonical_source_root_sha256']
-              assert gemini['semantic_delta_admitted'] is False
-          else:
-              assert gemini.get('schema') in {'GardenGeminiAvailabilityReceipt/v1', 'GardenGeminiAvailabilityReceipt/v2'}
-              assert gemini.get('admission_status') == 'NO_MODEL_FINDING'
-
-          print(json.dumps({
-              'target_id': target_selection['target_id'],
-              'free_families_selected': [row['family'] for row in free_selection['selected']],
-              'free_independent_families_completed': free_bundle['independent_reviewer_family_count'],
-              'free_cross_exam_families_completed': free_bundle['final_disposition_family_count'],
-              'paid_families_selected': expected_families,
-              'paid_families_completed': bundle['completed_families'],
-              'openrouter_actual_cost_usd': bundle['actual_cost_usd'],
-              'openrouter_hourly_cost_ceiling_usd': bundle['routine_hourly_cost_ceiling_usd'],
-              'openrouter_daily_cost_ceiling_usd': bundle['daily_openrouter_cost_ceiling_usd'],
-              'gemini_status': gemini.get('status') or (gemini.get('independent_finding') or {}).get('disposition'),
-              'semantic_admission_minimum_families': minimum,
-              'semantic_delta_admitted': False,
-          }, sort_keys=True))
-          PY
+      - name: Enforce registered review boundaries
+        run: python -m tools.verify_review_boundaries
 
       - name: Build immutable hourly multi-provider receipt
         run: |
@@ -189,6 +106,7 @@ jobs:
           PY
 
       - name: Upload immutable review receipts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: garden-hourly-design-review-${{ github.run_id }}
@@ -201,6 +119,7 @@ jobs:
             agents/outbox/hourly/design-review-bundle.json
             agents/outbox/hourly/matrix-review/*.json
             agents/outbox/hourly/paid-review-bundle.json
+            agents/outbox/hourly/boundary-receipt.json
             agents/outbox/hourly/combined-receipt.json
             agents/outbox/hourly/gemini-review.json
             agents/outbox/hourly/paid-review/*.json
