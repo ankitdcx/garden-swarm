@@ -1,0 +1,24 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:git-process-v2-swarm:20260916",
+  "work_package_id": "GARDEN-GIT-PROCESS-V2-20260916",
+  "branch": "chatgpt/git-process-v2-20260916",
+  "base_sha": "c2bcaa8dcfe1284e53523f3f075616899c2af56c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "substantial_edit_started": false,
+  "status": "ACTIVE",
+  "scope": [
+    "GIT_OPERATING_CONTEXT_REVISION",
+    "PREFLIGHT_RECEIPT",
+    "WORKSTREAM_MERGE_TRAIN",
+    "WORKSTREAM_LIFECYCLE",
+    "REVIEWER_RECOVERY",
+    "INFLIGHT_REVIEWER_INVALIDATION",
+    "QUALITY_QUEUE_RETENTION",
+    "SECRET_SCANNING",
+    "BRANCH_NAMING",
+    "SAFE_BRANCH_CLEANUP"
+  ]
+}
