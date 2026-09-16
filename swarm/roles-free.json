@@ -1,11 +1,12 @@
 {
-  "schema": "GardenSwarmFreeRoleSet/v0.3",
+  "schema": "GardenSwarmFreeRoleSet/v0.4",
   "privacy_class": "PUBLIC_SOURCE_ONLY_NON_ZDR",
+  "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
   "roles": [
     {
       "id": "FREE-ARCH",
       "name": "Free architecture critic",
-      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "model": "dots-studio/dots-3-note-preview:free",
       "objective": "Find architectural contradictions, missing boundaries, unnecessary layers, and simpler stronger alternatives in the supplied public Garden source.",
       "lenses": ["systems architecture", "agent architecture", "dependency structure", "simplification"],
       "tier": "calibration",
@@ -14,7 +15,7 @@
     {
       "id": "FREE-FORMAL",
       "name": "Free formal-methods critic",
-      "model": "dots-studio/dots-3-note-preview:free",
+      "model": "cohere/north-mini-code:free",
       "objective": "Find underspecified semantics, unverifiable claims, type or contract gaps, and proof-obligation failures in the supplied public Garden source.",
       "lenses": ["formal methods", "type systems", "verification", "proof obligations"],
       "tier": "calibration",

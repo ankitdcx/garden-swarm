@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 from urllib import error, request
 from tools import matrix_design_review as review
+from tools.provider_exclusion import load_policy, openrouter_provider_policy, require_allowed_model
 CHAT="https://openrouter.ai/api/v1/chat/completions"; KEY_INFO="https://openrouter.ai/api/v1/key"; SELECTION=Path("agents/runtime/paid-selection.json"); OUT_DIR=Path("agents/outbox/hourly/paid-review"); BUNDLE=Path("agents/outbox/hourly/paid-review-bundle.json")
 
 def _key_usage_daily(key:str)->tuple[float|None,dict[str,Any]]:
@@ -26,6 +27,8 @@ def _key_usage_daily(key:str)->tuple[float|None,dict[str,Any]]:
 
 def _call(*,model:dict[str,Any],prompt:str,selection:dict[str,Any],reasoning:dict[str,Any]|None=None)->tuple[dict[str,Any]|None,dict[str,Any]]:
     model_id=str(model["model"]); family=str(model["family"])
+    exclusion_policy=load_policy()
+    require_allowed_model(model_id=model_id,family=family,policy=exclusion_policy)
     approved_source=selection.get("approved_families") or [row.get("family") for row in selection.get("selected") or []]; approved={str(x) for x in approved_source if x}
     if family not in approved: raise RuntimeError(f"unapproved paid reviewer family: {family}")
     if model_id.endswith(":free"): raise RuntimeError(f"free route is not a paid routine reviewer: {model_id}")
@@ -38,8 +41,8 @@ def _call(*,model:dict[str,Any],prompt:str,selection:dict[str,Any],reasoning:dic
         if usage_daily is None: return None,{"status":"DAILY_USAGE_UNVERIFIED","family":family,"model":model_id,"cost":None,"daily_budget_receipt":usage_receipt}
         if usage_daily+per_call_ceiling>daily_ceiling: return None,{"status":"DAILY_BUDGET_RESERVED_EXHAUSTED","family":family,"model":model_id,"cost":0.0,"usage_daily_before_call":usage_daily,"daily_openrouter_cost_ceiling_usd":daily_ceiling,"reserved_max_call_cost_usd":per_call_ceiling,"daily_budget_receipt":usage_receipt}
     else: usage_daily=None; usage_receipt={"status":"NO_DAILY_CEILING_CONFIGURED"}
-    provider_policy=selection["provider_policy"]; max_price=provider_policy["max_price_usd_per_million_tokens"]
-    body={"model":model_id,"messages":[{"role":"user","content":prompt}],"temperature":0.1,"max_tokens":int(selection["max_output_tokens"]),"provider":{"sort":provider_policy.get("sort","price"),"allow_fallbacks":bool(provider_policy.get("allow_fallbacks",True)),"data_collection":provider_policy.get("data_collection","deny"),"max_price":{"prompt":float(max_price["prompt"]),"completion":float(max_price["completion"])}}}
+    provider_policy=openrouter_provider_policy(selection["provider_policy"],exclusion_policy); max_price=provider_policy["max_price_usd_per_million_tokens"]
+    body={"model":model_id,"messages":[{"role":"user","content":prompt}],"temperature":0.1,"max_tokens":int(selection["max_output_tokens"]),"provider":{"sort":provider_policy.get("sort","price"),"allow_fallbacks":bool(provider_policy.get("allow_fallbacks",True)),"data_collection":provider_policy.get("data_collection","deny"),"ignore":provider_policy.get("ignore",[]),"max_price":{"prompt":float(max_price["prompt"]),"completion":float(max_price["completion"])}}}
     if reasoning is not None: body["reasoning"]=reasoning
     req=request.Request(CHAT,method="POST",data=json.dumps(body).encode("utf-8"),headers={"Authorization":f"Bearer {key}","Content-Type":"application/json","HTTP-Referer":"https://github.com/ankitdcx/garden-swarm","X-Title":"Garden Routine Paid Design Review"})
     try:

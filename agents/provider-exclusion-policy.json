@@ -1,0 +1,33 @@
+{
+  "schema": "GardenProviderExclusionPolicy/v1",
+  "status": "ACTIVE_HUMAN_OPERATOR_ROUTING_CONSTRAINT",
+  "effective_date": "2026-09-16",
+  "scope": "ALL_GARDEN_WORK",
+  "source_policy": "https://github.com/ankitdcx/garden-main/blob/main/governance/PROVIDER_EXCLUSION_POLICY_v1.json",
+  "basis": "Explicit human operator trust/procurement preference; no allegation of misconduct or poisoning is asserted as fact by this policy.",
+  "excluded": [
+    {
+      "organization": "Anthropic",
+      "family_aliases": ["anthropic", "claude"],
+      "model_markers": ["anthropic/", "claude"],
+      "provider_slugs": ["anthropic"]
+    },
+    {
+      "organization": "NVIDIA",
+      "family_aliases": ["nvidia", "nemotron"],
+      "model_markers": ["nvidia/", "nemotron"],
+      "provider_slugs": ["nvidia"]
+    }
+  ],
+  "enforcement": {
+    "deny_direct_model_selection": true,
+    "deny_model_origin_via_third_party_host": true,
+    "deny_provider_endpoint_for_other_models": true,
+    "deny_fallback_to_excluded_provider": true,
+    "deny_reviewer_or_challenger_assignment": true,
+    "deny_direct_contact_or_review_request": true,
+    "fail_closed": true
+  },
+  "historical_reference_policy": "Historical and prior-art references may remain for audit/provenance. They do not authorize operational use.",
+  "override": "EXPLICIT_FUTURE_HUMAN_DIRECTIVE_ONLY"
+}

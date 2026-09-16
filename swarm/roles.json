@@ -18,7 +18,7 @@
     {
       "id": "FORMAL",
       "name": "Formal methods reviewer",
-      "model": "~anthropic/claude-opus-latest",
+      "model": "z-ai/glm-5.3-flash",
       "objective": "Find underspecified semantics, unverifiable claims, type/contract gaps, and proof-obligation failures.",
       "lenses": [
         "formal methods",

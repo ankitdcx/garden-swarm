@@ -5,6 +5,7 @@
   "catalog_reference_date": "2026-09-15",
   "public_only": true,
   "semantic_delta_admitted": false,
+  "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
   "daily_openrouter_cost_ceiling_usd": 1.0,
   "budget_pools_usd": {
     "routine": 9.0,
@@ -39,6 +40,7 @@
     "sort": "price",
     "allow_fallbacks": true,
     "data_collection": "deny",
+    "ignore": ["anthropic", "nvidia"],
     "max_price_usd_per_million_tokens": {
       "prompt": 0.25,
       "completion": 0.75
@@ -52,6 +54,7 @@
   ],
   "notes": [
     "Routine paid reviewers and the free swarm produce proposal evidence only.",
+    "Anthropic/Claude and NVIDIA/Nemotron are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
     "The free swarm is deliberately broad and multi-track; it reviews bounded canonical-design and public implementation/governance targets.",
     "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
     "Free-swarm breadth is used before paid reviewers; free reviewers never satisfy paid-family requirements.",
