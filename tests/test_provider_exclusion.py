@@ -25,6 +25,8 @@ class ProviderExclusionTests(unittest.TestCase):
             ("third-party/claude-derived-example", "other"),
             ("nvidia/nemotron-example", "nvidia"),
             ("third-party/nemotron-example", "other"),
+            ("mistralai/mistral-example", "mistral"),
+            ("third-party/mistral-derived-example", "other"),
         ]
         for model_id, family in blocked:
             with self.subTest(model=model_id):
@@ -33,20 +35,26 @@ class ProviderExclusionTests(unittest.TestCase):
         require_allowed_model(model_id="deepseek/example", family="deepseek", policy=self.policy)
 
     def test_openrouter_provider_routes_ignore_excluded_endpoints(self) -> None:
-        self.assertEqual(excluded_provider_slugs(self.policy), ["anthropic", "nvidia"])
+        self.assertEqual(excluded_provider_slugs(self.policy), ["anthropic", "mistral", "nvidia"])
         routed = openrouter_provider_policy({"allow_fallbacks": True, "ignore": ["other-provider"]}, self.policy)
-        self.assertEqual(routed["ignore"], ["anthropic", "nvidia", "other-provider"])
+        self.assertEqual(routed["ignore"], ["anthropic", "mistral", "nvidia", "other-provider"])
 
     def test_free_selector_skips_excluded_model_origins(self) -> None:
         models = [
             {"id": "nvidia/nemotron-example:free", "context_length": 999999},
+            {"id": "mistralai/mistral-example:free", "context_length": 999998},
             {"id": "deepseek/a:free", "context_length": 10},
             {"id": "qwen/a:free", "context_length": 20},
-            {"id": "mistralai/a:free", "context_length": 30},
+            {"id": "z-ai/a:free", "context_length": 30},
+            {"id": "google/gemma-a:free", "context_length": 40},
         ]
         picked = choose(models, slot=0, count=3)
         self.assertEqual(len(picked), 3)
-        self.assertFalse(any("nvidia" in row["model"].lower() or "nemotron" in row["model"].lower() for row in picked))
+        for row in picked:
+            lowered = row["model"].lower()
+            self.assertNotIn("nvidia", lowered)
+            self.assertNotIn("nemotron", lowered)
+            self.assertNotIn("mistral", lowered)
 
     def test_active_role_sets_do_not_assign_excluded_models(self) -> None:
         for rel in ("swarm/roles.json", "swarm/roles-free.json"):

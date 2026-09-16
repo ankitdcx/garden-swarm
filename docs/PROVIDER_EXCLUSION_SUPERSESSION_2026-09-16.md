@@ -2,7 +2,7 @@
 
 Status: ACTIVE HUMAN OPERATOR ROUTING CONSTRAINT
 
-`agents/provider-exclusion-policy.json` supersedes any earlier Garden operational document, role list, escalation note, fallback suggestion, reviewer roster, or model-selection example that recommends or permits Anthropic/Claude or NVIDIA/Nemotron for Garden work.
+`agents/provider-exclusion-policy.json` supersedes any earlier Garden operational document, role list, escalation note, fallback suggestion, reviewer roster, or model-selection example that recommends or permits Anthropic/Claude, NVIDIA/Nemotron, or Mistral/Mistral AI for Garden work.
 
 The exclusion applies to direct calls, third-party-hosted model routes, provider endpoints, automatic fallbacks, reviewer/challenger assignments, and active requests for advice/review/collaboration.
 

@@ -25,7 +25,7 @@ class ProviderStopTests(unittest.TestCase):
                 self.assertNotEqual(result['status'],'REVIEW_COMPLETE_NEEDS_GSL_INTEGRATOR')
 
     def test_paid_batch_stops_after_first_provider_failure(self):
-        selection={'schema':'GardenPaidModelSelection/v2','design_epoch':'v15.5','selected':[{'family':f,'model':f+'/m'} for f in ['a','b']], 'approved_families':['a','b'],'routine_hourly_cost_ceiling_usd':0.05,'routine_model_call_cost_ceiling_usd':0.01,'daily_openrouter_cost_ceiling_usd':1}
+        selection={'schema':'GardenPaidModelSelection/v2','design_epoch':'v15.5','selected':[{'family':f,'model':f+'/m'} for f in ['a','b']], 'approved_families':['a','b'],'routine_hourly_cost_ceiling_usd':0.45,'routine_model_call_cost_ceiling_usd':0.15,'daily_openrouter_cost_ceiling_usd':1}
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);p=root/'selection.json';p.write_text(json.dumps(selection))
             with patch.object(paid,'SELECTION',p), patch.object(paid,'OUT_DIR',root/'out'), patch.object(paid,'BUNDLE',root/'bundle.json'), patch.object(paid.review,'load_matrix',return_value=({'design_epoch':'v15.5','canonical_source_root_sha256':'s'},{'target_id':'t','public_only':True})), patch.object(paid.review,'extract_target',return_value=('source',{})), patch.object(paid.review,'independent_prompt',return_value='prompt'), patch.object(paid,'_call',return_value=(None,{'status':'HTTP_429','cost':None})) as call:
@@ -34,8 +34,8 @@ class ProviderStopTests(unittest.TestCase):
                 self.assertEqual(json.loads((root/'bundle.json').read_text())['status'],'PARTIAL_PAID_REVIEW_PROPOSALS_ONLY')
 
     def test_origin_backfill_stops_entire_multibatch_sweep(self):
-        families=['deepseek','qwen','glm','mistral']
-        selection={'selected':[{'family':f,'model':f+'/m'} for f in families],'approved_families':families,'provider_policy':{'data_collection':'deny'},'routine_model_call_cost_ceiling_usd':0.01}
+        families=['deepseek','qwen','glm']
+        selection={'selected':[{'family':f,'model':f+'/m'} for f in families],'approved_families':families,'provider_policy':{'data_collection':'deny'},'routine_model_call_cost_ceiling_usd':0.15}
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);p=root/'selection.json';p.write_text(json.dumps(selection))
             with patch.dict('os.environ',{'OPENROUTER_API_KEY':'mock'}), patch.object(ip,'SELECTION',p), patch.object(ip,'OUT',root/'receipt.json'), patch.object(ip,'load_records',return_value=([{'id':str(i)} for i in range(50)],None)), patch.object(ip,'_call',return_value=(None,{'status':'HTTP_429','cost':None})) as call:

@@ -17,6 +17,12 @@
       "family_aliases": ["nvidia", "nemotron"],
       "model_markers": ["nvidia/", "nemotron"],
       "provider_slugs": ["nvidia"]
+    },
+    {
+      "organization": "Mistral AI",
+      "family_aliases": ["mistral", "mistralai"],
+      "model_markers": ["mistralai/", "mistral"],
+      "provider_slugs": ["mistral"]
     }
   ],
   "enforcement": {

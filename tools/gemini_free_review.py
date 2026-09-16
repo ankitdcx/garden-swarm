@@ -14,7 +14,7 @@ from urllib import error, request
 
 from tools.matrix_design_review import extract_target, independent_prompt, load_matrix, validate_independent
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 OUT = Path("agents/outbox/hourly/gemini-review.json")
 

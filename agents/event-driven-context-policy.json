@@ -56,6 +56,15 @@
     "raw_evidence_retention_owned_elsewhere": true,
     "snapshot_is_not_truth_or_authority": true
   },
+  "quality_review": {
+    "enabled": true,
+    "policy": "agents/event-driven-model-quality-policy.json",
+    "non_material_default": "NO_MODEL_CALL",
+    "material_event_default": "MATERIAL_STRONG_BOARD",
+    "cheap_triage_only_for_unresolved_deterministic_classification": true,
+    "budget_or_provider_failure_cannot_downgrade_required_assurance": true,
+    "review_output_is_proposal_evidence_only": true
+  },
   "frontier_handoff": {
     "enabled": true,
     "purpose": "MATERIAL_CHANGE_SYNTHESIS_ONLY",
@@ -97,5 +106,5 @@
     "record_openrouter_provider_cost_separately": true,
     "quality_regression_review_required": true
   },
-  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission."
+  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission."
 }

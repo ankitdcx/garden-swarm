@@ -4,19 +4,31 @@ This directory defines the durable contract for Garden's automated review bus.
 
 ## Provider exclusions
 
-`provider-exclusion-policy.json` is a fail-closed human operator routing constraint for all Garden work. Anthropic/Claude and NVIDIA/Nemotron are excluded from model selection, provider endpoints, fallbacks, reviewer/challenger assignment, and active contact. Historical references may remain for provenance but do not authorize operational use. Only an explicit future human directive may change the exclusion list.
+`provider-exclusion-policy.json` is a fail-closed human operator routing constraint for all Garden work. Anthropic/Claude, NVIDIA/Nemotron, and Mistral/Mistral AI are excluded from model selection, provider endpoints, fallbacks, reviewer/challenger assignment, and active contact. Historical references may remain for provenance but do not authorize operational use. Only an explicit future human directive may change the exclusion list.
+
+## Event-driven quality policy
+
+`event-driven-model-quality-policy.json` makes review quality materiality-driven rather than clock-driven.
+
+- Unchanged/non-material state: no model call.
+- Optional unresolved triage: Qwen3.7 Flash, DeepSeek V4 Flash 0731, or GLM 5.3 Flash when deterministic classification remains UNKNOWN/INCONCLUSIVE.
+- Material paid board: DeepSeek V4 Pro 0813 + Qwen3.8 Max + GLM 5.3, blind before cross-examination.
+- Separate Google lane: Gemini 3.8 Flash, free-tier only with no paid fallback.
+- Separate ChatGPT frontier: user-selected ChatGPT model; never routed through OpenRouter and never hardcoded by this repository.
+
+The OpenRouter daily ceiling remains $1.00. Higher-quality models are justified by fewer event-triggered calls, not by increasing the daily budget.
 
 ## Roles and diversity
 
-The free lane rotates model families rather than treating one vendor as an independent committee. Preferred allowed families/postures include:
+The free lane rotates allowed model families rather than treating one vendor as an independent committee. Preferred allowed families/postures include:
 
-- DeepSeek — formal/reasoning critic
-- Qwen — implementation/code critic
+- DeepSeek — adversarial reasoning / code
+- Qwen — architecture / implementation
 - Llama — open-weight baseline
-- Mistral — compliance/European framing
-- GLM — additional reasoning / non-Western corpus diversity
+- GLM — semantic/formal reasoning
 - Gemma — cheap/open Google-family reviewer
 - Cohere — retrieval/grounding posture
+- Poolside — implementation correctness
 - Dots / Inkling — additional open-weight reasoning baselines when free endpoints exist
 - Gemini hosted — optional direct free-tier reviewer only when a separate `GEMINI_API_KEY` is configured on a billing-disabled/free-tier project
 

@@ -5,10 +5,10 @@ from tools import run_ip_origin_multi_agent_review as review
 
 
 class IPOriginReviewBudgetTests(unittest.TestCase):
-    def test_up_to_200_records_fit_64_calls_with_four_families(self):
+    def test_up_to_200_records_fit_48_calls_with_three_paid_families(self):
         self.assertEqual(review.BATCH_SIZE, 25)
         self.assertEqual(math.ceil(200 / review.BATCH_SIZE), 8)
-        self.assertEqual(8 * 4 * 2, 64)
+        self.assertEqual(8 * 3 * 2, 48)
         self.assertLessEqual(review.WORKFLOW_COST_CEILING_USD, 0.80)
 
     def test_four_specialist_roles_exist(self):
@@ -43,7 +43,7 @@ class IPOriginReviewBudgetTests(unittest.TestCase):
 
     def test_family_reasoning_transport_matches_endpoint_contract(self):
         self.assertEqual(review._reasoning_for_family("glm"), {"effort": "low"})
-        for family in ("deepseek", "qwen", "mistral"):
+        for family in ("deepseek", "qwen"):
             self.assertEqual(review._reasoning_for_family(family), {"effort": "none"})
 
     def test_protection_code_normalization_accepts_harmless_delimiters(self):

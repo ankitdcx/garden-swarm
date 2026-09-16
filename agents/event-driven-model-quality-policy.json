@@ -1,0 +1,88 @@
+{
+  "schema": "GardenEventDrivenModelQualityPolicy/v1",
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
+  "effective_date": "2026-09-16",
+  "design_epoch": "v15.5",
+  "public_only": true,
+  "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
+  "event_context_policy": "agents/event-driven-context-policy.json",
+  "purpose": "SPEND_MODEL_BUDGET_ONLY_WHEN_MATERIAL_CHANGE_JUSTIFIES_HIGHER_QUALITY_REVIEW",
+  "activation": {
+    "clock_passage_never_authorizes_model_spend": true,
+    "identical_fingerprint_replay_never_authorizes_model_spend": true,
+    "no_change_default": "NO_MODEL_CALL",
+    "paid_review_requires": [
+      "GardenMaterialContextPacket/v1 material == true",
+      "or an explicit HIGH/CRITICAL review obligation that cannot be discharged deterministically"
+    ],
+    "provider_failure_does_not_authorize_weaker_assurance": true
+  },
+  "budget": {
+    "daily_openrouter_cost_ceiling_usd": 1.0,
+    "material_event_reserved_ceiling_usd": 0.45,
+    "strong_model_call_reserved_ceiling_usd": 0.15,
+    "max_prompt_characters": 60000,
+    "max_output_tokens": 3000,
+    "budget_exhaustion_result": "BLOCK_PAID_REVIEW_OR_DEGRADE_ONLY_WITH_EXPLICIT_RECEIPT",
+    "full_context_fallback_does_not_bypass_budget_or_assurance": true
+  },
+  "tiers": {
+    "DETERMINISTIC_NO_MODEL": {
+      "default": true,
+      "use_when": "dedupe, schema, hash, dependency, known-rule and materiality checks can resolve the event without a model"
+    },
+    "OPTIONAL_UNRESOLVED_TRIAGE": {
+      "max_model_calls": 1,
+      "use_only_when": "deterministic classification remains UNKNOWN/INCONCLUSIVE and a bounded public packet exists",
+      "candidate_models": [
+        {"family":"qwen","model":"qwen/qwen3.7-flash","role":"cheap_change_triage"},
+        {"family":"deepseek","model":"deepseek/deepseek-v4-flash-0731","role":"cheap_adversarial_triage"},
+        {"family":"glm","model":"z-ai/glm-5.3-flash","role":"cheap_semantic_triage"}
+      ],
+      "result_is_proposal_evidence_only": true
+    },
+    "MATERIAL_STRONG_BOARD": {
+      "use_when": "material public change or explicit HIGH/CRITICAL review obligation",
+      "blind_round_required": true,
+      "openrouter_models": [
+        {"family":"deepseek","model":"deepseek/deepseek-v4-pro-0813","role":"primary_architecture_code_reasoning"},
+        {"family":"qwen","model":"qwen/qwen3.8-max","role":"independent_architecture_agentic_challenger"},
+        {"family":"glm","model":"z-ai/glm-5.3","role":"formal_semantics_long_context"}
+      ],
+      "separate_google_lane": {
+        "provider":"google-gemini-developer-api",
+        "model":"gemini-3.8-flash",
+        "billing_policy":"FREE_TIER_ONLY_NO_PAID_FALLBACK",
+        "role":"independent_google_family_reviewer"
+      },
+      "cross_examination_after_blind_round_only": true,
+      "model_agreement_is_not_proof": true
+    },
+    "CHATGPT_FRONTIER": {
+      "provider_boundary":"EXTERNAL_CHATGPT_NOT_OPENROUTER",
+      "model_identity":"USER_SELECTED_CHATGPT_MODEL_NOT_HARDCODED_BY_REPOSITORY",
+      "use_when":"material synthesis, unresolved cross-family conflict, whole-source integration, or final Garden/GSL review requires the separate ChatGPT lane",
+      "max_handoffs_per_material_event":1,
+      "cannot_replace_independent_family_quorum":true,
+      "cannot_grant_authority":true,
+      "cannot_promote_canon":true
+    }
+  },
+  "pricing_snapshot": {
+    "as_of":"2026-09-16",
+    "status":"INFORMATIONAL_REVALIDATE_BEFORE_COST_SENSITIVE_USE",
+    "sources":["OpenRouter model catalogue","Google Gemini Developer API pricing"],
+    "usd_per_million_input_output": {
+      "qwen/qwen3.7-flash":[0.03,0.13],
+      "deepseek/deepseek-v4-flash-0731":[0.05,0.16],
+      "z-ai/glm-5.3-flash":[0.075,0.25],
+      "deepseek/deepseek-v4-pro-0813":[0.66,1.98],
+      "qwen/qwen3.8-max":[2.0,6.0],
+      "z-ai/glm-5.3":[1.0,3.41],
+      "gemini-3.8-flash_paid_reference":[0.75,3.75]
+    },
+    "pricing_does_not_create_model_authority_or_quality_proof":true
+  },
+  "excluded_families_must_never_be_used_even_if_cheaper_or_higher_scoring": true,
+  "boundary": "This policy selects review quality/cost posture only. Model output remains proposal evidence and cannot create truth, Proof, authority, merge permission, canonical status, or human admission."
+}
