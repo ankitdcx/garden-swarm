@@ -1,5 +1,14 @@
 # Single OpenRouter review worker
 
+Deployment status (2026-09-16): BLOCKED_STORAGE_WRITE_POLICY. The repository's
+active Other ruleset requires pull requests for all non-main branch updates,
+including garden-review-state. Therefore the ledger's conditional write is
+currently rejected and no inference may run. This PR does not alter or bypass
+that ruleset. Before activation, the repository owner must supply a permitted
+durable state store (or configure a narrowly scoped state-branch write policy,
+retaining deletion/force-push protection). Main and source-code branch protections
+must remain in place. A secret existing is not evidence of a successful call.
+
 This is a bounded activation path, not a claim that the previous multi-agent
 coordinator is running. It uses the existing OPENROUTER_API_KEY Actions secret.
 The older batch workflows remain paused. The existing admission guard gains one
