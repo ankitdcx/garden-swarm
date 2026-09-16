@@ -140,10 +140,18 @@ missing context must be named rather than treated as a missing Garden mechanism.
 Build a packet offline, without calling a model:
 
 ```sh
-python -m tools.review_context --target DRM-H01-CONSTITUTIONAL-EVENT-BOUNDARY --output /tmp/garden-context.json
+python -m tools.review_context --target DRM-H01-CONSTITUTIONAL-EVENT-BOUNDARY --directive /tmp/reviewed-public-directive.json --output /tmp/garden-context.json
 ```
 
-The command prints the exact packet hash and neutral-query hash for the existing
+The directive must contain the reviewed public architecture capsule required by
+docs/GARDEN_REVIEW_CONTEXT_CAPSULE.md. Its canonical source-root hash must match
+the verified index root. The source profiles bound retrieved text; the compact
+capsule and serialization have an additional 64,000-character allowance, all
+within the 200,000-character hard prompt ceiling. No required content is truncated.
+Without --directive the command produces a retrieval preview, not a dispatchable
+packet.
+
+The command prints the exact combined packet hash and neutral-query hash for the existing
 private-baseline commitment. Use the printed packet hash as source_packet_sha256
 in both the directive and its baseline commitment. Baseline text remains private.
 The packet may also be inspected with --profile DEEP, --query followed by a bounded

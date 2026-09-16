@@ -194,6 +194,22 @@ def build_packet(root, target, source, trace, profile, requests=None):
     return packet
 
 
+def bind_capsule(packet, directive, target, trace):
+    """Compose the reviewed architecture capsule with verified exact passages."""
+    from tools import context_capsule
+    capsule, capsule_hash = context_capsule.require_directive_capsule(
+        directive, target_id=target['target_id'], trace=trace)
+    if capsule['source_identity']['canonical_source_root_sha256'] != packet['source_root_sha256']:
+        raise ValueError('architecture capsule canonical root does not match verified corpus')
+    combined = {k: v for k, v in packet.items() if k != 'packet_sha256'}
+    combined['architecture_context_capsule'] = capsule
+    combined['architecture_context_capsule_sha256'] = capsule_hash
+    combined['packet_sha256'] = digest(combined)
+    if len(packet_text(combined)) > packet['review_profile']['context_characters'] + 64000:
+        raise ValueError('combined context exceeds profile; expand profile or use full-context lane')
+    return combined, capsule_hash, capsule['context_expansion_level']
+
+
 def packet_text(packet):
     return json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
 
@@ -205,6 +221,7 @@ def main():
     parser.add_argument('--query', action='append', default=[])
     parser.add_argument('--chunk', action='append', default=[])
     parser.add_argument('--output', required=True)
+    parser.add_argument('--directive', help='Reviewed public capsule/directive JSON; required for a dispatchable packet')
     args = parser.parse_args()
     from tools.matrix_design_review import extract_target
     root = Path('.')
@@ -212,14 +229,19 @@ def main():
     target = next(t for t in matrix['targets'] if t['target_id'] == args.target)
     policy = json.loads((root / 'agents/openrouter-paid-review-policy.json').read_text())
     source, trace = extract_target(root, target)
-    profile = select_profile(policy, target, args.profile)
-    requests = [{'query': q} for q in args.query] + [{'chunk_id': c} for c in args.chunk]
+    directive = json.loads(Path(args.directive).read_text()) if args.directive else {}
+    profile = select_profile(policy, target, args.profile or directive.get('review_profile'))
+    requests = ([{'query': q} for q in args.query] + [{'chunk_id': c} for c in args.chunk]) or directive.get('context_requests', [])
     packet = build_packet(root, target, source, trace, profile, requests)
+    if args.directive:
+        if requests and directive.get('context_requests_reviewed_as_neutral') is not True:
+            raise ValueError('expanded CLI context requires neutral-reference review')
+        packet, _, _ = bind_capsule(packet, directive, target, trace)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(packet_text(packet) + '\n')
     from tools.independent_branch_protocol import neutral_query, sha256_text
-    print(json.dumps({'packet_sha256': packet['packet_sha256'], 'neutral_query_sha256': sha256_text(neutral_query(target)), 'profile': profile['name'], 'coverage': packet['coverage']}))
+    print(json.dumps({'dispatchable_context': bool(args.directive), 'packet_sha256': packet['packet_sha256'], 'neutral_query_sha256': sha256_text(neutral_query(target)), 'profile': profile['name'], 'coverage': packet['coverage']}))
 
 
 if __name__ == '__main__':

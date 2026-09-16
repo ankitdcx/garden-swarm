@@ -16,6 +16,7 @@ from pathlib import Path
 import time
 from urllib import error, parse
 
+from tools import context_capsule
 from tools import independent_branch_protocol as protocol
 from tools import matrix_design_review as review
 from tools import single_review_worker as legacy
@@ -49,7 +50,7 @@ def load_directive(token: str) -> dict | None:
     return json.loads(base64.b64decode(content))
 
 
-def _target_by_id(root: Path, target_id: str, directive=None) -> tuple[dict, dict, str, dict, str]:
+def _target_by_id(root: Path, target_id: str, directive=None) -> tuple[dict, dict, str, dict, str, str, str]:
     matrix = json.loads((root / "agents/design-review-matrix.json").read_text(encoding="utf-8"))
     if matrix.get("schema") != "GardenDesignReviewMatrix/v1":
         raise ValueError("unsupported design review matrix")
@@ -66,10 +67,11 @@ def _target_by_id(root: Path, target_id: str, directive=None) -> tuple[dict, dic
     policy = json.loads((root / 'agents/openrouter-paid-review-policy.json').read_text())
     profile = review_context.select_profile(policy, target, directive.get('review_profile'))
     packet = review_context.build_packet(root, target, source, trace, profile, directive.get('context_requests'))
+    packet, capsule_hash, expansion_level = review_context.bind_capsule(packet, directive, target, trace)
     trace = {**trace, 'context_packet_sha256': packet['packet_sha256'],
              'source_root_sha256': packet['source_root_sha256'],
              'context_coverage': packet['coverage'], 'review_profile': profile}
-    return matrix, target, review_context.packet_text(packet), trace, packet['packet_sha256']
+    return matrix, target, review_context.packet_text(packet), trace, packet['packet_sha256'], capsule_hash, expansion_level
 
 
 def _families(policy: dict) -> list[str]:
@@ -91,13 +93,23 @@ def _cycle_id(*, target_id: str, source_packet_sha256: str, baseline_sha256: str
     })
 
 
-def _cycle(state: dict, cycle_id: str, *, directive: dict, source_packet_sha256: str) -> dict:
+def _cycle(
+    state: dict,
+    cycle_id: str,
+    *,
+    directive: dict,
+    source_packet_sha256: str,
+    capsule_sha256: str,
+    context_expansion_level: str,
+) -> dict:
     cycles = state.setdefault("convergence_cycles", {})
     if cycle_id not in cycles:
         cycles[cycle_id] = {
             "protocol": WORKER_PROTOCOL,
             "target_id": directive["target_id"],
             "source_packet_sha256": source_packet_sha256,
+            "architecture_context_capsule_sha256": capsule_sha256,
+            "context_expansion_level": context_expansion_level,
             "baseline_sha256": directive["private_baseline_commitment"]["baseline_sha256"],
             "neutral_query_sha256": directive["private_baseline_commitment"]["neutral_query_sha256"],
             "attempts": [],
@@ -121,6 +133,8 @@ def _latest_branch_result(cycle: dict, family: str) -> dict:
 
 
 def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, str] | None:
+    if cycle.get("context_expansion_required"):
+        return None
     phase = directive["phase"]
     if phase == "BLIND":
         for family in families:
@@ -234,6 +248,8 @@ def _reconcile_known_attempts(ledger: legacy.GitLedger, key: str) -> None:
 
 
 def _result_status(cycle: dict, phase: str, families: list[str]) -> str:
+    if cycle.get("context_expansion_required"):
+        return "AWAITING_CHATGPT_CONTEXT_EXPANSION"
     if phase == "BLIND":
         return "READY" if len(cycle["blind"]) < len(families) else "AWAITING_CHATGPT_RECONCILIATION"
     if phase == "RECONCILE":
@@ -267,7 +283,7 @@ def run(root: Path = Path(".")) -> None:
     convergence_policy = protocol.load_policy(json.loads((root / "agents/independent-branch-convergence-policy.json").read_text(encoding="utf-8")))
     exclusions = load_policy(root / "agents/provider-exclusion-policy.json")
     families = _families(policy)
-    matrix, target, source, trace, source_packet_hash = _target_by_id(root, str(directive.get("target_id") or ""), directive)
+    matrix, target, source, trace, source_packet_hash, capsule_hash, expansion_level = _target_by_id(root, str(directive.get("target_id") or ""), directive)
     protocol.validate_directive(directive, families=families, target_id=target["target_id"], source_packet_sha256=source_packet_hash)
     expected_query = protocol.sha256_text(protocol.neutral_query(target))
     if directive['private_baseline_commitment']['neutral_query_sha256'] != expected_query:
@@ -284,7 +300,14 @@ def run(root: Path = Path(".")) -> None:
         policy=policy,
         convergence_policy=convergence_policy,
     )
-    cycle = _cycle(state, cycle_id, directive=directive, source_packet_sha256=source_packet_hash)
+    cycle = _cycle(
+        state,
+        cycle_id,
+        directive=directive,
+        source_packet_sha256=source_packet_hash,
+        capsule_sha256=capsule_hash,
+        context_expansion_level=expansion_level,
+    )
     protocol.assert_call_budget(cycle, convergence_policy)
     plan = _plan(cycle, directive, families)
     if plan is None:
@@ -334,6 +357,8 @@ def run(root: Path = Path(".")) -> None:
         "endpoint": endpoint["tag"],
         "target_id": target["target_id"],
         "source_packet_sha256": source_packet_hash,
+        "architecture_context_capsule_sha256": capsule_hash,
+        "context_expansion_level": expansion_level,
         "baseline_commitment_sha256": directive["private_baseline_commitment"]["baseline_sha256"],
         "prompt_sha256": prompt_hash,
         "candidate_sha256": directive.get("merged_candidate_sha256"),
@@ -388,6 +413,7 @@ def run(root: Path = Path(".")) -> None:
             raise ValueError("review response is not valid JSON")
         if phase in ("BLIND", "RECONCILE"):
             finding = review.validate_independent(raw, target_id=target["target_id"], family=family, model_id=model["model"])
+            context_capsule.validate_context_verdict(finding)
         else:
             finding = protocol.validate_final_review(
                 raw,
@@ -415,6 +441,8 @@ def run(root: Path = Path(".")) -> None:
             "response_id": response["id"],
             "prompt_sha256": prompt_hash,
             "candidate_sha256": directive.get("merged_candidate_sha256"),
+            "architecture_context_capsule_sha256": capsule_hash,
+            "context_expansion_level": expansion_level,
             "peer_content_seen": False,
         }
         if phase == "BLIND":
@@ -425,6 +453,17 @@ def run(root: Path = Path(".")) -> None:
             cycle["final"][family] = record
         else:
             cycle["confirm"][family] = record
+        if finding.get("context_sufficiency") != "SUFFICIENT" or requests:
+            cycle["context_expansion_required"] = {
+                "status": finding["context_sufficiency"],
+                "requested_by_family": family,
+                "phase": phase,
+                "missing_context_reason": finding.get("missing_context_reason", ""),
+                "requested_dependency_or_source_refs": finding.get("requested_dependency_or_source_refs", []),
+                "previous_context_capsule_sha256": capsule_hash,
+                "previous_context_expansion_level": expansion_level,
+                "rule": "EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_A_NEW_SOURCE_PACKET",
+            }
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
         if isinstance(exc, error.HTTPError):

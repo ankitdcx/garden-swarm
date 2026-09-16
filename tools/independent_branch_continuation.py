@@ -52,6 +52,7 @@ def dispatch(root: Path = Path(".")) -> None:
         return
 
     executor_revision = _digest_files(root, [
+        "tools/context_capsule.py",
         "tools/independent_branch_worker.py",
         "tools/review_context.py",
         "tools/review_budget.py",
@@ -59,7 +60,9 @@ def dispatch(root: Path = Path(".")) -> None:
         "SOURCE_MANIFEST.json",
         "tools/independent_branch_protocol.py",
         "tools/independent_branch_continuation.py",
+        "agents/garden-architecture-context-capsule-policy.json",
         "agents/independent-branch-convergence-policy.json",
+        "agents/event-driven-context-policy.json",
         "agents/openrouter-paid-review-policy.json",
         "agents/provider-exclusion-policy.json",
         "agents/design-review-matrix.json",
@@ -76,7 +79,7 @@ def dispatch(root: Path = Path(".")) -> None:
             "updated": time.time(),
         }
         ledger.save(state)
-        print("New material binding requires private ChatGPT baseline before OpenRouter inference")
+        print("New material binding requires private ChatGPT baseline and source-bound Garden context capsule before OpenRouter inference")
         return
 
     status = continuation.get("status")

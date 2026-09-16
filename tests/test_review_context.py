@@ -40,6 +40,33 @@ class ContextReviewTests(unittest.TestCase):
     def packet(self, requests=None):
         return c.build_packet(self.root, self.target, self.source, self.trace, self.profile, requests)
 
+    def bind_directive(self, directive):
+        from tests.test_context_capsule import ContextCapsuleTests
+        from tools import context_capsule
+        cap = ContextCapsuleTests().capsule()
+        cap['target_id'] = self.target['target_id']
+        cap['source_identity'].update(
+            canonical_source_root_sha256=self.packet()['source_root_sha256'],
+            target_source=self.trace['source'], target_source_sha256=self.trace['source_sha256'])
+        directive.update(architecture_context_capsule=cap,
+                         architecture_context_capsule_sha256=context_capsule.sha256_value(cap),
+                         same_context_capsule_for_all_reviewers=True)
+        packet, _, _ = c.bind_capsule(self.packet(), directive, self.target, self.trace)
+        directive['source_packet_sha256'] = packet['packet_sha256']
+        directive['private_baseline_commitment']['source_packet_sha256'] = packet['packet_sha256']
+        return directive
+
+    def test_capsule_root_must_match_verified_five_file_corpus(self):
+        from tests.test_context_capsule import ContextCapsuleTests
+        from tools import context_capsule
+        cap = ContextCapsuleTests().capsule()
+        cap['target_id'] = self.target['target_id']
+        cap['source_identity'].update(target_source=self.trace['source'], target_source_sha256=self.trace['source_sha256'])
+        directive = {'architecture_context_capsule': cap,
+                     'architecture_context_capsule_sha256': context_capsule.sha256_value(cap)}
+        with self.assertRaisesRegex(ValueError, 'canonical root'):
+            c.bind_capsule(self.packet(), directive, self.target, self.trace)
+
     def test_packet_has_all_five_sources_and_reproducible_exact_passages(self):
         first, second = self.packet(), self.packet()
         self.assertEqual(first, second)
@@ -125,6 +152,12 @@ class ContextReviewTests(unittest.TestCase):
             legacy.budget_check({'paused': False, 'attempts': []}, {'usage': 8.99, 'usage_daily': 0}, audit, now)
 
     def test_live_worker_uses_same_rich_packet_for_two_families_and_reserves_first(self):
+        self.exercise_worker('SUFFICIENT')
+
+    def test_material_context_gap_stops_before_second_reviewer(self):
+        self.exercise_worker('EXPAND_REQUIRED')
+
+    def exercise_worker(self, context_verdict):
         state = {'scope': 'PUBLIC_MATRIX_REVIEW_ONLY', 'paused': False, 'attempts': [], 'cycles': {}}
         saves, calls = [], []
         packet = self.packet()
@@ -134,11 +167,13 @@ class ContextReviewTests(unittest.TestCase):
                      'private_baseline_commitment': {'schema': p.BASELINE_SCHEMA, 'baseline_sha256': 'b'*64,
                         'neutral_query_sha256': p.sha256_text(p.neutral_query(self.target)),
                         'source_packet_sha256': packet['packet_sha256'], 'created_before_openrouter_calls': True}}
+        self.bind_directive(directive)
         class Ledger:
             def __init__(self, token): self.value = state
             def save(self, value): saves.append(copy.deepcopy(value))
         finding = {k: 'fixture' for k in ['current_semantic_claim','proposed_delta','do_nothing_comparison','uncertainty','evidence_ancestry','overturn_conditions']}
         finding.update(source_anchors=['CONSTITUTIONAL EVENTS'], falsification_attempts=['fixture'], evidence_search_trace=['source'], affected_invariants=[],affected_tests=[],affected_contracts=[],disposition='NO_CHANGE')
+        finding.update(context_sufficiency=context_verdict, missing_context_reason='' if context_verdict == 'SUFFICIENT' else 'Need authority dependency', requested_dependency_or_source_refs=[] if context_verdict == 'SUFFICIENT' else ['AuthorityScope'])
         def http(url, token, body=None, **kwargs):
             if url.endswith('/models'):
                 return {'data': [{'id': r['model'], 'canonical_slug': r['model']} for r in self.policy['routine_reviewers']]}
@@ -153,6 +188,10 @@ class ContextReviewTests(unittest.TestCase):
         with patch.dict(w.os.environ, env), patch.object(legacy,'host_check'), patch.object(legacy,'GitLedger',Ledger), patch.object(legacy,'http',http), patch.object(w,'load_directive',return_value=directive):
             w.run(self.root)
             w.run(self.root)
+        if context_verdict != 'SUFFICIENT':
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(state['continuation']['status'], 'AWAITING_CHATGPT_CONTEXT_EXPANSION')
+            return
         self.assertEqual(len(calls), 2)
         self.assertEqual(calls[0]['messages'], calls[1]['messages'])
         self.assertIn('Please find any defects or gaps or worthy upgrades.', calls[0]['messages'][0]['content'])
@@ -175,6 +214,7 @@ class ContextReviewTests(unittest.TestCase):
                      'private_baseline_commitment': {'schema': p.BASELINE_SCHEMA, 'baseline_sha256': 'd'*64,
                         'neutral_query_sha256': p.sha256_text(p.neutral_query(self.target)),
                         'source_packet_sha256': packet['packet_sha256'], 'created_before_openrouter_calls': True}}
+        self.bind_directive(directive)
         with patch.dict(w.os.environ, {'OPENROUTER_API_KEY':'fixture','GH_REVIEW_TOKEN':'fixture'}), patch.object(legacy,'host_check'), patch.object(legacy,'GitLedger',Ledger), patch.object(legacy,'http') as http, patch.object(w,'load_directive',return_value=directive):
             with self.assertRaisesRegex(ValueError, 'cannot reset'):
                 w.run(self.root)
