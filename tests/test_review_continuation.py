@@ -142,6 +142,19 @@ class ContinuationTests(unittest.TestCase):
         with patch.object(w, 'http', return_value={'data': data}), self.assertRaisesRegex(ValueError, 'model identity'):
             w.reconcile(self.ledger('fixture'), 'fixture')
 
+    def test_http_failure_keeps_status_but_not_raw_error_text(self):
+        import io
+        attempt = {'status': 'UNKNOWN', 'cost': None}
+        exc = w.error.HTTPError(w.OR, 404, 'failure', {}, io.BytesIO(json.dumps({
+            'error': {'code': 404, 'message': 'No endpoints found; sensitive fixture must not leak'}
+        }).encode()))
+        w.record_http_failure(attempt, exc)
+        self.assertEqual(attempt['http_status'], 404)
+        self.assertEqual(attempt['error_category'], 'NO_COMPATIBLE_ENDPOINT')
+        self.assertNotIn('sensitive fixture', json.dumps(attempt))
+        self.assertEqual(attempt['status'], 'UNKNOWN')
+        self.assertIsNone(attempt['cost'])
+
     def test_http_204_dispatch_success(self):
         from unittest.mock import MagicMock
         response = MagicMock()

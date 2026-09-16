@@ -12,6 +12,7 @@ from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import time
 from urllib import request, error, parse
@@ -253,6 +254,36 @@ def coverage(root, state, policy, exclusions):
             'full_garden_review_complete': False, 'semantic_delta_admitted': False}
 
 
+def record_http_failure(attempt, exc):
+    """Keep bounded diagnostics, never raw provider error text or headers."""
+    attempt['http_status'] = exc.code
+    raw = exc.read(8192)
+    attempt['error_body_sha256'] = hashlib.sha256(raw).hexdigest()
+    try:
+        payload = json.loads(raw)
+    except (ValueError, UnicodeError):
+        return
+    if not isinstance(payload, dict):
+        return
+    problem = payload.get('error', {})
+    if not isinstance(problem, dict):
+        return
+    if isinstance(problem.get('code'), int):
+        attempt['provider_error_code'] = problem['code']
+    message = str(problem.get('message', '')).lower()
+    for needle, category in (
+            ('no endpoints', 'NO_COMPATIBLE_ENDPOINT'), ('rate limit', 'RATE_LIMIT'),
+            ('insufficient credits', 'CREDIT_LIMIT'), ('unsupported', 'UNSUPPORTED_REQUEST'),
+            ('authentication', 'AUTHENTICATION'), ('provider returned error', 'UPSTREAM_ERROR')):
+        if needle in message:
+            attempt['error_category'] = category
+            break
+    generation = payload.get('id')
+    if isinstance(generation, str) and re.fullmatch(r'gen-[A-Za-z0-9_-]{1,160}', generation):
+        attempt['response_id'] = generation
+    # An HTTP status or an error category alone does not prove zero billing.
+
+
 def model_identity(key, model_id):
     rows = http(OR + '/models', key)['data']
     matches = [row for row in rows if row.get('id') == model_id]
@@ -406,7 +437,9 @@ def run(root=Path('.')):
         finding['independent'] = round_no == 0
         attempt.update(status='REVIEW_RECORDED', finding=finding)
     except Exception as exc:
-        # No exception body or headers: upstream errors can contain secret data.
+        # No raw exception body or headers: upstream errors may echo private data.
+        if isinstance(exc, error.HTTPError):
+            record_http_failure(attempt, exc)
         attempt.update(status='INCOMPLETE' if billing_verified else 'UNKNOWN', error_type=type(exc).__name__)
     state['continuation'] = {
         'status': 'READY' if attempt['status'] == 'REVIEW_RECORDED' or (attempt['status'] == 'INCOMPLETE' and attempt_number < MAX_ATTEMPTS_PER_SLOT) else 'BLOCKED',

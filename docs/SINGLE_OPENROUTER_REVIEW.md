@@ -99,3 +99,26 @@ limits, agents/provider-exclusion-policy.json exclusions, agents/design-review-m
 review requirements, and AGENTS.md status distinctions. The operator's explicit
 request authorizes bounded automatic OpenRouter continuation; it grants no new
 design authority.
+
+## Live activation evidence, 2026-09-16
+
+Automatic dispatch and continuation are verified. The original truncated call was
+reconciled using its exact generation ID, provider, cost and canonical model mapping.
+[Run 35097894001](https://github.com/ankitdcx/garden-swarm/actions/runs/35097894001)
+recorded a valid DeepSeek review, finish reason stop, cost $0.0013029, then dispatched
+Qwen without a manual click. Together with the original $0.0011595 incomplete call,
+known billed spend is $0.0024624.
+
+[Qwen run 35097998039](https://github.com/ankitdcx/garden-swarm/actions/runs/35097998039)
+returned HTTPError through the alibaba endpoint and left cost/completion UNKNOWN.
+Its original receipt lacks the HTTP status and generation identity. The queue is
+BLOCKED until that request is reconciled from OpenRouter account activity or
+provider evidence. Do not reset/delete it or invent zero cost. The later logging
+repair preserves safe HTTP status, category, response identity when supplied, and
+an error-body hash for future failures; it cannot recover discarded past fields.
+
+To resolve this specific blocker, obtain the Qwen request entry around
+2026-09-16 12:48:50 UTC from the OpenRouter Activity page, including its generation
+ID (if any), status, provider and cost. Never paste the API key. After evidence-based
+ledger reconciliation the existing automatic queue can resume. This outstanding
+external-evidence dependency means activation is partial, not gap-free completion.
