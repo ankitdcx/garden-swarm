@@ -78,7 +78,9 @@
       "cross-branch vote or majority summary"
     ],
     "stop_branch_when": "NO_UNRESOLVED_MATERIAL_CONTRADICTION_COUNTEREXAMPLE_EVIDENCE_GAP_OR_STRONGER_ALTERNATIVE_REMAINS",
-    "do_not_force_consensus": true
+    "do_not_force_consensus": true,
+    "all_initial_reviews_required_before_reconciliation": true,
+    "no_followup_exception": "Only a source-sufficient NO_CHANGE result with explicit ChatGPT closure reason."
   },
   "synthesis": {
     "owner": "EXTERNAL_CHATGPT_FRONTIER",
@@ -108,12 +110,14 @@
     ],
     "material_block_or_patch_requires_chatgpt_reintegration": true,
     "maximum_confirmation_rounds": 1,
-    "confirmation_uses_bit_identical_revised_candidate_for_all_reviewers": true
+    "confirmation_uses_bit_identical_revised_candidate_for_all_reviewers": true,
+    "branch_closures_required": "All four closures bind each latest response hash; immutable once final review begins."
   },
   "stop_rule": {
     "success_condition": "NO_UNRESOLVED_MATERIAL_CONTRADICTION_COUNTEREXAMPLE_EVIDENCE_GAP_VIOLATED_INVARIANT_CONTEXT_GAP_OR_STRONGER_KNOWN_ALTERNATIVE_REMAINS_AT_REQUIRED_ASSURANCE_LEVEL",
     "four_of_four_agreement_is_insufficient_by_itself": true,
-    "unresolved_after_confirmation": "STOP_AND_ESCALATE_WITH_EXPLICIT_DISAGREEMENT_RECEIPT"
+    "unresolved_after_confirmation": "STOP_AND_ESCALATE_WITH_EXPLICIT_DISAGREEMENT_RECEIPT",
+    "after_all_approvals": "AWAITING_CHATGPT_FINAL_DECISION; approvals never automatically admit a semantic delta."
   },
   "call_budget": {
     "normal_expected_calls": 12,
@@ -131,7 +135,9 @@
     "durable_state_required_before_call": true,
     "unknown_call_or_unknown_billing_blocks_further_inference": true,
     "external_chatgpt_directive_required_between_protocol_phases": true,
-    "directive_schema": "GardenIndependentBranchDirective/v1"
+    "directive_schema": "GardenIndependentBranchDirective/v1",
+    "maximum_attempts_per_slot": 2,
+    "incomplete_retry": "Explicit retry_of_attempt_sha256 plus retry_reason, only after completion and billing are reconciled."
   },
   "legacy_disposition": {
     "peer_cross_examination_where_models_receive_other_model_answers": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",

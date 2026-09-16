@@ -76,6 +76,8 @@ def validate_context_verdict(value: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(refs, list):
         raise ValueError("requested_dependency_or_source_refs must be a list")
     reason = str(value.get("missing_context_reason") or "")
+    if verdict == "SUFFICIENT" and (reason.strip() or refs or value.get("requested_context")):
+        raise ValueError("SUFFICIENT cannot accompany missing context or expansion requests")
     if verdict != "SUFFICIENT" and not reason.strip():
         raise ValueError("insufficient-context review must explain the missing context")
     if verdict != "SUFFICIENT" and not refs:

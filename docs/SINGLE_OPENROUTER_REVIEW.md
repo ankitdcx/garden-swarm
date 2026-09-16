@@ -41,6 +41,26 @@ Supported phases:
 
 Changing candidate bytes within a final/confirmation round fails closed.
 
+Final and confirmation directives also carry `branch_closures`, keyed by all four
+family names. Each entry has the latest `finding_sha256`, an assessment `reason`,
+and `outcome`: `RECONCILED` after follow-ups or `NO_FOLLOWUP_NEEDED` only for a
+context-sufficient `NO_CHANGE` initial answer. The closure map becomes immutable
+when final review starts. Reconciliation cannot start before all four initial
+reviews finish or reopen after final review starts. These receipts record
+ChatGPT's assessment; they do not prove that assessment correct.
+
+An incomplete call needs `retry_of_attempt_sha256` (the canonical JSON hash of
+the latest failed attempt) and `retry_reason` in a fresh directive. The same slot
+allows at most two paid attempts, both counted within the task's 20-call ceiling.
+Unknown completion/billing cannot authorize this retry. Missing context instead
+requires a renewed shared packet and baseline, not a blind replay.
+
+After confirmation, any `BLOCK` or `APPROVE_WITH_PATCH` produces an explicit
+disagreement receipt and `ESCALATE_UNRESOLVED`. Four approvals still lead to
+`AWAITING_CHATGPT_FINAL_DECISION`, never automatic acceptance. Contradictory
+approvals with unresolved material findings/evidence gaps and contradictory
+context-sufficiency declarations are rejected.
+
 ## Execution and continuation
 
 The active queue covers explicitly registered public targets in `agents/design-review-matrix.json`. Private candidate content is not sent by this lane. Canonical inputs are source-hash bound; public implementation inputs are bounded to registered paths.
@@ -48,6 +68,13 @@ The active queue covers explicitly registered public targets in `agents/design-r
 `tools/independent_branch_worker.py` is the active inference transport. `tools/independent_branch_continuation.py` can automatically dispatch the next family only when the current phase itself uses the same packet and remains isolated (`BLIND`, `FINAL`, or `CONFIRM`). It cannot invent ChatGPT reconciliation directives.
 
 A main-branch source/protocol change moves the queue to `AWAITING_CHATGPT_BASELINE_OR_DIRECTIVE`. Clock passage cannot create a baseline, directive, query or review task. The daily recovery wake can only recover already-admitted transport state.
+
+The same source/executor freshness check applies to manual and scheduled
+continuation. A prior unconfirmed call takes precedence in status reporting:
+`BLOCKED_UNRESOLVED_CALL` names its model, workflow run and recorded generation ID
+without altering its billing record. Architecture and event-context policy edits
+also trigger the freshness check. The recovery wake is 01:17 UTC / 06:47 India
+time daily; it does not schedule fresh inference work.
 
 ## Calls and spending
 
