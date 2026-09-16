@@ -84,28 +84,29 @@ class AutomationAuditTests(unittest.TestCase):
 
 
 class CIAggregationTests(unittest.TestCase):
+    def runs(self):
+        return [{'id':i+1,'run_attempt':1,'head_sha':'a'*40,'path':p,'repository':{'full_name':'owner/repo'},'event':'pull_request','status':'completed','conclusion':'success'} for i,p in enumerate(MANDATORY)]
+
+    def result(self, rows):
+        return aggregate(rows,head_sha='a'*40,repository='owner/repo')['overall']
+
     def test_every_mandatory_lane_must_pass_at_exact_head(self):
-        head='h'; rows=[]
-        for name in MANDATORY:
-            rows.append({'name':name,'head_sha':head,'status':'completed','conclusion':'success','event':'pull_request','workflow_id':1,'id':len(rows)+1,'run_attempt':1})
-        result=aggregate(rows,head)
-        self.assertEqual(result['status'],'PASS')
+        rows=self.runs();self.assertEqual(self.result(rows),'PASS')
+        self.assertEqual(self.result(rows[:-1]),'UNKNOWN')
+        rows[0]['head_sha']='b'*40;self.assertEqual(self.result(rows),'UNKNOWN')
+        rows=self.runs();rows[0]['conclusion']='failure';self.assertEqual(self.result(rows),'FAIL')
 
     def test_newer_failed_or_inflight_attempt_cannot_be_hidden_by_old_pass(self):
-        head='h'; rows=[]
-        for name in MANDATORY:
-            rows.append({'name':name,'head_sha':head,'status':'completed','conclusion':'success','event':'pull_request','workflow_id':1,'id':10,'run_attempt':1})
-        rows.append({'name':MANDATORY[0],'head_sha':head,'status':'in_progress','conclusion':None,'event':'pull_request','workflow_id':1,'id':11,'run_attempt':1})
-        result=aggregate(rows,head)
-        self.assertEqual(result['status'],'BLOCKED')
+        rows=self.runs();new=copy.deepcopy(rows[0]);new.update(run_attempt=2,conclusion='failure')
+        self.assertEqual(self.result(rows+[new]),'FAIL')
+        new.update(status='in_progress',conclusion=None)
+        self.assertEqual(self.result(rows+[new]),'UNKNOWN')
 
     def test_foreign_or_manual_success_cannot_satisfy_required_lane(self):
-        head='h'; rows=[]
-        for name in MANDATORY:
-            rows.append({'name':name,'head_sha':head,'status':'completed','conclusion':'success','event':'pull_request','workflow_id':1,'id':len(rows)+1,'run_attempt':1})
-        rows[0]['event']='workflow_dispatch'
-        result=aggregate(rows,head)
-        self.assertEqual(result['status'],'BLOCKED')
+        rows=self.runs();rows[0]['repository']['full_name']='foreign/repo'
+        self.assertEqual(self.result(rows),'UNKNOWN')
+        rows=self.runs();rows[0]['event']='workflow_dispatch'
+        self.assertEqual(self.result(rows),'UNKNOWN')
 
 
 if __name__=='__main__': unittest.main()
