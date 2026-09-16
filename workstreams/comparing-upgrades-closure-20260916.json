@@ -1,0 +1,12 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:comparing-upgrades-closure:20260916",
+  "work_package_id": "COMPARING-UPGRADES-CLOSURE",
+  "branch": "chatgpt/comparing-upgrades-closure-20260916",
+  "base_sha": "c2bcaa8dcfe1284e53523f3f075616899c2af56c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "substantial_edit_started": false
+}
