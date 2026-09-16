@@ -74,6 +74,9 @@ callers cannot be accounted for safely by a repository-local lock.
 Allowed models and exclusions come from the current policies. No silent model or
 endpoint fallback is permitted. Requests require ZDR/no data collection; these
 are routing constraints, not independent certification of provider practices.
+Requested IDs and permanent canonical model slugs are bound from the live catalog
+before new calls. Legacy receipts can use an explicitly recorded reconciliation-time
+catalog mapping; this is not claimed to be a historical catalog snapshot.
 Known costs, finish reasons and typed results persist even when review validation
 fails. Each call also uploads an Actions receipt. The ledger's coverage lists
 finished, pending and blocked registered targets, never whole-Garden completion.

@@ -112,6 +112,8 @@ class SingleReviewTests(unittest.TestCase):
         def fake_http(url, token, body=None, **kwargs):
             if url.endswith('/key'):
                 return {'data': self.key}
+            if url.endswith('/models'):
+                return {'data': [{'id': m['model'], 'canonical_slug': m['model']} for m in self.policy['routine_reviewers']]}
             if url.endswith('/endpoints'):
                 return {'data': {'endpoints': [self.endpoint]}}
             self.assertTrue(url.endswith('/chat/completions'))
