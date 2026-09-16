@@ -11,12 +11,13 @@ This directory defines the durable contract for Garden's automated review bus.
 `event-driven-model-quality-policy.json` makes review quality materiality-driven rather than clock-driven.
 
 - Unchanged/non-material state: no model call.
-- Optional unresolved triage: Qwen3.7 Flash, DeepSeek V4 Flash 0731, or GLM 5.3 Flash when deterministic classification remains UNKNOWN/INCONCLUSIVE.
-- Material paid board: DeepSeek V4 Pro 0813 + Qwen3.8 Max + GLM 5.3, blind before cross-examination.
+- Routine material review: DeepSeek V4.1 Flash + Qwen3.8 Flash + GLM 5.3 Flash + Xiaomi MiMo-V2.5. These are pinned exact model identities selected for current quality/cost value.
+- HIGH/CRITICAL escalation: DeepSeek V4.1 Flash + Qwen3.8 Max (0902) + GLM 5.3 + MiMo-V2.5-Pro, only under a separate escalation receipt/budget.
 - Separate Google lane: Gemini 3.8 Flash, free-tier only with no paid fallback.
 - Separate ChatGPT frontier: user-selected ChatGPT model; never routed through OpenRouter and never hardcoded by this repository.
+- InclusionAI Ling 3.0 Flash and Step 3.7 Flash remain benchmark candidates until Garden-specific output/reliability qualification passes. Kimi K3 is retained only as a future escalation candidate because its current price/value is weaker for routine Garden review.
 
-The OpenRouter daily ceiling remains $1.00. Higher-quality models are justified by fewer event-triggered calls, not by increasing the daily budget.
+The OpenRouter daily ceiling remains $1.00. Better models are paid for by fewer event-triggered calls, not by increasing the daily budget. Moving `latest` aliases are not used for evidence lineage; model changes require a later catalog-review event.
 
 ## Roles and diversity
 
@@ -26,6 +27,7 @@ The free lane rotates allowed model families rather than treating one vendor as 
 - Qwen — architecture / implementation
 - Llama — open-weight baseline
 - GLM — semantic/formal reasoning
+- Xiaomi — agentic execution / long-context challenger
 - Gemma — cheap/open Google-family reviewer
 - Cohere — retrieval/grounding posture
 - Poolside — implementation correctness

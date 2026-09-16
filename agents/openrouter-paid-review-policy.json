@@ -14,8 +14,8 @@
     "escalation": 5.0,
     "emergency_reserve": 3.0
   },
-  "routine_hourly_cost_ceiling_usd": 0.45,
-  "routine_model_call_cost_ceiling_usd": 0.15,
+  "routine_hourly_cost_ceiling_usd": 0.20,
+  "routine_model_call_cost_ceiling_usd": 0.05,
   "max_prompt_characters": 60000,
   "max_output_tokens": 3000,
   "free_swarm": {
@@ -43,14 +43,15 @@
     "data_collection": "deny",
     "ignore": ["anthropic", "mistral", "nvidia"],
     "max_price_usd_per_million_tokens": {
-      "prompt": 2.25,
-      "completion": 6.75
+      "prompt": 0.25,
+      "completion": 1.0
     }
   },
   "routine_reviewers": [
-    {"family":"deepseek","role":"primary_architecture_code_reasoning","model":"deepseek/deepseek-v4-pro-0813"},
-    {"family":"qwen","role":"independent_architecture_agentic_challenger","model":"qwen/qwen3.8-max"},
-    {"family":"glm","role":"formal_semantics_long_context","model":"z-ai/glm-5.3"}
+    {"family":"deepseek","role":"primary_agentic_reasoning","model":"deepseek/deepseek-v4.1-flash"},
+    {"family":"qwen","role":"independent_architecture_and_code","model":"qwen/qwen3.8-flash"},
+    {"family":"glm","role":"formal_semantics_and_long_context","model":"z-ai/glm-5.3-flash"},
+    {"family":"xiaomi","role":"independent_agentic_execution","model":"xiaomi/mimo-v2.5"}
   ],
   "event_driven_activation": {
     "paid_review_requires_material_event_or_explicit_high_risk_obligation": true,
@@ -62,12 +63,12 @@
   "notes": [
     "Routine paid reviewers and the free swarm produce proposal evidence only.",
     "Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
-    "Paid review is now quality-first and material-event-driven: DeepSeek V4 Pro, Qwen3.8 Max and GLM 5.3 replace the former cheap routine board; cheap flash models remain optional unresolved-triage candidates under the separate event-driven quality policy.",
+    "Routine material review uses the current cost/quality value board: DeepSeek V4.1 Flash, Qwen3.8 Flash, GLM 5.3 Flash and Xiaomi MiMo-V2.5. Expensive flagship models are escalation-only under the separate event-driven quality policy.",
     "Gemini 3.8 Flash remains a separate direct Google-family lane under free-tier-only/no-paid-fallback policy; ChatGPT remains a separate external frontier lane and is not hardcoded by this repository.",
     "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
-    "Free-swarm breadth is used before paid reviewers when applicable; free reviewers never satisfy paid-family requirements merely by being free.",
-    "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "The legacy routine_hourly_cost_ceiling_usd field is an event-dispatch reservation envelope for compatibility; it is not a scheduling instruction.",
+    "Moving latest aliases are intentionally not used for evidence lineage; exact model identities stay pinned until a later catalog-review event.",
+    "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "The coordinator remains paused until separately resumed; registering stronger models does not authorize provider calls or ChatGPT handoffs."
   ],
   "specialist_free_sweep": {

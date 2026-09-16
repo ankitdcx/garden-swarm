@@ -49,9 +49,15 @@ class MultiTrackReviewPolicyTests(unittest.TestCase):
         self.assertTrue(self.quality["activation"]["clock_passage_never_authorizes_model_spend"])
         self.assertEqual(self.quality["activation"]["no_change_default"], "NO_MODEL_CALL")
         self.assertEqual(self.quality["budget"]["daily_openrouter_cost_ceiling_usd"], 1.0)
-        board = self.quality["tiers"]["MATERIAL_STRONG_BOARD"]["openrouter_models"]
-        self.assertEqual([row["family"] for row in board], ["deepseek", "qwen", "glm"])
-        self.assertEqual(self.quality["tiers"]["MATERIAL_STRONG_BOARD"]["separate_google_lane"]["model"], "gemini-3.8-flash")
+        board = self.quality["tiers"]["MATERIAL_VALUE_BOARD"]["openrouter_models"]
+        self.assertEqual([row["model"] for row in board], ["deepseek/deepseek-v4.1-flash", "qwen/qwen3.8-flash", "z-ai/glm-5.3-flash", "xiaomi/mimo-v2.5"])
+        escalation = self.quality["tiers"]["HIGH_CRITICAL_ESCALATION"]
+        self.assertEqual(escalation["execution_status"], "DECLARED_NOT_AUTOMATICALLY_DISPATCHED")
+        escalation_models = [row["model"] for row in escalation["models"]]
+        self.assertIn("qwen/qwen3.8-max-0902", escalation_models)
+        self.assertIn("xiaomi/mimo-v2.5-pro", escalation_models)
+        self.assertEqual(self.quality["tiers"]["SEPARATE_GOOGLE_LANE"]["model"], "gemini-3.8-flash")
+        self.assertTrue(self.quality["activation"]["moving_latest_aliases_are_not_used_for_evidence_lineage"])
 
 if __name__ == "__main__":
     unittest.main()
