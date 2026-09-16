@@ -1,72 +1,95 @@
-# Single OpenRouter review worker
+# Automated OpenRouter review queue
 
-Deployment status (2026-09-16): STORAGE_RULESET_OBSTRUCTION_REMOVED. The operator
-installed the dedicated review-state ruleset and work-branch rules. The state
-branch now blocks deletion and force pushes without requiring a pull request for
-normal updates. Main remains protected by PR and required CI rules. A successful
-Actions reservation write and first live provider receipt are still required;
-this ruleset inspection is not a claim that OpenRouter has run.
+The public worker uses the existing OPENROUTER_API_KEY Actions secret. A main-branch
+material event admits source-bound work; each finished call dispatches the next
+pending reviewer automatically. The older batch workflows and broader coordinator
+remain paused. No model output can merge code or promote Garden semantics.
 
-This is a bounded activation path, not a claim that the previous multi-agent
-coordinator is running. It uses the existing OPENROUTER_API_KEY Actions secret.
-The older batch workflows remain paused. The existing admission guard gains one
-explicit mode that verifies this worker's exact Actions workflow identity and
-persistent state before exposing the inference secret. Its default legacy path
-still rejects dispatch; arbitrary workflows cannot claim this new mode.
+## Execution and scope
 
-After this change is reviewed and merged, open Actions, select **Garden single
-OpenRouter review**, select **Run workflow**, and use **main**. Each run makes at
-most one model request. The next run continues saved progress; it does not repeat
-a recorded review. No cron, background coordinator, or automatic retry is enabled.
+The queue covers the ten explicitly registered public targets in
+`agents/design-review-matrix.json`: three bounded canonical sections and seven
+implementation/governance surfaces. This is not the denominator for all Garden
+modules or the five complete design documents. Private candidate content is not
+sent by this lane. Canonical inputs must match SOURCE_MANIFEST; public code inputs
+must be under registered implementation paths and are bound to exact file hashes.
 
-State is retained in the [review ledger](https://github.com/ankitdcx/garden-swarm/blob/garden-review-state/review-state/ledger.json)
-on the `garden-review-state` branch. A SHA-conditional GitHub write reserves the call before inference. Do not
-delete/reset/rebase that branch. Missing state blocks execution. The workflow
-uses the existing `garden-provider-review` concurrency group. A timeout, crash,
-missing cost, unexpected provider/model, incomplete answer, or failed state write
-stops the lane; an unresolved reservation requires evidence-backed reconciliation.
-There is deliberately no reset button that could silently repeat a billed call.
+For each target, four allocated model families review independently, then receive
+previous-round findings for challenge, revision and verification. At most four
+rounds run (16 successful calls per target). An all-NO_CHANGE challenge round stops
+early. Unresolved objections remain proposals requiring source checks and tests;
+agreement does not establish truth, independence, approval or qualification.
 
-## Review sequence
+One workflow run makes at most one inference call. Output has an 8000-token total
+ceiling (including reasoning), with concise visible JSON requested. Low reasoning
+effort is requested only where the live endpoint advertises reasoning controls.
+Every request is rechecked against live pricing, context and the cost reservation.
+A completed but unusable response may receive one additional separately billed
+attempt for that slot. The original receipt is preserved. Unknown completion or
+unknown billing never authorizes a blind retry.
 
-One exact public matrix target and source hash is used throughout a cycle.
-The current policy allocates four reviewer families. Every family first receives
-the source without peer answers. Then each challenges the previous round, revises
-the proposal, and checks it again. Maximum: four rounds, sixteen calls. A no-change
-challenge round can stop earlier. Completion of rounds means proposal evidence,
-not agreement-as-proof, tested correctness, merge authority or canonical approval.
-Unresolved objections remain in receipts. Source/policy/worker changes create a
-new binding; unchanged work does not create another charge for the same slot.
+## Durable state and stop conditions
 
-The first connection test is one of these actual reviews. Each receipt contains
-source hashes, requested and returned model/provider, generation identity, cost,
-round, answer and structured finding. It is stored in the state branch and an
-Actions artifact. An online success is not claimed until that receipt exists.
+The [persistent ledger](https://github.com/ankitdcx/garden-swarm/blob/garden-review-state/review-state/ledger.json)
+contains reservations, answers, generation identities, costs, queue status and
+coverage. Both workflows share garden-provider-review concurrency. SHA-conditional
+writes reserve the effect before transport; failure to save blocks the call.
+Normal state writes are permitted by the installed state-branch ruleset while
+force pushes and deletion remain prohibited. Main retains ordinary PR/CI gates.
 
-## Spending and disclosure
+The secret-free continuation workflow starts on relevant main-branch changes.
+Unchanged source/policy/protocol bindings do not restart completed reviews.
+Successful worker completion uses GitHub workflow_dispatch to advance. A daily
+01:17 UTC recovery wake resumes only already-admitted deferred work or recovers one
+unconfirmed dispatch delivery; it cannot create review work from clock passage.
+This narrow recovery timer supersedes the former no-timer rule for this workflow
+only. Scheduled Actions delivery may be delayed; it is not a real-time deadline.
 
-Only already-public canonical text with a matching SOURCE_MANIFEST hash is sent.
-Private v15.7/v15.8 deltas are not eligible for this lane. The current approved
-model board and exclusion policy are read at execution time. There is no silent
-model replacement. Routing requires no data collection and ZDR, one allowed
-endpoint, no fallbacks, live endpoint pricing and a bounded request. Those are
-provider API constraints, not an independent audit of the provider's internals.
+The continuation statuses are READY, DISPATCHED, IN_FLIGHT, DEFERRED_DAILY, BLOCKED
+and COMPLETE_PROPOSALS_ONLY. Setting the ledger paused field to true prevents
+further calls. It cannot undo an already-issued request. BLOCKED is a visible stop,
+not success; missing credentials, unavailable approved routes, unknown calls,
+identity/cost mismatches and exhausted response retries require investigation.
+There is no automatic reset or permission expansion. Dispatch delivery recovery
+is capped at two attempts; response retry is capped at two attempts per slot.
 
-The worker reserves at most $0.05 per call and enforces at most $1 per UTC day.
-It uses current key usage plus conservative local accounting, and counts all
-historical key spend against the $9 routine lifetime pool. This can block early;
-it cannot withdraw from the other pools. This deployment assumes the existing
-Actions key is the shared Garden inference key and no other caller uses it outside
-the paused legacy workers/this serialized lane. Concurrent use from another host
-or another key needs shared accounting before it is admitted. Free/Gemini lanes
-are not activated here, so their unavailable prior quota history is not guessed.
+When a response identity is available, the worker first reads generation metadata
+to reconcile the saved call's identity, provider, exact cost and terminal status.
+Metadata does not repair truncated JSON or prove a finding correct. Without a
+response identity, the lane stays blocked. The first live call from run 35095704429
+returned truncated JSON at 1800 output tokens and reported $0.0011595; its original
+UNKNOWN receipt must be reconciled, not erased or relabeled as a successful review.
 
-Remaining deployment work: prove one live receipt; inspect provider account
-reconciliation; connect authenticated completion events/delayed wakes to this
-same ledger; qualify free/Gemini lanes and private review routing; add test-backed
-closure of findings. This worker intentionally does not claim those are complete.
+## Spending and evidence
+
+Limits remain $0.05 per call, $1 per UTC day and the $9 routine lifetime allocation.
+Accounting is deliberately conservative and may stop early because provider usage
+and local receipts overlap. The other budget pools are unavailable to this worker.
+All admitted callers must share this ledger/key boundary; unrelated concurrent
+callers cannot be accounted for safely by a repository-local lock.
+
+Allowed models and exclusions come from the current policies. No silent model or
+endpoint fallback is permitted. Requests require ZDR/no data collection; these
+are routing constraints, not independent certification of provider practices.
+Known costs, finish reasons and typed results persist even when review validation
+fails. Each call also uploads an Actions receipt. The ledger's coverage lists
+finished, pending and blocked registered targets, never whole-Garden completion.
+
+Validation includes reservation-before-call, identity reconciliation, incomplete
+answer limits, duplicate events, daily deferral, delivery recovery, provider
+exclusions, completed-queue no-op and GitHub's empty 204 dispatch response. Live
+activation is established only by new receipts and successor workflow runs.
+
+Free/Gemini lanes, private candidate review, full design-section coverage and
+integration of findings remain separate pending work. This configuration does not
+claim Garden v15.8 is complete or automatically approved.
+
+Sources: [GitHub workflow dispatch behavior](https://github.blog/changelog/2022-09-08-github-actions-use-github_token-with-workflow_dispatch-and-repository_dispatch/),
+[OpenRouter reasoning budgets](https://openrouter.ai/docs/guides/best-practices/reasoning-tokens),
+and [generation reconciliation](https://openrouter.ai/docs/api/api-reference/generations/get-request-%26-usage-metadata-for-a-generation).
 
 Source obligations: existing agents/openrouter-paid-review-policy.json execution
 limits, agents/provider-exclusion-policy.json exclusions, agents/design-review-matrix.json
-independent/cross-examination requirements, and the public source status boundaries
-in AGENTS.md. This is ordinary review infrastructure with no new design authority.
+review requirements, and AGENTS.md status distinctions. The operator's explicit
+request authorizes bounded automatic OpenRouter continuation; it grants no new
+design authority.

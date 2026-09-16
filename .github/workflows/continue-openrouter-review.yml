@@ -1,0 +1,48 @@
+name: Garden automatic review continuation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Garden_*.txt'
+      - 'SOURCE_MANIFEST.json'
+      - 'agents/design-review-matrix.json'
+      - 'agents/openrouter-paid-review-policy.json'
+      - 'agents/provider-exclusion-policy.json'
+      - 'tools/**'
+      - 'tests/**'
+      - 'server/**'
+      - 'prototype/**'
+      - '.github/workflows/single-openrouter-review.yml'
+      - '.github/workflows/continue-openrouter-review.yml'
+  workflow_dispatch:
+  # Recovery only: cannot create new reviews from clock passage.
+  schedule:
+    - cron: '17 1 * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: garden-provider-review
+  cancel-in-progress: false
+
+jobs:
+  continue:
+    if: github.repository == 'ankitdcx/garden-swarm' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify bounded continuation offline
+        run: python -m unittest tests.test_single_review_worker tests.test_review_continuation -v
+      - name: Resume only admitted pending public work
+        env:
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.review_continuation

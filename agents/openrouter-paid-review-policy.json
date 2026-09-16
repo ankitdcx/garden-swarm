@@ -17,7 +17,7 @@
   "routine_hourly_cost_ceiling_usd": 0.20,
   "routine_model_call_cost_ceiling_usd": 0.05,
   "max_prompt_characters": 60000,
-  "max_output_tokens": 3000,
+  "max_output_tokens": 8000,
   "free_swarm": {
     "enabled": true,
     "distinct_families_per_hour": 4,

@@ -24,7 +24,7 @@
     "routine_material_event_reserved_ceiling_usd": 0.20,
     "routine_model_call_reserved_ceiling_usd": 0.05,
     "max_prompt_characters": 60000,
-    "max_output_tokens": 3000,
+    "max_output_tokens": 8000,
     "budget_exhaustion_result": "BLOCK_PAID_REVIEW_OR_DEGRADE_ONLY_WITH_EXPLICIT_RECEIPT",
     "full_context_fallback_does_not_bypass_budget_or_assurance": true
   },

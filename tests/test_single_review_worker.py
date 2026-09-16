@@ -72,7 +72,7 @@ class SingleReviewTests(unittest.TestCase):
         self.assertTrue(body['provider']['zdr'])
         self.assertEqual(body['provider']['only'], ['allowed'])
         self.assertLessEqual(money(estimate), money('.05'))
-        self.assertLessEqual(body['max_tokens'], 1800)
+        self.assertEqual(body['max_tokens'], 8000)
 
     def test_large_context_never_silently_truncated(self):
         with self.assertRaises(ValueError):
@@ -126,7 +126,7 @@ class SingleReviewTests(unittest.TestCase):
                'GH_REVIEW_TOKEN': 'fixture', 'GITHUB_SHA': 'fixture', 'GITHUB_RUN_ID': 'fixture'}
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            for file in ['agents/openrouter-paid-review-policy.json', 'agents/provider-exclusion-policy.json',
+            for file in [t['source_file'] for t in json.loads(Path('agents/design-review-matrix.json').read_text())['targets']] + ['agents/openrouter-paid-review-policy.json', 'agents/provider-exclusion-policy.json',
                          'SOURCE_MANIFEST.json', 'agents/design-review-matrix.json',
                          'Garden_User_v15.5_FULL_2026-09-12.txt']:
                 dest = root / file
