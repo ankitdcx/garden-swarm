@@ -20,6 +20,7 @@ import time
 from pathlib import Path
 from typing import Any
 from urllib import error, request
+from tools.provider_exclusion import load_policy, openrouter_provider_policy, require_allowed_model
 
 CHAT = "https://openrouter.ai/api/v1/chat/completions"
 MATRIX = Path("agents/design-review-matrix.json")
@@ -32,9 +33,7 @@ FINAL_SCHEMA = "GardenDesignFinalDisposition/v1"
 
 
 def canonical_hash(value: Any) -> str:
-    return hashlib.sha256(
-        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
-    ).hexdigest()
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
 
 
 def load_matrix(root: Path = Path(".")) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -108,12 +107,7 @@ def _clean_json(text: str) -> dict[str, Any] | None:
 
 
 def validate_independent(value: dict[str, Any], *, target_id: str, family: str, model_id: str) -> dict[str, Any]:
-    required = [
-        "source_anchors", "current_semantic_claim", "falsification_attempts",
-        "evidence_search_trace", "proposed_delta", "do_nothing_comparison",
-        "affected_invariants", "affected_tests", "affected_contracts",
-        "uncertainty", "evidence_ancestry", "overturn_conditions", "disposition",
-    ]
+    required = ["source_anchors", "current_semantic_claim", "falsification_attempts", "evidence_search_trace", "proposed_delta", "do_nothing_comparison", "affected_invariants", "affected_tests", "affected_contracts", "uncertainty", "evidence_ancestry", "overturn_conditions", "disposition"]
     if any(key not in value for key in required):
         raise ValueError("independent finding missing required fields")
     if value.get("disposition") not in {"NO_CHANGE", "PROPOSE_DELTA", "BLOCKER", "NEEDS_CROSS_REFERENCE"}:
@@ -124,21 +118,12 @@ def validate_independent(value: dict[str, Any], *, target_id: str, family: str, 
         raise ValueError("falsification_attempts must be non-empty")
     if not isinstance(value.get("evidence_search_trace"), list) or not value["evidence_search_trace"]:
         raise ValueError("evidence_search_trace must be non-empty")
-    value.update({
-        "schema": INDEPENDENT_SCHEMA,
-        "target_id": target_id,
-        "reviewer_family": family,
-        "reviewer_model": model_id,
-        "independent": True,
-    })
+    value.update({"schema": INDEPENDENT_SCHEMA, "target_id": target_id, "reviewer_family": family, "reviewer_model": model_id, "independent": True})
     return value
 
 
 def validate_final(value: dict[str, Any], *, target_id: str, family: str, model_id: str) -> dict[str, Any]:
-    required = [
-        "peer_challenges", "correlated_or_common_source_evidence", "revised_disposition",
-        "revised_delta", "do_nothing_comparison", "uncertainty", "overturn_conditions",
-    ]
+    required = ["peer_challenges", "correlated_or_common_source_evidence", "revised_disposition", "revised_delta", "do_nothing_comparison", "uncertainty", "overturn_conditions"]
     if any(key not in value for key in required):
         raise ValueError("final disposition missing required fields")
     if value.get("revised_disposition") not in {"NO_CHANGE", "PROPOSE_DELTA", "BLOCKER", "NEEDS_CROSS_REFERENCE"}:
@@ -147,18 +132,15 @@ def validate_final(value: dict[str, Any], *, target_id: str, family: str, model_
         raise ValueError("peer_challenges must be a list")
     if not isinstance(value.get("correlated_or_common_source_evidence"), list):
         raise ValueError("correlated evidence must be a list")
-    value.update({
-        "schema": FINAL_SCHEMA,
-        "target_id": target_id,
-        "reviewer_family": family,
-        "reviewer_model": model_id,
-        "independent_final_disposition": True,
-    })
+    value.update({"schema": FINAL_SCHEMA, "target_id": target_id, "reviewer_family": family, "reviewer_model": model_id, "independent_final_disposition": True})
     return value
 
 
 def call_openrouter(*, model: dict[str, Any], prompt: str, max_tokens: int = 3600) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     model_id = str(model["model"])
+    family = str(model.get("family", ""))
+    policy = load_policy()
+    require_allowed_model(model_id=model_id, family=family, policy=policy)
     if not model_id.endswith(":free"):
         raise RuntimeError(f"paid route refused: {model_id}")
     key = os.environ.get("OPENROUTER_API_KEY")
@@ -169,19 +151,9 @@ def call_openrouter(*, model: dict[str, Any], prompt: str, max_tokens: int = 360
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.1,
         "max_tokens": max_tokens,
-        "provider": {"allow_fallbacks": False},
+        "provider": openrouter_provider_policy({"allow_fallbacks": False}, policy),
     }
-    req = request.Request(
-        CHAT,
-        method="POST",
-        data=json.dumps(body).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/ankitdcx/garden-swarm",
-            "X-Title": "Garden Design Review Matrix",
-        },
-    )
+    req = request.Request(CHAT, method="POST", data=json.dumps(body).encode("utf-8"), headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", "HTTP-Referer": "https://github.com/ankitdcx/garden-swarm", "X-Title": "Garden Design Review Matrix"})
     try:
         with request.urlopen(req, timeout=300) as response:
             data = json.loads(response.read().decode("utf-8"))
@@ -281,6 +253,9 @@ def main() -> int:
         raise SystemExit("free-model selection contains duplicate families")
     if not all(str(m.get("model", "")).endswith(":free") for m in selected):
         raise SystemExit("non-free OpenRouter route refused")
+    policy = load_policy()
+    for model in selected:
+        require_allowed_model(model_id=str(model.get("model", "")), family=str(model.get("family", "")), policy=policy)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     attempts: list[dict[str, Any]] = []
@@ -288,7 +263,6 @@ def main() -> int:
     independent_by_family: dict[str, dict[str, Any]] = {}
 
     halted = False
-    # All independent calls finish before any reviewer sees a peer finding.
     for model in selected:
         family = str(model["family"])
         raw, attempt = call_openrouter(model=model, prompt=independent_prompt(target=target, source=source, trace=trace, model=model))
@@ -331,14 +305,7 @@ def main() -> int:
     bundle = build_bundle(matrix=matrix, target=target, trace=trace, independent=independent, finals=finals, attempts=attempts)
     BUNDLE.parent.mkdir(parents=True, exist_ok=True)
     BUNDLE.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({
-        "target_id": target["target_id"],
-        "status": bundle["status"],
-        "independent_families": bundle["independent_reviewer_family_count"],
-        "final_families": bundle["final_disposition_family_count"],
-        "zero_cost_verified": bundle["zero_cost_verified"],
-        "semantic_delta_admitted": False,
-    }, sort_keys=True))
+    print(json.dumps({"target_id": target["target_id"], "status": bundle["status"], "independent_families": bundle["independent_reviewer_family_count"], "final_families": bundle["final_disposition_family_count"], "zero_cost_verified": bundle["zero_cost_verified"], "semantic_delta_admitted": False}, sort_keys=True))
     return 0
 
 

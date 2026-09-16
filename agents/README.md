@@ -2,9 +2,13 @@
 
 This directory defines the durable contract for Garden's automated review bus.
 
+## Provider exclusions
+
+`provider-exclusion-policy.json` is a fail-closed human operator routing constraint for all Garden work. Anthropic/Claude and NVIDIA/Nemotron are excluded from model selection, provider endpoints, fallbacks, reviewer/challenger assignment, and active contact. Historical references may remain for provenance but do not authorize operational use. Only an explicit future human directive may change the exclusion list.
+
 ## Roles and diversity
 
-The hourly free lane rotates model families rather than treating one vendor as an independent committee. Preferred families/postures:
+The free lane rotates model families rather than treating one vendor as an independent committee. Preferred allowed families/postures include:
 
 - DeepSeek — formal/reasoning critic
 - Qwen — implementation/code critic
@@ -13,7 +17,6 @@ The hourly free lane rotates model families rather than treating one vendor as a
 - GLM — additional reasoning / non-Western corpus diversity
 - Gemma — cheap/open Google-family reviewer
 - Cohere — retrieval/grounding posture
-- NVIDIA Nemotron — open reasoning/orchestration baseline
 - Dots / Inkling — additional open-weight reasoning baselines when free endpoints exist
 - Gemini hosted — optional direct free-tier reviewer only when a separate `GEMINI_API_KEY` is configured on a billing-disabled/free-tier project
 
@@ -22,15 +25,15 @@ Execution limits and lifetime-versus-daily budget scope are defined only in [ope
 ## Durable state
 
 - `inbox/` — bounded task definitions checked into Git.
-- `outbox/` — reserved path/schema for model findings. Hourly CI publishes run outputs as immutable GitHub Actions artifacts rather than allowing an agent to push directly to protected branches.
+- `outbox/` — reserved path/schema for model findings. CI publishes run outputs as immutable GitHub Actions artifacts rather than allowing an agent to push directly to protected branches.
 - `shared/` — human/release-admitted findings only. Automated workflows must never write here.
 - `HANDOFF.md` — required structured finding format, including mandatory `search_trace`.
 
 Git remains the durable design/task state. GitHub Actions artifacts preserve exact automated run receipts without granting models repository write authority.
 
-## Hourly division of labor
+## Division of labor
 
-The single Coordinator must accumulate independent reviews and cross-examinations over separate bounded dispatches. Findings stay proposals until the required cross-reference, quorum and independent admission checks pass. Artifact upload alone is not durable governed publication.
+The single Coordinator must accumulate independent reviews and cross-examinations over separate bounded event-driven dispatches. Findings stay proposals until the required cross-reference, quorum and independent admission checks pass. Artifact upload alone is not durable governed publication.
 
 ## Privacy
 

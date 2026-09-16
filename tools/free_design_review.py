@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib import request
 
 from tools._free_review_common import parse_handoff_or_receipt
+from tools.provider_exclusion import load_policy, openrouter_provider_policy, require_allowed_model
 
 CHAT = "https://openrouter.ai/api/v1/chat/completions"
 FILES = [
@@ -43,9 +44,11 @@ def main() -> int:
     sel = json.loads((root / args.selection).read_text())
     model = sel["selected"][0]
     model_id = model["model"]
+    policy = load_policy(root / "agents/provider-exclusion-policy.json")
+    require_allowed_model(model_id=model_id, family=str(model.get("family", "")), policy=policy)
     if not model_id.endswith(":free"):
         raise SystemExit(f"paid route refused: {model_id}")
-    slot = int(sel["hour_slot"])
+    slot = int(sel.get("event_slot", sel.get("hour_slot", 0)))
     items = []
     for filename in FILES:
         raw = (root / filename).read_bytes()
@@ -66,7 +69,7 @@ Trace: {json.dumps(trace)}
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         raise SystemExit("OPENROUTER_API_KEY required")
-    payload = {"model":model_id,"messages":[{"role":"user","content":prompt}],"temperature":0.15,"max_tokens":2800,"provider":{"allow_fallbacks":True}}
+    payload = {"model":model_id,"messages":[{"role":"user","content":prompt}],"temperature":0.15,"max_tokens":2800,"provider":openrouter_provider_policy({"allow_fallbacks":True}, policy)}
     req = request.Request(CHAT, method="POST", data=json.dumps(payload).encode(), headers={"Authorization":f"Bearer {key}","Content-Type":"application/json","HTTP-Referer":"https://github.com/ankitdcx/garden-swarm","X-Title":"Garden Free Review Bus"})
     with request.urlopen(req, timeout=300) as r:
         data = json.loads(r.read().decode())

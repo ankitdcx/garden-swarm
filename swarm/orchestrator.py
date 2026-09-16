@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Any
 from urllib import error, request
 
+from tools.provider_exclusion import load_policy, openrouter_provider_policy, require_allowed_model
+
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_SOURCE_FILES = [
     "Garden_User_v15.5_FULL_2026-09-12.txt",
@@ -72,6 +74,9 @@ def load_roles(path: Path, tier: str) -> list[Role]:
     roles = [Role(**r) for r in payload["roles"]]
     if len({r.id for r in roles}) != len(roles):
         raise ValueError("Duplicate role id")
+    policy = load_policy(path.resolve().parents[1] / "agents/provider-exclusion-policy.json")
+    for role in roles:
+        require_allowed_model(model_id=role.model, family=role.id, policy=policy)
     if tier == "calibration":
         roles = [r for r in roles if r.tier == "calibration"]
     elif tier == "standard":
@@ -80,7 +85,6 @@ def load_roles(path: Path, tier: str) -> list[Role]:
 
 
 def chunk_text(text: str, max_chars: int) -> list[str]:
-    """Deterministic paragraph-aware chunking. No inferred semantics."""
     paragraphs = text.split("\n\n")
     chunks: list[str] = []
     current: list[str] = []
@@ -113,16 +117,7 @@ def build_work_items(root: Path, filenames: list[str], max_chars: int) -> list[W
         sha = digest(raw)
         chunks = chunk_text(raw.decode("utf-8"), max_chars)
         for i, text in enumerate(chunks, 1):
-            items.append(
-                WorkItem(
-                    id=f"{path.stem}:chunk-{i:03d}",
-                    source_file=filename,
-                    source_sha256=sha,
-                    chunk_index=i,
-                    chunk_count=len(chunks),
-                    text=text,
-                )
-            )
+            items.append(WorkItem(id=f"{path.stem}:chunk-{i:03d}", source_file=filename, source_sha256=sha, chunk_index=i, chunk_count=len(chunks), text=text))
     return items
 
 
@@ -184,10 +179,11 @@ this chunk. Such claims require a later cross-reference pass.
 
 
 def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effort: str | None = None, public_free: bool = False) -> RunResult:
+    policy = load_policy()
+    require_allowed_model(model_id=role.model, family=role.id, policy=policy)
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
-        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR",
-                         error="OPENROUTER_API_KEY is not set")
+        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR", error="OPENROUTER_API_KEY is not set")
 
     payload: dict[str, Any] = {
         "model": role.model,
@@ -197,78 +193,38 @@ def call_openrouter(role: Role, item: WorkItem, max_tokens: int, reasoning_effor
         ],
         "temperature": 0.2,
         "max_tokens": max_tokens,
+        "provider": openrouter_provider_policy({"allow_fallbacks": True}, policy),
     }
     if not public_free:
-        payload["provider"] = {"zdr": True}
+        payload["provider"] = openrouter_provider_policy({"zdr": True, "allow_fallbacks": True}, policy)
     if reasoning_effort:
         payload["reasoning"] = {"effort": reasoning_effort, "exclude": True}
     if role.web:
-        payload["plugins"] = [{"id": "web", "engine": "parallel",
-                               "mode": "turbo", "max_results": 5}]
+        payload["plugins"] = [{"id": "web", "engine": "parallel", "mode": "turbo", "max_results": 5}]
 
-    req = request.Request(
-        OPENROUTER_URL,
-        method="POST",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/ankitdcx/garden-swarm",
-            "X-Title": "Garden Swarm",
-        },
-    )
-
+    req = request.Request(OPENROUTER_URL, method="POST", data=json.dumps(payload).encode("utf-8"), headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", "HTTP-Referer": "https://github.com/ankitdcx/garden-swarm", "X-Title": "Garden Swarm"})
     try:
         with request.urlopen(req, timeout=300) as response:
             data = json.loads(response.read().decode("utf-8"))
         msg = data["choices"][0]["message"]
-        return RunResult(
-            work_item=item.id,
-            role_id=role.id,
-            role_name=role.name,
-            requested_model=role.model,
-            returned_model=data.get("model"),
-            status="OK",
-            output=msg.get("content", ""),
-            annotations=msg.get("annotations"),
-            usage=data.get("usage"),
-        )
+        return RunResult(work_item=item.id, role_id=role.id, role_name=role.name, requested_model=role.model, returned_model=data.get("model"), status="OK", output=msg.get("content", ""), annotations=msg.get("annotations"), usage=data.get("usage"))
     except error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:1500]
-        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR",
-                         error=f"HTTP {exc.code}: {detail}")
+        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR", error=f"HTTP {exc.code}: {detail}")
     except Exception as exc:
-        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR",
-                         error=f"{type(exc).__name__}: {exc}")
+        return RunResult(item.id, role.id, role.name, role.model, None, "ERROR", error=f"{type(exc).__name__}: {exc}")
 
 
-def receipt(mode: str, roles: list[Role], items: list[WorkItem],
-            results: list[RunResult], args: argparse.Namespace) -> dict[str, Any]:
+def receipt(mode: str, roles: list[Role], items: list[WorkItem], results: list[RunResult], args: argparse.Namespace) -> dict[str, Any]:
     return {
         "schema": "GardenSwarmRunReceipt/v0.1",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "mode": mode,
         "garden_release": "v15.5",
-        "source_identity": [
-            {
-                "work_item": w.id,
-                "source_file": w.source_file,
-                "source_sha256": w.source_sha256,
-                "chunk_index": w.chunk_index,
-                "chunk_count": w.chunk_count,
-                "chars": len(w.text),
-            }
-            for w in items
-        ],
+        "source_identity": [{"work_item": w.id, "source_file": w.source_file, "source_sha256": w.source_sha256, "chunk_index": w.chunk_index, "chunk_count": w.chunk_count, "chars": len(w.text)} for w in items],
         "roles": [asdict(r) for r in roles],
-        "limits": {
-            "max_chars": args.max_chars,
-            "max_tokens": args.max_tokens,
-            "max_calls": args.max_calls,
-            "max_concurrency": args.max_concurrency,
-            "reasoning_effort": args.reasoning_effort,
-            "public_free": args.public_free,
-        },
+        "limits": {"max_chars": args.max_chars, "max_tokens": args.max_tokens, "max_calls": args.max_calls, "max_concurrency": args.max_concurrency, "reasoning_effort": args.reasoning_effort, "public_free": args.public_free},
+        "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
         "results": [asdict(r) for r in results],
         "admission_status": "PROPOSALS_ONLY",
     }
@@ -279,15 +235,13 @@ def main() -> int:
     p.add_argument("--repo-root", default=".")
     p.add_argument("--roles", default="swarm/roles.json")
     p.add_argument("--source", action="append", dest="sources")
-    p.add_argument("--role-tier", choices=["calibration", "standard", "all"],
-                   default="calibration")
+    p.add_argument("--role-tier", choices=["calibration", "standard", "all"], default="calibration")
     p.add_argument("--max-chars", type=int, default=60000)
     p.add_argument("--max-tokens", type=int, default=3000)
     p.add_argument("--max-calls", type=int, default=4)
     p.add_argument("--max-concurrency", type=int, default=2)
     p.add_argument("--reasoning-effort", choices=["none", "minimal", "low", "medium", "high"])
-    p.add_argument("--public-free", action="store_true",
-                   help="Allow non-ZDR free endpoints only for the published canonical Garden v15.5 source")
+    p.add_argument("--public-free", action="store_true", help="Allow non-ZDR free endpoints only for the published canonical Garden v15.5 source")
     p.add_argument("--live", action="store_true")
     p.add_argument("--output", default="swarm/runs/latest-plan.json")
     args = p.parse_args()
@@ -311,31 +265,22 @@ def main() -> int:
         if not os.environ.get("OPENROUTER_API_KEY"):
             raise SystemExit("OPENROUTER_API_KEY is required for --live")
         selected = pairs[: args.max_calls]
-        with concurrent.futures.ThreadPoolExecutor(
-            max_workers=args.max_concurrency
-        ) as pool:
-            futures = [
-                pool.submit(call_openrouter, role, item, args.max_tokens, args.reasoning_effort, args.public_free)
-                for role, item in selected
-            ]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=args.max_concurrency) as pool:
+            futures = [pool.submit(call_openrouter, role, item, args.max_tokens, args.reasoning_effort, args.public_free) for role, item in selected]
             for f in concurrent.futures.as_completed(futures):
                 result = f.result()
                 results.append(result)
                 print(f"{result.status}: {result.role_id} / {result.work_item}")
         mode = "LIVE"
     else:
-        print(
-            f"DRY RUN: {len(roles)} roles x {len(items)} work items = "
-            f"{len(pairs)} planned calls"
-        )
+        print(f"DRY RUN: {len(roles)} roles x {len(items)} work items = {len(pairs)} planned calls")
         print("No OpenRouter request was sent.")
         mode = "DRY_RUN"
 
     data = receipt(mode, roles, items, results, args)
     out = root / args.output
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n",
-                   encoding="utf-8")
+    out.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Receipt: {out}")
     return 0
 
