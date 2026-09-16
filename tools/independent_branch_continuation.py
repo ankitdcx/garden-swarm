@@ -4,6 +4,8 @@ Main-branch changes can require a new ChatGPT baseline, but never create inferen
 work by themselves. Only a staged external ChatGPT directive may begin a phase.
 Within BLIND, FINAL or CONFIRM phases, recorded results may dispatch the next
 isolated family because every reviewer in that phase receives the same packet.
+Recorded reviews are also queued for external ChatGPT quality adjudication in the
+same durable-state transaction used by continuation.
 """
 from __future__ import annotations
 
@@ -14,6 +16,7 @@ from pathlib import Path
 import time
 
 from tools import independent_branch_protocol as protocol
+from tools import reviewer_quality_runtime
 from tools import single_review_worker as legacy
 
 WORKER = "single-openrouter-review.yml"
@@ -42,6 +45,11 @@ def host_check() -> str:
     raise ValueError("unregistered continuation host")
 
 
+def _save_if_quality_changed(ledger: legacy.GitLedger, state: dict, quality_added: int) -> None:
+    if quality_added:
+        ledger.save(state)
+
+
 def dispatch(root: Path = Path(".")) -> None:
     event = host_check()
     token = os.environ["GH_REVIEW_TOKEN"]
@@ -51,12 +59,16 @@ def dispatch(root: Path = Path(".")) -> None:
         print("PAUSED; no model call or dispatch")
         return
 
+    registry = reviewer_quality_runtime.load_registry(root)
+    quality_added = reviewer_quality_runtime.queue_pending_assessments(state, registry, limit=20)
+
     executor_revision = _digest_files(root, [
         "tools/context_capsule.py",
         "tools/independent_branch_worker.py",
         "tools/single_review_worker.py",
         "tools/review_context.py",
         "tools/review_budget.py",
+        "tools/reviewer_quality_runtime.py",
         "agents/review-context-policy.json",
         "SOURCE_MANIFEST.json",
         "tools/independent_branch_protocol.py",
@@ -65,6 +77,8 @@ def dispatch(root: Path = Path(".")) -> None:
         "agents/independent-branch-convergence-policy.json",
         "agents/event-driven-context-policy.json",
         "agents/openrouter-paid-review-policy.json",
+        "agents/reviewer-quality-policy.json",
+        "agents/reviewer-slot-registry.json",
         "agents/provider-exclusion-policy.json",
         "agents/design-review-matrix.json",
     ])
@@ -98,11 +112,14 @@ def dispatch(root: Path = Path(".")) -> None:
 
     status = continuation.get("status")
     if status == "DEFERRED_DAILY" and time.time() < float(continuation.get("resume_after", 0)):
+        _save_if_quality_changed(ledger, state, quality_added)
         return
     if status == 'DISPATCHED':
         if event != 'schedule' or time.time() - float(continuation.get('updated', 0)) < 3600:
+            _save_if_quality_changed(ledger, state, quality_added)
             return
     if status not in ("READY", "DEFERRED_DAILY", "DISPATCHED"):
+        _save_if_quality_changed(ledger, state, quality_added)
         print("Queue state: " + str(status) + "; no automatic dispatch")
         return
     attempts = int(continuation.get("dispatch_attempts", 0))
@@ -122,6 +139,8 @@ def dispatch(root: Path = Path(".")) -> None:
     }
     ledger.save(state)
     legacy.http(legacy.API + "/actions/workflows/" + WORKER + "/dispatches", token, {"ref": "main"})
+    if quality_added:
+        print("Queued " + str(quality_added) + " reviewer response(s) for ChatGPT quality adjudication")
     print("Next isolated reviewer dispatched")
 
 
