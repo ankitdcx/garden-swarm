@@ -5,6 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
+from tools import context_capsule
 from tools import independent_branch_protocol as p
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +16,24 @@ class IndependentBranchProtocolTests(unittest.TestCase):
         self.policy = p.load_policy(json.loads((ROOT / "agents/independent-branch-convergence-policy.json").read_text(encoding="utf-8")))
         self.families = ["deepseek", "qwen", "glm", "xiaomi"]
         self.source_hash = "a" * 64
+        self.capsule = {
+            "schema": context_capsule.CAPSULE_SCHEMA,
+            "public_only": True,
+            "target_id": "T",
+            "context_expansion_level": "L0_CAPSULE",
+            "source_identity": {
+                "DesignEpoch": "v15.5",
+                "canonical_source_root_sha256": "d" * 64,
+                "candidate_source_root_sha256": None,
+                "target_source": "x",
+                "target_source_sha256": "1" * 64,
+            },
+            "whole_garden_orientation": {"purpose": "Garden architecture orientation"},
+            "dependency_closure": {"upstream": ["A"], "downstream": ["B"]},
+            "cross_cutting_obligations": {"authority": "APPLICABLE"},
+            "relevant_history": {"open_findings": []},
+            "omission_and_uncertainty_ledger": {"omitted": ["unrelated modules"], "risk": "LOW"},
+        }
         self.baseline = {
             "schema": p.BASELINE_SCHEMA,
             "baseline_sha256": "b" * 64,
@@ -33,6 +52,8 @@ class IndependentBranchProtocolTests(unittest.TestCase):
             "target_id": "T",
             "source_packet_sha256": self.source_hash,
             "reviewer_families": self.families,
+            "architecture_context_capsule": copy.deepcopy(self.capsule),
+            "architecture_context_capsule_sha256": context_capsule.sha256_value(self.capsule),
             "private_baseline_commitment": copy.deepcopy(self.baseline),
         }
 
@@ -43,10 +64,15 @@ class IndependentBranchProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "may not be embedded"):
             p.validate_baseline_commitment(bad)
 
-    def test_blind_directive_forbids_branch_or_peer_content(self):
+    def test_blind_directive_forbids_branch_or_peer_content_and_binds_capsule(self):
         d = self.base_directive("BLIND")
         d["same_neutral_query_for_all_reviewers"] = True
+        d["same_context_capsule_for_all_reviewers"] = True
         p.validate_directive(d, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
+        bad = copy.deepcopy(d)
+        bad["architecture_context_capsule"]["whole_garden_orientation"]["purpose"] = "mutated"
+        with self.assertRaisesRegex(ValueError, "capsule hash mismatch"):
+            p.validate_directive(bad, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
         for key in ("branch_candidate", "merged_candidate", "peer_findings"):
             bad = copy.deepcopy(d)
             bad[key] = "leak"
@@ -105,12 +131,14 @@ class IndependentBranchProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "one confirmation"):
             p.validate_directive(bad, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
 
-    def test_blind_prompt_is_model_identity_independent(self):
+    def test_blind_prompt_is_model_identity_independent_and_requests_context_verdict(self):
         target = {"target_id": "T", "review_question": "Q?"}
         trace = {"source": "x", "source_sha256": "1" * 64}
-        first = p.blind_prompt(target=target, source="public source", trace=trace)
-        second = p.blind_prompt(target=target, source="public source", trace=trace)
+        first = p.blind_prompt(target=target, source="public source plus capsule", trace=trace)
+        second = p.blind_prompt(target=target, source="public source plus capsule", trace=trace)
         self.assertEqual(first, second)
+        self.assertIn("context_sufficiency", first)
+        self.assertIn("FULL_CONTEXT_REQUIRED", first)
         self.assertNotIn("deepseek", first.lower())
         self.assertNotIn("qwen", first.lower())
         self.assertNotIn("glm", first.lower())
@@ -126,11 +154,31 @@ class IndependentBranchProtocolTests(unittest.TestCase):
             "proposed_patch": "",
             "uncertainty": "none found in bounded packet",
             "overturn_conditions": "new counterexample",
+            "context_sufficiency": "SUFFICIENT",
+            "missing_context_reason": "",
+            "requested_dependency_or_source_refs": [],
         }
         out = p.validate_final_review(review, family="deepseek", model_id="deepseek/x", candidate_sha256="e" * 64, phase="FINAL")
         self.assertTrue(out["independent"])
         self.assertFalse(out["peer_reviews_seen"])
         self.assertNotIn("proof", out)
+
+    def test_final_review_cannot_approve_with_insufficient_context(self):
+        review = {
+            "verdict": "APPROVE",
+            "material_findings": [],
+            "missing_evidence": [],
+            "surviving_counterexamples": [],
+            "affected_invariants": [],
+            "proposed_patch": "",
+            "uncertainty": "context missing",
+            "overturn_conditions": "provide source",
+            "context_sufficiency": "EXPAND_REQUIRED",
+            "missing_context_reason": "need upstream authority owner",
+            "requested_dependency_or_source_refs": ["AuthorityOwner"],
+        }
+        with self.assertRaisesRegex(ValueError, "must BLOCK"):
+            p.validate_final_review(review, family="qwen", model_id="qwen/x", candidate_sha256="e" * 64, phase="FINAL")
 
     def test_absolute_call_ceiling_is_twenty(self):
         cycle = {"attempts": [{"inference_reserved": True} for _ in range(19)]}
