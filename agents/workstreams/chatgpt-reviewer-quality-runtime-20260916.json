@@ -1,0 +1,14 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:reviewer-quality-runtime-20260916",
+  "work_package_id": "GARDEN-REVIEWER-QUALITY-RUNTIME-QUEUE-V1",
+  "branch": "chatgpt/reviewer-quality-runtime-20260916",
+  "base_sha": "5a38f5ab3eee949752d5c3246104deb1ed8ef3cf",
+  "dependency_intent_ids": ["chatgpt:reviewer-quality-workstream-v1:20260916"],
+  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "pre_pr_bootstrap_commit": "WORKSTREAM_INTENT_ONLY",
+  "substantial_edit_started": false,
+  "boundary": "GitHub requires at least one commit before a pull request can exist. This intent-only commit is the permitted pre-draft bootstrap; implementation edits begin only after the draft PR is opened."
+}
