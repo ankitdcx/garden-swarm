@@ -5,7 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
-from tools.rotate_design_review_target import select_target
+from tools.rotate_design_review_target import event_slot, select_target
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,11 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class DesignTargetRotationTests(unittest.TestCase):
     def setUp(self):
-        self.matrix = json.loads(
-            (ROOT / "agents/design-review-matrix.json").read_text(encoding="utf-8")
-        )
+        self.matrix = json.loads((ROOT / "agents/design-review-matrix.json").read_text(encoding="utf-8"))
 
-    def test_consecutive_hours_rotate_when_multiple_targets_exist(self):
+    def test_distinct_event_slots_rotate_when_multiple_targets_exist(self):
         self.assertGreaterEqual(len(self.matrix["targets"]), 2)
         first = select_target(copy.deepcopy(self.matrix), 0)
         second = select_target(copy.deepcopy(self.matrix), 1)
@@ -30,12 +28,17 @@ class DesignTargetRotationTests(unittest.TestCase):
             expected = self.matrix["targets"][slot % count]
             self.assertEqual(selected["target_id"], expected["target_id"])
 
+    def test_same_event_key_is_stable_without_clock_input(self):
+        self.assertEqual(event_slot("merge:repo:abc"), event_slot("merge:repo:abc"))
+        self.assertNotEqual(event_slot("merge:repo:abc"), event_slot("merge:repo:def"))
+
     def test_selection_mutates_only_runtime_active_metadata(self):
         candidate = copy.deepcopy(self.matrix)
         target = select_target(candidate, 7)
         self.assertEqual(candidate["active_target_id"], target["target_id"])
-        self.assertEqual(candidate["active_target_hour_slot"], 7)
-        self.assertIn("Scheduling evidence only", candidate["active_target_selection_reason"])
+        self.assertEqual(candidate["active_target_event_slot"], 7)
+        self.assertNotIn("active_target_hour_slot", candidate)
+        self.assertIn("event-key", candidate["active_target_selection_reason"])
         self.assertFalse(candidate["semantic_compliance_proved"])
         self.assertEqual(candidate["canonical_source_root_sha256"], self.matrix["canonical_source_root_sha256"])
         self.assertEqual(candidate["design_epoch"], self.matrix["design_epoch"])
@@ -43,6 +46,10 @@ class DesignTargetRotationTests(unittest.TestCase):
     def test_negative_slot_is_rejected(self):
         with self.assertRaises(ValueError):
             select_target(copy.deepcopy(self.matrix), -1)
+
+    def test_empty_event_key_is_rejected(self):
+        with self.assertRaises(ValueError):
+            event_slot("  ")
 
 
 if __name__ == "__main__":

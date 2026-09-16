@@ -4,9 +4,9 @@
   "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
   "minimum_independent_reviewer_families": 3,
   "preferred_independent_reviewer_families": 8,
-  "selection_policy": "Choose exactly one public bounded target per hourly cycle using deterministic rotation across canonical design, implementation, verification, security/privacy, integration, operations/budget and authority surfaces. Coverage evidence never authorizes a semantic delta.",
+  "selection_policy": "Choose exactly one public bounded target per eligible material review event using deterministic event-key rotation across canonical design, implementation, verification, security/privacy, integration, operations/budget and authority surfaces. Replaying an unchanged event key does not create new review work. Coverage evidence never authorizes a semantic delta.",
   "active_target_id": "DRM-H01-CONSTITUTIONAL-EVENT-BOUNDARY",
-  "active_target_selection_reason": "High-risk constitutional/containment boundary; rotation expands beyond source design into executable public implementation and governance surfaces.",
+  "active_target_selection_reason": "High-risk constitutional/containment boundary; event-driven selection expands beyond source design into executable public implementation and governance surfaces.",
   "semantic_compliance_proved": false,
   "targets": [
     {"target_id":"DRM-H01-CONSTITUTIONAL-EVENT-BOUNDARY","target_kind":"canonical_design","risk":"HIGH","freshness":"UNREVIEWED_UNDER_EXPANDED_MULTI_TRACK_POLICY","source_file":"Garden_User_v15.5_FULL_2026-09-12.txt","start_anchor":"CONSTITUTIONAL EVENTS","end_anchor":"HISTORICAL BELIEF AND EXPLAINABLE BELIEF CHANGE","review_question":"Does Garden correctly separate constitutional violation blocking/evidence preservation from containment, restriction, guilt, intent and their independent authority/evidence requirements?","public_only":true,"last_qualified_review_bundle":null},

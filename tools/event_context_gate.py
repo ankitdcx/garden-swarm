@@ -21,7 +21,7 @@ def _hash(value: Any) -> str:
 
 def load_policy(path: Path = POLICY) -> dict[str, Any]:
     policy = json.loads(path.read_text(encoding="utf-8"))
-    if policy.get("schema") != "GardenEventDrivenContextPolicy/v1":
+    if policy.get("schema") != "GardenEventDrivenContextPolicy/v2":
         raise ValueError("unsupported event-driven context policy schema")
     if policy.get("public_only") is not True:
         raise ValueError("public adapter policy must remain public-only")
@@ -96,8 +96,8 @@ def build_packet(observations: list[dict[str, Any]], policy: dict[str, Any], *, 
     now = time.time() if now is None else float(now)
     validated = [_validate_observation(row, policy) for row in observations]
 
-    # Preserve the newest exact semantic replay only. Different fingerprints remain separate,
-    # so contradictory observations cannot disappear merely because they share a subject.
+    # Preserve only the newest exact semantic replay. Different fingerprints remain
+    # separate so relevant contradictions cannot disappear behind subject-level dedupe.
     dedup: dict[tuple[str, str], dict[str, Any]] = {}
     duplicate_ids: list[str] = []
     for row in sorted(validated, key=lambda r: (float(r["observed_at_unix"]), str(r["observation_id"]))):
@@ -138,20 +138,20 @@ def build_packet(observations: list[dict[str, Any]], policy: dict[str, Any], *, 
         "deduplicated_observation_count": len(dedup),
         "active_observation_count": len(active),
         "stale_observation_count": len(stale_ids),
-        "frontier_call_eligible": material and bool(policy["frontier_council"]["enabled"]),
+        "frontier_handoff_eligible": material and bool(policy["frontier_handoff"]["enabled"]),
         "semantic_delta_admitted": False,
         "authority_granted": False,
         "compression_boundary": (
-            "This packet is a derived routing/context view. Source/evidence refs are retained; "
-            "raw evidence remains owned by its source contract and omitted observations are recorded."
+            "Derived routing/context view only. Source/evidence refs remain back-pointers; "
+            "raw evidence remains owned by its source contract and omissions are explicit."
         ),
+        "full_context_fallback_rule": policy["full_context_fallback"]["required_when"],
     }
     chars = len(json.dumps(payload, ensure_ascii=False, separators=(",", ":")))
     payload["context_characters"] = chars
     if chars > int(policy["context_packet"]["max_prompt_characters"]):
-        # Do not silently truncate evidence. Escalate compaction as an explicit separate step.
-        payload["frontier_call_eligible"] = False
-        payload["packet_status"] = "MATERIAL_BUT_TOO_LARGE_REQUIRES_EXPLICIT_COMPACTION"
+        payload["frontier_handoff_eligible"] = False
+        payload["packet_status"] = "MATERIAL_BUT_TOO_LARGE_REQUIRES_EXPLICIT_RECOMPACTION_OR_CONTEXT_EXPANSION"
     else:
         payload["packet_status"] = "MATERIAL" if material else "NOT_MATERIAL"
     payload["packet_sha256"] = _hash({k: v for k, v in payload.items() if k != "packet_sha256"})
@@ -179,7 +179,7 @@ def main() -> int:
         "raw_observations": packet["raw_observation_count"],
         "active_observations": packet["active_observation_count"],
         "context_characters": packet["context_characters"],
-        "frontier_call_eligible": packet["frontier_call_eligible"],
+        "frontier_handoff_eligible": packet["frontier_handoff_eligible"],
     }, sort_keys=True))
     return 0
 
