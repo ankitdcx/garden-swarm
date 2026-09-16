@@ -9,9 +9,11 @@
     "paid_review_policy": "agents/openrouter-paid-review-policy.json",
     "slot_registry": "agents/reviewer-slot-registry.json",
     "convergence_policy": "agents/independent-branch-convergence-policy.json",
-    "provider_exclusion_policy": "agents/provider-exclusion-policy.json"
+    "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
+    "runtime_queue": "garden-review-state:reviewer_quality_queue"
   },
   "schemas": {
+    "assessment_request": "GardenReviewerQualityAssessmentRequest/v1",
     "response_receipt": "GardenReviewerQualityReceipt/v1",
     "slot_summary": "GardenReviewerSlotQualitySummary/v1",
     "shadow_benchmark": "GardenReviewerShadowBenchmark/v1",
@@ -92,6 +94,16 @@
     "record_hard_failures": true,
     "record_surviving_or_overturned_findings": true
   },
+  "runtime_assessment_queue": {
+    "every_current_protocol_REVIEW_RECORDED_attempt_must_be_queued": true,
+    "deduplicate_by_response_sha256": true,
+    "queue_owner": "EXTERNAL_CHATGPT_FRONTIER",
+    "queue_status": "AWAITING_CHATGPT_ADJUDICATION",
+    "quality_queue_does_not_block_independent_peer_collection_by_itself": true,
+    "quality_adjudication_required_before_treating_quality_evidence_as_closed": true,
+    "assessment_request_is_not_proof_authority_or_model_replacement": true,
+    "reuse_existing_continuation_state_transaction": true
+  },
   "selection_boundary": {
     "selector_must_read_slot_registry": true,
     "all_required_slots_must_be_ACTIVE": true,
@@ -99,5 +111,5 @@
     "replacement_cannot_reduce_required_family_diversity": true,
     "excluded_families_remain_ineligible_even_if_better_scoring": true
   },
-  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. A replacement becomes active only after blind shadow evidence and an explicit governed registry update. Reviewer agreement is never treated as proof or as a positive quality signal by itself."
+  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. Every recorded current-protocol review is queued for external ChatGPT quality adjudication. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. A replacement becomes active only after blind shadow evidence and an explicit governed registry update. Reviewer agreement is never treated as proof or as a positive quality signal by itself."
 }
