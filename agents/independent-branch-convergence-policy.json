@@ -25,7 +25,8 @@
       "neutral_query_sha256",
       "source_packet_sha256",
       "created_before_openrouter_calls"
-    ]
+    ],
+    "disclosure_after_blind": "FINAL_AND_CONFIRM_REQUIRE_EXACT_COMMITTED_PUBLIC_BASELINE; PRIVATE_CONTENT_MUST_NOT_BE_DISCLOSED"
   },
   "source_packet": {
     "must_follow": "GardenArchitectureContextCapsulePolicy/v1",
@@ -111,7 +112,12 @@
     "material_block_or_patch_requires_chatgpt_reintegration": true,
     "maximum_confirmation_rounds": 1,
     "confirmation_uses_bit_identical_revised_candidate_for_all_reviewers": true,
-    "branch_closures_required": "All four closures bind each latest response hash; immutable once final review begins."
+    "branch_closures_required": "All four closures bind each latest response hash; immutable once final review begins.",
+    "synthesis_audit_required": true,
+    "synthesis_audit_schema": "GardenSynthesisAuditPacket/v1",
+    "must_expose": "Exact committed public baseline plus every original BLIND and RECONCILE finding from durable state, with evidence-bound retain/reject/supersede/unresolved dispositions.",
+    "must_audit": "Every original evidence ID and its disposition; unresolved or unsupported disposition must BLOCK.",
+    "evidence_class": "POST_BLIND_SYNTHESIS_AUDIT_NOT_INDEPENDENT_BLIND_EVIDENCE"
   },
   "stop_rule": {
     "success_condition": "NO_UNRESOLVED_MATERIAL_CONTRADICTION_COUNTEREXAMPLE_EVIDENCE_GAP_VIOLATED_INVARIANT_CONTEXT_GAP_OR_STRONGER_KNOWN_ALTERNATIVE_REMAINS_AT_REQUIRED_ASSURANCE_LEVEL",
@@ -140,7 +146,7 @@
     "incomplete_retry": "Explicit retry_of_attempt_sha256 plus retry_reason, only after completion and billing are reconciled."
   },
   "legacy_disposition": {
-    "peer_cross_examination_where_models_receive_other_model_answers": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
+    "peer_cross_examination_where_models_receive_other_model_answers": "FORBIDDEN_DURING_BLIND_AND_RECONCILE; REQUIRED_AS_LOCKED_POST_BLIND_SYNTHESIS_AUDIT_DURING_FINAL_AND_CONFIRM; OTHER_FINAL_REVIEWS_REMAIN_HIDDEN",
     "batch_multi_model_synthesis_inside_openrouter_lane": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
     "legacy_outputs_without_v1_protocol_receipt": "NON_ADMISSIBLE_AS_CURRENT_GARDEN_MULTI_MODEL_CONVERGENCE_EVIDENCE"
   },
@@ -149,5 +155,6 @@
     "same_source_packet_for_all_initial_reviewers": true,
     "context_expansion_requires_new_baseline_commitment": true,
     "no_claim_of_full_corpus_or_dependency_closure_from_retrieval": true
-  }
+  },
+  "revision": 2
 }

@@ -69,6 +69,8 @@ def _request_for(state: dict[str, Any], attempt: dict[str, Any], registry: dict[
         "finding_sha256": attempt.get("finding_sha256"),
         "context_sufficiency": finding.get("context_sufficiency"),
         "peer_content_seen": bool(record.get("peer_content_seen")),
+        "evidence_stage": record.get("evidence_stage", "ISOLATED_BRANCH"),
+        "synthesis_audit_sha256": record.get("synthesis_audit_sha256"),
         "response_id": attempt.get("response_id"),
         "run_id": attempt.get("run_id"),
     }
@@ -113,7 +115,14 @@ def queue_pending_assessments(state: dict[str, Any], registry: dict[str, Any], *
             continue
         request = _request_for(state, attempt, registry, now)
         if request["peer_content_seen"] is not False:
-            raise ValueError("quality request detected peer-content exposure")
+            phase = attempt.get("phase")
+            cycle = state["convergence_cycles"][attempt["cycle"]]
+            bound = cycle.get(("final" if phase == "FINAL" else "confirm") + "_synthesis_audit_sha256")
+            if (phase not in ("FINAL", "CONFIRM") or
+                    request["evidence_stage"] != "POST_BLIND_SYNTHESIS_AUDIT" or
+                    not bound or request["synthesis_audit_sha256"] != bound or
+                    attempt.get("synthesis_audit_sha256") != bound):
+                raise ValueError("quality request detected unauthorized peer-content exposure")
         queue.append(request)
         queued_hashes.add(response_hash)
         attempt["reviewer_quality_status"] = QUALITY_STATUS
