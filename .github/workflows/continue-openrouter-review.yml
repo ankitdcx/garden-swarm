@@ -8,6 +8,8 @@ on:
       - 'SOURCE_MANIFEST.json'
       - 'agents/design-review-matrix.json'
       - 'agents/review-context-policy.json'
+      - 'agents/garden-architecture-context-capsule-policy.json'
+      - 'agents/event-driven-context-policy.json'
       - 'agents/openrouter-paid-review-policy.json'
       - 'agents/provider-exclusion-policy.json'
       - 'agents/independent-branch-convergence-policy.json'
@@ -48,6 +50,7 @@ jobs:
         run: |
           python -m unittest tests.test_independent_branch_protocol -v
           python -m unittest tests.test_review_continuation -v
+          python -m unittest tests.test_review_phase_guards -v
       - name: Resume only an already-directed same-packet isolated phase
         env:
           GH_REVIEW_TOKEN: ${{ github.token }}

@@ -54,6 +54,7 @@ def dispatch(root: Path = Path(".")) -> None:
     executor_revision = _digest_files(root, [
         "tools/context_capsule.py",
         "tools/independent_branch_worker.py",
+        "tools/single_review_worker.py",
         "tools/review_context.py",
         "tools/review_budget.py",
         "agents/review-context-policy.json",
@@ -70,7 +71,20 @@ def dispatch(root: Path = Path(".")) -> None:
     current_commit = os.environ.get("GITHUB_SHA")
     continuation = state.get("continuation") or {}
 
-    if event == "push" and (state.get("admitted_source_commit") != current_commit or state.get("executor_revision_v3") != executor_revision):
+    outstanding = [row for row in state.get("attempts", []) if row.get("status") in ("RESERVED", "UNKNOWN")]
+    if outstanding:
+        state["continuation"] = {
+            "status": "BLOCKED_UNRESOLVED_CALL",
+            "reason": "GENERATION_OR_BILLING_EVIDENCE_REQUIRED",
+            "attempts": [{k: a.get(k) for k in ("run_id", "model", "status", "response_id", "started")}
+                         for a in outstanding],
+            "updated": time.time(),
+        }
+        ledger.save(state)
+        print("Outstanding call requires reconciliation; no continuation dispatch")
+        return
+
+    if state.get("admitted_source_commit") != current_commit or state.get("executor_revision_v3") != executor_revision:
         state["admitted_source_commit"] = current_commit
         state["executor_revision_v3"] = executor_revision
         state["continuation"] = {
@@ -91,10 +105,6 @@ def dispatch(root: Path = Path(".")) -> None:
     if status not in ("READY", "DEFERRED_DAILY", "DISPATCHED"):
         print("Queue state: " + str(status) + "; no automatic dispatch")
         return
-    if any(row.get("status") in ("RESERVED", "UNKNOWN") for row in state.get("attempts", [])):
-        print("Outstanding call requires worker reconciliation; no continuation dispatch")
-        return
-
     attempts = int(continuation.get("dispatch_attempts", 0))
     if attempts >= 2:
         state["continuation"] = {

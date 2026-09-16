@@ -141,7 +141,11 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
             if family not in cycle["blind"]:
                 return phase, family, "blind:" + family
         return None
+    if set(cycle.get("blind") or {}) != set(families):
+        raise ValueError("all four initial reviews must finish before reconciliation or final review")
     if phase == "RECONCILE":
+        if cycle.get("final") or cycle.get("confirm"):
+            raise ValueError("branch reconciliation cannot change after final review starts")
         family = directive["family"]
         branch_round = int(directive["branch_round"])
         done = list(cycle["reconcile"].get(family) or [])
@@ -153,6 +157,28 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         if prior.get("finding_sha256") != directive["own_response_sha256"]:
             raise ValueError("branch directive does not bind the latest own-branch response")
         return phase, family, f"reconcile:{branch_round}:{family}"
+    closures = directive.get("branch_closures") or {}
+    if set(closures) != set(families):
+        raise ValueError("final review requires four explicit branch closures")
+    for family in families:
+        closure, latest = closures[family], _latest_branch_result(cycle, family)
+        if closure.get("finding_sha256") != latest.get("finding_sha256"):
+            raise ValueError("branch closure must bind the latest response")
+        if not isinstance(closure.get("reason"), str) or not closure["reason"].strip():
+            raise ValueError("branch closure needs a material-issue assessment")
+        finding = latest["finding"]
+        if finding.get("context_sufficiency") != "SUFFICIENT":
+            raise ValueError("branch closure cannot waive missing context")
+        if cycle["reconcile"].get(family):
+            if closure.get("outcome") != "RECONCILED":
+                raise ValueError("followed-up branch must be closed as RECONCILED")
+        elif (closure.get("outcome") != "NO_FOLLOWUP_NEEDED" or
+              finding.get("disposition") != "NO_CHANGE"):
+            raise ValueError("only an explicit NO_CHANGE branch can omit followup")
+    closures_hash = protocol.sha256_value(closures)
+    if cycle.get("branch_closures_sha256", closures_hash) != closures_hash:
+        raise ValueError("branch closures changed after final review began")
+    cycle["branch_closures_sha256"] = closures_hash
     bucket = "final" if phase == "FINAL" else "confirm"
     candidate_hash = directive["merged_candidate_sha256"]
     existing_hashes = {row.get("candidate_sha256") for row in cycle[bucket].values() if row.get("candidate_sha256")}
@@ -164,6 +190,21 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         if family not in cycle[bucket]:
             return phase, family, bucket + ":" + family
     return None
+
+
+def _require_explicit_retry(state: dict, cycle_id: str, slot: str, directive: dict) -> None:
+    prior = [a for a in state.get("attempts", [])
+             if a.get("cycle") == cycle_id and a.get("slot") == slot and a.get("inference_reserved")]
+    if not prior:
+        return
+    if len(prior) >= 2:
+        raise ValueError("two attempts per review slot exhausted; stop and escalate")
+    latest = prior[-1]
+    if latest.get("status") not in ("INCOMPLETE", "INCOMPLETE_REQUIRES_EXPLICIT_DIRECTIVE"):
+        raise ValueError("prior slot is unresolved or already completed")
+    if (directive.get("retry_of_attempt_sha256") != protocol.sha256_value(latest) or
+            not isinstance(directive.get("retry_reason"), str) or not directive["retry_reason"].strip()):
+        raise ValueError("incomplete call requires an explicit receipt-bound retry directive")
 
 
 def _prompt(*, phase: str, family: str, directive: dict, target: dict, source: str, trace: dict, cycle: dict) -> str:
@@ -256,7 +297,19 @@ def _result_status(cycle: dict, phase: str, families: list[str]) -> str:
         return "AWAITING_CHATGPT_RECONCILIATION"
     if phase == "FINAL":
         return "READY" if len(cycle["final"]) < len(families) else "AWAITING_CHATGPT_FINAL_DECISION"
-    return "READY" if len(cycle["confirm"]) < len(families) else "COMPLETE_PROPOSALS_ONLY"
+    if len(cycle["confirm"]) < len(families):
+        return "READY"
+    unresolved = [family for family in families
+                  if cycle["confirm"][family]["finding"].get("verdict") != "APPROVE"]
+    if unresolved:
+        cycle["disagreement_receipt"] = {
+            "schema": "GardenReviewDisagreementReceipt/v1",
+            "phase": "CONFIRM", "families": unresolved,
+            "response_hashes": {f: cycle["confirm"][f]["finding_sha256"] for f in unresolved},
+            "status": "ESCALATE_UNRESOLVED", "semantic_delta_admitted": False,
+        }
+        return "ESCALATE_UNRESOLVED"
+    return "AWAITING_CHATGPT_FINAL_DECISION"
 
 
 def run(root: Path = Path(".")) -> None:
@@ -317,6 +370,7 @@ def run(root: Path = Path(".")) -> None:
         return
 
     phase, family, slot = plan
+    _require_explicit_retry(state, cycle_id, slot, directive)
     model = next(row for row in policy["routine_reviewers"] if row["family"] == family)
     require_allowed_model(model_id=model["model"], family=family, policy=exclusions)
     prompt = _prompt(phase=phase, family=family, directive=directive, target=target, source=source, trace=trace, cycle=cycle)
@@ -351,6 +405,8 @@ def run(root: Path = Path(".")) -> None:
         "protocol": WORKER_PROTOCOL,
         "cycle": cycle_id,
         "slot": slot,
+        "retry_of_attempt_sha256": directive.get("retry_of_attempt_sha256"),
+        "retry_reason": directive.get("retry_reason"),
         "phase": phase,
         "model": model["model"],
         "family": family,

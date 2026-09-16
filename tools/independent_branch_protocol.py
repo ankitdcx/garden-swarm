@@ -209,6 +209,11 @@ def validate_final_review(value: dict[str, Any], *, family: str, model_id: str, 
     context_capsule.validate_context_verdict(value)
     if value.get("context_sufficiency") != "SUFFICIENT" and value.get("verdict") != "BLOCK":
         raise ValueError("final review with insufficient context must BLOCK rather than approve")
+    if value.get("verdict") == "APPROVE" and any(value.get(k) for k in (
+            "material_findings", "missing_evidence", "surviving_counterexamples", "proposed_patch")):
+        raise ValueError("APPROVE cannot contain unresolved material findings, missing evidence or patches")
+    if value.get("verdict") == "APPROVE_WITH_PATCH" and not str(value.get("proposed_patch") or "").strip():
+        raise ValueError("APPROVE_WITH_PATCH requires an explicit proposed patch")
     value.update({
         "schema": FINAL_REVIEW_SCHEMA,
         "reviewer_family": family,
