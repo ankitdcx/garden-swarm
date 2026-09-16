@@ -74,7 +74,9 @@
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "ChatGPT and Gemini remain separate independent lanes.",
     "Escalation and emergency pools are not spendable by this routine runner.",
-    "Legacy free_swarm/specialist_free_sweep per-hour fields describe superseded batch envelopes. execution_limits is the active shared execution cap; legacy batch workflows are blocked. Do not infer review quorum from a call cap."
+    "Legacy free_swarm/specialist_free_sweep per-hour fields describe superseded batch envelopes. execution_limits is the active shared execution cap; legacy batch workflows are blocked. Do not infer review quorum from a call cap.",
+    "Event-driven context routing is additive: cheap/free workers normalize observations; a separate materiality gate may invoke one GPT-6 Astra synthesis call. Astra never becomes a universal relay hop and cannot replace independent review or semantic admission.",
+    "The coordinator remains paused until separately resumed; registering event-driven tooling does not authorize provider calls."
   ],
   "specialist_free_sweep": {
     "enabled": true,
@@ -97,5 +99,13 @@
     "scope": "SHARED_ACROSS_ALL_LANES",
     "enforcement_status": "LEGACY_BATCH_DISPATCH_BLOCKED_PENDING_DURABLE_SHARED_LEDGER",
     "family_counts": "Review-cycle diversity targets, accumulated over multiple dispatches; not simultaneous calls or quota grants."
+  },
+  "event_driven_context": {
+    "policy": "agents/event-driven-context-policy.json",
+    "context_builder": "tools/event_context_gate.py",
+    "frontier_council_runner": "tools/run_frontier_council.py",
+    "frontier_catalog_reference_date": "2026-09-16",
+    "activation_status": "WIRED_TOOLING_PAUSED_WITH_COORDINATOR",
+    "no_schedule_required": true
   }
 }
