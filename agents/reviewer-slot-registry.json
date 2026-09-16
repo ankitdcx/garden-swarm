@@ -1,0 +1,57 @@
+{
+  "schema": "GardenReviewerSlotRegistry/v1",
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_REGISTRY",
+  "effective_date": "2026-09-16",
+  "quality_policy": "agents/reviewer-quality-policy.json",
+  "required_active_slots": 4,
+  "slots": [
+    {
+      "slot_id": "SLOT-REASONING",
+      "role": "primary_agentic_reasoning",
+      "family": "deepseek",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "state": "ACTIVE",
+      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "quality_receipt_count": 0,
+      "hard_failure_count": 0
+    },
+    {
+      "slot_id": "SLOT-ARCHITECTURE",
+      "role": "independent_architecture_and_code",
+      "family": "qwen",
+      "model": "qwen/qwen3.8-flash",
+      "state": "ACTIVE",
+      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "quality_receipt_count": 0,
+      "hard_failure_count": 0
+    },
+    {
+      "slot_id": "SLOT-FORMAL",
+      "role": "formal_semantics_and_long_context",
+      "family": "glm",
+      "model": "z-ai/glm-5.3-flash",
+      "state": "ACTIVE",
+      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "quality_receipt_count": 0,
+      "hard_failure_count": 0
+    },
+    {
+      "slot_id": "SLOT-EXECUTION",
+      "role": "independent_agentic_execution",
+      "family": "xiaomi",
+      "model": "xiaomi/mimo-v2.5",
+      "state": "ACTIVE",
+      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "quality_receipt_count": 0,
+      "hard_failure_count": 0
+    }
+  ],
+  "rules": {
+    "exactly_one_active_model_per_slot": true,
+    "families_must_be_distinct": true,
+    "non_active_slot_blocks_new_four_branch_review": true,
+    "model_change_requires_shadow_benchmark_and_registry_PR": true,
+    "registry_change_is_not_quality_proof_or_authority": true,
+    "moving_latest_aliases_forbidden": true
+  }
+}

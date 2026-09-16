@@ -12,7 +12,11 @@ Core principle:
 
 Before any GitHub write, branch creation, file mutation, pull request, workflow rerun, merge attempt, branch replacement, or `garden-review-state` update, read `GIT_OPERATING_CONTEXT.md` first. Refresh the live default-branch head and relevant GitHub rulesets when that file requires it, and inspect open PR/work-intent overlap before choosing shared paths.
 
-`GIT_OPERATING_CONTEXT.md` is an operational Git/process source only. It does not change Garden canonical semantics, grant authority, or authorize promotion. Do not bypass strict required checks, rewrite protected history, fabricate approval, or weaken a fail-closed Garden gate merely to make CI green.
+For parallel ChatGPT Git work, also read `CHATGPT_WORKSTREAM_POLICY.json`: one chat thread + one bounded work package uses its own `chatgpt/...` branch and early draft PR; genuine semantic collisions are reconciled on a fresh `integration/...` branch and final main admission is serialized through the merge train.
+
+For OpenRouter reviewer work, also read `agents/reviewer-quality-policy.json` and `agents/reviewer-slot-registry.json`. Reviewer slots are evidence-governed, not permanent model identities: bad task responses may be rejected; DEGRADED/QUARANTINED slots block new convergence admission; replacements require blind shadow evidence and a governed registry PR. Agreement with ChatGPT or peers is never a quality score by itself.
+
+`GIT_OPERATING_CONTEXT.md`, `CHATGPT_WORKSTREAM_POLICY.json`, and reviewer-quality policies are operational process sources only. They do not change Garden canonical semantics, grant authority, create Proof, or authorize promotion. Do not bypass strict required checks, rewrite protected history, fabricate approval, silently substitute a reviewer, or weaken a fail-closed Garden gate merely to make CI green.
 
 ## Read first
 

@@ -34,6 +34,7 @@ jobs:
           python -m unittest tests.test_independent_branch_protocol tests.test_review_context -v
           python -m unittest tests.test_single_review_worker tests.test_review_continuation -v
           python -m unittest tests.test_review_phase_guards -v
+          python -m unittest tests.test_reviewer_quality -v
       - name: Admit only the registered isolated single-call host and persistent state
         env:
           GH_REVIEW_TOKEN: ${{ github.token }}

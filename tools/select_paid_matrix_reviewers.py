@@ -7,7 +7,33 @@ from pathlib import Path
 from tools.provider_exclusion import load_policy, require_allowed_model, openrouter_provider_policy
 
 POLICY = Path("agents/openrouter-paid-review-policy.json")
+REGISTRY = Path("agents/reviewer-slot-registry.json")
 OUTPUT = Path("agents/runtime/paid-selection.json")
+
+
+def active_reviewers(policy: dict, registry: dict, exclusion_policy: dict) -> list[dict]:
+    if registry.get("schema") != "GardenReviewerSlotRegistry/v1":
+        raise ValueError("unsupported reviewer slot registry")
+    slots = list(registry.get("slots") or [])
+    required = int(registry.get("required_active_slots", 0))
+    if len(slots) != required or required != 4:
+        raise ValueError("exactly four governed reviewer slots required")
+    if any(slot.get("state") != "ACTIVE" for slot in slots):
+        raise ValueError("reviewer slot not ACTIVE; repair or governed replacement required before new convergence task")
+    selected = [{"family": str(s["family"]), "role": str(s["role"]), "model": str(s["model"])} for s in slots]
+    families = [row["family"] for row in selected]
+    if len(set(families)) != required:
+        raise ValueError("reviewer slot families must remain distinct")
+    if any(not row["model"].strip() for row in selected):
+        raise ValueError("reviewer slot is missing a model")
+    if any(row["model"].endswith(":free") for row in selected):
+        raise ValueError("paid routine selector may not silently substitute free routes")
+    for row in selected:
+        require_allowed_model(model_id=row["model"], family=row["family"], policy=exclusion_policy)
+    mirror = list(policy.get("routine_reviewers") or [])
+    if mirror != selected:
+        raise ValueError("paid-review routine_reviewers drifted from reviewer-slot-registry; update both in one governed PR")
+    return selected
 
 
 def main() -> int:
@@ -19,19 +45,13 @@ def main() -> int:
     if policy.get("semantic_delta_admitted") is not False:
         raise SystemExit("routine reviewer policy may not self-admit semantic deltas")
 
+    registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
     exclusion_policy = load_policy()
-    selected = list(policy.get("routine_reviewers") or [])
-    if len(selected) < 2:
-        raise SystemExit("routine paid reviewer set must contain at least two independent families")
-    families = [str(row.get("family")) for row in selected]
-    if len(set(families)) != len(families):
-        raise SystemExit("routine paid reviewer families must be distinct")
-    if any(not str(row.get("model", "")).strip() for row in selected):
-        raise SystemExit("routine paid reviewer is missing a model")
-    if any(str(row.get("model", "")).endswith(":free") for row in selected):
-        raise SystemExit("paid routine selector may not silently substitute free routes")
-    for row in selected:
-        require_allowed_model(model_id=str(row.get("model", "")), family=str(row.get("family", "")), policy=exclusion_policy)
+    try:
+        selected = active_reviewers(policy, registry, exclusion_policy)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    families = [row["family"] for row in selected]
 
     daily_ceiling = float(policy.get("daily_openrouter_cost_ceiling_usd", 0))
     if not (0 < daily_ceiling <= 2.0):
@@ -42,6 +62,8 @@ def main() -> int:
         "purpose": policy["purpose"],
         "design_epoch": policy["design_epoch"],
         "provider_exclusion_policy": policy.get("provider_exclusion_policy"),
+        "reviewer_quality_policy": policy.get("reviewer_quality_policy"),
+        "reviewer_slot_registry": str(REGISTRY),
         "selected": selected,
         "approved_families": families,
         "daily_openrouter_cost_ceiling_usd": daily_ceiling,
