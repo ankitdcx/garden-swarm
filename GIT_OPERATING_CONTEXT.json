@@ -1,0 +1,58 @@
+{
+  "schema": "GardenGitOperatingContext/v1",
+  "observed_at": "2026-09-16",
+  "human_source": "GIT_OPERATING_CONTEXT.md",
+  "status": "OPERATIONAL_PROCESS_SOURCE_NOT_CANONICAL_GARDEN_SEMANTICS",
+  "refresh_before_new_write_package": true,
+  "live_github_rules_override_snapshot": true,
+  "repositories": {
+    "ankitdcx/garden-main": {
+      "observed_main_sha": "46516375cf0c0db387c6c2fc665282409da7278a",
+      "verified_merge_ruleset_id": 23542743,
+      "work_branch_ruleset_id": 23542796,
+      "strict_required_checks": true,
+      "required_checks": ["validate", "trusted-base-admission"],
+      "non_fast_forward_blocked_on_main": true,
+      "non_fast_forward_blocked_on_work_branches": true,
+      "source_root_design_epoch_binding_required_for_guarded_prs": true
+    },
+    "ankitdcx/garden-swarm": {
+      "observed_main_sha": "2e6de899e0cf21085928ead6f39910f42130c1cb",
+      "verified_merge_ruleset_id": 23543047,
+      "work_branch_ruleset_id": 23543069,
+      "persistent_review_state_ruleset_id": 23543091,
+      "strict_required_checks": true,
+      "required_checks": ["verify", "guard"],
+      "non_fast_forward_blocked_on_main": true,
+      "non_fast_forward_blocked_on_work_branches": true,
+      "review_state_branch": "garden-review-state",
+      "review_state_deletion_blocked": true,
+      "auto_merge_observed_disabled": true
+    }
+  },
+  "preflight_order": [
+    "READ_GIT_OPERATING_CONTEXT",
+    "REFRESH_MAIN_HEAD",
+    "REFRESH_RULESETS_IF_STALE",
+    "CHECK_OPEN_PR_AND_INTENT_OVERLAP",
+    "BOUND_WORK_PACKAGE",
+    "CREATE_UNIQUE_CURRENT_BASE_BRANCH",
+    "RUN_DETERMINISTIC_PARSE_AND_TARGETED_TESTS",
+    "DECLARE_COMPLETE_AGENT_WORK_INTENT",
+    "OPEN_PR",
+    "OBSERVE_CI_WITHOUT_POLL_LOOP",
+    "FIX_TYPED_FAILURE_ONLY",
+    "REFRESH_MAIN_BEFORE_MERGE",
+    "MERGE_ONLY_WITH_EXACT_REQUIRED_CHECKS",
+    "VERIFY_MAIN_ONCE"
+  ],
+  "hard_rules": {
+    "force_push_or_history_rewrite_default": "FORBIDDEN",
+    "blind_workflow_retry": "FORBIDDEN",
+    "fabricated_human_or_reviewer_approval": "FORBIDDEN",
+    "merge_with_stale_strict_base": "FORBIDDEN",
+    "search_result_as_post_merge_authority": "FORBIDDEN",
+    "same_hash_reread_default": "SKIP",
+    "active_status_poll_loop": "FORBIDDEN_BY_DEFAULT"
+  }
+}
