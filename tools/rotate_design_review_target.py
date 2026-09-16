@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Deterministically select one bounded Garden Design Review Matrix target per UTC hour.
+"""Deterministically select one bounded Garden review target from a durable event key.
 
-This is scheduling/evidence plumbing only. It never admits a semantic delta, grants
-reviewers authority, or changes canonical Garden source. The workflow checkout is
-ephemeral: the matrix rewrite below selects the target for this run only.
+This is routing/evidence plumbing only. It never admits a semantic delta, grants
+reviewers authority or changes canonical Garden source. No wall-clock fallback is
+permitted: unchanged time passage must not rotate work.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
-import time
+import os
 from pathlib import Path
 from typing import Any
 
@@ -18,12 +18,19 @@ MATRIX = Path("agents/design-review-matrix.json")
 RECEIPT = Path("agents/runtime/design-target-selection.json")
 
 
+def event_slot(event_key: str) -> int:
+    key = str(event_key).strip()
+    if not key:
+        raise ValueError("event_key must be non-empty")
+    return int(hashlib.sha256(key.encode("utf-8")).hexdigest()[:16], 16)
+
+
 def select_target(matrix: dict[str, Any], slot: int) -> dict[str, Any]:
     targets = list(matrix.get("targets") or [])
     if len(targets) < 2:
-        raise ValueError("Design Review Matrix needs at least two targets for hourly rotation")
+        raise ValueError("Design Review Matrix needs at least two targets for deterministic rotation")
     if slot < 0:
-        raise ValueError("hour_slot must be non-negative")
+        raise ValueError("event_slot must be non-negative")
     index = slot % len(targets)
     target = targets[index]
     target_id = str(target.get("target_id", "")).strip()
@@ -31,16 +38,18 @@ def select_target(matrix: dict[str, Any], slot: int) -> dict[str, Any]:
         raise ValueError("selected target has no target_id")
     matrix["active_target_id"] = target_id
     matrix["active_target_selection_reason"] = (
-        f"Deterministic hourly round-robin slot={slot}; index={index} of {len(targets)}. "
-        "Scheduling evidence only; no semantic authority."
+        f"Deterministic event-key rotation slot={slot}; index={index} of {len(targets)}. "
+        "Routing evidence only; no semantic authority."
     )
-    matrix["active_target_hour_slot"] = slot
+    matrix["active_target_event_slot"] = slot
+    matrix.pop("active_target_hour_slot", None)
     return target
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--matrix", default=str(MATRIX))
+    parser.add_argument("--event-key")
     parser.add_argument("--slot", type=int)
     parser.add_argument("--receipt", default=str(RECEIPT))
     args = parser.parse_args()
@@ -54,20 +63,29 @@ def main() -> int:
     if matrix.get("semantic_compliance_proved") is not False:
         raise SystemExit("review matrix may not self-claim semantic compliance")
 
-    slot = args.slot if args.slot is not None else int(time.time() // 3600)
-    target = select_target(matrix, slot)
-    target_index = next(
-        i for i, row in enumerate(matrix["targets"]) if row.get("target_id") == target["target_id"]
-    )
+    event_key = args.event_key or os.environ.get("GARDEN_EVENT_KEY") or os.environ.get("GITHUB_SHA")
+    if args.slot is not None:
+        slot = args.slot
+        event_key_hash = None
+        selection_mode = "EXPLICIT_EVENT_SLOT"
+    else:
+        if not event_key:
+            raise SystemExit("event key is required unless --slot is supplied; no clock fallback is allowed")
+        slot = event_slot(event_key)
+        event_key_hash = hashlib.sha256(event_key.encode("utf-8")).hexdigest()
+        selection_mode = "DETERMINISTIC_EVENT_HASH_ROUND_ROBIN"
 
-    # This mutation exists only inside the workflow checkout so the existing bounded
-    # review tool can consume exactly the selected target. It is not committed.
+    target = select_target(matrix, slot)
+    target_index = next(i for i, row in enumerate(matrix["targets"]) if row.get("target_id") == target["target_id"])
+
+    # Ephemeral workflow mutation only; the selected target is not committed here.
     matrix_path.write_text(json.dumps(matrix, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     receipt = {
-        "schema": "GardenDesignTargetSelectionReceipt/v1",
-        "hour_slot": slot,
-        "selection_mode": "DETERMINISTIC_HOURLY_ROUND_ROBIN",
+        "schema": "GardenDesignTargetSelectionReceipt/v2",
+        "event_slot": slot,
+        "event_key_sha256": event_key_hash,
+        "selection_mode": selection_mode,
         "target_id": target["target_id"],
         "target_index": target_index,
         "target_count": len(matrix["targets"]),

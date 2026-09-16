@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
-"""Run exactly one free OpenRouter review per hour and degrade cleanly on free-tier exhaustion."""
+"""Legacy filename: run exactly one event-selected free OpenRouter review."""
 from __future__ import annotations
 import json, subprocess, sys
 from pathlib import Path
 
 SEL = Path("agents/runtime/free-selection.json")
-OUT = Path("agents/outbox/hourly")
+OUT = Path("agents/outbox/hourly")  # legacy artifact path retained for compatibility
 
 
 def main() -> int:
     sel = json.loads(SEL.read_text(encoding="utf-8"))
-    slot = int(sel["hour_slot"])
+    slot = int(sel["event_slot"])
     lane = "design" if slot % 2 == 0 else "repo"
-    # Execute as a module so repository-root package imports such as
-    # tools._free_review_common resolve deterministically. Direct script
-    # execution sets sys.path[0] to tools/ and can fail before inference.
     cmd = [sys.executable, "-m", f"tools.free_{lane}_review"]
     proc = subprocess.run(cmd, text=True, capture_output=True)
     print(proc.stdout, end="")
@@ -25,8 +22,9 @@ def main() -> int:
         return proc.returncode
     OUT.mkdir(parents=True, exist_ok=True)
     receipt = {
-        "schema": "GardenFreeReviewAvailabilityReceipt/v1",
-        "hour_slot": slot,
+        "schema": "GardenFreeReviewAvailabilityReceipt/v2",
+        "event_slot": slot,
+        "event_key_sha256": sel.get("event_key_sha256"),
         "lane": lane,
         "status": "RATE_LIMITED",
         "reason": "OpenRouter free-tier HTTP 429; no paid fallback attempted",

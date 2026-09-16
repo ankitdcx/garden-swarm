@@ -1,9 +1,14 @@
-name: Garden hourly free specialist sweep
+name: Garden event-dispatched free specialist sweep (legacy hourly filename)
 
 on:
   # Scheduled work is owned by the single Garden Coordinator.
-  # Keep this legacy worker available only for explicit dispatch.
+  # Legacy filename retained; this worker has no clock trigger.
   workflow_dispatch:
+    inputs:
+      event_key:
+        description: Durable event/material-work key; defaults to dispatched commit SHA
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -16,6 +21,8 @@ jobs:
   specialist-sweep:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:
+      GARDEN_EVENT_KEY: ${{ inputs.event_key || github.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,15 +37,18 @@ jobs:
           python -m unittest tests.test_design_target_rotation -v
           python -m unittest tests.test_design_review_matrix -v
           python -m unittest tests.test_multi_track_review_policy -v
+          python -m unittest tests.test_event_driven_context_routing -v
 
-      - name: Select a different bounded public target from the main hourly lane
+      - name: Select a different bounded public target for this event
         id: slot
         run: |
           SLOT=$(python - <<'PY'
-          import json, time
+          import hashlib, json, os
           policy = json.load(open('agents/openrouter-paid-review-policy.json', encoding='utf-8'))
           offset = int(policy['specialist_free_sweep']['target_slot_offset'])
-          print(int(time.time() // 3600) + offset)
+          key = os.environ['GARDEN_EVENT_KEY']
+          base = int(hashlib.sha256(key.encode('utf-8')).hexdigest()[:16], 16)
+          print(base + offset)
           PY
           )
           echo "slot=$SLOT" >> "$GITHUB_OUTPUT"
@@ -102,6 +112,7 @@ jobs:
           print(json.dumps({
               'target_id': target['target_id'],
               'target_index': target['target_index'],
+              'event_slot': target['event_slot'],
               'selected_families': [row['family'] for row in selected],
               'selected_roles': [row['role'] for row in selected],
               'independent_completed': bundle['independent_reviewer_family_count'],
@@ -115,10 +126,11 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: garden-hourly-free-specialist-sweep-${{ github.run_id }}
+          name: garden-event-free-specialist-sweep-${{ github.run_id }}
           path: |
             agents/design-review-matrix.json
             agents/openrouter-paid-review-policy.json
+            agents/event-driven-context-policy.json
             agents/runtime/specialist-target-selection.json
             agents/runtime/free-selection.json
             agents/outbox/hourly/design-review-bundle.json

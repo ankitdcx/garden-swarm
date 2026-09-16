@@ -1,9 +1,10 @@
+import inspect
 import json
 import unittest
 from pathlib import Path
 
 from tools import event_context_gate as gate
-from tools import run_frontier_council as council
+from tools import run_frontier_council as frontier
 
 
 class EventDrivenContextRoutingTests(unittest.TestCase):
@@ -30,12 +31,12 @@ class EventDrivenContextRoutingTests(unittest.TestCase):
         row.update(updates)
         return row
 
-    def test_unchanged_low_risk_context_skips_frontier(self):
+    def test_unchanged_low_risk_context_skips_frontier_handoff(self):
         packet = gate.build_packet([self.obs()], self.policy, now=200.0)
         self.assertFalse(packet["material"])
-        self.assertFalse(packet["frontier_call_eligible"])
+        self.assertFalse(packet["frontier_handoff_eligible"])
         self.assertEqual(packet["packet_status"], "NOT_MATERIAL")
-        ok, reason = council.eligible(packet, self.policy)
+        ok, reason = frontier.eligible(packet, self.policy)
         self.assertFalse(ok)
         self.assertEqual(reason, "NOT_MATERIAL")
 
@@ -63,10 +64,10 @@ class EventDrivenContextRoutingTests(unittest.TestCase):
         )
         packet = gate.build_packet([left, right], self.policy, now=200.0)
         self.assertTrue(packet["material"])
-        self.assertTrue(packet["frontier_call_eligible"])
+        self.assertTrue(packet["frontier_handoff_eligible"])
         self.assertEqual({x["observation_id"] for x in packet["observations"]}, {"left", "right"})
         self.assertIn("CONTRADICTION", packet["materiality_reasons"]["left"])
-        ok, reason = council.eligible(packet, self.policy)
+        ok, reason = frontier.eligible(packet, self.policy)
         self.assertTrue(ok)
         self.assertEqual(reason, "MATERIAL_CONTEXT_ELIGIBLE")
 
@@ -81,26 +82,48 @@ class EventDrivenContextRoutingTests(unittest.TestCase):
             packet["omitted_observations"],
         )
 
-    def test_frontier_policy_is_selective_astra_not_universal_relay(self):
-        cfg = self.policy["frontier_council"]
-        self.assertEqual(cfg["primary_model"], "openai/gpt-6-astra")
-        self.assertEqual(cfg["purpose"], "MATERIAL_CHANGE_SYNTHESIS_ONLY")
-        self.assertEqual(cfg["max_calls_per_material_event"], 1)
+    def test_frontier_is_external_chatgpt_not_openrouter_or_hardcoded_model(self):
+        cfg = self.policy["frontier_handoff"]
+        self.assertEqual(cfg["lane"], "EXTERNAL_CHATGPT_FRONTIER_REVIEW")
+        self.assertEqual(cfg["provider_boundary"], "NOT_OPENROUTER")
+        self.assertEqual(cfg["model_identity"], "USER_SELECTED_CHATGPT_MODEL_NOT_HARDCODED_BY_REPOSITORY")
+        self.assertNotIn("primary_model", cfg)
+        self.assertNotIn("provider_policy", cfg)
         self.assertTrue(cfg["requires_materiality_receipt"])
         self.assertTrue(cfg["cannot_replace_independent_family_quorum"])
         self.assertTrue(cfg["cannot_admit_semantic_delta"])
         self.assertTrue(cfg["cannot_grant_authority"])
-        self.assertLessEqual(cfg["max_call_cost_usd"], 0.20)
 
-    def test_context_packet_preserves_backpointers_and_no_authority(self):
+    def test_material_packet_builds_provider_neutral_chatgpt_request(self):
         packet = gate.build_packet([
             self.obs(risk="HIGH", event_kind="TEST_FAILURE", source_refs=["run:1"], evidence_refs=["log:1"])
         ], self.policy, now=200.0)
-        row = packet["observations"][0]
-        self.assertEqual(row["source_refs"], ["run:1"])
-        self.assertEqual(row["evidence_refs"], ["log:1"])
-        self.assertFalse(packet["semantic_delta_admitted"])
-        self.assertFalse(packet["authority_granted"])
+        request = frontier.build_request(packet, self.policy, now=201.0)
+        self.assertEqual(request["schema"], "GardenFrontierReviewRequest/v1")
+        self.assertEqual(request["lane"], "EXTERNAL_CHATGPT_FRONTIER_REVIEW")
+        self.assertEqual(request["provider_boundary"], "NOT_OPENROUTER")
+        self.assertEqual(request["model_selection"], "USER_PRODUCT_CONTEXT")
+        self.assertFalse(request["contains_provider_credentials"])
+        self.assertFalse(request["contains_openrouter_model_route"])
+        self.assertEqual(request["context_packet"]["observations"][0]["source_refs"], ["run:1"])
+        self.assertEqual(request["context_packet"]["observations"][0]["evidence_refs"], ["log:1"])
+        self.assertFalse(request["semantic_delta_admitted"])
+        self.assertFalse(request["authority_granted"])
+
+    def test_frontier_builder_has_no_network_or_provider_credential_path(self):
+        source = inspect.getsource(frontier)
+        self.assertNotIn("urlopen", source)
+        self.assertNotIn("OPENROUTER_API_KEY", source)
+        self.assertNotIn("chat/completions", source)
+        self.assertNotIn("openai/gpt-6-astra", source)
+
+    def test_full_context_fallback_is_explicit(self):
+        required = self.policy["full_context_fallback"]["required_when"]
+        self.assertGreaterEqual(len(required), 5)
+        text = " ".join(required).lower()
+        self.assertIn("dependency closure", text)
+        self.assertIn("designepoch", text)
+        self.assertIn("whole-source", text)
 
 
 if __name__ == "__main__":

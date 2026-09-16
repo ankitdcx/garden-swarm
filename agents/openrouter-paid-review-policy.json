@@ -1,6 +1,6 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "purpose": "ROUTINE_HOURLY_PUBLIC_MULTI_TRACK_REVIEW",
+  "purpose": "EVENT_DRIVEN_PUBLIC_MULTI_TRACK_REVIEW",
   "design_epoch": "v15.5",
   "catalog_reference_date": "2026-09-15",
   "public_only": true,
@@ -45,38 +45,23 @@
     }
   },
   "routine_reviewers": [
-    {
-      "family": "deepseek",
-      "role": "adversarial_reasoning",
-      "model": "deepseek/deepseek-v4-flash-0731"
-    },
-    {
-      "family": "qwen",
-      "role": "architecture_and_code",
-      "model": "qwen/qwen3.7-flash"
-    },
-    {
-      "family": "glm",
-      "role": "formal_semantics",
-      "model": "z-ai/glm-5.3-flash"
-    },
-    {
-      "family": "mistral",
-      "role": "implementation_and_compliance",
-      "model": "mistralai/mistral-small-2603"
-    }
+    {"family":"deepseek","role":"adversarial_reasoning","model":"deepseek/deepseek-v4-flash-0731"},
+    {"family":"qwen","role":"architecture_and_code","model":"qwen/qwen3.7-flash"},
+    {"family":"glm","role":"formal_semantics","model":"z-ai/glm-5.3-flash"},
+    {"family":"mistral","role":"implementation_and_compliance","model":"mistralai/mistral-small-2603"}
   ],
   "notes": [
     "Routine paid reviewers and the free swarm produce proposal evidence only.",
-    "The free swarm is deliberately broad and multi-track; it reviews both bounded canonical-design targets and bounded public implementation/governance targets.",
+    "The free swarm is deliberately broad and multi-track; it reviews bounded canonical-design and public implementation/governance targets.",
     "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
     "Free-swarm breadth is used before paid reviewers; free reviewers never satisfy paid-family requirements.",
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
     "ChatGPT and Gemini remain separate independent lanes.",
     "Escalation and emergency pools are not spendable by this routine runner.",
-    "Legacy free_swarm/specialist_free_sweep per-hour fields describe superseded batch envelopes. execution_limits is the active shared execution cap; legacy batch workflows are blocked. Do not infer review quorum from a call cap.",
-    "Event-driven context routing is additive: cheap/free workers normalize observations; a separate materiality gate may invoke one GPT-6 Astra synthesis call. Astra never becomes a universal relay hop and cannot replace independent review or semantic admission.",
-    "The coordinator remains paused until separately resumed; registering event-driven tooling does not authorize provider calls."
+    "Legacy free_swarm/specialist_free_sweep per-hour fields are quota and reviewer-cardinality envelopes, not scheduling instructions. The active coordinator is event/completion driven and legacy batch workflows are dispatch-only.",
+    "Event-driven context routing is additive: deterministic/cheap/OpenRouter workers may normalize observations, perform bounded independent review and build a compact material-context packet.",
+    "OpenRouter MUST NOT invoke, impersonate or hardcode the external ChatGPT frontier lane. A material packet may create a provider-neutral GardenFrontierReviewRequest/v1 for separate ChatGPT review.",
+    "The coordinator remains paused until separately resumed; registering event-driven tooling does not authorize provider calls or ChatGPT handoffs."
   ],
   "specialist_free_sweep": {
     "enabled": true,
@@ -103,8 +88,10 @@
   "event_driven_context": {
     "policy": "agents/event-driven-context-policy.json",
     "context_builder": "tools/event_context_gate.py",
-    "frontier_council_runner": "tools/run_frontier_council.py",
-    "frontier_catalog_reference_date": "2026-09-16",
+    "frontier_handoff_builder": "tools/run_frontier_council.py",
+    "frontier_handoff_schema": "GardenFrontierReviewRequest/v1",
+    "frontier_provider_boundary": "EXTERNAL_CHATGPT_NOT_OPENROUTER",
+    "event_key_routing": true,
     "activation_status": "WIRED_TOOLING_PAUSED_WITH_COORDINATOR",
     "no_schedule_required": true
   }
