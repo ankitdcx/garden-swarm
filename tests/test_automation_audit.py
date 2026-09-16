@@ -64,7 +64,7 @@ class AutomationAuditTests(unittest.TestCase):
         self.assertEqual(sum(policy['budget_pools_usd'].values()),20)
         self.assertIn('NOT_DAILY',policy['budget_pool_scope'])
         self.assertIsNone(policy['balance_remaining_usd'])
-        self.assertEqual(policy['daily_openrouter_cost_ceiling_usd'],1)
+        self.assertEqual(policy['daily_openrouter_cost_ceiling_usd'],2)
         self.assertEqual(policy['free_swarm']['max_parallelism'],1)
         self.assertEqual(policy['execution_limits']['max_model_calls_per_dispatch'],1)
 

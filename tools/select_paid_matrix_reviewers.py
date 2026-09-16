@@ -34,8 +34,8 @@ def main() -> int:
         require_allowed_model(model_id=str(row.get("model", "")), family=str(row.get("family", "")), policy=exclusion_policy)
 
     daily_ceiling = float(policy.get("daily_openrouter_cost_ceiling_usd", 0))
-    if not (0 < daily_ceiling <= 1.0):
-        raise SystemExit("daily OpenRouter cost ceiling must be >0 and <= $1.00")
+    if not (0 < daily_ceiling <= 2.0):
+        raise SystemExit("daily OpenRouter cost ceiling must be >0 and <= $2.00")
 
     payload = {
         "schema": "GardenPaidModelSelection/v2",

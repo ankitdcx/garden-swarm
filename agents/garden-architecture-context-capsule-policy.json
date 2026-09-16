@@ -14,27 +14,124 @@
     "public_openrouter_lane_remains_public_only": true
   },
   "required_layers": [
-    {"layer": "SOURCE_IDENTITY", "must_include": ["DesignEpoch", "canonical_source_root_sha256", "candidate_source_root_sha256_when_applicable", "exact target source path and hash", "context capsule version and hash"]},
-    {"layer": "WHOLE_GARDEN_ORIENTATION", "must_include": ["Garden purpose and system boundary", "five-document architecture map or current successor topology", "top-level control loop and process flow", "authority HSA rights consent privacy and Human-Effect Closure boundaries", "Reason Compare Proof Evidence AAP ActionGate and DesignEpoch boundaries", "major registries theories and owner map relevant to architectural interpretation", "cross-cutting invariants that apply broadly"], "form": "COMPACT_SOURCE_BOUND_ARCHITECTURE_MAP"},
-    {"layer": "TARGET_SOURCE", "must_include": ["exact section or module under review", "its declared purpose inputs outputs owners and authority/effect surface", "source backpointers"]},
-    {"layer": "DEPENDENCY_CLOSURE", "must_include": ["direct upstream owners", "direct downstream consumers", "transitive dependencies required to judge the review question", "applicable SchemaIDs FunctionContracts TransitionContracts invariants and tests", "relevant shared-state provenance and authority composition edges"]},
-    {"layer": "CROSS_CUTTING_OBLIGATIONS", "must_consider": ["authority", "HSA and rights", "Human-Effect Closure", "consent and privacy", "security", "Reason and Compare", "Proof and Evidence", "AAP and assurance", "ActionGate", "Process Policy Decision Conformance and Evidence algebras", "DesignEpoch and source identity", "causal level obligations", "rollback and reversibility", "provenance and audit"], "include_only_applicable_but_record_not_applicable_dispositions": true},
-    {"layer": "RELEVANT_HISTORY", "must_include_when_material": ["current supersession or retention decisions", "open contradictions", "relevant prior findings and unresolved defects", "known failed alternatives", "DO_NOTHING alternative"]},
-    {"layer": "OMISSION_AND_UNCERTAINTY_LEDGER", "must_include": ["what was omitted", "why it was omitted", "whether omission could affect the answer", "known uncertainty", "available expansion pointers"]}
+    {
+      "layer": "SOURCE_IDENTITY",
+      "must_include": [
+        "DesignEpoch",
+        "canonical_source_root_sha256",
+        "candidate_source_root_sha256_when_applicable",
+        "exact target source path and hash",
+        "context capsule version and hash"
+      ]
+    },
+    {
+      "layer": "WHOLE_GARDEN_ORIENTATION",
+      "must_include": [
+        "Garden purpose and system boundary",
+        "five-document architecture map or current successor topology",
+        "top-level control loop and process flow",
+        "authority HSA rights consent privacy and Human-Effect Closure boundaries",
+        "Reason Compare Proof Evidence AAP ActionGate and DesignEpoch boundaries",
+        "major registries theories and owner map relevant to architectural interpretation",
+        "cross-cutting invariants that apply broadly"
+      ],
+      "form": "COMPACT_SOURCE_BOUND_ARCHITECTURE_MAP"
+    },
+    {
+      "layer": "TARGET_SOURCE",
+      "must_include": [
+        "exact section or module under review",
+        "its declared purpose inputs outputs owners and authority/effect surface",
+        "source backpointers"
+      ]
+    },
+    {
+      "layer": "DEPENDENCY_CLOSURE",
+      "must_include": [
+        "direct upstream owners",
+        "direct downstream consumers",
+        "transitive dependencies required to judge the review question",
+        "applicable SchemaIDs FunctionContracts TransitionContracts invariants and tests",
+        "relevant shared-state provenance and authority composition edges"
+      ]
+    },
+    {
+      "layer": "CROSS_CUTTING_OBLIGATIONS",
+      "must_consider": [
+        "authority",
+        "HSA and rights",
+        "Human-Effect Closure",
+        "consent and privacy",
+        "security",
+        "Reason and Compare",
+        "Proof and Evidence",
+        "AAP and assurance",
+        "ActionGate",
+        "Process Policy Decision Conformance and Evidence algebras",
+        "DesignEpoch and source identity",
+        "causal level obligations",
+        "rollback and reversibility",
+        "provenance and audit"
+      ],
+      "include_only_applicable_but_record_not_applicable_dispositions": true
+    },
+    {
+      "layer": "RELEVANT_HISTORY",
+      "must_include_when_material": [
+        "current supersession or retention decisions",
+        "open contradictions",
+        "relevant prior findings and unresolved defects",
+        "known failed alternatives",
+        "DO_NOTHING alternative"
+      ]
+    },
+    {
+      "layer": "OMISSION_AND_UNCERTAINTY_LEDGER",
+      "must_include": [
+        "what was omitted",
+        "why it was omitted",
+        "whether omission could affect the answer",
+        "known uncertainty",
+        "available expansion pointers"
+      ]
+    }
   ],
   "global_orientation_snapshot": {
     "reusable_between_reviews": true,
     "must_be_source_bound": true,
-    "must_invalidate_when": ["DesignEpoch changes", "canonical source root changes", "candidate source root changes for candidate review", "top-level owner or registry mapping changes", "cross-cutting constitutional rights authority or HSA semantics change", "global control-flow or document topology changes"],
+    "must_invalidate_when": [
+      "DesignEpoch changes",
+      "canonical source root changes",
+      "candidate source root changes for candidate review",
+      "top-level owner or registry mapping changes",
+      "cross-cutting constitutional rights authority or HSA semantics change",
+      "global control-flow or document topology changes"
+    ],
     "may_be_reused_when_exact_hashes_remain_valid": true,
     "cannot_substitute_for_target_or_dependency_source": true
   },
   "context_expansion_ladder": [
-    {"level": "L0_CAPSULE", "content": "global orientation + target + bounded dependency closure + applicable obligations", "default": true},
-    {"level": "L1_DEPENDENCY_EXPANDED", "content": "expand transitive dependencies contracts invariants tests and prior findings"},
-    {"level": "L2_CROSS_LAYER_EXPANDED", "content": "include all materially interacting Garden layers and owner-qualified semantics"},
-    {"level": "L3_AFFECTED_DOCUMENTS_FULL", "content": "send complete affected Garden design documents rather than excerpts"},
-    {"level": "L4_FULL_GARDEN", "content": "send the full current five-document or successor Garden corpus required for whole-source review"}
+    {
+      "level": "L0_CAPSULE",
+      "content": "global orientation + target + bounded dependency closure + applicable obligations",
+      "default": true
+    },
+    {
+      "level": "L1_DEPENDENCY_EXPANDED",
+      "content": "expand transitive dependencies contracts invariants tests and prior findings"
+    },
+    {
+      "level": "L2_CROSS_LAYER_EXPANDED",
+      "content": "include all materially interacting Garden layers and owner-qualified semantics"
+    },
+    {
+      "level": "L3_AFFECTED_DOCUMENTS_FULL",
+      "content": "send complete affected Garden design documents rather than excerpts"
+    },
+    {
+      "level": "L4_FULL_GARDEN",
+      "content": "send the full current five-document or successor Garden corpus required for whole-source review"
+    }
   ],
   "expansion_triggers": [
     "dependency closure is incomplete unknown or cyclic in a way that changes interpretation",
@@ -46,9 +143,33 @@
     "contradiction depends on omitted source",
     "whole-source Compare Proof Evidence Challenger Tier-A audit or promotion obligation applies"
   ],
-  "reviewer_context_verdict": {"required_field": "context_sufficiency", "allowed": ["SUFFICIENT", "EXPAND_REQUIRED", "FULL_CONTEXT_REQUIRED"], "when_not_sufficient_require": ["missing_context_reason", "requested_dependency_or_source_refs"], "context_insufficiency_is_not_a_negative_quality_score": true},
-  "four_branch_consistency": {"all_initial_reviewers_receive_bit_identical_context_capsule": true, "context_capsule_sha256_must_match_across_initial_branches": true, "if_material_expansion_is_required": "STOP_CURRENT_BLIND_ROUND_EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_IDENTICAL_EXPANDED_PACKET", "do_not_expand_only_one_initial_branch": true, "branch_reconciliation_may_add_only_that_branch_own_history_and_chatgpt_branch_candidate": true},
-  "packet_budget": {"prefer_smallest_packet_that_preserves_decision_relevant_semantics": true, "routine_openrouter_prompt_character_ceiling": 60000, "never_truncate_target_dependency_or_contradiction_silently": true, "when_budget_is_insufficient": "EXPAND_BY_REFERENCED_STAGED_REVIEW_OR_ESCALATE_TO_FULL_CONTEXT_CAPABLE_LANE; NEVER_DROP_REQUIRED_CONTEXT"},
+  "reviewer_context_verdict": {
+    "required_field": "context_sufficiency",
+    "allowed": [
+      "SUFFICIENT",
+      "EXPAND_REQUIRED",
+      "FULL_CONTEXT_REQUIRED"
+    ],
+    "when_not_sufficient_require": [
+      "missing_context_reason",
+      "requested_dependency_or_source_refs"
+    ],
+    "context_insufficiency_is_not_a_negative_quality_score": true
+  },
+  "four_branch_consistency": {
+    "all_initial_reviewers_receive_bit_identical_context_capsule": true,
+    "context_capsule_sha256_must_match_across_initial_branches": true,
+    "if_material_expansion_is_required": "STOP_CURRENT_BLIND_ROUND_EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_IDENTICAL_EXPANDED_PACKET",
+    "do_not_expand_only_one_initial_branch": true,
+    "branch_reconciliation_may_add_only_that_branch_own_history_and_chatgpt_branch_candidate": true
+  },
+  "packet_budget": {
+    "prefer_smallest_packet_that_preserves_decision_relevant_semantics": true,
+    "routine_openrouter_prompt_character_ceiling": 200000,
+    "never_truncate_target_dependency_or_contradiction_silently": true,
+    "when_budget_is_insufficient": "EXPAND_BY_REFERENCED_STAGED_REVIEW_OR_ESCALATE_TO_FULL_CONTEXT_CAPABLE_LANE; NEVER_DROP_REQUIRED_CONTEXT",
+    "adaptive_source_profile_policy": "agents/openrouter-paid-review-policy.json"
+  },
   "whole_garden_review_mode": {
     "first_full_review_marks_unreviewed_units_as_review_events": true,
     "review_units_are_processed_sequentially_or_by_governed_nonoverlapping_partition": true,

@@ -55,10 +55,10 @@ Limits remain:
 
 - one inference call per dispatch;
 - one concurrent model call maximum;
-- `$0.05` reservation ceiling per routine call;
-- `$1.00` OpenRouter ceiling per UTC day;
+- `$0.10` reservation ceiling per call;
+- `$2.00` default OpenRouter ceiling per UTC day; a dated, target-bound AUDIT plan may select `$10.00`;
 - `$9` routine lifetime allocation from the original `$20` pool;
-- **20 OpenRouter inference calls absolute maximum per convergence task**.
+- **20 OpenRouter inference calls absolute maximum per target/source task, including context expansions**.
 
 The ceiling is `4 blind + up to 8 branch follow-ups + 4 final + up to 4 confirmation = 20`. Easy work can finish at 8 calls; normal work is expected around 12. Budget exhaustion stops/defers work; it never authorizes dropping a required reviewer, weakening assurance, or sharing branches.
 
@@ -96,3 +96,102 @@ This live evidence proves parts of the transport, reservation and continuation p
 ## Evidence boundary
 
 A completed convergence protocol produces proposal evidence only. It does not establish whole-Garden coverage, semantic correctness, canonical promotion, legal status, authority or human admission. Agreement itself is never the stopping criterion; the stopping criterion is absence of unresolved material contradiction, counterexample, evidence gap, violated invariant or stronger known alternative at the required assurance level.
+
+## Source-backed context and adaptive review depth
+
+The active worker now verifies all five canonical public files against
+SOURCE_MANIFEST before constructing a review packet. It includes the exact
+canonical overview (reader guide, status distinctions, architecture and whole-system
+loop), the target section, and retrieved dependency/mitigation passages. Every
+passage retains its file hash, exact line positions and excerpt hash. The initial
+five-file corpus produces 532 indexed passages. Source changes rebuild the index;
+cache corruption cannot replace canonical source text.
+
+The local index is reused through Actions cache. The cache stores already-public
+source, never credentials, private baseline text or private candidate deltas.
+Context selection is deterministic. The packet binds the release, complete source
+manifest, retrieval policy, profile, supplied passages and explicit omission counts.
+It does not claim full dependency closure or that omitted material is absent from
+Garden. Exact retrieval is not proof, empirical validation or whole-design review.
+
+| Profile | Generated-token ceiling | Source-context character budget | Reasoning request |
+| --- | ---: | ---: | --- |
+| ROUTINE | 8,000 | 32,000 | medium |
+| COMPLEX | 16,000 | 64,000 | high |
+| DEEP | 32,000 | 100,000 | high |
+
+HIGH-risk targets use at least COMPLEX; theories, cross-module targets and CRITICAL
+work use DEEP. A directive may request greater depth but cannot lower the floor.
+These are starting budgets, not guarantees of sufficient reasoning. Generated-token
+ceilings include model reasoning where applicable. The old 1,800-visible-token
+instruction is removed. The worker does not force low reasoning for complex work.
+Reasoning controls are sent only where advertised; receipts disclose native defaults
+when no explicit control can be sent. A live endpoint with insufficient output,
+prompt or total context limits is rejected instead of silently shrinking the review.
+The full assembled prompt, input byte bound, output budget and live prices must fit
+the reserved cost. Timeouts increase with depth while each dispatch stays bounded.
+
+Every active review phase explicitly asks: "Please find any defects or gaps or
+worthy upgrades." NO_CHANGE is valid. Findings must check existing mitigations;
+missing context must be named rather than treated as a missing Garden mechanism.
+
+## Rebuilding a context packet
+
+Build a packet offline, without calling a model:
+
+```sh
+python -m tools.review_context --target DRM-H01-CONSTITUTIONAL-EVENT-BOUNDARY --directive /tmp/reviewed-public-directive.json --output /tmp/garden-context.json
+```
+
+The directive must contain the reviewed public architecture capsule required by
+docs/GARDEN_REVIEW_CONTEXT_CAPSULE.md. Its canonical source-root hash must match
+the verified index root. The source profiles bound retrieved text; the compact
+capsule and serialization have an additional 64,000-character allowance, all
+within the 200,000-character hard prompt ceiling. No required content is truncated.
+Without --directive the command produces a retrieval preview, not a dispatchable
+packet.
+
+The command prints the exact combined packet hash and neutral-query hash for the existing
+private-baseline commitment. Use the printed packet hash as source_packet_sha256
+in both the directive and its baseline commitment. Baseline text remains private.
+The packet may also be inspected with --profile DEEP, --query followed by a bounded
+concept, or --chunk followed by an exact passage ID from the omission list/index.
+Each changed packet requires a renewed ChatGPT baseline commitment and a new blind
+round with that identical packet for all reviewers. Context expansion cannot reset
+the task's 20-call limit or create a new spending allowance.
+
+Models may return requested_context as an array of objects containing a query or
+chunk_id. These requests enter a durable context_request_queue and stop inference
+at AWAITING_CHATGPT_CONTEXT. ChatGPT checks whether each is a neutral source request,
+retrieves exact passages and builds a renewed shared packet. An expanded directive
+must set context_requests_reviewed_as_neutral to true. Raw branch answers or
+inferred peer conclusions must never be passed as additional source context.
+This is a deterministic retrieval/handoff facility; it does not claim the external
+ChatGPT synthesis step runs unattended in GitHub Actions.
+
+A dedicated matrix target, DRM-X01-AUTHORITY-EXECUTION-RECOVERY, checks interfaces
+between authority, AAP, Runtime, transition contracts, time/events and recovery.
+The matrix now contains eleven bounded targets. That remains smaller than the
+whole Garden design and its theories.
+
+## Dated audit mode and remaining funds
+
+Default spending remains event-driven: a ceiling is not a spending target.
+Per-call $0.10 and per-day $2 are upper limits. Selecting AUDIT requires a directive
+with spending_mode AUDIT and audit_window fields utc_day, target_id, audit_id and
+purpose. The date must equal the current UTC day and the target must match the
+directive. The shared daily ceiling becomes $10 only for that admitted work.
+Expired audit plans fail closed; they never renew automatically.
+
+The original pools remain $9 routine, $3 challenger, $5 escalation and $3 emergency.
+AUDIT still draws only from routine funds; a $10 daily limit cannot override the
+$9 lifetime allocation or borrow the other $11. Those funds are not silently
+reallocated. Provider-reported spend and conservative local accounting can cause an
+earlier stop. Raising or refilling a lifetime allocation requires a separate actual
+budget decision. Unknown billing still blocks both spending modes.
+
+All response, context, profile, cost and identity receipts remain proposals. Before
+integrating a recommended change, require a reproducible regression/falsification
+check or keep its missing evidence as an explicit unverified obligation. Periodic
+quality comparison on known-defect cases is recommended before buying higher-cost
+models; this configuration does not claim that benchmark has been completed.

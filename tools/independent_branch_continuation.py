@@ -54,6 +54,10 @@ def dispatch(root: Path = Path(".")) -> None:
     executor_revision = _digest_files(root, [
         "tools/context_capsule.py",
         "tools/independent_branch_worker.py",
+        "tools/review_context.py",
+        "tools/review_budget.py",
+        "agents/review-context-policy.json",
+        "SOURCE_MANIFEST.json",
         "tools/independent_branch_protocol.py",
         "tools/independent_branch_continuation.py",
         "agents/garden-architecture-context-capsule-policy.json",
@@ -81,7 +85,10 @@ def dispatch(root: Path = Path(".")) -> None:
     status = continuation.get("status")
     if status == "DEFERRED_DAILY" and time.time() < float(continuation.get("resume_after", 0)):
         return
-    if status not in ("READY", "DEFERRED_DAILY"):
+    if status == 'DISPATCHED':
+        if event != 'schedule' or time.time() - float(continuation.get('updated', 0)) < 3600:
+            return
+    if status not in ("READY", "DEFERRED_DAILY", "DISPATCHED"):
         print("Queue state: " + str(status) + "; no automatic dispatch")
         return
     if any(row.get("status") in ("RESERVED", "UNKNOWN") for row in state.get("attempts", [])):

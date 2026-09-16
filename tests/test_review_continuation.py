@@ -35,7 +35,7 @@ class ContinuationTests(unittest.TestCase):
         self.assertEqual(self.dispatch(), 1)
         self.assertEqual(self.dispatch(), 0)
         self.assertEqual(self.state['continuation']['status'], 'DISPATCHED')
-        self.assertEqual(len(self.state['coverage']['targets']), 10)
+        self.assertEqual(len(self.state['coverage']['targets']), 11)
         self.assertFalse(self.state['coverage']['full_garden_review_complete'])
 
     def test_clock_never_creates_new_review(self):
