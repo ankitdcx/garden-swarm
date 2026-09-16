@@ -7,6 +7,7 @@ on:
       - 'Garden_*.txt'
       - 'SOURCE_MANIFEST.json'
       - 'agents/design-review-matrix.json'
+      - 'agents/review-context-policy.json'
       - 'agents/openrouter-paid-review-policy.json'
       - 'agents/provider-exclusion-policy.json'
       - 'agents/independent-branch-convergence-policy.json'

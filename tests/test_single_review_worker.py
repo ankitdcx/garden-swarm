@@ -26,7 +26,7 @@ class SingleReviewTests(unittest.TestCase):
                 money(value)
 
     def test_daily_existing_spend_included(self):
-        self.key['usage_daily'] = '0.99'
+        self.key['usage_daily'] = '1.99'
         with self.assertRaisesRegex(ValueError, 'daily'):
             budget_check(self.state, self.key, self.policy, 100000)
 

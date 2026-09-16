@@ -1,0 +1,20 @@
+{
+  "schema": "GardenReviewContextPolicy/v1",
+  "scope": "VERIFIED_FIVE_FILE_PUBLIC_CORPUS",
+  "cache_is_not_authority": true,
+  "overview": "Exact canonical reader guide, status words, whole-system loop and typed-graph navigation",
+  "dependency_queries_by_kind": {
+    "canonical_design": ["Human Sovereignty", "AuthorityScope", "FunctionContract", "Invariant", "DesignEpoch"],
+    "theory": ["TheoryArtifact", "ProofObligation", "EmpiricalValidation", "Assumptions", "Counterexample"],
+    "cross_module": ["AuthorityScope", "TransitionContract", "FunctionContract", "Revocation", "Recovery"],
+    "operations_and_budget": ["ResourceBudget", "AAP", "Runtime", "Privacy"],
+    "test_and_verification": ["ProofCertificate", "Evidence", "ConformanceTest", "Uncertainty"],
+    "integration_and_provenance": ["DesignEpoch", "ProvenanceGraph", "Composition", "Authority"],
+    "security_and_privacy": ["AgentEnvelope", "AuthorityScope", "Privacy", "Revocation"],
+    "authority_and_actiongate": ["ActionGate", "AuthorityScope", "Revocation", "Human Sovereignty"]
+  },
+  "missing_context": "Return NEEDS_CROSS_REFERENCE and requested_context entries containing an exact chunk_id or a bounded query. ChatGPT builds an expanded shared packet and renews its baseline commitment before a new blind round. Never share one branch's answer as context for another.",
+  "retrieval_is_not_absence_proof": true,
+  "cross_module_review_required_before_integration": true,
+  "accepted_change_requires_reproducible_test_or_explicit_unverified_obligation": true
+}

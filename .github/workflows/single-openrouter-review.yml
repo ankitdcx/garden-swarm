@@ -15,7 +15,7 @@ jobs:
   review:
     if: github.repository == 'ankitdcx/garden-swarm' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     env:
       GARDEN_OPENROUTER_PROTOCOL: INDEPENDENT_BRANCH_CONVERGENCE_V1
     steps:
@@ -25,9 +25,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: .cache/garden-review
+          key: garden-review-context-v1-${{ hashFiles('SOURCE_MANIFEST.json', 'tools/review_context.py', 'agents/review-context-policy.json') }}
       - name: Verify independent-branch protocol offline
         run: |
-          python -m unittest tests.test_independent_branch_protocol -v
+          python -m unittest tests.test_independent_branch_protocol tests.test_review_context -v
           python -m unittest tests.test_single_review_worker tests.test_review_continuation -v
       - name: Admit only the registered isolated single-call host and persistent state
         env:

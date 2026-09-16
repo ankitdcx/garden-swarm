@@ -19,6 +19,8 @@ from urllib import error, parse
 from tools import independent_branch_protocol as protocol
 from tools import matrix_design_review as review
 from tools import single_review_worker as legacy
+from tools import review_context
+from tools.review_budget import effective_policy
 from tools.provider_exclusion import load_policy, require_allowed_model
 
 DIRECTIVE_PATH = "review-state/convergence-directive.json"
@@ -26,18 +28,8 @@ DIRECTIVE_REF = legacy.STATE_BRANCH
 WORKER_PROTOCOL = protocol.PROTOCOL_ID
 
 
-def _model_identity_matches(requested: str, actual: str | None) -> bool:
-    actual = str(actual or "")
-    return actual == requested or actual.startswith(requested + "-")
-
-
-def _source_packet(target: dict, source: str, trace: dict) -> dict:
-    return {
-        "target_id": target["target_id"],
-        "review_question": target["review_question"],
-        "trace": trace,
-        "source": source,
-    }
+def _model_identity_matches(requested: str, actual: str | None, identity=None) -> bool:
+    return actual == requested or bool(identity and identity.get("id") == requested and identity.get("canonical_slug") == actual)
 
 
 def load_directive(token: str) -> dict | None:
@@ -57,7 +49,7 @@ def load_directive(token: str) -> dict | None:
     return json.loads(base64.b64decode(content))
 
 
-def _target_by_id(root: Path, target_id: str) -> tuple[dict, dict, str, dict, str]:
+def _target_by_id(root: Path, target_id: str, directive=None) -> tuple[dict, dict, str, dict, str]:
     matrix = json.loads((root / "agents/design-review-matrix.json").read_text(encoding="utf-8"))
     if matrix.get("schema") != "GardenDesignReviewMatrix/v1":
         raise ValueError("unsupported design review matrix")
@@ -68,8 +60,16 @@ def _target_by_id(root: Path, target_id: str) -> tuple[dict, dict, str, dict, st
     if target.get("public_only") is not True:
         raise ValueError("non-public target refused")
     source, trace = review.extract_target(root, target)
-    packet = _source_packet(target, source, trace)
-    return matrix, target, source, trace, protocol.sha256_value(packet)
+    directive = directive or {}
+    if directive.get('context_requests') and directive.get('context_requests_reviewed_as_neutral') is not True:
+        raise ValueError('expanded context requires ChatGPT neutral-reference review before sharing')
+    policy = json.loads((root / 'agents/openrouter-paid-review-policy.json').read_text())
+    profile = review_context.select_profile(policy, target, directive.get('review_profile'))
+    packet = review_context.build_packet(root, target, source, trace, profile, directive.get('context_requests'))
+    trace = {**trace, 'context_packet_sha256': packet['packet_sha256'],
+             'source_root_sha256': packet['source_root_sha256'],
+             'context_coverage': packet['coverage'], 'review_profile': profile}
+    return matrix, target, review_context.packet_text(packet), trace, packet['packet_sha256']
 
 
 def _families(policy: dict) -> list[str]:
@@ -203,12 +203,19 @@ def _reconcile_known_attempts(ledger: legacy.GitLedger, key: str) -> None:
         cost = legacy.money(data.get("total_cost"))
         prior_cost = attempt.get("cost")
         accounted = max(cost, legacy.money(prior_cost)) if prior_cost is not None else cost
-        if data.get("id") != response_id or not _model_identity_matches(str(attempt.get("model")), actual_model):
+        identity = attempt.get('model_identity')
+        if actual_model != attempt.get('model') and identity is None:
+            identity = legacy.model_identity(key, attempt['model'])
+            attempt['model_identity'] = {**identity, 'evidence_timing': 'RECONCILIATION_TIME_NOT_ORIGINAL_REQUEST'}
+        if data.get("id") != response_id or not _model_identity_matches(str(attempt.get("model")), actual_model, identity):
             raise ValueError("generation identity mismatch")
-        if attempt.get("actual_provider") and actual_provider != attempt.get("actual_provider"):
+        expected_provider = attempt.get("actual_provider") or attempt.get("expected_provider")
+        if not expected_provider or actual_provider != expected_provider:
             raise ValueError("generation provider mismatch")
         if accounted > legacy.money(attempt["reserved"]):
             raise ValueError("finalized cost exceeds reservation")
+        if data.get("finish_reason") not in ("stop", "length", "error", "content_filter", "tool_calls"):
+            raise ValueError("generation has no terminal outcome")
         attempt["response_reported_cost"] = prior_cost
         attempt["final_generation_cost"] = str(cost)
         attempt["cost"] = str(accounted)
@@ -260,8 +267,16 @@ def run(root: Path = Path(".")) -> None:
     convergence_policy = protocol.load_policy(json.loads((root / "agents/independent-branch-convergence-policy.json").read_text(encoding="utf-8")))
     exclusions = load_policy(root / "agents/provider-exclusion-policy.json")
     families = _families(policy)
-    matrix, target, source, trace, source_packet_hash = _target_by_id(root, str(directive.get("target_id") or ""))
+    matrix, target, source, trace, source_packet_hash = _target_by_id(root, str(directive.get("target_id") or ""), directive)
     protocol.validate_directive(directive, families=families, target_id=target["target_id"], source_packet_sha256=source_packet_hash)
+    expected_query = protocol.sha256_text(protocol.neutral_query(target))
+    if directive['private_baseline_commitment']['neutral_query_sha256'] != expected_query:
+        raise ValueError('baseline neutral query does not match current review instructions')
+    profile = trace['review_profile']
+    task_key = protocol.sha256_value({'target': target['target_id'], 'source_root': trace['source_root_sha256'], 'target_source': trace['source_sha256']})
+    total_reserved = sum(a.get('inference_reserved') is True and a.get('task_key') == task_key for a in state['attempts'])
+    if total_reserved >= convergence_policy['call_budget']['absolute_maximum_openrouter_inference_calls_per_task']:
+        raise ValueError('context expansion cannot reset the task inference-call limit')
     cycle_id = _cycle_id(
         target_id=target["target_id"],
         source_packet_sha256=source_packet_hash,
@@ -284,13 +299,15 @@ def run(root: Path = Path(".")) -> None:
     prompt = _prompt(phase=phase, family=family, directive=directive, target=target, source=source, trace=trace, cycle=cycle)
     prompt_hash = protocol.sha256_text(prompt)
 
+    spending_policy, spending_receipt = effective_policy(policy, directive, time.time())
+    identity = legacy.model_identity(key, model['model'])
     key_info = legacy.http(legacy.OR + "/key", key)["data"]
-    reserve, day, daily = legacy.budget_check(state, key_info, policy, time.time())
+    reserve, day, daily = legacy.budget_check(state, key_info, spending_policy, time.time())
     endpoints = legacy.http(legacy.OR + "/models/" + model["model"] + "/endpoints", key)["data"]["endpoints"]
     eligible = []
     for endpoint in endpoints:
         try:
-            body, estimate = legacy.endpoint_request(endpoint, model, prompt, reserve, policy, exclusions)
+            body, estimate = legacy.endpoint_request(endpoint, model, prompt, reserve, policy, exclusions, profile=profile, model_capabilities=identity)
             eligible.append((legacy.money(estimate), endpoint, body))
         except (ValueError, KeyError, RuntimeError):
             continue
@@ -300,6 +317,13 @@ def run(root: Path = Path(".")) -> None:
 
     attempt = {
         "inference_reserved": True,
+        "task_key": task_key,
+        "spending": spending_receipt,
+        "review_profile": profile,
+        "context_coverage": trace['context_coverage'],
+        "model_identity": identity,
+        "expected_provider": endpoint['provider_name'],
+        "reasoning_control_sent": body.get('reasoning', 'MODEL_NATIVE_DEFAULT_NOT_EXPLICITLY_CONTROLLED'),
         "status": "RESERVED",
         "protocol": WORKER_PROTOCOL,
         "cycle": cycle_id,
@@ -332,7 +356,9 @@ def run(root: Path = Path(".")) -> None:
 
     billing_verified = False
     try:
-        response = legacy.http(legacy.OR + "/chat/completions", key, body, timeout=120)
+        response = legacy.http(legacy.OR + "/chat/completions", key, body, timeout=profile['request_timeout_seconds'])
+        # Save response identity even when usage is absent, enabling later billing reconciliation.
+        attempt.update(response_id=response.get('id'), actual_model=response.get('model'), actual_provider=response.get('provider'))
         cost = legacy.money((response.get("usage") or {}).get("cost"))
         attempt.update(
             response_id=response.get("id"),
@@ -343,7 +369,7 @@ def run(root: Path = Path(".")) -> None:
         )
         if cost > reserve:
             raise ValueError("cost exceeds reservation")
-        if not _model_identity_matches(model["model"], response.get("model")):
+        if not _model_identity_matches(model["model"], response.get("model"), identity):
             raise ValueError("returned model identity does not bind to requested pinned model")
         if response.get("provider") != endpoint["provider_name"]:
             raise ValueError("returned provider identity mismatch")
@@ -370,6 +396,15 @@ def run(root: Path = Path(".")) -> None:
                 candidate_sha256=directive["merged_candidate_sha256"],
                 phase=phase,
             )
+        requests = finding.get('requested_context') or []
+        if not isinstance(requests, list) or len(requests) > 12:
+            raise ValueError('invalid requested-context list')
+        if requests:
+            state.setdefault('context_request_queue', []).append({
+                'task_key': task_key, 'cycle': cycle_id, 'family': family,
+                'source_packet_sha256': source_packet_hash, 'requests': requests,
+                'status': 'AWAITING_CHATGPT_SHARED_PACKET_REBUILD', 'no_peer_answer_sharing': True})
+            attempt['requested_context'] = requests
         finding_hash = protocol.sha256_value(finding)
         record = {
             "family": family,
@@ -392,6 +427,8 @@ def run(root: Path = Path(".")) -> None:
             cycle["confirm"][family] = record
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
+        if isinstance(exc, error.HTTPError):
+            legacy.record_http_failure(attempt, exc)
         attempt.update(status="INCOMPLETE" if billing_verified else "UNKNOWN", error_type=type(exc).__name__)
 
     state["continuation"] = {
@@ -400,6 +437,8 @@ def run(root: Path = Path(".")) -> None:
         "cycle": cycle_id,
         "updated": time.time(),
     }
+    if attempt.get('requested_context') and attempt['status'] == 'REVIEW_RECORDED':
+        state['continuation']['status'] = 'AWAITING_CHATGPT_CONTEXT'
     out = root / "agents/outbox/single-review/receipt.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(protocol.canonical_json(attempt) + "\n", encoding="utf-8")
@@ -419,7 +458,8 @@ def execute(root: Path = Path(".")) -> None:
             if token:
                 ledger = legacy.GitLedger(token)
                 ledger.value["continuation"] = {
-                    "status": "BLOCKED",
+                    "status": "DEFERRED_DAILY" if isinstance(exc, legacy.DailyBudget) else "BLOCKED",
+                    "resume_after": (int(time.time()) // 86400 + 1) * 86400,
                     "reason": str(exc) if type(exc) is ValueError else type(exc).__name__,
                     "updated": time.time(),
                     "run_id": os.environ.get("GITHUB_RUN_ID"),

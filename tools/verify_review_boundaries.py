@@ -55,8 +55,8 @@ def verify(inputs: dict) -> dict:
         raise ValueError("boundary failed: all((not row['model'].endswith(':free') for row in selected))")
     if not selection['provider_policy']['data_collection'] == 'deny':
         raise ValueError("boundary failed: selection['provider_policy']['data_collection'] == 'deny'")
-    if not selection['daily_openrouter_cost_ceiling_usd'] == 1.0:
-        raise ValueError("boundary failed: selection['daily_openrouter_cost_ceiling_usd'] == 1.0")
+    if not selection['daily_openrouter_cost_ceiling_usd'] == policy.get('daily_openrouter_cost_ceiling_usd', 1.0):
+        raise ValueError("boundary failed: selection['daily_openrouter_cost_ceiling_usd'] matches declared policy")
     if not selection['semantic_delta_admitted'] is False:
         raise ValueError("boundary failed: selection['semantic_delta_admitted'] is False")
     if not target_selection['schema'] == 'GardenDesignTargetSelectionReceipt/v1':
@@ -83,8 +83,8 @@ def verify(inputs: dict) -> dict:
         raise ValueError("boundary failed: bundle['selected_families'] == expected_families")
     if not bundle['actual_cost_usd'] <= bundle['routine_hourly_cost_ceiling_usd']:
         raise ValueError("boundary failed: bundle['actual_cost_usd'] <= bundle['routine_hourly_cost_ceiling_usd']")
-    if not bundle['daily_openrouter_cost_ceiling_usd'] == 1.0:
-        raise ValueError("boundary failed: bundle['daily_openrouter_cost_ceiling_usd'] == 1.0")
+    if not bundle['daily_openrouter_cost_ceiling_usd'] == policy.get('daily_openrouter_cost_ceiling_usd', 1.0):
+        raise ValueError("boundary failed: bundle['daily_openrouter_cost_ceiling_usd'] matches declared policy")
     if not bundle['semantic_delta_admitted'] is False:
         raise ValueError("boundary failed: bundle['semantic_delta_admitted'] is False")
     if not bundle['requires_separate_gemini_lane'] is True:

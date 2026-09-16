@@ -75,7 +75,11 @@
     "sequential_only": true,
     "all_reviewers_receive_bit_identical_merged_candidate": true,
     "reviewers_do_not_receive_other_final_reviews": true,
-    "allowed_verdicts": ["APPROVE", "BLOCK", "APPROVE_WITH_PATCH"],
+    "allowed_verdicts": [
+      "APPROVE",
+      "BLOCK",
+      "APPROVE_WITH_PATCH"
+    ],
     "material_block_or_patch_requires_chatgpt_reintegration": true,
     "maximum_confirmation_rounds": 1,
     "confirmation_uses_bit_identical_revised_candidate_for_all_reviewers": true
@@ -90,9 +94,10 @@
     "easy_case_minimum_calls": 8,
     "absolute_maximum_openrouter_inference_calls_per_task": 20,
     "derivation": "4 initial + up to 8 branch followups + 4 final + up to 4 confirmation",
-    "daily_openrouter_cost_ceiling_usd": 1.0,
-    "call_reservation_ceiling_usd": 0.05,
-    "budget_exhaustion": "STOP_OR_DEFER; NEVER_DROP_REQUIRED_REVIEW_OR_SHARE_BRANCHES_TO_SAVE_COST"
+    "daily_openrouter_cost_ceiling_usd": 2.0,
+    "call_reservation_ceiling_usd": 0.1,
+    "budget_exhaustion": "STOP_OR_DEFER; NEVER_DROP_REQUIRED_REVIEW_OR_SHARE_BRANCHES_TO_SAVE_COST",
+    "audit_daily_openrouter_cost_ceiling_usd": 10.0
   },
   "transport": {
     "one_inference_call_per_dispatch": true,
@@ -106,5 +111,11 @@
     "peer_cross_examination_where_models_receive_other_model_answers": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
     "batch_multi_model_synthesis_inside_openrouter_lane": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
     "legacy_outputs_without_v1_protocol_receipt": "NON_ADMISSIBLE_AS_CURRENT_GARDEN_MULTI_MODEL_CONVERGENCE_EVIDENCE"
+  },
+  "source_context": {
+    "policy": "agents/review-context-policy.json",
+    "same_source_packet_for_all_initial_reviewers": true,
+    "context_expansion_requires_new_baseline_commitment": true,
+    "no_claim_of_full_corpus_or_dependency_closure_from_retrieval": true
   }
 }
