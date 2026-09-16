@@ -1,7 +1,7 @@
 {
   "schema": "GardenEventDrivenContextPolicy/v1",
   "design_epoch": "v15.5",
-  "candidate_design_ref": "ankitdcx/garden-main:design_deltas/v15.7/EVENT-DRIVEN-CONTEXT-ROUTING-CANDIDATE.md",
+  "candidate_design_ref": "https://github.com/ankitdcx/garden-main/blob/event-driven-context-routing-20260916/design_deltas/v15.7/EVENT-DRIVEN-CONTEXT-ROUTING-CANDIDATE.md",
   "status": "PUBLIC_ADAPTER_CANDIDATE_NO_CANONICAL_EFFECT",
   "public_only": true,
   "normalization": {
