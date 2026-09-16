@@ -43,7 +43,7 @@ class IPOriginReviewBudgetTests(unittest.TestCase):
 
     def test_family_reasoning_transport_matches_endpoint_contract(self):
         self.assertEqual(review._reasoning_for_family("glm"), {"effort": "low"})
-        for family in ("deepseek", "qwen", "mistral"):
+        for family in ("deepseek", "qwen", "xiaomi"):
             self.assertEqual(review._reasoning_for_family(family), {"effort": "none"})
 
     def test_protection_code_normalization_accepts_harmless_delimiters(self):

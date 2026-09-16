@@ -6,7 +6,7 @@ Every automated reviewer output must conform to this shape. A missing `search_tr
 {
   "schema": "GardenAgentHandoff/v1",
   "agent": "provider/model",
-  "agent_family": "deepseek|qwen|llama|mistral|glm|gemma|cohere|dots|inkling|gemini|other",
+  "agent_family": "deepseek|qwen|llama|glm|gemma|cohere|poolside|dots|inkling|gemini|other",
   "role": "adversary|formal|implementation|grounding|open_weight_baseline|compliance|manager",
   "task_id": "...",
   "status": "NO_CHANGE|PROPOSED|BLOCKER|NEEDS_CROSS_REFERENCE",

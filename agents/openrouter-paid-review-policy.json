@@ -2,10 +2,11 @@
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
   "purpose": "EVENT_DRIVEN_PUBLIC_MULTI_TRACK_REVIEW",
   "design_epoch": "v15.5",
-  "catalog_reference_date": "2026-09-15",
+  "catalog_reference_date": "2026-09-16",
   "public_only": true,
   "semantic_delta_admitted": false,
   "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
+  "event_driven_model_quality_policy": "agents/event-driven-model-quality-policy.json",
   "daily_openrouter_cost_ceiling_usd": 1.0,
   "budget_pools_usd": {
     "routine": 9.0,
@@ -13,10 +14,10 @@
     "escalation": 5.0,
     "emergency_reserve": 3.0
   },
-  "routine_hourly_cost_ceiling_usd": 0.05,
-  "routine_model_call_cost_ceiling_usd": 0.0125,
-  "max_prompt_characters": 140000,
-  "max_output_tokens": 1800,
+  "routine_hourly_cost_ceiling_usd": 0.20,
+  "routine_model_call_cost_ceiling_usd": 0.05,
+  "max_prompt_characters": 60000,
+  "max_output_tokens": 3000,
   "free_swarm": {
     "enabled": true,
     "distinct_families_per_hour": 4,
@@ -40,31 +41,35 @@
     "sort": "price",
     "allow_fallbacks": true,
     "data_collection": "deny",
-    "ignore": ["anthropic", "nvidia"],
+    "ignore": ["anthropic", "mistral", "nvidia"],
     "max_price_usd_per_million_tokens": {
       "prompt": 0.25,
-      "completion": 0.75
+      "completion": 1.0
     }
   },
   "routine_reviewers": [
-    {"family":"deepseek","role":"adversarial_reasoning","model":"deepseek/deepseek-v4-flash-0731"},
-    {"family":"qwen","role":"architecture_and_code","model":"qwen/qwen3.7-flash"},
-    {"family":"glm","role":"formal_semantics","model":"z-ai/glm-5.3-flash"},
-    {"family":"mistral","role":"implementation_and_compliance","model":"mistralai/mistral-small-2603"}
+    {"family":"deepseek","role":"primary_agentic_reasoning","model":"deepseek/deepseek-v4.1-flash"},
+    {"family":"qwen","role":"independent_architecture_and_code","model":"qwen/qwen3.8-flash"},
+    {"family":"glm","role":"formal_semantics_and_long_context","model":"z-ai/glm-5.3-flash"},
+    {"family":"xiaomi","role":"independent_agentic_execution","model":"xiaomi/mimo-v2.5"}
   ],
+  "event_driven_activation": {
+    "paid_review_requires_material_event_or_explicit_high_risk_obligation": true,
+    "clock_passage_alone_never_authorizes_spend": true,
+    "identical_state_replay_never_authorizes_spend": true,
+    "no_change_default": "NO_PAID_CALL",
+    "strong_board_selected_only_after_bounded_context_materiality": true
+  },
   "notes": [
     "Routine paid reviewers and the free swarm produce proposal evidence only.",
-    "Anthropic/Claude and NVIDIA/Nemotron are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
-    "The free swarm is deliberately broad and multi-track; it reviews bounded canonical-design and public implementation/governance targets.",
+    "Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
+    "Routine material review uses the current cost/quality value board: DeepSeek V4.1 Flash, Qwen3.8 Flash, GLM 5.3 Flash and Xiaomi MiMo-V2.5. Expensive flagship models are escalation-only under the separate event-driven quality policy.",
+    "Gemini 3.8 Flash remains a separate direct Google-family lane under free-tier-only/no-paid-fallback policy; ChatGPT remains a separate external frontier lane and is not hardcoded by this repository.",
     "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
-    "Free-swarm breadth is used before paid reviewers; free reviewers never satisfy paid-family requirements.",
+    "The legacy routine_hourly_cost_ceiling_usd field is an event-dispatch reservation envelope for compatibility; it is not a scheduling instruction.",
+    "Moving latest aliases are intentionally not used for evidence lineage; exact model identities stay pinned until a later catalog-review event.",
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
-    "ChatGPT and Gemini remain separate independent lanes.",
-    "Escalation and emergency pools are not spendable by this routine runner.",
-    "Legacy free_swarm/specialist_free_sweep per-hour fields are quota and reviewer-cardinality envelopes, not scheduling instructions. The active coordinator is event/completion driven and legacy batch workflows are dispatch-only.",
-    "Event-driven context routing is additive: deterministic/cheap/OpenRouter workers may normalize observations, perform bounded independent review and build a compact material-context packet.",
-    "OpenRouter MUST NOT invoke, impersonate or hardcode the external ChatGPT frontier lane. A material packet may create a provider-neutral GardenFrontierReviewRequest/v1 for separate ChatGPT review.",
-    "The coordinator remains paused until separately resumed; registering event-driven tooling does not authorize provider calls or ChatGPT handoffs."
+    "The coordinator remains paused until separately resumed; registering stronger models does not authorize provider calls or ChatGPT handoffs."
   ],
   "specialist_free_sweep": {
     "enabled": true,
@@ -86,10 +91,11 @@
     "hourly_free_call_cap": 2,
     "scope": "SHARED_ACROSS_ALL_LANES",
     "enforcement_status": "LEGACY_BATCH_DISPATCH_BLOCKED_PENDING_DURABLE_SHARED_LEDGER",
-    "family_counts": "Review-cycle diversity targets, accumulated over multiple dispatches; not simultaneous calls or quota grants."
+    "family_counts": "Review-cycle diversity targets, accumulated over separate event-driven dispatches; not simultaneous calls or quota grants."
   },
   "event_driven_context": {
     "policy": "agents/event-driven-context-policy.json",
+    "quality_policy": "agents/event-driven-model-quality-policy.json",
     "context_builder": "tools/event_context_gate.py",
     "frontier_handoff_builder": "tools/run_frontier_council.py",
     "frontier_handoff_schema": "GardenFrontierReviewRequest/v1",

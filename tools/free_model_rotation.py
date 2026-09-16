@@ -17,7 +17,6 @@ FAMILIES = [
     ("deepseek", ("deepseek/",), "adversarial_reasoning"),
     ("qwen", ("qwen/",), "architecture_and_code"),
     ("llama", ("meta-llama/", "meta/"), "systems_integration"),
-    ("mistral", ("mistralai/",), "privacy_compliance_and_failure_modes"),
     ("glm", ("z-ai/", "zhipu/", "zhipuai/", "thudm/"), "semantic_formalization"),
 ]
 
