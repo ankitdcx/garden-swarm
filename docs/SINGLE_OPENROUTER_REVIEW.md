@@ -54,7 +54,10 @@ There is no automatic reset or permission expansion. Dispatch delivery recovery
 is capped at two attempts; response retry is capped at two attempts per slot.
 
 When a response identity is available, the worker first reads generation metadata
-to reconcile the saved call's identity, provider, exact cost and terminal status.
+to reconcile the saved call's identity, provider, finalized cost and terminal status. Both completion-reported and final
+generation costs are retained; the larger is charged against the local budget.
+Mismatching metadata remains visible in the ledger. A merged executor repair can
+rearm blocked processing without changing or restarting completed review cycles.
 Metadata does not repair truncated JSON or prove a finding correct. Without a
 response identity, the lane stays blocked. The first live call from run 35095704429
 returned truncated JSON at 1800 output tokens and reported $0.0011595; its original

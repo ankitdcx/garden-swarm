@@ -40,8 +40,10 @@ def dispatch(root=Path('.')):
     bindings = list(w.target_bindings(root, policy, exclusions))
     revision = w.digest([b[3] for b in bindings])
     continuation = state.get('continuation', {})
-    if event in ('push', 'workflow_dispatch') and state.get('queue_revision') != revision:
+    executor_revision = w.digest([(root / p).read_text() for p in ('tools/single_review_worker.py', 'tools/review_continuation.py')])
+    if event in ('push', 'workflow_dispatch') and (state.get('queue_revision') != revision or state.get('executor_revision') != executor_revision):
         state['queue_revision'] = revision
+        state['executor_revision'] = executor_revision
         state['admitted_source_commit'] = os.environ['GITHUB_SHA']
         continuation = {'status': 'READY', 'updated': time.time()}
         state['continuation'] = continuation

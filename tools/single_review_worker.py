@@ -263,19 +263,28 @@ def reconcile(ledger, key):
         if not response_id:
             raise ValueError('unidentified call requires manual reconciliation')
         data = http(OR + '/generation?' + parse.urlencode({'id': response_id}), key)['data']
+        metadata = {k: data.get(k) for k in (
+            'id', 'model', 'provider_name', 'total_cost', 'finish_reason', 'native_finish_reason',
+            'tokens_prompt', 'tokens_completion', 'native_tokens_reasoning')}
+        attempt['generation_metadata'] = metadata
+        state['cycles'][attempt['cycle']][attempt['slot']] = attempt
+        ledger.save(state)  # Preserve mismatch evidence without admitting inference.
         cost = money(data.get('total_cost'))
+        previous_cost = attempt.get('cost')
+        accounted = max(cost, money(previous_cost)) if previous_cost is not None else cost
         if (data.get('id') != response_id or data.get('model') != attempt['model'] or
                 not attempt.get('actual_provider') or data.get('provider_name') != attempt['actual_provider'] or
-                cost > money(attempt['reserved']) or
-                (attempt.get('cost') is not None and cost != money(attempt['cost']))):
+                accounted > money(attempt['reserved'])):
             raise ValueError('generation reconciliation mismatch')
         finish = data.get('finish_reason')
         if finish not in ('stop', 'length', 'content_filter', 'error', 'tool_calls'):
             raise ValueError('generation has no terminal outcome')
-        attempt['reconciliation'] = {k: data.get(k) for k in (
-            'id', 'model', 'provider_name', 'total_cost', 'finish_reason', 'native_finish_reason',
-            'tokens_prompt', 'tokens_completion', 'native_tokens_reasoning')}
-        attempt.update(cost=str(cost), finish_reason=finish, status='INCOMPLETE')
+        # Completion usage and finalized generation billing may differ. Preserve
+        # both and charge the larger amount against the budget; never erase spend.
+        attempt['reconciliation'] = metadata
+        attempt['response_reported_cost'] = previous_cost
+        attempt['final_generation_cost'] = str(cost)
+        attempt.update(cost=str(accounted), finish_reason=finish, status='INCOMPLETE')
         # The saved original body and error remain evidence. Metadata cannot repair JSON.
         if finish == 'stop' and attempt.get('response_text'):
             try:
