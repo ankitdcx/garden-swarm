@@ -1,0 +1,110 @@
+{
+  "schema": "GardenIndependentBranchConvergencePolicy/v1",
+  "status": "ACTIVE_NONCANONICAL_OPENROUTER_WORK_PROTOCOL",
+  "effective_date": "2026-09-16",
+  "scope": "ALL_GARDEN_OPENROUTER_MODEL_INFERENCE_WORK",
+  "public_only": true,
+  "purpose": "PRESERVE_INDEPENDENT_MODEL_EVIDENCE_WHILE_ALLOWING_CHATGPT_CENTERED_BRANCH_RECONCILIATION_AND_BOUNDED_FINAL_CONVERGENCE",
+  "boundaries": {
+    "openrouter_metadata_catalog_and_billing_queries_are_not_model_inference": true,
+    "model_output_is_proposal_evidence_only": true,
+    "agreement_is_not_proof": true,
+    "no_model_may_grant_authority_or_promote_canon": true,
+    "excluded_provider_policy": "agents/provider-exclusion-policy.json",
+    "event_quality_policy": "agents/event-driven-model-quality-policy.json"
+  },
+  "private_baseline": {
+    "owner": "EXTERNAL_CHATGPT_FRONTIER",
+    "must_exist_before_first_openrouter_inference": true,
+    "content_must_not_be_sent_in_initial_blind_round": true,
+    "repository_receives_commitment_only": true,
+    "commitment_schema": "GardenPrivateBaselineCommitment/v1",
+    "required_fields": [
+      "baseline_sha256",
+      "neutral_query_sha256",
+      "source_packet_sha256",
+      "created_before_openrouter_calls"
+    ]
+  },
+  "reviewer_board": {
+    "source": "agents/openrouter-paid-review-policy.json:routine_reviewers",
+    "required_distinct_families": 4,
+    "sequential_only": true,
+    "same_neutral_query_and_source_packet_for_all_initial_reviews": true,
+    "initial_reviewers_must_not_receive": [
+      "ChatGPT baseline content",
+      "another reviewer's answer",
+      "another branch's reconciliation candidate",
+      "a summary derived from another reviewer's answer"
+    ]
+  },
+  "branch_protocol": {
+    "initial_calls": 4,
+    "branches": "ONE_PER_REVIEWER_FAMILY",
+    "default_followups_per_branch": 1,
+    "maximum_followups_per_branch": 2,
+    "branch_followup_inputs": [
+      "same source packet",
+      "that branch model's own prior response",
+      "ChatGPT branch-specific merged candidate"
+    ],
+    "forbidden_branch_followup_inputs": [
+      "any other model response",
+      "any other branch candidate",
+      "cross-branch vote or majority summary"
+    ],
+    "stop_branch_when": "NO_UNRESOLVED_MATERIAL_CONTRADICTION_COUNTEREXAMPLE_EVIDENCE_GAP_OR_STRONGER_ALTERNATIVE_REMAINS",
+    "do_not_force_consensus": true
+  },
+  "synthesis": {
+    "owner": "EXTERNAL_CHATGPT_FRONTIER",
+    "input": "FOUR_RECONCILED_BRANCH_RESULTS",
+    "must_record": [
+      "common conclusions",
+      "material disagreements",
+      "evidence differences",
+      "surviving counterexamples",
+      "discarded alternatives with reason",
+      "DO_NOTHING alternative",
+      "uncertainty"
+    ],
+    "model_outputs_cannot_self_synthesize_across_branches": true
+  },
+  "final_review": {
+    "reviewers": 4,
+    "sequential_only": true,
+    "all_reviewers_receive_bit_identical_merged_candidate": true,
+    "reviewers_do_not_receive_other_final_reviews": true,
+    "allowed_verdicts": ["APPROVE", "BLOCK", "APPROVE_WITH_PATCH"],
+    "material_block_or_patch_requires_chatgpt_reintegration": true,
+    "maximum_confirmation_rounds": 1,
+    "confirmation_uses_bit_identical_revised_candidate_for_all_reviewers": true
+  },
+  "stop_rule": {
+    "success_condition": "NO_UNRESOLVED_MATERIAL_CONTRADICTION_COUNTEREXAMPLE_EVIDENCE_GAP_VIOLATED_INVARIANT_OR_STRONGER_KNOWN_ALTERNATIVE_REMAINS_AT_REQUIRED_ASSURANCE_LEVEL",
+    "four_of_four_agreement_is_insufficient_by_itself": true,
+    "unresolved_after_confirmation": "STOP_AND_ESCALATE_WITH_EXPLICIT_DISAGREEMENT_RECEIPT"
+  },
+  "call_budget": {
+    "normal_expected_calls": 12,
+    "easy_case_minimum_calls": 8,
+    "absolute_maximum_openrouter_inference_calls_per_task": 20,
+    "derivation": "4 initial + up to 8 branch followups + 4 final + up to 4 confirmation",
+    "daily_openrouter_cost_ceiling_usd": 1.0,
+    "call_reservation_ceiling_usd": 0.05,
+    "budget_exhaustion": "STOP_OR_DEFER; NEVER_DROP_REQUIRED_REVIEW_OR_SHARE_BRANCHES_TO_SAVE_COST"
+  },
+  "transport": {
+    "one_inference_call_per_dispatch": true,
+    "max_concurrent_model_calls": 1,
+    "durable_state_required_before_call": true,
+    "unknown_call_or_unknown_billing_blocks_further_inference": true,
+    "external_chatgpt_directive_required_between_protocol_phases": true,
+    "directive_schema": "GardenIndependentBranchDirective/v1"
+  },
+  "legacy_disposition": {
+    "peer_cross_examination_where_models_receive_other_model_answers": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
+    "batch_multi_model_synthesis_inside_openrouter_lane": "SUPERSEDED_AND_FORBIDDEN_FOR_NEW_OPENROUTER_WORK",
+    "legacy_outputs_without_v1_protocol_receipt": "NON_ADMISSIBLE_AS_CURRENT_GARDEN_MULTI_MODEL_CONVERGENCE_EVIDENCE"
+  }
+}
