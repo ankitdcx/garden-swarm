@@ -1,0 +1,10 @@
+{
+  "schema": "GardenSingleReviewLedger/v1",
+  "repository": "ankitdcx/garden-swarm",
+  "scope": "PUBLIC_MATRIX_REVIEW_ONLY",
+  "paused": false,
+  "created_at": "2026-09-16",
+  "authority_basis": "Explicit operator request to enable review calls and bounded follow-ups; implementation subject to ordinary PR checks.",
+  "attempts": [],
+  "cycles": {}
+}
