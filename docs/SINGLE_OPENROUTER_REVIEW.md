@@ -2,7 +2,10 @@
 
 This is a bounded activation path, not a claim that the previous multi-agent
 coordinator is running. It uses the existing OPENROUTER_API_KEY Actions secret.
-The older batch workflows and their admission guard remain unchanged and paused.
+The older batch workflows remain paused. The existing admission guard gains one
+explicit mode that verifies this worker's exact Actions workflow identity and
+persistent state before exposing the inference secret. Its default legacy path
+still rejects dispatch; arbitrary workflows cannot claim this new mode.
 
 After this change is reviewed and merged, open Actions, select **Garden single
 OpenRouter review**, select **Run workflow**, and use **main**. Each run makes at

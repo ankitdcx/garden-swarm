@@ -159,11 +159,36 @@ def endpoint_request(endpoint, model, prompt, reserve, policy, exclusions):
     return body, str(estimated)
 
 
-def run(root=Path('.')):
+def host_check():
     if os.environ.get('GITHUB_REPOSITORY') != REPO or os.environ.get('GITHUB_REF') != 'refs/heads/main':
         raise ValueError('only the installed main-branch worker may dispatch')
     if os.environ.get('GITHUB_EVENT_NAME') != 'workflow_dispatch':
         raise ValueError('explicit scoped dispatch required')
+    expected = REPO + '/.github/workflows/single-openrouter-review.yml@refs/heads/main'
+    if os.environ.get('GITHUB_WORKFLOW_REF') != expected:
+        raise ValueError('unregistered workflow cannot enter the single-call lane')
+
+
+def preflight():
+    """No inference credential: qualify host/state before exposing the API key."""
+    host_check()
+    token = os.environ.get('GH_REVIEW_TOKEN')
+    if not token:
+        raise ValueError('state access token missing')
+    state = GitLedger(token).value
+    if state.get('paused') is not False or state.get('scope') != 'PUBLIC_MATRIX_REVIEW_ONLY':
+        raise ValueError('single-review state is paused or outside scope')
+    if any(a['status'] in ('UNKNOWN', 'RESERVED') for a in state['attempts']):
+        raise ValueError('unresolved prior call blocks admission')
+    policy = json.loads(Path('agents/openrouter-paid-review-policy.json').read_text())
+    limits = policy['execution_limits']
+    if limits['max_model_calls_per_dispatch'] != 1 or limits['max_concurrent_model_calls'] != 1:
+        raise ValueError('single-call policy binding changed')
+    print('Single-review host/state preflight passed; live budget and reservation checks still required')
+
+
+def run(root=Path('.')):
+    host_check()
     key, gh = os.environ.get('OPENROUTER_API_KEY'), os.environ.get('GH_REVIEW_TOKEN')
     if not key or not gh:
         raise ValueError('required Actions secret/token unavailable')

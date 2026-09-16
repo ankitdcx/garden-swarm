@@ -121,6 +121,7 @@ class SingleReviewTests(unittest.TestCase):
                     'usage': {'cost': .001}, 'choices': [{'finish_reason': 'stop',
                      'message': {'content': json.dumps(finding)}}]}
         env = {'GITHUB_REPOSITORY': worker.REPO, 'GITHUB_REF': 'refs/heads/main',
+               'GITHUB_WORKFLOW_REF': worker.REPO + '/.github/workflows/single-openrouter-review.yml@refs/heads/main',
                'GITHUB_EVENT_NAME': 'workflow_dispatch', 'OPENROUTER_API_KEY': 'fixture',
                'GH_REVIEW_TOKEN': 'fixture', 'GITHUB_SHA': 'fixture', 'GITHUB_RUN_ID': 'fixture'}
         with tempfile.TemporaryDirectory() as temp:
@@ -138,6 +139,12 @@ class SingleReviewTests(unittest.TestCase):
                 self.assertEqual(len(calls), 2)
                 self.assertNotEqual(calls[0]['model'], calls[1]['model'])
                 self.assertEqual(saved[-1]['attempts'][-1]['status'], 'REVIEW_RECORDED')
+
+    def test_other_workflow_cannot_use_single_lane(self):
+        env = {'GITHUB_REPOSITORY': worker.REPO, 'GITHUB_REF': 'refs/heads/main',
+               'GITHUB_EVENT_NAME': 'workflow_dispatch', 'GITHUB_WORKFLOW_REF': 'legacy'}
+        with patch.dict(worker.os.environ, env), self.assertRaisesRegex(ValueError, 'unregistered'):
+            worker.host_check()
 
 
 if __name__ == '__main__':

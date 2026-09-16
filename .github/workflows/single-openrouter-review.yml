@@ -24,6 +24,10 @@ jobs:
           python-version: '3.12'
       - name: Verify the single-call boundary offline
         run: python -m unittest tests.test_single_review_worker -v
+      - name: Admit only the registered single-call host and persistent state
+        env:
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.check_dispatch_admission --single-public-review
       - name: Execute one pending public review
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
