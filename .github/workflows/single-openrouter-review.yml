@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: garden-provider-review
@@ -23,7 +24,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify the single-call boundary offline
-        run: python -m unittest tests.test_single_review_worker -v
+        run: python -m unittest tests.test_single_review_worker tests.test_review_continuation -v
       - name: Admit only the registered single-call host and persistent state
         env:
           GH_REVIEW_TOKEN: ${{ github.token }}
@@ -33,6 +34,11 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GH_REVIEW_TOKEN: ${{ github.token }}
         run: python -m tools.single_review_worker
+      - name: Continue the persisted queue after a recorded result
+        if: success()
+        env:
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.review_continuation
       - name: Save review receipt
         if: always()
         uses: actions/upload-artifact@v4

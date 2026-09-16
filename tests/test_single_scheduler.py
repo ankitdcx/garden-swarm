@@ -20,7 +20,12 @@ class SingleSchedulerTests(unittest.TestCase):
         for path in sorted((root / '.github/workflows').glob('*.y*ml')):
             with self.subTest(workflow=path.name):
                 text = path.read_text(encoding='utf-8')
-                self.assertIsNone(re.search(r'^\s*schedule\s*:', text, re.MULTILINE))
+                if path.name == 'continue-openrouter-review.yml':
+                    self.assertIn("cron: '17 1 * * *'", text)
+                    self.assertNotIn('OPENROUTER_API_KEY', text)
+                    self.assertIn('tools.review_continuation', text)
+                else:
+                    self.assertIsNone(re.search(r'^\s*schedule\s*:', text, re.MULTILINE))
 
     def test_retired_timers_remain_dispatchable(self):
         root = Path(__file__).resolve().parents[1]
