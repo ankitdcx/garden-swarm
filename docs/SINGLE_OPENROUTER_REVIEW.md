@@ -1,98 +1,94 @@
-# Automated OpenRouter review queue
+# Garden OpenRouter independent-branch convergence
 
-The public worker uses the existing OPENROUTER_API_KEY Actions secret. A main-branch
-material event admits source-bound work; each finished call dispatches the next
-pending reviewer automatically. The older batch workflows and broader coordinator
-remain paused. No model output can merge code or promote Garden semantics.
+Status: active noncanonical operating protocol for Garden OpenRouter model-inference work.
+
+The public worker uses the existing `OPENROUTER_API_KEY` Actions secret, but OpenRouter is no longer allowed to run a peer-sharing debate. The active protocol is `GardenIndependentBranchConvergencePolicy/v1` in `agents/independent-branch-convergence-policy.json`.
+
+The broad Coordinator and legacy batch workers remain paused/not admitted. The bounded single-call worker can make at most one model inference per dispatch and no model output can merge code, establish truth/Proof, mint authority, or promote Garden semantics.
+
+## Core process
+
+For every Garden task that uses OpenRouter model inference:
+
+1. **ChatGPT private baseline first.** ChatGPT independently solves the task before any OpenRouter inference. The baseline content stays outside the public OpenRouter lane. The repository receives only a SHA-256 commitment proving that a baseline, neutral query and source packet were fixed first.
+2. **Four blind branches.** DeepSeek, Qwen, GLM and Xiaomi/MiMo receive the same neutral query and the same source packet, one after another. They do not receive ChatGPT's baseline or another model's answer.
+3. **One-to-one reconciliation.** ChatGPT compares its private baseline with each branch separately. A branch follow-up may contain only the same source packet, that model's own previous branch response, and ChatGPT's branch-specific merged candidate. Default is one follow-up; maximum is two. No response or summary from another branch is allowed.
+4. **Four reconciled branch results.** ChatGPT then holds four separately reconciled versions. Models do not synthesize across branches.
+5. **ChatGPT synthesis.** ChatGPT merges the four branch results and records common conclusions, material disagreements, evidence differences, surviving counterexamples, discarded alternatives, the DO_NOTHING alternative and uncertainty.
+6. **Four isolated final reviews.** The bit-identical merged candidate is sent separately to all four reviewers. Each returns `APPROVE`, `BLOCK`, or `APPROVE_WITH_PATCH`. No final reviewer sees another final review.
+7. **At most one confirmation round.** If a material block/patch is valid, ChatGPT reintegrates it and the bit-identical revised candidate may be sent once more to all four reviewers. If a material disagreement still survives, the task stops and escalates with an explicit disagreement receipt rather than looping.
+
+Four-of-four agreement is never Proof. Closure still depends on applicable Garden Compare/Reason/Proof/Evidence/AAP/authority/ActionGate/human boundaries.
+
+## Why peer sharing is forbidden
+
+The previous worker used blind review followed by peer cross-examination: every model could receive the previous round's other-model findings. That can create correlated convergence and make apparently independent reviewers anchor on one another.
+
+That behavior is superseded for new OpenRouter work. `free_swarm.cross_examination` and `specialist_free_sweep.cross_examination` are now false. Legacy tools that contain peer-sharing logic remain only for historical/reference compatibility; their outputs are not current `GardenIndependentBranchConvergence/v1` evidence.
+
+## Durable ChatGPT handoff
+
+The public worker cannot create ChatGPT's private baseline or branch synthesis. A durable external ChatGPT directive is staged on the `garden-review-state` branch at:
+
+`review-state/convergence-directive.json`
+
+Directive schema: `GardenIndependentBranchDirective/v1`.
+
+The directive is public-only and contains a baseline **commitment**, not the private baseline text. It binds the exact target, source-packet hash, ordered reviewer families and protocol phase.
+
+Supported phases:
+
+- `BLIND`: same neutral packet for four sequential reviewers.
+- `RECONCILE`: exactly one reviewer family, branch round 1 or 2, its own prior response hash, and ChatGPT's branch-specific candidate. The directive must attest that no peer content is present.
+- `FINAL`: one merged candidate hash; exact same candidate to all four.
+- `CONFIRM`: one revised candidate hash; exact same candidate to all four; confirmation round must equal 1.
+
+Changing candidate bytes within a final/confirmation round fails closed.
 
 ## Execution and scope
 
-The queue covers the ten explicitly registered public targets in
-`agents/design-review-matrix.json`: three bounded canonical sections and seven
-implementation/governance surfaces. This is not the denominator for all Garden
-modules or the five complete design documents. Private candidate content is not
-sent by this lane. Canonical inputs must match SOURCE_MANIFEST; public code inputs
-must be under registered implementation paths and are bound to exact file hashes.
+The active queue still covers the explicitly registered public targets in `agents/design-review-matrix.json`. Private candidate content is not sent by this lane. Canonical inputs are source-hash bound; public implementation inputs are bounded to registered source paths.
 
-For each target, four allocated model families review independently, then receive
-previous-round findings for challenge, revision and verification. At most four
-rounds run (16 successful calls per target). An all-NO_CHANGE challenge round stops
-early. Unresolved objections remain proposals requiring source checks and tests;
-agreement does not establish truth, independence, approval or qualification.
+`tools/independent_branch_worker.py` is the active inference transport. `tools/independent_branch_continuation.py` may automatically dispatch the next family only when the protocol phase itself is same-packet and isolated (`BLIND`, `FINAL`, or `CONFIRM`). It does not invent ChatGPT reconciliation directives.
 
-One workflow run makes at most one inference call. Output has an 8000-token total
-ceiling (including reasoning), with concise visible JSON requested. Low reasoning
-effort is requested only where the live endpoint advertises reasoning controls.
-Every request is rechecked against live pricing, context and the cost reservation.
-A completed but unusable response may receive one additional separately billed
-attempt for that slot. The original receipt is preserved. Unknown completion or
-unknown billing never authorizes a blind retry.
+A main-branch source/protocol change moves the queue to `AWAITING_CHATGPT_BASELINE_OR_DIRECTIVE`. Clock passage cannot create a baseline, a directive, a query, or model work. The daily recovery wake can only recover already-admitted transport state.
 
-## Durable state and stop conditions
+## Calls and spending
 
-The [persistent ledger](https://github.com/ankitdcx/garden-swarm/blob/garden-review-state/review-state/ledger.json)
-contains reservations, answers, generation identities, costs, queue status and
-coverage. Both workflows share garden-provider-review concurrency. SHA-conditional
-writes reserve the effect before transport; failure to save blocks the call.
-Normal state writes are permitted by the installed state-branch ruleset while
-force pushes and deletion remain prohibited. Main retains ordinary PR/CI gates.
+Limits remain:
 
-The secret-free continuation workflow starts on relevant main-branch changes.
-Unchanged source/policy/protocol bindings do not restart completed reviews.
-Successful worker completion uses GitHub workflow_dispatch to advance. A daily
-01:17 UTC recovery wake resumes only already-admitted deferred work or recovers one
-unconfirmed dispatch delivery; it cannot create review work from clock passage.
-This narrow recovery timer supersedes the former no-timer rule for this workflow
-only. Scheduled Actions delivery may be delayed; it is not a real-time deadline.
+- one inference call per dispatch;
+- one concurrent model call maximum;
+- `$0.05` reservation ceiling per routine call;
+- `$1.00` OpenRouter ceiling per UTC day;
+- `$9` routine lifetime allocation from the original `$20` pool;
+- **20 OpenRouter inference calls absolute maximum per convergence task**.
 
-The continuation statuses are READY, DISPATCHED, IN_FLIGHT, DEFERRED_DAILY, BLOCKED
-and COMPLETE_PROPOSALS_ONLY. Setting the ledger paused field to true prevents
-further calls. It cannot undo an already-issued request. BLOCKED is a visible stop,
-not success; missing credentials, unavailable approved routes, unknown calls,
-identity/cost mismatches and exhausted response retries require investigation.
-There is no automatic reset or permission expansion. Dispatch delivery recovery
-is capped at two attempts; response retry is capped at two attempts per slot.
+The 20-call ceiling is derived as:
 
-When a response identity is available, the worker first reads generation metadata
-to reconcile the saved call's identity, provider, finalized cost and terminal status. Both completion-reported and final
-generation costs are retained; the larger is charged against the local budget.
-Mismatching metadata remains visible in the ledger. A merged executor repair can
-rearm blocked processing without changing or restarting completed review cycles.
-Metadata does not repair truncated JSON or prove a finding correct. Without a
-response identity, the lane stays blocked. The first live call from run 35095704429
-returned truncated JSON at 1800 output tokens and reported $0.0011595; its original
-UNKNOWN receipt must be reconciled, not erased or relabeled as a successful review.
+`4 blind + up to 8 branch follow-ups + 4 final + up to 4 confirmation = 20`.
 
-## Spending and evidence
+Typical work should use fewer calls. Easy tasks can finish at 8 calls (four blind + four final). A normal task is expected around 12 calls (one branch follow-up each). Budget exhaustion stops/defers work; it never authorizes dropping a required reviewer, weakening assurance, or sharing branches to save money.
 
-Limits remain $0.05 per call, $1 per UTC day and the $9 routine lifetime allocation.
-Accounting is deliberately conservative and may stop early because provider usage
-and local receipts overlap. The other budget pools are unavailable to this worker.
-All admitted callers must share this ledger/key boundary; unrelated concurrent
-callers cannot be accounted for safely by a repository-local lock.
+## Persistent state and failures
 
-Allowed models and exclusions come from the current policies. No silent model or
-endpoint fallback is permitted. Requests require ZDR/no data collection; these
-are routing constraints, not independent certification of provider practices.
-Known costs, finish reasons and typed results persist even when review validation
-fails. Each call also uploads an Actions receipt. The ledger's coverage lists
-finished, pending and blocked registered targets, never whole-Garden completion.
+The `garden-review-state` ledger preserves reservations, response identities, exact/finalized billing, model/provider identity and protocol receipts. Existing transport reconciliation remains conservative: the larger known completion/final-generation cost is charged.
 
-Validation includes reservation-before-call, identity reconciliation, incomplete
-answer limits, duplicate events, daily deferral, delivery recovery, provider
-exclusions, completed-queue no-op and GitHub's empty 204 dispatch response. Live
-activation is established only by new receipts and successor workflow runs.
+Old unresolved responses are preserved as evidence. A superseded protocol response is not silently reclassified as valid v1 convergence evidence. Unknown identity or unknown billing blocks new inference.
 
-Free/Gemini lanes, private candidate review, full design-section coverage and
-integration of findings remain separate pending work. This configuration does not
-claim Garden v15.8 is complete or automatically approved.
+The active worker accepts a returned versioned model identity only when it is the exact requested pinned model or a version-qualified identity beginning with that pinned model ID; the exact actual model/provider is still recorded.
 
-Sources: [GitHub workflow dispatch behavior](https://github.blog/changelog/2022-09-08-github-actions-use-github_token-with-workflow_dispatch-and-repository_dispatch/),
-[OpenRouter reasoning budgets](https://openrouter.ai/docs/guides/best-practices/reasoning-tokens),
-and [generation reconciliation](https://openrouter.ai/docs/api/api-reference/generations/get-request-%26-usage-metadata-for-a-generation).
+## Model board
 
-Source obligations: existing agents/openrouter-paid-review-policy.json execution
-limits, agents/provider-exclusion-policy.json exclusions, agents/design-review-matrix.json
-review requirements, and AGENTS.md status distinctions. The operator's explicit
-request authorizes bounded automatic OpenRouter continuation; it grants no new
-design authority.
+Routine four-family value board remains:
+
+- DeepSeek V4.1 Flash
+- Qwen3.8 Flash
+- GLM 5.3 Flash
+- Xiaomi MiMo-V2.5
+
+Model identities remain pinned until a later model-catalog review event. Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI remain excluded. The separate Gemini and ChatGPT lanes do not replace the four OpenRouter branches.
+
+## Evidence boundary
+
+A completed protocol produces proposal evidence only. It does not establish whole-Garden coverage, semantic correctness, canonical promotion, legal status, authority, or human admission. Agreement itself is never the stopping criterion; the stopping criterion is absence of unresolved material contradiction, counterexample, evidence gap, violated invariant or stronger known alternative at the required assurance level.
