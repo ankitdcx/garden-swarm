@@ -5,54 +5,25 @@
   "candidate_correction_ref": "https://github.com/ankitdcx/garden-main/blob/main/design_deltas/v15.7/EVENT-DRIVEN-CONTEXT-ROUTING-CORRECTION-2026-09-16.md",
   "status": "PUBLIC_ADAPTER_CANDIDATE_NO_CANONICAL_EFFECT",
   "public_only": true,
+  "request_efficiency_policy": "agents/interactive-request-efficiency-policy.json",
+  "request_efficiency_binding": {
+    "event_driven_over_polling": true,
+    "same_hash_reuse_over_reread": true,
+    "rate_limit_circuit_breaker_required": true,
+    "efficiency_cannot_reduce_context_or_assurance": true
+  },
   "normalization": {
     "preferred_cost_class": "DETERMINISTIC_FREE_OR_LOW_COST",
     "required_observation_schema": "GardenNormalizedContextObservation/v1",
-    "required_fields": [
-      "observation_id",
-      "observed_at_unix",
-      "subject",
-      "event_kind",
-      "fingerprint",
-      "changed_fields",
-      "risk",
-      "uncertainty",
-      "source_refs",
-      "evidence_refs",
-      "summary",
-      "public_only"
-    ],
-    "deduplicate_by": [
-      "subject",
-      "fingerprint"
-    ],
+    "required_fields": ["observation_id", "observed_at_unix", "subject", "event_kind", "fingerprint", "changed_fields", "risk", "uncertainty", "source_refs", "evidence_refs", "summary", "public_only"],
+    "deduplicate_by": ["subject", "fingerprint"],
     "risk_is_routing_hint_not_truth": true
   },
   "materiality": {
     "risk_at_or_above": "HIGH",
-    "risk_order": [
-      "LOW",
-      "MEDIUM",
-      "HIGH",
-      "CRITICAL"
-    ],
-    "trigger_event_kinds": [
-      "SEMANTIC_DELTA",
-      "AUTHORITY_CHANGE",
-      "RIGHTS_CHANGE",
-      "SECURITY_FINDING",
-      "PRIVACY_FINDING",
-      "TEST_FAILURE",
-      "INVARIANT_FAILURE",
-      "PROOF_OBLIGATION_CHANGE",
-      "DEPENDENCY_INVALIDATION",
-      "NEW_OVERTURNING_EVIDENCE"
-    ],
-    "trigger_uncertainty": [
-      "HIGH",
-      "UNKNOWN",
-      "INCONCLUSIVE"
-    ],
+    "risk_order": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+    "trigger_event_kinds": ["SEMANTIC_DELTA", "AUTHORITY_CHANGE", "RIGHTS_CHANGE", "SECURITY_FINDING", "PRIVACY_FINDING", "TEST_FAILURE", "INVARIANT_FAILURE", "PROOF_OBLIGATION_CHANGE", "DEPENDENCY_INVALIDATION", "NEW_OVERTURNING_EVIDENCE"],
+    "trigger_uncertainty": ["HIGH", "UNKNOWN", "INCONCLUSIVE"],
     "contradiction_always_material": true,
     "clock_passage_alone_is_material": false,
     "identical_fingerprint_replay_is_material": false,
@@ -80,13 +51,7 @@
     "adaptive_context_profile_policy": "agents/openrouter-paid-review-policy.json"
   },
   "context_expansion": {
-    "levels": [
-      "L0_CAPSULE",
-      "L1_DEPENDENCY_EXPANDED",
-      "L2_CROSS_LAYER_EXPANDED",
-      "L3_AFFECTED_DOCUMENTS_FULL",
-      "L4_FULL_GARDEN"
-    ],
+    "levels": ["L0_CAPSULE", "L1_DEPENDENCY_EXPANDED", "L2_CROSS_LAYER_EXPANDED", "L3_AFFECTED_DOCUMENTS_FULL", "L4_FULL_GARDEN"],
     "reviewer_may_request_expansion": true,
     "material_expansion_request_must_not_be_overruled_by_cost_saving": true,
     "if_initial_four_branch_round_needs_material_expansion": "STOP_EXPAND_AND_RESTART_ALL_FOUR_ON_BIT_IDENTICAL_EXPANDED_PACKET",
@@ -147,5 +112,5 @@
     "record_openrouter_provider_cost_separately": true,
     "quality_regression_review_required": true
   },
-  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission. Bounded context is valid only when the source-bound whole-Garden orientation, target, applicable dependency closure, cross-cutting obligations and omission ledger are sufficient for the review question; otherwise context must expand or fail closed."
+  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission. Bounded context is valid only when the source-bound whole-Garden orientation, target, applicable dependency closure, cross-cutting obligations and omission ledger are sufficient for the review question; otherwise context must expand or fail closed. Request efficiency minimizes redundant remote work but cannot weaken correctness or assurance."
 }

@@ -1,0 +1,112 @@
+{
+  "schema": "GardenInteractiveRequestEfficiencyPolicy/v1",
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
+  "effective_date": "2026-09-16",
+  "scope": "GARDEN_CHATGPT_INTERACTIVE_WORK_AND_EXTERNAL_TOOL_MODEL_ORCHESTRATION",
+  "purpose": "REDUCE_AVOIDABLE_REMOTE_REQUESTS_WITHOUT_REDUCING_CORRECTNESS_ASSURANCE_OR_CONTEXT_SUFFICIENCY",
+  "boundaries": {
+    "cannot_control_or_observe_openai_internal_chatgpt_request_graph": true,
+    "cannot_guarantee_avoidance_of_chatgpt_platform_rate_limits": true,
+    "governs_garden_side_external_tool_connector_model_and_status_requests": true,
+    "efficiency_never_authorizes_silent_context_loss_or_assurance_downgrade": true,
+    "coordinator_pause_state_is_unchanged": true
+  },
+  "principles": [
+    "EVENT_DRIVEN_OVER_POLLING",
+    "SOURCE_HASH_REUSE_OVER_REREAD",
+    "MATERIALITY_GATING_BEFORE_REMOTE_WORK",
+    "COALESCE_RELATED_READS_AND_WRITES_WHERE_SUPPORTED",
+    "SINGLE_FLIGHT_FOR_EXPENSIVE_REMOTE_OPERATIONS",
+    "CHECKPOINT_AND_RESUME_INSTEAD_OF_RECONSTRUCT_AND_RETRY",
+    "STOP_OPTIONAL_REMOTE_WORK_AFTER_RATE_LIMIT"
+  ],
+  "interaction_cycle": [
+    "Observe user request and currently held verified state",
+    "Determine whether fresh remote evidence is materially required",
+    "Reuse source-bound context capsule and unchanged hashes where valid",
+    "Build the smallest sufficient request set",
+    "Execute deterministic or local checks before model calls",
+    "Execute remote calls single-flight unless independence requires isolated branches",
+    "Persist or retain a resumable checkpoint",
+    "Return the best current result without status polling loops"
+  ],
+  "event_sources": [
+    "NEW_USER_MESSAGE",
+    "REPOSITORY_HEAD_CHANGE",
+    "PULL_REQUEST_HEAD_CHANGE",
+    "NEW_REVIEW_OR_FINDING",
+    "CHECK_COMPLETION_OR_FAILURE_EVENT",
+    "SOURCE_HASH_INVALIDATION",
+    "DEPENDENCY_INVALIDATION",
+    "EXPLICIT_USER_REFRESH_REQUEST"
+  ],
+  "reuse_rules": {
+    "same_resource_same_hash_reread_default": "SKIP",
+    "same_pr_same_head_status_refetch_without_new_event_default": "SKIP",
+    "whole_garden_orientation_reuse": "USE_GardenArchitectureContextCapsulePolicy_v1_WHILE_HASH_VALID",
+    "changed_dependency_closure_only": true,
+    "reconstruct_from_scratch_each_turn": false
+  },
+  "polling_rules": {
+    "active_poll_loop_in_single_chat_turn": "FORBIDDEN_BY_DEFAULT",
+    "ci_status_checks_after_mutation": "ONE_OBSERVATION_UNLESS_A_NEW_COMPLETION_EVENT_IS_ALREADY_AVAILABLE",
+    "repeat_status_read_to_wait_for_completion": false,
+    "next_user_message_may_serve_as_next_observation_event": true,
+    "webhook_or_scheduler_may_resume_only_if_separately_authorized": true
+  },
+  "rate_limit_circuit_breaker": {
+    "triggers": ["HTTP_429", "RATE_LIMIT", "TOO_MANY_REQUESTS", "PROVIDER_QUOTA_TEMPORARY"],
+    "on_trigger": [
+      "STOP_OPTIONAL_REMOTE_CALLS_IN_THE_AFFECTED_LANE",
+      "DO_NOT_IMMEDIATELY_RETRY_THE_SAME_REQUEST",
+      "PRESERVE_COMPLETED_WORK_AND_SOURCE_BINDINGS",
+      "RECORD_OR_RETAIN_RESUME_CHECKPOINT",
+      "RETURN_PARTIAL_RESULT_IF_USEFUL_AND_SAFE"
+    ],
+    "retry_policy_for_programmatic_APIs": "HONOR_RETRY_AFTER_WHEN_AVAILABLE_OR_USE_BOUNDED_EXPONENTIAL_BACKOFF_WITH_JITTER_IN_AN_AUTHORIZED_RUNTIME",
+    "chat_turn_behavior": "DO_NOT_SPIN_OR_SLEEP_WAITING_FOR_RESET; RESUME_ON_A_LATER_EVENT",
+    "failed_attempts_must_not_be_treated_as_success": true
+  },
+  "request_coalescing": {
+    "prefer_combined_or_broader_single_read_when_it_replaces_multiple_equivalent_reads": true,
+    "avoid_repeated_get_pr_info_or_branch_head_reads_without_state_change": true,
+    "avoid_reopening_full_files_when_exact_needed_lines_or_bound_digest_are_already_available": true,
+    "do_not_batch_independent_model_reviews_in_a_way_that_breaks_blindness": true
+  },
+  "model_call_policy": {
+    "deterministic_gate_before_model": true,
+    "non_material_change_default": "NO_MODEL_CALL",
+    "openrouter_single_review_worker_existing_max_calls_per_dispatch": 1,
+    "openrouter_existing_max_concurrent_model_calls": 1,
+    "chatgpt_frontier_use": "MATERIAL_INTEGRATION_OR_CONTEXT_EXPANSION_ONLY",
+    "model_output_remains_proposal_evidence_only": true
+  },
+  "context_and_token_efficiency": {
+    "use_source_bound_architecture_capsule": true,
+    "smallest_sufficient_context_not_smallest_possible_context": true,
+    "send_deltas_plus_dependency_closure_when_sufficient": true,
+    "full_context_fallback_when_required": true,
+    "avoid_repeating_unchanged_large_context_in_the_same_workstream": true,
+    "large_output_allowance_should_match_task_need": true
+  },
+  "measurement": {
+    "record_remote_call_count_when_runtime_supports_it": true,
+    "record_duplicate_reads_avoided": true,
+    "record_poll_reads_avoided": true,
+    "record_context_reuse": true,
+    "record_rate_limit_events": true,
+    "record_resume_from_checkpoint": true,
+    "compare_quality_and_completion_against_request_reduction": true
+  },
+  "garden_bindings": {
+    "process_algebra": "REQUEST_IS_A_COSTED_EFFECT; REPEATED_EQUIVALENT_REQUEST_WITH_NO_NEW_EVENT_IS_NONPRODUCTIVE_BY_DEFAULT",
+    "reason": "FRESH_EXTERNAL_REASONING_ONLY_WHEN_MATERIAL_OR_CONTEXT_INVALIDATED",
+    "proof": "FEWER_REQUESTS_DO_NOT_REDUCE_REQUIRED_PROOF_OBLIGATIONS",
+    "compare": "COMPARE_REUSED_STATE_TO_CURRENT_HASHES_BEFORE_REFRESH",
+    "evidence": "CACHE_OR_REUSE_ONLY_WITH_SOURCE_IDENTITY_AND_FRESHNESS",
+    "audit": "RATE_LIMIT_AND_SKIPPED_REFRESH_DECISIONS_REMAIN_EXPLICIT",
+    "compliance": "NO_EFFICIENCY_OPTIMIZATION_MAY_BYPASS_AUTHORITY_RIGHTS_PRIVACY_OR_ASSURANCE",
+    "design_epoch": "ROOT_OR_EPOCH_CHANGE_INVALIDATES_AFFECTED_REUSE"
+  },
+  "closure_rule": "A request-efficient Garden interaction minimizes redundant remote work while preserving the same decision-relevant source identity, context sufficiency, evidence, authority and assurance obligations. If efficiency conflicts with correctness, correctness wins."
+}
