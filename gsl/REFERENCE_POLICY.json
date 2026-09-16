@@ -61,7 +61,13 @@
       "class": "RUNTIME_GENERATED_RECEIPT",
       "owner": "tools/run_gemini_free_review.py",
       "require_tracked_file": false
+    },
+    {
+      "reference": "review-state/convergence-directive.json",
+      "class": "STATE_BRANCH_RUNTIME_DIRECTIVE",
+      "owner": "tools/independent_branch_worker.py",
+      "require_tracked_file": false
     }
   ],
-  "rule": "A generated/runtime reference is not a dangling source-file reference merely because no tracked file exists. It must instead resolve to an explicit generating owner/class. Unknown untracked references remain failures."
+  "rule": "A generated/runtime reference is not a dangling source-file reference merely because no tracked file exists. It must instead resolve to an explicit generating or consuming owner/class. Unknown untracked references remain failures."
 }

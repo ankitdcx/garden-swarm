@@ -25,6 +25,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertLessEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.05)
         self.assertEqual(self.policy["event_driven_activation"]["no_change_default"], "NO_PAID_CALL")
         self.assertTrue(self.policy["event_driven_activation"]["clock_passage_alone_never_authorizes_spend"])
+        self.assertTrue(self.policy["event_driven_activation"]["private_chatgpt_baseline_commitment_required_before_first_openrouter_inference"])
 
     def test_model_catalog_reference_is_explicit(self): self.assertEqual(self.policy["catalog_reference_date"], "2026-09-16")
 
@@ -37,12 +38,14 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(len(set(families)), 4)
         self.assertTrue(all(not row["model"].endswith(":free") for row in reviewers))
 
-    def test_free_swarm_is_enabled_with_cross_examination(self):
+    def test_legacy_peer_cross_examination_is_disabled(self):
         swarm = self.policy["free_swarm"]
         self.assertTrue(swarm["enabled"])
         self.assertEqual(swarm["distinct_families_per_hour"], 4)
         self.assertGreaterEqual(swarm["minimum_available_families"], 3)
-        self.assertTrue(swarm["cross_examination"])
+        self.assertFalse(swarm["cross_examination"])
+        self.assertFalse(self.policy["specialist_free_sweep"]["cross_examination"])
+        self.assertEqual(self.policy["independent_branch_convergence_policy"], "agents/independent-branch-convergence-policy.json")
 
     def test_provider_policy_denies_collection_exclusions_and_has_value_price_ceiling(self):
         provider = self.policy["provider_policy"]

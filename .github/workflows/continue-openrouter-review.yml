@@ -9,6 +9,7 @@ on:
       - 'agents/design-review-matrix.json'
       - 'agents/openrouter-paid-review-policy.json'
       - 'agents/provider-exclusion-policy.json'
+      - 'agents/independent-branch-convergence-policy.json'
       - 'tools/**'
       - 'tests/**'
       - 'server/**'
@@ -16,7 +17,7 @@ on:
       - '.github/workflows/single-openrouter-review.yml'
       - '.github/workflows/continue-openrouter-review.yml'
   workflow_dispatch:
-  # Recovery only: cannot create new reviews from clock passage.
+  # Recovery only: cannot create new review work or a ChatGPT baseline from clock passage.
   schedule:
     - cron: '17 1 * * *'
 
@@ -33,6 +34,8 @@ jobs:
     if: github.repository == 'ankitdcx/garden-swarm' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      GARDEN_OPENROUTER_PROTOCOL: INDEPENDENT_BRANCH_CONVERGENCE_V1
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,9 +43,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify bounded continuation offline
-        run: python -m unittest tests.test_single_review_worker tests.test_review_continuation -v
-      - name: Resume only admitted pending public work
+      - name: Verify isolated continuation offline
+        run: |
+          python -m unittest tests.test_independent_branch_protocol -v
+          python -m unittest tests.test_review_continuation -v
+      - name: Resume only an already-directed same-packet isolated phase
         env:
           GH_REVIEW_TOKEN: ${{ github.token }}
-        run: python -m tools.review_continuation
+        run: python -m tools.independent_branch_continuation

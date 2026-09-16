@@ -36,7 +36,12 @@ class AutomationAuditTests(unittest.TestCase):
                     continue
                 self.assertNotIn('pull_request:',triggers)
                 self.assertIn('group: garden-provider-review',text)
-                self.assertLess(text.index('tools.check_dispatch_admission'),text.index('OPENROUTER_API_KEY'))
+                if 'tools.independent_branch_worker' in text:
+                    self.assertIn('tools.independent_branch_preflight', text)
+                    self.assertLess(text.index('tools.independent_branch_preflight'), text.index('OPENROUTER_API_KEY'))
+                    self.assertIn('INDEPENDENT_BRANCH_CONVERGENCE_V1', text)
+                else:
+                    self.assertLess(text.index('tools.check_dispatch_admission'),text.index('OPENROUTER_API_KEY'))
 
     def test_dispatch_fails_before_provider_work(self):
         result = subprocess.run([sys.executable,'-m','tools.check_dispatch_admission'],cwd=ROOT,capture_output=True,text=True)
@@ -102,3 +107,6 @@ class CIAggregationTests(unittest.TestCase):
         self.assertEqual(self.result(rows),'UNKNOWN')
         rows=self.runs();rows[0]['event']='workflow_dispatch'
         self.assertEqual(self.result(rows),'UNKNOWN')
+
+
+if __name__=='__main__': unittest.main()

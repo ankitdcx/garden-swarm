@@ -1,4 +1,4 @@
-"""The admitted Coordinator owns periodic work across both platforms."""
+"""The admitted continuation wake is recovery-only; it cannot create review work."""
 from pathlib import Path
 import re
 import unittest
@@ -23,7 +23,9 @@ class SingleSchedulerTests(unittest.TestCase):
                 if path.name == 'continue-openrouter-review.yml':
                     self.assertIn("cron: '17 1 * * *'", text)
                     self.assertNotIn('OPENROUTER_API_KEY', text)
-                    self.assertIn('tools.review_continuation', text)
+                    self.assertIn('tools.independent_branch_continuation', text)
+                    self.assertIn('Recovery only', text)
+                    self.assertIn('INDEPENDENT_BRANCH_CONVERGENCE_V1', text)
                 else:
                     self.assertIsNone(re.search(r'^\s*schedule\s*:', text, re.MULTILINE))
 
@@ -32,3 +34,7 @@ class SingleSchedulerTests(unittest.TestCase):
         for name in ('hourly-free-agent-review', 'hourly-specialist-agent-sweep', 'branch-lifecycle'):
             text = (root / f'.github/workflows/{name}.yml').read_text(encoding='utf-8')
             self.assertIn('workflow_dispatch:', text)
+
+
+if __name__ == '__main__':
+    unittest.main()

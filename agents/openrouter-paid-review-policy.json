@@ -7,6 +7,7 @@
   "semantic_delta_admitted": false,
   "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
   "event_driven_model_quality_policy": "agents/event-driven-model-quality-policy.json",
+  "independent_branch_convergence_policy": "agents/independent-branch-convergence-policy.json",
   "daily_openrouter_cost_ceiling_usd": 1.0,
   "budget_pools_usd": {
     "routine": 9.0,
@@ -22,7 +23,7 @@
     "enabled": true,
     "distinct_families_per_hour": 4,
     "minimum_available_families": 3,
-    "cross_examination": true,
+    "cross_examination": false,
     "max_parallelism": 1,
     "max_free_calls_per_hour": 8,
     "cost_policy": "OpenRouter :free routes only; every successful free call must report zero cost."
@@ -58,24 +59,28 @@
     "clock_passage_alone_never_authorizes_spend": true,
     "identical_state_replay_never_authorizes_spend": true,
     "no_change_default": "NO_PAID_CALL",
-    "strong_board_selected_only_after_bounded_context_materiality": true
+    "strong_board_selected_only_after_bounded_context_materiality": true,
+    "private_chatgpt_baseline_commitment_required_before_first_openrouter_inference": true
   },
   "notes": [
-    "Routine paid reviewers and the free swarm produce proposal evidence only.",
+    "All current Garden OpenRouter model-inference work is governed by agents/independent-branch-convergence-policy.json.",
+    "The four routine reviewers receive the same neutral initial query and source packet sequentially; they never receive one another's answers.",
+    "Branch reconciliation is ChatGPT-centered and branch-local: each model may see only its own prior branch result plus the ChatGPT branch-specific merged candidate. OpenRouter peer-answer cross-examination is superseded.",
+    "Final review sends the bit-identical ChatGPT-synthesized candidate separately to all four reviewers; final reviewers do not receive one another's reviews. One confirmation round is the maximum.",
+    "Agreement is evidence, not Proof or authority. Unresolved material disagreement after confirmation stops and escalates rather than looping.",
     "Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
     "Routine material review uses the current cost/quality value board: DeepSeek V4.1 Flash, Qwen3.8 Flash, GLM 5.3 Flash and Xiaomi MiMo-V2.5. Expensive flagship models are escalation-only under the separate event-driven quality policy.",
-    "Gemini 3.8 Flash remains a separate direct Google-family lane under free-tier-only/no-paid-fallback policy; ChatGPT remains a separate external frontier lane and is not hardcoded by this repository.",
-    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls.",
+    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls. A single convergence task can never exceed 20 inference calls or the shared $1/day ceiling.",
     "The legacy routine_hourly_cost_ceiling_usd field is an event-dispatch reservation envelope for compatibility; it is not a scheduling instruction.",
     "Moving latest aliases are intentionally not used for evidence lineage; exact model identities stay pinned until a later catalog-review event.",
-    "Paid-model failure or budget-policy failure never weakens semantic admission requirements.",
-    "The coordinator remains paused until separately resumed; registering stronger models does not authorize provider calls or ChatGPT handoffs."
+    "Paid-model failure or budget-policy failure never weakens semantic admission requirements or authorizes sharing branches.",
+    "The broad Coordinator remains paused; the bounded single-call review worker can advance only an admitted protocol phase and one model call per dispatch."
   ],
   "specialist_free_sweep": {
     "enabled": true,
     "preferred_families_per_hour": 8,
     "minimum_families_per_hour": 3,
-    "cross_examination": true,
+    "cross_examination": false,
     "target_slot_offset": 5,
     "max_free_calls_per_hour": 16,
     "cost_policy": "OpenRouter :free routes only; no paid fallback."
@@ -90,18 +95,19 @@
     "daily_free_call_cap": 48,
     "hourly_free_call_cap": 2,
     "scope": "SHARED_ACROSS_ALL_LANES",
-    "enforcement_status": "LEGACY_BATCH_DISPATCH_BLOCKED_PENDING_DURABLE_SHARED_LEDGER",
-    "family_counts": "Review-cycle diversity targets, accumulated over separate event-driven dispatches; not simultaneous calls or quota grants."
+    "enforcement_status": "ACTIVE_SINGLE_CALL_INDEPENDENT_BRANCH_LEDGER; LEGACY_BATCH_PATHS_NOT_ADMITTED",
+    "family_counts": "Review-cycle diversity targets accumulated over separate isolated event-driven dispatches; never simultaneous calls, peer-sharing permission or quota grants."
   },
   "event_driven_context": {
     "policy": "agents/event-driven-context-policy.json",
     "quality_policy": "agents/event-driven-model-quality-policy.json",
+    "convergence_policy": "agents/independent-branch-convergence-policy.json",
     "context_builder": "tools/event_context_gate.py",
     "frontier_handoff_builder": "tools/run_frontier_council.py",
     "frontier_handoff_schema": "GardenFrontierReviewRequest/v1",
     "frontier_provider_boundary": "EXTERNAL_CHATGPT_NOT_OPENROUTER",
     "event_key_routing": true,
-    "activation_status": "WIRED_TOOLING_PAUSED_WITH_COORDINATOR",
+    "activation_status": "SINGLE_CALL_TRANSPORT_ACTIVE_ONLY_AFTER_CHATGPT_DIRECTIVE; BROAD_COORDINATOR_PAUSED",
     "no_schedule_required": true
   }
 }
