@@ -1,0 +1,129 @@
+{
+  "authority": {
+    "generated_human_view": "GIT_OPERATING_CONTEXT.md",
+    "generated_machine_view": "GIT_OPERATING_CONTEXT.json",
+    "generated_views_must_not_be_edited_by_hand": true,
+    "live_github_rules_override_snapshot": true,
+    "normative_source": "ankitdcx/garden-main:GIT_OPERATING_CONTEXT_SOURCE.json",
+    "project_source_export": "USE_GENERATED_GIT_OPERATING_CONTEXT_MD",
+    "swarm_copy_role": "EXACT_PINNED_MIRROR"
+  },
+  "boundaries": {
+    "operational_not_canonical_semantics": true,
+    "receipt_is_evidence_not_proof_or_authority": true,
+    "request_efficiency_never_weakens_correctness_or_assurance": true
+  },
+  "branch_cleanup": {
+    "cleanup_is_event_driven": true,
+    "cleanup_receipt_required": true,
+    "merged_branch_may_be_deleted_only_after_MERGED_DELETE_ELIGIBLE": true,
+    "review_state_never_auto_deleted": true,
+    "stale_draft_or_abandoned_never_auto_deleted": true
+  },
+  "document_revision": 2,
+  "failure_catalogue": [
+    {"id": 1, "name": "Stale base under strict checks", "rule": "Refresh main immediately before merge; stale green checks are insufficient."},
+    {"id": 2, "name": "Superseded PR still counted as concurrent intent", "rule": "Close/supersede predecessor before replacement when practical or provide a real IntegrationReceipt."},
+    {"id": 3, "name": "Missing AgentWorkIntent", "rule": "Create complete intent at draft PR creation."},
+    {"id": 4, "name": "Changed path missing from intent", "rule": "Derive target paths from the final diff and keep intent current."},
+    {"id": 5, "name": "Missing IntegrationReceipt", "rule": "Compare overlapping semantics and record composition evidence/tests before claiming compatibility."},
+    {"id": 6, "name": "Concurrent edits caused merge conflicts", "rule": "Use early draft intents, narrow branches, and fresh integration branches for genuine collisions."},
+    {"id": 7, "name": "Protected/non-fast-forward branch update", "rule": "No force push; use forward commits or fresh replacement branches."},
+    {"id": 8, "name": "Malformed JSON discovered late", "rule": "Parse changed structured files before PR and still run reference closure."},
+    {"id": 9, "name": "Runtime/generated reference looked like missing file", "rule": "Register generated/runtime references with their producer; never create fake placeholders."},
+    {"id": 10, "name": "Stale config-surface fingerprint", "rule": "Recompute fingerprints and consumers/tests in the same work package."},
+    {"id": 11, "name": "Tests hardcoded old model/family assumptions", "rule": "Search for stale assumptions and assert invariants rather than obsolete exact values unless exactness is required."},
+    {"id": 12, "name": "Premature duplicate aggregate failures", "rule": "Incomplete mandatory set is UNKNOWN/DEFERRED; final PASS/FAIL only after all required lanes settle."},
+    {"id": 13, "name": "Classic commit-status endpoint incomplete for Actions", "rule": "Use workflow/PR check evidence and ruleset contexts."},
+    {"id": 14, "name": "Code-search lag after merge", "rule": "Use direct exact-ref fetch for proof; search is discovery."},
+    {"id": 15, "name": "Auto-merge assumption", "rule": "Do not attempt auto-merge without fresh setting evidence."},
+    {"id": 16, "name": "AAP floor mismatch", "rule": "Derive assurance tier/modules from the material change; never lower them to make CI green."},
+    {"id": 17, "name": "Human admission / trusted-base mismatch", "rule": "Never fabricate or broaden human approval; bind it to exact governed scope."},
+    {"id": 18, "name": "Blind workflow retry", "rule": "Inspect typed failure first; retry only after state/input change or proven transient failure."},
+    {"id": 19, "name": "Bad merge discovered after admission", "rule": "Never rewrite main; recover via typed revert-or-forward-fix PR from current main and revalidate dependents."}
+  ],
+  "github_field_notes": {
+    "extra_approval_for_unattributed_changes": "GitHub ruleset field concerning unattributed Copilot-created PRs; with required approving review count 0 it does not currently add a functional approval requirement."
+  },
+  "loading_order": [
+    "GIT_OPERATING_CONTEXT_SOURCE.json or generated GIT_OPERATING_CONTEXT.md",
+    "live default-branch head and applicable GitHub rulesets",
+    "ankitdcx/garden-main:governance/PROCESS_CURRENT.json",
+    "the process file named by PROCESS_CURRENT.json",
+    "CHATGPT_WORKSTREAM_POLICY.json for parallel ChatGPT Git work",
+    "canonical/source manifests and applicable domain policies/modules"
+  ],
+  "preflight": {
+    "allowed_overlap_results": ["NO_MATERIAL_COLLISION_WITH_DECLARED_SCOPE", "MATERIAL_COLLISION_DECLARED_FOR_INTEGRATION"],
+    "bootstrap_intent_only_commit_allowed_before_receipt": true,
+    "branch_prefixes": {"chatgpt": "chatgpt/", "integration": "integration/"},
+    "legacy_branch_exception_requires_explicit_receipt": true,
+    "receipt_proves": "BOUND_PREFLIGHT_FACTS_AND_ACKNOWLEDGEMENT_NOT_PRIVATE_COGNITIVE_READING",
+    "receipt_required_for_future_chatgpt_branches": true,
+    "required_fields": ["workstream_id", "repository", "base_sha", "git_context_revision", "git_context_source_sha256", "process_pointer", "process_version", "verified_merge_ruleset_id", "overlap_checked_open_prs", "overlap_result", "created_before_substantial_edit", "authority_effect"],
+    "schema": "GardenGitPreflightReceipt/v1",
+    "substantive_edit_requires_draft_pr_and_receipt": true
+  },
+  "process_binding": {
+    "expected_process_id": "GardenCanonicalUpdateProcess",
+    "expected_version_at_revision": "1.4",
+    "pointer": "governance/PROCESS_CURRENT.json",
+    "refresh_on_process_pointer_change": true,
+    "repository": "ankitdcx/garden-main"
+  },
+  "recovery": {
+    "bad_merge": {
+      "event": "BAD_MERGE_DETECTED",
+      "forward_fix_preferred_when": "revert would remove valid intervening dependent work or worsen state",
+      "never_reset_or_force_push_main": true,
+      "required_path": ["freeze dependent merge-train entries by dependency invalidation", "create recovery branch from current main", "choose revert commit or forward-fix with explicit rationale", "open recovery PR with AgentWorkIntent and preflight receipt", "run ordinary required checks and applicable Garden process/ActionGate/human gates", "merge through protected PR path", "revalidate downstream workstreams"],
+      "revert_preferred_when": "bounded reversal is safer and preserves exact provenance"
+    },
+    "schema": "GardenGitRecoveryPolicy/v1"
+  },
+  "repository_snapshots": {
+    "ankitdcx/garden-main": {
+      "auto_merge": false,
+      "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+      "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+      "non_fast_forward_blocked": true,
+      "required_checks": ["validate", "trusted-base-admission"],
+      "revision_base_sha": "1034bae620bc794637c4c1e056f9467e369eca8b",
+      "strict_required_status_checks": true,
+      "verified_merge_ruleset_id": 23542743,
+      "work_branch_ruleset_id": 23542796
+    },
+    "ankitdcx/garden-swarm": {
+      "auto_merge": false,
+      "non_fast_forward_blocked": true,
+      "persistent_review_state_ruleset_id": 23543091,
+      "required_checks": ["verify", "guard"],
+      "review_state_branch": "garden-review-state",
+      "revision_base_sha": "c2bcaa8dcfe1284e53523f3f075616899c2af56c",
+      "strict_required_status_checks": true,
+      "verified_merge_ruleset_id": 23543047,
+      "work_branch_ruleset_id": 23543069
+    }
+  },
+  "request_efficiency": ["no repeated same-hash reads by default", "no active CI/status polling loop", "read failed job/step first", "reuse verified head/ruleset/process/context hashes until invalidated", "after 429 stop optional calls and resume from checkpoint", "exact-ref fetch is proof; search is discovery"],
+  "reviewer_quality": {
+    "inflight_non_active_slot": {"default": "PAUSE_CURRENT_CONVERGENCE_WITH_REVIEWER_SLOT_INVALIDATED", "replacement_model_requires_new_convergence_cycle": true, "same_model_may_resume_only_after_governed_return_to_ACTIVE_and_source_binding_still_fresh": true, "silent_model_swap": false},
+    "normative_metric_file": "ankitdcx/garden-swarm:agents/reviewer-quality-policy.json",
+    "queue_retention": {"closed_archive_hash_limit": 512, "hard_limit_blocks_new_convergence_admission": true, "overdue_after_hours": 72, "pending_hard_limit": 128, "pending_soft_limit": 64, "unadjudicated_items_never_silently_deleted": true},
+    "recovery": {"DEGRADED_to_ACTIVE": "REQUIRES_SUCCESSFUL_BLIND_REQUALIFICATION_AND_GOVERNED_REGISTRY_PR", "QUARANTINED_to_ACTIVE": "REQUIRES_SUCCESSFUL_BLIND_REQUALIFICATION_ZERO_HARD_FAILURES_AND_GOVERNED_REGISTRY_PR", "no_direct_state_jump_to_ACTIVE": true}
+  },
+  "revision_id": "2026-09-16-r2",
+  "schema": "GardenGitOperatingContextSource/v2",
+  "scope": ["ankitdcx/garden-main", "ankitdcx/garden-swarm"],
+  "secret_scanning": {"allowlist_requires_exact_rule_and_path_and_reason": true, "central_ci_required": true, "local_hooks_optional_not_authoritative": true, "patterns": ["private key PEM headers", "GitHub tokens", "OpenAI/OpenRouter-style secret keys", "AWS access key IDs", "Google API keys", "generic high-confidence credential assignments"], "scan_changed_text_files": true, "test_fixtures_may_be_allowlisted_but_never_real_credentials": true},
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_PROCESS_SOURCE",
+  "workstreams": {
+    "abandoned_review_after_days_without_activity": 14,
+    "merge_train": {"blocked_head_may_be_skipped_only_if_not_dependency_of_later_ready_item": true, "default_order": "DEPENDENCIES_FIRST_THEN_READY_TIME", "dependency_invalidation": "REVALIDATE_REQUIRED", "driver": "EXTERNAL_CHATGPT_FRONTIER_OR_EXPLICIT_HUMAN_TRIGGER", "entry_conditions": ["no unresolved semantic collision", "declared dependencies merged or satisfied", "current main/base freshness established", "required checks green for current composition", "workstream not stale abandoned superseded or closed"], "exit_condition": "ALL_WORKSTREAMS_MERGED_SUPERSEDED_CLOSED_OR_EXPLICITLY_BLOCKED_WITH_RECEIPT", "final_main_admission_serial": true, "scheduling": "EVENT_DRIVEN_NOT_CLOCK_DRIVEN"},
+    "stale_draft_after_hours_without_activity": 72,
+    "stale_or_abandoned_is_not_auto_delete": true,
+    "statuses": ["ACTIVE", "REVALIDATE_REQUIRED", "INTEGRATING", "STALE_DRAFT", "ABANDONED_REVIEW_REQUIRED", "SUPERSEDED", "CLOSED"],
+    "timeouts_are_evaluated_only_on_event_or_maintenance_scan": true,
+    "unit": "ONE_CHATGPT_THREAD_PLUS_ONE_BOUNDED_WORK_PACKAGE"
+  }
+}

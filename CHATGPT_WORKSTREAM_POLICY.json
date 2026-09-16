@@ -1,63 +1,19 @@
 {
-  "schema": "GardenChatGPTWorkstreamPolicy/v1",
-  "status": "ACTIVE_NONCANONICAL_GIT_OPERATING_POLICY",
-  "effective_date": "2026-09-16",
-  "scope": "PARALLEL_CHATGPT_GARDEN_GIT_WORK",
-  "purpose": "ISOLATE_PARALLEL_CHATGPT_WORK_EARLY_DETECT_SEMANTIC_COLLISIONS_AND_SERIALIZE_FINAL_INTEGRATION",
-  "workstream_unit": "ONE_CHATGPT_THREAD_PLUS_ONE_BOUNDED_WORK_PACKAGE",
-  "rules": {
-    "unique_branch_per_workstream": true,
-    "future_chatgpt_branch_prefix": "chatgpt/",
-    "do_not_reuse_one_long_lived_branch_for_UNRELATED_packages": true,
-    "draft_pr_should_be_opened_before_substantial_editing": true,
-    "agent_work_intent_required_at_draft_pr_creation": true,
-    "workstream_receipt_marker": "GARDEN_CHATGPT_WORKSTREAM",
-    "workstream_schema": "GardenChatGPTWorkstreamIntent/v1",
-    "independent_workstreams_do_not_edit_each_others_branches": true,
-    "semantic_overlap_uses_existing_AgentWorkIntent_and_IntegrationReceipt_engine": true
-  },
-  "workstream_intent_required_fields": [
-    "workstream_id",
-    "work_package_id",
-    "branch",
-    "base_sha",
-    "dependency_intent_ids",
-    "integration_strategy",
-    "draft_pr_created_before_substantial_edit",
-    "status"
-  ],
-  "allowed_status": ["ACTIVE", "INTEGRATING", "SUPERSEDED", "CLOSED"],
   "allowed_integration_strategy": ["DIRECT_IF_NO_COLLISION", "INTEGRATION_BRANCH_IF_COLLISION"],
-  "collision_rule": {
-    "path_symbol_domain_invariant_or_contract_collision_is_material": true,
-    "different_files_can_still_collide_semantically": true,
-    "colliding_independent_chatgpt_workstreams_should_not_merge_into_each_other": true,
-    "preferred_resolution": "KEEP_BOTH_SOURCE_BRANCHES_INTACT_AND_CREATE_FRESH_INTEGRATION_BRANCH_FROM_CURRENT_MAIN",
-    "integration_branch_prefix": "integration/",
-    "integration_branch_must_compare_both_source_workstreams": true,
-    "integration_receipt_required": true,
-    "source_PRs_close_as_SUPERSEDED_after_integrated_candidate_is_verified": true
-  },
-  "merge_train": {
-    "final_main_admission_is_serial": true,
-    "default_order": "DEPENDENCIES_FIRST_THEN_READY_TIME",
-    "after_each_merge_revalidate_remaining_workstreams_against_new_main": true,
-    "relevant_main_change_emits_dependency_invalidation_event": true,
-    "unaffected_workstream_may_continue_after_hash_check": true,
-    "affected_workstream_must_rebase_by_forward_composition_or_fresh_replacement_and_rerun_affected_checks": true,
-    "never_force_push_to_rewrite_workstream_history": true
-  },
-  "request_efficiency": {
-    "draft_pr_is_the_shared_visibility_surface": true,
-    "do_not_poll_other_workstreams": true,
-    "refresh_open_work_only_on_new_PR_head_merge_or_user_event": true,
-    "reuse_unchanged_intent_and_head_hashes": true
-  },
-  "boundaries": {
-    "branch_isolation_does_not_prove_semantic_independence": true,
-    "integration_receipt_is_evidence_not_proof_or_authority": true,
-    "merge_train_does_not_bypass_repository_rules": true,
-    "human_or_protected_admission_rules_remain_separate": true
-  },
-  "closure_rule": "Parallel ChatGPT work is isolated by bounded branches and made visible by early draft PR intents. Noncolliding work enters main through a serial merge train. Genuine collisions preserve both source branches and are reconciled on a fresh integration branch with explicit comparison and evidence."
+  "allowed_status": ["ACTIVE", "REVALIDATE_REQUIRED", "INTEGRATING", "STALE_DRAFT", "ABANDONED_REVIEW_REQUIRED", "SUPERSEDED", "CLOSED"],
+  "bindings": {"agent_intent_schema": "AgentWorkIntent/v1", "git_operating_context_source": "GIT_OPERATING_CONTEXT_SOURCE.json", "integration_receipt_schema": "IntegrationReceipt/v1", "preflight_schema": "GardenGitPreflightReceipt/v1"},
+  "boundaries": {"human_or_protected_admission_rules_remain_separate": true, "integration_receipt_is_evidence_not_proof_or_authority": true, "lifecycle_timeout_never_authorizes_deletion": true, "merge_train_does_not_bypass_repository_rules": true},
+  "collision_rule": {"colliding_independent_chatgpt_workstreams_should_not_merge_into_each_other": true, "different_files_can_still_collide_semantically": true, "integration_branch_must_compare_both_source_workstreams": true, "integration_receipt_required": true, "path_symbol_domain_invariant_or_contract_collision_is_material": true, "preferred_resolution": "KEEP_BOTH_SOURCE_BRANCHES_INTACT_AND_CREATE_FRESH_INTEGRATION_BRANCH_FROM_CURRENT_MAIN", "source_PRs_close_as_SUPERSEDED_after_integrated_candidate_is_verified": true},
+  "effective_date": "2026-09-16",
+  "lifecycle": {"ABANDONED_REVIEW_REQUIRED_action": "BLOCK_MERGE_TRAIN_ENTRY_UNTIL_EXPLICIT_CLOSE_RESUME_OR_SUPERSEDE", "STALE_DRAFT_action": "SURFACE_FOR_REVIEW_NO_AUTOMATIC_MERGE_OR_DELETE", "abandoned_review_after_days_without_activity": 14, "evaluate_only_on_new_event_or_maintenance_scan": true, "stale_draft_after_hours_without_activity": 72, "stale_or_abandoned_is_not_delete_authority": true},
+  "merge_train": {"affected_workstream_must_forward_compose_or_fresh_replace_and_rerun_affected_checks": true, "after_each_merge_revalidate_remaining_workstreams_against_new_main": true, "blocked_head_may_be_skipped_only_if_not_dependency_of_later_ready_item": true, "default_order": "DEPENDENCIES_FIRST_THEN_READY_TIME", "dependency_invalidation_status": "REVALIDATE_REQUIRED", "driver": "EXTERNAL_CHATGPT_FRONTIER_OR_EXPLICIT_HUMAN_TRIGGER", "entry_conditions": ["status ACTIVE or REVALIDATE_REQUIRED resolved to ACTIVE", "no unresolved semantic collision", "dependencies satisfied", "current main/base freshness established", "required checks green for current composition"], "exit_condition": "ALL_WORKSTREAMS_MERGED_SUPERSEDED_CLOSED_OR_EXPLICITLY_BLOCKED_WITH_RECEIPT", "final_main_admission_is_serial": true, "never_force_push_to_rewrite_workstream_history": true, "relevant_main_change_emits_dependency_invalidation_event": true, "scheduling": "EVENT_DRIVEN_NOT_CLOCK_DRIVEN", "unaffected_workstream_may_continue_after_hash_check": true},
+  "policy_revision": 2,
+  "purpose": "ISOLATE_PARALLEL_CHATGPT_WORK_EARLY_DETECT_SEMANTIC_COLLISIONS_SERIALIZE_FINAL_INTEGRATION_AND_FAIL_CLOSED_ON_ABANDONED_OR_INVALIDATED_WORK",
+  "request_efficiency": {"do_not_poll_other_workstreams": true, "draft_pr_is_shared_visibility_surface": true, "refresh_open_work_only_on_new_PR_head_merge_or_user_event": true, "reuse_unchanged_intent_and_head_hashes": true},
+  "rules": {"branch_isolation_does_not_prove_semantic_independence": true, "do_not_reuse_one_long_lived_branch_for_unrelated_packages": true, "draft_pr_must_exist_before_substantial_edit": true, "future_chatgpt_branch_prefix": "chatgpt/", "git_preflight_receipt_required_before_substantial_edit": true, "independent_workstreams_do_not_edit_each_others_branches": true, "integration_branch_prefix": "integration/", "intent_only_bootstrap_commit_before_draft_pr": true, "semantic_overlap_uses_existing_AgentWorkIntent_and_IntegrationReceipt_engine": true, "unique_branch_per_workstream": true},
+  "schema": "GardenChatGPTWorkstreamPolicy/v1",
+  "scope": "PARALLEL_CHATGPT_GARDEN_GIT_WORK",
+  "status": "ACTIVE_NONCANONICAL_GIT_OPERATING_POLICY",
+  "workstream_intent_required_fields": ["workstream_id", "work_package_id", "branch", "base_sha", "dependency_intent_ids", "integration_strategy", "draft_pr_created_before_substantial_edit", "status", "draft_opened_at", "last_activity_at"],
+  "workstream_unit": "ONE_CHATGPT_THREAD_PLUS_ONE_BOUNDED_WORK_PACKAGE"
 }

@@ -1,0 +1,25 @@
+{
+  "allowed_recovery_modes": [
+    "REVERT",
+    "FORWARD_FIX"
+  ],
+  "authority_effect": "NONE",
+  "downstream_dependency_revalidation_required": true,
+  "event": "BAD_MERGE_DETECTED",
+  "forward_fix_preferred_when": "revert would remove valid intervening dependent work or worsen state",
+  "never_reset_or_force_push_main": true,
+  "ordinary_required_checks_and_applicable_Garden_gates_remain_required": true,
+  "required_steps": [
+    "freeze dependent merge-train entries by dependency invalidation",
+    "create recovery branch from current main",
+    "choose revert commit or forward-fix with explicit rationale",
+    "open recovery PR with AgentWorkIntent and preflight receipt",
+    "run ordinary required checks and applicable Garden process/ActionGate/human gates",
+    "merge through protected PR path",
+    "revalidate downstream workstreams"
+  ],
+  "revert_preferred_when": "bounded reversal is safer and preserves exact provenance",
+  "schema": "GardenGitRecoveryPolicy/v1",
+  "source": "GIT_OPERATING_CONTEXT_SOURCE.json",
+  "source_revision": 2
+}

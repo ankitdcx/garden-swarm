@@ -1,0 +1,10 @@
+{
+  "authority_effect": "NONE",
+  "document_revision": 2,
+  "mirror_path": "ankitdcx/garden-swarm:GIT_OPERATING_CONTEXT_SOURCE.json",
+  "normative_source": "ankitdcx/garden-main:GIT_OPERATING_CONTEXT_SOURCE.json",
+  "revision_id": "2026-09-16-r2",
+  "schema": "GardenGitOperatingContextMirrorReceipt/v1",
+  "source_sha256": "2881e9429a98a4d1e0f4d460c8d0ff8ea30b5d2c7bcb95f568a754c51a2b844f",
+  "status": "PINNED_EXACT_MIRROR_EXPECTED"
+}

@@ -15,10 +15,22 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Verify generated Git operating context
+        run: python tools/render_git_operating_context.py --check
+      - name: Validate ChatGPT Git preflight receipt
+        if: github.event_name == 'pull_request'
+        run: python tools/check_git_preflight_event.py
+      - name: Scan changed files for high-confidence secrets
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python tools/secret_scan.py --base "$BASE_SHA" --head HEAD --output /tmp/garden-secret-scan.json
       - name: Verify public release
         run: python scripts/verify_public_release.py
       - name: Verify free-review and Design Review Matrix boundaries offline
@@ -45,5 +57,6 @@ jobs:
             /tmp/garden-repo-gsl-audit.json
             /tmp/garden-gsl-conformance-receipt.json
             /tmp/reference-closure-receipt.json
+            /tmp/garden-secret-scan.json
           if-no-files-found: warn
           retention-days: 30

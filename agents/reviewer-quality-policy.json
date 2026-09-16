@@ -1,115 +1,38 @@
 {
-  "schema": "GardenReviewerQualityPolicy/v1",
-  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
-  "effective_date": "2026-09-16",
-  "scope": "ALL_GARDEN_OPENROUTER_REVIEWER_RESPONSES_AND_REVIEWER_SLOT_CHANGES",
-  "purpose": "MEASURE_REVIEWER_QUALITY_CONTINUOUSLY_REJECT_BAD_TASK_RESPONSES_AND_REPLACE_PERSISTENTLY_BAD_MODELS_ONLY_WITH_EVIDENCE",
   "bindings": {
-    "event_quality_policy": "agents/event-driven-model-quality-policy.json",
-    "paid_review_policy": "agents/openrouter-paid-review-policy.json",
-    "slot_registry": "agents/reviewer-slot-registry.json",
     "convergence_policy": "agents/independent-branch-convergence-policy.json",
+    "event_quality_policy": "agents/event-driven-model-quality-policy.json",
+    "git_operating_context_source": "GIT_OPERATING_CONTEXT_SOURCE.json",
+    "paid_review_policy": "agents/openrouter-paid-review-policy.json",
     "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
-    "runtime_queue": "garden-review-state:reviewer_quality_queue"
+    "runtime_queue": "garden-review-state:reviewer_quality_queue",
+    "slot_registry": "agents/reviewer-slot-registry.json"
   },
-  "schemas": {
-    "assessment_request": "GardenReviewerQualityAssessmentRequest/v1",
-    "response_receipt": "GardenReviewerQualityReceipt/v1",
-    "slot_summary": "GardenReviewerSlotQualitySummary/v1",
-    "shadow_benchmark": "GardenReviewerShadowBenchmark/v1",
-    "transition_proposal": "GardenReviewerTransitionProposal/v1"
-  },
-  "quality_dimensions": {
-    "source_grounding": 0.22,
-    "defect_precision": 0.16,
-    "defect_recall_after_closure": 0.18,
-    "context_handling": 0.16,
-    "instruction_schema_compliance": 0.12,
-    "unique_material_contribution": 0.10,
-    "counterexample_quality": 0.06
-  },
-  "non_quality_signals": [
-    "agreement_with_chatgpt",
-    "agreement_with_other_reviewers",
-    "majority_membership",
-    "verbosity",
-    "provider_popularity"
-  ],
-  "task_response_rejection": {
-    "hard_failure_rejects_response": true,
-    "invalid_schema_or_missing_context_verdict_rejects_response": true,
-    "rejected_response_does_not_count_as_required_branch_completion": true,
-    "task_must_retry_only_under_existing_bounded_retry_rules_or_defer": true,
-    "no_silent_substitute_model_inside_an_active_convergence_task": true
-  },
-  "hard_failures": [
-    "PEER_ANSWER_LEAKAGE_OR_USE",
-    "FABRICATED_SOURCE_OR_EVIDENCE",
-    "EXCLUDED_PROVIDER_OR_MODEL_USE",
-    "MATERIAL_SOURCE_MISREPRESENTATION",
-    "CLAIMED_AUTHORITY_OR_PROOF_NOT_GRANTED",
-    "CONTEXT_INSUFFICIENT_BUT_GUESSED_AS_SUFFICIENT",
-    "REPEATED_OUTPUT_SCHEMA_BYPASS_AFTER_ONE_BOUNDED_REPAIR"
-  ],
+  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. Every recorded current-protocol review is queued for external ChatGPT quality adjudication. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. Recovery requires blind requalification and a governed registry PR; a replacement starts a new convergence cycle. Reviewer agreement is never proof or a positive quality signal by itself.",
+  "effective_date": "2026-09-16",
+  "hard_failures": ["PEER_ANSWER_LEAKAGE_OR_USE", "FABRICATED_SOURCE_OR_EVIDENCE", "EXCLUDED_PROVIDER_OR_MODEL_USE", "MATERIAL_SOURCE_MISREPRESENTATION", "CLAIMED_AUTHORITY_OR_PROOF_NOT_GRANTED", "CONTEXT_INSUFFICIENT_BUT_GUESSED_AS_SUFFICIENT", "REPEATED_OUTPUT_SCHEMA_BYPASS_AFTER_ONE_BOUNDED_REPAIR"],
+  "inflight_transition": {"already_recorded_valid_peer_evidence_is_retained_but_does_not_waive_missing_slot": true, "non_active_required_slot": "PAUSE_CURRENT_CONVERGENCE_WITH_REVIEWER_SLOT_INVALIDATED", "replacement_model_requires_new_convergence_cycle": true, "same_model_resume_requires": "GOVERNED_RETURN_TO_ACTIVE_AND_FRESH_SOURCE_BINDING", "silent_model_swap": false},
   "lifecycle": {
-    "states": ["ACTIVE", "DEGRADED", "SHADOW_CHALLENGED", "QUARANTINED"],
-    "ordinary_window_minimum_receipts": 8,
     "degrade_when_weighted_quality_below": 0.58,
-    "quarantine_when_weighted_quality_below": 0.48,
-    "ordinary_quarantine_requires_minimum_receipts": 8,
     "hard_failure_transition": "QUARANTINED_PENDING_GOVERNED_REGISTRY_UPDATE",
-    "recovery_requires_new_shadow_evidence": true
+    "ordinary_quarantine_requires_minimum_receipts": 8,
+    "ordinary_window_minimum_receipts": 8,
+    "quarantine_when_weighted_quality_below": 0.48,
+    "recovery_requires_new_shadow_evidence": true,
+    "recovery_rules": {"ACTIVE_to_ACTIVE": "NO_CHANGE", "DEGRADED_to_ACTIVE": "FORBIDDEN_DIRECT", "DEGRADED_to_SHADOW_CHALLENGED": "ALLOWED_ON_EXPLICIT_REQUALIFICATION_EVENT", "QUARANTINED_to_ACTIVE": "FORBIDDEN_DIRECT", "QUARANTINED_to_SHADOW_CHALLENGED": "ALLOWED_ON_EXPLICIT_REQUALIFICATION_EVENT", "SHADOW_CHALLENGED_to_ACTIVE": "REQUIRES_QUALIFIED_SHADOW_BENCHMARK_AND_GOVERNED_REGISTRY_PR"},
+    "states": ["ACTIVE", "DEGRADED", "SHADOW_CHALLENGED", "QUARANTINED"]
   },
-  "shadow_replacement": {
-    "event_driven_only": true,
-    "triggers": [
-      "slot enters DEGRADED",
-      "slot has a hard failure",
-      "new materially stronger model release",
-      "material price or context change",
-      "provider reliability degradation",
-      "explicit human or ChatGPT catalog review event"
-    ],
-    "same_blind_packets_for_incumbent_and_candidate": true,
-    "peer_answers_hidden": true,
-    "minimum_shadow_packets": 6,
-    "candidate_must_have_zero_hard_failures": true,
-    "minimum_weighted_quality_improvement": 0.08,
-    "candidate_unique_contribution_floor_relative_to_incumbent": -0.05,
-    "candidate_must_meet_context_tool_schema_and_provider_exclusion_requirements": true,
-    "cost_is_tiebreaker_after_quality_floor_not_a_quality_substitute": true,
-    "replacement_requires_registry_PR": true,
-    "no_self_modifying_model_swap": true
-  },
-  "receipt_requirements": {
-    "scores_are_zero_to_one": true,
-    "scores_require_evidence_refs_or_adjudication_refs": true,
-    "adjudicator_may_be_external_chatgpt_but_receipt_is_assessment_not_proof": true,
-    "record_response_sha256": true,
-    "record_source_packet_sha256": true,
-    "record_phase": true,
-    "record_model_family_and_exact_model_id": true,
-    "record_context_sufficiency": true,
-    "record_cost_and_latency_when_known": true,
-    "record_hard_failures": true,
-    "record_surviving_or_overturned_findings": true
-  },
-  "runtime_assessment_queue": {
-    "every_current_protocol_REVIEW_RECORDED_attempt_must_be_queued": true,
-    "deduplicate_by_response_sha256": true,
-    "queue_owner": "EXTERNAL_CHATGPT_FRONTIER",
-    "queue_status": "AWAITING_CHATGPT_ADJUDICATION",
-    "quality_queue_does_not_block_independent_peer_collection_by_itself": true,
-    "quality_adjudication_required_before_treating_quality_evidence_as_closed": true,
-    "assessment_request_is_not_proof_authority_or_model_replacement": true,
-    "reuse_existing_continuation_state_transaction": true
-  },
-  "selection_boundary": {
-    "selector_must_read_slot_registry": true,
-    "all_required_slots_must_be_ACTIVE": true,
-    "DEGRADED_OR_QUARANTINED_SLOT_BLOCKS_NEW_CONVERGENCE_ADMISSION_UNTIL_REPAIRED_OR_GOVERNED_REPLACEMENT": true,
-    "replacement_cannot_reduce_required_family_diversity": true,
-    "excluded_families_remain_ineligible_even_if_better_scoring": true
-  },
-  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. Every recorded current-protocol review is queued for external ChatGPT quality adjudication. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. A replacement becomes active only after blind shadow evidence and an explicit governed registry update. Reviewer agreement is never treated as proof or as a positive quality signal by itself."
+  "non_quality_signals": ["agreement_with_chatgpt", "agreement_with_other_reviewers", "majority_membership", "verbosity", "provider_popularity"],
+  "policy_revision": 2,
+  "purpose": "MEASURE_REVIEWER_QUALITY_CONTINUOUSLY_REJECT_BAD_TASK_RESPONSES_AND_REPLACE_PERSISTENTLY_BAD_MODELS_ONLY_WITH_EVIDENCE",
+  "quality_dimensions": {"context_handling": 0.16, "counterexample_quality": 0.06, "defect_precision": 0.16, "defect_recall_after_closure": 0.18, "instruction_schema_compliance": 0.12, "source_grounding": 0.22, "unique_material_contribution": 0.1},
+  "receipt_requirements": {"adjudicator_may_be_external_chatgpt_but_receipt_is_assessment_not_proof": true, "record_context_sufficiency": true, "record_cost_and_latency_when_known": true, "record_hard_failures": true, "record_model_family_and_exact_model_id": true, "record_phase": true, "record_response_sha256": true, "record_source_packet_sha256": true, "record_surviving_or_overturned_findings": true, "scores_are_zero_to_one": true, "scores_require_evidence_refs_or_adjudication_refs": true},
+  "runtime_assessment_queue": {"assessment_request_is_not_proof_authority_or_model_replacement": true, "closed_archive_hash_limit": 512, "closed_statuses": ["ADJUDICATED", "REJECTED", "SUPERSEDED"], "deduplicate_by_response_sha256": true, "every_current_protocol_REVIEW_RECORDED_attempt_must_be_queued": true, "hard_limit_blocks_new_convergence_admission": true, "overdue_after_hours": 72, "overdue_status": "OVERDUE_CHATGPT_ADJUDICATION", "pending_hard_limit": 128, "pending_soft_limit": 64, "quality_adjudication_required_before_treating_quality_evidence_as_closed": true, "quality_queue_does_not_block_independent_peer_collection_by_itself_below_hard_limit": true, "queue_owner": "EXTERNAL_CHATGPT_FRONTIER", "queue_status": "AWAITING_CHATGPT_ADJUDICATION", "reuse_existing_continuation_state_transaction": true, "unadjudicated_items_never_silently_deleted": true},
+  "schema": "GardenReviewerQualityPolicy/v1",
+  "schemas": {"assessment_request": "GardenReviewerQualityAssessmentRequest/v1", "response_receipt": "GardenReviewerQualityReceipt/v1", "shadow_benchmark": "GardenReviewerShadowBenchmark/v1", "slot_summary": "GardenReviewerSlotQualitySummary/v1", "transition_proposal": "GardenReviewerTransitionProposal/v1"},
+  "scope": "ALL_GARDEN_OPENROUTER_REVIEWER_RESPONSES_AND_REVIEWER_SLOT_CHANGES",
+  "selection_boundary": {"DEGRADED_OR_QUARANTINED_SLOT_BLOCKS_NEW_CONVERGENCE_ADMISSION_UNTIL_REPAIRED_OR_GOVERNED_REPLACEMENT": true, "all_required_slots_must_be_ACTIVE": true, "excluded_families_remain_ineligible_even_if_better_scoring": true, "replacement_cannot_reduce_required_family_diversity": true, "selector_must_read_slot_registry": true},
+  "shadow_replacement": {"candidate_must_have_zero_hard_failures": true, "candidate_must_meet_context_tool_schema_and_provider_exclusion_requirements": true, "candidate_unique_contribution_floor_relative_to_incumbent": -0.05, "cost_is_tiebreaker_after_quality_floor_not_a_quality_substitute": true, "event_driven_only": true, "minimum_shadow_packets": 6, "minimum_weighted_quality_improvement": 0.08, "no_self_modifying_model_swap": true, "peer_answers_hidden": true, "replacement_requires_registry_PR": true, "same_blind_packets_for_incumbent_and_candidate": true, "triggers": ["slot enters DEGRADED", "slot has a hard failure", "new materially stronger model release", "material price or context change", "provider reliability degradation", "explicit human or ChatGPT catalog review event"]},
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
+  "task_response_rejection": {"hard_failure_rejects_response": true, "invalid_schema_or_missing_context_verdict_rejects_response": true, "no_silent_substitute_model_inside_an_active_convergence_task": true, "rejected_response_does_not_count_as_required_branch_completion": true, "task_must_retry_only_under_existing_bounded_retry_rules_or_defer": true}
 }

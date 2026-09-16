@@ -1,352 +1,255 @@
-# Garden Git Operating Context v1
+# Garden Git Operating Context — revision 2
 
-**Observed:** 2026-09-16  
-**Scope:** `ankitdcx/garden-main` and `ankitdcx/garden-swarm`  
-**Status:** operational process source; **not** Garden canonical semantics, Proof, authority, or promotion.
+**Revision ID:** `2026-09-16-r2`  
+**Source SHA-256:** `2881e9429a98a4d1e0f4d460c8d0ff8ea30b5d2c7bcb95f568a754c51a2b844f`  
+**Normative source:** `ankitdcx/garden-main:GIT_OPERATING_CONTEXT_SOURCE.json`  
+**Status:** ACTIVE_NONCANONICAL_OPERATIONAL_PROCESS_SOURCE
 
-## Mandatory use
+> This Markdown is generated. Do not edit it by hand. Edit `GIT_OPERATING_CONTEXT_SOURCE.json` and regenerate.
 
-Before any AI/agent performs a GitHub write, branch creation, file mutation, pull request, workflow rerun, merge attempt, branch replacement, or state-branch update for Garden:
+Live GitHub rules and current repository heads override stale snapshot values in this document.
 
-1. Read this file first.
-2. Reuse the last verified repository state only while its head/ruleset identity is unchanged.
-3. Fetch the current default-branch head and relevant live ruleset(s) before starting a new write package.
-4. Inspect open PR/work-intent overlap before choosing shared paths.
-5. If the live GitHub rules disagree with this snapshot, **the live rules win**; update this file in the same bounded work package if practical.
-6. Do not infer that a red workflow is a Git-process defect. Some Garden workflows intentionally fail closed when an assurance, authority, evidence, AAP, or conformance obligation is not met.
+## 1. Mandatory loading order
 
-The objective is: **fresh base + bounded intent + minimal remote requests + no history rewriting + exact evidence + one clean merge path**.
+- GIT_OPERATING_CONTEXT_SOURCE.json or generated GIT_OPERATING_CONTEXT.md
+- live default-branch head and applicable GitHub rulesets
+- ankitdcx/garden-main:governance/PROCESS_CURRENT.json
+- the process file named by PROCESS_CURRENT.json
+- CHATGPT_WORKSTREAM_POLICY.json for parallel ChatGPT Git work
+- canonical/source manifests and applicable domain policies/modules
 
----
+The Git operating context is loaded first for mutation mechanics, but the current Garden process pointer and the process file it names must be loaded before routing semantic/design work.
 
-## Repository snapshot
+## 2. Repository snapshots
 
 ### `ankitdcx/garden-main`
 
-Observed default branch head when this context was created:
-
-`46516375cf0c0db387c6c2fc665282409da7278a`
-
-Active rulesets observed:
-
-- **Garden Main - Verified merges** — ruleset `23542743`
-  - applies to default/main;
-  - deletion blocked;
-  - non-fast-forward updates blocked;
-  - pull request required;
-  - review threads must be resolved;
-  - extra approval is required for unattributed changes;
-  - allowed merge methods: merge, squash, rebase;
-  - strict required-status policy enabled;
-  - required checks: **`validate`** and **`trusted-base-admission`**;
-  - no bypass actor is available to the connected agent.
-- **Garden Main - Work branch history** — ruleset `23542796`
-  - applies to non-main branches;
-  - non-fast-forward updates blocked.
-
-Important consequence: a branch history rewrite that needs force-push is not the normal recovery path. Prefer a merge-from-current-main when safe, or create a **fresh replacement branch from current main** and supersede the old PR.
-
-High-level structure used during Git work:
-
-- `canonical/current/` — canonical-current identity and source manifest.
-- `implementation/garden_kernel/` — private/reference kernel implementation.
-- `implementation/tests/` — deterministic kernel/conformance tests.
-- `governance/` — authority, admission, process and governance records.
-- `design_deltas/` — successor/candidate deltas, including v15.7 work.
-- `reviews/evolution/` — Reason / Algebra / Assurance / Production receipts.
-- `.github/workflows/` — protected CI and admission workflows.
-
-Garden-main PR intents must be bound to the **actual current PR base SHA**, source root and DesignEpoch from the base branch. Canonical v15.5 is not edited in place unless a separately authorized successor process explicitly permits it.
+- **auto_merge:** `False`
+- **canonical_source_root_sha256:** `63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598`
+- **design_epoch_ref:** `Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598`
+- **non_fast_forward_blocked:** `True`
+- **required_checks:** `validate`, `trusted-base-admission`
+- **revision_base_sha:** `1034bae620bc794637c4c1e056f9467e369eca8b`
+- **strict_required_status_checks:** `True`
+- **verified_merge_ruleset_id:** `23542743`
+- **work_branch_ruleset_id:** `23542796`
 
 ### `ankitdcx/garden-swarm`
 
-Observed default branch head when this context was created:
+- **auto_merge:** `False`
+- **non_fast_forward_blocked:** `True`
+- **persistent_review_state_ruleset_id:** `23543091`
+- **required_checks:** `verify`, `guard`
+- **review_state_branch:** `garden-review-state`
+- **revision_base_sha:** `c2bcaa8dcfe1284e53523f3f075616899c2af56c`
+- **strict_required_status_checks:** `True`
+- **verified_merge_ruleset_id:** `23543047`
+- **work_branch_ruleset_id:** `23543069`
 
-`2e6de899e0cf21085928ead6f39910f42130c1cb`
+## 3. Preflight receipt
 
-Active rulesets observed:
+Future ChatGPT workstreams require `GardenGitPreflightReceipt/v1` before substantial editing.
+The only allowed pre-receipt mutation is the small intent-only bootstrap commit needed to create the draft PR.
+The receipt proves bounded preflight facts and acknowledgement; it does not prove private cognition or that a model literally 'read' a file.
 
-- **Garden Swarm - Verified merges** — ruleset `23543047`
-  - applies to default/main;
-  - deletion blocked;
-  - non-fast-forward updates blocked;
-  - pull request required;
-  - review threads must be resolved;
-  - extra approval is required for unattributed changes;
-  - allowed merge methods: merge, squash, rebase;
-  - strict required-status policy enabled;
-  - required checks: **`verify`** and **`guard`**;
-  - no bypass actor is available to the connected agent.
-- **Garden Swarm - Work branch history** — ruleset `23543069`
-  - applies to ordinary non-main work branches;
-  - non-fast-forward updates blocked.
-- **Garden Swarm - Persistent review state** — ruleset `23543091`
-  - applies to `garden-review-state`;
-  - deletion blocked;
-  - non-fast-forward updates blocked.
+**Required fields:**
 
-Observed repository behavior: GitHub auto-merge is disabled. Do not depend on auto-merge.
+- workstream_id
+- repository
+- base_sha
+- git_context_revision
+- git_context_source_sha256
+- process_pointer
+- process_version
+- verified_merge_ruleset_id
+- overlap_checked_open_prs
+- overlap_result
+- created_before_substantial_edit
+- authority_effect
 
-High-level structure used during Git work:
+ChatGPT work branches use `chatgpt/`; integration branches use `integration/`.
 
-- root five-file/public Garden source and `SOURCE_MANIFEST.json`;
-- `agents/` — machine policies, routing, review and provider constraints;
-- `tools/` — worker, selector, review, audit and integration tooling;
-- `gsl/` — repository GSL profiles/contracts/registries;
-- `swarm/` — orchestrator and integration-provenance implementation;
-- `prototype/` — non-certified executable reference mechanisms;
-- `server/` — read-only discovery/MCP foundation;
-- `tests/` and `swarm/tests/` — regression and conformance tests;
-- `docs/` — operating and mechanism documentation;
-- `.github/workflows/` — CI and review execution surfaces.
+## 4. Parallel ChatGPT workstreams and merge train
 
-`garden-review-state` is durable execution state, not an ordinary feature branch. Never delete, rewrite, or casually reconstruct it.
+Workstream unit: **ONE_CHATGPT_THREAD_PLUS_ONE_BOUNDED_WORK_PACKAGE**.
 
----
+**Statuses:** `ACTIVE`, `REVALIDATE_REQUIRED`, `INTEGRATING`, `STALE_DRAFT`, `ABANDONED_REVIEW_REQUIRED`, `SUPERSEDED`, `CLOSED`
 
-## Required Git process
+- Stale draft: 72 hours without activity.
+- Abandoned-review threshold: 14 days without activity.
+- Time thresholds are evaluated only on a new event or maintenance scan; no polling loop is created.
+- Stale/abandoned work is never auto-deleted.
 
-### A. Before writing anything
+**Merge train:**
 
-1. Read this file.
-2. Fetch current `main` once.
-3. Fetch current relevant rulesets once if the saved ruleset snapshot is not already fresh for this workstream.
-4. Search current open PRs / declared AgentWorkIntents for overlapping paths, symbols, semantic domains, invariants, and contracts.
-5. Decide the bounded work package and expected changed paths **before** creating the PR.
-6. Prefer a new uniquely named branch from current main. Do not share a work branch with another chat/agent unless explicitly coordinated.
+- Driver: `EXTERNAL_CHATGPT_FRONTIER_OR_EXPLICIT_HUMAN_TRIGGER`.
+- Scheduling: `EVENT_DRIVEN_NOT_CLOCK_DRIVEN`.
+- Order: `DEPENDENCIES_FIRST_THEN_READY_TIME`.
+- no unresolved semantic collision
+- declared dependencies merged or satisfied
+- current main/base freshness established
+- required checks green for current composition
+- workstream not stale abandoned superseded or closed
+- Dependency invalidation moves affected work to `REVALIDATE_REQUIRED`.
+- Exit: `ALL_WORKSTREAMS_MERGED_SUPERSEDED_CLOSED_OR_EXPLICITLY_BLOCKED_WITH_RECEIPT`.
+- Final admission to `main` is serial.
 
-### B. Before opening a PR
+## 5. Reviewer-quality lifecycle
 
-Run the cheapest deterministic checks first:
+Normative metric/threshold definition: `ankitdcx/garden-swarm:agents/reviewer-quality-policy.json`.
+This document intentionally does not duplicate those weights as authority; the referenced policy is normative.
 
-- parse every changed JSON/YAML file;
-- compile/run directly affected code tests;
-- run repository reference-closure checks when references or path-like strings changed;
-- run config-surface/fingerprint tests when model/reviewer/policy surfaces changed;
-- update tests that intentionally encode the old policy shape;
-- for `garden-main`, run the applicable evolution Reason/Algebra/AAP/Production audits for material governance changes;
-- ensure AAP safety tier/modules are **derived from the change** and are not below the minimum floor;
-- ensure runtime/generated paths are registered in the reference policy rather than pretending they are tracked files.
+**Recovery:**
 
-### C. PR intent
+- DEGRADED → ACTIVE: REQUIRES_SUCCESSFUL_BLIND_REQUALIFICATION_AND_GOVERNED_REGISTRY_PR.
+- QUARANTINED → ACTIVE: REQUIRES_SUCCESSFUL_BLIND_REQUALIFICATION_ZERO_HARD_FAILURES_AND_GOVERNED_REGISTRY_PR.
+- No direct state jump back to ACTIVE.
 
-Every guarded PR must carry an `AgentWorkIntent` covering the **actual complete diff**.
+**If a required reviewer becomes non-ACTIVE while a task is in flight:**
 
-Rules:
+- Default: `PAUSE_CURRENT_CONVERGENCE_WITH_REVIEWER_SLOT_INVALIDATED`.
+- No silent model swap.
+- The same exact model may resume only after governed return to ACTIVE and a fresh source-binding check.
+- A replacement model starts a new convergence cycle.
 
-- base SHA must match the PR's actual current base;
-- target paths must cover every changed file;
-- semantic domains/invariants/contracts must include cross-file effects, not only filenames;
-- `garden-main` also binds source root + DesignEpoch;
-- review/proposal evidence never grants authority or canonical status.
+**Quality queue retention/backpressure:**
 
-If another open intent overlaps, independently compare the two changes and add an `IntegrationReceipt` only after confirming compatibility and running post-composition tests. Never fabricate compatibility.
+- Soft pending limit: 64.
+- Hard pending limit: 128.
+- Overdue after: 72 hours.
+- Closed archive hash limit: 512.
+- Unadjudicated items are never silently deleted.
+- Crossing the hard limit blocks new convergence admission until quality debt is reduced.
 
-### D. While CI runs
+## 6. Bad-merge recovery
 
-- Do not poll in a loop.
-- Observe once after mutation; wait for a new completion event/user turn before another status read unless completion is already known.
-- If a workflow fails, read **the failed job/step only** first.
-- Classify the failure before retrying:
-  - Git/process/config defect → fix exact cause;
-  - expected fail-closed semantic/assurance result → repair the underlying design/receipt or leave blocked;
-  - transient provider/network error → preserve checkpoint; bounded retry only if the owning policy permits it.
-- Rerun only the failed job/workflow when possible; do not rerun successful lanes without cause.
+A bad merge is recovered without rewriting protected history.
 
-### E. Before merge
+- freeze dependent merge-train entries by dependency invalidation
+- create recovery branch from current main
+- choose revert commit or forward-fix with explicit rationale
+- open recovery PR with AgentWorkIntent and preflight receipt
+- run ordinary required checks and applicable Garden process/ActionGate/human gates
+- merge through protected PR path
+- revalidate downstream workstreams
 
-1. Fetch current main head.
-2. Compare it with the PR base. Strict required-status rules mean **old green checks are not sufficient after main advances**.
-3. If base is stale:
-   - do not attempt to bypass required checks;
-   - do not force-push rewritten history;
-   - either compose current main into the branch with a normal forward update when clean, or create a fresh current-base replacement branch/PR;
-   - when replacing a PR, **close/supersede the old PR before opening the replacement** when practical, so it is no longer treated as concurrent work.
-4. Confirm exact required checks for that repository are green on the current composition.
-5. Confirm review threads are resolved.
-6. Merge through the PR path only.
+- `main` must never be reset or force-pushed as rollback.
+- Prefer a revert when: bounded reversal is safer and preserves exact provenance.
+- Prefer a forward fix when: revert would remove valid intervening dependent work or worsen state.
 
-### F. After merge
+## 7. Secret scanning
 
-- Verify default-branch head once.
-- Fetch the changed file directly from `main` when proof of deployed repository state matters.
-- Do not rely on stale code-search indexing immediately after merge.
-- Record any new failure mode in this file if it represents a reusable Git/process lesson.
+- Central CI scanning is mandatory; local hooks are optional and not authoritative.
+- Scan changed text files for high-confidence credential patterns.
+- Allowlisting requires exact rule + exact path + reason.
+- Fake fixtures may be allowlisted; real credentials may not.
 
----
+## 8. Branch cleanup
 
-## Failure catalogue and prevention rules
+- A merged branch may be deleted only after `MERGED_DELETE_ELIGIBLE` classification.
+- `garden-review-state` is never auto-deleted.
+- Stale or abandoned workstreams are never auto-deleted.
+- Cleanup is event-driven and requires a cleanup receipt.
 
-### 1. Stale base under strict required checks
+## 9. GitHub ruleset field note
 
-**Observed:** a PR had green head checks, but `main` advanced before merge; GitHub returned required checks as expected/pending and refused merge.
+GitHub ruleset field concerning unattributed Copilot-created PRs; with required approving review count 0 it does not currently add a functional approval requirement.
 
-**Prevention:** always re-read `main` immediately before merge. Green checks are valid only for the current strict composition. If stale, compose/recreate and let checks rerun.
+## 10. Request efficiency
+
+- no repeated same-hash reads by default
+- no active CI/status polling loop
+- read failed job/step first
+- reuse verified head/ruleset/process/context hashes until invalidated
+- after 429 stop optional calls and resume from checkpoint
+- exact-ref fetch is proof; search is discovery
+
+## 11. Failure catalogue
+
+### 1. Stale base under strict checks
+
+**Rule:** Refresh main immediately before merge; stale green checks are insufficient.
 
 ### 2. Superseded PR still counted as concurrent intent
 
-**Observed:** replacement PR opened while its predecessor was still open, causing integration-provenance collision with the old identical intent.
-
-**Prevention:** when replacing rather than composing, close/mark the predecessor superseded **before** opening the new PR where possible. If both must remain open, include an explicit IntegrationReceipt.
+**Rule:** Close/supersede predecessor before replacement when practical or provide a real IntegrationReceipt.
 
 ### 3. Missing AgentWorkIntent
 
-**Observed:** integration provenance blocked PRs with `MISSING_AGENT_WORK_INTENT`.
-
-**Prevention:** create the complete intent in the PR body at PR creation, not after CI fails.
+**Rule:** Create complete intent at draft PR creation.
 
 ### 4. Changed path missing from intent
 
-**Observed:** guarded PRs can fail when actual changed files are absent from declared `target_paths`.
+**Rule:** Derive target paths from the final diff and keep intent current.
 
-**Prevention:** derive target paths from the actual final diff; after adding a new file, update the PR intent before expecting provenance CI to pass.
+### 5. Missing IntegrationReceipt
 
-### 5. Integration receipt missing for semantic/path overlap
-
-**Observed:** provider-policy and v15.7/review changes overlapped broad semantic domains or paths and were blocked until a compatibility receipt was supplied.
-
-**Prevention:** check open work before editing. When overlap is intentional, compare semantics and add `IntegrationReceipt/v1` with concrete composition evidence and tests.
+**Rule:** Compare overlapping semantics and record composition evidence/tests before claiming compatibility.
 
 ### 6. Concurrent edits caused merge conflicts
 
-**Observed:** another workstream changed the same review subsystem while a PR was in progress.
+**Rule:** Use early draft intents, narrow branches, and fresh integration branches for genuine collisions.
 
-**Prevention:** do preflight overlap search first; keep work packages narrow; refresh main before final composition; preserve the newer work rather than overwriting it.
+### 7. Protected/non-fast-forward branch update
 
-### 7. Non-fast-forward / protected branch write
+**Rule:** No force push; use forward commits or fresh replacement branches.
 
-**Observed:** direct update/force-style operations were blocked by repository rules or PR-only behavior.
+### 8. Malformed JSON discovered late
 
-**Prevention:** never plan on force push. Use forward commits on a work branch and merge via PR. If history becomes awkward, create a fresh branch from current main.
+**Rule:** Parse changed structured files before PR and still run reference closure.
 
-### 8. Malformed JSON discovered by reference closure
+### 9. Runtime/generated reference looked like missing file
 
-**Observed:** a context-policy JSON typo made the file unreadable; ordinary tests passed until reference closure failed.
-
-**Prevention:** parse every changed JSON before PR. Reference closure is still required because syntactically valid strings can contain bad repository references.
-
-### 9. Runtime/generated reference looked like a missing file
-
-**Observed:** reference closure failed on paths such as runtime state/directive outputs until their generator/owner was registered.
-
-**Prevention:** never create a fake tracked placeholder merely to satisfy closure. Register generated/runtime references with the owning producer in the reference policy.
+**Rule:** Register generated/runtime references with their producer; never create fake placeholders.
 
 ### 10. Stale config-surface fingerprint
 
-**Observed:** changing reviewer/model-policy shape invalidated the config-surface fingerprint and consumers.
+**Rule:** Recompute fingerprints and consumers/tests in the same work package.
 
-**Prevention:** whenever a watched config changes, recompute the fingerprint and update all registered consumers/tests in the same work package.
+### 11. Tests hardcoded old model/family assumptions
 
-### 11. Stale tests hardcoded old policy cardinality/model assumptions
+**Rule:** Search for stale assumptions and assert invariants rather than obsolete exact values unless exactness is required.
 
-**Observed:** model/provider changes broke tests that still assumed the old number of families or old model identities.
+### 12. Premature duplicate aggregate failures
 
-**Prevention:** search for old policy/model/family assumptions before PR; update tests to assert invariants rather than obsolete exact counts where exact counts are not themselves an invariant.
+**Rule:** Incomplete mandatory set is UNKNOWN/DEFERRED; final PASS/FAIL only after all required lanes settle.
 
-### 12. Required workflow aggregation produced duplicate/premature red runs
+### 13. Classic commit-status endpoint incomplete for Actions
 
-**Observed:** `pipeline-aggregate` can be triggered once per mandatory workflow completion; an aggregate may run while other mandatory lanes are still unsettled, producing noisy duplicate failures.
+**Rule:** Use workflow/PR check evidence and ruleset contexts.
 
-**Prevention/optimization:** aggregate must treat an unsettled mandatory set as `UNKNOWN/DEFERRED`, not as final PASS/FAIL. Final FAIL/PASS is authoritative only after every mandatory lane has a completed current attempt.
+### 14. Code-search lag after merge
 
-### 13. Classic commit-status endpoint is not enough for Actions checks
-
-**Observed:** commit-status lookup can be empty while GitHub Actions check runs exist.
-
-**Prevention:** use PR/workflow-run evidence and ruleset-required check contexts; do not conclude "no checks" from an empty classic status list.
-
-### 14. Code search lag after merge
-
-**Observed:** GitHub code search returned stale old-commit snippets shortly after merge.
-
-**Prevention:** use direct `fetch_file`/contents at `ref=main` or exact SHA for authoritative state; code search is discovery, not post-merge proof.
+**Rule:** Use direct exact-ref fetch for proof; search is discovery.
 
 ### 15. Auto-merge assumption
 
-**Observed:** `garden-swarm` rejected auto-merge because repository auto-merge is disabled.
+**Rule:** Do not attempt auto-merge without fresh setting evidence.
 
-**Prevention:** do not spend a call attempting auto-merge unless repository settings were freshly verified to permit it.
+### 16. AAP floor mismatch
 
-### 16. Garden-main AAP assurance floor mismatch
-
-**Observed:** kernel CI failed because a production evolution receipt selected a safety tier below/different from the derived AAP minimum floor.
-
-**Prevention:** run the assurance audit before PR/merge and derive the selected tier/modules from the actual material change; never hand-select a lower tier to make CI pass.
+**Rule:** Derive assurance tier/modules from the material change; never lower them to make CI green.
 
 ### 17. Human admission / trusted-base mismatch
 
-**Observed class:** protected/human admission checks are exact-base and exact-change bound; candidate text cannot manufacture its own approval.
+**Rule:** Never fabricate or broaden human approval; bind it to exact governed scope.
 
-**Prevention:** never fabricate or broaden human approval. Bind any real human admission to the exact PR/base/source/change set required by the trusted-base mechanism.
+### 18. Blind workflow retry
 
-### 18. Blind retry of a failed workflow
+**Rule:** Inspect typed failure first; retry only after state/input change or proven transient failure.
 
-**Observed pattern:** repeated runs can reproduce the same deterministic failure and create noise.
+### 19. Bad merge discovered after admission
 
-**Prevention:** inspect the failing step and typed receipt first. Retry only after an input/code/state change or when the failure is proven transient.
+**Rule:** Never rewrite main; recover via typed revert-or-forward-fix PR from current main and revalidate dependents.
 
----
+## 12. Boundaries
 
-## CI result interpretation
+- This is an operational Git/process source, not canonical Garden semantics.
+- Receipts are evidence, not Proof, authority, human approval, or promotion.
+- Request efficiency never weakens correctness, assurance, authority, privacy, safety, or process gates.
 
-A red workflow is not automatically a repository defect.
+## 13. Source-of-truth rule
 
-### Git/process defect examples
-
-- missing/stale work intent;
-- undeclared changed path;
-- missing integration receipt;
-- stale PR base under strict checks;
-- merge conflict;
-- malformed JSON/YAML;
-- stale config fingerprint;
-- unresolved repository reference;
-- incorrect required-check assumption.
-
-### Legitimate fail-closed Garden result examples
-
-- AAP tier below derived floor;
-- missing trusted authority/human admission;
-- stale DesignEpoch/source root;
-- missing Proof/Evidence/conformance obligation;
-- constitutional change without required human gate;
-- unknown billing/call completion that blocks further inference.
-
-Do **not** weaken the safety gate merely to make the workflow green.
-
----
-
-## Request-efficiency rules for Git work
-
-- No repeated same-hash reads.
-- No active CI/status polling loop.
-- Prefer one broad authoritative read over several equivalent reads.
-- Read only the failed job/step first.
-- Preserve verified base/head/ruleset/check data as a checkpoint and invalidate it only on a relevant event.
-- After `429 / Too Many Requests`, stop optional calls in that lane and resume from checkpoint on a later event.
-- Use direct exact-ref fetches for proof; use search only for discovery.
-- Do not batch independent model reviews in a way that leaks peer answers.
-
----
-
-## Minimal preflight checklist
-
-Before **every** Garden Git mutation, answer these internally:
-
-- [ ] Which repo am I changing?
-- [ ] What is current `main` SHA?
-- [ ] Are the saved ruleset IDs/required check names still current?
-- [ ] Which exact files/symbols/domains will change?
-- [ ] Is another open PR/work intent touching the same responsibility?
-- [ ] Is my work branch based on current main?
-- [ ] Does my AgentWorkIntent cover the complete final diff?
-- [ ] Do I need source-root/DesignEpoch binding (`garden-main`)?
-- [ ] Do I need Reason/Algebra/AAP/Production receipts?
-- [ ] Did changed JSON/YAML parse?
-- [ ] Did relevant unit/conformance/reference-closure/config-surface tests pass locally/CI?
-- [ ] If replacing a PR, is the old PR closed before the replacement becomes concurrent?
-- [ ] Immediately before merge, is main still the same base?
-- [ ] Are the exact required checks green for the current composition?
-- [ ] Am I avoiding force push, bypass, fabricated approval, and blind retries?
-
-If any answer required for safe mutation is unknown, resolve that item before writing or fail closed.
+`ankitdcx/garden-main:GIT_OPERATING_CONTEXT_SOURCE.json` is authoritative. `GIT_OPERATING_CONTEXT.md` and `GIT_OPERATING_CONTEXT.json` are generated views.
+The `garden-swarm` source copy is an exact pinned mirror and must match the authoritative source SHA-256 for the same revision.
+For ChatGPT Project Sources, use the generated Markdown view rather than maintaining a separate manually edited copy.
