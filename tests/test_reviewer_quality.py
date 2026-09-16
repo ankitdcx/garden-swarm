@@ -1,5 +1,6 @@
 import copy
 import unittest
+from unittest import mock
 
 from tools import reviewer_quality as q
 from tools import select_paid_matrix_reviewers as selector
@@ -104,7 +105,7 @@ class ReviewerQualityTests(unittest.TestCase):
             {"slot_id": "4", "state": "ACTIVE", "family": "xiaomi", "role": "r4", "model": "xiaomi/mimo-v2.5"},
         ]}
         exclusion = {"schema": "GardenProviderExclusionPolicy/v1", "excluded": []}
-        with unittest.mock.patch.object(selector, "require_allowed_model", return_value=None):
+        with mock.patch.object(selector, "require_allowed_model", return_value=None):
             self.assertEqual(len(selector.active_reviewers(policy, registry, exclusion)), 4)
             registry = copy.deepcopy(registry)
             registry["slots"][1]["state"] = "QUARANTINED"
