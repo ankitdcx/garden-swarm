@@ -48,13 +48,36 @@
   },
   "context_packet": {
     "schema": "GardenMaterialContextPacket/v1",
+    "architecture_context_capsule_policy": "agents/garden-architecture-context-capsule-policy.json",
+    "requires_source_bound_whole_garden_orientation": true,
+    "requires_target_source": true,
+    "requires_applicable_dependency_closure": true,
+    "requires_cross_cutting_obligation_dispositions": true,
+    "requires_omission_and_uncertainty_ledger": true,
+    "requires_context_sufficiency_verdict": true,
     "max_prompt_characters": 12000,
+    "compact_default_max_prompt_characters": 12000,
+    "openrouter_review_prompt_ceiling_characters": 60000,
     "preserve_source_backpointers": true,
     "preserve_evidence_ancestry": true,
     "preserve_relevant_contradictions": true,
     "record_omissions": true,
     "raw_evidence_retention_owned_elsewhere": true,
-    "snapshot_is_not_truth_or_authority": true
+    "snapshot_is_not_truth_or_authority": true,
+    "smallest_sufficient_context_not_smallest_possible_context": true
+  },
+  "context_expansion": {
+    "levels": [
+      "L0_CAPSULE",
+      "L1_DEPENDENCY_EXPANDED",
+      "L2_CROSS_LAYER_EXPANDED",
+      "L3_AFFECTED_DOCUMENTS_FULL",
+      "L4_FULL_GARDEN"
+    ],
+    "reviewer_may_request_expansion": true,
+    "material_expansion_request_must_not_be_overruled_by_cost_saving": true,
+    "if_initial_four_branch_round_needs_material_expansion": "STOP_EXPAND_AND_RESTART_ALL_FOUR_ON_BIT_IDENTICAL_EXPANDED_PACKET",
+    "do_not_give_only_one_initial_reviewer_extra_context": true
   },
   "quality_review": {
     "enabled": true,
@@ -86,8 +109,10 @@
   "full_context_fallback": {
     "required_when": [
       "dependency closure is unknown or incomplete",
+      "reviewer returns FULL_CONTEXT_REQUIRED with a material reason",
       "DesignEpoch or canonical source root changed",
       "HIGH or CRITICAL semantic change crosses multiple owners or files",
+      "authority HSA rights consent privacy constitutional or Human-Effect Closure semantics change",
       "compact context cannot establish affected contracts or invariants",
       "whole-source Compare Proof Evidence Challenger or Tier-A closure is required",
       "assurance or audit obligation explicitly requires full revalidation",
@@ -100,11 +125,14 @@
     "record_deduplicated_observation_count": true,
     "record_stale_observation_count": true,
     "record_context_characters": true,
+    "record_context_capsule_sha256": true,
+    "record_context_expansion_level": true,
+    "record_context_expansion_requests": true,
     "record_frontier_handoff_avoided": true,
     "record_frontier_handoff_created": true,
     "record_full_context_fallback": true,
     "record_openrouter_provider_cost_separately": true,
     "quality_regression_review_required": true
   },
-  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission."
+  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission. Bounded context is valid only when the source-bound whole-Garden orientation, target, applicable dependency closure, cross-cutting obligations and omission ledger are sufficient for the review question; otherwise context must expand or fail closed."
 }
