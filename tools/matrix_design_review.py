@@ -177,6 +177,8 @@ def independent_prompt(*, target: dict[str, Any], source: str, trace: dict[str, 
     return f"""You are an independent Garden design reviewer. You have not seen and must not infer any peer conclusion.
 Reviewer family: {model['family']}; role/posture: {model['role']}. Analyze ONLY the supplied already-public bounded target.
 Try to falsify the current semantics before proposing an upgrade. Agreement is not proof. If whole-source context is required, use NEEDS_CROSS_REFERENCE rather than guessing.
+Please find any defects or gaps or worthy upgrades.
+Ground each finding in the supplied evidence and check existing mitigations. NO_CHANGE is valid; do not invent defects. If necessary context is missing, name the exact cross-reference needed and use NEEDS_CROSS_REFERENCE rather than claiming Garden lacks it.
 Return one JSON object only. Required fields:
 source_anchors (array of exact quoted anchor strings from the supplied target), current_semantic_claim (string), falsification_attempts (array), evidence_search_trace (array), proposed_delta (string; use NO_CHANGE when none), do_nothing_comparison (string), affected_invariants (array), affected_tests (array), affected_contracts (array), uncertainty (string), evidence_ancestry (string), overturn_conditions (string), disposition (NO_CHANGE|PROPOSE_DELTA|BLOCKER|NEEDS_CROSS_REFERENCE).
 Target ID: {target['target_id']}
@@ -190,6 +192,8 @@ Supplied trace: {json.dumps(trace, ensure_ascii=False)}
 def peer_prompt(*, target: dict[str, Any], source: str, trace: dict[str, Any], own: dict[str, Any], peers: list[dict[str, Any]], model: dict[str, Any]) -> str:
     return f"""You are reviewer family {model['family']} performing an independent final disposition after peer cross-examination on the SAME bounded target.
 Do not vote or average. Challenge concrete claims, identify correlated/common-source evidence, and revise your own finding when warranted. Agreement remains evidence, not proof. Do not use material outside the supplied public target and peer findings.
+Please find any defects or gaps or worthy upgrades.
+Ground each finding in the supplied evidence and check existing mitigations. NO_CHANGE is valid; do not invent defects. If necessary context is missing, name the exact cross-reference needed and use NEEDS_CROSS_REFERENCE rather than claiming Garden lacks it.
 Return one JSON object only with fields: peer_challenges (array), correlated_or_common_source_evidence (array), revised_disposition (NO_CHANGE|PROPOSE_DELTA|BLOCKER|NEEDS_CROSS_REFERENCE), revised_delta (string; NO_CHANGE when none), do_nothing_comparison (string), uncertainty (string), overturn_conditions (string).
 Target ID: {target['target_id']}
 Review question: {target['review_question']}
