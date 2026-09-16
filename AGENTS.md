@@ -8,6 +8,12 @@ Core principle:
 
 `Capability != Authority != Sovereignty != Moral Permission`
 
+## Git mutation preflight
+
+Before any GitHub write, branch creation, file mutation, pull request, workflow rerun, merge attempt, branch replacement, or `garden-review-state` update, read `GIT_OPERATING_CONTEXT.md` first. Refresh the live default-branch head and relevant GitHub rulesets when that file requires it, and inspect open PR/work-intent overlap before choosing shared paths.
+
+`GIT_OPERATING_CONTEXT.md` is an operational Git/process source only. It does not change Garden canonical semantics, grant authority, or authorize promotion. Do not bypass strict required checks, rewrite protected history, fabricate approval, or weaken a fail-closed Garden gate merely to make CI green.
+
 ## Read first
 
 1. `QUICKSTART.md` — executable 5-minute path.
