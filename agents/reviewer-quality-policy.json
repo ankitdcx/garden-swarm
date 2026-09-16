@@ -25,7 +25,7 @@
     "defect_recall_after_closure": 0.18,
     "context_handling": 0.16,
     "instruction_schema_compliance": 0.12,
-    "unique_material_contribution": 0.10,
+    "unique_material_contribution": 0.1,
     "counterexample_quality": 0.06
   },
   "non_quality_signals": [
@@ -52,7 +52,12 @@
     "REPEATED_OUTPUT_SCHEMA_BYPASS_AFTER_ONE_BOUNDED_REPAIR"
   ],
   "lifecycle": {
-    "states": ["ACTIVE", "DEGRADED", "SHADOW_CHALLENGED", "QUARANTINED"],
+    "states": [
+      "ACTIVE",
+      "DEGRADED",
+      "SHADOW_CHALLENGED",
+      "QUARANTINED"
+    ],
     "ordinary_window_minimum_receipts": 8,
     "degrade_when_weighted_quality_below": 0.58,
     "quarantine_when_weighted_quality_below": 0.48,
@@ -111,5 +116,9 @@
     "replacement_cannot_reduce_required_family_diversity": true,
     "excluded_families_remain_ineligible_even_if_better_scoring": true
   },
-  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. Every recorded current-protocol review is queued for external ChatGPT quality adjudication. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. A replacement becomes active only after blind shadow evidence and an explicit governed registry update. Reviewer agreement is never treated as proof or as a positive quality signal by itself."
+  "closure_rule": "Reviewer quality is continuously measured as evidence about a review slot. Every recorded current-protocol review is queued for external ChatGPT quality adjudication. One bad response may be rejected immediately; persistent or hard failure can remove the slot from admission. A replacement becomes active only after blind shadow evidence and an explicit governed registry update. Reviewer agreement is never treated as proof or as a positive quality signal by itself.",
+  "peer_exposure_boundary": {
+    "forbidden": "Peer answers during BLIND/RECONCILE, or other final/confirmation answers in any phase.",
+    "permitted": "Hash-bound POST_BLIND_SYNTHESIS_AUDIT in FINAL/CONFIRM only; never score as independent blind evidence."
+  }
 }

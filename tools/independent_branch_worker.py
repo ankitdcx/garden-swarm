@@ -180,6 +180,11 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         raise ValueError("branch closures changed after final review began")
     cycle["branch_closures_sha256"] = closures_hash
     bucket = "final" if phase == "FINAL" else "confirm"
+    audit = protocol.synthesis_audit_packet(cycle, directive, families)
+    audit_key = bucket + "_synthesis_audit_sha256"
+    if cycle.get(audit_key, audit["packet_sha256"]) != audit["packet_sha256"]:
+        raise ValueError("synthesis audit changed inside a final-review round")
+    cycle[audit_key] = audit["packet_sha256"]
     candidate_hash = directive["merged_candidate_sha256"]
     existing_hashes = {row.get("candidate_sha256") for row in cycle[bucket].values() if row.get("candidate_sha256")}
     if existing_hashes and existing_hashes != {candidate_hash}:
@@ -232,6 +237,7 @@ def _prompt(*, phase: str, family: str, directive: dict, target: dict, source: s
         trace=trace,
         merged_candidate=directive["merged_candidate"],
         phase=phase,
+        audit_packet=protocol.synthesis_audit_packet(cycle, directive, directive["reviewer_families"]),
     )
     bucket = "final" if phase == "FINAL" else "confirm"
     key = bucket + "_prompt_sha256"
@@ -418,6 +424,7 @@ def run(root: Path = Path(".")) -> None:
         "baseline_commitment_sha256": directive["private_baseline_commitment"]["baseline_sha256"],
         "prompt_sha256": prompt_hash,
         "candidate_sha256": directive.get("merged_candidate_sha256"),
+        "synthesis_audit_sha256": cycle.get(("final" if phase == "FINAL" else "confirm") + "_synthesis_audit_sha256") if phase in ("FINAL", "CONFIRM") else None,
         "binding": {"protocol": WORKER_PROTOCOL, "target": target, "trace": trace},
         "source_commit": os.environ["GITHUB_SHA"],
         "run_id": os.environ["GITHUB_RUN_ID"],
@@ -477,6 +484,7 @@ def run(root: Path = Path(".")) -> None:
                 model_id=model["model"],
                 candidate_sha256=directive["merged_candidate_sha256"],
                 phase=phase,
+                audit_packet=protocol.synthesis_audit_packet(cycle, directive, families),
             )
         requests = finding.get('requested_context') or []
         if not isinstance(requests, list) or len(requests) > 12:
@@ -499,7 +507,9 @@ def run(root: Path = Path(".")) -> None:
             "candidate_sha256": directive.get("merged_candidate_sha256"),
             "architecture_context_capsule_sha256": capsule_hash,
             "context_expansion_level": expansion_level,
-            "peer_content_seen": False,
+            "peer_content_seen": phase in ("FINAL", "CONFIRM"),
+            "evidence_stage": "POST_BLIND_SYNTHESIS_AUDIT" if phase in ("FINAL", "CONFIRM") else "ISOLATED_BRANCH",
+            "synthesis_audit_sha256": attempt.get("synthesis_audit_sha256"),
         }
         if phase == "BLIND":
             cycle["blind"][family] = record

@@ -17,15 +17,20 @@ FAMILIES = ['deepseek', 'qwen', 'glm', 'xiaomi']
 
 def response(family, disposition='NO_CHANGE', verdict='APPROVE'):
     finding = {'disposition': disposition, 'verdict': verdict, 'context_sufficiency': 'SUFFICIENT'}
-    return {'finding': finding, 'finding_sha256': p.sha256_value([family, finding])}
+    return {'finding': finding, 'finding_sha256': p.sha256_value(finding)}
 
 
 def cycle():
-    return {'blind': {f: response(f) for f in FAMILIES}, 'reconcile': {}, 'final': {}, 'confirm': {}}
+    return {'baseline_sha256': p.sha256_text('Public baseline'), 'blind': {f: response(f) for f in FAMILIES}, 'reconcile': {}, 'final': {}, 'confirm': {}}
 
 
 def final_directive(value):
     return {'phase': 'FINAL', 'merged_candidate_sha256': 'c' * 64,
+            'source_packet_sha256': 'a' * 64,
+            'private_baseline_commitment': {'baseline_sha256': value['baseline_sha256']},
+            'synthesis_audit': {'baseline_text': 'Public baseline', 'public_baseline_approved': True,
+                'dispositions': {key: {'decision': 'RETAIN', 'reason': 'Source supports disposition', 'evidence_refs': ['source:fixture']}
+                                 for key in [*p.synthesis_evidence(value, FAMILIES), 'BASELINE']}},
             'branch_closures': {f: {'finding_sha256': value['blind'][f]['finding_sha256'],
                                    'outcome': 'NO_FOLLOWUP_NEEDED',
                                    'reason': 'Existing source covers the attempted counterexample.'}
@@ -83,6 +88,7 @@ class PhaseGuards(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'latest response'):
             w._plan(value, directive, FAMILIES)
         directive['branch_closures']['qwen'].update(outcome='RECONCILED', finding_sha256=value['reconcile']['qwen'][-1]['finding_sha256'])
+        directive['synthesis_audit'] = final_directive(value)['synthesis_audit']
         self.assertIsNotNone(w._plan(value, directive, FAMILIES))
 
     def test_closure_cannot_change_during_final_review(self):

@@ -2,7 +2,7 @@
 
 Status: active noncanonical operating protocol for Garden OpenRouter model-inference work.
 
-The public worker uses the existing `OPENROUTER_API_KEY` Actions secret. OpenRouter is not allowed to run a peer-sharing debate. The active protocol is `GardenIndependentBranchConvergencePolicy/v1` in `agents/independent-branch-convergence-policy.json`.
+The public worker uses the existing `OPENROUTER_API_KEY` Actions secret. The initial and branch-reconciliation rounds remain isolated. Final and confirmation rounds perform a bounded post-blind synthesis audit with shared locked evidence, while other final reviewers' answers remain hidden. The active protocol is `GardenIndependentBranchConvergencePolicy/v1` in `agents/independent-branch-convergence-policy.json`.
 
 The broad Coordinator and legacy batch workers remain paused/not admitted. The bounded single-call worker can make at most one model inference per dispatch. No model output can merge code, establish truth/Proof, mint authority, or promote Garden semantics.
 
@@ -10,34 +10,34 @@ The broad Coordinator and legacy batch workers remain paused/not admitted. The b
 
 For every Garden task that uses OpenRouter model inference:
 
-1. **ChatGPT baseline first.** ChatGPT independently answers the task before any OpenRouter inference. The baseline content stays outside the public OpenRouter lane. The repository receives only a SHA-256 commitment binding the baseline, neutral query and source packet.
+1. **ChatGPT baseline first.** ChatGPT independently answers the task before any OpenRouter inference. Initially only its SHA-256 commitment enters the public lane. After all blind and branch-reconciliation findings are locked, final audit requires the exact committed baseline text, explicitly approved as public. A baseline containing private material must not be disclosed; that task stops for a fresh public-only baseline and round.
 2. **Four blind branches.** DeepSeek, Qwen, GLM and Xiaomi/MiMo receive the same neutral query and source packet one after another. They do not receive ChatGPT's baseline or another model's answer.
 3. **One-to-one reconciliation.** ChatGPT compares its baseline with each branch separately. A branch follow-up may contain only the same source packet, that model's own prior branch response, and ChatGPT's branch-specific merged candidate. Default is one follow-up; maximum is two. No response or summary from another branch is allowed.
 4. **Four reconciled branch results.** ChatGPT then holds four separately reconciled versions. Models do not synthesize across branches.
 5. **ChatGPT synthesis.** ChatGPT merges the four branch results and records common conclusions, material disagreements, evidence differences, surviving counterexamples, discarded alternatives, the DO_NOTHING alternative and uncertainty.
-6. **Four isolated final reviews.** The bit-identical merged candidate is sent separately to all four reviewers. Each returns `APPROVE`, `BLOCK`, or `APPROVE_WITH_PATCH`. No final reviewer sees another final review.
+6. **Four isolated final audits.** The bit-identical merged candidate, committed public baseline, every original blind/reconciliation finding and all synthesis dispositions are sent separately to all four reviewers. The worker constructs evidence from durable state so the integrator cannot silently omit rejected findings. Reviewers challenge baseline framing, evidence rejection and synthesis omissions, and explicitly audit every evidence ID. Each returns `APPROVE`, `BLOCK`, or `APPROVE_WITH_PATCH`. No final reviewer sees another final review.
 7. **At most one confirmation round.** If a material block/patch is valid, ChatGPT reintegrates it and the bit-identical revised candidate may be sent once more to all four reviewers. If material disagreement survives, the task stops and escalates with an explicit disagreement receipt rather than looping.
 
 Four-of-four agreement is never Proof. Closure still depends on applicable Garden Compare/Reason/Proof/Evidence/AAP/authority/ActionGate/human boundaries.
 
-## Why peer sharing is forbidden
+## Blind independence and later cross-examination
 
 The predecessor worker used blind review followed by peer cross-examination: later prompts could include other models' findings. That can create correlated convergence and make apparently independent reviewers anchor on one another.
 
-That behavior is superseded for new OpenRouter work. `free_swarm.cross_examination` and `specialist_free_sweep.cross_examination` are false. Legacy tools that contain peer-sharing logic remain historical/reference compatibility only; their outputs are not current `GardenIndependentBranchConvergence/v1` evidence.
+Uncontrolled peer sharing is superseded for new OpenRouter work. Controlled disclosure is permitted only after blind/reconciliation evidence is locked, in FINAL/CONFIRM synthesis audit. Later audits are correlated post-blind evidence and never counted as additional independent blind reviews. `free_swarm.cross_examination` and `specialist_free_sweep.cross_examination` are false. Legacy tools that contain peer-sharing logic remain historical/reference compatibility only; their outputs are not current `GardenIndependentBranchConvergence/v1` evidence.
 
 ## Durable ChatGPT handoff
 
 The public worker cannot create ChatGPT's baseline or cross-branch synthesis. A durable external ChatGPT directive is staged on the `garden-review-state` branch at `review-state/convergence-directive.json` using `GardenIndependentBranchDirective/v1`.
 
-The directive is public-only and contains a baseline commitment, not baseline text. It binds the exact target, source-packet hash, ordered reviewer families and protocol phase.
+BLIND and RECONCILE directives contain a baseline commitment, not baseline text. FINAL and CONFIRM directives additionally contain the approved public baseline disclosure in synthesis_audit. It binds the exact target, source-packet hash, ordered reviewer families and protocol phase.
 
 Supported phases:
 
 - `BLIND`: same neutral packet for four sequential reviewers.
 - `RECONCILE`: exactly one reviewer family, branch round 1 or 2, its own prior response hash, and ChatGPT's branch-specific candidate; no peer content.
-- `FINAL`: one merged candidate hash; exact same candidate to all four.
-- `CONFIRM`: one revised candidate hash; exact same candidate to all four; confirmation round equals 1.
+- `FINAL`: one merged candidate and synthesis-audit packet hash; exact same candidate and complete audit evidence to all four.
+- `CONFIRM`: one revised candidate and synthesis-audit packet hash; exact same candidate and complete audit evidence to all four; confirmation round equals 1.
 
 Changing candidate bytes within a final/confirmation round fails closed.
 
@@ -180,7 +180,7 @@ packet.
 
 The command prints the exact combined packet hash and neutral-query hash for the existing
 private-baseline commitment. Use the printed packet hash as source_packet_sha256
-in both the directive and its baseline commitment. Baseline text remains private.
+in both the directive and its baseline commitment. Baseline text remains hidden during BLIND/RECONCILE; only an explicitly public baseline may later be disclosed for final audit.
 The packet may also be inspected with --profile DEEP, --query followed by a bounded
 concept, or --chunk followed by an exact passage ID from the omission list/index.
 Each changed packet requires a renewed ChatGPT baseline commitment and a new blind
@@ -222,3 +222,27 @@ integrating a recommended change, require a reproducible regression/falsificatio
 check or keep its missing evidence as an explicit unverified obligation. Periodic
 quality comparison on known-defect cases is recommended before buying higher-cost
 models; this configuration does not claim that benchmark has been completed.
+
+## Synthesis audit directive and evidence
+
+FINAL/CONFIRM require synthesis_audit with baseline_text, public_baseline_approved=true,
+and dispositions keyed by BASELINE and every BLIND:family:0 or
+RECONCILE:family:round evidence ID. Each disposition has decision
+(RETAIN, REJECT, SUPERSEDE, UNRESOLVED), reason and nonempty evidence_refs.
+The baseline must match the pre-review commitment. The worker copies every exact
+normalized finding from the durable cycle, checks its hash, and constructs
+GardenSynthesisAuditPacket/v1. Packet hashes freeze separately within FINAL and
+CONFIRM. No final reviewer sees another final or confirmation answer.
+
+Each final response must bind synthesis_audit_sha256 and return disposition_audit
+for every evidence ID, with SUPPORTED/BLOCK and a reason. Any unresolved or
+unsupported disposition requires overall BLOCK. References and auditor assertions
+are inspectable evidence, not automatically verified facts or Proof. All original
+findings stay visible even if their disposition is REJECT or SUPERSEDE.
+
+This uses the existing final/confirmation calls: the absolute 20-call limit and
+spending pools do not increase. Larger prompts must fit the existing endpoint and
+budget checks; no silent truncation or evidence dropping is permitted. A task that
+cannot fit defers. Four model families do not establish independent training
+lineage, geography or empirical quality. The separate Gemini lane has not been
+qualified as a required challenger and is not silently substituted.
