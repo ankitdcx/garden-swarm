@@ -55,6 +55,7 @@
     "requires_cross_cutting_obligation_dispositions": true,
     "requires_omission_and_uncertainty_ledger": true,
     "requires_context_sufficiency_verdict": true,
+    "max_prompt_characters": 12000,
     "compact_default_max_prompt_characters": 12000,
     "openrouter_review_prompt_ceiling_characters": 60000,
     "preserve_source_backpointers": true,
