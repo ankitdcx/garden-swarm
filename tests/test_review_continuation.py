@@ -96,11 +96,33 @@ class ContinuationTests(unittest.TestCase):
 
     def test_reconciliation_rejects_substituted_identity(self):
         self.state['attempts'] = [{'status': 'UNKNOWN', 'response_id': 'wanted', 'model': 'model',
-                                  'actual_provider': 'Fixture', 'reserved': '.05', 'cost': '.001'}]
+                                  'actual_provider': 'Fixture', 'reserved': '.05', 'cost': '.001', 'cycle': 'c', 'slot': 's'}]
+        self.state['cycles'] = {'c': {}}
         with patch.object(w, 'http', return_value={'data': {'id': 'wrong', 'total_cost': .001}}):
             with self.assertRaisesRegex(ValueError, 'mismatch'):
                 w.reconcile(self.ledger('fixture'), 'fixture')
         self.assertEqual(self.state['attempts'][0]['status'], 'UNKNOWN')
+
+    def test_final_billing_difference_preserves_conservative_accounting(self):
+        attempt = {'status': 'UNKNOWN', 'response_id': 'fixture-gen', 'model': 'fixture-model',
+                   'actual_provider': 'Fixture', 'reserved': '.05', 'cost': '.001', 'cycle': 'c', 'slot': 's'}
+        self.state['attempts'] = [attempt]
+        self.state['cycles'] = {'c': {'s': copy.deepcopy(attempt)}}
+        data = {'id': 'fixture-gen', 'model': 'fixture-model', 'provider_name': 'Fixture',
+                'total_cost': .002, 'finish_reason': 'length'}
+        with patch.object(w, 'http', return_value={'data': data}):
+            w.reconcile(self.ledger('fixture'), 'fixture')
+        self.assertEqual(attempt['cost'], '0.002')
+        self.assertEqual(attempt['response_reported_cost'], '.001')
+        self.assertEqual(attempt['status'], 'INCOMPLETE')
+
+    def test_executor_fix_rearms_but_preserves_review_cycle(self):
+        self.dispatch()
+        revision = self.state['queue_revision']
+        self.state['continuation'] = {'status': 'BLOCKED'}
+        self.state['executor_revision'] = 'old-executor'
+        self.assertEqual(self.dispatch(), 1)
+        self.assertEqual(self.state['queue_revision'], revision)
 
     def test_http_204_dispatch_success(self):
         from unittest.mock import MagicMock
