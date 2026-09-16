@@ -1,0 +1,87 @@
+name: One-use governed branch cleanup v2 2026-09-16
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/one-use-governed-cleanup-v2-20260916.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'cleanup/one-use-governed-cleanup-v2-20260916'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Delete exact safe refs using merged-PR or ancestry proof
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SELF_BRANCH: ${{ github.head_ref }}
+          SELF_SHA: ${{ github.event.pull_request.head.sha }}
+          CLEANUP_CONFIG: >-
+            {"repository":"ankitdcx/garden-swarm","main_sha":"1a97676649e356f99b579aaf54c1c2ae3d2cbb98","targets":[{"name":"automated-openrouter-continuation","sha":"da5db970196e260c94fbc7d7098352e8ee8f48dd","proof":"merged_pr","pr":197},{"name":"correct-chatgpt-frontier-event-routing-20260916","sha":"cebdb48cb091ca7ea0c81fab56e6ad671535e5bb","proof":"merged_pr","pr":191},{"name":"enable-single-openrouter-review","sha":"5c991d97963055599f3a137aab8f963d784b3281","proof":"superseded","pr":195},{"name":"event-driven-context-routing-20260916","sha":"0704ef3fca457538236b0f8527f569f44d8b5453","proof":"ancestor"},{"name":"event-driven-context-routing-pr-20260916","sha":"02f83d3ce231329c609d51a6fc7826b4c03f8653","proof":"merged_pr","pr":189},{"name":"explicit-worthy-upgrade-review-instruction","sha":"539a5913ccb45c1961d048495181cf38f5432ad4","proof":"merged_pr","pr":202},{"name":"fix-event-context-reference-20260916","sha":"26cc30d38914ace3eb12a49684a7d0a94d012e17","proof":"merged_pr","pr":190},{"name":"policy/exclude-anthropic-nvidia-20260916","sha":"8d9d4dd3d5b704dbb36ba8972d6cf02593e93235","proof":"ancestor"},{"name":"policy/exclude-anthropic-nvidia-v2-20260916","sha":"323a2222fe51d6484285de19d41347bbf61b159a","proof":"merged_pr","pr":192},{"name":"policy/exclude-mistral-20260916","sha":"61b22f492e008a1deb506e1095e5120ebe5c86d6","proof":"ancestor"},{"name":"policy/exclude-mistral-quality-v2-20260916","sha":"f6b7f57387cf4f5fb0f34b208a409a6188d7e34f","proof":"superseded","pr":193},{"name":"policy/exclude-mistral-quality-v3-20260916","sha":"ef76e28bf03cd79d119464c8b5303d64c1643b72","proof":"merged_pr","pr":194},{"name":"policy/openrouter-independent-convergence-20260916","sha":"3e6098a806fcb97ad809ded04224657ade29bdf4","proof":"ancestor"},{"name":"protocol/independent-branch-convergence-20260916","sha":"9b35a3164ea25c576a0183e7d2b6cf485f812f88","proof":"merged_pr","pr":201},{"name":"review-canonical-model-identity","sha":"cb9d3938e2beafafe280cda634cd68339be99bb0","proof":"merged_pr","pr":199},{"name":"review-generation-reconciliation","sha":"6a913a8b75f2db29f99bca1f39d0237a2bed277a","proof":"merged_pr","pr":198},{"name":"review-http-failure-diagnostics","sha":"d3bcf0397578805276727281c3260e28f6b95942","proof":"merged_pr","pr":200},{"name":"single-review-worker-ready-for-admission","sha":"e53ecb7b8a2755f0f72add8b350741170b0df6c8","proof":"merged_pr","pr":196},{"name":"cleanup/one-use-governed-cleanup-20260916","sha":"9f8b89a55c6b5b5f3e8410937660f86fab82e526","proof":"failed_cleanup","pr":203}],"preserve":["main","garden-review-state","ip/final-origin-inventory-review-v4-20260915","protocol/garden-architecture-context-capsule-20260916"]}
+        run: |
+          python - <<'PY'
+          import json, os, re, subprocess, urllib.request
+          from pathlib import Path
+          cfg=json.loads(os.environ['CLEANUP_CONFIG']); repo=os.environ['GITHUB_REPOSITORY']; base=cfg['main_sha']; assert repo==cfg['repository']
+          def git(*args): return subprocess.check_output(['git',*args], text=True).strip()
+          def heads():
+              d={}
+              for line in git('ls-remote','--heads','origin').splitlines():
+                  sha,ref=line.split(); d[ref.removeprefix('refs/heads/')]=sha
+              return d
+          def api(path):
+              req=urllib.request.Request('https://api.github.com/repos/'+repo+path,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req,timeout=30) as r: return json.load(r)
+          assert git('rev-parse','HEAD')==base
+          live=heads(); assert live.get('main')==base
+          open_heads=set()
+          for page in range(1,20):
+              rows=api(f'/pulls?state=open&per_page=100&page={page}')
+              for p in rows:
+                  if p.get('head',{}).get('repo') and p['head']['repo']['full_name']==repo: open_heads.add(p['head']['ref'])
+              if len(rows)<100: break
+          else: raise RuntimeError('open PR pagination not exhausted')
+          for name in cfg['preserve']: assert name in live, f'preserve missing: {name}'
+          delete=[]; absent=[]
+          for t in cfg['targets']:
+              name,sha=t['name'],t['sha']; assert re.fullmatch(r'[0-9a-f]{40}',sha)
+              if name not in live: absent.append(t); continue
+              assert live[name]==sha, f'branch moved: {name}'; assert name not in open_heads, f'open PR: {name}'
+              if t['proof']=='ancestor':
+                  subprocess.run(['git','merge-base','--is-ancestor',sha,base],check=True)
+              else:
+                  pr=api('/pulls/'+str(t['pr'])); assert pr['head']['ref']==name and pr['head']['sha']==sha and pr['state']=='closed'
+                  if t['proof']=='merged_pr': assert pr.get('merged_at'), f'PR not merged: {t["pr"]}'
+                  elif t['proof'] in ('superseded','failed_cleanup'):
+                      assert not pr.get('merged_at'); marker=((pr.get('title') or '')+'\n'+(pr.get('body') or '')).lower()
+                      assert ('supersed' in marker or 'do not merge' in marker or 'failed' in marker)
+                  else: raise AssertionError('unknown proof')
+              delete.append({'name':name,'sha':sha,'proof':t['proof']})
+          assert heads().get('main')==base
+          self_name,self_sha=os.environ['SELF_BRANCH'],os.environ['SELF_SHA']; assert heads().get(self_name)==self_sha
+          refs=delete+[{'name':self_name,'sha':self_sha,'proof':'self_carrier'}]
+          cmd=['git','push','--atomic']+[f"--force-with-lease=refs/heads/{r['name']}:{r['sha']}" for r in refs]+['origin']+[f":refs/heads/{r['name']}" for r in refs]
+          subprocess.run(cmd,check=True)
+          remaining=heads(); assert remaining.get('main')==base; assert not any(r['name'] in remaining for r in refs); assert all(x in remaining for x in cfg['preserve'])
+          receipt={'schema':'BranchRetirementReceipt/v1','repository':repo,'main_sha':base,'deleted':refs,'already_absent':absent,'preserved':{k:remaining[k] for k in cfg['preserve']},'remaining_heads':remaining,'status':'VERIFIED','canonical_effect':'NONE','provider_calls':0}
+          Path('branch-retirement-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n'); print(json.dumps(receipt,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: governed-branch-cleanup-v2-${{ github.run_id }}
+          path: branch-retirement-receipt.json
+          if-no-files-found: error
+          retention-days: 90
