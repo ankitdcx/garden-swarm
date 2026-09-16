@@ -5,6 +5,13 @@
   "candidate_correction_ref": "https://github.com/ankitdcx/garden-main/blob/main/design_deltas/v15.7/EVENT-DRIVEN-CONTEXT-ROUTING-CORRECTION-2026-09-16.md",
   "status": "PUBLIC_ADAPTER_CANDIDATE_NO_CANONICAL_EFFECT",
   "public_only": true,
+  "request_efficiency_policy": "agents/interactive-request-efficiency-policy.json",
+  "request_efficiency_binding": {
+    "event_driven_over_polling": true,
+    "same_hash_reuse_over_reread": true,
+    "rate_limit_circuit_breaker_required": true,
+    "efficiency_cannot_reduce_context_or_assurance": true
+  },
   "normalization": {
     "preferred_cost_class": "DETERMINISTIC_FREE_OR_LOW_COST",
     "required_observation_schema": "GardenNormalizedContextObservation/v1",
@@ -134,5 +141,5 @@
     "record_openrouter_provider_cost_separately": true,
     "quality_regression_review_required": true
   },
-  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission. Bounded context is valid only when the source-bound whole-Garden orientation, target, applicable dependency closure, cross-cutting obligations and omission ledger are sufficient for the review question; otherwise context must expand or fail closed."
+  "boundary": "This policy routes public proposal evidence only. Context compression, materiality, model review, OpenRouter review or external ChatGPT frontier output creates no truth, Proof, authority, canonical status or merge permission. Bounded context is valid only when the source-bound whole-Garden orientation, target, applicable dependency closure, cross-cutting obligations and omission ledger are sufficient for the review question; otherwise context must expand or fail closed. Request efficiency minimizes redundant remote work but cannot weaken correctness or assurance."
 }
