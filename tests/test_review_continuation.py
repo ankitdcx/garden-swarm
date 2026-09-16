@@ -124,6 +124,37 @@ class ContinuationTests(unittest.TestCase):
         self.assertEqual(self.dispatch(), 1)
         self.assertEqual(self.state['queue_revision'], revision)
 
+    def test_dated_canonical_identity_requires_exact_catalog_mapping(self):
+        attempt = {'status': 'UNKNOWN', 'response_id': 'gen', 'model': 'vendor/model',
+                   'actual_model': 'vendor/model', 'actual_provider': 'Fixture',
+                   'reserved': '.05', 'cost': '.001', 'cycle': 'c', 'slot': 's'}
+        self.state['attempts'] = [attempt]
+        self.state['cycles'] = {'c': {'s': copy.deepcopy(attempt)}}
+        data = {'id': 'gen', 'model': 'vendor/model-20260910', 'provider_name': 'Fixture',
+                'total_cost': .001, 'finish_reason': 'length'}
+        responses = [{'data': data}, {'data': [{'id': 'vendor/model', 'canonical_slug': 'vendor/model-20260910'}]}]
+        with patch.object(w, 'http', side_effect=responses) as http:
+            w.reconcile(self.ledger('fixture'), 'fixture')
+            self.assertEqual(http.call_count, 2)
+        self.assertEqual(attempt['status'], 'INCOMPLETE')
+        self.assertEqual(attempt['model_identity']['canonical_slug'], data['model'])
+        attempt.update(status='UNKNOWN', model_identity={'id': 'vendor/model', 'canonical_slug': 'vendor/other'})
+        with patch.object(w, 'http', return_value={'data': data}), self.assertRaisesRegex(ValueError, 'model identity'):
+            w.reconcile(self.ledger('fixture'), 'fixture')
+
+    def test_http_failure_keeps_status_but_not_raw_error_text(self):
+        import io
+        attempt = {'status': 'UNKNOWN', 'cost': None}
+        exc = w.error.HTTPError(w.OR, 404, 'failure', {}, io.BytesIO(json.dumps({
+            'error': {'code': 404, 'message': 'No endpoints found; sensitive fixture must not leak'}
+        }).encode()))
+        w.record_http_failure(attempt, exc)
+        self.assertEqual(attempt['http_status'], 404)
+        self.assertEqual(attempt['error_category'], 'NO_COMPATIBLE_ENDPOINT')
+        self.assertNotIn('sensitive fixture', json.dumps(attempt))
+        self.assertEqual(attempt['status'], 'UNKNOWN')
+        self.assertIsNone(attempt['cost'])
+
     def test_http_204_dispatch_success(self):
         from unittest.mock import MagicMock
         response = MagicMock()
