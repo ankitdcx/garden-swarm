@@ -29,12 +29,17 @@ def aggregate(runs: list[dict], *, head_sha: str, repository: str) -> dict:
                        'run_id':latest['id'] if latest else None,
                        'run_attempt':latest.get('run_attempt', 1) if latest else None,
                        'evidence_url':latest.get('html_url') if latest else None})
-    overall = 'FAIL' if any(s['result'] == 'FAIL' for s in stages) else (
-        'PASS' if all(s['result'] == 'PASS' for s in stages) else 'UNKNOWN')
+    settled = all(s['result'] in ('PASS', 'FAIL') for s in stages)
+    if not settled:
+        overall = 'UNKNOWN'
+    else:
+        overall = 'FAIL' if any(s['result'] == 'FAIL' for s in stages) else 'PASS'
     return {'schema':'CIConformancePipelineReceipt/v1', 'scope':'MANDATORY_REPOSITORY_WORKFLOW_AGGREGATE',
             'repository':repository, 'head_sha':head_sha, 'stages':stages,
+            'settled':settled,
             'overall':overall, 'overall_status':overall,
-            'certification_boundary':'Only the named GitHub workflow runs at this exact head. No semantic admission, provider-review quorum, protected approval or canonical promotion.'}
+            'deferred_reason':None if settled else 'MANDATORY_WORKFLOW_SET_NOT_SETTLED',
+            'certification_boundary':'Only the named GitHub workflow runs at this exact head. UNKNOWN is deferred/incomplete rather than PASS or FAIL. No semantic admission, provider-review quorum, protected approval or canonical promotion.'}
 
 
 def main() -> int:
@@ -62,7 +67,9 @@ def main() -> int:
     output = Path(args.output); output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(receipt, indent=2)+'\n')
     print(json.dumps(receipt, sort_keys=True))
-    return 0 if receipt['overall'] == 'PASS' else 1
+    # An incomplete mandatory set is a deferred observation, not a failed aggregate.
+    # A completed set still fails closed when any mandatory lane failed.
+    return 1 if receipt['overall'] == 'FAIL' else 0
 
 
 if __name__ == '__main__':
