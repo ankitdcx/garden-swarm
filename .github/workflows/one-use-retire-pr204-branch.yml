@@ -1,0 +1,60 @@
+name: One-use retire merged PR204 branch
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - '.github/workflows/one-use-retire-pr204-branch.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'cleanup/retire-pr204-branch-20260916'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Retire exact merged PR204 head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SELF_BRANCH: ${{ github.head_ref }}
+          SELF_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, urllib.request
+          from pathlib import Path
+          repo='ankitdcx/garden-swarm'; base='7d0d52dc07a1e975c644c89886381ed8ec67e30e'; name='protocol/garden-architecture-context-capsule-20260916'; sha='846b9ccb547260dd18097ffb8bec8ff2b9ca14c3'
+          def git(*a): return subprocess.check_output(['git',*a],text=True).strip()
+          def heads():
+              return {r.split()[1].removeprefix('refs/heads/'):r.split()[0] for r in git('ls-remote','--heads','origin').splitlines()}
+          def api(path):
+              req=urllib.request.Request('https://api.github.com/repos/'+repo+path,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req,timeout=30) as x:return json.load(x)
+          assert git('rev-parse','HEAD')==base and heads().get('main')==base
+          live=heads(); assert live.get(name)==sha
+          opens=api('/pulls?state=open&per_page=100'); assert name not in {p['head']['ref'] for p in opens if p.get('head',{}).get('repo') and p['head']['repo']['full_name']==repo}
+          pr=api('/pulls/204'); assert pr['state']=='closed' and pr.get('merged_at') and pr['head']['ref']==name and pr['head']['sha']==sha
+          self_name,self_sha=os.environ['SELF_BRANCH'],os.environ['SELF_SHA']; assert live.get(self_name)==self_sha
+          refs=[{'name':name,'sha':sha,'proof':'merged_pr_204'},{'name':self_name,'sha':self_sha,'proof':'self_carrier'}]
+          cmd=['git','push','--atomic']+[f"--force-with-lease=refs/heads/{r['name']}:{r['sha']}" for r in refs]+['origin']+[f":refs/heads/{r['name']}" for r in refs]
+          subprocess.run(cmd,check=True)
+          remaining=heads(); assert remaining.get('main')==base and not any(r['name'] in remaining for r in refs)
+          receipt={'schema':'BranchRetirementReceipt/v1','repository':repo,'main_sha':base,'deleted':refs,'remaining_heads':remaining,'status':'VERIFIED','canonical_effect':'NONE','provider_calls':0}
+          Path('branch-retirement-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n'); print(json.dumps(receipt,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: retire-pr204-branch-${{ github.run_id }}
+          path: branch-retirement-receipt.json
+          if-no-files-found: error
+          retention-days: 90
