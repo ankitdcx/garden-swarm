@@ -13,7 +13,7 @@ Every SCT scoring profile SHALL declare:
 - threshold calibration scope;
 - INVALID / INSUFFICIENT_EVIDENCE / UNKNOWN behavior.
 
-No profile may rely on incidental parser/item count. If cardinality is intended to affect the score, that effect and threshold calibration must be explicit. If cardinality is intended to be neutral, the profile must use a cardinality-neutral normalized aggregation (for example, normalized weights/log-mean-exp or another qualified equivalent). This candidate does not mandate one universal formula.
+No profile may rely on incidental parser/item count. If cardinality is intended to affect the score, that effect and threshold calibration must be explicit. If cardinality is intended to be neutral, the profile must use a genuinely cardinality-canceling normalized aggregation, for example weighted log-mean-exp log(Σ w_i exp(kappa*d_i)/Σ w_i)/kappa, or another qualified equivalent. Merely normalizing weights without canceling the aggregation's cardinality term is insufficient. This candidate does not mandate one universal formula.
 
 Empty input, all-zero effective evidence weight, nonfinite values, or parameters outside the profile's declared domain SHALL return a typed non-PASS result rather than a numeric score. Stable numerical evaluation is required; a nonfinite intermediate/output is INVALID, not evidence.
 
@@ -33,7 +33,7 @@ Epistemic reliability may affect evidentiary weight. It SHALL NOT scale, dilute 
 5. HARD ADMISSIBILITY BEFORE SOFT OPTIMIZATION
 SCT optimization operates only on candidates that have already passed every applicable hard rights, safety, law, authority, consent and noncompensable bound.
 A numerical/estimation/solver tolerance such as epsilon_band may apply only where the owning profile explicitly classifies the relevant bound as soft/compensable. It SHALL NOT widen a protected hard ceiling.
-If uncertainty crosses a hard ceiling and the governing profile requires conservative resolution, the result is the owner-qualified non-PASS state; optimization cannot trade through the gate.
+If uncertainty does not establish compliance below a protected hard/noncompensable ceiling, the result is the owner-qualified non-PASS state. Optimization cannot trade through the gate. Conservative resolution is mandatory at such hard gates rather than optional profile behavior.
 
 6. THEORY-EQ BOUNDARY
 All SCT equations remain conditional TheoryEquationContract instances. A reference equation does not prove empirical calibration, safety, correctness or universal applicability. Missing units, assumptions, validity domain, dependence semantics or falsifiers block qualified use.
@@ -47,9 +47,9 @@ SCT-159-005 Epistemic reliability SHALL NOT scale rights/consent/authority.
 SCT-159-006 Soft numerical tolerance SHALL NOT widen a protected hard gate.
 
 PROVISIONAL TESTS
-TEST-SCT-159-001 all-zero discrepancy at n=1,3,10 under cardinality-neutral profile -> equivalent calibrated result.
+TEST-SCT-159-001 under a cardinality-neutral profile, the same declared discrepancy/weight distribution presented at n=1,3,10 after the profile's declared normalization SHALL produce the same score and threshold disposition within its declared numerical tolerance; any residual difference must come only from an explicitly declared cardinality term.
 TEST-SCT-159-002 duplicate one evidence root ten times -> independent support does not increase.
 TEST-SCT-159-003 identical rare failures vs independent common failures -> cofailure and correlation remain distinct.
 TEST-SCT-159-004 empty/all-zero weights or invalid kappa/nonfinite input -> typed non-PASS.
 TEST-SCT-159-005 low-reliability testimony + valid consent -> consent remains valid; high reliability + no authority -> no authority.
-TEST-SCT-159-006 soft objective improvement beyond hard protected ceiling -> rejected before optimization.
+TEST-SCT-159-006 uncertainty interval crosses protected hard ceiling even if epsilon_band would admit it -> rejected/non-PASS before optimization.
