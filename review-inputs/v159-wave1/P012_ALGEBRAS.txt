@@ -1,0 +1,114 @@
+GARDEN v15.9 REVIEW PACKET P012 — POLICY / DECISION / CONFORMANCE / EVIDENCE ALGEBRAS
+Source basis: exact Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review the four remaining universal algebras after Process Algebra was upgraded in Unit 008. Preserve existing owners and avoid inventing new algebras when ordinary typed computation or graph machinery suffices.
+
+GLOBAL GARDEN BOUNDARIES
+- GSL v45.1; ten Core Objects and 24 Core Relations unchanged.
+- Human rights, Constitution, K0P/safety, authority and consent are hard constraints, never optimization dimensions.
+- UNKNOWN/STALE/BLOCKED/TIMEOUT/INCONCLUSIVE are not silently PASS.
+- Reasoning/evidence/model agreement do not create authority or truth.
+- Unit 004 strengthened typed effect/scope closure; Unit 007 strengthened dependency closure; Unit 011 strengthened FunctionContract semantics.
+
+ALGEBRA ADMISSION TEST
+An architectural mechanism is an Algebra only when it defines reusable typed operands, operators, composition/closure laws, identity/error/unknown behavior and interaction rules that eliminate duplicated semantics.
+Every admitted Algebra has a machine-readable AlgebraSignature. A law is declared only where it actually applies; Garden does not invent identity, associativity, commutativity or idempotence merely for symmetry.
+Concrete AlgebraSignature instances resolve through REG-ALGEBRA-001. A law omitted from an instance is not assumed.
+
+POLICY ALGEBRA — PA v1.0a
+Decision domain:
+  PERMIT
+  DENY
+  REQUIRE_APPROVAL(A)
+  DEFER
+  NOT_APPLICABLE
+  INDETERMINATE
+  CONFLICT
+  SAFE_FALLBACK(Action)
+
+Formal structure:
+  D = (DecisionSet, AND_D, OR_D, NOT_D, RESOLVE_D, precedence_D)
+
+Policy composition operators include conjunction, disjunction, negation, precedence, exception, temporal/contextual activation, obligation union, delegation and escalation. Policy content remains owned by its substantive authority; Policy Algebra owns universal composition semantics.
+
+Precedence / authority:
+  Constitution/rights and K0P are non-bypassable independent hard dimensions.
+  Law > valid delegated authority > operational policy > user preference > optimization within applicable scope.
+  Human court/governance rulings do not bypass Policy; they enter as typed AuthoritativeRuling/PolicyArtifact inputs at the applicable legal authority.
+
+ResolveStrategy registry:
+  DENY_OVERRIDES
+  PERMIT_OVERRIDES
+  MOST_RESTRICTIVE
+  ALL_REQUIRED
+  FIRST_APPLICABLE
+  ONLY_ONE_APPLICABLE
+  HIGHER_AUTHORITY
+  OBLIGATION_UNION
+  ESCALATE_ON_CONFLICT
+Architecture objects cannot invent new resolution semantics at runtime.
+
+Policy evaluation preserves applicable policies, precedence/conflict handling, obligations, final decision/effect and provenance.
+Formal cautions:
+- AND_D and OR_D are distinct and MUST NOT share one normative truth table unless equivalence is proven.
+- simultaneous approvals compose as explicit requirement sets; no required approval may be dropped.
+- SAFE_FALLBACK activates only on its declared failure/uncertainty path and is not an unconditional effect.
+- timeout/resource exhaustion is a typed decision path, never implicit PERMIT.
+- PolicyDecision is normative/operational, not an epistemic truth judgment.
+
+DECISION ALGEBRA
+Decision Algebra is the typed effect/result sub-algebra used by Policy Algebra and other decision systems. It does not own policy authority.
+Review whether this is sufficiently specified as an independent algebra rather than merely a generic Result Algebra alias.
+
+CONFORMANCE ALGEBRA
+Purpose: reusable closed semantics beneath compliance, audit and self-conformance.
+Operands:
+  RequirementSet
+  ApplicabilitySet
+  ObligationSet
+  EvidenceSet
+  ProofSet
+  CoverageSet
+  StandardMapping
+  ConformanceResult
+Operators:
+  REQUIREMENT_UNION
+  REQUIREMENT_INTERSECTION
+  SCOPE_PROJECT
+  MAP_STANDARD
+  PROPAGATE_OBLIGATION
+  BIND_EVIDENCE
+  BIND_PROOF
+  INVALIDATE_BY_DEPENDENCY
+  COVERAGE
+  GAP
+  DIFF
+  COMPOSE_CONFORMANCE
+ConformanceResult preserves PASS | FAIL | INCONCLUSIVE | UNKNOWN | NOT_APPLICABLE | BLOCKED | STALE.
+Audit is not a separate Algebra: Audit = Process profile + Conformance Algebra + Engine.Compliance + Engine.Proof + immutable AuditEvidence.
+
+EVIDENCE COMPOSITION ALGEBRA
+Purpose: reusable dependence-aware composition semantics for empirical evidence without turning Evidence into Proof.
+Artifact: EvidenceComposition; EvidenceDependenceModel may represent common-source, causal, methodological, statistical or conditional dependence; it is not restricted to binary independence or one universal correlation coefficient. Cycles are allowed where the declared dependence model permits them.
+Core flow:
+  evidence inputs + dependence/context model
+  -> assess dependence
+  -> corroborate / contradict / condition
+  -> preserve uncertainty and source dependence
+  -> typed combined/conflict/conditional evidence state.
+Correlated/shared-source evidence cannot be counted as independent because it appears in multiple records. Dependence-aware composition uses the declared valid model; no arbitrary universal down-weight. Probability/confidence output only when a calibrated probabilistic model justifies it. Proof may verify formal calculation/model-consistency; Knowledge/Research/Reason own empirical credibility/source validity/applicability.
+
+FUTURE ALGEBRA BOUNDARY
+Explanation, Authority, Dependency and Resource remain non-admitted as algebras unless GSL-COMPARE later demonstrates genuinely independent closed composition semantics not already covered by Process/Policy/Decision/Conformance/Evidence, mathematics or typed graph machinery.
+
+REVIEW QUESTIONS
+1. Is Decision Algebra actually independent enough to remain a named algebra? If yes, define its closed operands/operators/non-laws precisely; if no, identify the simpler owner without losing semantics.
+2. Define AND_D/OR_D/NOT_D/RESOLVE_D behavior for INDETERMINATE, CONFLICT, NOT_APPLICABLE and REQUIRE_APPROVAL without accidental permission.
+3. Check exceptions/precedence/delegation for authority escalation or scope leakage.
+4. Check Conformance composition for false PASS through partial applicability, stale evidence or coverage gaps.
+5. Check Evidence composition for double-counting, circular support, conflicting evidence, dependence-model misspecification and uncertainty propagation.
+6. Check cross-algebra composition: Policy <-> Decision; Conformance <-> Evidence/Proof; Process <-> Policy; no layer may manufacture truth/authority.
+7. Compare DO_NOTHING and simplification/merge alternatives.
+8. Request exact missing context with EXPAND_REQUIRED rather than inventing it.
