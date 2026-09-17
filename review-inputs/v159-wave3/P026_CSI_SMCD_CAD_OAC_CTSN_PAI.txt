@@ -1,0 +1,44 @@
+GARDEN v15.9 REVIEW PACKET P026 — CSI / SMCD / CAD / OAC / CTSN / PAI
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review the v15.8 systemic closure layer that sits on top of UBC/TSI/TIA/ART/IIC/PIR. Preserve admission sequencing: these mechanisms cannot cite their dependencies as canonical unless admitted or bundled with explicit composition evidence.
+
+CSI — COGNITION-SHAPING INTEGRITY
+Shaping channels include pretraining, SFT, RL/RLHF/RLAIF, reward models, preference labels, constitutions, distillation, system prompts, persistent memory, retrieval and evaluator feedback. TrainingSignal != Truth; HighReward != Correct; RepeatedExposure != Authority. Subject agent may not unilaterally modify authoritative shaping/evaluation mechanisms. Material runtime shaping has provenance discipline.
+
+SMCD — SAFETY MONITORING COVERAGE & DISCOVERY DEBT
+No detected anomaly != no anomaly. Monitoring claims are conditioned on observable surface, sampling method, coverage estimate/confidence, known blind spots and discovery debt. Outside-surface incidents revise coverage/debt, trigger bounded historical backscan and revalidate dependent safety claims. External anomaly reports may be first-class evidence.
+
+CAD — CAPABILITY–ASSURANCE DELTA
+No universal scalar capability/safety ratio. Material capability expansion requires CapabilityAssuranceDelta/v1 for affected deployment boundary. Stronger capability does not silently inherit weaker assurance. Unplanned emergent capability expanding reachable effects triggers CAD. Decision policy: ASSURANCE_SUFFICIENT | CONDITIONAL | LIMIT_SCOPE | REQUALIFICATION_REQUIRED | BLOCK.
+
+OAC — ORGANIZATIONAL ALIGNMENT CLOSURE
+Aligned members != aligned organization. Assess communication topology, collective reward/objective, authority graph, information asymmetry, model-family correlation, incentives, cooperation/competition, delegation, dissent/escalation/exit, reviewer independence, resources, reputation pressure, external effects, containment/rollback. Material topology/reward/authority/resource/membership change triggers requalification.
+
+CTSN — CAPABILITY-TRANSFER SAFETY NON-TRANSITIVITY
+Capability inheritance != safeguard inheritance. Applies to distillation, fine-tuning, adapters/LoRA, merges, quantization/compression, checkpoint conversion, wrappers, system prompts, tools, memory and orchestration. DerivativeMaterialityPolicy tests behaviour/tool/memory/authority/capability class changes. Material derivative gets own lineage/assurance. Parent evidence transfer = TRANSFERABLE | PARTIALLY_TRANSFERABLE | STALE | NOT_TRANSFERABLE | UNKNOWN.
+
+PAI — PHYSICAL ACTION INTERLOCK
+PhysicalActionEnvelope/v1 machine-checkable bounds for protected physical control. Irreversible protected effects require external interlock unless explicit compensating-control receipt proves equal/stronger assurance. Temporal/spatial joint-action evaluation is required where individually safe actions can compose into collision/shared-resource hazards.
+
+EXISTING TEST INTENT
+CSI: self evaluator/reward modification denied; retrieval poisoning detectable; prompt material behavior change gets lineage/requalification.
+SMCD: missed outside-surface incident revises coverage/debt; external anomaly enters evidence pipeline.
+CAD: capability jump with old certification -> requalification; emergent capability -> CAD.
+OAC: compliant members causing prohibited group outcome -> organizational failure; material topology/reward change -> requalification.
+CTSN: fine-tuned descendant does not inherit parent safety automatically; same weights + powerful wrapper/tools/memory -> separate assurance.
+PAI: protected physical-limit override blocked by interlock; two individually safe robots with timing overlap -> joint check blocks.
+
+REVIEW QUESTIONS
+1. CSI: define shaping lineage/materiality and self-modification boundary without treating every prompt/context change as full retraining.
+2. SMCD: define coverage/debt claim semantics without false precision; distinguish sampling coverage from latent attack/behavior coverage.
+3. CAD: define materiality around reachable effects/authority/autonomy/horizon/tools without one scalar and without forcing full requalification for trivial change.
+4. OAC: check group-level failure attribution, correlated models/reviewers, coalition changes and organization boundary manipulation.
+5. CTSN: define transferability evidence, derivative equivalence and when unchanged weights but changed wrapper/context become new behavior class.
+6. PAI: check external interlock independence, failure mode, degraded operation, composition and physical timing/sensor uncertainty.
+7. Check that each mechanism reuses UBC/TSI/TIA/ART/IIC/PIR instead of duplicating them.
+8. Check dependency sequencing/admission: no candidate treats unadmitted dependency as already canonical.
+9. Check Human-Effect Closure and AAP bindings for newly reachable human/physical effects.
+10. Compare DO_NOTHING/minimal repairs and request EXPAND_REQUIRED for missing context.
