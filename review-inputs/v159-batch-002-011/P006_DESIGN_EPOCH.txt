@@ -1,0 +1,52 @@
+GARDEN v15.9 REVIEW PACKET P006 — DESIGNEPOCH / DESIGNBINDING
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review immutable versioning, admission, binding, drift, migration and invalidation semantics for DesignEpoch without turning a human-readable draft into a certified epoch.
+
+CURRENT v15.8 DESIGN
+DesignEpoch is an immutable versioned snapshot of the complete canonical design for a declared scope. It binds at least:
+- schema definitions and alias/migration records;
+- invariants and proof obligations;
+- registries and architecture-object identities/bindings;
+- ten Core Objects and 24 Core Relations;
+- Constitution and active Rights;
+- compiler/CIR contracts and normative GSL grammar/version;
+- capability/domain/profile definitions and dependencies;
+- acceptance evidence, verification receipts, authority and provenance roots.
+
+Epoch acceptance requires applicable gates:
+1 integrity/registry-root consistency;
+2 constitutional/rights check;
+3 global invariant/proof-obligation analysis for declared scope;
+4 interface/schema compatibility + migration evidence;
+5 dependency closure/cycle/SCC analysis;
+6 independent frozen-verifier or equivalent independent verification;
+7 competent human/governance approval.
+Describing these requirements does not self-certify the document.
+
+DESIGN-EPOCH STATES
+SPEC_DRAFT | SPEC_ACCEPTED | PROOF_COMPLETE_FOR_SCOPE | IMPLEMENTED_FOR_SCOPE | VALIDATED_FOR_SCOPE | DEPLOYMENT_CERTIFIED. No state silently implies a later stage.
+
+DESIGN BINDING
+Every production artifact is bound to the specific DesignEpoch it implements. DesignBinding contains code hash, epoch ref, architecture_object_id, requirement/invariant/proof refs, safety/security constraints, environment commitment and verification status.
+CodeStatus: COMPLIANT | STALE | INCONSISTENT | UNKNOWN | VERIFICATION_REQUIRED | BLOCKED.
+
+DRIFT / IMPACT
+Runtime compares live bindings to accepted epochs. New accepted epoch -> Design Diff -> Impact Closure across requirements, invariants, architecture objects, interfaces, schemas, state machines, dependencies, assumptions, proof obligations, safety/security constraints and deployed bindings. Changed assumptions/dependencies/interfaces stale dependent proofs.
+
+EVOLUTION
+Changes occur via immutable candidate branch/history, DO_NOTHING comparator, dependency impact, migration, proof/evidence, authority, provenance, rollback/compensation and post-change validation. Cross-timescale/domain/regime/authority sub-epoch adaptations require promotion; full DesignEpoch transition when authoritative architecture/semantics change.
+
+CONSTRAINTS
+Review:
+- full snapshot vs scope-bound epoch semantics;
+- atomic acceptance and partial-scope acceptance;
+- content roots and mutable external references;
+- proof/evidence reuse across epochs;
+- stale vs inconsistent vs unknown distinctions;
+- rollback after external irreversible effects;
+- forks/merges and authority continuity;
+- whether accepted epoch can depend on not-yet-accepted artifacts.
+Compare DO_NOTHING and minimal repair.
