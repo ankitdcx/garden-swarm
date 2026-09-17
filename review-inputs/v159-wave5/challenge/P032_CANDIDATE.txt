@@ -2,7 +2,7 @@ GARDEN v15.9 — P032 ARTIFACT / SCHEMA / OWNER CLOSURE SYNTHESIZED CANDIDATE
 Status: DESIGN-CLOSURE CANDIDATE / NO NEW SCHEMAID MINTING / NOT CANONICAL
 
 1. ADMISSION PRINCIPLE
-A candidate name is not a schema. Before machine admission every retained artifact/profile SHALL have an admission row with relation, host, owner, role, scope/currentness, status, tests and unresolved obligations. If exact host sufficiency cannot be established, return INCOMPLETE / NEEDS_SCHEMA_ADMISSION. No placeholder SchemaID is minted.
+A candidate name is not a schema. Before machine admission every retained artifact/profile SHALL have an admission row with relation, host, owner, role, scope/currentness, status, tests and unresolved obligations. If exact host sufficiency cannot be established, retain the candidate as SPECIFIED with closure_status INCOMPLETE / NEEDS_SCHEMA_ADMISSION. No placeholder SchemaID is minted.
 
 Relation evaluation is semantic, not name-based:
 - DUPLICATES when no distinct semantic delta exists -> remove candidate, retain migration reference if needed.
@@ -10,17 +10,24 @@ Relation evaluation is semantic, not name-based:
 - REFINES when the candidate is an owner-qualified policy/profile/view that narrows/adds constraints without requiring a new persistent identity.
 - EXTENDS when the candidate requires genuinely additional persistent fields/relations/lifecycle beyond the host while preserving host identity/contract.
 - NEW only when no existing host can represent the required persistent semantics after full owner-field comparison.
-Do not force one lexical precedence when host evidence is incomplete; choose the least ontology-expanding relation that is semantically valid and record the reason.
+Choose the least ontology-expanding relation that is semantically valid and record the reason. Do not invent a host when evidence is incomplete.
 
 2. STATUS DOMAIN
-For each admission row:
-  existing_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT | UNKNOWN
-  delta_status = ENFORCED | CHECKED | SPECIFIED | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | NOT_PRESENT | UNKNOWN
-UNKNOWN/INCOMPLETE/NEEDS_SCHEMA_ADMISSION is non-PASS for machine admission. `TEST-*` prose is SPECIFIED unless exact executable harness/result receipts are bound.
+Preserve the source status domain:
+  existing_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT.
+Use a separate closure_status when the inherited status/host relationship is not established:
+  closure_status = RESOLVED | UNKNOWN | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
+For the candidate delta:
+  delta_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
+UNKNOWN/INCOMPLETE/NEEDS_SCHEMA_ADMISSION is not an ENFORCED/CHECKED admission. It may remain in the design as an explicitly unresolved candidate with resolution obligations. `TEST-*` prose is SPECIFIED unless exact executable harness/result receipts are bound.
 
 3. TRUST ALLOCATION
-TrustAllocationDecision/v1 SHALL be a strict attenuation/narrowing assessment over an independently valid current parent authorization/envelope. It may restrict, condition, scope or deny. It SHALL NOT create, widen, revive or reauthorize authority. If parent grant is absent/revoked/expired -> no effective authority regardless of trust/reputation.
-Relation: REFINES/EXTENDS existing PolicyDecision/AuthZ/envelope machinery pending exact host-field closure; no new authority root.
+TrustAllocationDecision/v1 is scoped to an independently valid current ParentAuthorityEnvelope / authorization machinery. Owner policy may allocate, condition, narrow or deny capabilities/actions only within that current parent envelope.
+Invariant:
+  EffectiveAuthorizedScope <= CurrentParentAuthorityEnvelope.
+Trust/reputation SHALL NOT create a new authority root, exceed the parent envelope, revive a revoked/expired grant or bypass a hard authority/rights/safety/law condition.
+If no current parent authority exists, trust alone produces no effective authority.
+Exact allocation/attenuation semantics inside the parent envelope remain owner-qualified rather than one universal trust formula.
 
 4. REPUTATION
 ReputationAggregationPolicy/v1 is a qualified policy/profile over ComparePolicy + the correct owner-qualified ReputationProfile. Bare `ReputationProfile` SHALL NOT resolve across HumanCore.Identity.ReputationProfile and Capability.Economy.ReputationProfile without owner qualification.
@@ -36,19 +43,19 @@ RelationalAgencyAssessment
 EvidenceControlRisk
 ObstructionEvent
 JusticeEvidenceContinuityReceipt.
-Each stays SPECIFIED/INCOMPLETE until an exact host mapping and required delta are recorded. A future design epoch may ALIAS/REFINE/EXTEND/NEW or withdraw/reserve the name; there is no automatic expiry-to-admission.
+Each remains existing_status=SPECIFIED or NOT_PRESENT as source-supported, with delta/closure status INCOMPLETE or NEEDS_SCHEMA_ADMISSION until exact host mapping and required semantic delta are recorded. A future design epoch may ALIAS/REFINE/EXTEND/NEW or withdraw/reserve the name; there is no automatic admission from age or deadline.
 
 6. CAPABILITY TRANSFER SPLIT
-Reject the bare catch-all `CapabilityTransferAssessment/v1` as an admitted type.
-Use distinct owner-qualified semantics:
-- CTSN.DerivativeTransferAssessment (or equivalent qualified name) for model/system parent->derivative capability/safety evidence transfer, bound to derivative lineage/assurance owners.
-- HRAP.HumanCapabilitySupportAssessment (or equivalent) for human learning/skill/delegation support, bound to human intent/consent/human-effect owners.
-They may be profiles/views over existing hosts; new SchemaIDs require separate proof of persistent-data need.
+Reject the bare catch-all `CapabilityTransferAssessment/v1` as one admitted semantic type.
+Separate owner-qualified concepts are required:
+- a CTSN derivative/system transfer assessment for parent->derivative capability/safety evidence transfer, owned by the derivative lineage/assurance domain;
+- an HRAP human capability support/learning assessment, owned by Human Sovereignty/Human-Effect/intent-consent domain.
+The exact qualified names and canonical host schemas remain fields in their admission rows; this candidate does not mint those names as SchemaIDs. They may resolve as profiles/views over existing hosts.
 Cross-domain target misuse is invalid.
 
 7. CAUSAL CLOSURE RECEIPT
 CausalClosureReceipt/v1 SHALL NOT duplicate CausalGraph or CausalReconstructionTrace node/edge payloads.
-It is a closure/disposition receipt referencing the canonical graph/trace/evidence artifacts and qualified CLIC function outputs. It records closure status, material gaps/frontier, owner refs, authority refs, unresolved obligations, ComparePolicy and disposition. Causal edge epistemic status remains in or references the canonical causal/evidence representation.
+It is a closure/disposition receipt referencing canonical graph/trace/evidence artifacts and qualified CLIC function outputs. It records closure status, material gaps/frontier, owner refs, authority refs, unresolved obligations, ComparePolicy and disposition. Causal-edge epistemic status remains in or references the canonical causal/evidence representation.
 Engine.Compare owns comparison/gap aggregation; it does not become sole causal-proof or action-authority owner.
 If canonical host fields cannot express required closure metadata, only those exact missing fields are proposed as an extension.
 
@@ -56,10 +63,10 @@ If canonical host fields cannot express required closure metadata, only those ex
 IntegrityReport/v1 is a REFINES/profile view over the existing IncidentRecord/reporting lifecycle unless exact host comparison proves a distinct persistent record is necessary. Reporter-protection/merits/bad-faith semantics reuse P019/P025 owners. Channel routing binds IntegrityChannelOwner. No duplicate merits lifecycle.
 
 9. PHYSICAL ACTION ENVELOPE
-PhysicalActionEnvelope/v1 is a qualified physical-safety refinement/profile anchored to SafetyEnvelope and ControlledActuationRecord. It SHALL preserve exact device/action/force/energy/time/space/shared-resource bounds and external-interlock/compensating-control preconditions. Controlled actuation fails closed if required current envelope/interlock bindings are missing or invalid.
+PhysicalActionEnvelope/v1 is a qualified physical-safety refinement/profile anchored to SafetyEnvelope and ControlledActuationRecord. It inherits and applies their existing fail-closed semantics and must preserve exact device/action/force/energy/time/space/shared-resource bounds plus external-interlock/compensating-control preconditions. If required fields cannot be represented, extend the owning host contract rather than bypass it with a detached envelope.
 Until exact host-field mapping is verified, status remains SPECIFIED/NEEDS_SCHEMA_ADMISSION rather than a standalone ENFORCED schema.
 
-10. OTHER CANDIDATES
+10. OTHER CANDIDATES — ALL REMAIN PENDING HOST CLOSURE UNLESS EXACTLY RESOLVED
 ART_BOOTSTRAP_PROFILE -> likely REFINES OperationProfile/AAP; defaults, graduation/regression/invalidation remain SPECIFIED pending host map.
 EpochIndependenceClassification -> EXTENDS/REFINES DesignEpoch evidence-reuse assessment pending exact host map.
 EpochIndependenceComparePolicy -> REFINES ComparePolicy.
@@ -69,7 +76,7 @@ IncentiveConsistencyAssessment -> EXTENDS/REFINES comparison/policy trace.
 IntegrityChannelOwner -> owner/responsibility profile; exact host relation pending.
 ContainmentCredibilityPolicy -> REFINES Security/AAP/Policy.
 ContainmentDecision -> REFINES/EXTENDS existing ContainmentAction/admission receipt.
-CognitionShapingReceipt -> EXTENDS provenance/audit record with exact shaping delta; store owner != approval authority.
+CognitionShapingReceipt -> EXTENDS provenance/audit record with exact shaping delta; producer_role SHALL resolve per shaping channel and the admission row records the channel->producer mapping; store owner is not approval authority.
 MonitoringCoverageReceipt -> EXTENDS audit/monitoring/EpistemicDebt with estimator/scope/currentness fields.
 CapabilityAssuranceDelta -> EXTENDS AAP/DeploymentSafetyCase/DesignEpoch reuse mapping.
 CapabilityAssuranceDecisionPolicy -> REFINES Policy/AAP; exact precedence/currentness required.
@@ -81,25 +88,28 @@ EvidenceControlRisk -> REFINES EvidenceThreatProfile/custody independence.
 ObstructionEvent -> REFINES IncidentRecord/ObservationRecord; allegation != adjudicated obstruction.
 JusticeEvidenceContinuityReceipt -> EXTENDS/REFINES custody/evidence-lineage/case-state records pending exact host map.
 
+The arrows above are candidate dispositions, not admission. Each remains SPECIFIED/INCOMPLETE/NEEDS_SCHEMA_ADMISSION until the exact host-field comparison and validation evidence close it.
+
 11. REQUIRED ADMISSION ROW
-qualified_name; relation; canonical_host_schema_ids; normative_owner; producer_role; store_owner; reviewer_role; enforcement_role; added_fields_constraints; controlling_policy_versions; scope; validity; invalidators; inherited_invariants_tests; new_tests; existing_status; delta_status; unresolved_obligations; migration_aliases.
+qualified_name; relation; canonical_host_schema_ids; normative_owner; producer_role; store_owner; reviewer_role; enforcement_role; added_fields_constraints; controlling_policy_versions; scope; validity; invalidators; inherited_invariants_tests; new_test_scenarios; existing_status; closure_status; delta_status; unresolved_obligations; migration_aliases.
 
 PROVISIONAL INVARIANTS
 P32-001 New name alone SHALL NOT mint SchemaID.
-P32-002 UNKNOWN/INCOMPLETE host closure SHALL NOT be treated as admitted.
-P32-003 Trust assessment SHALL only attenuate current parent authority.
+P32-002 UNKNOWN/INCOMPLETE host closure SHALL NOT be treated as ENFORCED or CHECKED admission; it may remain explicitly unresolved.
+P32-003 Effective trust-allocated scope SHALL NOT exceed or revive the current parent authority envelope.
 P32-004 Owner-qualified ReputationProfile identity SHALL not be collapsed by bare name.
 P32-005 Bare CapabilityTransferAssessment SHALL not conflate CTSN and HRAP.
 P32-006 CausalClosureReceipt SHALL reference, not duplicate, canonical causal graph/trace payloads.
 P32-007 IntegrityReport SHALL not create a second reporting-merits lifecycle.
-P32-008 PhysicalActionEnvelope SHALL preserve SafetyEnvelope/ControlledActuation interlock and composition semantics.
+P32-008 PhysicalActionEnvelope SHALL inherit/preserve SafetyEnvelope/ControlledActuation interlock and composition semantics.
 P32-009 SPECIFIED test labels SHALL NOT be reported as executed PASS.
 
-PROVISIONAL TESTS
+SPECIFIED TEST SCENARIOS
 TEST-P32-AUTH-001 no parent grant + high trust -> no effective authority.
 TEST-P32-SCHEMA-001 contract-less name submitted as NEW without host comparison -> NEEDS_SCHEMA_ADMISSION.
-TEST-P32-TRANSFER-001 human target passed to derivative-transfer assessment -> type/owner rejection.
+TEST-P32-TRANSFER-001 human target submitted to CTSN derivative-transfer assessment -> type/owner rejection.
+TEST-P32-TRANSFER-002 derivative/system lineage target submitted to HRAP human-capability support assessment -> type/owner rejection.
 TEST-P32-CAUSAL-001 closure receipt containing independent raw node/edge graph payload -> rejected/normalized to canonical graph refs.
 TEST-P32-REPORT-001 IntegrityReport starts a duplicate merits lifecycle -> rejected.
-TEST-P32-PHYS-001 actuation missing required active envelope/interlock refs -> non-PASS.
+TEST-P32-PHYS-001 actuation missing required inherited active envelope/interlock refs -> existing host fail-closed behavior applies.
 TEST-P32-STATUS-001 TEST-* prose with no harness/result receipt -> SPECIFIED, not CHECKED/ENFORCED.
