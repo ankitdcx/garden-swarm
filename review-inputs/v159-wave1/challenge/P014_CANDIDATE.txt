@@ -1,0 +1,67 @@
+P014 SYNTHESIZED v15.9 CANDIDATE — ENGINE.REASON
+Proposal-only; challenge this candidate against P014 source.
+
+1. CLOSED REASON RESULT
+ReasonResult contains:
+  status = SOLVED | PARTIAL | INCONCLUSIVE | UNKNOWN | CONTRADICTION | RESOURCE_BOUND | MODEL_OUT_OF_SCOPE | VALIDATION_REQUIRED;
+  claims/artifacts;
+  problem_signature;
+  strategy_trace;
+  dependencies/provenance;
+  tier;
+  resource/termination receipt;
+  ClaimValidationPlan where applicable.
+All non-SOLVED states are non-authoritative. SOLVED means reasoning completed under its declared reasoning contract; it still does not mean proved, empirically true or authorized. Any required validation remains separately enforced.
+
+2. R1–R4 ARE OBLIGATION CLASSES, NOT COMPUTE MULTIPLIERS
+R1 — Local: bounded local reasoning, explicit assumptions/status, no claim of wider closure.
+R2 — Contextual: resolve declared relevant context/dependencies/constraints and compare material alternatives.
+R3 — Deep: broader strategy composition/simulation/formal/adversarial analysis as selected by AAP; explicit assumptions, cross-checks and validation plan.
+R4 — Critical: maximum bounded reasoning assurance required by the operation, including independent challenge/diverse reasoning where policy requires and explicit escalation/governance/human route where applicable.
+Domain name alone does not force R4; AAP derives tier from actual consequence, authority, uncertainty and applicable policy. More tokens alone never satisfy a higher tier.
+
+3. PROBLEM SIGNATURE / PORTFOLIO SELECTION
+ProblemSignature is produced independently of candidate strategy self-scores and binds problem class, semantic types, effect/authority sensitivity, causal/formal/empirical character, constraints, novelty/uncertainty, resource context and required validation classes.
+Strategy selection uses Engine.Compare over admissible strategies and context-matched ReasoningStrategyPerformanceRecords.
+A strategy/owner cannot be sole evaluator of the performance evidence that grants it higher assurance eligibility. Records label evaluator/source, held-out/leakage status, context similarity, DesignEpoch and uncertainty.
+Self-graded evidence is retained but cannot independently satisfy protected selection/assurance floors.
+Untried/new strategies may be explored only under an AAP-approved exploration policy; there is no mandatory novelty probe for every critical operation.
+
+4. MIXED-STRATEGY COMPOSITION
+Reason composition is a bounded typed DAG/process:
+  strategy nodes have typed I/O;
+  provenance/state handoffs are explicit;
+  one top-level resource/termination budget applies;
+  each node emits status/uncertainty;
+  conflicts remain explicit.
+A formal proof result or hard constraint is not averaged with an LLM/planner opinion. Contradictory outputs yield CONTRADICTION/INCONCLUSIVE until resolved by the applicable owner/validation path.
+Composition trace records which strategy produced which claim.
+
+5. CLAIMVALIDATIONPLAN
+Consequential/promotable classification is derived from policy/AAP and claim/effect semantics outside the reasoner's self-confidence. Reason cannot mark a claim 'non-consequential' solely to bypass validation.
+ClaimValidationPlan names required formal, empirical/test, legal/authority and human/governance routes with owners and status.
+Reason-generated hypotheses/defaults remain claims/hypotheses, not Evidence.
+
+6. ABSTRACTION / BACKWARD / CAUSAL REASONING
+Every abstraction/preimage/backward result carries:
+  model/context;
+  soundness/approximation direction (over/under/exact/unknown as applicable);
+  assumptions;
+  dropped dimensions/invariants;
+  validity scope;
+  validation status.
+Backward/preimage results are NECESSARY_CONDITION/WHY_NOT/HYPOTHESIS unless causal C0..C4 identification requirements are independently met. 'Root cause' wording is forbidden where only reachability/necessary-condition analysis was established.
+
+7. PORTFOLIO EVOLUTION
+Changes to protected evaluator metrics, admissible-context rules or assurance floors bind DesignEpoch/dependency invalidation and require independent evaluation/authority. Engine.Reason cannot self-certify a change to its own protected evaluation boundary.
+
+Candidate invariants:
+- Reason status never substitutes for Proof/Evidence/Authorization;
+- R tier is demonstrated by obligations, not compute volume;
+- self-grading cannot independently raise assurance eligibility;
+- mixed-strategy conflicts are not silently averaged;
+- Reason cannot self-classify consequential claim out of validation;
+- preimage/abstraction cannot overclaim causality.
+
+CHALLENGE REQUEST
+Attack result semantics, tier obligations, portfolio-selection independence, mixed-strategy composition and causal/abstraction soundness. Return ACCEPT / CHANGE / BLOCK with minimal repair and falsifiable test.
