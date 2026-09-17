@@ -1,0 +1,55 @@
+name: Garden v15.9 wave 027-031 challenge
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave4-027-031-20260917'
+    paths:
+      - 'review-inputs/v159-wave4/challenge-trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  challenge:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P027_SCT_STRUCTURAL_COHERENCE
+            source: P027_SCT_STRUCTURAL_COHERENCE.txt
+            candidate: P027_CANDIDATE.txt
+          - id: P028_TRAIN_GAIA_DOMAIN_PROFILES
+            source: P028_TRAIN_GAIA_DOMAIN_PROFILES.txt
+            candidate: P028_CANDIDATE.txt
+          - id: P029_VSM_RPM_PPM_TFT_FET_COMPOSITION
+            source: P029_VSM_RPM_PPM_TFT_FET_COMPOSITION.txt
+            candidate: P029_CANDIDATE.txt
+          - id: P030_RESEARCH_LEARNING_DEFERRED_COMPARATIVE
+            source: P030_RESEARCH_LEARNING_DEFERRED_COMPARATIVE.txt
+            candidate: P030_CANDIDATE.txt
+          - id: P031_RELIABILITY_GSL_ARCHITECTURES
+            source: P031_RELIABILITY_GSL_ARCHITECTURES.txt
+            candidate: P031_CANDIDATE.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial challenge
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave2_challenge.py "review-inputs/v159-wave4/${{ matrix.source }}" "review-inputs/v159-wave4/challenge/${{ matrix.candidate }}"
+      - name: Upload challenge evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave4-challenge-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave2-challenge/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
