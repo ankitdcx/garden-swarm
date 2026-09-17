@@ -1,0 +1,71 @@
+GARDEN v15.9 REVIEW PACKET P033
+Topic: Legacy 50 module semantic retention and local-contract reconciliation
+Frozen source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+BOUNDARY
+All 50 historical module blocks were verified against the historic source and all 50 current owner responsibilities were found at the inspected contract level. This is NOT permission to restore obsolete/unsafe semantics. Review only demonstrated local inconsistencies/summary overclaims and the executable preservation boundary.
+
+DELIBERATE REPLACEMENTS TO KEEP
+- Safety.Bypass -> preauthorized governed emergency safety profile; K0P override is prohibited.
+- Health.Prescribe -> RecommendMedication + qualified-authority AuthorizeMedicationOrder; do not restore autonomous prescribing.
+- Proof.Validate -> formal-artifact validation with formal/empirical separation.
+- Knowledge.Validate -> evidence/formal-claim/disposition paths.
+- Compliance generic certification -> scoped conformance + authenticated external certification; Garden internal assessment is not official certification.
+- Policy.Update -> UpdatePolicy with explicit policy algebra/authority semantics.
+
+DIRECT LOCAL RECONCILIATION CANDIDATES
+
+1. EDUCATION CREDENTIAL PROOF PROFILE
+IssueCredential permits a selected approved privacy-proof method, including non-ZKP profiles. VerifyCredential locally still appears ZKP-only.
+Candidate repair: credential issuance SHALL bind the exact CredentialProofProfile/method/version used. Verification dispatches to that bound approved verifier and returns VERIFIED / UNSUPPORTED_PROFILE / STALE / REVOKED / INVALID / UNKNOWN as appropriate. A non-ZKP approved credential must not be rejected solely because one legacy verifier assumed ZKP; unsupported verifier capability must not be reported as credential invalidity.
+
+2. EVOLUTION U20 STALE FIELD
+EvolutionState retains an `emergency_proof_override_gate` / `MultiSigEmergencyOverrideProtocol` style field historically tagged U20, while current U20 semantics are Automated POG Proof Discharge Gates and Garden separately forbids proof bypass.
+Candidate repair: deprecate the stale field as a historical alias only where exact migration requires it; map no current execution semantics to 'proof override'. Current proof discharge remains owner-qualified, non-bypassable and evidence/proof bound. Old serialized state is migrated explicitly; absence of new proof is not replaced by multisig override.
+
+3. RUNTIME / EXECUTION SUMMARY NORMALIZATION
+Older local summaries such as timeout->abort and 'all-or-nothing transactions' are broader than later current external-effect semantics. P021 already retains PARTIAL_EFFECT, OUTCOME_UNKNOWN, irreversible residual, durable effect identity and reconciliation.
+Candidate repair: mark short lifecycles/summaries as non-exhaustive projections and bind them to the authoritative result/effect contract. Scheduler cancellation is not a promise of physical halt or rollback.
+
+4. OFFLINE RED / CRITICAL CONTINUITY
+A RED/offline 'beacon-only/no execution' shorthand can conflict with independently authorized essential physical minimum-risk continuity.
+Candidate repair: RED disables ordinary autonomy/execution. It does not revoke a separately current bounded critical-continuity authority lease/profile. Essential safe-control handoff remains independently authorized, tightly scoped and reconciled. Network loss itself creates no authority.
+
+5. MOBILITY TIMING / ASSURANCE CONSTANTS
+Local Mobility text contains fixed ASIL-D/50 ms style wording. Treat these as qualified reference-profile values unless the active domain owner explicitly selects them. Actual safety/timing requirements remain domain/ODD/profile bound and may be stricter or different.
+
+6. LOCALE TRANSLATION RESULT TYPE
+Locale.Translate returning plain String with unconditional meaning-preservation is too lossy for current GSL/Explanation semantics.
+Candidate repair: translation returns or binds a typed TranslationResult/Explanation result preserving source/target locale, semantic status, ambiguity/loss/untranslatable state, provenance and applicable policy/rights constraints. Ambiguous/untranslatable does not become confident String. Governance cannot choose semantic truth merely because cultures conflict.
+
+7. CARBON `Certify`
+Carbon local `Certify` can be read as official external certification.
+Candidate repair: distinguish internal EmissionCertificate/assessment/evidence package from authenticated external certification/issuer status. Footprint validity does not manufacture issuer authority.
+
+8. MEDIA FIXED LIMITS
+Older fixed display/flash/session reference numbers must yield to current user/device/domain-qualified profiles where the current source already provides such profiles. External standards terminology/thresholds require source/version verification before being called certified.
+
+9. SPACE SNAPSHOT / RECOVERY
+SEU snapshot rollback restores digital state only under validated recovery state. It cannot erase irreversible physical residuals. Reuse existing Transition/Execution/continuity semantics rather than a new recovery engine.
+
+10. NATIVE / HARDWARE / SOFTWARE SIGNATURE BOUNDARY
+Signed bytecode/firmware/kernel/driver identifies/authenticates an artifact but does not itself prove safety, qualification or authority. Existing attestation/qualification/current boot/calibration gates remain separate.
+
+PRESERVATION PROOF
+A final v15.9 current-view map should bind:
+old responsibility/function -> current owner/contract -> invariant/test -> deliberate replacement/alias if any.
+This map is migration evidence; it is not proof that every historical implementation is safe or should be restored.
+
+REVIEW QUESTIONS
+- Are the listed reconciliation repairs valid and minimal?
+- Are any of the 50 owners materially missing a core responsibility rather than merely changed intentionally?
+- Does any proposed repair accidentally restore a legacy unsafe bypass/autonomous authority?
+- Which local hardcoded numbers should remain explicit profile examples versus removed from current normative reading?
+- Is Education verification best fixed by dispatch to the credential-bound proof profile?
+- Is stale U20 override state safely handled as a non-executable migration alias?
+
+DO_NOTHING COMPARATOR
+If a later current owner already fully resolves a local summary, a current-reading cross-reference may be sufficient. Do not duplicate mechanisms just to rewrite every historical paragraph.
+
+OMISSION LEDGER
+This packet summarizes the inspected 50-module ledger rather than repeating all 50 full contracts. A claim that a whole module is missing requires exact source evidence, not absence from this packet.
