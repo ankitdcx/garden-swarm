@@ -1,0 +1,70 @@
+GARDEN v15.9 REVIEW PACKET P020 — SAFETY / SECURITY / LAW / GOVERNANCE / ACCESS / PRIVACY AUTHORITY LAYER
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review the shared protection and authority capabilities as independent but composable hard gates. Prevent one gate from laundering another. Preserve emergency/continuity paths without authorization-free execution.
+
+CANONICAL HARD-GATE CONJUNCTION
+legitimacy_gate = Constitution + active rights + applicable Law
+physical_gate = K0P / safety admissibility
+authenticity_gate = trusted identity / attestation / integrity
+authorization_gate = valid principal / delegation / consent
+policy_gate = Engine.Policy decision
+Execution is admissible only when every applicable hard gate allows the action.
+Proof/evidence floors may also be required by AAP but do not replace these gates.
+
+SAFETY / K0P
+K0P constrains physical admissibility and is independent of political/normative authority. K0P cannot authorize an otherwise illegitimate action; Constitution cannot make a physically unsafe act safe.
+Safety preserves active/degraded/emergency/fallback/halt states. K0P never uses an OVERRIDDEN state.
+Safety-critical novelty, material sensor conflict or assurance collapse does not imply a universal blind halt. Critical continuity semantics: revoke unsafe autonomy -> independent safe-control handoff -> minimum-safe continuity -> qualified recovery, with shutdown only when the domain safety case shows it safer/feasible.
+EmergencyAdmissionContract combines domain HazardPredicate, pre-authorized authority, authenticity, K0P, Constitution/rights, scope/expiry, bounded SafeActionSet, recovery and audit. Emergency substitutes a narrow already-authorized path for ordinary deliberation; it never creates authority or turns K0P off.
+
+SECURITY
+Security checks identity, integrity, credentials, isolation, cryptography, instruction/channel separation and technical protection.
+CryptographicSuite is versioned and binds components/algorithms, parameters, key lifecycle, entropy/attestation, side-channel/fault profile and migration/deprecation state. Cryptographic integrity authenticates only what the scheme establishes; it does not prove truth/authority/safety.
+No Ambient Authority / privilege-ring principles: capabilities must be explicitly granted; untrusted content/generated code/bounded agents/trusted services/protected kernels have distinct privilege. A model/tool cannot infer permission from technical reachability.
+Machine-trace refinement may require noninterference/bounded-leakage evidence for timing/cache/memory/speculation/shared-resource/power/EM channels under declared attacker models.
+
+LAW
+Legal artifacts bind proceeding type, jurisdiction, authority, standard of proof, remedy, appeal, recusal, temporality, ambiguity/conflict and provenance. Law predicates use typed applicability/ambiguity results rather than Bool.
+LegalSourceAuthenticityProfile separates official source identity/status from applicability. LegalFormalizationInterpretationReceipt distinguishes source-law conflict from encoding defect, missing exception/context, jurisdiction mismatch or unresolved interpretation.
+Garden legal output is not automatically law, evidence, admissible material, advocacy or judgment. External use preserves authenticity, chain of custody, reproducibility, limits and challenge.
+UNKNOWN/INCOMPLETE/RESOURCE_UNKNOWN never means no legal gap. Formalization confidence is translation quality, not legal truth or authority.
+
+GOVERNANCE
+Governance thresholds are constitutional/jurisdictional parameters, not universal magic numbers. Fundamental rights remain hard floors.
+ComparativeRightsSynthesis: research -> rights/conflict/minority analysis -> qualified human/legal review -> governance proposal -> constitutional non-regression -> RATIFY | REMAIN_CONTEXTUAL | REJECT | UNRESOLVED. It cannot create law directly.
+GovernanceParticipationProfile binds electorate/eligibility and decision class to proposal/vote/result/assembly/dissent/appeal/review. Participation statistics never substitute for rights or truth.
+HumanRightsRealitySweep may emit RightsGapEscalation and interim non-regression controls; Evolution may nominate but cannot ratify a right.
+
+ACCESS
+Access/capability enforcement is scope-, principal-, context-, expiry- and revocation-bound. Access to a channel/device/data does not itself authorize use/disclosure/action. No Ambient Authority remains controlling. Point-of-use authorization and current revocation/fence state are required where consequential.
+Accessibility/contestability is a human-facing right/capability and must not be conflated with technical access-control permission.
+
+PRIVACY
+Personal-data processing requires legitimate purpose plus applicable consent/law/authority, minimization, purpose limitation, access and erasure/retention rules. Technical access capability creates no permission.
+Derived data/models/caches/replicas carry source impact/taint. Correction/erasure distinguishes verified deletion, unlearning/retraining, quarantine, residual risk and unestablished erasure. Garden never promises literal learned-influence erasure unless established under declared model/threat scope.
+Lawful accountability tombstones are retained only to the extent legally/privacy permitted; provenance metadata itself can be sensitive.
+
+CROSS-BOUNDARIES
+Safety != authority.
+Security/authenticity != truth/authority.
+Law applicability != Policy decision != Governance choice.
+Governance majority != truth/rights override.
+Technical access != consent/use authority.
+Privacy permission is purpose/context specific and revocable.
+Emergency != authorization-free.
+
+REVIEW QUESTIONS
+1. Check conjunction semantics: can any implementation accidentally convert one gate's PASS into overall permission while another is UNKNOWN/STALE/FAIL?
+2. Check critical continuity versus revocation: how is minimum safe control transferred without retaining suspect credentials/authority?
+3. Check EmergencyAdmissionContract expiry/replay, stale sensor state, preauthorization scope and renewal without emergency self-expansion.
+4. Check Security key/trust-root rotation, degraded crypto, side-channel model gaps and self-verification of security-root replacement.
+5. Check Law source authenticity vs applicability/interpretation; avoid treating formal solver output as legal truth.
+6. Check Governance voting/participation for minority-right non-regression, eligibility changes, conflict of interest, appeal and emergency governance.
+7. Check Access vs Accessibility naming/semantics and delegated capability revocation/attenuation.
+8. Check Privacy purpose change, secondary use, derived/model influence, lawful hold, deletion acknowledgement vs completed erasure, and provenance-metadata leakage.
+9. Check jurisdiction conflicts and RRCTX-like restrictions without silently universalizing one jurisdiction.
+10. Compare DO_NOTHING/minimal binding repairs. Request EXPAND_REQUIRED if a critical owner contract is absent.
