@@ -1,9 +1,11 @@
 {
   "schema": "GardenV159Wave3ChallengeTrigger/v1",
-  "campaign": "GARDEN-V159-WAVE3-022-026-CHALLENGE-20260917",
+  "campaign": "GARDEN-V159-WAVE3-022-026-CHALLENGE-20260917-R2",
   "source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
   "blind_review_run_id": 35248160508,
   "blind_review_quorum": "4/4 usable families for every packet",
+  "prior_challenge_run_id": 35253168906,
+  "prior_challenge_disposition": "FAILED_PRE_INFERENCE_MODULE_IMPORT; no reviewer model call was started by the failed challenge jobs",
   "packets": [22,23,24,25,26],
   "reviewers": ["deepseek", "glm", "xiaomi", "gemini-3.8-flash-openrouter"],
   "minimum_distinct_successful_families": 3,
