@@ -1,11 +1,13 @@
 {
   "schema": "GardenV159WaveTrigger/v1",
   "campaign": "GARDEN-V159-WAVE-012-016-20260917",
+  "attempt": 2,
   "packets": [12,13,14,15,16],
   "source": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
   "reviewers": ["deepseek","glm","xiaomi","gemini-3.8-flash-openrouter"],
   "minimum_distinct_successful_families": 3,
   "chatgpt_baseline": "frozen-before-external-review",
   "packet_parallelism": 2,
+  "evidence_artifact_path_fix": true,
   "canonical_effect": false
 }
