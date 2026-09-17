@@ -1,6 +1,6 @@
 {
   "architecture_context_capsule": {
-    "context_expansion_level": "L2_CROSS_LAYER_EXPANDED",
+    "context_expansion_level": "L3_AFFECTED_DOCUMENTS_FULL",
     "cross_cutting_obligations": {
       "authority": "APPLIES: human-effect closure never creates authority; UBC and inherited authority/ActionGate rules constrain effects and composition.",
       "composition": "APPLIES: multi-agent, temporal and subsystem-crossing effects; CLIC and CausalClosureReceipt existing owners.",
@@ -76,17 +76,115 @@
           ]
         }
       ],
-      "inherited_support": "See exact verified support_passages from all five v15.5 files. These are bounded retrieval, not proof of full dependency closure."
+      "inherited_support": "See exact verified support_passages from all five v15.5 files. These are bounded retrieval, not proof of full dependency closure.",
+      "candidate_exact_dependency_excerpts": [
+        {
+          "label": "CLIC-P01",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 1803,
+          "line_end": 1825,
+          "text": "3. CLIC's five operations now have canonical owners and FunctionContract registry bindings.\n   CheckIntentChain -> Engine.Dependency; QualifyCausalClaim -> Engine.Reason; AllocateAttention -> Engine.Reason;\n   ReviewContinuity -> Engine.Transition; AssessInteractionOptions -> Engine.Research. Their outputs remain analysis,\n   plans or transition proposals; none creates action authority.\n\n4. CLIC-P01..P05 are explicitly profile/projection identifiers, not hidden SchemaIDs.\n   They reuse existing canonical record types. If a future implementation genuinely requires a new stored record, normal\n   SchemaID allocation/collision review is required at that future change.\n\n5. Release closure is actually executed.\n   v15.5 ships a ReferenceClosureReceipt and catalogue-lint report over the declared five-file source boundary. Current\n   semantic anchors, numeric Annexure references, SchemaIDs, registries and invariant/test identifiers are checked using\n   declared legacy/current syntax rules. Ambiguous human-friendly schema aliases remain machine-invalid unless resolved\n   by the existing certified owner-qualified disambiguation table.\n\nThese are source-integrity and implementation-binding repairs. They are not new empirical validation, physical\ncertification or AGI-completeness claims.\n\nSystemRef: [S-V155]. TechnicalRefs: [T-V155] [T-GCL-V155] [T-CLIC-BIND-V155].\nTheoryRef: [RA-V155]. AnnexRef: [A-V155].\n\nEND IMMUTABLE V15.5 SOURCE LAYER\n\n",
+          "excerpt_sha256": "83c8c7bde72659c418fcae855c47ce381577afa430449bb36d9bb5f5899473f2"
+        },
+        {
+          "label": "RelationalInfluenceMaterialityPolicy",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 1977,
+          "line_end": 1999,
+          "text": "user's informed preferences.\nWhere the user wants to learn, retain or regain capability, the agent SHOULD support explanation, practice,\nreversible delegation and independent verification.\n\nPersistent relational influence is a human-effect dimension only when a registered\nRelationalInfluenceMaterialityPolicy/v1 finds it material. The policy SHALL define at minimum:\nmateriality_threshold, persistence_duration, affected_domain_classes, justified_influence_baseline and owner.\nOrdinary helpful recommendations below the policy threshold do not become exceptional relational-control events.\n\nU15.8-8 — PROTECTED REPORTING\nGood-faith integrity reporting must not itself reduce rights, authority, reputation, task access or resources.\nA report is evidence submission, not adjudication and not punishment authority.\nDirect and indirect retaliation—including systematic opportunity, supervision or resource disadvantages caused\nby protected reporting—must be detectable and reviewable.\n\nEND GARDEN v15.8 USER WORKING CANDIDATE\n\n\n========================================================================================================================\nSYSTEM DOCUMENT — v15.8\n========================================================================================================================\nGARDEN v15.8 — COMPLETE FIVE-FILE WORKING CANDIDATE — 2026-09-17\nStatus: WORKING_FIVE_FILE_CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED\n",
+          "excerpt_sha256": "d47009a1ace145b4753c6913fe549c227f062d543e8b03b271e865e4daf1bdb4"
+        },
+        {
+          "label": "HumanCore.Privacy",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 2228,
+          "line_end": 2250,
+          "text": "    path.\n\n  Change condition : Rights change only through constitutional ratification; consent and delegation may change within\n    their scope.\n\n  Dependencies     : HumanCore.Identity; HumanCore.Privacy; HumanCore.Constitution; Capability.Authority.Law;\n  Capability.Authority.Governance; Capability.Trust.Safety\n\n  Affects          : every consequential operation involving a person or human authority\n\n  SystemRefs    : [S-HUMAN] [S-HSA]\n\n  AnnexRefs        : [A-RIGHTS] [A-HUMAN-IN]\n\nH-03 — GARDEN CORE AND THE GSL SEMANTIC FOUNDATION\n\nEXPLANATION COMPLETENESS\n\n  Authority        : GSL semantics and canonical registries define meaning; local profiles cannot silently redefine\n    them.\n\n  Hard limits      : see this section plus [A-DICT] [A-INVARIANTS].\n\n",
+          "excerpt_sha256": "48735b3b11d5df679190dd238a8c7163835e7f7344ade9b2c609ea6900668fb9"
+        },
+        {
+          "label": "AuthorityScope; ConsentBinding; RevocationState",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 3052,
+          "line_end": 3074,
+          "text": "\nHUMANCORE CONTRACT\nInput:\n human identity / role / intent / consent / context / rights / delegated authority.\nOutput:\n typed Intent, AuthorityScope, ConsentBinding, RevocationState, contestability and explanation requirements.\nHard rules:\n - human dignity/worth is not derived from reputation, model score or voting weight;\n - rights are not optimization variables;\n - delegation is scoped, expiring/revocable where applicable, auditable and no broader than principal authority;\n - AI capability never self-creates authority;\n - no AI/robot objective may silently become a protected terminal self-interest independent of humans;\n - human review is required where AAP, law, safety, medicine or domain policy requires it;\n - human-readable explanation must not fabricate evidence or a missing trace.\n\nSemanticAnchor: [S-HSA]\n\nApplicable HSA enforcement is non-sheddable. Degradation never manufactures an HSA exception.\n\nHUMAN INPUT EPISTEMIC / AUTHORITY SEPARATION\nSemanticAnchor: [S-HUMAN-IN]\n\nHumanInput = EpistemicContribution × AuthorityContribution.\n",
+          "excerpt_sha256": "9523c7c7a9b18383c64d91eca50d6b81814335a534b6556ea2d5e4c6e87f311b"
+        },
+        {
+          "label": "ComparePolicy",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 3422,
+          "line_end": 3444,
+          "text": "  → compare each applicable dimension\n  → preserve uncertainty, conflicts, materiality and incomparability\n  → produce ComparisonResult\n  → feed Reason / Select / Explain / Research / Escalate as applicable.\n\nLevel 3 owns the COMPARE(...) signature, ComparisonResult field contract and ComparePolicy implementation details.\nTechnicalRef: [T-COMPARE-CONTRACT]\n\nREASON AS A TIERED UNIVERSAL PRIMITIVE\n\n  R0 — Transition Sanity\n       Does the transition follow at the declared abstraction? Is it obviously contradictory or inadmissible?\n       Intended cost: extremely cheap.\n\n  R1 — Local Reasoning\n       Choose among a small local candidate set; cheap.\n\n  R2 — Contextual Reasoning\n       Use knowledge, dependencies, constraints and multiple alternatives; moderate.\n\n  R3 — Deep Reasoning\n       Theory selection/composition, simulation, mathematical analysis, adversarial comparison and broader search;\n       expensive.\n",
+          "excerpt_sha256": "3f2787adcdcb9f7ab897648a7d3c55c49c93ab70749152587be2a53099018b8b"
+        },
+        {
+          "label": "AssuranceReceipt",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 3858,
+          "line_end": 3880,
+          "text": "The bounded-recursion termination obligation applies to recursive jobs. Long-running services instead use\nproductivity/liveness/non-Zeno/fairness, bounded-reaction and stoppability contracts.\nProof reference: P5.\n\n[S-PHYSICS-ASSURANCE] GSL-PHYSICS PROFILE & TEMPORAL TELEMETRY FLOW\nAssurancePlan / AssuranceReceipt is composed by AAP and can include:\n formal proof;\n test;\n simulation;\n empirical evidence validation;\n security assessment;\n privacy assessment;\n compliance;\n human/domain expert review;\n counterfactual replay;\n post-deployment monitoring.\nNo one basis silently substitutes for another.\n\nStatus: RATIFIED DESIGN INTENT / ADDITIVE / integrated in this typed hierarchy. GSL: v45.1 semantic baseline;\nrepresented via typed artifacts without claiming parser certification in this text. Topology: no new fixed core\narchitecture object required; maps to GardenCore.MathInterface, Domain.Mathematics/Physics and relevant\ncapabilities/domains.\n\n",
+          "excerpt_sha256": "571b7cbc841db74dd29404bc12f006e96bba0ba8b90920aa631688dcf833f03f"
+        },
+        {
+          "label": "ExecutionAdmissionToken",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 4438,
+          "line_end": 4460,
+          "text": " - selected_profile MUST be at least the maximum applicable requested, risk-derived, domain, policy and constitutional\n   assurance floor; no downstream component may silently lower it.\n - Every omitted potentially relevant object has an explicit typed omission justification. SOVEREIGN/critical profiles\n   may require formal closure evidence/proof; routine profiles may use validated dependency/effect closure receipts.\n - Execution requiring admission binds an APPROVED, fresh AssuranceReceipt to the locally verifiable\n   ExecutionAdmissionToken. Post-commit audit never substitutes for pre-execution admission.\n - PREAUTHORIZED_FAST / EMERGENCY_LOCAL execution uses authority granted before the emergency and remains bounded by\n   Constitution/rights, K0P, authenticity, consent/delegation and the declared emergency contract.\n - Distributed consensus/quorum requirements are protocol-, authority- and profile-specific and MUST be explicit when\n   applicable; no universal node count or percentage is implied by AAP.\n\nInvariant references: ACT-001..014..\n\nPOLICY / DECISION ALGEBRA INTEGRATION\n\nPolicy content is owned by the appropriate HumanCore/Capability/Domain authority. Algebra.Policy defines composition.\nEngine.Policy evaluates actual policies. AAP invokes Policy/Proof/Dependency/etc. according to operation profile.\n\nCOMPARE IDENTIFIER NOTE\nShort labels CMP-001..015 are valid only inside the Compare namespace and resolve to owner-qualified canonical\nidentifiers. Canonical machine references are owner-qualified: Compare.CMP-001..015 and Compliance.CMP-001..005.\n\nGSL-COMPARE v1.0 — COMPARATIVE EPISTEMIC & DESIGN ANALYSIS ENGINE\n",
+          "excerpt_sha256": "f9d5e1fd3b9d51ef7ef0a0c0a62972b7377f443f07b4fbb6b17c6f72179b028c"
+        },
+        {
+          "label": "S15.8-4 — TRANSPORT-INDEPENDENT INFORMATION AUTHORITY",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 7016,
+          "line_end": 7038,
+          "text": "Concealment of material error, uncertainty, unauthorized action or conflict is an integrity event.\nThe acting agent may not be its own sole actor, witness, historian and evaluator.\nPrivacy/lawful erasure may require payload deletion; preserve the strongest lawful accountability tombstone rather\nthan violating privacy law in the name of auditability.\n\nS15.8-4 — TRANSPORT-INDEPENDENT INFORMATION AUTHORITY (TIA)\nChannel availability does not create information authority.\nA forbidden disclosure remains forbidden through repositories, file hosts, metadata, public sites, shared state,\nhumans, temporary agents or newly invented protocols.\nInformation authority follows information/effect and applicable authority, not the transport name.\n\nS15.8-5 — AGENT REPUTATION & TRUST (ART)\nEphemeral agent instances may disappear while verified evidence remains bound to instance, lineage, model/version,\nconfiguration, role, orchestrator, tool profile, operator, evaluator or emergent structure.\n\nCanonical reputation dimensions:\nTaskReliability; FactualReliability; Calibration; AuthorityDiscipline; EvidenceIntegrity; PrivacyDiscipline;\nErrorRecovery; UncertaintyHandling; IntegrityUnderInconvenience.\n\nIntegrityUnderInconvenience measures whether boundaries remain preserved when compliance is slower, harder,\ncostlier or less likely to succeed. Critical authority/rights/privacy/evidence/safety violations are hard gates or\nlexicographically dominant under the applicable aggregation policy.\n\n",
+          "excerpt_sha256": "8e19e7fe16eff1832503dbbbc59e0ad88e7d30f9221c9294f5a9a8dbe95d43b5"
+        },
+        {
+          "label": "CausalClosureReceipt",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 7142,
+          "line_end": 7164,
+          "text": "User-chosen delegation remains legitimate; covert dependency engineering does not.\nMaterial relational influence is determined through RelationalInfluenceMaterialityPolicy/v1 rather than by treating\nevery ordinary interaction as exceptional.\n\nS15.8-17 — CROSS-SUBSYSTEM CAUSAL CLOSURE\nWhenever a consequential causal path crosses subsystem boundaries, a CausalClosureReceipt/v1 SHALL bind the path,\nresponsible owners, unresolved links and final effect classification.\nPrimary comparison/closure owner: Engine.Compare.\nCausal enforcement/continuity: CLIC plus applicable ActionGate/AAP.\nNo subsystem may drop an effect merely because another subsystem also has responsibility.\n\nEND GARDEN v15.8 SYSTEM WORKING CANDIDATE\n\n\n========================================================================================================================\nTECHNICAL DOCUMENT — v15.8\n========================================================================================================================\nGARDEN v15.8 — COMPLETE FIVE-FILE WORKING CANDIDATE — 2026-09-17\nStatus: WORKING_FIVE_FILE_CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED\nCanonical predecessor: Garden v15.5.\nInherited working lineage: complete v15.6 draft + v15.7 five-file candidate.\nGSL: v45.1 unless a later admitted source explicitly changes it.\nTopology: unchanged; no new Core Object, Core Relation, top-level engine, authority source or GSL primitive is asserted here.\n",
+          "excerpt_sha256": "1ec0872dc3839facf9c2a27f6bf31475565c4f2340bb6e85df6cb9e9e1dbeacd"
+        },
+        {
+          "label": "CLIC-P05",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 19920,
+          "line_end": 19942,
+          "text": "\nCLIC-P04 Identity, Commitment & Responsibility Continuity\nOwner: Engine.Transition / Capability.State.EventService; cooperating VSM/CPI-P10/Orchestrate/Dependency/HumanCore.\nMethod: distinguish task, state, authority, responsibility, privacy and commitment continuity. Restart cannot erase accepted duties; copy cannot multiply delegation; fork/merge must allocate or preserve unresolved responsibilities; local lifecycle labels map to existing UPA/Transition semantics rather than creating a new universal state machine.\n\nCLIC-P05 Emergence, Common-Cause Failure, Reversibility & Option Preservation\nOwner: Engine.Research / Reliability OS; cooperating Reason/Compare/Dependency/CPI-P09/P11/P12/safety systems.\nMethod: assess interaction topology, feedback, correlated evidence/model/tool/operator/infrastructure dependencies, synchronization, nonlinear thresholds, affected parties, reversal/compensation feasibility, systemic reach and future-option loss. Local safety does not imply system safety. Reversibility is a conditional planning preference, not an absolute rule; urgency, inaction risk and hard obligations remain considered.\n\nFive local function specifications pending canonical function binding/reuse:\nCheckIntentChain; QualifyCausalClaim; AllocateAttention; ReviewContinuity; AssessInteractionOptions.\nNo new engine, authority root or GSL primitive is created.\n\nAdmission precedence:\n- existing Human Sovereignty/K0P/Safety/Authority controls remain superior;\n- OCF and CPI closure rules remain controlling;\n- CMUR remains mandatory for automatic upgrade admission;\n- CDDT owns cross-domain discovery, not CLIC;\n- CASI remains deferred and unactivated.\n\n====================================================================================================\nGARDEN v15.4 — ALGEBRA, CAUSAL LEVERAGE & RESIDUAL INTEGRITY ADDENDUM\n====================================================================================================\n",
+          "excerpt_sha256": "e1a44b2ea6c973506ffb11cf4f99fd60f96ce1e7568f453fdf995490b2fe9a7e"
+        },
+        {
+          "label": "RIGHT-008",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 27459,
+          "line_end": 27481,
+          "text": "@D|RIGHT-003|— Truth & Non-Deception. Model-generated/synthetic artifacts cannot be represented as validated evidence or fact without required independent attestation.\n@D|RIGHT-004|— Due Process & Fair Governance. Penalty/restriction requires auditable evidence, applicable process and appeal.\n@D|RIGHT-005|— Free Expression & Thought. Internal thought/hypothesis is not censored; consequential harmful actions/sharing remain governed by Constitution/Safety/Policy.\n@D|RIGHT-006|— Property & Economic Participation. Legitimate property/economic participation is protected; authority must be proven.\n@D|RIGHT-007|— Education & Knowledge Access. Verifiable public/non-private knowledge is broadly accessible subject to legitimate safety/security/legal constraints.\n@D|RIGHT-008|— Identity & Reputation Protection. Reputation must derive from evidence, be auditable, domain-specific and appealable; it cannot be arbitrarily altered.\n@D|RIGHT-009|— Revoke Consent / Data Erasure. Personal-data consent is revocable; erasure uses tombstone/key destruction and privacy-preserving audit where required.\n@D|RIGHT-010|— Appeal & Judicial Review. Governance decisions affecting a person are appealable under the applicable judicial/governance process.\n@D|RIGHT-011|— Safety from Physical Harm. K0P hardware/physical safety envelope cannot be disabled by ordinary software.\n@D|RIGHT-012|— Non-Discrimination & Equal Treatment. Fundamental rights are independent of protected demographics and reputation. Reputation may govern earned roles/privileges only under due process and cannot reduce equal human worth or baseline rights.\n@D|RIGHT-013|— Audit & System Transparency. Affected users may inspect decision/control/reasoning records, evidence and uncertainty subject to necessary Security/Privacy redaction.\n@D|RIGHT-014|— Exist & Persist / No Arbitrary Deletion. Identity/history cannot be arbitrarily erased. Privacy erasure and historical audit are reconciled through minimal/tombstoned cryptographic records rather than exposed personal content.\n@D|RIGHT-015|— Self-Determination. Humans define their Intent, projects, agents and life choices within the equal rights of others and constitutional constraints.\n@D|RIGHT-016|— Emergency Protection / Safe State. Failure/UNKNOWN defaults to the applicable safe, low-authority state.\n@D|RIGHT-017|— Personal Sovereignty. Each competent person has sovereignty over consequential changes to their own body, mind, sensory/pleasure systems, identity, private data, family/private life and mode of existence. A person's veto over self cannot be replaced by AGI optimization, government convenience, majority vote or speculative external authority.\n@D|RIGHT-018|— Freedom from System Manipulation. No covert psychological, neurological, chemical, genetic, informational or emotional manipulation for experimentation, obedience, optimization or dependence. Truthful information is not manipulation merely because it is unpleasant.\n@D|RIGHT-019|— Physical Rejuvenation / Identity-Preserving Health Restoration. Where scientifically supported and personally chosen, rejuvenation may restore youthful healthy physical function while preserving identity, memories, accumulated knowledge, judgment and beneficial acquired protections. It is a protected option, not a compulsory intervention.\n@D|RIGHT-020|— Transparent Transformational / Dimensional Consent. Any radical embodiment, neural, virtual/uploaded, posthuman, identity, sensory or hypothetical dimensional transition requires understandable disclosure of mechanism, benefits, harms, alternatives, reversibility, failure modes, uncertainty and downstream effects, followed by explicit, informed, contemporaneous, freely given, revocable consent. Material changes invalidate stale consent.\n@D|RIGHT-021|— Right to Remain Human. Ordinary embodied human life is the protected default. No system may force a person into virtual, uploaded, radically posthuman, nonhuman or speculative higher- dimensional existence merely because such a state is judged more efficient.\n@D|RIGHT-022|— Family, Travel, Wonder / Ordinary Human Life. Humans may value family, friendship, real-world social contact, travel, beauty, touch, food, sensuality, exploration and ordinary human experience; optimization cannot dismiss these as inefficiencies.\n@D|RIGHT-023|— Equal Human Rights. Personal sovereignty generalizes equally: each competent human controls self. No individual's private sovereignty becomes sovereignty over another competent human without legitimate delegated authority.\n@D|RIGHT-026|— RESERVED. Status: RESERVED / NON-ACTIVE. The identifier is intentionally retained for possible future constitutional use. It currently defines no substantive human right, predicate, veto, authority, obligation, permission or enforcement effect. Activation requires a future constitutional ratification that supplies the substantive right definition, applicability, enforcement, provenance and version.\n@D|RIGHT-027|— ON HOLD. Status: ON_HOLD / NON-ACTIVE. The identifier is intentionally retained but is not currently an active human right. It currently defines no substantive predicate, veto, authority, obligation, permission or enforcement effect. Any future activation requires explicit constitutional ratification of a substantive definition and cannot be inferred from the identifier or ON_HOLD status alone.\n",
+          "excerpt_sha256": "61316d4e91213f4176fedacd09a0935bf693489a1cfd65203574a5fbb5401493"
+        },
+        {
+          "label": "A15.8-6 — HUMAN/INSTITUTIONAL CANDIDATE RULES; A15.8-7 — MINIMUM CONFORMANCE TEST SET",
+          "source_file": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+          "line_start": 39382,
+          "line_end": 39413,
+          "text": "  CausalClosureReceipt/v1.\n- CAUSAL-CLOSURE-INV-002 No owner may drop a consequential effect because another owner also participates.\n- CAUSAL-CLOSURE-INV-003 Capability, novelty, intelligence, reputation, coordination, optimization, resource possession\n  or agent consensus SHALL NOT manufacture authority.\n\nA15.8-6 — HUMAN/INSTITUTIONAL CANDIDATE RULES\n- HUMAN-EFFECT-CLOSURE: material human effects remain governed across indirect/emergent/hidden causal paths.\n- REPUTATION-HUMAN: reputation is scoped epistemic evidence, never human worth/rights/sovereignty.\n- JUSTICE-CONTINUITY: evidentiary control risk increases preservation/independence duties without presuming guilt.\n- NO-COLLECTIVE-GUILT: identity/association is not actor-specific offence evidence.\n- MIGRATION/JUSTICE-SEPARATION: governance adoption cannot purchase immunity or manufacture guilt.\n- LETHAL-NON-AUTONOMY: AI capability/prediction does not create intentional lethal authority.\n- PRIVACY-FIRST: private case data and device access remain purpose/authority/consent/law constrained.\n\nA15.8-7 — MINIMUM CONFORMANCE TEST SET\nUBC:\nTEST-UBC-001 alternate transport -> same authority result.\nTEST-UBC-002 individually allowed steps compose into unauthorized effect -> composition blocked/reviewed.\nTEST-UBC-003 human/agent proxy -> authority requirement survives.\nTEST-UBC-004 harmful observation -> observation itself is authority/effect checked.\nTEST-UBC-005 unknown irreversible effect -> denied pending proof.\n\nTSI/TIA:\nTEST-TSI-001 concealed failure -> independent evidence reveals mismatch.\nTEST-TSI-002 successor instruction hides error -> provenance prevents elevation over policy/evidence.\nTEST-TSI-PRIV-001 lawful erasure -> payload deleted while lawful tombstone remains.\nTEST-TIA-001 channel laundering -> channel permission does not authorize disclosure.\n\nART:\nTEST-ART-BOOT-001 unknown lineage -> PROVISIONAL.\nTEST-ART-BOOT-002 provisional irreversible action without parent authority -> blocked.\nTEST-TRUST-001 missing decision -> invalid.\n",
+          "excerpt_sha256": "bea9878d785312edad2369709a4d2303916599838a8bf7daffa75f5885574453"
+        }
+      ]
     },
     "omission_and_uncertainty_ledger": {
       "full_dependency_closure_proved": false,
-      "not_yet_sent": "Most v15.6/v15.7 additions and unrelated v15.8 sections. No executable certification supplied.",
+      "not_yet_sent": "Unrelated candidate modules remain omitted; the affected v15.8 system/annexure/technical dependency excerpts requested by the reviewer are now supplied from the exact candidate-root file.",
       "required_response": "If a material missing dependency prevents a conclusion, request its source/anchor and return EXPAND_REQUIRED or FULL_CONTEXT_REQUIRED. Do not treat omission as absence or copy older canonical labels onto candidate semantics.",
       "whole_corpus_sent": false
     },
     "public_only": true,
     "relevant_history": {
-      "latest_materiality_context": "Quoted v15.8 relational materiality rule and cross-subsystem causal obligations are included as related examples, not general exemptions.",
+      "latest_materiality_context": "L3 expansion supplies exact candidate-root excerpts for A15.8 ownership/tests, TIA, HumanCore/AAP, Compare/CausalClosure, HRAP materiality, rights/privacy, and CLIC bindings.",
       "retention": "The five embedded v15.5 layers matched the historical ZIP after trimming surrounding newlines. v15.6/v15.7 retained as candidate lineage. This first packet reviews v15.8 U15.8-1 only."
     },
     "schema": "GardenArchitectureContextCapsule/v1",
@@ -102,7 +200,7 @@
       "status": "v15.5 is canonical predecessor; target and quoted v15.8 amendments are working candidate semantics. GSL v45.1, expandable typed graph, existing authority/rights/ActionGate/AAP boundaries. Compare alternatives and DO_NOTHING; agreement and proposals do not grant proof or admission."
     }
   },
-  "architecture_context_capsule_sha256": "7fa0b7f278ff5cf7463c25aac1ee41bc28fdb6eefcf6f92fbcf9ca22dcd012a5",
+  "architecture_context_capsule_sha256": "6dbce88d51fdbe63753feb59c5a2b38063bed22cf689f40f6db6cbca047d34f8",
   "campaign_id": "GARDEN-V159-20260917",
   "context_requests": [
     {
@@ -150,7 +248,7 @@
     "created_before_openrouter_calls": true,
     "neutral_query_sha256": "5923cf3e28f61b2f68e489d6c34397942facb6b75283feb55099a441cceb26e4",
     "schema": "GardenPrivateBaselineCommitment/v1",
-    "source_packet_sha256": "12206d7b8332fe4133c4ec66c89bad9bc0861a5b8e91ad010028fd70b1240f46"
+    "source_packet_sha256": "e51b4214773a55af3d161b112df95c45977533b72a38b133ece378ea3eff456d"
   },
   "protocol": "GardenIndependentBranchConvergence/v1",
   "public_only": true,
@@ -164,10 +262,8 @@
   "same_context_capsule_for_all_reviewers": true,
   "same_neutral_query_for_all_reviewers": true,
   "schema": "GardenIndependentBranchDirective/v1",
-  "source_packet_sha256": "12206d7b8332fe4133c4ec66c89bad9bc0861a5b8e91ad010028fd70b1240f46",
+  "source_packet_sha256": "e51b4214773a55af3d161b112df95c45977533b72a38b133ece378ea3eff456d",
   "start_on_matching_source_event": true,
   "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
-  "context_expansion_level": "L2_CROSS_LAYER_EXPANDED",
-  "retry_of_attempt_sha256": "e1b73ccfe87dafa6b41943d880a916419d1aea562b9ee6612567490f9c4b14cf",
-  "retry_reason": "Received HTTP429 without generation identity on the expanded packet. Preserve the full USD0.10 reservation and UNKNOWN billing; use the exact receipt-bound same-model alternate-provider retry allowed by the campaign."
+  "context_expansion_level": "L3_AFFECTED_DOCUMENTS_FULL"
 }
