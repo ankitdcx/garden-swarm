@@ -1,0 +1,50 @@
+name: Garden v15.9 wave 017-021 review
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave1-012-016-20260917'
+    paths:
+      - 'review-inputs/v159-wave2/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P017_POLICY_COMPLIANCE_EVOLVE_RESEARCH
+            file: P017_POLICY_COMPLIANCE_EVOLVE_RESEARCH.txt
+          - id: P018_HUMAN_SOVEREIGNTY_CORE
+            file: P018_HUMAN_SOVEREIGNTY_CORE.txt
+          - id: P019_HUMAN_EFFECT_HRAP_REPORTING_REPUTATION
+            file: P019_HUMAN_EFFECT_HRAP_REPORTING_REPUTATION.txt
+          - id: P020_SAFETY_SECURITY_LAW_GOV_ACCESS_PRIVACY
+            file: P020_SAFETY_SECURITY_LAW_GOV_ACCESS_PRIVACY.txt
+          - id: P021_RUNTIME_EXEC_TIME_EVENT_NETWORK_FABRIC_RESILIENCE
+            file: P021_RUNTIME_EXEC_TIME_EVENT_NETWORK_FABRIC_RESILIENCE.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Four-family blind review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave_board.py "review-inputs/v159-wave2/${{ matrix.file }}"
+      - name: Upload packet evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave2-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave1/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
