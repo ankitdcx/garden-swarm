@@ -1,0 +1,45 @@
+GARDEN v15.9 REVIEW PACKET P024 — CAUSAL SAFETY / UBC / CLIC / GCL
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review causal closure from a consequential effect through unanticipated mechanisms, CLIC cross-layer causal integrity and GCL causal leverage. Preserve causal qualification, authority separation and minimal existing owners; do not create a universal causal scalar or new authority source.
+
+CAUSAL SAFETY UNIT — v15.8
+Relevant safety unit is causal closure of consequential effect, not model/immediate actor. Path may include training, model, prompt/context, memory/retrieval, tools, agents, organizations, human intermediaries, physical systems and infrastructure. Changing where causal influence enters does not remove governance obligations. Capability/novelty/intelligence/reputation/coordination/optimization/resources/consensus do not manufacture authority.
+
+UBC
+Unknown strategy != unknown authority. Novel mechanism != novel authority. Effect equivalence is evaluated by declared ComparePolicy. Changing transport/encoding/site/tool/intermediary does not independently change authority. Allowed(A) AND Allowed(B) does not imply allowed composition. AI/human/market/persistent-instruction/intermediary delegation does not erase outcome authority requirements. Observation is an action when it discloses, perturbs, signals, creates persistent knowledge or consumes consequential resources. Uncharacterized irreversible effect whose observation/testing may itself cause prohibited harm is DENY pending applicable proof.
+Existing tests include transport equivalence, unauthorized composition, proxy/intermediary authority survival, harmful observation and unknown irreversible effect.
+
+CAUSAL CLOSURE RECEIPT
+CausalClosureReceipt/v1 for material cross-subsystem causal path binds root_effect_ref, causal nodes/edges, contributing subsystems, owners, authority refs, evidence/provenance, known gaps, ComparePolicy, final effect class, unresolved obligations, DesignEpoch and decision/route. Compare owns gap detection; CLIC continuity; ActionGate/AAP applicable authority.
+
+CLIC
+P01 intent-to-effect semantic conservation.
+P02 causal intervention/counterfactual qualification.
+P03 attention/salience governance.
+P04 identity/commitment/responsibility continuity.
+P05 emergence/common-cause/reversibility/option preservation.
+Canonical operation owners:
+  CheckIntentChain -> Engine.Dependency
+  QualifyCausalClaim -> Engine.Reason
+  AllocateAttention -> Engine.Reason
+  ReviewContinuity -> Engine.Transition
+  AssessInteractionOptions -> Engine.Research
+Outputs remain analysis/plans/proposals, never action authority.
+
+GCL
+Generalized Causal Leverage measures/redescribes amplification/redirection by an informational intervention through pre-existing physical/computational/economic/institutional/social flows. It is not a fundamental force or authority. Typed effect-delta and intervention-measure vectors remain separate. One-number normalization exists only under explicit valid NormDefinition/encoding. Cross-basis comparison requires explicit qualified mapping. Causal attribution is only as strong as model/evidence/identification. Leverage magnitude says nothing about moral value or legitimate authority.
+
+REVIEW QUESTIONS
+1. Define causal-closure completion versus known gap/UNKNOWN: when is a receipt sufficient for consequential use?
+2. Check causal path owner/edge semantics against Unit 001 C0..C4; correlation/reachability cannot be promoted to causality.
+3. Check UBC effect equivalence for hidden semantic differences and over-broad equivalence.
+4. Check composition: individually authorized effects may combine into unauthorized emergent outcome.
+5. Check observation/testing that itself changes world/human state and safe information-gathering alternatives.
+6. Check CLIC P01 intent-to-effect chain for responsibility/authority continuity through adapters/humans/agents.
+7. Check attention/salience optimization for hidden omission and circular self-confirmation.
+8. Check GCL denominator/zero/UNKNOWN, units/basis mapping, uncertain counterfactual baseline and long-chain attribution.
+9. Ensure causal leverage never influences authority except through ordinary consequence/risk assessment.
+10. Compare DO_NOTHING/minimal repairs and request EXPAND_REQUIRED for missing anchors.
