@@ -1,0 +1,61 @@
+GARDEN v15.9 REVIEW PACKET P011 — FUNCTIONCONTRACT
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review FunctionContract as the universal executable-function semantic contract. Close machine-resolvability and lifecycle gaps without turning every prose operation into a new function identity.
+
+CURRENT UNIVERSAL CONTRACT
+Every executable function is interpreted through a generated FunctionContract even where prose shows a short signature.
+FunctionContract binds:
+- function identity and owner;
+- input/output semantic types;
+- closed effect vector epsilon;
+- AuthorityRequirement and consent where applicable;
+- hard constraints/invariants;
+- FailureModeSet and typed terminal/result algebra;
+- dependencies and invalidators;
+- ResourceLimits / TerminationContract;
+- DesignEpoch / EnvironmentCommitment / KnowledgeSnapshot;
+- provenance and explanation binding.
+
+RESULT RULE
+Bool only for total deterministic predicates with complete TRUE/FALSE valid-input semantics. Operations that can be UNKNOWN, STALE, BLOCKED, TIMEOUT, INCONCLUSIVE, RESOURCE_UNKNOWN, partial, unsupported or malformed use owner-qualified typed result algebras. None/null cannot hide these states.
+
+PARAMETER RULE
+Operational constants/thresholds/cadences use QualifiedProfileParameter classified FORMAL_BOUND | MEASURED_VALUE | ENGINEERING_TARGET | PROFILE_PARAMETER with owner, scope, type/unit, source/evidence, version, validity, uncertainty and invalidators where applicable.
+
+ANNEXURE INVARIANTS
+FUNC-001 every executable function resolves exactly one owner-qualified FunctionContract for active version/scope.
+FUNC-002 declares semantic I/O and every applicable effect dimension.
+FUNC-003 declares AuthorityRequirement, consent/delegation and hard gates where applicable.
+FUNC-004 declares FailureModeSet and result algebra closed over all semantically possible terminals.
+FUNC-005 Bool only for total deterministic predicate.
+FUNC-006 None/null cannot encode timeout/unknown/stale/blocked/incomplete/unsupported/counterexample absence.
+FUNC-007 binds dependencies, invalidators, resource/termination bounds and provenance.
+FUNC-008 generated code cannot weaken inherited contract.
+FUNC-009 contract change invalidates affected dependency/proof/conformance artifacts.
+FUNC-010 Engine.Compile rejects unresolved contracts before certification.
+
+CURRENT IMPLEMENTATION GAP PATTERN
+Many v15.6 engineering-hardening records say `CONTRACT_REQUIREMENT_PROFILE_ONLY_NOT_MACHINE_RESOLVABLE_FUNCTIONCONTRACT`, with machine_contract_id/version null and binding unresolved before executable admission. They separately require exact owner-qualified identity/version, complete result mapping, resource bounds, authority/consent, dependency/proof roots and runtime receipt fields.
+
+EFFECT COMPLETION
+Consequential execution must distinguish blocked-before-effect from failure-after-effect, partial effect and OUTCOME_UNKNOWN. Physical or external uncertain completion must be reconciled before retry. Effect identity/idempotency/fencing semantics apply where target supports them.
+
+RESOURCE/TERMINATION REQUIRED FIELDS IN HARDENING CANDIDATES
+worst_case_time_bound; memory_bound; concurrency_bound; retry_budget; deadline; cancellation_and_termination_condition; protected_safety_resource_floor; assumption_profile. Unspecified required bounds -> RESOURCE_UNKNOWN/BLOCKED, not unlimited execution.
+
+CONSTRAINTS
+Review:
+- exactly-one contract resolution with overloads/generics/adapters;
+- semantic contract identity/versioning and refinement/subtyping;
+- effect closure including transitive/tool/network/state effects;
+- precondition/postcondition and failure phase distinctions;
+- result-algebra completeness;
+- optional vs required resource bounds for persistent services;
+- cancellation/retry/idempotency/uncertain completion;
+- authority/consent freshness at point of use;
+- generated contract vs human semantic source precedence;
+- contract migration and compatibility.
+Compare DO_NOTHING and minimal repair.
