@@ -1,0 +1,184 @@
+GARDEN v15.9 — P037 FINAL WHOLE-INTEGRATION REVIEW PACKET
+Status: FINAL CROSS-WAVE REVIEW INPUT / PROPOSAL EVIDENCE ONLY / NOT CANONICAL
+Campaign: GARDEN-V159-20260917
+Frozen v15.8 source-root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+PURPOSE
+This is the final integration review after packet-level review. Do NOT restart P001–P036, do NOT repeat completed model calls, and do NOT re-review local packet details unless a cross-wave contradiction makes an earlier conclusion materially unsound. Review only cross-wave composition: contradictions, duplicate owners/schemas, semantic loss, dropped hard gates, status inflation, unresolved dependencies, stale/current-reference ambiguity, and release/materialization closure.
+
+EVIDENCE STATE
+- P001–P011: completed bounded packet review evidence exists for GSL Core, Core Objects, Core Relations, Type/Effect/Scope, Provenance, DesignEpoch, Dependency Semantics, Process Algebra, Universal Step Loop, AAP, and FunctionContract.
+- P012–P016: cross-reviewed synthesis candidates exist for Algebras, Compare, Reason, Proof/Explanation, and Orchestrate/Search/Compile/Transition.
+- P017–P021: cross-reviewed synthesis candidates exist for Policy/Compliance/Evolve/Research, Human Sovereignty, Human Effect/HRAP/Reporting/Reputation, Safety/Security/Law/Governance/Access/Privacy, and Runtime/Execution/Time/Event/Network/Fabric/Resilience.
+- P022–P026: cross-reviewed synthesis candidates exist for Knowledge/GSL-KR/World Evidence, GSL-Physics/Digital Twin/Critical Continuity, Causal Safety/UBC/CLIC/GCL, TSI/TIA/ART/IIC/PIR, and CSI/SMCD/CAD/OAC/CTSN/PAI.
+- P027–P031: cross-reviewed synthesis candidates exist for SCT, TRAIN/GAIA/domain profiles, VSM/RPM/PPM/TFT/FET composition, research/learning/deferred/comparative profiles, and reliability/GSL architectures.
+- P032–P036: Wave 5 blind review and challenge review are complete. Blind run 35255993070 succeeded with five packet artifacts. Challenge run 35256718065 succeeded. P032 and P035 reached 4-family challenge quorum; P033, P034 and P036 reached 3-family quorum. Challenge corrections have already been incorporated. Do not rerun those calls.
+
+GLOBAL NON-NEGOTIABLES
+1. Authority never arises from capability, evidence, reputation, model agreement, access, optimization, successful outcome, cryptographic authenticity, or the RCI label.
+2. UNKNOWN / STALE / CONFLICT / BLOCKED / INCOMPLETE / NEEDS_SCHEMA_ADMISSION are not PASS wherever hard resolution is required.
+3. Specification != formal proof != implementation != empirical validation != external certification.
+4. Rights, consent, privacy, legitimate authority, safety, law, appeal/contestability, and human agency survive every applicable projection and composition.
+5. Prefer an existing owner, alias, refinement, binding or minimal repair over ontology growth. A name does not justify a SchemaID.
+6. Current point-of-use authority/currentness matters; cached or historical approval cannot silently authorize a later effect after relevant context changes.
+7. External/physical uncertain completion preserves PARTIAL_EFFECT / OUTCOME_UNKNOWN / irreversible residual and requires reconciliation before unsafe replay.
+8. Review consensus is evidence only. It does not make this candidate canonical or executably certified.
+
+INTEGRATED CORE SEMANTICS TO PRESERVE
+A. GSL / TYPES / CONTRACTS
+- GSL v45.1 remains the predecessor semantic core unless an explicitly reviewed successor delta changes it. Preserve the six Pillars, ten Core Objects and 24 Core Relations absent a separately justified topology change.
+- Bool is only for total deterministic predicates whose valid semantic domain is exactly TRUE/FALSE. Epistemic, policy, proof, safety, authority, lifecycle, distributed-finality and similar operations use owner-qualified multi-status results.
+- Core declarations, effect declarations, evidence, provenance, signatures and attestations describe/bind state; they do not create permission.
+- Every executable function resolves an owner-qualified FunctionContract binding semantic I/O, closed/qualified effects, authority/consent requirements, hard gates, result/failure algebra, dependencies/invalidators, resource/termination semantics, DesignEpoch/EnvironmentCommitment/KnowledgeSnapshot, provenance and explanation.
+- Hidden/transitive/tool/network/state effects must not escape contract closure. Resource unknowns do not mean unlimited execution.
+- Context/profile specialization may refine applicability but cannot weaken universal rights or hard semantic constraints.
+
+B. DESIGN EPOCH / DEPENDENCY / ADMISSION
+- DesignEpoch separates SPEC_DRAFT, SPEC_ACCEPTED, PROOF_COMPLETE_FOR_SCOPE, IMPLEMENTED_FOR_SCOPE, VALIDATED_FOR_SCOPE and DEPLOYMENT_CERTIFIED. No earlier state implies a later state.
+- Changed assumptions, interfaces, owners, dependencies, checkers or environment can stale dependent evidence/proofs/assurance.
+- Accepted current semantics require source-root integrity, rights/constitutional closure, dependency and interface closure, required independent verification and legitimate approval. A prose description of those gates is not satisfaction of them.
+- Cumulative small-change drift cannot evade material-change requalification by fragmentation.
+
+C. PROCESS / STEP LOOP / AAP / EXECUTION
+- Process Algebra owns typed composition semantics; Runtime/Transition own live effect/result behavior; AAP owns activation/assurance selection; these owners must not silently duplicate one another.
+- RETRY after uncertain or irreversible external effect is gated by effect identity, fencing/idempotency where available, and reconciliation. ROLLBACK is not interchangeable with COMPENSATION.
+- Parallel composition does not imply effect commutativity and cannot ignore a failed child merely because another succeeds.
+- DO_NOTHING is a real comparator: no new intervention by the evaluated decision-maker, not a frozen world.
+- The Universal Per-Step loop remains the single functional action loop. RCI may describe it but must not instantiate a second scheduler/execution loop.
+- AAP assurance floors are monotonic with applicable risk/authority/rights constraints. Emergency/fast paths consume pre-existing bounded authority and never mint bypass authority.
+- Resource pressure may narrow/defer/transfer to an authorized minimum-risk path; it cannot lower mandatory rights/constitutional/physical-safety floors.
+
+D. ALGEBRAS / COMPARE / REASON / PROOF / EXPLANATION / COMPILE
+- Policy, Decision, Conformance and Evidence results are typed and not interchangeable merely because labels such as PASS/FAIL resemble one another.
+- NOT_APPLICABLE cannot become implicit permit unless applicability is established.
+- Compare is constraint-aware/partial-order capable; scalarization is profile-qualified and never substitutes for hard constraints or authority.
+- Mandatory closure retrieval is distinct from ranked retrieval; incomplete mandatory closure cannot be presented as complete because ranking was high-confidence.
+- Reason preserves INCONCLUSIVE/UNKNOWN/CONTRADICTED/RESOURCE_LIMIT/MODEL_OUT_OF_SCOPE/VALIDATION_REQUIRED as applicable; mixed-strategy disagreement remains explicit.
+- Formal proof remains distinct from testing/empirical validation. Proof certificates bind exact assumptions/checker/logic/version/dependency root/environment and reuse requires compatibility evidence.
+- Explanation distinguishes causal trace, decision rationale, heuristic attribution and unknown cause, and binds material claims to evidence/trace/policy or labels synthesis/uncertainty.
+- Compile requires semantic-preservation/translation-validation evidence; a successful build or a new compiler cannot certify its own equivalence alone where independence is required.
+
+E. HUMAN SOVEREIGNTY / HUMAN EFFECT / RIGHTS
+- Human epistemic contribution and human authority/consent are separate typed channels. Reliability cannot numerically scale rights or authority.
+- Delegation is attenuating/current; copying, restart, offline state or reputation cannot widen/revive expired or revoked authority.
+- Consent revocation and erasure completion are distinct. Identity continuity must support accountability/revocation without requiring universal persistent linkability.
+- Human-Effect Closure applies to material direct/indirect, immediate/latent, cumulative and relational effects. Missing/stale materiality evidence must not become false NON_MATERIAL.
+- Short decisive manipulation is not exempt merely because a persistence threshold was not crossed.
+- Reporting protection, merits, containment and bad-faith adjudication remain distinct. Non-corroboration alone is not proof of bad faith.
+- Reputation remains domain/purpose/population/epoch/evidence bounded, uncertainty-bearing and appealable, and cannot create authority.
+
+F. SAFETY / SECURITY / LAW / PRIVACY / GOVERNANCE
+- Applicable hard gates compose conservatively: one gate's PASS cannot dominate another gate's UNKNOWN/STALE/FAIL where that gate is mandatory.
+- Authenticity/integrity, legal source authenticity, applicability, interpretation, conformance, operational admission and external certification stay distinct.
+- Security-root/checker replacement cannot be sole-self-verified where independence is required.
+- Governance majorities/eligibility changes cannot bypass rights/minority protections.
+- Privacy purpose change/secondary use, metadata/provenance leakage, lawful-hold scope and point-of-use checks remain explicit.
+- Access-control permission is not the same semantic owner as human accessibility/contestability.
+
+G. RUNTIME / CONTINUITY / DISTRIBUTED EFFECTS
+- Timeout/cancel does not promise physical halt, total rollback or absence of external effect.
+- Event time, ingest time and processing time remain distinct; timing/error bounds are profile- and evidence-qualified.
+- Duplicate/reordered events, retries, failover and cross-substrate execution must preserve one effect identity and must not duplicate authority/evidence/effect.
+- Offline/partition state cannot create authority; cached authority/policy expires/revalidates as specified.
+- Critical-continuity fallback/handoff is prequalified, bounded, independently legitimate/current, fenced, and carries unresolved effect/state. Abrupt shutdown is not universally safest.
+
+H. KNOWLEDGE / EVIDENCE / CAUSAL / PHYSICAL
+- Keep separation among raw evidence, typed semantic state, purpose-limited profiles, active context and learned weights. Retrieval/model weights do not promote themselves into evidence.
+- Evidence dependence survives copying/summarization/derivative synthesis. Resource-bounded retrieval exposes omission/incompleteness rather than false closure.
+- Digital/physical twin prediction is model state, not independent observation. Calibration/frame/unit/time/currentness/credibility status remains visible.
+- CLIC preserves semantic conservation across transformations: units, frames, time, identity, scope, epistemic status, effects and authority. Similar syntax/hash/embedding is insufficient.
+- GCL remains a bounded analytical profile; scalar leverage cannot create authority or moral value.
+- Unknown irreversible-effect handling must remain qualified by the controlling UBC/AAP/safety rules; do not silently universalize a narrower test into a stronger rule if that would erase legitimate bounded fallback semantics.
+
+I. TSI / TIA / ART / IIC / PIR / CSI / SMCD / CAD / OAC / CTSN / PAI
+- Accountability/lineage survives rewriting while respecting lawful privacy/erasure via strongest lawful retained lineage/tombstone rather than immortal protected payload.
+- Disclosure/derivation/aggregation authority follows data/transport/intermediary semantics; possession of a channel/tool grants no disclosure authority.
+- Trust/reputation allocation stays inside a current parent authority envelope; correlated evidence cannot inflate support.
+- Capability/assurance are typed and deployment-bound, not one scalar. Material cumulative/emergent expansion triggers requalification.
+- Organizational assurance cannot be reduced to member-score aggregation; topology, authority, reward, resources, membership and reviewer independence matter.
+- Wrappers/tools/prompts/memory/orchestration can be material derivatives even with unchanged model weights.
+- External interlocks/compensating controls require independence, currentness and temporal/spatial composition evidence.
+
+J. STRUCTURAL / DOMAIN / THEORY / RELIABILITY
+- Soft optimization bands never widen hard rights/safety/authority ceilings; optimization occurs inside admissible choices.
+- TRAIN/GAIA/domain-profile halt/fallback language resolves to domain-qualified minimum-risk transitions, not universal zero-output.
+- Theory equations remain conditional on their qualified assumptions/evidence; equations do not create authority or universal physics.
+- Deferred/undefined profiles remain DEFERRED/UNRESOLVED rather than reconstructed from names or memory.
+- GSL-KR, GSL-AR, GSL-R and other architecture profiles remain distinct unless a source-anchored versioned migration/supersession exists.
+- Reliability retry/cache/fallback must revalidate current authority, privacy, evidence, epoch and effect state; provider failure cannot relax mandatory assurance.
+
+WAVE 5 CLOSURE TO PRESERVE
+P032 — ARTIFACT / SCHEMA / OWNER CLOSURE
+- Candidate relation is semantically classified NEW | REFINES | EXTENDS | ALIASES | DUPLICATES before SchemaID admission. Choose the least ontology-expanding valid relation and record why.
+- Keep `existing_status` separate from `closure_status` and `delta_status`; SPECIFIED tests are not executed tests.
+- Trust allocation cannot exceed/revive CurrentParentAuthorityEnvelope.
+- Bare ReputationProfile cannot collapse distinct HumanCore.Identity and Capability.Economy identities.
+- Bare CapabilityTransferAssessment must not conflate CTSN derivative/system transfer with HRAP human capability support.
+- CausalClosureReceipt references canonical causal/evidence artifacts rather than duplicating graph/trace payloads.
+- IntegrityReport reuses the reporting-merits lifecycle; PhysicalActionEnvelope inherits existing SafetyEnvelope/ControlledActuation semantics unless exact missing fields justify an extension.
+- Contract-less names remain unresolved/admission-pending until exact host closure is proved.
+
+P033 — LEGACY 50 RECONCILIATION
+- Preserve all source-resolved legacy responsibilities through current owners, but do not restore unsafe broader historical APIs for lexical parity.
+- Credential verification distinguishes revoked/expired/stale/unsupported-profile/unknown from invalid; inability of a local verifier to execute a proof profile is not proof of credential invalidity.
+- Legacy U20 emergency proof override has zero current proof-bypass semantics.
+- Legacy timeout/all-or-nothing summaries are non-exhaustive projections of current P021 effect/result semantics.
+- RED/offline state disables ordinary execution and does not create/renew/widen continuity authority.
+- Legacy constants remain reference examples unless current profile/evidence binds them; external-standard claims require source/version provenance before certification wording.
+- Locale translation exposes ambiguity/loss/unknown rather than collapsing non-confident semantic output to a confident String for machine use.
+- Internal carbon assessment/certificate does not impersonate authenticated external certification.
+
+P034 — JUSTICE / CURRENT READING
+- Justice flow is a guarded proceeding-profile transition graph, not an unconditional linear chain. Allegation alone creates no preservation/coercive authority.
+- Urgent preservation is preauthorized, bounded, expiry/review/release governed, and cannot self-renew without current competent authority plus fresh required evaluation.
+- CLOSED_WITH_REASON does not fall through to adjudication/enforcement. APPEAL is profile-enabled/optional. ENFORCEMENT requires enforceable decision, current authority, finality/stay and required procedural conditions.
+- Required defense/representation opportunity is a gate before the consequential stage when the applicable profile requires it.
+- EvidenceControlRisk is procedural risk only, not guilt evidence. Missing evidence alone does not establish obstruction.
+- CurrentReadingMap is derived/source-anchored/hash-bound/non-authority-bearing. Historical aliases retain lineage and never transfer authority by naming.
+- Unprovable active anchors are EXTERNAL/UNRESOLVED, not invented.
+
+P035 — RCI
+- RCI is an architectural/current-reading view over existing owners: zero new Core Objects, Core Relations, top-level Engines, authority sources or automatic certification claims.
+- RCI control claims are bounded by deployed legitimate authority, consent/purpose, technical enforceability, and active safety/law/rights boundaries. It creates no observation right.
+- Garden's own material evolution, including material change to its authority envelope, is inside the governed boundary.
+- Where independence is required, a protected consequential self-change cannot place sole proposer/implementer/verifier-authorizer control in one actor/process or non-independent mutable control lineage. Unknown independence is non-PASS where required.
+- Material unverified knowledge/code/capability remains pending/non-admitted under verification backpressure; queue pressure cannot manufacture promotion or authority.
+- RCI is not proof of containment and does not claim Garden already contains AGI or can control every future intelligence.
+
+P036 — RELEASE / ADMISSION / STATUS
+Allowed reviewed deliverable label:
+  GARDEN v15.9 — COMPLETE CROSS-REVIEWED WORKING CANDIDATE
+  SEMANTIC REVIEW COMPLETE
+  NOT EXECUTABLY CERTIFIED / NOT PRODUCTION CERTIFICATION / NOT CANONICAL UNLESS SEPARATELY ADMITTED
+
+Release closure requires, before those claims are made:
+- P001–P036 plus P037 final integration are dispositioned;
+- mandatory CurrentReadingMap active-reference closure;
+- UpgradeTraceabilityTable covers every reviewed/proposed upgrade group, including accepted, rejected and no-change dispositions;
+- all accepted current semantic changes have layer anchors or explicit nonactive unresolved/deferred dispositions;
+- unresolved required dependencies propagate non-PASS/incomplete status;
+- source-retention/hash closure for all five predecessor slices;
+- no accepted upgrade is lost between consolidated upgrade document and layer files;
+- hard rights/consent/privacy/authority/safety/law gates survive each applicable layer projection;
+- duplicate owner/schema or topology change fails closure unless an explicit reviewed relation/change justifies it;
+- predecessor GSL v45.1 compatibility is stated honestly; absent an exact anchor it is SOURCE-DECLARED/UNVERIFIED or UNKNOWN and cannot support stronger certification claims;
+- release filenames/date/final bytes are fixed before final hashes are computed;
+- ReleaseManifest hashes the exact six final deliverables: consolidated upgrade document plus User/System/Technical/Annexure/Theories v15.9 files.
+
+P037 REVIEW QUESTIONS — FIND ONLY MATERIAL CROSS-WAVE DEFECTS
+1. CONTRADICTION: Does any reviewed wave weaken or contradict a core authority/rights/result/currentness/effect rule from another wave?
+2. DUPLICATION: Does any candidate create a second semantic owner, loop, registry, evidence truth system, justice lifecycle, reporting lifecycle, trust/reputation root, or release authority already owned elsewhere?
+3. STATUS INFLATION: Can any SPECIFIED/reviewed/model-agreed item be misread as CHECKED, ENFORCED, PROVED, CERTIFIED or CANONICAL?
+4. DEPENDENCY/ADMISSION: Can a dependent candidate become active while a required prerequisite is unresolved/non-admitted/stale/conflicted?
+5. REFERENCE/CURRENT READING: Can alias/supersession/current-map logic create dangling or ambiguous active references, silently transfer authority, or erase historical lineage?
+6. EFFECT/RETRY/CONTINUITY: Are OUTCOME_UNKNOWN, partial/irreversible effects, offline authority, critical continuity and retry semantics consistent across Process, FunctionContract, Runtime, Reliability and domain profiles?
+7. HUMAN BOUNDARY: Can any capability, RCI, causal, reputation, knowledge, optimization or domain mechanism bypass Human-Effect Closure, consent, privacy, rights or appeal because the effect is indirect/latent/collective/hidden?
+8. SELF-CHANGE: Can a system rewrite its own authority/checker/evaluator/update boundary and thereby make its review appear independent or valid?
+9. SCHEMA/TOPOLOGY: Are candidate artifact relations and owner-qualified identities sufficient to prevent accidental new top-level schema/engine/registry growth?
+10. MATERIALIZATION: Could the five layer documents and consolidated upgrade document diverge, lose an accepted repair, retain a stale contradictory sentence, or compute hashes before final bytes/date/filenames stabilize?
+
+OUTPUT DISCIPLINE
+Return at most six material integration findings. Prefer a finding only when it changes the final semantic/materialization plan. For each finding, identify the conflicting packet/domain, minimal repair/overlay, and a falsifiable integration test. If no material integration defect remains, verdict KEEP and explicitly say release may proceed to materialization under P036's non-certification labels and closure checks. Do not demand blanket packet reruns. Targeted re-review is justified only if a new integration finding invalidates the substantive conclusion of a specific earlier packet.
+
+FINAL NON-CLAIMS
+This packet does not itself admit v15.9, allocate new SchemaIDs, certify executable implementation, establish jurisdiction-specific legal compliance, or prove universal AGI containment.
