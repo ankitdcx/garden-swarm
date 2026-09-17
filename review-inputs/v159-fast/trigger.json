@@ -2,9 +2,9 @@
   "schema": "GardenFastBoardTrigger/v1",
   "campaign": "GARDEN-V159-FAST-20260917",
   "packet": "P001_GSL_CORE",
-  "attempt": 3,
+  "attempt": 4,
   "source": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
-  "mode": "FOUR_BLIND_PARALLEL_LIVE_CATALOG_REVIEWERS",
-  "models_from": "live OpenRouter catalogue constrained by Garden family policy",
+  "mode": "FOUR_BLIND_PARALLEL_CURRENT_ROUTE_REVIEWERS",
+  "models_from": "live OpenRouter catalogue constrained by Garden family policy with campaign-local same-family routing",
   "canonical_effect": false
 }
