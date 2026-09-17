@@ -1,0 +1,64 @@
+GARDEN v15.9 REVIEW PACKET P034
+Topic: Justice continuity / guarded proceedings / current-reading and reference closure
+Frozen source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+BOUNDARY
+Review justice process semantics and current-document navigation. Preserve law, due process, privacy, lawful retention/erasure, defense/representation, appeal, no collective guilt, no guilt from evidence control alone, and the difference between historical retained text and current effective overlays.
+
+SOURCE — JUSTICE CONTINUITY INTENT
+Garden's v15.8 human/institutional layer says evidentiary-control risk increases preservation/independence duties without presuming guilt. Identity/association is not actor-specific offence evidence. Migration/adoption cannot purchase immunity or manufacture guilt. Privacy remains purpose/authority/consent/law constrained.
+
+SOURCE — ABBREVIATED JUSTICE FLOW TO REVIEW
+T15.8-16 contains a compact sequence similar to:
+RECEIVED -> PRESERVATION_HOLD -> CONFLICT_SCREENED -> ... -> PROSECUTION_OR_CLAIM | CLOSED_WITH_REASON -> ADJUDICATION -> APPEAL -> ENFORCEMENT -> ARCHIVED_WITH_REOPEN_CONDITIONS.
+Read literally, this can make every report receive a hold before conflict screening, make CLOSED_WITH_REASON continue to adjudication/enforcement, make appeal mandatory rather than available, and omit the explicit defense/representation stage present in retained System justice workflow.
+
+PROPOSED GUARDED GRAPH SEMANTICS TO CHALLENGE
+- The flow is a proceeding-profile transition graph, not an unconditional chain.
+- At intake, conflict screening and time-sensitive preservation may proceed in parallel when justified.
+- A preservation hold requires applicable purpose, lawful authority, scope, minimum-necessary data, independence/review where required, expiry/review and release/deletion conditions. Allegation alone grants none.
+- A preauthorized urgent preservation path may precede complete nonurgent screening only inside its bounded grant, with prompt independent review.
+- Investigation, evidence request, obstruction review, claim/prosecution, defense/representation, adjudication, remedy, appeal, enforcement and archive transitions are enabled only by the applicable proceeding profile.
+- CLOSED_WITH_REASON routes to review/archive/reopening as authorized, not automatically to adjudication/enforcement.
+- Appeal availability does not mean every case must enter appeal.
+- Enforcement requires a valid decision and applicable finality/stay status.
+- Incomplete/missing evidence never becomes guilt merely because the process advanced.
+
+JUSTICE CANDIDATE ARTIFACTS
+EvidenceControlRisk:
+  should assess evidence/subject/controller refs, control powers, conflicts/dependencies, preservation risk, independent access/custody options, authority/privacy constraints, uncertainty and risk result. It creates no guilt inference.
+
+ObstructionEvent:
+  should bind a valid duty/hold and its service/scope, observed conduct, preservation chain, explanation/uncertainty and independently adjudicated outcome. Missing/destroyed evidence alone does not prove knowing obstruction or the underlying offence.
+
+JusticeEvidenceContinuityReceipt:
+  should bind case/evidence scope, custody transfers, holds, lawful disclosure/retention permissions, missing/contested evidence, state reason, next accountable owner/deadline and reopen conditions. It must not claim continuity if material evidence is missing.
+
+CURRENT-READING / REFERENCE DEFECTS
+Retained historic User H-15 rows for several later concepts terminate in truncated `A-` references, while following overlays contain the complete current invariant/test families. Earlier status/owner prose still mentions historical versions and Engine.Orchestrate even though later candidate lineage resolves orchestration into existing Engine.Reason/orchestration ownership.
+
+The final v15.9 documents need a non-destructive CurrentReadingMap outside immutable retained history. For each active concept it should bind:
+- current effective owner/name;
+- exact current System/Technical/Annexure/Theory anchors or successor overlay;
+- historical alias/supersession where applicable;
+- current status;
+- unresolved external dependency state.
+
+Every current-view link must resolve inside the declared delivery or be explicitly EXTERNAL / UNRESOLVED. Historical dangling/truncated tokens may remain in preserved source history, but current navigation must not point readers to them as active links.
+
+ENGINE.ORCHESTRATE
+Historical Engine.Orchestrate references are preserved for lineage. Current effective reading must resolve them through the already-established Engine.Reason/orchestration ownership rather than invent a new top-level engine.
+
+REVIEW QUESTIONS
+1. Is the guarded proceeding graph the smallest safe repair to the compact linear flow?
+2. What conditions are essential on urgent preservation to avoid both evidence loss and unauthorized indefinite holds?
+3. How should CLOSED_WITH_REASON, appeal, stays/finality and enforcement be typed so no automatic coercive path appears?
+4. Do EvidenceControlRisk/ObstructionEvent/JusticeEvidenceContinuityReceipt need new persistent schemas, or should they refine existing Incident/Evidence/Custody records under P032?
+5. Is a generated CurrentReadingMap sufficient to fix stale/dangling navigation without rewriting immutable historical text?
+6. Are there any current aliases where historical naming could materially change authority/owner rather than just navigation?
+
+DO_NOTHING COMPARATOR
+Do not build a universal criminal/civil procedure ontology. Proceeding profiles remain law/jurisdiction specific. This packet only closes unsafe generic sequencing and reference/owner ambiguity.
+
+OMISSION LEDGER
+No legal correctness for any jurisdiction is claimed. Exact proceeding rules remain owned by applicable law/governance profiles. The packet does not reinstate the historically excluded full Justice System/CanonicalCrimeOntology.
