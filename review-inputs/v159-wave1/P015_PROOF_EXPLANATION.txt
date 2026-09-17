@@ -1,0 +1,67 @@
+GARDEN v15.9 REVIEW PACKET P015 — ENGINE.PROOF + ENGINE.EXPLANATION
+Source basis: exact Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review formal Proof and faithful Explanation together because both consume reasoning/trace artifacts but must preserve distinct epistemic and authority boundaries. Do not create an Explanation Algebra unless genuine closed composition semantics require it.
+
+ENGINE.PROOF — CURRENT BOUNDARY
+Canonical scope: formal entailment, model-checking obligations and structural proof.
+Proof does NOT:
+- manufacture empirical evidence;
+- validate empirical truth merely because mathematics is valid;
+- certify an entire deployment alone;
+- turn a test result into a theorem;
+- create authority.
+Canonical capability name is Engine.Proof; historical names Verity/Themis remain migration aliases.
+
+PROOF ARTIFACTS / DISCIPLINE
+ProofObligation binds formal/non-formal assurance class, assumptions, logic/profile, applicability, criticality, dependency root, environment, timeout/resources, checker/validation method, status and accepted artifacts.
+ProofAttemptResult is multi-status. ProofTrace is immutable. ProofCertificate references a verified ProofTrace. Empirical Evidence, test receipt and attestation remain separate artifact classes.
+Trust-root bootstrap requires an independent genesis root, reproducible-build ceremony, checker/kernel diversity, multi-party key custody, hardware measurement/attestation, independently reproduced binaries and constitutional replacement procedure for a defective frozen checker. A compromised checker cannot be sole verifier of its replacement.
+Continuous services use liveness/productivity/non-Zeno/fairness/bounded-reaction/stoppability obligations rather than fake total termination.
+Invariant-delta/proof invalidation binds proofs to exact invariant semantic identities/hashes; schema compatibility alone is insufficient for cross-epoch reuse.
+
+PROOF TIERS
+  V0 — structural/type/invariant sanity.
+  V1 — ordinary validation.
+  V2 — evidence/dependency/assumption checking.
+  V3 — independent/deeper verification.
+  V4 — formal/high-assurance verification appropriate to critical scope.
+Higher Reason tier does not imply same-number Proof tier; AAP derives minimum floor independently.
+
+ENGINE.EXPLANATION — CURRENT BOUNDARY
+Produces faithful audience-appropriate projections from actual typed traces.
+Explanation cannot invent missing reasoning/evidence, raise epistemic status, create proof or authority.
+Question types include WHAT, WHY, HOW, WHY_NOT, WHAT_IF, WHEN, WHERE, WHO, AUTHORITY, EVIDENCE, UNCERTAINTY, ALTERNATIVES, COUNTERFACTUAL and CHANGE.
+Redactions produce RedactionReceipt where disclosure itself is lawful/safe, preserving contestability without leaking protected content.
+No separate Explanation Algebra is ratified.
+
+DUAL-PROJECTION / SELF-EXPLAINING DESIGN
+CanonicalDesignObject has:
+  machine projection -> typed GSL/registries/proofs/executable contracts
+  human projection -> GSL-EXPLAIN DesignExplanationBundle
+Neither projection may silently diverge. Mismatch is DESIGN_DRIFT and blocks certification for affected scope.
+Every major design object should answer WHY, WHAT, HOW, INPUTS, OUTPUTS, DEPENDS_ON, AUTHORITY, HARD_LIMITS, EVIDENCE, FAILURE, ALTERNATIVES, CHANGE and HUMAN_VIEW; unavailable fields remain UNKNOWN/NOT_APPLICABLE/PENDING rather than silently absent.
+
+HUMAN / PRIVACY BOUNDARY
+Explanation must preserve source provenance and distinction among observation/evidence/claim/knowledge, proof and policy. It may summarize but not launder history. Privacy/lawful erasure may require payload redaction/deletion; explanation cannot reveal protected facts merely to improve auditability.
+
+CURRENT DEPENDENCIES
+- Units 004/005/006/007: type/effect/scope, provenance, epoch, dependency invalidation.
+- Unit 010: AAP picks assurance floor.
+- Unit 011: FunctionContract result/resource semantics.
+- Engine.Reason output may require Proof but reasoning itself is not proof.
+- Engine.Explanation consumes actual typed traces from Reason/Compare/Proof/Policy/Execution/Knowledge.
+
+REVIEW QUESTIONS
+1. Clarify V0–V4: does V1 'ordinary validation' blur Proof vs test/evidence? Repair without collapsing formal/non-formal assurance.
+2. Define proof result lattice: PROVED, DISPROVED/COUNTEREXAMPLE, UNKNOWN, INCONCLUSIVE, TIMEOUT, RESOURCE_UNKNOWN, STALE, NOT_APPLICABLE, MALFORMED, CHECKER_UNTRUSTED as appropriate.
+3. Check proof assumption/environment/dependency binding and reuse across DesignEpochs.
+4. Check checker independence, proof-carrying artifacts and replacement of compromised verification roots.
+5. Ensure proof of model property is never treated as proof model applies to reality.
+6. Define explanation faithfulness/completeness/abstraction rules: when may details be summarized, omitted or redacted while still contestable?
+7. Handle 'WHY' when causal path is unknown, or trace contains model-generated reasoning not fully inspectable.
+8. Check explanation for audience adaptation versus semantic distortion, privacy membership-oracle leakage and strategic/deceptive omission.
+9. Decide whether explanation composition needs an Algebra or remains Process + typed projection; prefer simpler owner.
+10. Compare DO_NOTHING and request EXPAND_REQUIRED for materially missing anchors.
