@@ -1,0 +1,63 @@
+P021 SYNTHESIZED v15.9 CANDIDATE — RUNTIME / EXECUTION / TIME / EVENT / NETWORK / FABRIC / RESILIENCE
+Proposal-only; challenge this candidate against P021 source.
+
+1. DURABLE EFFECT STATE BEFORE CONSEQUENTIAL EXTERNAL DISPATCH
+For consequential external effects whose duplicate replay could be harmful, Execution must establish a profile-appropriate durable EffectIntent record BEFORE dispatch. The durability mechanism is implementation/profile specific; this contract does not universalize fsync.
+EffectIntent binds at least:
+- effect_id;
+- target/action envelope;
+- current admission/authority/fence epoch;
+- idempotency/replay semantics;
+- reconciliation endpoint/method;
+- transition/process identity;
+- provenance.
+After crash/restart, any dispatched-but-not-reconciled effect is restored as OUTCOME_UNKNOWN/PARTIAL rather than silently requeued as never attempted.
+
+2. EXECUTION ADMISSION FRESHNESS
+ExecutionAdmissionToken binds principal, scope/effect, expiry/deadline, DesignEpoch/context and current revocation/authority fence or invalidator. A queued token is revalidated at the actual consequential effect boundary when its authority/consent may have changed. Stale/revoked token is non-PASS.
+
+3. LOSSLESS EXECUTION LIFECYCLE
+Short diagrams must project losslessly onto authoritative states including:
+  PREPARED / ADMITTED / COMMITTED / EFFECT_STARTED / PARTIAL_EFFECT /
+  FAILED_AFTER_EFFECT / OUTCOME_UNKNOWN / RECONCILIATION_REQUIRED /
+  COMPENSATION_REQUIRED / IRREVERSIBLE_RESIDUAL / RECONCILED / CANCELLED / FAILED.
+No projection may collapse PARTIAL/OUTCOME_UNKNOWN into ordinary FAIL/SUCCESS.
+
+4. TIMINGPROFILE
+Physical timing guarantees are QualifiedProfileParameters in a versioned TimingProfile, declaring clock domain, synchronization source, uncertainty/error bound, validity, latency/jitter assumptions and failure behavior. PTP/GNSS or '<1 ms' language is never universal. Logical/causal clocks establish ordering properties only; they do not prove physical synchronization accuracy.
+
+5. EVENT DELIVERY / SIDE-EFFECT IDEMPOTENCY
+Event occurrence identity, EventRecord identity and delivery attempt identity are distinct. Duplicate/reordered delivery cannot create new authority, evidence weight or external effect merely by repetition.
+Listeners that can cause consequential effects bind event delivery to the same effect_id/idempotency/fencing mechanism used by Execution. Re-delivery of an already-effected event routes to dedup/reconciliation according to target semantics.
+Lawful erasure may remove protected payload while preserving only the strongest lawful tombstone/structure; event immutability never requires unlawful payload retention.
+
+6. FABRIC MEMBERSHIP / FINALITY / VISIBILITY
+Protected atomic publication binds exact participant set, membership epoch, consistency/finality profile, visibility point and recovery behavior. A stale membership epoch is non-PASS for finality claims until reconciled. Async/catching-up readers are not commit participants unless the profile explicitly includes them; they must know whether their view is FINAL, STALE, PARTIAL or CATCHING_UP.
+2PC remains an implementation profile, not the semantic definition of atomicity.
+
+7. OFFLINE AUTHORITY / RECONNECT
+AuthorityLease and CachedPolicyBinding are profile-bounded and bind version, scope, expiry, invalidators and offline admissible effect envelope. Loss of network never creates authority. Emergency/offline holder cannot self-renew beyond the legitimate preauthorized renewal rule.
+On reconnect, law/consent/DesignEpoch/policy changes that occurred during partition invalidate stale cached bindings for future use. Past offline effects are not fictionally rewritten as never authorized; they are reconciled/audited/remediated according to the authority state that actually existed and current law/policy.
+Protected state conflicts never use silent last-write-wins.
+
+8. CONTINUITY HANDOFF / STALE COMMAND FENCING
+Critical continuity transfers control through independently qualified credentials/control path. Suspect or revoked principal commands are fenced or otherwise made stale according to target semantics. State transfer verifies integrity/provenance and carries unresolved partial effects so the successor does not replay them blindly.
+
+9. EMERGENCY LEASE RENEWAL
+Emergency authority remains bounded. Renewal requires a currently valid independently legitimate authorization path or an explicitly pre-authorized renewal rule with hard limits. The emergency holder cannot bootstrap indefinite authority merely by repeated self-renewal.
+
+10. RECONCILIATION
+OUTCOME_UNKNOWN, stale membership, partial effect and reconnect conflict route through typed reconciliation. Reconciliation has bounded resource/termination semantics and cannot loop indefinitely. Retry of non-idempotent effect requires established non-application or replay-safe/idempotent semantics under current effect identity/fence.
+
+Candidate invariants:
+- crash cannot erase dispatched-but-unreconciled effect history;
+- stale admission token cannot authorize later execution;
+- timing guarantees are profile-bound, not inferred from clock technology;
+- duplicate event delivery cannot duplicate authority/effect/evidence;
+- finality claims bind current participant/membership epoch;
+- offline partition cannot create/extend authority;
+- emergency holder cannot self-renew into indefinite authority;
+- continuity handoff carries unresolved-effect state and rejects stale commands.
+
+CHALLENGE REQUEST
+Attack durability-before-effect semantics, admission TOCTOU, lifecycle projection, TimingProfile, event dedup/effect identity, Fabric membership/finality, offline authority reconciliation and continuity/emergency renewal.
