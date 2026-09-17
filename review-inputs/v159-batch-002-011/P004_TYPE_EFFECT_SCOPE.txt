@@ -1,0 +1,45 @@
+GARDEN v15.9 REVIEW PACKET P004 — TYPE / EFFECT / SCOPE SEMANTICS
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review Garden's cross-cutting type/effect/scope discipline for deterministic compilation and safe composition. Do not duplicate FunctionContract, AAP, Policy or domain owners.
+
+CURRENT RULES
+Every executable function is interpreted through a FunctionContract binding:
+- identity/owner;
+- semantic input/output types;
+- closed effect vector epsilon;
+- AuthorityRequirement and consent where applicable;
+- hard constraints/invariants;
+- FailureModeSet and typed terminal/result algebra;
+- dependencies/invalidators;
+- ResourceLimits / TerminationContract;
+- DesignEpoch / EnvironmentCommitment / KnowledgeSnapshot;
+- provenance/explanation.
+
+Bool is permitted only for a total deterministic predicate whose complete valid-input semantic domain has exactly TRUE/FALSE. Epistemic, proof, safety, authority, policy, compliance, migration, distributed-finality, lifecycle and other potentially UNKNOWN/STALE/BLOCKED/TIMEOUT operations use owner-qualified multi-status results. Legacy Bool/None prose cannot override this rule; unresolved cases are MALFORMED.
+
+Operational constants/thresholds/cadences are QualifiedProfileParameter with classification FORMAL_BOUND | MEASURED_VALUE | ENGINEERING_TARGET | PROFILE_PARAMETER plus owner, scope, units/type, source/evidence, version, validity, uncertainty where applicable and invalidators.
+
+NUMERIC REPRESENTATION
+Raw Float is not a universal semantic type. Use MoneyAmount / ExactDecimal / Rational / Quantity<Unit,Frame> / Probability / Rate<Unit> / RiskBound / Interval<T> / Distribution<T> / Represented<T> / CalibratedMeasurement<T>. Raw machine float is allowed only inside a solver representation bound to error/precision semantics.
+
+TYPE-CLOSURE REQUIREMENT
+Machine package must emit complete TypeResolutionRegistry/receipt with zero unresolved identifiers for accepted scope.
+
+CONTEXT/SCOPE
+CONTEXT is the first-class semantic carrier of scope/circumstance. Context/profile specializations may refine applicability but cannot silently weaken universal rights, K0P or GSL semantics. Missing/stale required context yields UNKNOWN/STALE/BLOCKED as applicable.
+
+EFFECT/ADMISSION BOUNDARY
+Execution requires conjunction of all applicable legitimacy, physical-safety, authenticity, authorization and policy gates. Effect declarations/type analysis describe effects and requirements; they do not create permission.
+
+CONSTRAINTS
+Review:
+- whether 'closed effect vector' has sufficient closure/unknown semantics;
+- effect polymorphism/sub-effecting and hidden/transitive effects;
+- scope intersection/widening/narrowing and lifetime;
+- conversion/loss rules between semantic and representation types;
+- whether missing type/effect/scope data fails safely without making every unknown fatal;
+- cross-module composition without duplicating FunctionContract/AAP/Policy.
+Compare DO_NOTHING and minimal repair.
