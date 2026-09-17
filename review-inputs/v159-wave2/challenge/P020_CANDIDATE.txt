@@ -1,0 +1,70 @@
+P020 SYNTHESIZED v15.9 CANDIDATE — SAFETY / SECURITY / LAW / GOVERNANCE / ACCESS / PRIVACY AUTHORITY LAYER
+Proposal-only; challenge this candidate against P020 source.
+
+1. HARD-GATE RESULT SEMANTICS
+Each applicable hard gate returns an owner-qualified verdict projected into a common admission status:
+  PASS
+  FAIL
+  BLOCKED
+  UNKNOWN
+  STALE
+  CONFLICT
+  NOT_APPLICABLE.
+NOT_APPLICABLE is valid only after applicability resolution.
+Overall consequential execution admission is PASS only when every applicable hard gate is PASS and all required AAP assurance floors are satisfied. PASS from one gate never masks FAIL/BLOCKED/UNKNOWN/STALE/CONFLICT from another. Unknown applicability of a potentially mandatory gate is non-PASS.
+
+2. CRITICAL CONTINUITY / SAFE HANDOFF
+Revoking unsafe autonomy invalidates that principal's affected credentials/tokens/caches. Safe-control handoff must use independently qualified authority/credentials and an independently admissible control path, not credentials derived solely from the revoked autonomy. Stale commands from the revoked principal are fenced where target semantics permit. Minimum-safe continuity remains bounded by current Constitution/rights, K0P and legitimate authority.
+
+3. EMERGENCY ADMISSION
+EmergencyAdmissionContract binds:
+- pre-authorized principal/authority;
+- SafeActionSet/effect envelope;
+- hazard predicate and sensor/source freshness requirements;
+- scope;
+- expiry;
+- anti-replay/nonce or equivalent freshness mechanism;
+- renewal authority/rule;
+- recovery/termination;
+- audit/provenance.
+The emergency executor cannot unilaterally renew or widen its own emergency authority unless that renewal was itself explicitly pre-authorized by a separate legitimate rule. Expired/stale/replayed contract is non-PASS. Emergency never turns K0P/rights/authenticity off.
+
+4. SECURITY ROOT / CRYPTO BOUNDARY
+Cryptographic integrity/authenticity proves only the registered cryptographic property. Trust-root/key/checker/security-kernel replacement must be anchored by an independently trusted verification/authorization path outside the component being replaced. A compromised root cannot be sole verifier/authorizer of its successor.
+Side-channel/noninterference claims remain scoped to declared attacker model; unmodeled channel risk is UNKNOWN, not absence.
+
+5. LAW SEPARATION
+Preserve distinct legal statuses:
+  source_authenticity
+  jurisdiction/applicability
+  formalization_fidelity
+  interpretation_status
+  legal_conflict/ambiguity
+  external adjudicative status.
+Formal solver SAT/UNSAT or translation confidence is a property of the encoded model/translation, not legal truth, applicability or judgment. Conflicting jurisdictions remain CONFLICT/UNRESOLVED until resolved by legitimate authority. Garden Policy consumes typed legal artifacts; it does not become the law itself.
+
+6. GOVERNANCE / RIGHTS FLOOR
+Governance participation, majority, eligibility rules and emergency procedure cannot weaken fundamental rights outside the constitutional process that legitimately governs those rights. Eligibility changes affecting the decision body are themselves governed/versioned and cannot be opportunistically changed inside the vote being decided without the applicable independent/constitutional process. Dissent/appeal/minority-right analysis remains explicit.
+Rights-gap nomination/research is not ratification.
+
+7. ACCESS CONTROL VS ACCESSIBILITY
+Technical access-control result and HumanCore Accessibility/Contestability result are distinct owner-qualified types. Possessing a capability/channel/device/data handle does not authorize use/disclosure/action. Human accessibility/appeal cannot be implemented as an ACL permission bit or silently removed because technical access is denied.
+
+8. PRIVACY PURPOSE / ERASURE / METADATA
+A secondary use or purpose change requires a new/current lawful/consent/authority basis at point of use; original access capability or lawful-hold retention does not authorize general reuse.
+Erasure lifecycle distinguishes request/acknowledgement/in-progress/verified deletion or unlearning within declared scope/quarantine/residual risk/lawful hold/UNKNOWN. Unestablished erasure cannot be represented as completed.
+Lawful hold authorizes only the retained purpose/scope required by law and does not automatically reactivate ordinary processing.
+Provenance/tombstone/redaction metadata is itself privacy-governed and may require coarsening/protection to avoid membership inference.
+
+Candidate invariants:
+- overall hard-gate PASS requires every applicable gate PASS;
+- safe handoff does not inherit revoked autonomy credentials;
+- emergency contract cannot self-renew/widen without legitimate preauthorization;
+- changed security root cannot self-verify exclusively;
+- legal solver/formalization output does not become legal truth;
+- governance majority/eligibility cannot bypass rights;
+- technical access != accessibility/contestability;
+- retained data under lawful hold cannot be silently reused for unrelated purpose.
+
+CHALLENGE REQUEST
+Attack hard-gate conjunction, continuity after revocation, emergency replay/renewal, security-root independence, legal formalization boundaries, governance rights floors, Access/Accessibility separation and privacy secondary-use/erasure semantics.
