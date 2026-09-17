@@ -1,0 +1,9 @@
+{
+  "schema": "GardenFastBoardTrigger/v1",
+  "campaign": "GARDEN-V159-FAST-20260917",
+  "packet": "P001_GSL_CORE",
+  "source": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+  "mode": "FOUR_BLIND_PARALLEL_REVIEWERS",
+  "models_from": "agents/event-driven-model-quality-policy.json",
+  "canonical_effect": false
+}
