@@ -1,0 +1,104 @@
+GARDEN v15.9 — P037 FINAL CORRECTIVE OVERLAY
+Status: CROSS-WAVE SYNTHESIS / PROPOSAL EVIDENCE ONLY / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Campaign: GARDEN-V159-20260917
+Frozen v15.8 source-root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+P037 review run: 35268180631
+P037 packet SHA-256: 4237e0a96af783e98c9629eef1d86e9176e408cec2aca830a3c9f027c2ad91ac
+Reviewer evidence: 4/4 usable families; review consensus is evidence only and creates no authority.
+
+PURPOSE
+This overlay dispositioned the completed P037 whole-integration review without restarting P001–P036 or repeating any completed model call. It records only material cross-wave repairs that must be carried into final v15.9 materialization. Earlier packet-local conclusions remain in force except where this overlay explicitly narrows or clarifies them.
+
+1. REVIEW QUORUM CLOSURE — NO RERUN
+The repository Design Review Matrix sets minimum_independent_reviewer_families = 3. Therefore the recorded Wave 5 challenge evidence is sufficient for the configured minimum: P032/P035 have four independent families and P033/P034/P036 have three. The preferred family count is not an admission minimum. No Wave 5 reviewer call is repeated merely to increase family count. Review quorum remains evidence quality only; it creates no semantic or canonical authority.
+
+2. JUSTICE APPEAL / CONTESTABILITY CLARIFICATION
+Replace any reading of “APPEAL is profile-enabled/optional” that could allow a profile to remove contestability for a consequential or material-rights decision.
+- An applicable consequential/material-rights proceeding SHALL preserve an appeal/contestability route whenever Garden’s governing rights/procedural semantics require one.
+- “Optional” means the affected party may choose whether to invoke the route, and a profile may qualify procedure/jurisdiction/timing; it does not mean a profile may erase a mandatory appeal/contestability right.
+- A proceeding profile that removes a required route is non-PASS for that consequential use.
+
+3. TYPED CREDENTIAL NON-PASS PROPAGATION
+Verifier-unknown, unsupported-profile, stale, revoked, expired and invalid credential states remain semantically distinct.
+- Verifier-unknown or unsupported-profile propagates as its own typed non-PASS status plus reason and re-verification/appeal route where applicable.
+- It SHALL NOT be collapsed to FAIL(invalid), and it SHALL NOT become PASS by default.
+- Downstream admission records the exact status and current resolution path.
+
+4. URGENT-PRESERVATION EXPIRY ACROSS RETRY / FAILOVER
+The current urgent-preservation expiry is an effect invalidator.
+- Retry, failover or delayed continuation after expiry requires fresh current competent authority and the fresh evaluation required by P034.
+- Expiry SHALL NOT be silently extended by runtime retry, queue replay, failover or continuity machinery.
+- Where an earlier attempt may already have produced an external effect and completion is uncertain, preserve PARTIAL_EFFECT / OUTCOME_UNKNOWN and reconcile before unsafe replay.
+
+5. CAUSAL CLOSURE OWNER AND LAWFUL ERASURE
+P024 Causal Safety / CausalClosureReceipt is the canonical semantic owner for the causal-closure receipt described by the reviewed v15.9 candidate. P032 does not create a second receipt/evidence truth system.
+- CausalClosureReceipt references canonical evidence/provenance artifacts rather than duplicating their payload.
+- When privacy/lawful erasure requires protected payload deletion, the receipt SHALL NOT retain the erased payload merely to keep a historical pointer alive.
+- Replace the protected payload reference, where lawful and necessary, with the strongest lawful minimum tombstone/non-identifying surrogate allowed by P025, preserving only the structural linkage, erasure disposition/authority basis, minimal timing/provenance/dependency refs and other lawful minimum accountability state.
+- If erasure removes evidence required for a dependent current conclusion, that dependency becomes STALE / NEEDS_REVALIDATION / other owner-qualified non-PASS as applicable. Erasure is not refutation and does not fabricate a never-occurred history.
+
+6. GSL v45.1 PREDECESSOR COMPATIBILITY — FAIL HONESTLY
+The frozen v15.8 source-root hash is exact and remains the source-integrity anchor for this campaign. The current P037 evidence does not itself supply an exact independently verifiable GSL v45.1 predecessor schema/root hash sufficient for a stronger compatibility certification.
+- Internal review notes may retain SOURCE-DECLARED/UNVERIFIED as an epistemic statement.
+- The final release-facing field SHALL be `predecessor_gsl_compatibility_status = NOT_STATED` unless an exact compatibility proof artifact is available before release closure.
+- `VERIFIED_COMPATIBLE` is permitted only with the exact proof/source artifact reference that establishes it.
+- UNKNOWN, SOURCE-DECLARED or UNVERIFIED SHALL NOT be surfaced as if they were a compatibility PASS and SHALL NOT support executable/certification claims.
+
+7. CURRENT READING MAP — MANDATORY SUPPORTING ARTIFACT
+Before the reviewed release label may be used, generate and validate a hash-bound CurrentReadingMap from the final materialized v15.9 text.
+Required closure:
+- exact frozen source-root identity;
+- final document hashes/anchors or deterministic references to them;
+- active owner/name and exact current anchor for every active reference;
+- historical aliases/supersessions without authority transfer;
+- EXTERNAL / UNRESOLVED / DEFERRED entries with owner/resolution condition;
+- no undeclared dangling or ambiguous active reference.
+Generation order is: finalize release date, filenames and the six document bytes -> compute document hashes needed by the map -> generate/validate the CurrentReadingMap -> compute its hash -> build the ReleaseManifest. Signature/attestation is required only to the extent required by the active assurance profile; no signature is fabricated.
+
+8. UPGRADE TRACEABILITY FREEZE / CONSISTENCY
+UpgradeTraceabilityTable SHALL be frozen before ReleaseManifest computation and SHALL cover every P001–P037 disposition, including KEEP/CHANGE/ALIAS/DEFERRED/UNRESOLVED/REJECTED/NO_CHANGE.
+- The table’s final content SHALL be included in, or hash-bound from, the consolidated upgrade deliverable before manifest computation.
+- Every accepted current semantic change must resolve to an explicit final layer anchor; every substantive final-layer delta must have a traceability row.
+- Post-freeze traceability edits reopen release closure and force regeneration/re-hash. There is no in-place post-manifest semantic edit.
+
+9. RELEASE LABEL VS SELF-CHANGE AUTHORITY
+Declaring the reviewed working-candidate label is an administrative status act over already reviewed bytes. It creates no canonical authority, execution authority or certification.
+- Any material semantic edit introduced during release preparation is a new protected change and re-enters the applicable P035 independence/review requirements before closure.
+- Release preparation cannot use the label itself to authorize the change it labels.
+
+10. MANIFESTATION INTEGRITY
+ReleaseManifest SHALL bind the exact six final deliverables plus the CurrentReadingMap and UpgradeTraceabilityTable hashes/refs. The manifest itself SHALL be protected against silent substitution using a detached manifest digest and, where required by the active assurance profile, a signature/attestation over that digest.
+- The detached digest avoids recursive self-hashing.
+- Any change to a final deliverable, CurrentReadingMap, UpgradeTraceabilityTable or manifest after digest creation invalidates closure until the affected artifacts are rebuilt and re-hashed.
+- A manifest/digest is integrity evidence only; it creates no authority.
+
+11. MATERIALIZATION CLOSURE CHECKLIST
+The P036 reviewed label is not yet claimable until all of the following are true:
+[ ] P037 corrective overlay is recorded in UpgradeTraceabilityTable.
+[ ] Six final deliverable filenames/date/bytes are fixed.
+[ ] All accepted P001–P037 changes have final anchors or explicit nonactive unresolved/deferred dispositions.
+[ ] Final-layer hard rights/consent/privacy/authority/safety/law gates survive projection checks.
+[ ] CurrentReadingMap is generated from final bytes and passes active-reference closure.
+[ ] UpgradeTraceabilityTable consistency check passes and is frozen/hash-bound.
+[ ] Required unresolved dependencies propagate typed non-PASS/incomplete status.
+[ ] Duplicate owner/schema/topology check passes or has an explicit reviewed relation/change.
+[ ] `predecessor_gsl_compatibility_status` is VERIFIED_COMPATIBLE with proof, or NOT_STATED.
+[ ] ReleaseManifest binds exact six final deliverables plus supporting map/table hashes/refs.
+[ ] Detached ReleaseManifest digest is computed after manifest finalization.
+[ ] Every final file carries the reviewed candidate/non-certification/non-canonical status preamble.
+
+12. P037 DISPOSITION
+P037 verdict: CHANGE — TARGETED INTEGRATION REPAIRS REQUIRED BEFORE MATERIALIZATION CLOSURE.
+No finding invalidates the substantive conclusion of an earlier packet strongly enough to justify a blanket or packet-level reviewer rerun. The repair path is final synthesis/materialization only.
+
+PROVISIONAL INTEGRATION TESTS
+TEST-P37-APPEAL-001 consequential/material-rights profile deletes a required contestability route -> non-PASS.
+TEST-P37-CRED-001 locally unsupported proof profile -> typed UNSUPPORTED_PROFILE/UNKNOWN non-PASS, not invalid and not PASS.
+TEST-P37-EXPIRY-001 preservation-scoped retry fires after expiry without fresh authority -> blocked/non-PASS; uncertain prior external effect -> reconciliation required.
+TEST-P37-ERASE-001 lawful payload erasure -> receipt retains only lawful tombstone/surrogate and dependent evidence status is revalidated.
+TEST-P37-GSL-001 no exact v45.1 proof artifact -> final release-facing compatibility status NOT_STATED.
+TEST-P37-MAP-001 any active final reference lacks a unique current resolution/composition row -> release closure fails.
+TEST-P37-TRACE-001 accepted traceability row lacks final anchor or substantive final-layer change lacks row -> release closure fails.
+TEST-P37-TRACE-002 traceability edit after freeze -> manifest closure invalidated and hashes regenerated.
+TEST-P37-SELFCHANGE-001 semantic edit during release preparation -> P035 independence/review path reopens.
+TEST-P37-MANIFEST-001 mutate any bound artifact after manifest digest -> digest mismatch and release closure fails.
