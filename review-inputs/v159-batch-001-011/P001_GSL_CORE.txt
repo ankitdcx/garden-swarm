@@ -1,0 +1,32 @@
+GARDEN v15.9 REVIEW PACKET P001 — GSL SEMANTIC CORE
+Source basis: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded public review extract; proposal evidence only; no admission/certification.
+Goal: review and upgrade the GSL semantic core without changing Garden authority, rights, or topology merely for convenience.
+
+SCOPE
+- GardenCore.Semantics.GSL v45.1 foundation represented in v15.8.
+- Core/service/name separation, typed result discipline, qualified naming/IDs.
+- GSL-language/compile gap clauses already carried in v15.8 candidate lineage.
+- Causality-level typing where it changes GSL relation consumption.
+- Provenance representation where it changes semantic absence/redaction interpretation.
+- R0/SanityGate only insofar as it closes base semantic recursion.
+- Catalogue closure of GSL declarations.
+
+CURRENT v15.8 BASELINE EXTRACT
+Garden Core is the minimum technical machinery required by every Garden instance.
+GSL v45.1 uses six Pillars, ten Core Objects, 24 Core Relations and current universal semantic primitives.
+Provenance/state core includes DesignManifest, DesignEpoch, DesignBinding, KnowledgeSnapshot, EnvironmentCommitment, CanonicalStateRecord, source-span provenance, immutable historical lineage, content-addressed registries.
+Proof, test, evidence, attestation, assurance and applicability remain distinct typed results. Failure, timeout, resource limits, staleness, inconclusive and unknown states are preserved rather than collapsed into Bool.
+Bool is reserved for total deterministic predicates whose valid input space has a semantically complete true/false interpretation.
+Canonical IDs are owner-qualified and ambiguous short aliases HALT with AMBIGUOUS_IDENTIFIER.
+
+V15.8-CARRIED GSL GAP CANDIDATES
+- LetExpr ::= let Pattern (: Type)? = Expr in Expr; LetStmt ::= let Pattern (: Type)? = Expr ;?; LetStmt lexical scope + Unit result.
+- QueryStmt resolves QueryResultBinding; query without `into` requires a declared FunctionContract sink or QUERY_RESULT_UNCONSUMED; no implicit Knowledge mutation/Evidence creation.
+- `causes` remains one Core Relation; operational edge carries CausalRelationLevelBinding(C0..C4); lower-level consumption as stronger returns CAUSAL_LEVEL_UNDERFLOW.
+- R0 is SanityGate, not an Engine.Reason mode; PASS|FAIL|UNKNOWN; must not recursively invoke Reason.
+- ProvenanceClassManifest distinguishes REDACTED/PROTECTED, PROVENANCE_GAP and NOT_APPLICABLE without leaking protected payload.
+- AuthorityDecl and EffectDecl are FOUNDATIONAL_CONTRACT catalogue entries; declarations do not manufacture authority.
+
+CROSS-CUTTING CONSTRAINTS
+Keep six Pillars / ten Core Objects / 24 Core Relations absent strong evidence; do not add ontology for naming convenience. Preserve authority boundaries, typed uncertainty, privacy, deterministic compilation, owner separation, and DO_NOTHING comparison. Do not claim executable certification.
