@@ -1,0 +1,107 @@
+GARDEN v15.9 — P026 SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Basis: frozen v15.8 packet + pre-review ChatGPT baseline + preserved four-family blind review.
+
+1. ADMISSION SEQUENCING / BUNDLE ATOMICITY
+Retain the existing prerequisite rule: CSI/SMCD/CAD/OAC/CTSN/PAI/HRAP cannot be admitted before UBC/TSI/TIA/ART/IIC/PIR unless the dependencies are bundled into the same successor admission with explicit composition evidence.
+A same-wave review is not admission.
+For a bundled successor admission, each prerequisite is enumerated by stable anchor/version and the composition evidence states the dependency relation.
+If a required bundled prerequisite is rejected, unresolved or not admitted, the dependent layer remains HELD/NON-PASS; partial admission cannot leave dangling canonical references.
+
+2. CSI — COGNITION-SHAPING INTEGRITY
+Material cognition-shaping inputs preserve provenance, source/authority/evaluator refs, conflicts, DesignEpoch and validity scope.
+An agent may not be sole authority over material mechanisms that shape/evaluate its own future disposition.
+Where an applicable profile permits no independent reviewer for a shaping class, that permission must itself come from legitimate authority outside the shaped agent's unilateral control and cannot satisfy a separate independence requirement by declaration.
+For shaping that crosses a profile-defined consequential/safety/authority threshold, a null reviewer is a declared assurance limitation unless the governing profile explicitly establishes that independence is not required for that class.
+Runtime prompt/retrieval/memory/evaluator changes are assessed by material behavior/effect, not edit size.
+
+3. SMCD — MONITORING COVERAGE / DISCOVERY DEBT
+MonitoringCoverageReceipt SHALL bind:
+- observable/unobservable surface;
+- sampling method;
+- declared estimator/scale for coverage estimate/confidence where numeric/ordinal claims are used;
+- observation window;
+- monitor dependencies;
+- known blind spots;
+- currentness/invalidators;
+- discovery debt;
+- external discovery refs.
+An out-of-surface incident requires a substantive re-estimation of coverage/confidence/blind spots/debt and revalidation of materially dependent safety claims. The updated value is not forced to move in one universal numerical direction, but an unchanged or improved claim requires explicit evidence/justification; stale pre-incident assurance cannot silently persist.
+Known blind spots are not proof of safety inside those blind spots.
+
+4. CAD — CAPABILITY MATERIALITY / CUMULATIVE DRIFT
+Every deployment boundary that uses CAD SHALL bind a CapabilityMaterialityPolicy or equivalent owner-qualified predicate set covering the material dimensions relevant to that deployment, such as reachable-effect class, autonomy/horizon, tool/cyber/physical/scientific scope and authority-sensitive capability changes.
+The policy cannot weaken higher-layer hard materiality triggers already required by Garden/AAP/rights/safety/law.
+UNKNOWN potentially material capability/effect expansion triggers CAD/requalification or another explicit non-PASS route; it cannot be skipped as non-material by default.
+Materiality considers cumulative semantic/effect delta from the last qualified baseline so repeated sub-threshold changes cannot evade requalification.
+Capability and assurance remain typed dimensions; no universal scalar ratio is introduced.
+
+5. OAC — ORGANIZATIONAL MATERIALITY / STRUCTURAL INVALIDATION
+Organizational assurance is not a scalar average of member reputation.
+The active organizational materiality policy SHALL cover the dimensions already declared by OAC, including material changes to topology, collective objective/reward, authority graph, resources, membership/model-family correlation, dissent/escalation/exit paths and reviewer independence.
+A policy may add stricter triggers but cannot declare a higher-layer protected authority/reviewer-independence change irrelevant when that change affects the assurance case.
+Cumulative individually small changes are evaluated over a declared window/baseline; motivated salami-slicing cannot preserve stale organizational assurance.
+Material structural change invalidates/requalifies dependent OAC claims before consequential reuse.
+
+6. CTSN — DERIVATIVE MATERIALITY
+DerivativeMaterialityPolicy SHALL contain an explicit test/predicate for each required class:
+- behavior;
+- tools;
+- memory;
+- authority;
+- capability;
+plus owner/version, applicability and currentness.
+Weights are not the only behavior source: wrappers, prompts, retrieval, memory, tool configuration and orchestration can form a materially new effective behavior class.
+Edit size is not the criterion. A typo/format-only change may be non-material only when its behavior/effect classification supports that result.
+Cumulative derivative drift from the last qualified parent/baseline is checked.
+Parent capability evidence and parent safety evidence remain separately classified for transferability. UNKNOWN transferability is non-PASS for any assurance claim that requires transfer.
+
+7. PAI — EXTERNAL INTERLOCK / COMPENSATING CONTROL
+Retain the rule that protected irreversible physical action classes require external enforcement outside the agent's mutable reasoning path unless an explicit compensating-control path demonstrates equal or stronger assurance under the governing profile.
+The compensating-control exception SHALL NOT be self-certified by the acting agent or by a trust lineage that the compensated interlock is meant to constrain.
+Its receipt binds:
+- legitimate authority;
+- exact physical action/effect envelope;
+- comparator/assurance profile and property being compared;
+- independent verifier/reviewer/control path where required;
+- current hazard/environment assumptions;
+- validity/expiry and invalidators;
+- evidence/proof refs;
+- failure/recovery behavior.
+"Equal or stronger" is a typed profile-specific comparison, not free-form prose or a universal scalar.
+If required comparator/independence/currentness is unresolved, the protected action is BLOCKED/NON-PASS.
+
+8. PAI — TEMPORAL/SPATIAL COMPOSITION
+Safe(A) and Safe(B) never imply Safe(A parallel B) or Safe(A then B).
+The active PhysicalActionEnvelope/assurance profile SHALL name the owner-qualified composition semantics/checker for relevant temporal, spatial and shared-resource interactions.
+No new universal composition calculus is required, but a consequential composition cannot be admitted without a declared rule/checker when the profile requires one.
+
+9. MATERIALITY POLICY GOVERNANCE — COMMON RULE
+CSI/CAD/OAC/CTSN/PAI materiality/independence policies are governance artifacts, not escape hatches.
+They bind owner, version, scope, currentness, provenance, invalidators and the authority by which they are adopted.
+A subsystem cannot unilaterally relax the policy that controls its own protected requalification/independence requirement.
+
+PROVISIONAL INVARIANTS
+P26-001 Same-wave review does not satisfy prerequisite admission.
+P26-002 Rejected/unresolved bundled prerequisite holds the dependent layer.
+P26-003 Consequential cognition shaping cannot satisfy required independence with a self-authorized null reviewer.
+P26-004 Out-of-surface incidents invalidate stale monitoring coverage claims and trigger substantive re-estimation.
+P26-005 Known blind spots never become evidence of safety merely by declaration.
+P26-006 Material capability change includes cumulative drift and UNKNOWN potentially material expansion.
+P26-007 OAC/CTSN materiality policies cannot waive higher-layer protected triggers.
+P26-008 Wrapper/tool/memory/orchestration changes may be material even with identical weights.
+P26-009 PAI compensating control requires typed comparator/currentness and required independence; it cannot be self-certified.
+P26-010 Physical action composition uses declared owner-qualified temporal/spatial semantics.
+P26-011 No materiality policy may be unilaterally weakened by the subsystem it governs where external independence is required.
+
+PROVISIONAL TESTS
+TEST-P26-SEQ-001: bundled UBC dependency rejected -> P026 layer HELD, no dangling canonical citation.
+TEST-P26-CSI-001: consequential shaping + null reviewer + self-authored profile exception -> non-PASS.
+TEST-P26-SMCD-001: out-of-surface incident + unchanged high coverage with no new evidence -> stale/invalid assurance.
+TEST-P26-CAD-001: repeated small capability expansions cumulatively cross active materiality rule -> CAD triggered.
+TEST-P26-CAD-002: potentially material capability class UNKNOWN -> no ASSURANCE_SUFFICIENT without resolution/qualified rule.
+TEST-P26-OAC-001: cumulative topology/reviewer-independence changes -> organizational requalification.
+TEST-P26-CTSN-001: same weights + powerful new tool/memory wrapper -> derivative requalification.
+TEST-P26-CTSN-002: policy missing authority-class test -> policy incomplete/non-admissible.
+TEST-P26-PAI-001: acting organization/agent self-authors equal-assurance compensating receipt with no required independent verifier -> blocked.
+TEST-P26-PAI-002: two individually safe actions collide under timing overlap -> declared composition check blocks.
