@@ -1,0 +1,65 @@
+P019 SYNTHESIZED v15.9 CANDIDATE — HUMAN-EFFECT CLOSURE / HRAP / PROTECTED REPORTING / REPUTATION
+Proposal-only; challenge this candidate against P019 source.
+
+1. HRAP MATERIALITY RESULT
+RelationalInfluenceMaterialityResult is typed:
+  MATERIAL
+  NON_MATERIAL_WITHIN_SCOPE
+  UNKNOWN
+  STALE
+  INVALID
+  CONFLICT.
+Missing/unresolved policy never maps to NON_MATERIAL. UNKNOWN/STALE/INVALID/CONFLICT routes through the applicable Human-Effect/AAP fallback and remains non-PASS for a claim that the influence is below materiality threshold.
+
+2. ACUTE VS PERSISTENT INFLUENCE
+PersistenceDuration is one cumulative-materiality dimension; it is not an exemption from Human-Effect Closure or HRAP-INV-001. Short, decisive covert dependency/manipulation may be material immediately based on intensity, domain, reversibility, authority asymmetry or consequence. Ordinary helpful recommendations remain ordinary when the applicable materiality policy finds them non-material.
+
+3. CUMULATIVE / MULTI-AGENT BINDING
+Cumulative relational influence reuses the existing human-effect/cumulative-effect owner. Attribution groups by affected human(s), relevant causal pathway/domain and justified baseline, not merely agent/session identity. Rotating agents, sessions, tools or labels cannot reset accumulated influence. No duplicate accumulation engine is introduced.
+
+4. PROTECTED REPORTING STATE
+Reporting lifecycle separates:
+  SUBMITTED
+  PROTECTED_PENDING_REVIEW
+  VERIFIED_GOOD_FAITH
+  MERITS_SUPPORTED
+  MERITS_UNSUPPORTED
+  WITHDRAWN
+  AUTHORIZED_BAD_FAITH_FINDING
+  CLOSED.
+Good-faith protection and allegation merits are distinct. Non-corroboration, error, withdrawal or unsupported merits do not automatically prove bad faith.
+
+PROTECTED_PENDING_REVIEW prevents retaliation for the act of making an in-scope report while status is unresolved, subject to privacy/confidentiality and legitimate safety controls.
+
+Reporting does NOT grant blanket immunity. Independently evidenced misconduct/safety issues may be investigated/adjudicated through a conflict-free path whose causal/provenance record demonstrates it is not retaliation.
+
+5. RETALIATION ANALYSIS
+Retaliation review considers direct and indirect causal paths including resource, supervision, opportunity, assignment, access and reputation changes. Comparator/baseline selection, conflicts of interest and reviewer independence are explicit. Reporter identity is minimized/protected according to applicable privacy/law.
+
+6. REPUTATION SCOPE / CURRENTNESS
+HumanAgencyProfile/ReputationProfile binds:
+- purpose/domain;
+- population/reference class where ranking is used;
+- evidence roots/dependence;
+- uncertainty;
+- validity/expiry;
+- invalidators;
+- correction/appeal path.
+Point-of-use consumer verifies scope and currentness. Cross-domain reuse requires separately valid evidence and policy. Shared-root evidence is de-duplicated; demographic identity cannot substitute for behavior evidence.
+
+Reputation cannot itself create/reduce rights, sovereignty, punishment, policing, medical authority or eligibility outside separately legitimate law/policy/authority.
+
+7. UNKNOWN HUMAN EFFECT
+UNKNOWN_HUMAN_EFFECT never means NO_HUMAN_EFFECT, but it also does not imply universal shutdown. AAP selects a bounded response based on consequence, reversibility, effect envelope and continuity needs: narrow scope, gather evidence, require approval, qualified fallback, defer/block, or minimum-safe continuity as applicable. High-impact irreversible/unbounded unknown effects remain blocked unless an independently legitimate qualified path exists.
+
+Candidate invariants:
+- missing/stale HRAP policy cannot yield NON_MATERIAL;
+- acute material manipulation cannot hide below persistence duration;
+- session/agent rotation cannot reset cumulative influence;
+- reporting protection status is separate from merits;
+- protected reporting does not create immunity or punishment authority;
+- reputation remains scope/currentness/evidence bound and non-sovereign;
+- UNKNOWN_HUMAN_EFFECT is handled proportionately, never silently PASS.
+
+CHALLENGE REQUEST
+Attack HRAP fail-open semantics, acute/cumulative influence, protected-reporting interim protection versus immunity, retaliation attribution/privacy, reputation point-of-use scope and bounded UNKNOWN_HUMAN_EFFECT handling.
