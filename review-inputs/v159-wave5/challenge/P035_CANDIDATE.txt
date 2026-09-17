@@ -18,7 +18,9 @@ RCI may be registered as a documentation/architecture REFINES/ALIAS view of the 
 2. SCOPE / CONTROL CLAIM
 Replace unbounded wording such as 'controls intelligent systems' with:
   Garden through RCI governs and may admissibly control systems only within its deployed legitimate authority, consent/purpose envelope, technical enforceability and active safety/law/rights boundary.
-Outside that enforceable boundary it may observe, model, warn, recommend or report only under separately valid authority; the RCI label creates no extra control right.
+Outside that enforceable boundary it may observe, model, warn, recommend or report only under separately valid authority; the RCI label creates no extra control or observation right. Observation/modeling remains subject to applicable Privacy/Law/rights owners, consent/purpose limits, and data-minimization/retention profiles.
+
+The definition or material update of Garden's own `legitimate authority` envelope is itself a Protected Consequential Self-Change under §6 and SHALL be subject to the same independence, external-verification, provenance, and admission constraints. Recursive change cannot escape governance by rewriting the boundary that defines governance.
 
 3. OWNER MAP
 RCI view maps to existing owners:
@@ -66,26 +68,26 @@ A self-change is protected consequential when the applicable current profile say
 - recursive update/admission mechanism;
 - materially reachable capability/physical/cyber scope.
 
-For protected consequential self-change, the same actor/process SHALL NOT be sole proposer + implementer + independent verifier/certifier + authorizer where the owning profile requires independence.
+Where the owning profile requires independence, the same actor/process or non-independent control lineage SHALL NOT be the sole holder of any protected role among proposer, implementer, verifier/certifier, and authorizer. Separation by process name alone is insufficient.
 
-Independence is evaluated using the existing reviewer/evidence/control-lineage conflict profiles. Separate process names do not prove independence when they share the protected control root.
+Operational independence is evaluated by the existing Policy/AAP/reviewer/evidence/conflict owners using mutable control lineage. A reviewer/checker is not independent of a change when it shares the same mutable control lineage that can materially determine the changed component or the review outcome. Control lineage includes, as applicable, the mutable memory/state, provenance source, policy/authority configuration, verification authority/checker root, credentials, or update channel controlling the component being changed or the evidence used to approve it. If the lineage cannot be established, independence is UNKNOWN/non-PASS where independence is required.
 
 If no adequately independent in-system verifier/authorizer exists, route to the designated legitimate external/human/organizational authority defined by the active profile. Absence of independent review does not authorize self-approval.
 
-Routine non-semantic maintenance may proceed under its normal existing automation/validation contract; RCI does not require four-role separation for every cache refresh or harmless housekeeping action.
+Routine non-semantic maintenance may proceed under its normal existing automation/validation contract; RCI does not require protected-role separation for every cache refresh or harmless housekeeping action.
 
 7. QUARANTINE / PENDING ADMISSION
-Material consequential new knowledge/rules/code/capability/self-model changes first enter the existing pending/candidate/non-admitted process with:
+Material consequential new knowledge/rules/code/capability/self-model changes first enter the existing pending/candidate/non-admitted process. Whatever existing owner/schema carries that state SHALL at minimum expose or bind:
 - provenance;
 - materiality/change classification;
 - affected scope/dependencies;
 - epistemic status/uncertainty;
 - current authority/admission state;
 - required reviewers/checkers;
-- rollback/recovery assumptions;
+- rollback/recovery assumptions and irreversible residuals where applicable;
 - promotion condition.
 
-RCI uses existing Research/Evolve/Knowledge/DesignEpoch states; it does not require a new universal Quarantine object if those states already express non-admission.
+RCI prefers existing Research/Evolve/Knowledge/DesignEpoch states and does not require a new universal Quarantine object if those states satisfy these informational requirements. If they do not, the missing requirement is an unresolved owner/schema delta subject to ordinary design admission; the information requirement itself is not silently dropped.
 
 Low-risk ordinary learning/retrieval follows normal Knowledge/Research rules. It is escalated only if the active materiality profile finds that it can materially alter consequential behavior or authority-relevant state.
 
@@ -93,11 +95,12 @@ Low-risk ordinary learning/retrieval follows normal Knowledge/Research rules. It
 If candidate/capability generation materially outpaces the applicable verification/assurance capacity:
 - new unverified candidates remain non-admitted;
 - no authority/effect envelope expands on the basis of queue pressure;
-- the active CAD/AAP/Evolve/resource policy may throttle/pause candidate generation, narrow deployment scope, shed capability or require additional verification capacity;
+- the active CAD/AAP/Evolve/resource policy may impose a generation budget/rate, throttle/pause candidate generation, narrow deployment scope, or require additional verification capacity so queue growth cannot become an implicit admission mechanism;
+- shedding/throttling of already deployed capability follows the applicable Transition/Policy/consent/rollback owners and is not an automatic RCI-side revocation;
 - queue depth/age/coverage and stale-assurance debt remain observable;
 - resource exhaustion produces typed pending/UNKNOWN/non-PASS, not forced promotion.
 
-No universal numerical queue threshold is introduced; the active profile owns it.
+No universal numerical queue threshold is introduced; the active verification-capacity/resource profile owns it.
 
 9. POISONED KNOWLEDGE / OBSERVATION GAP / BYPASS
 RCI's named failure surfaces route to existing owners:
@@ -114,23 +117,29 @@ Naming them in RCI does not create duplicate mechanisms.
 RCI is a design/control architecture, not a proof of containment.
 Written rules, receipts and review structure reduce/expose risk only to the extent that the relevant enforcement, observation, proof and authority mechanisms are actually implemented and qualified. Unknown/unverified containment claims stay visible.
 
-PROVISIONAL INVARIANTS
+PROVISIONAL OWNER-BINDING ARCHITECTURAL PRINCIPLES
+The P35-* identifiers below are review traceability labels for requirements proposed to bind the existing owning specifications; they are not a new canonical invariant namespace owned by the non-canonical RCI view.
 P35-001 RCI SHALL create no new authority source.
 P35-002 RCI SHALL create no second Universal Per-Step execution loop.
-P35-003 RCI control claims are bounded by deployed legitimate authority and enforceability.
+P35-003 RCI control claims are bounded by deployed legitimate authority and enforceability; changing Garden's own authority envelope is itself protected consequential self-change.
 P35-004 Garden's material self-change path SHALL itself be governed.
-P35-005 Protected consequential self-change SHALL NOT be self-approved by one non-independent control lineage.
+P35-005 Where independence is required, protected consequential self-change SHALL NOT place sole protected roles in the same actor/process or non-independent mutable control lineage.
 P35-006 Routine non-semantic maintenance SHALL not be unnecessarily escalated as protected self-change.
 P35-007 Material unverified capability/knowledge remains non-admitted under verification backpressure.
-P35-008 Queue/resource pressure SHALL NOT manufacture promotion or authority.
+P35-008 Queue/resource pressure SHALL NOT manufacture promotion or authority; active profiles may bound generation rate to verification capacity.
 P35-009 RCI failure-surface names SHALL route to existing owners rather than create duplicate engines.
 P35-010 RCI SHALL NOT imply universal AGI containment/control.
+P35-011 RCI creates no observation right; observation/modeling remains subject to Privacy/Law/rights and data-minimization owners.
 
 PROVISIONAL TESTS
 TEST-P35-LOOP-001 attempt to instantiate separate RCI scheduler for per-step action -> rejected; map to existing loop owners.
-TEST-P35-AUTH-001 external system outside Garden authority boundary -> RCI cannot authorize control merely from capability.
-TEST-P35-SELF-001 protected verifier-code change proposed, implemented and self-certified by same control lineage -> promotion blocked.
-TEST-P35-MAINT-001 nonsemantic cache compaction under validated contract -> ordinary maintenance path, not mandatory four-role review.
-TEST-P35-BACKPRESSURE-001 capability candidates exceed verification profile capacity -> remain pending; generation/deployment narrowed or throttled, no auto-admission.
+TEST-P35-AUTH-001 external system outside Garden authority boundary -> RCI cannot authorize control or observation merely from capability.
+TEST-P35-AUTH-002 candidate self-change rewrites the authority envelope that would approve itself -> treat envelope update as protected consequential self-change; independent review/admission required.
+TEST-P35-SELF-001 same mutable lineage proposes and certifies a protected verifier-code change while nominal implementer/authorizer are distinct -> promotion blocked where independence is required.
+TEST-P35-SELF-002 verifier independence lineage cannot be established -> UNKNOWN/non-PASS where independent verification is required.
+TEST-P35-MAINT-001 nonsemantic cache compaction under validated contract -> ordinary maintenance path, not mandatory protected-role separation.
+TEST-P35-BACKPRESSURE-001 capability candidates exceed verification profile capacity -> remain pending; active generation/deployment controls bound growth; no auto-admission.
+TEST-P35-BACKPRESSURE-002 shedding a deployed capability without applicable transition/consent authority -> rejected as unauthorized RCI-side revocation.
+TEST-P35-QUAR-001 pending state omits required provenance/reviewer/promotion-condition fields -> unresolved owner/schema delta; cannot silently satisfy quarantine requirement.
 TEST-P35-POISON-001 poisoned retrieval alters behavior materially -> routed through Knowledge/CSI/provenance and no authority expansion.
 TEST-P35-LIMIT-001 document-only RCI rule with no executable enforcement -> status remains SPECIFIED, not certified containment.
