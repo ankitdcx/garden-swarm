@@ -18,12 +18,17 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        packet:
-          - P012_ALGEBRAS.txt
-          - P013_COMPARE.txt
-          - P014_REASON.txt
-          - P015_PROOF_EXPLANATION.txt
-          - P016_ORCH_SEARCH_COMPILE_TRANSITION.txt
+        include:
+          - id: P012_ALGEBRAS
+            file: P012_ALGEBRAS.txt
+          - id: P013_COMPARE
+            file: P013_COMPARE.txt
+          - id: P014_REASON
+            file: P014_REASON.txt
+          - id: P015_PROOF_EXPLANATION
+            file: P015_PROOF_EXPLANATION.txt
+          - id: P016_ORCH_SEARCH_COMPILE_TRANSITION
+            file: P016_ORCH_SEARCH_COMPILE_TRANSITION.txt
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -34,12 +39,12 @@ jobs:
       - name: Four-family blind review
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        run: python tools/v159_wave_board.py "review-inputs/v159-wave1/${{ matrix.packet }}"
+        run: python tools/v159_wave_board.py "review-inputs/v159-wave1/${{ matrix.file }}"
       - name: Upload packet evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v159-wave1-${{ matrix.packet }}-${{ github.run_id }}
-          path: review-results/v159-wave1/${{ matrix.packet }}/
-          if-no-files-found: warn
+          name: v159-wave1-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave1/${{ matrix.id }}/
+          if-no-files-found: error
           retention-days: 30
