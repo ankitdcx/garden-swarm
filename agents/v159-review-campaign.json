@@ -20,7 +20,7 @@
       "review_evidence_admissible": false
     }
   ],
-  "boundary": "This is a source-bound, user-authorized financial-risk exception for one historical abandoned attempt. It is not provider billing evidence, review completion, proof, canonical promotion, or an exception for future unknown calls. The original attempt remains unchanged.",
+  "boundary": "Source-bound financial-risk allowances cover only the exact historical abandonment and received HTTP429 failures admitted by http_429_recovery. They do not prove billing, review completion, canonical promotion, or recovery of timeout/5xx/in-flight unknown calls. Every original attempt remains unchanged; each 429 retry requires the exact latest receipt and at most two total attempts per slot.",
   "source_slices": [
     {
       "path": "review-inputs/v159/human-effect-closure.txt",
@@ -29,5 +29,23 @@
       "master_end_line": 1916,
       "master_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2"
     }
-  ]
+  ],
+  "http_429_recovery": {
+    "enabled": true,
+    "max_attempts_per_slot": 2,
+    "minimum_backoff_seconds": 60,
+    "billing_status": "UNKNOWN",
+    "review_evidence_admissible": false,
+    "legacy_receipts": [
+      {
+        "attempt_sha256": "c4bf2f3f87bbaa271e51cbfbf2a8342efe50c9add924d16fd0fd7643b5908ee1",
+        "run_id": "35186216190",
+        "observed_at": 1789623241.0,
+        "approved_not_before": 1789624141.0,
+        "header_evidence": "NOT_CAPTURED_BY_OLD_WORKER",
+        "reason": "GitHub run updated_at 2026-09-17T05:34:01Z provides conservative completion observation; allow retry after 15 minutes under existing USD10 campaign risk authorization. Original Retry-After was discarded, so no claim it was honored."
+      }
+    ],
+    "authorization_basis": "User authorized proceeding within USD 10 despite billing uncertainty. Only received HTTP429 failures; reserve remains charged conservatively and each retry needs an exact attempt-bound directive."
+  }
 }

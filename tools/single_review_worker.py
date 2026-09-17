@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import base64
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from decimal import Decimal, InvalidOperation
 import hashlib
 import json
@@ -273,6 +274,27 @@ def coverage(root, state, policy, exclusions):
 def record_http_failure(attempt, exc):
     """Keep bounded diagnostics, never raw provider error text or headers."""
     attempt['http_status'] = exc.code
+    if exc.code == 429:
+        # Keep only a normalized delay, never arbitrary response headers.
+        observed = time.time()
+        raw_retry = exc.headers.get('Retry-After') if exc.headers else None
+        valid = True
+        delay = Decimal('0')
+        if raw_retry is not None:
+            try:
+                if raw_retry.strip().isdigit():
+                    delay = Decimal(raw_retry.strip())
+                else:
+                    parsed = parsedate_to_datetime(raw_retry)
+                    if parsed.tzinfo is None:
+                        raise ValueError('Retry-After date requires timezone')
+                    delay = max(Decimal('0'), Decimal(str(parsed.timestamp() - observed)))
+            except (ValueError, TypeError, OverflowError):
+                valid = False
+        attempt['http_rate_limit'] = {
+            'observed_at': observed, 'retry_after_seconds': str(delay),
+            'retry_after_valid': valid, 'retry_after_present': raw_retry is not None,
+        }
     raw = exc.read(8192)
     attempt['error_body_sha256'] = hashlib.sha256(raw).hexdigest()
     try:

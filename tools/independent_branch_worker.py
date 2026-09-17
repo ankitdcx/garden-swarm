@@ -198,7 +198,7 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
     return None
 
 
-def _require_explicit_retry(state: dict, cycle_id: str, slot: str, directive: dict) -> None:
+def _require_explicit_retry(state: dict, cycle_id: str, slot: str, directive: dict, campaign=None, now=None) -> None:
     prior = [a for a in state.get("attempts", [])
              if a.get("cycle") == cycle_id and a.get("slot") == slot and a.get("inference_reserved")]
     if not prior:
@@ -206,11 +206,28 @@ def _require_explicit_retry(state: dict, cycle_id: str, slot: str, directive: di
     if len(prior) >= 2:
         raise ValueError("two attempts per review slot exhausted; stop and escalate")
     latest = prior[-1]
-    if latest.get("status") not in ("INCOMPLETE", "INCOMPLETE_REQUIRES_EXPLICIT_DIRECTIVE"):
+    recovery = review_campaign.rate_limit_recovery(latest, campaign)
+    if recovery and Decimal(str(time.time() if now is None else now)) < recovery["retry_not_before"]:
+        raise ValueError("rate-limit retry backoff has not elapsed")
+    if not recovery and latest.get("status") not in ("INCOMPLETE", "INCOMPLETE_REQUIRES_EXPLICIT_DIRECTIVE"):
         raise ValueError("prior slot is unresolved or already completed")
     if (directive.get("retry_of_attempt_sha256") != protocol.sha256_value(latest) or
             not isinstance(directive.get("retry_reason"), str) or not directive["retry_reason"].strip()):
         raise ValueError("incomplete call requires an explicit receipt-bound retry directive")
+
+
+def _prefer_alternate_rate_limit_endpoint(eligible, state, cycle_id, slot, directive, campaign):
+    """Choose once from verified endpoints of the same pinned model; no fallback."""
+    prior = [a for a in state.get('attempts', [])
+             if a.get('cycle') == cycle_id and a.get('slot') == slot and a.get('inference_reserved')]
+    if not prior:
+        return eligible
+    previous = prior[-1]
+    if (directive.get('retry_of_attempt_sha256') != protocol.sha256_value(previous) or
+            review_campaign.rate_limit_recovery(previous, campaign) is None):
+        return eligible
+    alternatives = [row for row in eligible if row[1]['tag'] != previous.get('endpoint')]
+    return alternatives or eligible
 
 
 def _prompt(*, phase: str, family: str, directive: dict, target: dict, source: str, trace: dict, cycle: dict) -> str:
@@ -256,8 +273,8 @@ def _reconcile_known_attempts(ledger: legacy.GitLedger, key: str, campaign=None)
     for attempt in state.get("attempts", []):
         if attempt.get("status") not in ("UNKNOWN", "RESERVED"):
             continue
-        if review_campaign.abandonment_charge(attempt, campaign) is not None:
-            continue  # Preserve exact unknown receipt; never retry or claim billing.
+        if review_campaign.unknown_allowance(attempt, campaign) is not None:
+            continue  # Preserve unknown billing; retry gate separately checks authorization.
         response_id = attempt.get("response_id")
         if not response_id:
             raise ValueError("unidentified prior call blocks new inference")
@@ -380,7 +397,7 @@ def run(root: Path = Path(".")) -> None:
         return
 
     phase, family, slot = plan
-    _require_explicit_retry(state, cycle_id, slot, directive)
+    _require_explicit_retry(state, cycle_id, slot, directive, campaign=campaign)
     model = next(row for row in policy["routine_reviewers"] if row["family"] == family)
     require_allowed_model(model_id=model["model"], family=family, policy=exclusions)
     prompt = _prompt(phase=phase, family=family, directive=directive, target=target, source=source, trace=trace, cycle=cycle)
@@ -407,6 +424,7 @@ def run(root: Path = Path(".")) -> None:
             continue
     if not eligible:
         raise ValueError("no permitted, affordable live endpoint; no model substitution")
+    eligible = _prefer_alternate_rate_limit_endpoint(eligible, state, cycle_id, slot, directive, campaign)
     estimate, endpoint, body = min(eligible, key=lambda row: row[0])
 
     attempt = {

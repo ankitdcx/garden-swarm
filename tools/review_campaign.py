@@ -75,14 +75,78 @@ def abandonment_charge(attempt, campaign):
     return allowance
 
 
+def rate_limit_recovery(attempt, campaign):
+    """Financial-risk allowance for a received 429, never proof of zero billing.
+
+    Only this source-bound campaign may opt in. A retry still needs an exact
+    attempt-bound directive and the existing per-slot call limit in the worker.
+    """
+    rule = (campaign or {}).get('http_429_recovery') or {}
+    if rule.get('enabled') is not True:
+        return None
+    spending = attempt.get('spending') or {}
+    if (attempt.get('status') != 'UNKNOWN' or attempt.get('http_status') != 429 or
+            attempt.get('error_type') != 'HTTPError' or attempt.get('response_id') or
+            attempt.get('cost') is not None or attempt.get('inference_reserved') is not True or
+            attempt.get('semantic_delta_admitted') is not False or
+            attempt.get('full_review_complete') is not False or
+            spending.get('campaign_id') != campaign.get('campaign_id') or
+            spending.get('source_sha256') != campaign.get('source_sha256')):
+        return None
+    if (rule.get('max_attempts_per_slot') != 2 or
+            rule.get('billing_status') != 'UNKNOWN' or
+            rule.get('review_evidence_admissible') is not False):
+        raise ValueError('invalid rate-limit recovery policy')
+    reserve = amount(attempt.get('reserved'))
+    if not Decimal('0') < reserve <= amount(campaign['per_call_ceiling_usd']):
+        raise ValueError('rate-limit reservation is not covered')
+    observation = attempt.get('http_rate_limit')
+    if observation is None:
+        # Earlier workers discarded Retry-After. Only an exact protected-policy
+        # receipt may provide the conservative, externally observed completion.
+        matches = [r for r in rule.get('legacy_receipts', [])
+                   if r.get('attempt_sha256') == digest(attempt)]
+        if len(matches) != 1:
+            return None
+        observation = matches[0]
+        if (observation.get('header_evidence') != 'NOT_CAPTURED_BY_OLD_WORKER' or
+                not isinstance(observation.get('reason'), str) or not observation['reason'].strip()):
+            raise ValueError('legacy rate-limit recovery requires honest header evidence')
+        approved_not_before = amount(observation.get('approved_not_before'))
+        observed = amount(observation.get('observed_at'))
+        if observed < amount(attempt.get('started')):
+            raise ValueError('rate-limit observation precedes call')
+        delay = max(Decimal('60'), amount(rule.get('minimum_backoff_seconds')))
+        return {'accounting_allowance_usd': reserve,
+                'retry_not_before': max(observed + delay, approved_not_before),
+                'review_evidence_admissible': False, 'billing_status': 'UNKNOWN'}
+    if observation.get('retry_after_valid') is not True:
+        return None
+    observed = amount(observation.get('observed_at'))
+    if observed < amount(attempt.get('started')):
+        raise ValueError('rate-limit observation precedes call')
+    delay = max(Decimal('60'), amount(rule.get('minimum_backoff_seconds')),
+                amount(observation.get('retry_after_seconds')))
+    return {'accounting_allowance_usd': reserve, 'retry_not_before': observed + delay,
+            'review_evidence_admissible': False, 'billing_status': 'UNKNOWN'}
+
+
+def unknown_allowance(attempt, campaign):
+    abandoned = abandonment_charge(attempt, campaign)
+    if abandoned is not None:
+        return abandoned
+    recovery = rate_limit_recovery(attempt, campaign)
+    return recovery['accounting_allowance_usd'] if recovery else None
+
+
 def blocking_attempts(state, campaign=None):
     return [a for a in state.get('attempts', [])
             if a.get('status') in ('UNKNOWN', 'RESERVED') and
-            abandonment_charge(a, campaign) is None]
+            unknown_allowance(a, campaign) is None]
 
 
 def accounting_charge(attempt, campaign=None):
-    allowance = abandonment_charge(attempt, campaign)
+    allowance = unknown_allowance(attempt, campaign)
     return allowance if allowance is not None else amount(attempt.get('cost'))
 
 
