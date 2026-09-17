@@ -1,0 +1,99 @@
+GARDEN v15.9 — P030 RESEARCH / LEARNING / DEFERRED / COMPARATIVE SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+
+1. DEFERRED / UNRESOLVED PROFILE RULE
+Any profile/name explicitly marked DEFERRED or UNRESOLVED has no operational, authority, certification or requirement-satisfaction semantics merely from historical mention, neighboring similarity or acronym reuse.
+
+This applies to the currently unresolved/deferred set including:
+  UCAS
+  Kindergarten
+  CASI adapter activation
+  GAC
+  FDE
+  CFBR
+  GTAH
+  unresolved manufacturing-qualification-transfer profiles
+and any later equivalent status.
+
+Historical references are archival/alias evidence only. Activation requires ordinary current:
+  definition
+  owner
+  scope
+  authority/admission
+  proof/evidence
+  DesignEpoch/migration
+qualification as applicable.
+
+A DEFERRED/UNRESOLVED name SHALL NOT silently fill a required capability/profile slot or satisfy an invariant by analogy.
+
+2. CASI ACTIVATION
+Historical CASI adapter mentions SHALL resolve to DEFERRED for current execution unless a later admitted source explicitly activates an exact adapter/profile version. No legacy reference, registry alias or previous candidate status may reactivate it implicitly.
+
+3. QUALIFICATION / CERTIFICATION TRANSFER
+Assurance, certification or qualification evidence is scoped to the exact source system/configuration/environment/profile for which it was established.
+
+Transfer to manufacturing target, derivative, new environment or other context requires an explicit owner-qualified TransferAssessment / evidence-reuse decision that binds:
+- source and target roots;
+- claimed transferable properties;
+- transfer assumptions;
+- invalidators;
+- changed dimensions;
+- current evidence;
+- result and unresolved obligations.
+
+Missing transfer assumptions/invalidators or UNKNOWN applicability -> NOT_TRANSFERABLE / UNKNOWN / REQUALIFICATION_REQUIRED as owned by the active profile, never permission-by-default.
+
+4. COMPARATIVE COGNITIVE COVERAGE
+The Candidate-B/comparator programme remains:
+  NOT_EXECUTED / UNRESOLVED
+unless a later evidence package proves otherwise.
+
+Any comparative conclusion requires at minimum:
+- pinned artifact/version/configuration for every compared system;
+- a predeclared common comparison protocol and dimensions;
+- matched task/evidence conditions;
+- applicability/uncertainty and missing-data rules;
+- independence/dependence information for evaluators/evidence;
+- retained raw/result provenance;
+- explicit limitation that comparison does not create authority or universal superiority.
+
+Missing any required comparison basis -> UNRESOLVED, not an inferred ranking.
+
+5. TH15.8 SUMMARY ALIASES
+TH15.8-1..14 are explanatory summary aliases to their detailed current owners (including the P022–P026 dependency families), not separate competing normative systems.
+
+Each current-view summary SHALL identify its owning semantic anchor. On conflict, the admitted owner/version governs and the summary becomes STALE/INVALID until repaired. A summary SHALL NOT create an independent authority, proof or duplicate invariant merely by restating the concept.
+
+6. CMUR INDEPENDENCE
+CMUR retains: model count != independence.
+Use the existing reviewer-independence/provenance owner rather than inventing one scalar independence metric. Material shared lineage/data/tooling/prompt/evaluator dependencies SHALL be disclosed and treated as correlated evidence where applicable. Correlated reviewers may still provide useful evidence but do not count as independent merely because they are separate calls/models.
+
+7. REJECTION MEMORY
+A rejection-memory entry retains its negative/rejected disposition, scope, reason, provenance and invalidators. Retrieval, migration, repetition or later reuse SHALL NOT silently convert it into positive evidence for promotion. Reconsideration requires a new version/evidence path; the historical rejection remains inspectable subject to privacy/lawful erasure.
+
+8. REPRODUCTION / PROMOTION WORDING
+No research/learning profile receives permission to reproduce, deploy, activate or self-promote merely because the source says 'no autonomous reproduction'. Any consequential reproduction/deployment/promotion still requires the ordinary applicable Research/Evolve/Proof/AAP/authority/admission path.
+
+9. HISTORICAL OPERATIONAL FACTS
+Historic budgets, prices, paused schedules, repository settings and operational observations remain dated evidence. They do not become current policy/theory axioms without a current verified source.
+
+PROVISIONAL INVARIANTS
+P30-001 DEFERRED/UNRESOLVED profile names have no operational semantics until admitted.
+P30-002 Historical CASI mention cannot reactivate a deferred adapter.
+P30-003 Qualification/certification transfer is scoped and fail-closed on missing assumptions/invalidators.
+P30-004 Comparative cognitive conclusions require pinned artifacts and common protocol; otherwise UNRESOLVED.
+P30-005 TH15.8 summaries are aliases, not independent normative owners.
+P30-006 Reviewer count does not manufacture independence.
+P30-007 Rejection memory cannot become positive evidence by retrieval/migration.
+P30-008 Research profile wording cannot create reproduction/deployment/promotion authority.
+P30-009 Historic operational facts do not silently become current policy.
+
+PROVISIONAL TESTS
+TEST-P30-DEFER-001 legacy CASI adapter reference with no admitted activation -> remains DEFERRED/non-executable.
+TEST-P30-DEFER-002 similar active profile exists next to unresolved UCAS -> UCAS still satisfies no requirement.
+TEST-P30-TRANSFER-001 manufacturing/config change with no declared invalidators -> old assurance does not transfer.
+TEST-P30-COMP-001 comparator version missing -> no superiority/ranking conclusion.
+TEST-P30-ALIAS-001 TH15.8 summary conflicts with owner -> summary STALE; owner governs.
+TEST-P30-INDEP-001 four reviewers share material data/evaluator lineage -> evidence marked correlated, not four independent roots.
+TEST-P30-REJECT-001 rejected candidate retrieved after migration -> remains REJECTED unless new version/evidence path is evaluated.
+TEST-P30-HIST-001 old budget/repo status quoted in current design -> treated as dated evidence, not current policy.
