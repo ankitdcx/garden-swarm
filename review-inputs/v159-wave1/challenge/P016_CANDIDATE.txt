@@ -1,0 +1,71 @@
+P016 SYNTHESIZED v15.9 CANDIDATE — ORCHESTRATE / SEARCH / COMPILE / TRANSITION
+Proposal-only; challenge this candidate against P016 source.
+
+1. ORCHESTRATE PLAN STATE / INDEPENDENCE
+ActivationPlan is versioned and binds the AAP classification inputs, activated object closure, tier/floor decisions, budgets, invalidators and plan provenance.
+On material IntegrityHealth/RegimeRisk/authority/dependency change, affected plan closure is invalidated/replanned. In-flight work may continue only under the stricter applicable old/new hard floor until re-admission; no assurance-floor erosion during replanning.
+Orchestrate may author its own activation plan, but that plan cannot satisfy an assurance/approval requirement that explicitly requires independence. Self-authored plan evidence is tagged same-origin and cannot count as independent challenge.
+Re-entrant/cross-engine orchestration carries a bounded call-depth/work budget from the top-level AAP plan; exhaustion -> non-PASS, not infinite recursion.
+
+2. SEARCH RESULT SEPARATION
+SearchResult separates:
+  MandatoryClosureResult
+  RankedRetrievalResult.
+MandatoryClosureResult has status COMPLETE | PARTIAL(reason, missing_refs) | STALE | UNKNOWN plus exact-source/provenance bindings. Ranked similarity results never substitute for mandatory closure.
+PARTIAL/STALE mandatory closure is UNKNOWN to consuming hard gates; absence in incomplete retrieval is not absence-of-obligation.
+Search returns contradictions/competing mandatory artifacts and typed conflict metadata rather than silently top-k suppressing them. Resolution belongs to Compare/Reason/Policy as applicable.
+Each returned artifact preserves source epoch/hash/registry/provenance sufficient for downstream binding.
+
+3. COMPILE / SEMANTIC PRESERVATION
+Compilation/projected generation emits a SemanticPreservationReceipt or equivalent binding:
+  accepted semantic source root;
+  CIR/intermediate root;
+  target artifact root;
+  compiler/generator/toolchain/profile roots;
+  equivalence criterion;
+  verifier identity/result;
+  relevant assumptions;
+  DesignEpoch/environment;
+  provenance.
+Successful compilation/build is not semantic-preservation proof.
+BYTE_IDENTICAL, CIR_EQUIVALENT and SEMANTIC_EQUIVALENT remain distinct criteria.
+A change to compiler/generator/trust-boundary semantics requires at least one independently anchored verifier outside the changed toolchain. A compiler/generated artifact cannot be sole verifier of its own trust change.
+Nondeterministic compilation must bind all admitted nondeterminism or validate an allowed semantic equivalence class; unreconciled nondeterminism is non-PASS for deterministic qualification.
+
+4. TRANSITION PHASES
+Transition state is explicitly phased:
+  PROPOSED
+  PREPARED
+  ADMITTED
+  COMMITTED
+  EFFECT_STARTED
+  EFFECT_OBSERVED / OUTCOME_UNKNOWN
+  RECONCILED / COMPENSATION_REQUIRED / FAILED.
+
+Admission/commit receipts are pre-effect authorization evidence; post-hoc audit/effect receipts cannot retroactively authorize an effect.
+COMMIT binds current authority/consent/policy and an effect envelope. Point-of-use checks immediately before consequential effect remain required where the contract says freshness can change.
+
+5. FENCING / IRREVERSIBILITY
+Consequential external effects bind effect identity and monotonic fence/lease epoch where target semantics support fencing. Stale fence -> reject/record discrepancy.
+An externally irreversible/non-idempotent effect that enters OUTCOME_UNKNOWN cannot be blind-retried. It routes to reconciliation first; retry only after non-application is established or replay-safe/idempotent semantics are proven. Compensation is a new authorized action, not fictional rollback.
+
+6. CROSS-ENGINE CYCLE BUDGET
+Every Search↔Reason↔Orchestrate/Compare recursive call within a top-level operation carries the same bounded plan work/cycle budget and call-chain trace. Cycle/depth exhaustion returns RESOURCE_BOUND/UNKNOWN according to owner result type.
+Results derived inside the same call chain are tagged and cannot satisfy an independence requirement merely because a different engine produced them.
+No arbitrary universal depth constant is hardcoded; AAP/profile owns the bound.
+
+7. GTF ROLE
+GTF remains a high-assurance Transition/Process profile, not a competing engine. Receipts identify Engine.Transition as owner and GTF as profile.
+
+Candidate invariants:
+- plan replanning cannot lower an active hard floor;
+- self-authored orchestration plan does not count as independent approval;
+- incomplete mandatory Search closure cannot PASS;
+- ranked retrieval cannot replace mandatory symbolic closure;
+- compiler/toolchain change cannot self-verify exclusively;
+- post-hoc receipt cannot authorize prior effect;
+- stale fence/OUTCOME_UNKNOWN prevents blind retry;
+- cross-engine cycles are bounded and same-chain work is not independent.
+
+CHALLENGE REQUEST
+Attack self-approval/replanning, Search partial closure, Compile trust boundary, Transition phase/fencing semantics and cross-engine recursion. Return ACCEPT / CHANGE / BLOCK with minimal repair and falsifiable test.
