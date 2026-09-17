@@ -26,7 +26,7 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.8-flash
-        run: python tools/v159_batch_board.py review-inputs/v159-batch-002-011
+        run: python -m tools.v159_batch_board review-inputs/v159-batch-002-011
       - name: Upload all review evidence
         if: always()
         uses: actions/upload-artifact@v4
