@@ -13,8 +13,7 @@ One exact historical attempt is eligible for a financial-risk exception. Its ful
 record hash, run ID, model and abandoned administrative status must match. Its
 original UNKNOWN status and null actual cost remain unchanged. Its full $0.05
 reservation is counted as an accounting allowance, not reported as a known bill.
-It is never retried or admitted as review evidence. Any modified, additional or
-in-flight unresolved attempt retains the ordinary blocking behavior.
+It is never retried or admitted as review evidence. Other unresolved attempts remain blocking except the separately declared received-429 campaign recovery below.
 
 All ledger costs plus that allowance count against the total ceiling. A new date,
 target, packet, cycle or reviewer does not reset it. The existing live provider
@@ -51,3 +50,11 @@ independent reviewer families. No unverified Gemini model ID is introduced here.
 
 Canonical Garden v15.5 source, authority and certification are unaffected. The
 v15.8 attachment remains a working candidate; this runner repair is not v15.9.
+
+## Received rate-limit rejection
+
+Campaign HTTP429 failures may receive a full-reservation accounting allowance, never a fabricated zero bill or review result. Recovery requires a received HTTP429 without response identity, exact campaign/source binding, an exact latest-attempt retry hash/reason, and at most two total attempts per slot. Timeout, 5xx and in-flight unknown calls are excluded. The original receipt remains unchanged.
+
+New receipts record parsed Retry-After evidence and enforce its deadline with a minimum 60-second delay. The first campaign failure's old worker discarded the header; its exact protected-policy exception records that limitation and requires 15 minutes after the observed run completion. This is an explicit conservative recovery decision, not proof of the missing header's value.
+
+A retry selects once among existing eligible endpoints of the same pinned model, preferring another eligible endpoint if available. No extra request, fallback model, provider exclusion change or privacy relaxation is introduced. Official guidance: https://openrouter.ai/docs/api_reference/limits.
