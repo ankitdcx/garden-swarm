@@ -1,0 +1,100 @@
+GARDEN v15.9 REVIEW PACKET P013 — ENGINE.COMPARE / GSL-COMPARE
+Source basis: exact Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review Engine.Compare / GSL-COMPARE as Garden's universal comparison mechanism. Strengthen epistemic separation, hard-gate handling, policy scoping, comparator evolution and machine-resolvable output without duplicating Reason, Proof, Research or Policy.
+
+CURRENT SEMANTICS
+Engine.Compare compares external/internal proposals against canonical Garden using bidirectional gap analysis and multi-dimensional constraint-aware comparison. Current comparison also models evidence dependence, regime instability/tail uncertainty and comparator self-evolution assurance.
+
+Three stages:
+1. Hybrid semantic + symbolic retrieval.
+2. Recursive closure + bidirectional gap analysis.
+3. Multi-dimensional comparative judgment with Proof/evidence/constraint checks.
+
+Comparison normalization extracts proposal claims/actions/relations/policies, assumptions, ambiguities, context and provenance into a typed semantic model.
+
+Candidate retrieval includes mandatory symbolic sets before optional ranking:
+  ExactSymbolic
+  UNION MandatoryDependencies
+  UNION ApplicablePolicies
+  UNION RelevantInvariants
+  UNION TopKSemantic
+  UNION HistoricalMatches
+Similarity ranking may prioritize optional candidates but cannot prune mandatory constitutional/safety/dependency/policy edges.
+
+Stage-2 labels:
+  AGREEMENT
+  CONTRADICTION
+  OMISSION
+  AMBIGUITY
+  NOVELTY
+A semantic atom retains parent context, qualifiers, scope, negation, temporality, authority and dependencies.
+
+Comparison dimensions may include:
+  evidence quality
+  formal consistency
+  empirical validation
+  explanatory power
+  invariant satisfaction
+  safety
+  authority/constraint feasibility
+  scope/applicability
+  simplicity
+  coverage
+  predictive success
+  cost
+  reversibility
+  historical performance
+Each dimension carries value/ordering, uncertainty, confidence and evidence basis.
+
+HARD-GATE RULE
+Constitution/rights, K0P, required authority, mandatory invariants and minimum evidence/assurance are feasibility constraints. Pareto comparison occurs among feasible candidates. Cost/speed cannot compensate for a violated hard gate.
+
+EPISTEMIC / ADOPTION SEPARATION
+  epistemic_result = which claim/model is better supported?
+  design_quality_result = which architecture is better on applicable design dimensions?
+  constraint_status = what hard constraints/authority apply?
+  adoption_recommendation = what should Garden do?
+Canonical status itself does not establish truth. Strongest valid evidence appropriate to claim type dominates canonical status on factual support. Mathematical claims require appropriate proof; empirical claims appropriate evidence; normative/legal adoption also requires legitimate authority.
+
+Comparison preserves dominance / incomparability / inconclusive / unknown outcomes and routes adoption, retention, merge, research or escalation separately from epistemic support.
+Comparison output preserves agreements, contradictions, proposal/Garden gaps, dimension results, hard-constraint status, recommendation, unresolved questions, explanation trace and provenance.
+
+Counterfactual option:
+  World A = current Garden
+  World B = Garden + proposal
+Replay representative historical/synthetic operations and compare correctness, safety, latency, resources, failures, proof burden and explainability where applicable.
+
+COMPARE POLICY
+ComparePolicy declares:
+  comparison dimensions and metric family;
+  domain/unit/frame bindings;
+  tolerance or equivalence/non-inferiority region;
+  uncertainty/dependence treatment;
+  materiality threshold;
+  hard bounds that cannot be compensated;
+  escalation/research behavior;
+  validity scope and DesignEpoch.
+No universal physical or semantic percentage is implied.
+
+CURRENT DEPENDENCIES
+- Unit 001: causal-level qualification, alias/name discipline.
+- Unit 004: effect/scope uncertainty and status composition.
+- Unit 005: provenance/independence.
+- Unit 006: DesignEpoch binding.
+- Unit 007: typed dependency closure.
+- Unit 010: AAP selects assurance depth.
+- Unit 011: FunctionContract governs executable interfaces.
+
+REVIEW QUESTIONS
+1. Define exact output/result algebra: dominance, equivalence, incomparability, inconclusive, unknown, conflict and partial comparability.
+2. Ensure epistemic_result, design_quality_result, constraint_status and adoption_recommendation cannot be accidentally conflated.
+3. Check dimension selection/materiality/scalarization for hidden value judgments or compensation across hard constraints.
+4. Check comparison under missing/stale evidence, dependence, tail/regime uncertainty and conflicting models.
+5. Check counterfactual replay for model leakage, hindsight bias, non-identifiability and false evidence promotion.
+6. Check comparator evolution/self-calibration: the comparator cannot be sole judge of a change to its own protected evaluation boundary.
+7. Check ComparePolicy versioning/freshness and cross-domain metric incompatibility.
+8. Prefer simple partial-order / typed-result semantics over universal scalar scoring.
+9. Compare DO_NOTHING and request EXPAND_REQUIRED for materially missing source anchors.
