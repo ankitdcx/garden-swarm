@@ -1,0 +1,110 @@
+GARDEN v15.9 REVIEW PACKET P032
+Topic: v15.8 candidate artifact/profile admission — owner, host, relation, status and schema closure
+Frozen source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+BOUNDARY
+Review the 26 candidate artifact/profile names introduced or named by v15.8. Do not allocate IDs simply because a name is new. Preserve existing qualified owners/SchemaIDs and classify every candidate before admission. Specification text is not executable enforcement.
+
+PRELIMINARY SOURCE RESULT
+26 candidate artifact/profile names were identified. Nine lack a substantive own field contract; 17 contain partial field/predicate contracts. Exact SchemaIDs/admission are explicitly unresolved in the source.
+
+EXISTING IDENTITIES / HOSTS THAT MUST NOT BE DUPLICATED
+- HumanCore.Identity.ReputationProfile — SCHEMA-23EC5B84BA.
+- Capability.Economy.ReputationProfile — SCHEMA-04EC1C5397.
+- ReputationDimensionAssessment — SCHEMA-5C9F98D84A.
+- ComparePolicy — existing comparison owner with dimensions/tolerance/dependence/materiality/noncompensable bounds/escalation/scope/DesignEpoch.
+- OperationProfile — SCHEMA-9282CB1CC0.
+- AssurancePlan — SCHEMA-8E29FDD648.
+- AssuranceReceipt — SCHEMA-F2B2D99D22.
+- Agency, CapabilityToken, AgentSession, SwarmPolicy — existing agent/collective identities.
+- SafetyEnvelope — SCHEMA-1F3E89CE2E.
+- ControlledActuationRecord — SCHEMA-E49CE01545.
+- CriticalContinuityContainmentContract — SCHEMA-958DDFB791.
+- SafeControlHandoffReceipt — SCHEMA-8E127067C8.
+- IncidentRecord — SCHEMA-3EDA4842D9.
+- CausalGraph — SCHEMA-459F37FACF.
+- CausalReconstructionTrace — SCHEMA-2D26ACA557.
+- ObservationRecord — SCHEMA-5E1CA8E625.
+- EvidenceThreatProfile — SCHEMA-F56F57694A.
+- ModelInternalAuditReceipt — SCHEMA-9EC50864B4.
+
+EXISTING CLIC FUNCTION OWNERS
+CheckIntentChain -> Engine.Dependency
+QualifyCausalClaim -> Engine.Reason
+ReviewContinuity -> Engine.Transition
+AssessInteractionOptions -> Engine.Research
+Engine.Compare may aggregate gap/comparison results but does not thereby own all causal reconstruction, proof or action authorization.
+
+CANDIDATE NAMES / PRELIMINARY RELATIONS
+TrustAllocationDecision/v1 — EXTENDS existing scoped authorization/PolicyDecision; trust narrows use and cannot create authority.
+ReputationAggregationPolicy/v1 — REFINES ComparePolicy + owner-qualified reputation; bare ReputationProfile is ambiguous.
+ART_BOOTSTRAP_PROFILE/v1 — no own contract; likely REFINES OperationProfile/AAP with bootstrap defaults/gradation/invalidation.
+EpochIndependenceClassification/v1 — EXTENDS DesignEpoch evidence-reuse classification.
+EpochIndependenceComparePolicy — no own contract; likely versioned ComparePolicy profile.
+EmergentStructureProfile/v1 — no own contract; likely EXTENDS Agency/SwarmPolicy/MAC.
+IncentiveMaterialityPolicy/v1 — REFINES comparison/policy for institutional incentive dimensions.
+IncentiveConsistencyAssessment/v1 — EXTENDS comparison/policy trace/incident routing.
+IntegrityReport/v1 — no own contract; likely profile/refinement over IncidentRecord/reporting semantics.
+IntegrityChannelOwner/v1 — partial owner/latency/fallback responsibility binding.
+ContainmentCredibilityPolicy/v1 — partial AAP/Security/Policy profile.
+ContainmentDecision/v1 — partial, likely refines existing containment/action/admission machinery.
+CognitionShapingReceipt/v1 — partial; store named Capability.Knowledge; producer owner varies by shaping channel.
+MonitoringCoverageReceipt/v1 — partial; related to audit/monitoring receipts and EpistemicDebt/ModelInternalAuditReceipt.
+CapabilityAssuranceDelta/v1 — partial; extends AAP/DeploymentSafetyCase + DesignEpoch evidence reuse.
+CapabilityAssuranceDecisionPolicy/v1 — partial; refines Engine.Policy/AAP, needs owner/version/scope/precedence.
+OrganizationalAlignmentAssessment/v1 — partial; extends MAC/collective safety.
+DerivativeMaterialityPolicy/v1 — partial; refines configuration change/evidence-reuse controls.
+CapabilityTransferAssessment/v1 — no own contract and semantically ambiguous: may mean CTSN parent->derivative safety transfer or HRAP user-skill/capability support.
+PhysicalActionEnvelope/v1 — partial; refines SafetyEnvelope/ControlledActuationRecord.
+RelationalAgencyAssessment/v1 — no own contract; extends human-effect/consent/UnderstandingRecord style assessment.
+RelationalInfluenceMaterialityPolicy/v1 — partial; refines ComparePolicy/human-effect rules.
+CausalClosureReceipt/v1 — partial; likely extends CLIC/causal/incident records if existing fields cannot express closure.
+EvidenceControlRisk — no own contract; likely refines EvidenceThreatProfile/custody independence.
+ObstructionEvent — no own contract; likely refines IncidentRecord/ObservationRecord with justice-specific adjudication links.
+JusticeEvidenceContinuityReceipt — no own contract; likely extends custody/evidence-lineage/case-state records.
+
+THE NINE WITHOUT SUBSTANTIVE OWN CONTRACT
+ART_BOOTSTRAP_PROFILE
+EpochIndependenceComparePolicy
+EmergentStructureProfile
+IntegrityReport
+CapabilityTransferAssessment
+RelationalAgencyAssessment
+EvidenceControlRisk
+ObstructionEvent
+JusticeEvidenceContinuityReceipt
+
+REQUIRED ADMISSION ROW FOR EVERY RETAINED NAME
+Record:
+- qualified candidate name;
+- relation = NEW | REFINES | EXTENDS | ALIASES | DUPLICATES;
+- exact host SchemaID(s) where known;
+- normative owner;
+- producer/store/reviewer/enforcement roles;
+- genuinely added fields/constraints;
+- controlling policies/versions;
+- scope/currentness/invalidators;
+- inherited invariants/tests;
+- newly required tests;
+- existing_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT;
+- separate delta_status;
+- unresolved obligations.
+
+A profile/view over an existing record does not automatically need a new SchemaID. An unresolved host returns INCOMPLETE/NEEDS_SCHEMA_ADMISSION rather than permission to invent an ID.
+
+SPECIAL QUESTIONS
+1. Which names are true persistent new records versus profiles/views/aliases over existing records?
+2. Should CapabilityTransferAssessment be split/renamed into owner-qualified CTSN transfer and HRAP human capability support rather than one catch-all bare type?
+3. Should CausalClosureReceipt bind existing CLIC/CausalGraph/CausalReconstructionTrace outputs and explicit causal-edge epistemic types rather than create a parallel causal graph schema?
+4. Should IntegrityReport reuse IncidentRecord/reporting lifecycle rather than duplicate merits/protection status?
+5. How should PhysicalActionEnvelope map to existing SafetyEnvelope and ControlledActuationRecord without losing joint-action timing or external-interlock semantics?
+6. Which proposed artifacts are only SPECIFIED until executable schema/validation receipts exist?
+
+TEST STATUS
+Current Annexure test labels are specified scenarios unless executable binding/result evidence exists. Do not call them executed tests solely because they are named TEST-*.
+
+DO_NOTHING COMPARATOR
+A bare new name is not enough for a new schema. Prefer owner-qualified profile/alias/extension when existing storage and lifecycle semantics suffice.
+
+OMISSION LEDGER
+This packet does not include every field of every inherited host schema. If exact host fields decide whether NEW vs EXTENDS, request that anchor and return EXPAND_REQUIRED rather than inventing a duplicate type.
