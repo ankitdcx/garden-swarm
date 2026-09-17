@@ -1,0 +1,9 @@
+{
+  "schema": "GardenGeminiRetroTrigger/v1",
+  "campaign": "GARDEN-V159-GEMINI-RETRO-001-011-20260917",
+  "packets": [1,2,3,4,5,6,7,8,9,10,11],
+  "model": "google/gemini-3.8-flash",
+  "route": "OpenRouter",
+  "purpose": "Independent retrospective challenger seeking new ideas missed by prior reviewers",
+  "canonical_effect": false
+}
