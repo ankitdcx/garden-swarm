@@ -1,0 +1,75 @@
+{
+  "schema": "GardenV159FinalIntegrationDisposition/v1",
+  "campaign": "GARDEN-V159-20260917",
+  "source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
+  "packet": 37,
+  "packet_id": "P037_FINAL_INTEGRATION",
+  "packet_sha256": "4237e0a96af783e98c9629eef1d86e9176e408cec2aca830a3c9f027c2ad91ac",
+  "review_run_id": 35268180631,
+  "review_run_conclusion": "success",
+  "review_quorum": {
+    "usable_families": 4,
+    "required_minimum_families": 3,
+    "minimum_source": "agents/design-review-matrix.json",
+    "met": true,
+    "reviewers": {
+      "deepseek": "COMPLETE_STRUCTURED_CHANGE",
+      "glm": "COMPLETE_STRUCTURED_MIXED",
+      "xiaomi": "COMPLETE_STRUCTURED_CHANGE",
+      "gemini": "COMPLETE_RAW_CHANGE"
+    }
+  },
+  "disposition": "CHANGE_TARGETED_FINAL_INTEGRATION_REPAIRS",
+  "targeted_packet_rerun_required": false,
+  "blanket_rerun_required": false,
+  "corrective_overlay_path": "review-inputs/v159-final/P037_FINAL_CORRECTIVE_OVERLAY.txt",
+  "corrective_overlay_blob_sha": "3be890de990dccdb99b7d77d99366753ac890cd9",
+  "corrective_overlay_commit": "09e2d6c7f5cbc1e1b988bca058ccc8f4e2b523bc",
+  "accepted_repairs": [
+    "preserve mandatory appeal/contestability for consequential or material-rights decisions; optional means party invocation/procedural qualification, not profile deletion",
+    "propagate verifier-unknown and unsupported credential states as typed non-PASS rather than invalid or PASS",
+    "treat urgent-preservation expiry as an effect invalidator across retry/failover and require fresh authority after expiry",
+    "bind CausalClosureReceipt to the existing P024 causal-safety owner and compose lawful erasure through P025 tombstone/minimum-retention semantics",
+    "use release-facing predecessor_gsl_compatibility_status NOT_STATED unless exact compatibility proof supports VERIFIED_COMPATIBLE",
+    "generate and validate CurrentReadingMap from fixed final document bytes before ReleaseManifest",
+    "freeze and consistency-check UpgradeTraceabilityTable before manifest computation; post-freeze changes reopen closure",
+    "treat release label as administrative/non-authorizing; semantic edits during release prep re-enter P035 review/independence",
+    "bind ReleaseManifest to six deliverables plus CurrentReadingMap and UpgradeTraceabilityTable and protect the manifest with a detached digest"
+  ],
+  "wave5_quorum_resolution": {
+    "configured_minimum_families": 3,
+    "P032": 4,
+    "P033": 3,
+    "P034": 3,
+    "P035": 4,
+    "P036": 3,
+    "result": "NO_RERUN_REQUIRED"
+  },
+  "materialization_closure": {
+    "status": "NOT_YET_COMPLETE",
+    "release_label_claimable": false,
+    "remaining_required_steps": [
+      "materialize exact six v15.9 final working-candidate deliverables with fixed release date/filenames/bytes",
+      "populate UpgradeTraceabilityTable for P001-P037 and bind/freeze it with the consolidated upgrade deliverable",
+      "verify accepted-change-to-final-anchor and final-delta-to-traceability consistency",
+      "verify hard rights/consent/privacy/authority/safety/law gate survival across final layer projections",
+      "generate and validate CurrentReadingMap against fixed final bytes",
+      "propagate unresolved required dependencies to typed non-PASS/incomplete statuses",
+      "verify duplicate owner/schema/topology closure",
+      "build ReleaseManifest over the six deliverables plus CurrentReadingMap/UpgradeTraceabilityTable hashes/refs",
+      "compute detached ReleaseManifest digest after manifest finalization"
+    ]
+  },
+  "status": "P037_REVIEW_AND_SYNTHESIS_COMPLETE_READY_FOR_FINAL_MATERIALIZATION",
+  "canonical_effect": false,
+  "executable_certification_claimed": false,
+  "next_step": "FINAL_MATERIALIZATION_AND_RELEASE_CLOSURE_USING_EXISTING_P001_P037_EVIDENCE",
+  "do_not_repeat": [
+    "P001-P036 completed packet reviews",
+    "Wave 5 blind review run 35255993070",
+    "Wave 5 challenge review run 35256718065",
+    "Wave 5 correction synthesis",
+    "P037 final integration review run 35268180631",
+    "P037 corrective synthesis"
+  ]
+}
