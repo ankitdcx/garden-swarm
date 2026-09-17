@@ -1,0 +1,77 @@
+P015 SYNTHESIZED v15.9 CANDIDATE — ENGINE.PROOF + ENGINE.EXPLANATION
+Proposal-only; challenge this candidate against P015 source.
+
+1. PROOF BOUNDARY AND DEPTH
+Engine.Proof remains formal/structural. Empirical test/validation receipts can be referenced as assumptions/inputs to an AssurancePlan but never become a ProofCertificate.
+
+Proof depth is clarified:
+  V0 structural/type/invariant well-formedness checks;
+  V1 bounded symbolic/structural validation (not empirical validation);
+  V2 dependency/assumption discharge and model-level proof checking;
+  V3 independent/diverse proof verification;
+  V4 highest formal/high-assurance proof appropriate to scope.
+AAP independently decides empirical/test/safety/human assurance; a V-tier alone never certifies a deployment.
+
+2. PROOF ATTEMPT RESULT
+ProofAttemptStatus includes:
+  PROVED
+  COUNTEREXAMPLE
+  INCONCLUSIVE
+  UNKNOWN
+  TIMEOUT
+  RESOURCE_UNKNOWN
+  MALFORMED_OBLIGATION
+  CHECKER_UNTRUSTED
+  CHECKER_MISMATCH
+  STALE
+  NOT_APPLICABLE.
+
+A formal proof from inconsistent/unsatisfied premises may remain formally valid, but the certificate MUST expose AssumptionConsistency/Satisfiability status and may be unusable for assurance under policy. Do not corrupt classical logic by universally calling ex-falso derivations 'invalid'. Consumers requiring meaningful assurance must require acceptable premise/grounding status.
+
+3. FORMAL MODEL VS REALITY
+ProofObligation/ProofCertificate declare target realm/model/specification plus:
+  assumption refs;
+  grounding/abstraction refs;
+  dependency root;
+  logic/checker/version;
+  DesignEpoch/environment bindings.
+A certificate proves the stated formal property under stated premises. It does not establish that the real system satisfies model/grounding assumptions. Operational certification separately requires applicable empirical/validation evidence for grounding assumptions.
+
+4. REUSE
+Cross-epoch proof reuse requires compatible invariant semantic hashes, assumptions, logic/checker semantics, relevant dependency closure and environment/model bindings. Any changed relevant basis -> STALE / re-discharge required. Elapsed time alone does not make a timeless proof stale unless a validity condition says so.
+
+5. CHECKER INDEPENDENCE
+If trusted checkers disagree -> CHECKER_MISMATCH, non-PASS, explicit re-verification/escalation. A changed checker/compiler/trust root cannot be sole verifier of its own replacement.
+
+6. EXPLANATION TYPES / NON-CONFABULATION
+Explanation distinguishes:
+  TRACE_EXPLANATION
+  DECISION_RATIONALE
+  CAUSAL_EXPLANATION
+  MODEL_ATTRIBUTION / STATISTICAL_RATIONALE
+  UNKNOWN.
+A WHY answer must not relabel an opaque/generated/statistical rationale as an observed causal chain. Explanation nodes carry provenance class such as OBSERVED_TRACE, FORMAL_DERIVATION, GENERATED_RATIONALE, MODEL_ATTRIBUTION, UNKNOWN with source refs.
+Causal explanation requires applicable causal qualification; otherwise output states rationale/association/unknown.
+
+7. FAITHFUL AUDIENCE PROJECTION
+Audience adaptation may compress detail but must preserve the semantic polarity/status of retained claims, including UNKNOWN/NOT_APPLICABLE, negation, scope/condition qualifiers and material uncertainty. It cannot upgrade epistemic status or erase a condition to make a statement stronger.
+Omission/redaction that is materially relevant is represented by an authorized privacy-safe RedactionReceipt where disclosure of the receipt itself is allowed.
+Public redaction metadata must be coarsened/bucketed where exact reason/shape/existence would become a membership oracle.
+
+8. DUAL PROJECTION / DESIGN DRIFT
+Machine and human projections share the same canonical semantic source root. Dependency invalidation marks both projections stale when relevant source changes. Engine.Compile owns machine regeneration; Engine.Explanation owns human projection; certification requires both current and a ProjectionConsistencyReceipt or equivalent comparison. No fixed cadence is required when event-driven invalidation is available.
+
+9. NO EXPLANATION ALGEBRA
+Keep Explanation as typed projection/process unless a future comparison proves independent closed composition laws not already represented by Process/Conformance/GSL.
+
+Candidate invariants:
+- empirical test alone cannot issue ProofCertificate;
+- formal proof never silently implies real-world grounding;
+- checker disagreement is non-PASS;
+- explanation cannot confabulate causal WHY from opaque rationale;
+- audience adaptation preserves status/negation/scope;
+- redaction metadata cannot bypass privacy;
+- dual projections invalidate together from semantic source changes.
+
+CHALLENGE REQUEST
+Find blockers/regressions. Pay special attention to proof logic correctness, vacuity/assumption semantics, real-world grounding, checker diversity, opaque model explanations and privacy-safe contestability. Return ACCEPT / CHANGE / BLOCK with minimal repair/test.
