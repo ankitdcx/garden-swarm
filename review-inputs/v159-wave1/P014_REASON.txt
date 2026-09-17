@@ -1,0 +1,61 @@
+GARDEN v15.9 REVIEW PACKET P014 — ENGINE.REASON / REASONING STRATEGY PORTFOLIO
+Source basis: exact Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review Engine.Reason as Garden's universal reasoning engine, including tiering, strategy selection/composition, abstraction, preimage/backward reasoning, claim-validation routing, resource bounds and reasoning-performance evidence. Keep Reason separate from Proof, Evidence, Search, Compare and Authorization.
+
+CURRENT CORE
+Engine.Reason selects/composes reasoning strategies.
+Reasoning != Proof != Evidence != Authorization.
+Current modes include ABSTRACTION and backward preimage/reachability analysis for necessary-condition/root-cause/WHY_NOT reasoning.
+A typed ClaimValidationPlan routes promotable/consequential results to required formal, empirical, test, legal/authority and human-review paths.
+
+CURRENT TIERS
+Historical R0 transition sanity was moved by Unit 001 to a separate non-Reason SanityGate owned primarily by Engine.Orchestrate.
+Engine.Reason modes are therefore:
+  R1 — Local Reasoning: small local candidate set; cheap.
+  R2 — Contextual Reasoning: knowledge, dependencies, constraints, multiple alternatives; moderate.
+  R3 — Deep Reasoning: theory selection/composition, simulation, mathematical analysis, adversarial comparison and broader search.
+  R4 — Critical Reasoning: maximum bounded assurance appropriate to scope, independent challenge and required governance/human escalation.
+AAP selects the active tier. Reason tier is an assurance depth, not a fixed compute multiplier and does not automatically imply identical Proof/Safety tier.
+
+REASONING STRATEGY PORTFOLIO CANDIDATE
+ReasoningStrategyPortfolio contains candidate strategies with metadata such as strategy kind (LLM, planning, simulation, formal), performance history, resource footprint and assurance compatibility.
+ReasoningStrategyPerformanceRecord is evidence-bound to strategy outcome in a context: accuracy/quality, latency, resource use, uncertainty and provenance.
+REG-REASON-PORTFOLIO-001 binds strategy classes to admissible contexts, metrics and assurance floors.
+Candidate FunctionContracts:
+  assemble_reasoning_portfolio(problem_signature, context, assurance_profile)
+  select_reasoning_strategy(portfolio, context, assurance_profile)
+  record_reasoning_performance(strategy_ref, outcome, context)
+Invariant intent:
+- selection uses Compare and preserves hard constraints;
+- performance records are provenance/dependency bound;
+- no strategy bypasses Proof/Safety/Authority;
+- composition obeys resource/termination bounds;
+- selection emits a trace/receipt.
+
+PREEMPTION / RESOURCE CONTEXT
+AAP may consume ReasoningPreemptionContract and ProofResourceBudget where applicable. Reasoning is bounded; timeout/resource exhaustion is an explicit non-PASS result, not success.
+
+CLAIM / EPISTEMIC BOUNDARY
+Reason may generate deductions, hypotheses, candidate causal explanations, plans, abstractions, counterfactuals and validation plans. These outputs do not become Evidence, Proof or authorized action merely because reasoning generated them.
+Common-sense/default reasoning is defeasible and cannot outrank proof, authenticated law, empirical evidence or hard safety constraints.
+
+EXISTING CROSS-CUTTING USERS
+- CLIC QualifyCausalClaim and AllocateAttention are owned by Engine.Reason.
+- CSR, causal world-model reasoning, theory selection and mathematical reasoning use Engine.Reason with Knowledge/Compare/Research/Proof as appropriate.
+- Unit 001 causal level semantics constrain causal conclusions.
+- Unit 010 AAP determines assurance floors.
+- Unit 011 FunctionContract governs executable reason operations.
+
+REVIEW QUESTIONS
+1. Does R1–R4 tiering have clear semantic obligations rather than vague 'think harder' labels? Define minimum differences without hardcoding one implementation.
+2. Define ProblemSignature and strategy-selection criteria enough to prevent circular 'best strategy according to itself'.
+3. Distinguish strategy performance evidence from benchmark leakage/self-grading and context shift.
+4. Check mixed strategy composition (LLM + planner + solver + simulator + formal methods) for termination, state/provenance and conflicting conclusions.
+5. Check abstraction/refinement and backward/preimage reasoning for soundness bounds and overclaim prevention.
+6. Define output/result algebra for REASON: solved, partial, inconclusive, unknown, contradiction, resource/time bound, model out-of-scope, validation-required.
+7. Check causal reasoning against C0..C4 and identification obligations.
+8. Check self-improvement/evolution of reasoning strategy portfolio: no self-certification of protected evaluator changes.
+9. Compare DO_NOTHING/simplification and request EXPAND_REQUIRED for materially missing context.
