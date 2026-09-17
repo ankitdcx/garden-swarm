@@ -134,6 +134,12 @@
     },
     {
       "query": "Exact CLIC-P01/P05 and FunctionContract bindings relevant to human-effect causal closure."
+    },
+    {
+      "chunk_id": "Garden_System_v15.5_FULL_2026-09-12.txt:1938-1992"
+    },
+    {
+      "chunk_id": "Garden_Technical_v15.5_FULL_2026-09-12.txt:12988-13038"
     }
   ],
   "context_requests_reviewed_as_neutral": true,
