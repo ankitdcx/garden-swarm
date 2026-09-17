@@ -1,0 +1,9 @@
+{
+  "schema": "GardenV159WaveChallengeTrigger/v1",
+  "campaign": "GARDEN-V159-WAVE-012-016-CHALLENGE-20260917",
+  "packets": [12,13,14,15,16],
+  "reviewers": ["deepseek","glm","xiaomi","gemini-3.8-flash-openrouter"],
+  "minimum_distinct_successful_families": 3,
+  "mode": "source_plus_synthesized_candidate_adversarial_challenge",
+  "canonical_effect": false
+}
