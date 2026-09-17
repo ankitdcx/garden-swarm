@@ -1,0 +1,55 @@
+GARDEN v15.9 — P027 SCT STRUCTURAL COHERENCE SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+
+1. SCT SCORE PROFILE CONTRACT
+Every SCT scoring profile SHALL declare:
+- input discrepancy type/domain and reference scale;
+- effective evidence-root/dependence handling;
+- whether cardinality is semantically relevant;
+- exact aggregation/normalization semantics;
+- kappa domain/sign convention;
+- variance definition;
+- numerical-stability method;
+- threshold calibration scope;
+- INVALID / INSUFFICIENT_EVIDENCE / UNKNOWN behavior.
+
+No profile may rely on incidental parser/item count. If cardinality is intended to affect the score, that effect and threshold calibration must be explicit. If cardinality is intended to be neutral, the profile must use a cardinality-neutral normalized aggregation (for example, normalized weights/log-mean-exp or another qualified equivalent). This candidate does not mandate one universal formula.
+
+Empty input, all-zero effective evidence weight, nonfinite values, or parameters outside the profile's declared domain SHALL return a typed non-PASS result rather than a numeric score. Stable numerical evaluation is required; a nonfinite intermediate/output is INVALID, not evidence.
+
+2. DEPENDENCE / DUPLICATE ROOTS
+Before SCT evidence aggregation, materially shared provenance/common-root items SHALL be clustered or otherwise dependency-adjusted under the existing Evidence/CLIC dependence owner. Copying, summarizing, splitting or repeating a source SHALL NOT increase independent epistemic support merely by item count. UNKNOWN dependence remains UNKNOWN rather than independent-by-default.
+
+3. COFAILURE != CORRELATION
+Joint/co-error frequency and correlation are distinct typed statistics. A CofailureFrequency SHALL NOT be labelled or silently converted to ErrorCorrelation. If correlation is used, the profile SHALL bind estimator, marginals, sample window, uncertainty and zero-variance behavior. Heterogeneous statistics may not be max/averaged as though they shared a common scale unless a separately qualified mapping proves that interpretation.
+
+4. HUMAN INPUT
+Deprecate the SCT notation:
+  HumanInput = EpistemicContribution × AuthorityContribution.
+SCT SHALL alias the P018 HumanInputBundle semantics:
+  epistemic contribution and authority/consent/rights contribution are disjoint typed channels.
+Epistemic reliability may affect evidentiary weight. It SHALL NOT scale, dilute or manufacture rights, valid consent or legitimate authority. Authority/consent does not upgrade weak evidence to truth.
+
+5. HARD ADMISSIBILITY BEFORE SOFT OPTIMIZATION
+SCT optimization operates only on candidates that have already passed every applicable hard rights, safety, law, authority, consent and noncompensable bound.
+A numerical/estimation/solver tolerance such as epsilon_band may apply only where the owning profile explicitly classifies the relevant bound as soft/compensable. It SHALL NOT widen a protected hard ceiling.
+If uncertainty crosses a hard ceiling and the governing profile requires conservative resolution, the result is the owner-qualified non-PASS state; optimization cannot trade through the gate.
+
+6. THEORY-EQ BOUNDARY
+All SCT equations remain conditional TheoryEquationContract instances. A reference equation does not prove empirical calibration, safety, correctness or universal applicability. Missing units, assumptions, validity domain, dependence semantics or falsifiers block qualified use.
+
+PROVISIONAL INVARIANTS
+SCT-159-001 Incidental evidence/parser cardinality SHALL NOT alter a cardinality-neutral profile's result.
+SCT-159-002 Common-root copies SHALL NOT multiply independent evidence weight.
+SCT-159-003 CofailureFrequency SHALL NOT masquerade as ErrorCorrelation.
+SCT-159-004 Undefined/invalid arithmetic SHALL return typed non-PASS, never fabricated numeric PASS.
+SCT-159-005 Epistemic reliability SHALL NOT scale rights/consent/authority.
+SCT-159-006 Soft numerical tolerance SHALL NOT widen a protected hard gate.
+
+PROVISIONAL TESTS
+TEST-SCT-159-001 all-zero discrepancy at n=1,3,10 under cardinality-neutral profile -> equivalent calibrated result.
+TEST-SCT-159-002 duplicate one evidence root ten times -> independent support does not increase.
+TEST-SCT-159-003 identical rare failures vs independent common failures -> cofailure and correlation remain distinct.
+TEST-SCT-159-004 empty/all-zero weights or invalid kappa/nonfinite input -> typed non-PASS.
+TEST-SCT-159-005 low-reliability testimony + valid consent -> consent remains valid; high reliability + no authority -> no authority.
+TEST-SCT-159-006 soft objective improvement beyond hard protected ceiling -> rejected before optimization.
