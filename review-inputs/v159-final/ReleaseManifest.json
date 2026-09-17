@@ -15,25 +15,76 @@
     "traceability_consistency_pass_and_frozen": true
   },
   "deliverables": [
-    {"bytes": 26345, "filename": "Garden_v15.9_CONSOLIDATED_UPGRADE_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "Consolidated", "sha256": "e61d3c22cda8a936717f360fe37a195f023e67cfce17674c1ffd5b5eacd3799e"},
-    {"bytes": 125796, "filename": "Garden_User_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "User", "sha256": "61f3e002762c41dfc8988fea22cf63ef5c9bd609b52d92f7d6e70fa02e0eac6b"},
-    {"bytes": 276124, "filename": "Garden_System_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "System", "sha256": "f800703ae004144ec50c31ac41ea8c0bde8486f15af4fa66838f785708485382"},
-    {"bytes": 1062486, "filename": "Garden_Technical_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "Technical", "sha256": "eb794368c550decefe6b37a5734a4515e9338504d5d1e2f4c4c4365ce05be5e1"},
-    {"bytes": 1294801, "filename": "Garden_Annexure_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "Annexure", "sha256": "37bb987758205ba5a82a9946666f7efd245a495700eb392c4face31db0dae06a"},
-    {"bytes": 201794, "filename": "Garden_Theories_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt", "role": "Theories", "sha256": "e090d07a602bf35129bff1601b9c46a754ff5e2bd4e65204304376256d41b438"}
+    {
+      "bytes": 26345,
+      "filename": "Garden_v15.9_CONSOLIDATED_UPGRADE_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "Consolidated",
+      "sha256": "e61d3c22cda8a936717f360fe37a195f023e67cfce17674c1ffd5b5eacd3799e"
+    },
+    {
+      "bytes": 125796,
+      "filename": "Garden_User_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "User",
+      "sha256": "61f3e002762c41dfc8988fea22cf63ef5c9bd609b52d92f7d6e70fa02e0eac6b"
+    },
+    {
+      "bytes": 276124,
+      "filename": "Garden_System_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "System",
+      "sha256": "f800703ae004144ec50c31ac41ea8c0bde8486f15af4fa66838f785708485382"
+    },
+    {
+      "bytes": 1062486,
+      "filename": "Garden_Technical_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "Technical",
+      "sha256": "eb794368c550decefe6b37a5734a4515e9338504d5d1e2f4c4c4365ce05be5e1"
+    },
+    {
+      "bytes": 1294801,
+      "filename": "Garden_Annexure_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "Annexure",
+      "sha256": "37bb987758205ba5a82a9946666f7efd245a495700eb392c4face31db0dae06a"
+    },
+    {
+      "bytes": 201794,
+      "filename": "Garden_Theories_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "role": "Theories",
+      "sha256": "e090d07a602bf35129bff1601b9c46a754ff5e2bd4e65204304376256d41b438"
+    }
   ],
   "executable_certification_claimed": false,
-  "frozen_source": {"filename": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt", "sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2"},
+  "frozen_source": {
+    "filename": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+    "sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2"
+  },
   "integrity_rule": "A later change to any bound deliverable, CurrentReadingMap, UpgradeTraceabilityTable, or this manifest invalidates closure until rebuilt and re-hashed. Detached digest is computed over the finalized manifest bytes and creates no authority.",
   "predecessor_gsl_compatibility_status": "NOT_STATED",
   "production_certification_claimed": false,
   "release_date": "2026-09-18",
   "release_label": "GARDEN v15.9 — COMPLETE CROSS-REVIEWED WORKING CANDIDATE",
-  "review_evidence": {"commit": "9b3e7840147cde7d680f5a2f168ade8b4681514b", "completed_model_calls_restarted": false, "completed_packet_range": "P001-P037", "p037_run_conclusion": "success", "p037_run_id": 35268180631, "wave5_blind_run_id": 35255993070, "wave5_challenge_run_id": 35256718065},
+  "review_evidence": {
+    "commit": "9b3e7840147cde7d680f5a2f168ade8b4681514b",
+    "completed_model_calls_restarted": false,
+    "completed_packet_range": "P001-P037",
+    "p037_run_conclusion": "success",
+    "p037_run_id": 35268180631,
+    "wave5_blind_run_id": 35255993070,
+    "wave5_challenge_run_id": 35256718065
+  },
   "schema": "GardenV159ReleaseManifest/v1",
   "semantic_review_status": "COMPLETE",
   "supporting_artifacts": {
-    "CurrentReadingMap": {"bytes": 8980, "filename": "CurrentReadingMap.json", "sha256": "e3e5caf18262292298620e7be2eb9be923bf4a1d3947a40e32ae9ce9656559f4", "validated": true},
-    "UpgradeTraceabilityTable": {"bytes": 17986, "filename": "UpgradeTraceabilityTable.md", "frozen": true, "sha256": "e53122e8e38d21967dec9d9035c230a84e95e6ca5891ec2f733fe0267908a64f"}
+    "CurrentReadingMap": {
+      "bytes": 8980,
+      "filename": "CurrentReadingMap.json",
+      "sha256": "e3e5caf18262292298620e7be2eb9be923bf4a1d3947a40e32ae9ce9656559f4",
+      "validated": true
+    },
+    "UpgradeTraceabilityTable": {
+      "bytes": 17986,
+      "filename": "UpgradeTraceabilityTable.md",
+      "frozen": true,
+      "sha256": "e53122e8e38d21967dec9d9035c230a84e95e6ca5891ec2f733fe0267908a64f"
+    }
   }
 }
