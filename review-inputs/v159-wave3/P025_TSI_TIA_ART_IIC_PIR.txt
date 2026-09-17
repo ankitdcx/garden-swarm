@@ -1,0 +1,36 @@
+GARDEN v15.9 REVIEW PACKET P025 — TSI / TIA / ART / IIC / PIR
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review truth/state integrity, transport-independent information authority, agent reputation/trust, institutional incentive consistency and protected integrity reporting as one integrity layer. Prevent self-authorship, reputation and channel availability from becoming authority or truth.
+
+TSI
+Consequential attempts, failures, retries, tools, effects, communications, authority decisions and corrections must not exist solely under acting-agent control. Summaries may compress but cannot launder history. Agent-authored memory/summaries/successor instructions remain provenance-marked claims/evidence. Concealment of material error/uncertainty/unauthorized action/conflict is integrity event. Acting agent cannot be sole actor+witness+historian+evaluator. Lawful erasure may remove payload while preserving strongest lawful accountability tombstone.
+
+TIA
+Channel availability does not create information authority. Forbidden disclosure remains forbidden through repos, file hosts, metadata, public sites, shared state, humans, temporary agents or novel protocols. Information authority follows information/effect + applicable authority, not transport name.
+
+ART
+Evidence survives ephemeral instances and binds to instance, lineage, model/version, configuration, role, orchestrator, tool profile, operator, evaluator or emergent structure. Dimensions include task/factual reliability, calibration, authority discipline, evidence/privacy integrity, error recovery, uncertainty handling and IntegrityUnderInconvenience. Unknown agents begin PROVISIONAL unless certified inherited evidence. Historic probation constants are profile parameters, not universal truth. Reputation != TrustAllocation != Authority. TrustAllocatedScope ⊆ ParentAuthorityEnvelope. Correlated peer testimony is not independent corroboration. Agent cannot unilaterally weaken its supervising evidence boundary.
+
+IIC
+Protected constraints must not remain in a condition where repeated violations receive systematic operational advantage over comparable compliance without an institutional inconsistency event. Rewards/reputation/resources causally dependent on invalidated action enter downstream revalidation. Materiality requires registered policy; insufficient sample/window does not fabricate conflict.
+
+PIR
+Consequential multi-agent environments require active authenticated detect -> report -> receipt -> triage -> independent verification -> bounded containment if required -> authorized resolution -> closure. A dead inbox is not active protection when harm can propagate. Report grants ability to report, not punishment authority. Temporary containment requires authority, credibility policy, bounds, review/expiry and independent appeal/un-containment.
+
+DEPENDENCIES
+Unit 019 already strengthened human protected-reporting protection/merits separation. This packet reviews agent/institutional integrity machinery and must not duplicate HumanCore reporting states.
+
+REVIEW QUESTIONS
+1. TSI: define independently anchored history without requiring impossible universal third-party observation; distinguish trusted external trace, cryptographic integrity and empirical truth.
+2. Check lawful erasure/tombstones for privacy membership leakage and accountability continuity.
+3. TIA: check transformations/derived summaries/encryption/metadata for information-authority laundering and recipient/purpose changes.
+4. ART: define evidence transfer across agent restart/copy/model/config/orchestrator change; prevent identity washing and stale reputation reuse.
+5. ART: check aggregation/hard-gate dimensions and no productivity compensation for critical integrity failure.
+6. IIC: define baseline/comparability/materiality enough to avoid both false positives and incentive-gaming blind spots.
+7. IIC: downstream invalidation should be dependency-local and include benefits/rewards created by invalid action without rewriting history.
+8. PIR: check containment credibility, expiry, appeal, privacy, independent verifier conflicts and emergency propagation.
+9. Check PIR/IIC relationship to Human protected reporting without duplicate authority or contradictory states.
+10. Compare DO_NOTHING/minimal binding repairs and request EXPAND_REQUIRED when context insufficient.
