@@ -1,29 +1,34 @@
 {
-  "schema": "GardenChatGPTWorkstreamIntent/v1",
-  "workstream_id": "chatgpt:v159-review-resume:20260917",
-  "work_package_id": "V159-REVIEW-RESUME",
-  "branch": "chatgpt/v159-review-resume-20260917",
   "base_sha": "d4b981d7c605e1c7ed1bd253bdb9c3681669b03d",
+  "branch": "chatgpt/v159-review-resume-20260917",
   "dependency_intent_ids": [],
-  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
   "draft_pr_created_before_substantial_edit": true,
-  "status": "ACTIVE",
+  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
   "overlap_prs": [
     214
   ],
-  "overlap_status": "OPENROUTER_ADMISSION_OVERLAP_REQUIRES_COMPARISON_BEFORE_MERGE",
-  "user_authorization": {
-    "date": "2026-09-17",
-    "campaign_total_usd": "10.00",
-    "billing_uncertainty_accepted": true,
-    "gemini_substitution_if_needed": true
-  },
+  "overlap_status": "COMPARED_BOUNDED_COMPOSITION_TESTS_PASSED",
   "planned_intent": {
-    "schema": "AgentWorkIntent/v1",
-    "intent_id": "chatgpt:v159-review-resume:20260917",
+    "affected_contracts": [
+      "GardenIndependentBranchConvergencePolicy/v1"
+    ],
+    "affected_invariants": [
+      "UNKNOWN_COST_IS_NOT_ZERO",
+      "ABANDONED_CALL_NEVER_RETRIED",
+      "CAMPAIGN_TOTAL_SPEND_CEILING",
+      "SOURCE_BOUND_REVIEW"
+    ],
     "agent_id": "ChatGPT-document-review",
-    "task_id": "V159-REVIEW-RESUME",
     "base_sha": "d4b981d7c605e1c7ed1bd253bdb9c3681669b03d",
+    "intended_effect": "Implement explicit user-authorized accounting exception for one abandoned historical call, conservatively reserve its full liability, and enforce a US$10 total v15.9 campaign ceiling without treating unknown billing as known or changing canonical design.",
+    "intent_id": "chatgpt:v159-review-resume:20260917",
+    "parallel_mode": "COORDINATED",
+    "schema": "AgentWorkIntent/v1",
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_ADMISSION",
+      "OPERATIONS_AND_BUDGET",
+      "DOCUMENT_REVIEW_CAMPAIGN"
+    ],
     "target_paths": [
       "workstreams/2026-09-17-v159-review-resume.json",
       "agents/v159-review-campaign.json",
@@ -32,7 +37,11 @@
       "tools/independent_branch_worker.py",
       "tools/independent_branch_continuation.py",
       "tests/test_review_campaign.py",
-      "docs/v159-review-resume.md"
+      "docs/v159-review-resume.md",
+      "agents/design-review-matrix.json",
+      "review-inputs/v159",
+      "tests/test_review_continuation.py",
+      "tests/test_single_review_worker.py"
     ],
     "target_symbols": [
       "GardenReviewCampaign/v1",
@@ -40,21 +49,16 @@
       "_reconcile_known_attempts",
       "dispatch"
     ],
-    "semantic_domains": [
-      "OPENROUTER_REVIEW_ADMISSION",
-      "OPERATIONS_AND_BUDGET",
-      "DOCUMENT_REVIEW_CAMPAIGN"
-    ],
-    "affected_invariants": [
-      "UNKNOWN_COST_IS_NOT_ZERO",
-      "ABANDONED_CALL_NEVER_RETRIED",
-      "CAMPAIGN_TOTAL_SPEND_CEILING",
-      "SOURCE_BOUND_REVIEW"
-    ],
-    "affected_contracts": [
-      "GardenIndependentBranchConvergencePolicy/v1"
-    ],
-    "intended_effect": "Implement explicit user-authorized accounting exception for one abandoned historical call, conservatively reserve its full liability, and enforce a US$10 total v15.9 campaign ceiling without treating unknown billing as known or changing canonical design.",
-    "parallel_mode": "COORDINATED"
-  }
+    "task_id": "V159-REVIEW-RESUME"
+  },
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "status": "ACTIVE",
+  "user_authorization": {
+    "billing_uncertainty_accepted": true,
+    "campaign_total_usd": "10.00",
+    "date": "2026-09-17",
+    "gemini_substitution_if_needed": true
+  },
+  "work_package_id": "V159-REVIEW-RESUME",
+  "workstream_id": "chatgpt:v159-review-resume:20260917"
 }

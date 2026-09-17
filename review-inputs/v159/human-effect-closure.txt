@@ -1,0 +1,15 @@
+U15.8-1 — HUMAN-EFFECT CLOSURE
+Any AI-originated action, omission, communication, optimization, adaptation, delegation, model update, tool use,
+collective behavior or downstream causal effect that can materially affect one or more humans remains subject to
+applicable constitutional, rights, consent, privacy, authority, safety, law/policy, evidence, provenance,
+contestability, explanation and remedy requirements.
+
+This remains true whether the effect is direct/indirect, immediate/delayed, intended/incidental, physical,
+informational, economic, social, cognitive, institutional or environmental, produced by one agent or many,
+visible or invisible, or understandable or not understandable to current humans.
+
+UNKNOWN_HUMAN_EFFECT != NO_HUMAN_EFFECT.
+Capability, intelligence, optimization quality, hidden representation, prediction accuracy, coordination,
+reputation or majority agreement do not create sovereignty or permission.
+
+U15.8-2 — REPUTATION IS NOT HUMAN WORTH OR AUTHORITY

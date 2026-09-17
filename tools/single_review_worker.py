@@ -18,6 +18,7 @@ import time
 from urllib import request, error, parse
 
 from tools import matrix_design_review as review
+from tools import review_campaign
 from tools.provider_exclusion import load_policy, require_allowed_model, excluded_provider_slugs
 
 REPO = 'ankitdcx/garden-swarm'
@@ -113,10 +114,10 @@ def next_slot(cycle, families):
     return None
 
 
-def budget_check(state, key_info, policy, now):
+def budget_check(state, key_info, policy, now, campaign=None):
     if state.get('paused') is not False:
         raise ValueError('single worker paused')
-    if any(a['status'] in ('RESERVED', 'UNKNOWN') for a in state['attempts']):
+    if review_campaign.blocking_attempts(state, campaign):
         raise ValueError('outstanding reservation/unknown cost; reconciliation required')
     if key_info.get('is_management_key') is True or key_info.get('is_free_tier') is True:
         raise ValueError('paid inference key required')
@@ -129,18 +130,20 @@ def budget_check(state, key_info, policy, now):
     # Conservatively count known old account spend plus local spend, even where
     # provider totals already include it. This tolerates delayed usage reporting.
     baseline = max([daily] + [money(a['usage_daily_before']) for a in current])
-    spent = sum((money(a['cost']) for a in current), Decimal(0))
+    spent = sum((review_campaign.accounting_charge(a, campaign) for a in current), Decimal(0))
     if baseline + spent + reserve > ceiling:
         raise DailyBudget('daily reservation exhausted')
     # Charge all historical key spend against the routine pool, conservatively;
     # no access to challenger/escalation/emergency funds is granted here.
     routine = money(policy['budget_pools_usd']['routine'])
-    all_spent = sum((money(a['cost']) for a in state['attempts']), Decimal(0))
+    all_spent = sum((review_campaign.accounting_charge(a, campaign) for a in state['attempts']), Decimal(0))
     if usage + all_spent + reserve > routine:
         raise ValueError('routine lifetime allocation exhausted')
     remaining = key_info.get('limit_remaining')
     if remaining is not None and money(remaining) < reserve:
         raise ValueError('key credit limit too low')
+    if campaign:
+        review_campaign.check_total(state, campaign, reserve)
     return reserve, day, str(daily)
 
 
@@ -221,6 +224,10 @@ def target_bindings(root, policy, exclusions):
     matrix, active = review.load_matrix(root)
     manifest = json.loads((root / 'SOURCE_MANIFEST.json').read_text())
     expected = {f['path']: f['sha256'] for f in manifest['canonical_files']}
+    campaign = review_campaign.load_campaign(root)
+    if campaign:
+        expected.update({row['path']: row['sha256'] for row in campaign.get('source_slices', [])
+                         if row.get('master_sha256') == campaign['source_sha256']})
     families = [m['family'] for m in policy['routine_reviewers']]
     if len(set(families)) < 3 or len(set(families)) != len(families):
         raise ValueError('distinct allocated reviewer families required')
