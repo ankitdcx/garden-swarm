@@ -1,0 +1,46 @@
+GARDEN v15.9 REVIEW PACKET P022 — KNOWLEDGE / CURATION / GSL-KR / WORLD EVIDENCE
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review Capability.Knowledge, Knowledge.Curation, GSL-KR as implementation profile, Observation/Evidence/Claim/Knowledge separation, KnowledgeSnapshot, revalidation and the v15.8 World Evidence Graph. Preserve Knowledge != GSL-KR and avoid promoting storage/retrieval/model weights into truth or authority.
+
+GLOBAL BOUNDARIES
+- GSL v45.1, ten Core Objects, 24 Core Relations unchanged.
+- ObservationRecord != Evidence != Claim != KnowledgeRecord.
+- Prediction/retrieval/model output != Evidence by generation alone.
+- Unit 005 strengthened provenance/dependence/privacy; Unit 006 DesignEpoch; Unit 007 dependency invalidation; Unit 013 mandatory closure vs ranked retrieval; Unit 017 Research evidence boundary.
+- Capability.Knowledge is semantic owner; Profile.Knowledge.GSL-KR is repository/reference implementation.
+
+CURRENT KNOWLEDGE SEMANTICS
+Knowledge stores observations, evidence, claims, theories, interpretations, provenance and snapshots. Validation can change while immutable source/history remains inspectable. Contradictions can remain CONFLICTED/UNKNOWN/INCONCLUSIVE. Revalidation can be triggered by new evidence, changed assumptions/environment/dependency, contradiction, staleness or higher assurance demand.
+KnowledgeSnapshot and EnvironmentCommitment bind uses to current epistemic/environment state.
+
+WORLD EVIDENCE GRAPH — v15.8
+Garden may maintain a provenance-rich graph separating:
+1 raw evidence;
+2 typed semantic world state;
+3 purpose-limited agency profiles;
+4 active retrieved context;
+5 model weights/general learned structure.
+Weight memory != evidentiary ledger. Copies do not multiply evidence weight. Minority evidence may not be destroyed because rare/unpopular. Private-device/private-record ingestion requires valid purpose + consent/law/authority/privacy and minimum necessary controls.
+Technical rules: maintain lineage/dependence; high-consequence entity merge needs stronger evidence and reversible merge/split history; active retrieval returns smallest-sufficient relevant subgraph including provenance, contradictions, competing explanations, uncertainty and applicable authority/rights/policy; disputable/privacy/provenance-critical facts remain explicit rather than only weight memory.
+Existing tests: repeated article does not multiply evidence; minority original remains visible against derivatives; private device without authority is blocked.
+
+CURATION
+Curation may deduplicate, normalize, correct, retract, annotate, compact and prioritize, but must preserve provenance, contradictions, retractions, lawful erasure and historical epistemic state. Curation cannot manufacture Evidence or erase material minority/counter evidence through popularity.
+
+GSL-KR BOUNDARY
+GSL-KR may implement current Knowledge storage/query semantics, but replaceability must remain possible through an owner-qualified Knowledge interface. Repository indexes/caches/embeddings are implementation projections and cannot become semantic truth sources.
+
+REVIEW QUESTIONS
+1. Define a stable Knowledge interface that makes GSL-KR replaceable without weakening semantics.
+2. Clarify knowledge acceptance/currentness result states: supported/current, conflicted, stale, unknown, revalidation-required, retracted/superseded as appropriate without collapsing claim truth.
+3. Check evidence-root de-duplication, common-source dependence, circular support and minority evidence retention.
+4. Check entity merge/split identity and irreversible merge risk.
+5. Check curation/compaction/lawful erasure versus auditability and reconstruction.
+6. Check active-context retrieval for selection bias: smallest-sufficient subgraph must preserve material contradiction/alternatives.
+7. Check model-weight memory and embeddings cannot satisfy evidentiary ledger requirements.
+8. Check privacy/access/derived-data taint across caches, embeddings, summaries and model-derived artifacts.
+9. Check KnowledgeSnapshot reuse/invalidation and cross-epoch compatibility.
+10. Compare DO_NOTHING/minimal binding repairs. Request EXPAND_REQUIRED rather than invent missing semantics.
