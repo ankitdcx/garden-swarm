@@ -1,0 +1,36 @@
+GARDEN v15.9 REVIEW PACKET P002 — TEN CORE OBJECTS
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review the ten-object ontology without changing it unless a defect is concrete and material. Prefer semantic clarification over ontology growth.
+
+CURRENT v15.8 SEMANTICS
+GSL v45.1 provides six Pillars, ten Core Objects and 24 Core Relations.
+
+TIME — when something exists, happens or is valid.
+SPACE — where something is located or related spatially.
+THING — the general root for entities and artifacts.
+EVENT — something that occurs.
+ACTION — an intentional state-changing operation.
+AGENCY — actors, capability, delegation and accountability.
+RULE — a condition, conclusion, obligation or constraint.
+VALUE — facts, preferences and norms represented without collapsing them together.
+CONTEXT — the scope and circumstances in which meaning and rules apply.
+CLAIM — an assertion that can be supported, challenged, qualified or remain unknown.
+
+CORE OBJECT CLOSURE
+Each of TIME, SPACE, THING, EVENT, ACTION, AGENCY, RULE, VALUE, CONTEXT and CLAIM has stable ID/reference form, equality/identity semantics, version/validity semantics, lifecycle/status, provenance and typed conversions.
+ObservedEvent != ObservationRecord. Occurrence and its recorded artifact cannot be silently conflated.
+HumanCore.DelegatedAgent means an AI agent acting for a user. GSL AGENCY is the semantic/ontological object; Agent != Agency.
+GSL TIME != Capability.State.TimeService; GSL EVENT != Capability.State.EventService; GSL SPACE != Domain.Applied.Space; GSL CONTEXT != Context.LocaleCulture.
+
+EPISTEMIC BOUNDARIES
+observation != evidence != claim != knowledge; prediction != evidence; proof != empirical truth; intent != authority; UNKNOWN != FALSE.
+
+CONSTRAINTS
+- v15.8 says topology unchanged and asserts no new Core Object.
+- Minimum Stable Core requires typed semantic representation through GSL and the ten Core Objects.
+- A service, profile, domain or architecture object must not be promoted into a Core Object merely for convenience.
+- Review whether identity/equality, occurrence-vs-record, actor-vs-agency, VALUE semantics, CONTEXT scope and CLAIM status are sufficiently non-overlapping and machine-projectable.
+- Compare DO_NOTHING and simpler repairs.
