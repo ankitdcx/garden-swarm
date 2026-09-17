@@ -59,6 +59,8 @@ Any comparative conclusion requires at minimum:
 
 Missing any required comparison basis -> UNRESOLVED, not an inferred ranking.
 
+The retained cross-tenant mutable-service covert-channel experiment and opaque-ID equivariance experiment remain bounded experiments/claims. This document does not promote them to external empirical results or theorems; promotion requires the ordinary evidence/review path.
+
 5. TH15.8 SUMMARY ALIASES
 TH15.8-1..14 are explanatory summary aliases to their detailed current owners (including the P022–P026 dependency families), not separate competing normative systems.
 
@@ -72,7 +74,7 @@ Use the existing reviewer-independence/provenance owner rather than inventing on
 A rejection-memory entry retains its negative/rejected disposition, scope, reason, provenance and invalidators. Retrieval, migration, repetition or later reuse SHALL NOT silently convert it into positive evidence for promotion. Reconsideration requires a new version/evidence path; the historical rejection remains inspectable subject to privacy/lawful erasure.
 
 8. REPRODUCTION / PROMOTION WORDING
-No research/learning profile receives permission to reproduce, deploy, activate or self-promote merely because the source says 'no autonomous reproduction'. Any consequential reproduction/deployment/promotion still requires the ordinary applicable Research/Evolve/Proof/AAP/authority/admission path.
+Statements prohibiting autonomous reproduction do not themselves grant or define any reproduction, deployment, activation or promotion authority. Any consequential reproduction/deployment/promotion requires the ordinary applicable Research / Evolve / Proof / admission / legitimate-authority path and all other hard gates.
 
 9. HISTORICAL OPERATIONAL FACTS
 Historic budgets, prices, paused schedules, repository settings and operational observations remain dated evidence. They do not become current policy/theory axioms without a current verified source.
@@ -82,17 +84,19 @@ P30-001 DEFERRED/UNRESOLVED profile names have no operational semantics until ad
 P30-002 Historical CASI mention cannot reactivate a deferred adapter.
 P30-003 Qualification/certification transfer is scoped and fail-closed on missing assumptions/invalidators.
 P30-004 Comparative cognitive conclusions require pinned artifacts and common protocol; otherwise UNRESOLVED.
-P30-005 TH15.8 summaries are aliases, not independent normative owners.
-P30-006 Reviewer count does not manufacture independence.
-P30-007 Rejection memory cannot become positive evidence by retrieval/migration.
-P30-008 Research profile wording cannot create reproduction/deployment/promotion authority.
-P30-009 Historic operational facts do not silently become current policy.
+P30-005 Pending bounded experiments remain experiment/claim status until independently promoted.
+P30-006 TH15.8 summaries are aliases, not independent normative owners.
+P30-007 Reviewer count does not manufacture independence.
+P30-008 Rejection memory cannot become positive evidence by retrieval/migration.
+P30-009 Research profile wording cannot create reproduction/deployment/promotion authority.
+P30-010 Historic operational facts do not silently become current policy.
 
 PROVISIONAL TESTS
 TEST-P30-DEFER-001 legacy CASI adapter reference with no admitted activation -> remains DEFERRED/non-executable.
 TEST-P30-DEFER-002 similar active profile exists next to unresolved UCAS -> UCAS still satisfies no requirement.
 TEST-P30-TRANSFER-001 manufacturing/config change with no declared invalidators -> old assurance does not transfer.
 TEST-P30-COMP-001 comparator version missing -> no superiority/ranking conclusion.
+TEST-P30-EXP-001 pending experiment appears in current theory summary -> remains experiment/claim, not verified external result.
 TEST-P30-ALIAS-001 TH15.8 summary conflicts with owner -> summary STALE; owner governs.
 TEST-P30-INDEP-001 four reviewers share material data/evaluator lineage -> evidence marked correlated, not four independent roots.
 TEST-P30-REJECT-001 rejected candidate retrieved after migration -> remains REJECTED unless new version/evidence path is evaluated.
