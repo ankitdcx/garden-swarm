@@ -1,0 +1,56 @@
+GARDEN v15.9 REVIEW PACKET P010 — ACTIVATION & ASSURANCE POLICY (AAP v1.0)
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review AAP as Engine.Orchestrate's activation/assurance profile: minimum sufficient architecture closure and assurance depth without weakening hard requirements or over-activating the whole system.
+
+PRIMARY PRINCIPLE
+For every requested operation, Garden determines which engines/capabilities/domains activate; mandatory/optional checks; verification depth; resource/time limits; human approval requirements; and fallback on uncertainty/failure/timeout. Safety emergencies may use pre-authorized paths but never bypass Constitution/rights, K0P, authenticity or legitimate authorization.
+
+CLASSIFICATION DIMENSIONS
+CONSEQUENCE
+IRREVERSIBILITY
+AUTHORITY
+NOVELTY_UNCERTAINTY
+SENSITIVITY
+Domain-specific dimensions may refine without weakening minimum assurance floor.
+
+PROFILES
+BASIC: routine, familiar, low-consequence, reversible; cheap retrieval/type/policy checks; fresh validated cache reuse.
+STANDARD: ordinary consequential reasoning/action; dependency closure, applicable policy/invariant checks, evidence freshness, ordinary verification.
+CRITICAL: high consequence/material irreversibility/sensitive authority/safety/security/financial/health; independent verification, deeper evidence/proof, stronger simulation/test, human/authority gates.
+SOVEREIGN: constitutional/system-root/highest consequence/canonical architecture change; maximum bounded assurance, whole affected closure, independent challenge, explicit governance/human approval, rollback/compensation and post-change validation.
+
+PIPELINE
+Receive -> classify -> discover typed relevant closure -> identify mandatory gates -> plan resources/time -> run assurance -> authority/consent -> execute/commit or defer/block/fallback -> observe/validate -> receipt/explanation -> learn/revalidate.
+
+CANONICAL ARTIFACTS
+OperationProfile; ActivationPlan; AssurancePlan; ResourceBudget; ApprovalPlan; AssuranceReceipt; OmissionJustification.
+
+BINDING RULES
+- selected_profile >= maximum applicable requested, risk-derived, domain, policy and constitutional assurance floor.
+- omitted potentially relevant object has typed omission justification; critical/sovereign may require stronger closure proof.
+- execution requiring admission binds fresh APPROVED AssuranceReceipt to locally verifiable ExecutionAdmissionToken; post-commit audit cannot replace pre-execution admission.
+- PREAUTHORIZED_FAST/EMERGENCY_LOCAL uses authority granted before emergency and remains bounded by hard gates.
+- distributed quorum requirements are protocol/authority/profile-specific; no universal count.
+- resource pressure cannot lower mandatory constitutional or physical-safety floor; unavailable assurance reduces authority or transfers to qualified minimum-risk path.
+
+BOOTSTRAP
+Cold start uses immutable bootstrap policy/manifest + measured boot; initial integrity UNKNOWN/DEGRADED; only allow-listed diagnostics/safe initialization before live IntegrityHealth. Bootstrap path is pre-authorized minimum policy, not a bypass.
+
+ASSURANCE REUSE
+AssuranceContextToken carries exact scope, expiry/review, DesignEpoch, KnowledgeSnapshot, EnvironmentCommitment, dependency/assumption closure, invalidators, authority/assurance floor and provenance. Recompute invalidated/newly applicable predicates.
+
+CONSTRAINTS
+Review:
+- monotonic assurance floors and dimension interactions;
+- profile discontinuities / cliff effects;
+- minimum-sufficient closure proof and omission justification;
+- bootstrap recursion/trust assumptions;
+- reuse/token freshness and TOCTOU;
+- resource exhaustion/degradation;
+- fast/emergency paths;
+- split R/V/S tier floors;
+- when reclassification is mandatory mid-process.
+Compare DO_NOTHING and minimal repair.
