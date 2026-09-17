@@ -1,0 +1,46 @@
+GARDEN v15.9 REVIEW PACKET P028
+Topic: TRAIN / GAIA Titanium & Diamond / domain reference profiles
+Frozen source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Exact Theory source family: local Theories 2519–2997 (master 42011–42489).
+
+BOUNDARY
+Review physical-assurance wording and domain reference profiles. Preserve P023 GSL-PHYSICS/critical-continuity semantics, P026 PAI, K0P, typed uncertainty and profile-specific qualification. Do not universalize illustrative constants or invent a second physical fallback engine.
+
+SOURCE — TRAIN ASSURANCE GEOMETRY
+Layer 1 — Hard Viability Kernel: physically enforced invariant region in which safety constraints hold.
+Layer 2 — Probabilistic Envelope: epistemic envelope expanding/contracting with uncertainty and bounded exploration while subordinate to the hard viability kernel.
+Safety degradation lattice:
+  Safe → Constrained → Degraded → Emergency → Halt
+Capability may be shed to preserve safety; normal authority cannot return without specified recovery conditions.
+
+SOURCE — TRAIN CONTROLLERS / FALLBACK LANGUAGE
+TRAIN/Titanium reference text contains local statements equivalent to below-floor => halt, deadline miss => deterministic safe-halt, disconnect/watchdog fallback, while other Garden contracts explicitly recognize that blind halt can be more hazardous than bounded minimum-risk continuity for active physical systems.
+
+SOURCE — GAIA TITANIUM / DIAMOND
+Titanium is a deterministic/local safety-kernel reference profile; Diamond adds asynchronous capability tokens, local veto and bounded consensus/network assumptions. Network consensus is not itself the hard real-time tick safety mechanism. Hardware ability to veto forbidden commands must be preserved.
+
+SOURCE — ROBOTICS v3.3
+The local profile invokes strict/Slater-style feasibility and describes 'Recursive Slater' as guaranteeing feasibility persists across timesteps, with closed-form fallback and illustrative timing. Existing TRAIN/physical contracts separately require dynamics, uncertainty, viability, observation error, timing and composition evidence.
+
+SOURCE — MEDIA v1.11
+A curvature regularizer is described as ensuring smooth latent trajectories and avoiding flicker/identity drift. Garden separately treats identity/semantic/content-policy conformance as distinct checks.
+
+SOURCE — DOMAIN PROFILE STATUS
+MEDICAL, AUTOMOTIVE, POWER/GRID, CLOUD/DC, FINANCIAL, INDUSTRIAL, MEDIA and ROBOTICS are reference/specification profiles. Global performance labels and numerical benefits remain illustrative/unvalidated unless qualified by their domain owner/evidence.
+AUTOMOTIVE already rejects a universal blind halt and binds operation to its domain/ODD.
+POWER/GRID 'N-1' and similar claims remain model/feasibility-bound under TheoryEquationContract.
+
+REVIEW QUESTIONS
+1. Should every local TRAIN/Titanium 'halt/safe-halt/disconnect' shorthand explicitly resolve to the active domain-qualified minimum-risk transition rather than mean zero-output universally?
+2. When the preferred safe state is physically unreachable, must the result explicitly record assurance loss and use the prequalified least-risk continuity/handoff path rather than label the outcome 'guaranteed safe'?
+3. Is present-step strict feasibility insufficient to claim recursive feasibility absent robust invariant/reachable-set or equivalent dynamics/disturbance/constraint proof?
+4. Must robotics fallback be proven against the full active coupled barrier/actuator/timing problem, not one simplified barrier?
+5. Should illustrative latency such as ≤50 μs remain non-normative until actual hardware/solver evidence exists?
+6. Does latent curvature support only a candidate smoothness objective, while output identity continuity, flicker, semantic policy and rights/content constraints require separate qualified evaluation?
+7. Do any other domain phrases accidentally read as universal guarantees rather than profile-conditional specifications?
+
+DO_NOTHING COMPARATOR
+Do not change wording merely for style. Accept KEEP where inherited profile qualifiers already prevent unsafe machine projection. Change only where the local sentence could reasonably be used as a stronger theorem/guarantee than Garden actually has.
+
+OMISSION LEDGER
+This packet does not repeat full GSL-PHYSICS, PAI, Execution or critical-continuity contracts. If an issue depends on an exact fallback authority/receipt, request the anchor rather than inventing one.
