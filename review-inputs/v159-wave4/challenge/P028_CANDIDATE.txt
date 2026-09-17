@@ -2,13 +2,13 @@ GARDEN v15.9 — P028 TRAIN / GAIA / DOMAIN PROFILE SYNTHESIZED CANDIDATE
 Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
 
 1. MINIMUM-RISK TRANSITION BINDING
-Every TRAIN/Titanium/domain reference phrase such as:
+Every TRAIN/Titanium/domain reference phrase lacking an already-qualified resolution, such as:
   halt
   safe-halt
   disconnect
   watchdog fallback
   below-floor => halt
-SHALL resolve to the active domain-qualified minimum-risk transition under the governing GSL-PHYSICS / Safety / Continuity / FET profile.
+SHALL resolve to the active domain-qualified minimum-risk transition under the governing GSL-PHYSICS / Safety / Continuity / FET profile. Profiles that already contain an equivalent qualified rule retain it and only require consistency with this binding.
 
 'Halt' does not universally mean zero output. Zero output is selected only where the qualified domain safety case establishes it as the appropriate minimum-risk action.
 
@@ -17,6 +17,12 @@ If the preferred nominal safe state is physically unreachable, the system SHALL:
 - select the prequalified least-risk continuity/handoff/controlled-safe-state action available under current authority;
 - preserve unresolved physical/effect state;
 - not issue a 'guaranteed safe' claim merely because a fallback path executed.
+
+If no prequalified least-risk path is available under current authority, the system SHALL remain in an owner-qualified UNKNOWN/non-PASS assurance-loss state and shed capability toward the safest attainable bounded condition permitted by the active domain profile. It SHALL NOT synthesize an unqualified continuity or safe-state claim at runtime.
+
+Restoration of shed capability or normal authority SHALL occur only under the active profile's specified recovery/requalification conditions. Executing a fallback or continuity path does not by itself restore normal authority.
+
+The independent hardware/local veto path for forbidden commands SHALL remain available where the profile requires it. Minimum-risk transition selection SHALL NOT supersede, disable or reinterpret such veto enforcement as authority.
 
 2. ROBOTICS RECURSIVE FEASIBILITY
 Present-step strict feasibility / Slater-style constraint qualification SHALL NOT by itself be described as guaranteeing recursive feasibility.
@@ -74,6 +80,8 @@ MEDICAL, AUTOMOTIVE, POWER/GRID, CLOUD/DC, FINANCIAL, INDUSTRIAL, MEDIA and ROBO
 PROVISIONAL INVARIANTS
 TRAIN-159-001 Halt shorthand SHALL resolve to domain-qualified minimum-risk transition, not universal zero-output.
 TRAIN-159-002 Unreachable nominal safe state SHALL record assurance loss rather than 'guaranteed safe'.
+TRAIN-159-003 Fallback execution SHALL NOT automatically restore shed capability or normal authority.
+TRAIN-159-004 Required hardware/local veto enforcement SHALL remain independent of minimum-risk transition selection.
 ROBOTICS-159-001 Instantaneous strict feasibility SHALL NOT imply recursive feasibility without separate qualified proof.
 ROBOTICS-159-002 Fallback qualification SHALL cover the actual coupled active constraint/timing problem.
 PROFILE-159-001 Illustrative performance constants SHALL NOT become normative without exact qualification evidence.
@@ -81,8 +89,10 @@ MEDIA-159-001 Latent smoothness regularization SHALL NOT substitute for output i
 
 PROVISIONAL TESTS
 TEST-TRAIN-159-001 zero output increases hazard while bounded continuity reduces it -> qualified continuity selected.
-TEST-TRAIN-159-002 preferred safe state unreachable -> assurance loss + least-risk handoff, no guaranteed-safe receipt.
+TEST-TRAIN-159-002 preferred safe state unreachable and no prequalified fallback exists -> assurance loss/non-PASS; no invented safe-state claim.
+TEST-TRAIN-159-003 fallback executes successfully but recovery conditions are unmet -> normal authority remains unavailable.
+TEST-TRAIN-159-004 software continuity selection attempts command forbidden by independent hardware veto -> veto still blocks.
 TEST-ROBOTICS-159-001 current QP strictly feasible; next state under allowed disturbance infeasible -> present-step proof does not certify recursion.
-TEST-ROBOTICS-159-002 simplified fallback violates second active barrier/actuator constraint -> fallback non-PASS.
+TEST-ROBOTICS-159-002 simplified fallback violates any materially active barrier, actuator, shared-resource, timing or composition constraint not covered by its qualification evidence -> fallback non-PASS.
 TEST-PROFILE-159-001 illustrative 50us value on untested target -> cannot satisfy runtime safety deadline.
 TEST-MEDIA-159-001 low-curvature latent path crosses identity/policy boundary -> smoothness PASS does not imply identity/policy PASS.
