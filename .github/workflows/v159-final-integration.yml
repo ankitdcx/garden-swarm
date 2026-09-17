@@ -1,0 +1,35 @@
+name: Garden v15.9 final integration review
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave5-032-036-20260917'
+    paths:
+      - 'review-inputs/v159-final/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Four-family final integration review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave_board.py "review-inputs/v159-final/P037_FINAL_INTEGRATION.txt"
+      - name: Upload integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-final-integration-${{ github.run_id }}
+          path: review-results/v159-wave1/P037_FINAL_INTEGRATION/
+          if-no-files-found: error
+          retention-days: 30
