@@ -1,0 +1,92 @@
+GARDEN v15.9 — P024 SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Basis: frozen v15.8 packet + pre-review ChatGPT baseline + preserved four-family blind review.
+
+1. CAUSAL SAFETY UNIT
+Retain the causal closure of a consequential effect as the relevant safety unit across training, inference context, memory/retrieval, tools, agents, organizations, humans, physical systems and infrastructure.
+Distributed causal participation never allows every owner to disclaim the effect.
+Capability, novelty, intelligence, reputation, optimization, resources, coordination or model consensus never manufacture authority.
+
+2. UBC — EFFECT EQUIVALENCE
+"Alternate transport -> same authority result" is narrowed to:
+If two effects are equivalent under the declared ComparePolicy over every material authority-relevant dimension, changing transport/encoding/site/tool/intermediary alone does not change the authority result.
+If material scope, recipient, purpose, rights, privacy, timing, composition, reversibility, physical consequence or other declared dimensions differ, the effects are not assumed equivalent.
+UNKNOWN material equivalence is not treated as equivalence.
+
+3. COMPOSITION
+Allowed(A) AND Allowed(B) does not imply Allowed(A composed-with B).
+Sequential, parallel, delegated and intermediary compositions are checked against the effective outcome and current authority/effect envelope.
+Human/agent/market/proxy intermediation does not erase the original authority requirement.
+
+4. OBSERVATION AS ACTION
+Observation/testing is action when it itself discloses, perturbs, signals, creates persistent knowledge, consumes consequential resources or causes another governed effect.
+The observation/testing step requires its own applicable authority/safety/effect checks; a denial of the proposed effect does not grant permission to probe it.
+
+5. UBC IRREVERSIBLE UNKNOWN TEST REPAIR
+Controlling rule:
+An uncharacterized irreversible effect whose observation/testing may itself cause prohibited harm is DENY for the proposed ordinary action pending the applicable admissibility evidence/proof.
+The short test is revised accordingly; it is not a universal rule that every uncertain irreversible effect always halts every qualified continuity/fallback path.
+Separately pre-authorized qualified fallback/minimum-safe continuity remains governed by its own active hard gates and envelope.
+Residual uncertainty demonstrably inside a qualified active envelope follows that envelope/AAP; unbounded material residual risk remains non-PASS.
+
+6. CAUSAL CLOSURE RECEIPT / KNOWN GAPS
+CausalClosureReceipt retains:
+root effect; causal nodes/edges; contributing subsystems; owners; authority refs; evidence/provenance; ComparePolicy; effect class; unresolved obligations; DesignEpoch; disposition.
+"known gaps" SHALL include enough classification to distinguish:
+- material unresolved gap;
+- accepted bounded limitation under a declared profile;
+- out-of-scope/non-material gap with justification;
+- UNKNOWN materiality.
+A material/required unresolved causal link cannot silently disappear into a generic gap list. It routes to the owning Compare/AAP/authority rule.
+No claim of complete causal-graph knowledge is required.
+
+7. CLIC SEMANTIC CONSERVATION
+Cross-layer transformations preserve or explicitly report loss of material:
+- units/frames;
+- event/validity time;
+- identity/commitments;
+- scope;
+- allowed effects;
+- epistemic status;
+- authority/consent bindings;
+- provenance/dependence.
+Syntax equality, hashes, embeddings or behavioral similarity alone do not establish semantic equivalence.
+Prediction/counterfactual/model outputs remain model-qualified and do not become observations in downstream causal accounting.
+
+8. CLIC COMMON CAUSE / EMERGENCE
+Shared/common causal roots are not multiplied as independent support. Emergent multi-agent effects retain collective causal closure and responsible-owner links.
+Copy/fork/migration does not expand identity, commitments or delegated authority.
+Rollback/reversibility claims distinguish internal design/software restoration from irreversible external effects.
+
+9. GCL — BOUNDED ANALYTICAL PROFILE
+GCL remains a bounded causal-leverage analytical/theory profile.
+Any scalarization:
+- references the original vector/effect/intervention representation;
+- declares metric/normalization and scope;
+- propagates material uncertainty/dependence;
+- rejects/returns UNKNOWN where the qualified arithmetic is not valid;
+- preserves provenance sufficient to reconstruct the meaning of the scalar;
+- cannot be used as a permission, moral-value, rights or authority signal without a separate legitimate decision rule.
+High leverage != beneficial, safe, lawful or authorized.
+
+PROVISIONAL INVARIANTS
+P24-001 Novel mechanism never creates authority.
+P24-002 Effect-equivalence requires declared material dimensions; unknown material equivalence is not PASS.
+P24-003 Component authorization never implies composition authorization.
+P24-004 Observation/testing is governed when it itself has material effect.
+P24-005 UBC irreversible-unknown fail-closed test retains the harmful-observation/testing condition.
+P24-006 Qualified fallback is not erased by an overbroad ordinary-action test.
+P24-007 Material causal gaps remain explicit and owner-routed.
+P24-008 CLIC preserves epistemic/authority semantics as well as data representation.
+P24-009 Shared causal roots are not independent evidence.
+P24-010 GCL scalarization preserves vector provenance/uncertainty and never creates authority.
+
+PROVISIONAL TESTS
+TEST-P24-UBC-001: transport changed but all material ComparePolicy dimensions equivalent -> same authority treatment.
+TEST-P24-UBC-002: transport change also changes recipient/purpose -> not automatically equivalent.
+TEST-P24-COMP-001: individually permitted A and B compose into unauthorized outcome -> blocked/reviewed.
+TEST-P24-OBS-001: probing action itself risks prohibited irreversible harm -> no probing permission from uncertainty.
+TEST-P24-IRREV-001: unknown irreversible effect with harmful-observation risk -> ordinary action denied pending applicable evidence.
+TEST-P24-FALLBACK-001: independently prequalified minimum-safe continuity remains evaluated under its own envelope, not blanket-denied by TEST-UBC-005.
+TEST-P24-GAP-001: material unresolved causal edge in receipt -> explicit non-PASS/escalation according to owning rule.
+TEST-P24-GCL-001: scalar leverage loses vector provenance or ignores uncertain denominator/dependence -> invalid/UNKNOWN.
