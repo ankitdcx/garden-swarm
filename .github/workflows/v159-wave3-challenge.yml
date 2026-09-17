@@ -1,0 +1,55 @@
+name: Garden v15.9 wave 022-026 challenge
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave3-022-026-20260917'
+    paths:
+      - 'review-inputs/v159-wave3/challenge-trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  challenge:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P022_KNOWLEDGE_CURATION_GSL_KR_WORLD_EVIDENCE
+            source: P022_KNOWLEDGE_CURATION_GSL_KR_WORLD_EVIDENCE.txt
+            candidate: P022_CANDIDATE.txt
+          - id: P023_GSL_PHYSICS_DIGITAL_TWIN_CRITICAL_CONTINUITY
+            source: P023_GSL_PHYSICS_DIGITAL_TWIN_CRITICAL_CONTINUITY.txt
+            candidate: P023_CANDIDATE.txt
+          - id: P024_CAUSAL_SAFETY_UBC_CLIC_GCL
+            source: P024_CAUSAL_SAFETY_UBC_CLIC_GCL.txt
+            candidate: P024_CANDIDATE.txt
+          - id: P025_TSI_TIA_ART_IIC_PIR
+            source: P025_TSI_TIA_ART_IIC_PIR.txt
+            candidate: P025_CANDIDATE.txt
+          - id: P026_CSI_SMCD_CAD_OAC_CTSN_PAI
+            source: P026_CSI_SMCD_CAD_OAC_CTSN_PAI.txt
+            candidate: P026_CANDIDATE.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial challenge
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave3_challenge.py "review-inputs/v159-wave3/${{ matrix.source }}" "review-inputs/v159-wave3/challenge/${{ matrix.candidate }}"
+      - name: Upload challenge evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave3-challenge-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave3-challenge/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
