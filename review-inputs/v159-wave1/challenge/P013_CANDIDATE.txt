@@ -1,0 +1,63 @@
+P013 SYNTHESIZED v15.9 CANDIDATE — ENGINE.COMPARE / GSL-COMPARE
+Proposal-only; challenge this candidate against P013 source.
+
+1. TWO-PHASE COMPARISON
+Stage 3 is normalized into:
+  3A Hard-feasibility evaluation
+  3B Multi-dimensional comparison among candidates not known infeasible.
+Hard dimensions include applicable Constitution/rights, K0P/safety, required authority/consent, mandatory invariants and declared minimum evidence/assurance.
+INFEASIBLE never enters compensatory ranking. UNKNOWN hard-feasibility remains UNKNOWN/ESCALATE/RESEARCH according to ComparePolicy, never FEASIBLE.
+
+2. TYPED COMPARE RESULT
+CompareResult contains separate fields:
+  epistemic_result
+  design_quality_result
+  constraint_status
+  adoption_recommendation
+  per_dimension_results
+  unresolved_questions
+  policy_status
+  provenance/trace.
+These are distinct types and cannot substitute for one another.
+
+constraint_status = FEASIBLE | INFEASIBLE | UNKNOWN | BLOCKED.
+design_quality_result = DOMINATES | DOMINATED | EQUIVALENT | INCOMPARABLE | INCONCLUSIVE.
+Per-dimension ordering = BETTER | WORSE | EQUIVALENT_WITHIN_POLICY | INCOMPARABLE | UNKNOWN.
+Dominance means at least one BETTER and no WORSE among comparable soft dimensions after hard-feasibility; UNKNOWN on a decisive dimension yields INCONCLUSIVE rather than dominance.
+
+Epistemic result independently records support appropriate to claim type; it never authorizes adoption.
+Adoption recommendation is a proposal such as RETAIN | ADOPT_CANDIDATE_IF_AUTHORIZED | MERGE | RESEARCH | ESCALATE | REJECT. It is not an execution/admission token. Actual adoption remains governed by authority/AAP/DesignEpoch.
+INFEASIBLE cannot recommend adoption.
+
+3. NO DEFAULT SCALARIZATION
+Default comparison is a partial order. Cross-dimension scalarization is forbidden unless a versioned ComparePolicy explicitly supplies a legitimate aggregation function, value/authority owner, units/normalization and hard-noncompensation constraints. Cost/speed/simplicity never compensate hard-gate failure.
+
+4. COMPAREPOLICY FRESHNESS
+ComparePolicy binds version, DesignEpoch/scope, validity, dimension definitions, units/frames, materiality/equivalence regions, uncertainty/dependence treatment, optional aggregation and escalation path.
+Expired/mismatched/unresolved policy -> policy_status non-current and comparison becomes UNKNOWN/INCONCLUSIVE/ESCALATE as applicable; no silent default.
+A proposal to change ComparePolicy or Engine.Compare protected evaluation semantics is evaluated using a frozen predecessor comparator/policy plus independent review/authority required by AAP. The new comparator cannot be sole judge of its own admission.
+
+5. MANDATORY CLOSURE RECEIPT
+Stage 1 emits RetrievalClosureReceipt identifying exact symbolic, mandatory dependency, applicable policy and invariant sets plus completeness/staleness status. Semantic TopK ranking is optional prioritization only. Incomplete mandatory closure -> UNKNOWN; absence in a partial retrieval is not absence-of-obligation.
+
+6. COUNTERFACTUAL REPLAY
+Replay binds:
+  frozen operation/test set selected independently of proposal effects where feasible;
+  information horizon / event time;
+  source provenance;
+  model/assumption/transportability refs;
+  leakage controls;
+  identification/materiality limits.
+Information unavailable at historical time cannot leak into World A/B unless the counterfactual explicitly models that information intervention. Non-identifiable differences yield INCONCLUSIVE/NON_IDENTIFIABLE rather than forced ranking. Replay is model-derived evidence, not fresh empirical observation.
+
+Candidate invariants:
+- hard infeasibility is never compensated;
+- four CompareResult channels remain separately typed;
+- UNKNOWN decisive dimension cannot become dominance;
+- stale ComparePolicy cannot silently execute;
+- self-modified comparator cannot self-admit;
+- partial mandatory retrieval cannot be treated as complete;
+- replay future leakage is rejected.
+
+CHALLENGE REQUEST
+Find blockers/regressions/missing cases. Test especially partial-order definitions, adoption recommendation versus actual authority, comparator self-evolution, and counterfactual replay. Return ACCEPT / CHANGE / BLOCK with minimal repair and test.
