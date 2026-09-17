@@ -148,6 +148,23 @@
       ],
       "public_only": true,
       "last_qualified_review_bundle": null
+    },
+    {
+      "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
+      "target_kind": "cross_module",
+      "risk": "HIGH",
+      "freshness": "UNREVIEWED_V15_8_WORKING_CANDIDATE",
+      "source_file": "review-inputs/v159/human-effect-closure.txt",
+      "start_anchor": "U15.8-1 \u2014 HUMAN-EFFECT CLOSURE",
+      "end_anchor": "U15.8-2 \u2014 REPUTATION IS NOT HUMAN WORTH OR AUTHORITY",
+      "review_question": "Assess the v15.8 human-effect closure rule against inherited Garden constraints. Find concrete defects, missing effect paths, stronger or simpler mechanisms, implementability and verification improvements. Preserve legitimate user delegation and lawful privacy; compare DO_NOTHING; distinguish already-covered semantics from justified new obligations. This is a candidate-source review, not canonical promotion.",
+      "public_only": true,
+      "context_queries": [
+        "Human Sovereignty Core consent privacy authority constitutional",
+        "CLIC causal continuity ActionGate AAP UNKNOWN",
+        "Policy Algebra applicability conflict precedence omission"
+      ],
+      "last_qualified_review_bundle": null
     }
   ],
   "boundary": "The matrix selects bounded review work only. It creates no truth, proof, authority, canonical status, code-merge permission, or semantic admission."

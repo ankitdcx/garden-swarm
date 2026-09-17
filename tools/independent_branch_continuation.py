@@ -18,6 +18,7 @@ import time
 from tools import independent_branch_protocol as protocol
 from tools import reviewer_quality_runtime
 from tools import single_review_worker as legacy
+from tools import review_campaign
 
 WORKER = "single-openrouter-review.yml"
 DISPATCHER = "continue-openrouter-review.yml"
@@ -50,6 +51,30 @@ def _save_if_quality_changed(ledger: legacy.GitLedger, state: dict, quality_adde
         ledger.save(state)
 
 
+def admitted_campaign_start(root: Path, token: str) -> dict | None:
+    """A push may start only an explicitly staged, fully bound BLIND directive."""
+    if review_campaign.load_campaign(root) is None:
+        return None
+    from tools import independent_branch_worker as worker
+    directive = worker.load_directive(token)
+    if not directive or directive.get('start_on_matching_source_event') is not True:
+        return None
+    if directive.get('phase') != 'BLIND':
+        raise ValueError('source-event campaign launch must be BLIND')
+    _, target, _, trace, packet_hash, _, _ = worker._target_by_id(root, directive['target_id'], directive)
+    campaign = review_campaign.bind_campaign(directive, trace['source_sha256'], root)
+    if campaign is None:
+        raise ValueError('source-event launch requires an authorized campaign')
+    policy = json.loads((root / 'agents/openrouter-paid-review-policy.json').read_text())
+    protocol.validate_directive(directive, families=worker._families(policy),
+                                target_id=target['target_id'], source_packet_sha256=packet_hash)
+    if directive['private_baseline_commitment']['neutral_query_sha256'] != protocol.sha256_text(protocol.neutral_query(target)):
+        raise ValueError('campaign baseline query mismatch')
+    return {'status': 'READY', 'campaign_id': campaign['campaign_id'],
+            'target_id': target['target_id'], 'source_packet_sha256': packet_hash,
+            'reason': 'EXPLICIT_SOURCE_BOUND_CAMPAIGN_DIRECTIVE'}
+
+
 def dispatch(root: Path = Path(".")) -> None:
     event = host_check()
     token = os.environ["GH_REVIEW_TOKEN"]
@@ -68,6 +93,8 @@ def dispatch(root: Path = Path(".")) -> None:
         "tools/single_review_worker.py",
         "tools/review_context.py",
         "tools/review_budget.py",
+        "tools/review_campaign.py",
+        "agents/v159-review-campaign.json",
         "tools/reviewer_quality_runtime.py",
         "agents/review-context-policy.json",
         "SOURCE_MANIFEST.json",
@@ -85,7 +112,7 @@ def dispatch(root: Path = Path(".")) -> None:
     current_commit = os.environ.get("GITHUB_SHA")
     continuation = state.get("continuation") or {}
 
-    outstanding = [row for row in state.get("attempts", []) if row.get("status") in ("RESERVED", "UNKNOWN")]
+    outstanding = review_campaign.blocking_attempts(state, review_campaign.load_campaign(root))
     if outstanding:
         state["continuation"] = {
             "status": "BLOCKED_UNRESOLVED_CALL",
@@ -99,6 +126,7 @@ def dispatch(root: Path = Path(".")) -> None:
         return
 
     if state.get("admitted_source_commit") != current_commit or state.get("executor_revision_v3") != executor_revision:
+        launch = admitted_campaign_start(root, token) if event in ('push', 'workflow_dispatch') else None
         state["admitted_source_commit"] = current_commit
         state["executor_revision_v3"] = executor_revision
         state["continuation"] = {
@@ -106,9 +134,13 @@ def dispatch(root: Path = Path(".")) -> None:
             "reason": "NEW_SOURCE_OR_PROTOCOL_BINDING",
             "updated": time.time(),
         }
+        if launch is None:
+            ledger.save(state)
+            print("New material binding requires private ChatGPT baseline and source-bound Garden context capsule before OpenRouter inference")
+            return
+        state['continuation'] = {**launch, 'updated': time.time()}
+        continuation = state['continuation']
         ledger.save(state)
-        print("New material binding requires private ChatGPT baseline and source-bound Garden context capsule before OpenRouter inference")
-        return
 
     status = continuation.get("status")
     if status == "DEFERRED_DAILY" and time.time() < float(continuation.get("resume_after", 0)):

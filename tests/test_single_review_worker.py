@@ -129,7 +129,7 @@ class SingleReviewTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             for file in [t['source_file'] for t in json.loads(Path('agents/design-review-matrix.json').read_text())['targets']] + ['agents/openrouter-paid-review-policy.json', 'agents/provider-exclusion-policy.json',
-                         'SOURCE_MANIFEST.json', 'agents/design-review-matrix.json',
+                         'SOURCE_MANIFEST.json', 'agents/design-review-matrix.json', 'agents/v159-review-campaign.json',
                          'Garden_User_v15.5_FULL_2026-09-12.txt']:
                 dest = root / file
                 dest.parent.mkdir(parents=True, exist_ok=True)

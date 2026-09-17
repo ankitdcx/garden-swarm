@@ -21,6 +21,7 @@ from tools import independent_branch_protocol as protocol
 from tools import matrix_design_review as review
 from tools import single_review_worker as legacy
 from tools import review_context
+from tools import review_campaign
 from tools.review_budget import effective_policy
 from tools.provider_exclusion import load_policy, require_allowed_model
 
@@ -248,13 +249,15 @@ def _prompt(*, phase: str, family: str, directive: dict, target: dict, source: s
     return prompt
 
 
-def _reconcile_known_attempts(ledger: legacy.GitLedger, key: str) -> None:
+def _reconcile_known_attempts(ledger: legacy.GitLedger, key: str, campaign=None) -> None:
     """Resolve identified old UNKNOWN calls without treating their text as v1 evidence."""
     state = ledger.value
     changed = False
     for attempt in state.get("attempts", []):
         if attempt.get("status") not in ("UNKNOWN", "RESERVED"):
             continue
+        if review_campaign.abandonment_charge(attempt, campaign) is not None:
+            continue  # Preserve exact unknown receipt; never retry or claim billing.
         response_id = attempt.get("response_id")
         if not response_id:
             raise ValueError("unidentified prior call blocks new inference")
@@ -329,8 +332,6 @@ def run(root: Path = Path(".")) -> None:
     if state.get("paused") is not False or state.get("scope") != "PUBLIC_MATRIX_REVIEW_ONLY":
         raise ValueError("review ledger paused or outside public scope")
 
-    _reconcile_known_attempts(ledger, key)
-    state = ledger.value
     directive = load_directive(gh)
     if directive is None:
         state["continuation"] = {"status": "AWAITING_CHATGPT_BASELINE_OR_DIRECTIVE", "updated": time.time()}
@@ -344,6 +345,9 @@ def run(root: Path = Path(".")) -> None:
     families = _families(policy)
     matrix, target, source, trace, source_packet_hash, capsule_hash, expansion_level = _target_by_id(root, str(directive.get("target_id") or ""), directive)
     protocol.validate_directive(directive, families=families, target_id=target["target_id"], source_packet_sha256=source_packet_hash)
+    campaign = review_campaign.bind_campaign(directive, trace['source_sha256'], root)
+    _reconcile_known_attempts(ledger, key, campaign)
+    state = ledger.value
     expected_query = protocol.sha256_text(protocol.neutral_query(target))
     if directive['private_baseline_commitment']['neutral_query_sha256'] != expected_query:
         raise ValueError('baseline neutral query does not match current review instructions')
@@ -383,9 +387,16 @@ def run(root: Path = Path(".")) -> None:
     prompt_hash = protocol.sha256_text(prompt)
 
     spending_policy, spending_receipt = effective_policy(policy, directive, time.time())
+    if campaign:
+        spending_policy = review_campaign.spending_policy(spending_policy, campaign)
+        spending_receipt = {**spending_receipt, 'mode': 'AUTHORIZED_DOCUMENT_CAMPAIGN',
+                            'daily_ceiling_usd': spending_policy['daily_openrouter_cost_ceiling_usd'],
+                            'pool_lifetime_allocation_usd': spending_policy['budget_pools_usd']['routine']}
     identity = legacy.model_identity(key, model['model'])
     key_info = legacy.http(legacy.OR + "/key", key)["data"]
-    reserve, day, daily = legacy.budget_check(state, key_info, spending_policy, time.time())
+    reserve, day, daily = legacy.budget_check(state, key_info, spending_policy, time.time(), campaign=campaign)
+    if campaign:
+        spending_receipt.update(review_campaign.check_total(state, campaign, reserve))
     endpoints = legacy.http(legacy.OR + "/models/" + model["model"] + "/endpoints", key)["data"]["endpoints"]
     eligible = []
     for endpoint in endpoints:
