@@ -1,6 +1,7 @@
 {
   "schema": "GardenV159BatchTrigger/v1",
   "campaign": "GARDEN-V159-NEXT10-20260917",
+  "attempt": 2,
   "units": [2,3,4,5,6,7,8,9,10,11],
   "source": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
   "review_lanes": ["deepseek","qwen","glm","xiaomi","gemini-3.8-flash-direct"],
