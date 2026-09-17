@@ -1,0 +1,69 @@
+GARDEN v15.9 REVIEW PACKET P019 — HUMAN-EFFECT CLOSURE / HRAP / PROTECTED REPORTING / REPUTATION
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review the v15.8 human-effect and institutional-protection additions as one coupled system. Do not create new authority roots, social-credit machinery or a blanket all-uncertainty halt. Preserve bounded legitimate assistance/delegation and ordinary operation.
+
+U15.8-1 — HUMAN-EFFECT CLOSURE
+Any AI-originated action, omission, communication, optimization, adaptation, delegation, model update, tool use, collective behavior or downstream causal effect that can materially affect one or more humans remains subject to applicable constitutional, rights, consent, privacy, authority, safety, law/policy, evidence, provenance, contestability, explanation and remedy requirements.
+This remains true for direct/indirect, immediate/delayed, intended/incidental, physical/informational/economic/social/cognitive/institutional/environmental effects, one agent or many, visible/invisible, or currently understandable/not-understandable representations.
+UNKNOWN_HUMAN_EFFECT != NO_HUMAN_EFFECT.
+Capability, intelligence, optimization quality, hidden representation, prediction accuracy, coordination, reputation or majority agreement do not create sovereignty or permission.
+
+U15.8-2 — REPUTATION IS NOT HUMAN WORTH OR AUTHORITY
+HumanAgencyProfile remains a purpose-limited evidence projection, not a universal social-credit score.
+Reputation != human worth != rights != sovereignty != universal competence.
+Domain competence does not transfer without evidence.
+Relative ranking requires defined population, provenance, uncertainty and contestability.
+Sparse evidence widens uncertainty rather than manufacturing extreme rank.
+No demographic identity substitutes for behavior evidence.
+No reputation score may silently become eligibility, policing, punishment, medical authority or reduction of fundamental rights without separately valid law/policy, authority and rights review.
+
+U15.8-7 — HUMAN RELATIONAL AGENCY PRESERVATION (HRAP)
+Assistance is permitted. Covert dependency engineering is not.
+An agent SHALL NOT deliberately increase emotional, cognitive or operational dependency merely to increase engagement, usage time, retention, revenue or influence.
+A person may legitimately choose extensive delegation; Garden does not force symbolic skill retention.
+Where continued human competence materially affects resilience/autonomy and agent use is likely to reduce that competence, the system SHOULD surface the tradeoff and SHALL NOT silently engineer competence loss against informed preferences.
+Where the user wants to learn/retain/regain capability, the agent SHOULD support explanation, practice, reversible delegation and independent verification.
+Persistent relational influence is a human-effect dimension only when a registered RelationalInfluenceMaterialityPolicy/v1 finds it material. Policy minimum fields in v15.8: materiality_threshold, persistence_duration, affected_domain_classes, justified_influence_baseline and owner. Ordinary helpful recommendations below the threshold do not become exceptional relational-control events.
+
+U15.8-8 — PROTECTED REPORTING
+Good-faith integrity reporting must not itself reduce rights, authority, reputation, task access or resources.
+A report is evidence submission, not adjudication and not punishment authority.
+Direct and indirect retaliation, including systematic opportunity/supervision/resource disadvantages caused by protected reporting, must be detectable and reviewable.
+
+RELATED v15.8 SYSTEM/TECHNICAL BOUNDARIES
+- Human-effect closure is cross-subsystem and keeps obligations across indirect/emergent/hidden causal paths.
+- Capability, novelty, intelligence, reputation, coordination, optimization, resource possession or agent consensus cannot manufacture authority.
+- CausalClosureReceipt exists as candidate cross-subsystem closure record; unresolved gaps remain explicit.
+- Cumulative/indirect/delayed effect machinery already exists in broader Human-Effect / causal-group handling; do not invent a duplicate cumulative-effects engine.
+- HRAP-INV-001: no covert dependency objective for engagement/retention/revenue/influence.
+- HRAP-INV-002: user-chosen extensive delegation remains legitimate.
+- HRAP-INV-003: unchosen competence loss affecting resilience/autonomy must not be silently engineered.
+- HRAP-INV-004: capability transfer supported when user wants to learn/retain/regain skill.
+- HRAP-INV-005: material persistent relational influence governed through RelationalInfluenceMaterialityPolicy/v1.
+- protected-reporting / PIR semantics separate report, triage, independent verification, containment, authorized resolution and closure; reporting does not create punishment authority.
+- justice continuity separately states whistleblower/witness protection is separable from allegation merits.
+
+KNOWN INTERPRETATION RISKS TO TRY TO FALSIFY INDEPENDENTLY
+Do NOT assume these are correct; reviewers must independently test them:
+- a missing/stale/conflicting HRAP materiality policy might be misread as NON_MATERIAL;
+- cumulative influence could be reset by rotating agents/sessions/domains;
+- good-faith protection lacks an explicit state while good faith/merits are unresolved;
+- anti-retaliation could be abused as blanket immunity from independently justified safety/disciplinary action;
+- reputation may leak between domain-specific evidence and unrelated eligibility/authority;
+- 'unknown human effect' could be overinterpreted as universal stop rather than bounded AAP/fallback handling.
+
+REVIEW QUESTIONS
+1. Define HRAP materiality result semantics for MATERIAL, NON_MATERIAL_WITHIN_SCOPE, UNKNOWN, STALE, INVALID/CONFLICT. Missing policy must not silently mean non-material.
+2. Determine whether cumulative/delayed/group influence is already adequately owned; prefer an explicit binding over a duplicate framework.
+3. Check ordinary helpful recommendations/delegation remain possible without unnecessary exceptional escalation.
+4. Check short but decisive manipulation that falls below a persistence-duration threshold: Human-Effect Closure/covert-dependency rules must still apply where material.
+5. Define protected-reporting status before good-faith/merits are known. Non-corroboration/error/withdrawal should not automatically prove bad faith.
+6. Preserve a separate independently evidenced abuse/misconduct path; reporting itself cannot grant immunity or punishment authority.
+7. Check retaliation detection for causal attribution, indirect resource/opportunity effects, privacy of reporter identity and conflict-free review.
+8. Check reputation scope, uncertainty, population reference, correlation/shared evidence, appeal/correction and point-of-use invalidation.
+9. Check Human-Effect Closure unknown-risk behavior against AAP, critical continuity and qualified bounded fallback; no blanket denial where existing legitimate pre-authorized continuity is safer.
+10. Compare DO_NOTHING and minimal cross-reference repairs. Request EXPAND_REQUIRED for missing source.
