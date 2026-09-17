@@ -1,0 +1,74 @@
+GARDEN v15.9 REVIEW PACKET P017 — POLICY / COMPLIANCE / EVOLVE / RESEARCH
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review the four remaining meta-engine interfaces whose semantics strongly interact with the already-reviewed Policy/Conformance/Evidence algebras, Compare, Reason, Proof, Orchestrate, Search, Compile and Transition. Preserve engine separation; do not create a new authority source or duplicate existing owners.
+
+GLOBAL BOUNDARIES
+- GSL v45.1; ten Core Objects / 24 Core Relations unchanged unless separately justified.
+- UNKNOWN/STALE/BLOCKED/TIMEOUT/INCONCLUSIVE are not PASS.
+- capability, model agreement, evidence, optimization and successful outcome do not create authority.
+- specification != proof != implementation != validation != certification.
+- rights / Constitution / consent / privacy / K0P / law remain hard applicable constraints.
+- Unit 012 candidate normalizes Decision Algebra into typed result semantics and strengthens Policy/Conformance/Evidence composition.
+- Unit 013 candidate separates hard feasibility from quality comparison and makes DO_NOTHING mandatory for change/adoption comparison.
+- Unit 014 candidate strengthens Reason result/tiering/validation and anti-self-grading.
+- Unit 015 candidate strengthens Proof/Explanation boundaries.
+- Unit 016 candidate strengthens Orchestrate/Search/Compile/Transition phase and independence semantics.
+
+V15.8 ENGINE.POLICY
+System role: executes Policy Algebra over actual PolicyArtifacts and context to produce PolicyDecision + PolicyEvaluationTrace. Policy Algebra != Policy Engine.
+Policy decision domain in v15.8 includes PERMIT, DENY, REQUIRE_APPROVAL(A), DEFER, NOT_APPLICABLE, INDETERMINATE, CONFLICT, SAFE_FALLBACK(Action).
+Precedence includes Constitution/rights and K0P as independent non-bypassable hard dimensions; Law > valid delegated authority > operational policy > user preference > optimization within scope.
+Policy evaluation preserves applicable policies, precedence/conflict handling, obligations, final decision/effect and provenance. Architecture objects cannot invent new resolution semantics at runtime.
+Review against Unit 012 candidate: authority precedence before same-stratum composition; NOT_D not a universal operational negation; OR_D cannot bypass multiple simultaneously applicable policies; SAFE_FALLBACK remains conditional and separately authorized.
+
+V15.8 ENGINE.COMPLIANCE
+System role: uses Conformance Algebra for source-bound normative mapping, safety cases, gaps, internal conformance assessment, audit, evidence preparation and authenticated recording of external certification.
+Garden assessment cannot create operational admissibility or official certification, and no status substitutes for proof/evidence actually supplied.
+Universal Standards Compliance Adapter flow:
+  official/authorized normative source
+  -> authenticity/version/completeness
+  -> stable RequirementInstance records
+  -> FormalizationReceipt = FORMALIZED | PARTIALLY_FORMALIZED | HUMAN_INTERPRETATION_REQUIRED | AMBIGUOUS | UNKNOWN
+  -> InstrumentApplicabilityProfile
+  -> NormativeRequirementBinding to Garden invariant | FunctionContract | proof/evidence obligation
+  -> explicit gaps/conflicts
+  -> Proof/Research/domain/AAP checks
+  -> independent cross-check
+  -> GardenConformanceAssessmentReceipt.
+CONFORMANT requires every applicable mandatory RequirementInstance satisfied and all required evidence/checks PASS. UNKNOWN applicability, missing evidence, unresolved conflict or remediation plan cannot count as satisfaction. External certification authority remains external.
+
+V15.8 ENGINE.EVOLVE
+System role: branch/merge, historical replay, recursive improvement, counterfactual trajectory comparison and governed adoption. Runs Human Rights Reality Sweep, which may nominate rights gaps but cannot create/remove/weaken rights without constitutional process.
+Evolution flow retains immutable original history, DO_NOTHING baseline, governed merge, rollback/compensation, blast-radius closure and proof/assurance gating.
+Cross-timescale/domain/regime/authority sub-epoch adaptation enters ApprovalPlan + DesignAuthorityDecision + GTF/DesignEpoch promotion when architecture/authoritative semantics are affected.
+A subsystem may not be sole judge of a change to its own trust/authority/verification boundary.
+Historical/current statuses remain separate; successful candidate comparison is not merge authority.
+
+V15.8 ENGINE.RESEARCH
+System role: evidence acquisition, theory discovery, RTR, falsification requests and domain research. LLM-generated material is never automatically Evidence.
+Research flow includes Observe -> Hypothesize -> Search -> Experiment -> Validate -> Update, but legacy Bool-like shorthand does not override current typed multi-status FunctionContract semantics.
+Hypothesis / ExperimentPlan / ModelCheckpoint / ResearchTrace / ConceptCandidate are existing artifacts.
+Epistemic diminishing-return policy bounds repeated low-yield investigation; Deep Archive preserves hypotheses, status, evidence history and reactivation paths. Archival changes scheduling, never truth status.
+Research-and-Theory Radar scans lawful/public/open research, tracks provenance/license/IP, creates candidate claims/theories/upgrades, and never treats discovery/retrieval as validation.
+Speculative hypotheses may motivate research/precaution/escalation but cannot satisfy a safety-critical evidence requirement by themselves.
+
+CROSS-ENGINE BOUNDARIES
+Policy evaluates legitimate normative content; it does not create the underlying law/right/authority.
+Compliance evaluates conformance; it does not create operational permission or external certification.
+Evolve proposes/compares/adopts only through valid DesignEpoch/authority gates; it does not self-authorize.
+Research discovers/tests; it does not create Evidence by generation or create adoption authority.
+All four use Dependency/DesignEpoch/provenance invalidation and owner-qualified multi-status results.
+
+REVIEW QUESTIONS
+1. ENGINE.POLICY: after Unit 012, what engine-level state/freshness/trace semantics are still missing? Check policy version drift, revocation during evaluation, same-origin/self-authored policy and TOCTOU between decision and effect.
+2. ENGINE.COMPLIANCE: distinguish source authenticity, formalization quality, applicability, conformance, operational admissibility and external certification. Find false-PASS paths through partial mappings, stale law/standard versions, conflicting jurisdictions or waived requirements.
+3. ENGINE.EVOLVE: test self-modification, evaluator change, branch/merge authority, rollback vs irreversible external effects, cumulative small changes, stale proofs, and adoption atomicity.
+4. ENGINE.RESEARCH: define result states for hypothesis generation, experiment authorization, evidence acquisition, negative/null result, replication failure, resource exhaustion and research stopping. Prevent publication/model outputs from becoming Evidence by default.
+5. Check research/evolution feedback loops for Goodhart/self-confirming benchmarks, repeated shared-source evidence and self-grading.
+6. Check legal/IP/licensing provenance and source-access constraints without turning public availability into permission.
+7. Check Human Rights Reality Sweep: nomination vs ratification, interim non-regression, dissent/appeal, no rights deletion by optimization.
+8. Compare each proposal with DO_NOTHING / simpler existing mechanism. Request EXPAND_REQUIRED for exact missing anchors rather than guessing.
