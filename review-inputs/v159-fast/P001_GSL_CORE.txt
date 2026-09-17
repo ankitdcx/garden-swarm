@@ -1,0 +1,148 @@
+GARDEN v15.9 REVIEW PACKET P001 — GSL SEMANTIC CORE
+Source basis: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded public review extract; proposal evidence only; no admission/certification.
+Goal: review and upgrade the GSL semantic core without changing Garden authority, rights, or topology merely for convenience.
+
+SCOPE
+- GardenCore.Semantics.GSL v45.1 foundation represented in v15.8.
+- Core/service/name separation, typed result discipline, qualified naming/IDs.
+- GSL-language/compile gap clauses already carried in v15.8 candidate lineage.
+- Causality-level typing where it changes GSL relation consumption.
+- Provenance representation where it changes semantic absence/redaction interpretation.
+- R0/SanityGate only insofar as it closes base semantic recursion.
+- Catalogue closure of GSL declarations.
+
+OUT OF SCOPE EXCEPT AS DEPENDENCY
+- redesigning rights/Constitution, Process Algebra, AAP, Reason, Proof, Knowledge, or governance as whole modules;
+- claiming executable certification;
+- inventing a new top-level architecture owner where an existing owner suffices.
+
+CURRENT v15.8 BASELINE EXTRACT
+
+Garden Core is the minimum technical machinery required by every Garden instance.
+
+SemanticAnchor: [S-GSL]
+
+4.1 GSL SEMANTIC CORE
+Uses GSL v45.1, six Pillars, ten Core Objects, 24 Core Relations and the current universal semantic primitives.
+
+4.2 PROVENANCE / STATE CORE
+ DesignManifest
+ DesignEpoch
+ DesignBinding
+ KnowledgeSnapshot
+ EnvironmentCommitment
+ CanonicalStateRecord
+ source-span provenance
+ immutable historical lineage
+ content-addressed registries
+
+4.3 FORMAL MATHEMATICAL INTERFACE
+Garden Core owns only universal mathematical representation contracts:
+ typed values;
+ units and dimensions;
+ frames;
+ exact vs approximate representation;
+ intervals/distributions;
+ numerical-result schema;
+ precision/residual/convergence/error;
+ theory/algorithm/solver/execution separation.
+The mathematical subject universe lives under Domain.Mathematics.
+
+4.4 CANONICAL REGISTRIES
+Registry reference: REG-CATALOG-001.
+
+4.5 KNOWLEDGE VS GSL-KR
+Capability.Knowledge is the conceptual/semantic capability. Profile.Knowledge.GSL-KR is a repository/reference implementation. Knowledge != GSL-KR, even when GSL-KR is the current canonical implementation profile.
+
+4.6 CORE/SERVICE NAME SEPARATION
+ GSL TIME != Capability.State.TimeService
+ GSL EVENT != Capability.State.EventService
+ GSL SPACE != Domain.Applied.Space
+ GSL CONTEXT != Context.LocaleCulture
+ GSL AGENCY != HumanCore.DelegatedAgent
+
+PURPOSE
+Make the design itself representable and auditable in GSL v45.1 without pretending this prose .txt is already a successfully compiled binary/source package. Every normative item in this master MUST have a corresponding typed machine artifact in the companion GSL package.
+
+CANONICAL MACHINE SPINE
+Proof, test, evidence, attestation, assurance and applicability remain distinct typed results. Failure, timeout, resource limits, staleness, inconclusive and unknown states are preserved rather than collapsed into Bool.
+
+RULE: Bool is reserved for total deterministic predicates whose valid input space has a semantically complete true/false interpretation. Epistemic, safety, authority, proof, compliance, migration and distributed operations MUST use typed result algebras.
+
+QUALIFIED-NAME RULE
+All schemas use canonical qualified names. Potentially colliding names are owner-qualified:
+ Identity.Credential != Education.Credential
+ Compliance.AuditEvidence != Security.AuditEvidence where semantics differ
+ Engine.Reason.ProblemSignature is canonical; alternate schema variants require explicit versions/adapters
+ Emergency.RecoveryCertificate and other similarly named receipts are independently qualified
+
+IDENTIFIER QUALIFICATION / COLLISION RULE
+Canonical machine IDs are owner-qualified; any shorthand resolves only through the explicit AliasRegistry.
+Examples:
+ Compare.CMP-001..015 = GSL-COMPARE invariants.
+ Engine.Compile / CPL-001..008 = compiler/compilation invariants.
+A bare short alias is valid only when the active namespace makes it unambiguous; otherwise compilation/lint HALTS with AMBIGUOUS_IDENTIFIER. This prevents historical prefix reuse from creating semantic collisions.
+
+UNIVERSAL FUNCTION-CONTRACT BINDING RELEVANT TO GSL
+Every executable function is interpreted through a generated FunctionContract even where abbreviated prose shows a short function signature.
+FunctionContract binds: function identity/owner; input/output semantic types; closed effect vector; AuthorityRequirement/consent where applicable; hard constraints/invariants; FailureModeSet and typed terminal/result algebra; dependencies/invalidators; ResourceLimits/TerminationContract; DesignEpoch/EnvironmentCommitment/KnowledgeSnapshot; provenance/explanation binding.
+A legacy prose signature using Bool/None cannot override this rule. The current machine projection MUST either prove that the Bool predicate is total/deterministic or generate the required typed result algebra; unresolved cases are MALFORMED.
+
+V15.8-CARRIED GSL GAP CANDIDATES
+
+V156-GAP-003 — Deterministic let binding grammar
+Disposition: GRAMMAR_REPAIR
+Change: Replace optional-expression LetExpr ambiguity with:
+  LetExpr ::= let Pattern (: Type)? = Expr in Expr
+and introduce:
+  LetStmt ::= let Pattern (: Type)? = Expr ;?
+LetStmt is valid only in BlockExpr/module statement scope, introduces a lexical binding in that enclosing scope and has Unit result; a bare let is no longer parsed as an expression.
+Schema: SCHEMA-DB03DABC62 LetStmt; owner GardenCore.Semantics.GSL/Engine.Compile.
+Do-nothing problem: optional 'in Expr' permits a complete expression with no specified result/scope and forces compilers to invent semantics.
+Tests: TEST-LANG-LET-001; test_let_without_in_has_defined_scope.
+
+V156-GAP-004 — Deterministic QueryStmt result semantics
+Disposition: GRAMMAR_SEMANTIC_REPAIR
+Change: QueryStmt resolves a QueryResultBinding. `query Expr into ID` binds the typed query result to ID in the enclosing lexical scope. A query without `into` must target a declared module/process output sink in the active FunctionContract; otherwise compilation fails QUERY_RESULT_UNCONSUMED. Query does not implicitly mutate Knowledge or create Evidence.
+Schema: SCHEMA-D17BC951EC QueryResultBinding; owner GardenCore.Semantics.GSL/Engine.Compile.
+Do-nothing problem: current grammar admits a result without specifying destination, scope or distinction from eval, defeating deterministic compilation and FunctionContract closure.
+Tests: TEST-LANG-QUERY-001; test_query_result_destination_is_explicit.
+
+V156-GAP-005 — Causal-level-qualified causes relation
+Disposition: TYPE_REFINEMENT_WITHOUT_NEW_CORE_RELATION
+Change: existing Core Relation `causes` remains one relation identity but every operational causes edge carries CausalRelationLevelBinding(level:C0..C4, model/assumption/evidence/identification refs as applicable). Consumers declare a minimum causal level; consuming a lower-level edge as a stronger level returns CAUSAL_LEVEL_UNDERFLOW. C2+ requires a declared causal/mechanistic model; C3/C4 additionally require applicable intervention/counterfactual identification obligations.
+Schema: SCHEMA-897FB2274E CausalRelationLevelBinding; owner GardenCore.Semantics.GSL/Engine.Reason/Engine.Research.
+Do-nothing problem: raw relation type does not itself prevent a C0/C1 edge from being consumed as C2+.
+Tests: TEST-CAUSAL-LEVEL-001; test_causes_requires_explicit_level.
+
+V156-GAP-006 — R0 Sanity Gate separated from Reason modes
+Disposition: SEMANTIC_REFINEMENT
+Change: R0 remains historical assurance-depth label for transition sanity but is typed as SanityGate, a terminating deterministic/total predicate over available transition type/scope/abstraction/obvious contradiction inputs with PASS|FAIL|UNKNOWN. Engine.Reason modes are R1..R4. Invoking R1..R4 may require SanityGate first; SanityGate does not recursively invoke Engine.Reason, closing the self-reference at the minimum tier.
+Schema: SCHEMA-29A1A917BC SanityGateResult; owner Engine.Orchestrate/Engine.Reason in historical source, normalized to existing Reason/orchestration ownership.
+Do-nothing problem: calling R0 a Reason tier while Reason is logically present at every meaningful transition leaves semantic self-reference without a base TerminationContract.
+Tests: TEST-REASON-R0-001; test_r0_is_not_reason_mode.
+
+V156-GAP-008 — Committed provenance class manifest distinguishes redaction from absence
+Disposition: PROVENANCE_STRENGTHENING
+Change: high-assurance provenance views carry a ProvenanceClassManifest committed by Merkle/content root. Manifest declares expected node classes and edge kinds without exposing protected payloads. For an authorized view: expected-but-undisclosed class = REDACTED/PROTECTED with a commitment; expected class with no valid committed node/edge = PROVENANCE_GAP; class outside declared applicable manifest = NOT_APPLICABLE. Redaction metadata remains privacy-minimized.
+Schemas: SCHEMA-1A6E45501B ProvenanceClassManifest; SCHEMA-30D7E367A8 ProvenanceGapDisposition; owner Capability.Knowledge/Engine.Explanation.
+Do-nothing problem: current lineage view lacks a machine-checkable distinction between redaction and true absence without hidden graph inspection.
+Tests: TEST-PROV-MANIFEST-001; test_redaction_distinct_from_absence.
+
+V156-GAP-009 — Catalogue closure for AuthorityDecl and EffectDecl
+Disposition: CATALOGUE_REPAIR
+Change: register AuthorityDecl and EffectDecl as FOUNDATIONAL_CONTRACT catalogue entries with stable SchemaIDs and generated machine layouts. Grammar productions remain unchanged. Do not invent a second semantic identity or fold away useful explicit declarations.
+Schemas: SCHEMA-A8447C581A AuthorityDecl; SCHEMA-D1DD528992 EffectDecl; owner GardenCore.Semantics.GSL/Engine.Compile.
+Do-nothing problem: grammar exposes machine-facing declaration forms whose catalogue/schema targets are not independently resolvable, leaving a type/reference-closure gap.
+Test: TEST-CATALOG-LANG-001.
+
+CROSS-CUTTING CONSTRAINTS FOR THIS REVIEW
+1. Keep six Pillars / ten Core Objects / 24 Core Relations unless there is packet-supported evidence that a specific identity is redundant or incomplete; do not add ontology merely for naming convenience.
+2. Grammar, AST, catalogue and compiler identity must close deterministically; readable shorthand cannot introduce ambiguous semantics.
+3. A relation annotation cannot silently promote epistemic status. Causal level, evidence, assumptions, model and identification obligations remain explicit.
+4. Redaction, absence, unknown and not-applicable remain distinct where materially meaningful, without leaking protected content.
+5. Authority/effect declarations describe requirements/effects; they do not manufacture authority.
+6. Existing owners remain preferred. If a proposed feature is better owned outside GSL, say so and specify the interface rather than expanding GSL.
+7. Every proposed change should be evaluated against DO_NOTHING and a simpler alternative.
+8. Do not claim this bounded packet proves whole-corpus reference closure or executable certification. Request exact missing anchors when materially necessary.
