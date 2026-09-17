@@ -1,0 +1,86 @@
+GARDEN v15.9 REVIEW PACKET P021 — RUNTIME / EXECUTION / TIME / EVENT / NETWORK / FABRIC / CONTINUITY / EMERGENCY / OFFLINE
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review the shared operational substrate and resilience semantics together, because timing, delivery, partitions, admission, partial effects and offline authority interact. Preserve typed UNKNOWN/PARTIAL/STALE outcomes rather than promising exactly-once execution, perfect clocks or universal availability.
+
+RUNTIME
+Capability.Compute.Runtime owns scheduling/execution queues and resource tickets. AAP/Orchestrate owns admission, assurance floors and resource/priority requirements; Runtime does not create authority.
+Existing artifacts include WorkPackage, ResourceTicket, CircuitBreakerState and ExecutionAdmissionToken. ExecutionAdmissionToken is a point-of-use authorization artifact, distinct from reusable AssuranceContextToken.
+Scheduling/fairness/backpressure semantics protect required continuous work and hard safety/emergency floors from starvation while remaining resource-bounded.
+Long-running services use liveness/productivity/non-Zeno/fairness/bounded-reaction/stoppability rather than fake total termination.
+
+EXECUTION
+Capability.Compute.Execution operates only after legitimacy, physical-safety, authenticity, authorization and policy gates as applicable.
+Existing artifacts include ExecutionContext, ExecutionReceipt and CompensationPlan.
+Current richer semantics elsewhere in v15.8 already admit PARTIAL_EFFECT / FAILED_AFTER_EFFECT / OUTCOME_UNKNOWN / compensation/reconciliation and effect identity/fencing. Older short lifecycle diagrams must not force all executions into success/failure/rollback.
+An irreversible external effect may have occurred before local acknowledgement. UNKNOWN completion is not permission to replay. Retry requires reconciliation or proven idempotent/replay-safe effect semantics.
+
+TIME SERVICE
+GSL TIME != Time Service.
+Time Service supplies temporal eligibility/deadlines/ordering under explicit clock domains, uncertainty, validity and provenance. Physical event/observation time remains distinct from ingest/processing time.
+Physical telemetry contracts already reject arrival-order-as-causal-order and require clock domain, synchronization uncertainty, latency/jitter/sequence/causal metadata for certified assimilation.
+Legacy language may mention PTP/GNSS and drift <1 ms for R4/AUTO or real-time domains. Review whether that is wrongly universal: timing requirements should be qualified profile parameters, and logical/causal clocks do not prove a physical clock-error bound.
+
+EVENT SERVICE
+GSL EVENT != Event Service.
+Event Service is the universal event model for capture/routing/storage. Event occurrence != payload truth.
+Event flow binds payload semantics to source/attestation, time/causal order, DesignEpoch/KnowledgeSnapshot/EnvironmentCommitment, privacy/retention, delivery state, epistemic status and provenance.
+Event subscription/listener flows must handle duplicate delivery, reordering, cancellation, backpressure, storms and failure without converting repeated delivery into repeated authority/evidence.
+Immutability of an event record does not imply indefinite payload retention where lawful erasure applies.
+
+NETWORK
+Network provides authenticated/timely communication. Reachability/channel access does not create disclosure/action authority.
+Revocation propagation may use approximate filters only as hints; consequential rejection/acceptance must resolve against exact signed structures when required.
+Partitions/offline states remain explicit.
+Timing/QoS claims are profile-bound rather than universal physical guarantees.
+
+FABRIC / DISTRIBUTED STATE
+Distributed semantics distinguish:
+- eventual CRDT convergence;
+- quorum/membership state;
+- high-impact canonical finality;
+- partition/partial-delivery status;
+- visibility point;
+- conflict ownership;
+- FLP/CAP assumptions.
+"Converged" is never asserted when unknowable under the declared partition model.
+Atomic publication of protected changes must bind participant set/membership epoch, applicable consistency/finality/visibility profile and failure/recovery behavior. 2PC may be an implementation profile, not universal semantic definition of atomicity.
+Async/catching-up readers are not automatically commit participants.
+
+CONTINUITY / EMERGENCY
+Critical continuity: authority/agency revocation -> independently qualified safe-control handoff -> minimum-safe continuity -> qualified recovery. Abrupt shutdown is not universal default.
+Emergency uses a pre-issued bounded EmergencyAdmissionContract / EmergencyContract; emergency never becomes authorization-free.
+Thresholds, sensor counts, duration, quorum, renewals and timing are domain/profile values unless actually universal by proof/constitution.
+
+OFFLINE
+Existing offline artifacts include OfflineState, AuthorityLease, CachedPolicyBinding and OfflineAuditEscrow.
+Offline operation must use explicitly pre-authorized bounded leases/cached policy with version, scope, expiry, invalidators and reconciliation. Loss of network cannot create new authority or make stale policy current.
+On reconnection, conflicting state, expired authority and partial effects require typed reconciliation rather than silent last-write-wins for protected decisions.
+
+CROSS-CUTTING REVIEW RISKS
+- crash after irreversible external commit but before acknowledgement;
+- partial action followed by compensation;
+- restart losing OUTCOME_UNKNOWN state;
+- stale ExecutionAdmissionToken reused after consent/authority revocation;
+- event duplicate causing repeated effect;
+- physical clock uncertainty hidden behind logical ordering;
+- offline replica treated as mandatory participant forever, or silently excluded from claimed atomicity;
+- coordinator failure after prepare;
+- stale membership epoch;
+- emergency lease self-renewal;
+- offline cached policy outliving law/consent/DesignEpoch change.
+
+REVIEW QUESTIONS
+1. Require lossless mapping between short lifecycle diagrams and authoritative typed result/transition semantics. Identify contradictions.
+2. Define crash/restart persistence for effect identity, OUTCOME_UNKNOWN, partial effect, reconciliation and compensation.
+3. Check idempotency/fencing/lease semantics across Runtime, Execution, Network and external targets.
+4. Replace universal timing promises with versioned TimingProfile only if justified; distinguish logical/causal ordering from physical synchronization uncertainty.
+5. Check Event delivery state vs event occurrence truth, duplicate/reordered delivery, immutable log vs lawful erasure/tombstone.
+6. Check Network revocation/QoS/partition semantics and no authority from channel availability.
+7. Check Fabric transaction participant/membership/finality/visibility semantics and separate safety from liveness.
+8. Check emergency/continuity handoff for stale commands and suspect dependency independence.
+9. Check Offline authority leases/cached policies and reconnection reconciliation; UNKNOWN/STALE never becomes permission.
+10. Compare DO_NOTHING / minimal binding repair. Request EXPAND_REQUIRED for missing anchors.
