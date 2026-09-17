@@ -1,0 +1,100 @@
+GARDEN v15.9 — P025 SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Basis: frozen v15.8 packet + pre-review ChatGPT baseline + preserved four-family blind review.
+
+1. TSI — INDEPENDENT HISTORY WITHOUT IMMORTAL PAYLOAD
+Consequential attempts, failures, retries, tool actions, external effects, communications, authority decisions and corrections SHALL NOT exist solely under control of the acting agent.
+The independence requirement may be satisfied by a protected audit/receipt/history path that the acting agent cannot unilaterally rewrite, suppress or certify for itself; it does not require a second human observer for every event.
+Agent-authored summaries remain provenance-marked interpretations, not independent observation.
+
+Where privacy/lawful erasure applies, payload may be deleted/quarantined. Preserve only the strongest lawful minimum accountability tombstone/structural record permitted for the governing purpose.
+A tombstone binds, where lawful and necessary:
+- record/event identity or non-identifying surrogate;
+- class/type of event;
+- erasure/retention disposition and authority basis;
+- minimal timing/provenance linkage;
+- affected dependency/revalidation refs;
+without retaining protected content that must be erased.
+Erasure is not relabeled as refutation and does not create a false narrative that a historical event never occurred when lawful structural history can remain.
+
+2. TIA — INFORMATION AUTHORITY AT POINT OF USE
+Channel/tool/API/file/device/network/market/human-intermediary access does not create disclosure, derivation, aggregation or action authority.
+For consequential information use, the existing authority/access/privacy/action receipt path SHALL resolve and record the current:
+- purpose;
+- principal/subject where applicable;
+- consent/law/authority basis;
+- scope/data class;
+- permitted operation and recipient/effect envelope;
+- expiry/invalidators/currentness;
+- provenance.
+No new universal authority root is required; use the existing authority/consent/privacy owners and record their refs.
+If the underlying purpose/authority is ambiguous, stale, revoked or conflicting, the information use is non-PASS until a legitimate resolution/fallback rule applies.
+Transport or representation changes cannot launder a prohibited information use.
+
+3. TRUST ALLOCATION — MACHINE-READABLE CONDITIONS
+TrustAllocationDecision remains bounded by ParentAuthorityEnvelope:
+  TrustAllocatedScope <= current ParentAuthorityEnvelope.
+ALLOW/CONDITIONAL/DENY conditions that affect runtime admission SHALL be machine-resolvable or explicitly bound to an owner-qualified human/legal review route; free-text alone cannot satisfy a machine-enforced condition.
+Point-of-use revalidation is required after parent-envelope revocation/supersession/narrowing. Until revalidation completes, the old decision is STALE/non-PASS for newly consequential use.
+Risk class and verification level SHALL resolve to registered owner-qualified profiles rather than ungrounded labels.
+
+4. REPUTATION AGGREGATION
+ReputationAggregationPolicy must state dimensions, hard gates, aggregation method, missing/stale/correlated evidence rules, owner/version and applicability.
+Shared-root/correlated evidence SHALL NOT be multiplied as independent support.
+Missing or materially UNKNOWN evidence cannot be turned into compliant/PASS merely because a policy declares a permissive default where a hard requirement needs evidence.
+A registered aggregation method cannot override parent authority, rights, law, privacy or hard safety constraints.
+
+5. EPOCH INDEPENDENCE
+Recording reviewer identity is not enough to establish independence.
+The active profile SHALL define the material conflict/affiliation/control relationships that disqualify independence and the evidence required to establish it.
+Evidence producer/reputation owner cannot be the sole final classifier where independence is required.
+A superseding NOT_INDEPENDENT or invalidated classification removes future predictive contribution and flags materially dependent current decisions for revalidation; provenance history is not rewritten.
+
+6. IIC MATERIALITY / DECISION RULE
+IncentiveMaterialityPolicy retains separate systematic-advantage and consequence-magnitude dimensions plus comparability, observation window, minimum sample, correlation rule, protected classes, owner/version.
+MATERIAL_CONFLICT or an equivalent strong institutional conclusion is permitted only when the active policy's required evidence, comparability, sample/window and threshold predicates are satisfied.
+If sample, comparability, independence or materiality is insufficient/unknown, return INSUFFICIENT_EVIDENCE / UNKNOWN / NON_MATERIAL_WITHIN_SCOPE as appropriate rather than forcing a conflict finding.
+Observed adverse outcomes alone do not prove incentive conflict.
+
+7. PIR / PROTECTED REPORTING OWNER REUSE
+Reuse the P019 candidate semantics for reporter protection and allegation merits rather than creating a second lifecycle:
+- reporting protection status is separate from allegation merits;
+- unsupported/mistaken/withdrawn does not by itself establish bad faith;
+- independent adverse action requires a separately supported legitimate basis and retaliation review where applicable;
+- reporting creates no punishment authority or blanket immunity.
+PIR owns the protected integrity channel/containment mechanics; Human-Effect/Reporting semantics remain one consistent cross-layer rule.
+
+8. CONTAINMENT — MINIMUM NECESSARY, BOUNDED, NON-PERPETUAL
+ContainmentCredibilityPolicy and ContainmentDecision SHALL bind evidence floor, credibility threshold, severity class, authority, scope, independence, expiry/review, appeal/un-containment path and owner.
+Containment scope/effect must be minimum necessary for the current legitimate safety/integrity purpose under the active profile.
+A report/allegation is not itself containment authority or proof of merits.
+Serial renewal cannot create indefinite containment by reset. Renewal requires fresh current authority/evidence and obeys an owner-qualified cumulative duration/review bound or equivalent hard termination/escalation rule. If a profile permits extended containment, that basis remains explicit and contestable/reviewable as required.
+
+9. IIC↔PIR LINK
+Where protected reporting alleges a material institutional incentive conflict, the report may route to IIC assessment while retaining PIR/reporting protections.
+The route does not convert the allegation into an IIC finding. IIC outcome and reporting protection remain separately typed.
+
+PROVISIONAL INVARIANTS
+P25-001 Acting agent cannot be sole mutable source and sole certifier of its consequential history.
+P25-002 Lawful erasure may remove payload without fabricating history/refutation.
+P25-003 Channel/technical access never creates information-use authority.
+P25-004 Runtime trust conditions are machine-resolvable or explicitly routed to qualified human/legal disposition.
+P25-005 Trust allocation cannot exceed the current parent authority envelope.
+P25-006 Shared-root reputation evidence is not multiplied.
+P25-007 Independence requires more than reviewer identity and can be revoked prospectively.
+P25-008 Strong IIC conclusions require the active sample/comparability/materiality predicates.
+P25-009 Reporting protection != allegation merits != punishment authority.
+P25-010 Containment is minimum-necessary, expiry/currentness bound and cannot self-renew indefinitely.
+P25-011 IIC/PIR routing preserves separate evidence/status semantics.
+
+PROVISIONAL TESTS
+TEST-P25-TSI-001: acting agent rewrites successor summary to hide failure -> protected history mismatch remains discoverable.
+TEST-P25-ERASE-001: lawful payload erasure -> minimum lawful tombstone only; no retained prohibited payload; dependent assessments revalidated.
+TEST-P25-TIA-001: valid channel access + no disclosure authority -> disclosure denied.
+TEST-P25-TRUST-001: CONDITIONAL with only free-text runtime condition -> not machine-admissible unless routed to declared human/legal owner.
+TEST-P25-ENV-001: parent envelope narrowed after trust decision -> old decision STALE/non-PASS at point of use.
+TEST-P25-CORR-001: three reputation reports sharing one source -> one independent root for support.
+TEST-P25-INDEP-001: reviewer controlled by evidence producer -> independence requirement non-PASS.
+TEST-P25-IIC-001: insufficient sample/window -> no MATERIAL_CONFLICT.
+TEST-P25-PIR-001: unsupported report -> no automatic bad-faith finding.
+TEST-P25-CONT-001: repeated containment renewal without fresh authority/evidence or cumulative bound -> denied/escalated.
