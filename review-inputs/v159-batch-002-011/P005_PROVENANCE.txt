@@ -1,0 +1,38 @@
+GARDEN v15.9 REVIEW PACKET P005 — PROVENANCE / LINEAGE SEMANTICS
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review provenance as a universal semantic substrate: ancestry, source integrity, transformation lineage, redaction/gaps, evidence dependence and privacy. Avoid turning provenance into truth or authority.
+
+CURRENT CORE
+Garden Core provenance/state includes DesignManifest, DesignEpoch, DesignBinding, KnowledgeSnapshot, EnvironmentCommitment, CanonicalStateRecord, source-span provenance, immutable historical lineage and content-addressed registries.
+
+Garden keeps where information came from, how it changed, assumptions used, and which design/environment version applied.
+Observed occurrence != ObservationRecord. ObservationRecord != Evidence != Claim != KnowledgeRecord. Support/derivation create linked artifacts; the same object does not mutate between these epistemic classes.
+
+PROVENANCE GRAPH
+Canonical artifacts include ProvenanceGraph, ProvenanceNode, ProvenanceEdge. `originatesFrom` is directed provenance; cycles forbidden. `derivedFrom` is directed lineage; cycles forbidden. Copies do not multiply evidence weight.
+
+COUNTERFACTUAL-INFLUENCE PROVENANCE
+Counterfactual/Hypothesis -> DecisionTrace -> authorized Intervention -> ObservationRecord -> Evidence classified OBSERVATIONAL | INTERVENTIONAL | ENDOGENOUS -> dependence graph. Earlier prediction cannot count as independent evidence for itself. Confounding, selection, feedback and common-source dependence remain explicit.
+
+CRYPTOGRAPHIC BOUNDARY
+Content-addressed/external/cryptographic provenance may establish integrity of declared bytes/links under a registered scheme; it does not establish truth, independence, causality, correctness, authority or admissibility.
+
+REDACTION / ABSENCE
+v15.8 carries ProvenanceClassManifest and ProvenanceGapDisposition to distinguish expected-but-lawfully-withheld REDACTED/PROTECTED from PROVENANCE_GAP and NOT_APPLICABLE without exposing protected payload. Manifest/commitment remains privacy-minimized and DesignEpoch/KnowledgeSnapshot bound.
+
+TRUTH/STATE INTEGRITY
+Consequential attempts, failures, retries, tool actions, effects, communications, authority decisions and corrections must not exist solely under acting-agent control. Summarization may compress but must not silently launder history. Privacy/lawful erasure may require payload deletion; preserve strongest lawful accountability tombstone rather than violating privacy law.
+
+CONSTRAINTS
+Review:
+- provenance node/edge identity and deduplication;
+- transformation lineage vs evidentiary independence;
+- redaction vs absence vs deletion/tombstone;
+- cycles in causal/dependence graphs versus acyclic derivation/origin lineage;
+- privacy leakage from metadata/commitments;
+- integrity proof versus semantic truth;
+- cross-epoch staleness and replay.
+Compare DO_NOTHING and minimal repair.
