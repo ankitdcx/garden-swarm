@@ -1,0 +1,48 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v159-rate-limit-recovery:20260917",
+  "work_package_id": "V159-RATE-LIMIT-RECOVERY",
+  "branch": "chatgpt/v159-rate-limit-recovery-20260917",
+  "base_sha": "14e36209df4ed8ce63d6f5b88d9bba24931e9c2c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "INTEGRATION_BRANCH_IF_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:v159-rate-limit-recovery:20260917",
+    "agent_id": "ChatGPT-document-review",
+    "task_id": "V159-RATE-LIMIT-RECOVERY",
+    "base_sha": "14e36209df4ed8ce63d6f5b88d9bba24931e9c2c",
+    "target_paths": [
+      "workstreams/2026-09-17-v159-rate-limit-recovery.json",
+      "agents/v159-review-campaign.json",
+      "tools/review_campaign.py",
+      "tools/independent_branch_worker.py",
+      "tools/single_review_worker.py",
+      "tests/test_review_campaign.py",
+      "tests/test_rate_limit_recovery.py",
+      "docs/v159-review-resume.md"
+    ],
+    "target_symbols": [
+      "campaign_rate_limit_allowance",
+      "_require_explicit_retry",
+      "record_http_failure"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_ADMISSION",
+      "OPERATIONS_AND_BUDGET"
+    ],
+    "affected_invariants": [
+      "UNKNOWN_COST_IS_NOT_ZERO",
+      "CAMPAIGN_TOTAL_SPEND_CEILING",
+      "BOUNDED_EXPLICIT_RETRY",
+      "RESPECT_PROVIDER_BACKOFF"
+    ],
+    "affected_contracts": [
+      "GardenIndependentBranchConvergencePolicy/v1"
+    ],
+    "intended_effect": "Recover explicitly rejected HTTP429 review requests under the authorized total budget with retained full reserve, backoff and at most one receipt-bound retry. No timeout/5xx general exception or semantic admission.",
+    "parallel_mode": "COORDINATED"
+  }
+}
