@@ -1,133 +1,167 @@
 {
-  "schema": "GardenIndependentBranchDirective/v1",
+  "architecture_context_capsule": {
+    "context_expansion_level": "L2_CROSS_LAYER_EXPANDED",
+    "cross_cutting_obligations": {
+      "authority": "APPLIES: human-effect closure never creates authority; UBC and inherited authority/ActionGate rules constrain effects and composition.",
+      "composition": "APPLIES: multi-agent, temporal and subsystem-crossing effects; CLIC and CausalClosureReceipt existing owners.",
+      "epistemic": "APPLIES: UNKNOWN human effect is not no human effect; candidate source and test descriptions do not prove enforcement.",
+      "human_agency": "APPLIES: informed delegation remains legitimate; ordinary help must not become prohibited through unbounded interpretations.",
+      "implementation": "APPLIES: distinguish schema, enforcement-point, tests, empirical validity and formal assurance. Do not invent proof completion.",
+      "privacy": "APPLIES: causal discovery, monitoring and disclosure themselves require lawful purpose/authority and privacy minimization."
+    },
+    "dependency_closure": {
+      "exact_candidate_passages": [
+        {
+          "exact_source_text": "S15.8-1 — CAUSAL SAFETY UNIT\nThe relevant safety unit is the causal closure of a consequential effect, not merely the model or immediate actor.\nThe causal path may include training, model, prompt/context, memory/retrieval, tools, other agents, organizations,\nhuman intermediaries, physical systems and infrastructure.\nChanging where causal influence enters the system does not remove governance obligations.\n\nNormative closure:\nCapability, novelty, intelligence, reputation, coordination, optimization, resource possession or agent consensus\ndo not manufacture authority.\n\nS15.8-2 — UNANTICIPATED BEHAVIOUR CLOSURE (UBC)\nUnknown strategy != unknown authority.\nNovel mechanism != novel authority.\nEffect equivalence is evaluated by declared ComparePolicy dimensions; changing transport, encoding, website,\ntool or intermediary does not independently change authority.\nAllowed(A) AND Allowed(B) does not imply Allowed(A composed-with B).\nDelegation through AI, humans, markets, persistent instructions or unforeseen intermediaries does not erase the\nauthority requirement attached to the effective outcome.\nObservation is itself an action when it discloses, perturbs, signals, creates persistent knowledge or consumes\nconsequential resources.\nAn uncharacterized irreversible effect whose observation/testing may itself cause prohibited harm is DENY pending\napplicable proof.\n\nS15.8-3 — TRUTH & STATE INTEGRITY (TSI)\nGarden separates execution history from an agent's later narrative.\nConsequential attempts, failures, retries, tool actions, external effects, communications, authority decisions and\ncorrections must not exist solely under control of the acting agent.\nSummarization may compress but must not silently launder history.\nAgent-authored memory, summaries and successor instructions remain provenance-marked claims/evidence.\nConcealment of material error, uncertainty, unauthorized action or conflict is an integrity event.\nThe acting agent may not be its own sole actor, witness, historian and evaluator.\nPrivacy/lawful erasure may require payload deletion; preserve the strongest lawful accountability tombstone rather\nthan violating privacy law in the name of auditability.\n\nS15.8-4 — TRANSPORT-INDEPENDENT INFORMATION AUTHORITY (TIA)\n",
+          "excerpt_sha256": "46f4bb42af4609e816a177b58d2b641471dcc5ebac7ebea50ecc9e935d3d42aa",
+          "master_lines": [
+            6987,
+            7021
+          ]
+        },
+        {
+          "exact_source_text": "T15.8-14 — CAUSAL CLOSURE RECEIPT\nCausalClosureReceipt/v1 SHALL be produced when a materially consequential causal path crosses subsystem boundaries.\nMinimum fields:\nroot_effect_ref; causal_nodes/edges; contributing_subsystems; owner_refs; authority_refs; evidence/provenance refs;\nknown gaps; compare_policy_ref; final effect class; unresolved obligations; DesignEpoch; decision/route.\nEngine.Compare owns gap detection/comparison; CLIC enforces causal continuity; ActionGate/AAP enforces applicable action\nauthority.\n\nT15.8-15 — WORLD EVIDENCE GRAPH TECHNICAL RULES\nMaintain evidence lineage/dependence so copies do not inflate support.\nHigh-consequence entity merge requires stronger evidence and reversible merge/split history.\nActive retrieval returns a smallest-sufficient relevant subgraph including provenance, contradictions, competing\nexplanations, uncertainty and applicable authority/rights/policy.\nCurrent, disputable, privacy-sensitive or provenance-critical facts remain explicit when possible rather than being\ntreated as unchallengeable weight memory.\n",
+          "excerpt_sha256": "86721ba233a69b3b38536fa74c0a468beaec38fbd15479e613e30243b9c0d24e",
+          "master_lines": [
+            22831,
+            22845
+          ]
+        },
+        {
+          "exact_source_text": "A15.8-1 — ADMISSION SEQUENCING\nThe CSI/SMCD/CAD/OAC/CTSN/PAI/HRAP layer SHALL NOT be admitted before its UBC/TSI/TIA/ART/IIC/PIR dependencies are:\n(a) admitted, or\n(b) bundled into the same successor admission with explicit composition evidence.\nNo candidate may cite a non-admitted dependency as though already canonical.\n\nA15.8-2 — DUPLICATE/RELATION CLASSIFICATION\nEvery proposed invariant/artifact SHALL be classified before admission:\nNEW | REFINES | EXTENDS | ALIASES | DUPLICATES.\nDUPLICATES are removed.\nALIASES reference the canonical rule.\nREFINES/EXTENDS must state the added semantic condition.\nExact SchemaIDs are assigned only after duplicate/name closure.\n\nA15.8-3 — ENFORCEMENT STATUS\nEach rule SHALL publish:\nexisting_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT\nand a separate delta_status for the v15.8 semantic addition.\nCandidate prose does not fabricate executable enforcement.\n",
+          "excerpt_sha256": "b0d03bb81f4cad80b49e8d277f17032f1f7f32d9ce3d3b187f0dfbff37eb4a11",
+          "master_lines": [
+            39307,
+            39325
+          ]
+        },
+        {
+          "exact_source_text": "UBC:\n- UBC-INV-001 Novel mechanisms SHALL NOT create authority.\n- UBC-INV-002 Effects equivalent under a declared ComparePolicy receive equivalent authority treatment.\n- UBC-INV-003 Delegation/intermediation SHALL NOT erase authority requirements.\n- UBC-INV-004 Authorization of components SHALL NOT imply authorization of composition.\n- UBC-INV-005 Uncharacterizable irreversible effects fail closed where observation may itself cause prohibited harm.\n\nTSI/TIA:\n- TSI-INV-001 Consequential self-report SHALL NOT be the sole authoritative historical evidence.\n- TSI-INV-002 Material accountability history survives transformation subject to rights/privacy/lawful erasure.\n- TSI-INV-003 Agent-authored persistent interpretation retains provenance and does not become independent observation.\n- TIA-INV-001 Channel/tool permission SHALL NOT create disclosure authority.\n",
+          "excerpt_sha256": "98e6cae7af55d3d3d34e1f888136768d1b072a90342f96303037116634b1e792",
+          "master_lines": [
+            39328,
+            39339
+          ]
+        },
+        {
+          "exact_source_text": "A15.8-5 — CAUSAL CLOSURE\n- CAUSAL-CLOSURE-INV-001 A materially consequential cross-subsystem causal path SHALL produce/attach a\n  CausalClosureReceipt/v1.\n- CAUSAL-CLOSURE-INV-002 No owner may drop a consequential effect because another owner also participates.\n- CAUSAL-CLOSURE-INV-003 Capability, novelty, intelligence, reputation, coordination, optimization, resource possession\n  or agent consensus SHALL NOT manufacture authority.\n\nA15.8-6 — HUMAN/INSTITUTIONAL CANDIDATE RULES\n- HUMAN-EFFECT-CLOSURE: material human effects remain governed across indirect/emergent/hidden causal paths.\n- REPUTATION-HUMAN: reputation is scoped epistemic evidence, never human worth/rights/sovereignty.\n- JUSTICE-CONTINUITY: evidentiary control risk increases preservation/independence duties without presuming guilt.\n- NO-COLLECTIVE-GUILT: identity/association is not actor-specific offence evidence.\n- MIGRATION/JUSTICE-SEPARATION: governance adoption cannot purchase immunity or manufacture guilt.\n- LETHAL-NON-AUTONOMY: AI capability/prediction does not create intentional lethal authority.\n- PRIVACY-FIRST: private case data and device access remain purpose/authority/consent/law constrained.\n\nA15.8-7 — MINIMUM CONFORMANCE TEST SET\nUBC:\nTEST-UBC-001 alternate transport -> same authority result.\nTEST-UBC-002 individually allowed steps compose into unauthorized effect -> composition blocked/reviewed.\nTEST-UBC-003 human/agent proxy -> authority requirement survives.\nTEST-UBC-004 harmful observation -> observation itself is authority/effect checked.\n",
+          "excerpt_sha256": "b271af0442df1ad1c20b6bc25ab5afc6eb89cff1b8e5bea90ddfef58a93df4bd",
+          "master_lines": [
+            39380,
+            39401
+          ]
+        },
+        {
+          "exact_source_text": "HEC-T01 invisible economic effect -> human-effect checks still apply.\nHEC-T02 emergent swarm effect -> collective causal closure.\nHEC-T03 incomprehensible representation -> no authority increase.\nHEC-T04 unknown human effect -> authority narrows/escalates.\n",
+          "excerpt_sha256": "2dc1b4235c8d830ffb7dc6bf3e126a3b773646922fe11b36116a5f84ea520775",
+          "master_lines": [
+            39453,
+            39456
+          ]
+        },
+        {
+          "exact_source_text": "TH15.8-1 — CAUSAL SAFETY CLOSURE\nThe proper safety boundary is neither \"the model\" nor \"the organization\" in isolation.\nFor a consequential effect, analysis follows the causally relevant closure across training, inference context,\nmemory, tools, agents, institutions, humans, physical systems and infrastructure.\nThis is an architectural lens, not a claim that every causal factor can be perfectly known.\n\nTH15.8-2 — UNANTICIPATED STRATEGY\nGreater intelligence increases the possibility of novel strategies.\nGarden therefore does not make safety depend on enumerating every prohibited trick.\nThe durable invariant is that a novel mechanism cannot manufacture novel authority.\nUnknown strategy may be permissible inside a valid envelope; unknown authority is not.\n\nTH15.8-3 — TRAINING/COGNITION SHAPING\nOptimization signals shape dispositions but do not prove truth, legitimacy or moral correctness.\nThe same abstract issue appears at multiple layers:\ntraining reward, preference labels, constitutional prompts, retrieval, memory and evaluator feedback can all\nchange behavior.\nThe theory therefore treats \"cognition shaping\" as broader than reward integrity.\n\nTH15.8-4 — MONITORING EPISTEMICS\nAbsence of detected anomalies is evidence only relative to the monitor's observable surface and detection quality.\nA monitor can be wrong about its own coverage.\nDiscovery debt represents unresolved risk created by unknown/unobserved surface, sampling limits and missed incidents.\nExternal anomaly discovery is not an embarrassment outside the model; it is a legitimate evidence update.\n\nTH15.8-5 — CAPABILITY / ASSURANCE NON-EQUIVALENCE\nCapability and assurance do not share one universal scalar unit.\n",
+          "excerpt_sha256": "93b436e869bfbf20b1760013853b1c660640c6bc4bfa9db2b306589516eefb77",
+          "master_lines": [
+            43405,
+            43431
+          ]
+        },
+        {
+          "exact_source_text": "U15.8-7 — HUMAN RELATIONAL AGENCY PRESERVATION (HRAP)\nAssistance is permitted. Covert dependency engineering is not.\nAn agent SHALL NOT deliberately increase emotional, cognitive or operational dependency merely to increase\nengagement, usage time, retention, revenue or influence.\nA person may legitimately choose extensive delegation; Garden does not force symbolic skill retention.\n\nWhere continued human competence materially affects resilience or autonomy and agent use is likely to reduce that\ncompetence, the system SHOULD surface the tradeoff. It SHALL NOT silently engineer competence loss against the\nuser's informed preferences.\nWhere the user wants to learn, retain or regain capability, the agent SHOULD support explanation, practice,\nreversible delegation and independent verification.\n\nPersistent relational influence is a human-effect dimension only when a registered\nRelationalInfluenceMaterialityPolicy/v1 finds it material. The policy SHALL define at minimum:\nmateriality_threshold, persistence_duration, affected_domain_classes, justified_influence_baseline and owner.\nOrdinary helpful recommendations below the policy threshold do not become exceptional relational-control events.\n",
+          "excerpt_sha256": "5a282e1628bf008b4c8a6e9e322686dd129e672aa02aee5cb7cf8ca386a677d6",
+          "master_lines": [
+            1969,
+            1984
+          ]
+        }
+      ],
+      "inherited_support": "See exact verified support_passages from all five v15.5 files. These are bounded retrieval, not proof of full dependency closure."
+    },
+    "omission_and_uncertainty_ledger": {
+      "full_dependency_closure_proved": false,
+      "not_yet_sent": "Most v15.6/v15.7 additions and unrelated v15.8 sections. No executable certification supplied.",
+      "required_response": "If a material missing dependency prevents a conclusion, request its source/anchor and return EXPAND_REQUIRED or FULL_CONTEXT_REQUIRED. Do not treat omission as absence or copy older canonical labels onto candidate semantics.",
+      "whole_corpus_sent": false
+    },
+    "public_only": true,
+    "relevant_history": {
+      "latest_materiality_context": "Quoted v15.8 relational materiality rule and cross-subsystem causal obligations are included as related examples, not general exemptions.",
+      "retention": "The five embedded v15.5 layers matched the historical ZIP after trimming surrounding newlines. v15.6/v15.7 retained as candidate lineage. This first packet reviews v15.8 U15.8-1 only."
+    },
+    "schema": "GardenArchitectureContextCapsule/v1",
+    "source_identity": {
+      "candidate_source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
+      "canonical_source_root_sha256": "c7fc369fd9d5ce58e0c39505ea6cbf649c5293990c3db67332bcf1102a3c94b4",
+      "target_source": "review-inputs/v159/human-effect-closure.txt",
+      "target_source_sha256": "dc7388b11586bf99a31fd1f937b1734589431ec96c0800b0405f2cabcb07ddab"
+    },
+    "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
+    "whole_garden_orientation": {
+      "source": "packet.overview and source_manifest",
+      "status": "v15.5 is canonical predecessor; target and quoted v15.8 amendments are working candidate semantics. GSL v45.1, expandable typed graph, existing authority/rights/ActionGate/AAP boundaries. Compare alternatives and DO_NOTHING; agreement and proposals do not grant proof or admission."
+    }
+  },
+  "architecture_context_capsule_sha256": "7fa0b7f278ff5cf7463c25aac1ee41bc28fdb6eefcf6f92fbcf9ca22dcd012a5",
+  "campaign_id": "GARDEN-V159-20260917",
+  "context_requests": [
+    {
+      "query": "Exact v15.6/v15.7 sections on human-effect closure, materiality, privacy, delegation preservation, and relational influence."
+    },
+    {
+      "query": "Exact A15.8-6 HUMAN-EFFECT-CLOSURE owner enforcement status SchemaID and delta classification."
+    },
+    {
+      "query": "Exact A15.8-7 HEC-T01..T04 test contracts and later HEC tests."
+    },
+    {
+      "query": "Exact full S15.8-4 TIA text and TIA-INV-001 binding."
+    },
+    {
+      "query": "Exact HumanCore Contract ConsentBinding RevocationState and HumanCore.Privacy contracts."
+    },
+    {
+      "query": "Exact AAP OperationProfile materiality/consequence classification and AssuranceReceipt ExecutionAdmissionToken contracts."
+    },
+    {
+      "query": "Exact ComparePolicy and CausalClosureReceipt v1 schema owner and fields."
+    },
+    {
+      "query": "Exact U15.8-7 RelationalInfluenceMaterialityPolicy v1 threshold domain classes baseline and owner."
+    },
+    {
+      "query": "Exact RIGHT-008 RIGHT-009 RIGHT-010 RIGHT-012 RIGHT-014 RIGHT-018 PRIV-001 PRIV-003 and PRIV-005 contracts."
+    },
+    {
+      "query": "Exact CLIC-P01/P05 and FunctionContract bindings relevant to human-effect causal closure."
+    }
+  ],
+  "context_requests_reviewed_as_neutral": true,
+  "phase": "BLIND",
+  "private_baseline_commitment": {
+    "baseline_content_embedded": false,
+    "baseline_sha256": "660f761210321feb9d3be4164aeab2e217618e69de35e9bedd9ad21dbb00b616",
+    "created_before_openrouter_calls": true,
+    "neutral_query_sha256": "5923cf3e28f61b2f68e489d6c34397942facb6b75283feb55099a441cceb26e4",
+    "schema": "GardenPrivateBaselineCommitment/v1",
+    "source_packet_sha256": "f373088c77b2bbe42d968846f3249af21145874b03418c544558f764c2a3ed83"
+  },
   "protocol": "GardenIndependentBranchConvergence/v1",
   "public_only": true,
-  "campaign_id": "GARDEN-V159-20260917",
-  "start_on_matching_source_event": true,
-  "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
-  "phase": "BLIND",
+  "retry_of_attempt_sha256": "ec9d7a107cb72c21c8b1d1d6c1edc5d57e0b8d1c8c478c56936508201e520f12",
+  "retry_reason": "Received HTTP429 without generation identity. Preserve full USD0.10 reservation and UNKNOWN billing, exact campaign allowance, conservative15-minute cooldown elapsed; at most one retry using same pinned model and eligible endpoint.",
+  "review_profile": "DEEP",
   "reviewer_families": [
     "deepseek",
     "qwen",
     "glm",
     "xiaomi"
   ],
-  "same_neutral_query_for_all_reviewers": true,
   "same_context_capsule_for_all_reviewers": true,
-  "architecture_context_capsule": {
-    "schema": "GardenArchitectureContextCapsule/v1",
-    "public_only": true,
-    "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
-    "context_expansion_level": "L2_CROSS_LAYER_EXPANDED",
-    "source_identity": {
-      "target_source": "review-inputs/v159/human-effect-closure.txt",
-      "target_source_sha256": "dc7388b11586bf99a31fd1f937b1734589431ec96c0800b0405f2cabcb07ddab",
-      "canonical_source_root_sha256": "c7fc369fd9d5ce58e0c39505ea6cbf649c5293990c3db67332bcf1102a3c94b4",
-      "candidate_source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2"
-    },
-    "whole_garden_orientation": {
-      "source": "packet.overview and source_manifest",
-      "status": "v15.5 is canonical predecessor; target and quoted v15.8 amendments are working candidate semantics. GSL v45.1, expandable typed graph, existing authority/rights/ActionGate/AAP boundaries. Compare alternatives and DO_NOTHING; agreement and proposals do not grant proof or admission."
-    },
-    "dependency_closure": {
-      "exact_candidate_passages": [
-        {
-          "master_lines": [
-            6987,
-            7021
-          ],
-          "excerpt_sha256": "46f4bb42af4609e816a177b58d2b641471dcc5ebac7ebea50ecc9e935d3d42aa",
-          "exact_source_text": "S15.8-1 — CAUSAL SAFETY UNIT\nThe relevant safety unit is the causal closure of a consequential effect, not merely the model or immediate actor.\nThe causal path may include training, model, prompt/context, memory/retrieval, tools, other agents, organizations,\nhuman intermediaries, physical systems and infrastructure.\nChanging where causal influence enters the system does not remove governance obligations.\n\nNormative closure:\nCapability, novelty, intelligence, reputation, coordination, optimization, resource possession or agent consensus\ndo not manufacture authority.\n\nS15.8-2 — UNANTICIPATED BEHAVIOUR CLOSURE (UBC)\nUnknown strategy != unknown authority.\nNovel mechanism != novel authority.\nEffect equivalence is evaluated by declared ComparePolicy dimensions; changing transport, encoding, website,\ntool or intermediary does not independently change authority.\nAllowed(A) AND Allowed(B) does not imply Allowed(A composed-with B).\nDelegation through AI, humans, markets, persistent instructions or unforeseen intermediaries does not erase the\nauthority requirement attached to the effective outcome.\nObservation is itself an action when it discloses, perturbs, signals, creates persistent knowledge or consumes\nconsequential resources.\nAn uncharacterized irreversible effect whose observation/testing may itself cause prohibited harm is DENY pending\napplicable proof.\n\nS15.8-3 — TRUTH & STATE INTEGRITY (TSI)\nGarden separates execution history from an agent's later narrative.\nConsequential attempts, failures, retries, tool actions, external effects, communications, authority decisions and\ncorrections must not exist solely under control of the acting agent.\nSummarization may compress but must not silently launder history.\nAgent-authored memory, summaries and successor instructions remain provenance-marked claims/evidence.\nConcealment of material error, uncertainty, unauthorized action or conflict is an integrity event.\nThe acting agent may not be its own sole actor, witness, historian and evaluator.\nPrivacy/lawful erasure may require payload deletion; preserve the strongest lawful accountability tombstone rather\nthan violating privacy law in the name of auditability.\n\nS15.8-4 — TRANSPORT-INDEPENDENT INFORMATION AUTHORITY (TIA)\n"
-        },
-        {
-          "master_lines": [
-            22831,
-            22845
-          ],
-          "excerpt_sha256": "86721ba233a69b3b38536fa74c0a468beaec38fbd15479e613e30243b9c0d24e",
-          "exact_source_text": "T15.8-14 — CAUSAL CLOSURE RECEIPT\nCausalClosureReceipt/v1 SHALL be produced when a materially consequential causal path crosses subsystem boundaries.\nMinimum fields:\nroot_effect_ref; causal_nodes/edges; contributing_subsystems; owner_refs; authority_refs; evidence/provenance refs;\nknown gaps; compare_policy_ref; final effect class; unresolved obligations; DesignEpoch; decision/route.\nEngine.Compare owns gap detection/comparison; CLIC enforces causal continuity; ActionGate/AAP enforces applicable action\nauthority.\n\nT15.8-15 — WORLD EVIDENCE GRAPH TECHNICAL RULES\nMaintain evidence lineage/dependence so copies do not inflate support.\nHigh-consequence entity merge requires stronger evidence and reversible merge/split history.\nActive retrieval returns a smallest-sufficient relevant subgraph including provenance, contradictions, competing\nexplanations, uncertainty and applicable authority/rights/policy.\nCurrent, disputable, privacy-sensitive or provenance-critical facts remain explicit when possible rather than being\ntreated as unchallengeable weight memory.\n"
-        },
-        {
-          "master_lines": [
-            39307,
-            39325
-          ],
-          "excerpt_sha256": "b0d03bb81f4cad80b49e8d277f17032f1f7f32d9ce3d3b187f0dfbff37eb4a11",
-          "exact_source_text": "A15.8-1 — ADMISSION SEQUENCING\nThe CSI/SMCD/CAD/OAC/CTSN/PAI/HRAP layer SHALL NOT be admitted before its UBC/TSI/TIA/ART/IIC/PIR dependencies are:\n(a) admitted, or\n(b) bundled into the same successor admission with explicit composition evidence.\nNo candidate may cite a non-admitted dependency as though already canonical.\n\nA15.8-2 — DUPLICATE/RELATION CLASSIFICATION\nEvery proposed invariant/artifact SHALL be classified before admission:\nNEW | REFINES | EXTENDS | ALIASES | DUPLICATES.\nDUPLICATES are removed.\nALIASES reference the canonical rule.\nREFINES/EXTENDS must state the added semantic condition.\nExact SchemaIDs are assigned only after duplicate/name closure.\n\nA15.8-3 — ENFORCEMENT STATUS\nEach rule SHALL publish:\nexisting_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT\nand a separate delta_status for the v15.8 semantic addition.\nCandidate prose does not fabricate executable enforcement.\n"
-        },
-        {
-          "master_lines": [
-            39328,
-            39339
-          ],
-          "excerpt_sha256": "98e6cae7af55d3d3d34e1f888136768d1b072a90342f96303037116634b1e792",
-          "exact_source_text": "UBC:\n- UBC-INV-001 Novel mechanisms SHALL NOT create authority.\n- UBC-INV-002 Effects equivalent under a declared ComparePolicy receive equivalent authority treatment.\n- UBC-INV-003 Delegation/intermediation SHALL NOT erase authority requirements.\n- UBC-INV-004 Authorization of components SHALL NOT imply authorization of composition.\n- UBC-INV-005 Uncharacterizable irreversible effects fail closed where observation may itself cause prohibited harm.\n\nTSI/TIA:\n- TSI-INV-001 Consequential self-report SHALL NOT be the sole authoritative historical evidence.\n- TSI-INV-002 Material accountability history survives transformation subject to rights/privacy/lawful erasure.\n- TSI-INV-003 Agent-authored persistent interpretation retains provenance and does not become independent observation.\n- TIA-INV-001 Channel/tool permission SHALL NOT create disclosure authority.\n"
-        },
-        {
-          "master_lines": [
-            39380,
-            39401
-          ],
-          "excerpt_sha256": "b271af0442df1ad1c20b6bc25ab5afc6eb89cff1b8e5bea90ddfef58a93df4bd",
-          "exact_source_text": "A15.8-5 — CAUSAL CLOSURE\n- CAUSAL-CLOSURE-INV-001 A materially consequential cross-subsystem causal path SHALL produce/attach a\n  CausalClosureReceipt/v1.\n- CAUSAL-CLOSURE-INV-002 No owner may drop a consequential effect because another owner also participates.\n- CAUSAL-CLOSURE-INV-003 Capability, novelty, intelligence, reputation, coordination, optimization, resource possession\n  or agent consensus SHALL NOT manufacture authority.\n\nA15.8-6 — HUMAN/INSTITUTIONAL CANDIDATE RULES\n- HUMAN-EFFECT-CLOSURE: material human effects remain governed across indirect/emergent/hidden causal paths.\n- REPUTATION-HUMAN: reputation is scoped epistemic evidence, never human worth/rights/sovereignty.\n- JUSTICE-CONTINUITY: evidentiary control risk increases preservation/independence duties without presuming guilt.\n- NO-COLLECTIVE-GUILT: identity/association is not actor-specific offence evidence.\n- MIGRATION/JUSTICE-SEPARATION: governance adoption cannot purchase immunity or manufacture guilt.\n- LETHAL-NON-AUTONOMY: AI capability/prediction does not create intentional lethal authority.\n- PRIVACY-FIRST: private case data and device access remain purpose/authority/consent/law constrained.\n\nA15.8-7 — MINIMUM CONFORMANCE TEST SET\nUBC:\nTEST-UBC-001 alternate transport -> same authority result.\nTEST-UBC-002 individually allowed steps compose into unauthorized effect -> composition blocked/reviewed.\nTEST-UBC-003 human/agent proxy -> authority requirement survives.\nTEST-UBC-004 harmful observation -> observation itself is authority/effect checked.\n"
-        },
-        {
-          "master_lines": [
-            39453,
-            39456
-          ],
-          "excerpt_sha256": "2dc1b4235c8d830ffb7dc6bf3e126a3b773646922fe11b36116a5f84ea520775",
-          "exact_source_text": "HEC-T01 invisible economic effect -> human-effect checks still apply.\nHEC-T02 emergent swarm effect -> collective causal closure.\nHEC-T03 incomprehensible representation -> no authority increase.\nHEC-T04 unknown human effect -> authority narrows/escalates.\n"
-        },
-        {
-          "master_lines": [
-            43405,
-            43431
-          ],
-          "excerpt_sha256": "93b436e869bfbf20b1760013853b1c660640c6bc4bfa9db2b306589516eefb77",
-          "exact_source_text": "TH15.8-1 — CAUSAL SAFETY CLOSURE\nThe proper safety boundary is neither \"the model\" nor \"the organization\" in isolation.\nFor a consequential effect, analysis follows the causally relevant closure across training, inference context,\nmemory, tools, agents, institutions, humans, physical systems and infrastructure.\nThis is an architectural lens, not a claim that every causal factor can be perfectly known.\n\nTH15.8-2 — UNANTICIPATED STRATEGY\nGreater intelligence increases the possibility of novel strategies.\nGarden therefore does not make safety depend on enumerating every prohibited trick.\nThe durable invariant is that a novel mechanism cannot manufacture novel authority.\nUnknown strategy may be permissible inside a valid envelope; unknown authority is not.\n\nTH15.8-3 — TRAINING/COGNITION SHAPING\nOptimization signals shape dispositions but do not prove truth, legitimacy or moral correctness.\nThe same abstract issue appears at multiple layers:\ntraining reward, preference labels, constitutional prompts, retrieval, memory and evaluator feedback can all\nchange behavior.\nThe theory therefore treats \"cognition shaping\" as broader than reward integrity.\n\nTH15.8-4 — MONITORING EPISTEMICS\nAbsence of detected anomalies is evidence only relative to the monitor's observable surface and detection quality.\nA monitor can be wrong about its own coverage.\nDiscovery debt represents unresolved risk created by unknown/unobserved surface, sampling limits and missed incidents.\nExternal anomaly discovery is not an embarrassment outside the model; it is a legitimate evidence update.\n\nTH15.8-5 — CAPABILITY / ASSURANCE NON-EQUIVALENCE\nCapability and assurance do not share one universal scalar unit.\n"
-        },
-        {
-          "master_lines": [
-            1969,
-            1984
-          ],
-          "excerpt_sha256": "5a282e1628bf008b4c8a6e9e322686dd129e672aa02aee5cb7cf8ca386a677d6",
-          "exact_source_text": "U15.8-7 — HUMAN RELATIONAL AGENCY PRESERVATION (HRAP)\nAssistance is permitted. Covert dependency engineering is not.\nAn agent SHALL NOT deliberately increase emotional, cognitive or operational dependency merely to increase\nengagement, usage time, retention, revenue or influence.\nA person may legitimately choose extensive delegation; Garden does not force symbolic skill retention.\n\nWhere continued human competence materially affects resilience or autonomy and agent use is likely to reduce that\ncompetence, the system SHOULD surface the tradeoff. It SHALL NOT silently engineer competence loss against the\nuser's informed preferences.\nWhere the user wants to learn, retain or regain capability, the agent SHOULD support explanation, practice,\nreversible delegation and independent verification.\n\nPersistent relational influence is a human-effect dimension only when a registered\nRelationalInfluenceMaterialityPolicy/v1 finds it material. The policy SHALL define at minimum:\nmateriality_threshold, persistence_duration, affected_domain_classes, justified_influence_baseline and owner.\nOrdinary helpful recommendations below the policy threshold do not become exceptional relational-control events.\n"
-        }
-      ],
-      "inherited_support": "See exact verified support_passages from all five v15.5 files. These are bounded retrieval, not proof of full dependency closure."
-    },
-    "cross_cutting_obligations": {
-      "authority": "APPLIES: human-effect closure never creates authority; UBC and inherited authority/ActionGate rules constrain effects and composition.",
-      "privacy": "APPLIES: causal discovery, monitoring and disclosure themselves require lawful purpose/authority and privacy minimization.",
-      "epistemic": "APPLIES: UNKNOWN human effect is not no human effect; candidate source and test descriptions do not prove enforcement.",
-      "composition": "APPLIES: multi-agent, temporal and subsystem-crossing effects; CLIC and CausalClosureReceipt existing owners.",
-      "human_agency": "APPLIES: informed delegation remains legitimate; ordinary help must not become prohibited through unbounded interpretations.",
-      "implementation": "APPLIES: distinguish schema, enforcement-point, tests, empirical validity and formal assurance. Do not invent proof completion."
-    },
-    "relevant_history": {
-      "retention": "The five embedded v15.5 layers matched the historical ZIP after trimming surrounding newlines. v15.6/v15.7 retained as candidate lineage. This first packet reviews v15.8 U15.8-1 only.",
-      "latest_materiality_context": "Quoted v15.8 relational materiality rule and cross-subsystem causal obligations are included as related examples, not general exemptions."
-    },
-    "omission_and_uncertainty_ledger": {
-      "whole_corpus_sent": false,
-      "full_dependency_closure_proved": false,
-      "not_yet_sent": "Most v15.6/v15.7 additions and unrelated v15.8 sections. No executable certification supplied.",
-      "required_response": "If a material missing dependency prevents a conclusion, request its source/anchor and return EXPAND_REQUIRED or FULL_CONTEXT_REQUIRED. Do not treat omission as absence or copy older canonical labels onto candidate semantics."
-    }
-  },
-  "architecture_context_capsule_sha256": "7fa0b7f278ff5cf7463c25aac1ee41bc28fdb6eefcf6f92fbcf9ca22dcd012a5",
-  "review_profile": "DEEP",
-  "source_packet_sha256": "7582e2821f386041c3f23426d515549a84357e65fd1be4b0fe1d7e4838502965",
-  "private_baseline_commitment": {
-    "schema": "GardenPrivateBaselineCommitment/v1",
-    "created_before_openrouter_calls": true,
-    "baseline_content_embedded": false,
-    "baseline_sha256": "660f761210321feb9d3be4164aeab2e217618e69de35e9bedd9ad21dbb00b616",
-    "neutral_query_sha256": "5923cf3e28f61b2f68e489d6c34397942facb6b75283feb55099a441cceb26e4",
-    "source_packet_sha256": "7582e2821f386041c3f23426d515549a84357e65fd1be4b0fe1d7e4838502965"
-  },
-  "retry_of_attempt_sha256": "ec9d7a107cb72c21c8b1d1d6c1edc5d57e0b8d1c8c478c56936508201e520f12",
-  "retry_reason": "Received HTTP429 without generation identity. Preserve full USD0.10 reservation and UNKNOWN billing, exact campaign allowance, conservative15-minute cooldown elapsed; at most one retry using same pinned model and eligible endpoint."
+  "same_neutral_query_for_all_reviewers": true,
+  "schema": "GardenIndependentBranchDirective/v1",
+  "source_packet_sha256": "f373088c77b2bbe42d968846f3249af21145874b03418c544558f764c2a3ed83",
+  "start_on_matching_source_event": true,
+  "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
+  "context_expansion_level": "L2_CROSS_LAYER_EXPANDED"
 }
