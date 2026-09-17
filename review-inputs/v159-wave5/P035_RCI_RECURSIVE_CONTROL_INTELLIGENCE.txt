@@ -1,0 +1,82 @@
+GARDEN v15.9 REVIEW PACKET P035
+Topic: Recursive Control Intelligence (RCI) architectural candidate
+Frozen v15.8 source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Additional candidate source: Garden_RCI_v15.9_Candidate.md, status REVIEW_PENDING.
+
+CANDIDATE CONCEPT
+Garden is described as a Recursive Control Intelligence architecture: an intelligence/control architecture that continuously learns, reasons, verifies, governs and controls intelligent systems, including its own evolution.
+RCI is proposed as an umbrella role. It explicitly does NOT claim Garden already contains AGI or guarantees control of every future intelligence.
+
+PROPOSED COMPONENT VIEW
+1. Knowledge: GSL-KR stores discoveries, evidence, memory, threats, corrections, uncertainty, provenance, expiry and rejected claims.
+2. Meaning: GSL maps goals/state/context/consequences into typed interpretable structures.
+3. Reasoning: compare alternatives, identify conflict, predict effects, expose assumptions.
+4. Control: authority, permissions, consent, scope, resource limits and human-effect checks constrain action.
+5. Verification: claims/plans/code/updates/actions tested against evidence, invariants and adversarial cases.
+6. Governance: proposed changes separated from verification and authorization; no system unilaterally promotes its own consequential upgrade.
+7. Execution safety: actions observable, reversible where possible, logged, recoverable and revocable.
+8. Recursive adaptation: new capabilities/failure modes/knowledge gaps enter quarantined intake, are tested, then may update the architecture.
+
+PROPOSED CONTROL LOOP
+Observe -> represent -> retrieve knowledge -> reason -> assess human effects -> guard authority -> propose/select -> verify -> authorize -> act -> observe outcome -> learn.
+
+The same control logic is proposed to cover:
+- external intelligent agents;
+- Garden modules;
+- GSL-KR;
+- the process that changes Garden itself.
+
+SAFETY MEANING
+'Newly discovered' != 'accepted'. New knowledge/capability first remains pending/provenance-bound and receives no expanded authority solely from novelty. Consequential promotion follows applicable independent observation/evidence, adversarial testing, rollback/recovery testing, proof/assurance and legitimate authorization.
+
+KNOWN FAILURE SURFACES TO KEEP VISIBLE
+unknown behavior; observation gaps; specification conflict; enforcement bypass; authority capture; poisoned knowledge; recursive-update defects; capability growth faster than verification. Written rules alone do not prove containment.
+
+PROPOSED DESIGN INTERPRETATION
+The smallest nonredundant interpretation is likely:
+  RCI = architectural classification / umbrella view / composition contract
+not:
+  a new Core Object
+  a new Core Relation
+  a new top-level Engine
+  a new authority source
+  a claim of AGI containment guarantee.
+
+Existing likely owners include:
+GSL Core, Knowledge/GSL-KR, Compare, Reason, AAP, Policy, Proof, Compliance, Execution, Transition, Evolve, Research, Human Sovereignty, Safety/Security/Law/Governance and the reviewed causal/human-effect layers.
+
+RECURSIVE SELF-CHANGE BOUNDARY
+Garden's own material upgrade path must be inside the governed causal/control boundary. For a protected consequential self-change, the same actor/process cannot be the sole:
+  proposer
+  implementer
+  verifier/certifier
+  authorizer
+when the applicable profile requires independence.
+No self-generated evidence/benchmark/receipt alone discharges an independent verification requirement.
+
+QUARANTINE / PENDING STATE
+New knowledge, rules, code, capability or self-model changes that could materially alter consequential behavior are first represented in a pending/quarantined candidate state with:
+- provenance;
+- affected scope/dependencies;
+- uncertainty;
+- current authority status;
+- required reviewers/checkers;
+- rollback/recovery assumptions;
+- promotion/admission condition.
+Quarantine does not imply maliciousness; it is simply non-admission.
+
+ACCEPTANCE QUESTIONS
+1. Is RCI useful as a single architectural umbrella/current-reading concept, or redundant enough to omit entirely?
+2. If retained, should it be ALIAS/REFINES/EXTENDS an architecture view rather than get a new top-level SchemaID/engine?
+3. Does the proposed loop duplicate the Universal Per-Step Control Loop or RCI self-governance in a way that should be expressed as composition rather than a second execution loop?
+4. Does 'controls intelligent systems' overclaim ability/authority? Should it read 'governs/admissibly controls systems within Garden's deployed authority and enforceable boundary'?
+5. What exact independence rule prevents self-approved recursive upgrades without making harmless self-maintenance impossible?
+6. Is quarantine needed only for material consequential changes, with ordinary low-risk learning/retrieval remaining under normal Knowledge/Research rules?
+7. How should capability growth faster than assurance/verification map to existing CAD/AAP/Evolve gates?
+8. What minimal tests demonstrate that RCI is not a new authority source and does not claim universal containment?
+
+DO_NOTHING COMPARATOR
+Do not introduce RCI merely as branding. Retain it only if it improves current architectural comprehension and closes recursive self-governance explicitly without duplicating existing mechanisms.
+
+OMISSION LEDGER
+RCI is a v15.9 candidate, not part of the frozen v15.8 baseline. It has not been ratified, implemented or certified. Review must preserve that status until ordinary admission.
