@@ -1,0 +1,50 @@
+name: Garden v15.9 wave 032-036 review
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave5-032-036-20260917'
+    paths:
+      - 'review-inputs/v159-wave5/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P032_ARTIFACT_SCHEMA_OWNER_CLOSURE
+            file: P032_ARTIFACT_SCHEMA_OWNER_CLOSURE.txt
+          - id: P033_LEGACY50_RECONCILIATION
+            file: P033_LEGACY50_RECONCILIATION.txt
+          - id: P034_JUSTICE_REFERENCE_CURRENT_READING
+            file: P034_JUSTICE_REFERENCE_CURRENT_READING.txt
+          - id: P035_RCI_RECURSIVE_CONTROL_INTELLIGENCE
+            file: P035_RCI_RECURSIVE_CONTROL_INTELLIGENCE.txt
+          - id: P036_RELEASE_ADMISSION_REGISTRY_TEST_STATUS
+            file: P036_RELEASE_ADMISSION_REGISTRY_TEST_STATUS.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Four-family blind review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave_board.py "review-inputs/v159-wave5/${{ matrix.file }}"
+      - name: Upload packet evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave5-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave1/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
