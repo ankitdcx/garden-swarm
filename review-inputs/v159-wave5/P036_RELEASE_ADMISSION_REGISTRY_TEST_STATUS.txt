@@ -1,0 +1,101 @@
+GARDEN v15.9 REVIEW PACKET P036
+Topic: final admission, registry, status, reference, test and release closure
+Frozen source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+BOUNDARY
+This packet is the release-control layer for a v15.9 working candidate. It must prevent review prose, model consensus or document completeness from masquerading as executable/canonical certification. At the same time it should permit a coherent complete successor design document set with clearly typed remaining implementation obligations.
+
+SOURCE PROCESS GUARDS
+A15.8 admission sequencing:
+A candidate layer SHALL NOT cite a non-admitted dependency as if already canonical. Dependencies must be admitted or bundled in the same successor admission with explicit composition evidence.
+
+A15.8 duplicate/relation classification:
+Every proposed invariant/artifact is classified before admission:
+  NEW | REFINES | EXTENDS | ALIASES | DUPLICATES.
+DUPLICATES are removed.
+ALIASES point to the canonical rule.
+REFINES/EXTENDS state the added semantic condition.
+Exact SchemaIDs are assigned only after duplicate/name closure.
+
+A15.8 enforcement status:
+Each rule publishes:
+  existing_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT
+and a separate delta_status for the new semantic addition.
+Candidate prose does not fabricate executable enforcement.
+
+KNOWN CAMPAIGN REALITY
+P001 onward is being reviewed in bounded source packets with independent ChatGPT baseline + external multi-family review + synthesis + adversarial challenge. Passing review means cross-reviewed design candidate. It does not itself mean the design is formally proved, executable, production safe, officially certified or canonically ratified.
+
+TEST STATUS
+Named `TEST-*` rows in prose are test specifications unless an executable harness plus result receipt is bound to the exact version. A specified counterexample test is still valuable design evidence but must not be reported as 'passed' merely because reviewers approve it.
+
+OWNER / SCHEMA CLOSURE
+Before canonical machine admission, every active new/changed persistent artifact/function/policy must resolve:
+- canonical qualified name and owner;
+- relation to existing type/rule;
+- host SchemaID or admitted new SchemaID if truly necessary;
+- producer/store/reviewer/enforcement roles;
+- function/effect/authority contract;
+- current version/scope/invalidators;
+- applicable tests/invariants;
+- existing_status and delta_status;
+- unresolved obligations.
+
+REFERENCE CLOSURE
+The final v15.9 delivery should provide a generated CurrentReadingMap so users/implementers do not have to reconstruct effective semantics from historical append-only overlays. It should resolve:
+- current active owner/name;
+- aliases and supersessions;
+- exact current anchors;
+- historical-only names;
+- EXTERNAL/UNRESOLVED references;
+- deliberately retained immutable predecessor text.
+No dangling current reference may be silently treated as resolved.
+
+HISTORICAL TEXT VS CURRENT VIEW
+Historical v15.5/v15.6/v15.7/v15.8 content may remain intact for lineage. A current successor overlay must explicitly govern current reading and identify any stale local summary that has been repaired. The final reader should not need to guess which of two contradictory historical clauses is operative.
+
+RELEASE LABEL OPTIONS
+A design-only result may honestly be labeled:
+  GARDEN v15.9 — COMPLETE CROSS-REVIEWED WORKING CANDIDATE
+  NOT EXECUTABLY CERTIFIED / NOT PRODUCTION CERTIFICATION
+if the semantic review campaign and internal cross-reference closure are complete but executable proof/test/runtime work is not.
+
+It must not be labeled canonical/ratified/certified solely from this review campaign unless a separate legitimate admission authority/process actually supplies that status.
+
+UNRESOLVED PROFILES
+Explicit DEFERRED / UNRESOLVED definitions remain visible in the final five files and do not block the entire design document from being complete as a working candidate, provided:
+- their status is explicit;
+- no active invariant depends on them as if implemented/admitted;
+- the CurrentReadingMap records the missing dependency/owner;
+- operational/certification claims do not rely on them.
+
+CROSS-FILE RELEASE CHECKS
+Before materializing final five documents:
+- source-retention/hash check against frozen v15.8 slices;
+- every accepted upgrade mapped to at least one owning layer;
+- every rejected/no-change disposition recorded or safely omitted from normative overlay;
+- no known accepted upgrade lost between combined upgrade document and layer documents;
+- current aliases/supersessions resolved;
+- no duplicate newly introduced owner/schema unless deliberate qualified identities;
+- all `UNKNOWN/STALE/CONFLICT/BLOCKED/INCOMPLETE` semantics remain non-PASS where hard resolution is required;
+- rights/consent/privacy/authority/safety/law hard gates survive every layer projection;
+- topology remains unchanged unless an explicitly reviewed architectural change says otherwise;
+- GSL semantic core remains compatible with predecessor v45.1 unless a reviewed successor delta says otherwise.
+
+WHOLE-INTEGRATION REVIEW
+After P036, perform one final cross-wave integration packet over the consolidated P001–P036 upgrade set. That final pass should look only for contradictions, duplicate owners, missing cross-layer propagation, stale status claims and dropped accepted corrections. It should not restart every source packet.
+
+REVIEW QUESTIONS
+1. Is this status model sufficient to produce a 'complete v15.9 working candidate' without falsely claiming executable certification?
+2. Should any unresolved profile block the whole document, or only the functions that depend on it?
+3. What minimum owner/schema/reference closure is required before assigning final SchemaIDs?
+4. How should executable test receipts be linked so SPECIFIED and PASS cannot be confused?
+5. Is a generated current-reading overlay preferable to rewriting preserved historical bytes?
+6. What final integration checks are essential to ensure no accepted upgrade is lost across five documents?
+7. Does any review/admission wording accidentally imply reviewer consensus creates authority or canonical status?
+
+DO_NOTHING COMPARATOR
+Do not invent implementation/test receipts to make the release look complete. Prefer explicit typed incompleteness over false certification, while still producing the best complete semantic working candidate.
+
+OMISSION LEDGER
+This packet does not claim current repository code implements all reviewed semantics. Runtime enforcement and formal certification remain separate work unless direct executable evidence is later supplied.
