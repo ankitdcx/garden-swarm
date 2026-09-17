@@ -1,0 +1,89 @@
+GARDEN v15.9 — P031 RELIABILITY / GSL ARCHITECTURES SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+
+1. ARCHITECTURE PROFILE STATUS
+Retain distinct current statuses:
+- GSL-KR: normative repository/knowledge baseline for its declared scope.
+- GSL-AR: operational architecture/reference profile for its declared scope.
+- GSL-R: exploratory/non-normative profile.
+
+No profile substitutes for another merely by shared naming, performance, configuration convenience or local selection.
+
+Promotion or replacement of an exploratory/non-normative profile into normative/operational use is a versioned DesignBinding / migration / compatibility change with the ordinary current owner, authority, evidence, proof and invalidation obligations. Explicit promotion is governed too; only saying 'no silent replacement' is insufficient.
+
+2. GNR OWNER BOUNDARY
+GNR remains a named runtime specialization whose complete authoritative semantics are not defined by this Theory/reference-profile excerpt.
+
+Until its exact current owner contract is resolved:
+- GNR is UNRESOLVED in this view;
+- this packet SHALL NOT invent or amend its normative semantics;
+- any future change must bind the Capability.Compute.NativeInterface/runtime owner and pass ordinary DesignBinding/migration qualification.
+
+3. RELIABILITY RETRY BINDING
+The Reliability OS generic retry budget is not an independent retry authority.
+
+Retries are permitted only for operation classes whose current Execution/Process contract permits replay, including:
+- read-only transient operations under the declared retry profile;
+- verified same-effect idempotent operations under the current effect identity/fence contract, when the original effect is still required under current state/objective.
+
+For a non-idempotent external effect with OUTCOME_UNKNOWN:
+  blind replay is prohibited;
+  reconcile or establish non-application before retry.
+
+A retry-count threshold such as 'three retries' cannot override effect semantics.
+
+4. FALLBACK DOES NOT LOWER HARD REQUIREMENTS
+Provider/model/cache/fallback selection SHALL NOT weaken or bypass mandatory:
+- authority;
+- consent;
+- rights;
+- safety/K0P;
+- privacy;
+- law;
+- required proof/verification;
+- current effect/admission constraints.
+
+This prohibition applies whether the weakening is silent or explicitly logged.
+If no fallback satisfies the mandatory floor, the result is the owner-qualified non-PASS / degraded / minimum-risk route, not a lower-assurance PASS.
+
+5. CONSEQUENTIAL CACHE / FALLBACK REVALIDATION
+Before consequential use of cached/reused policy, evidence, answer, model output or fallback result, the consumer SHALL revalidate the current bindings required by its contract, including where applicable:
+- authority;
+- consent;
+- privacy/purpose;
+- evidence/knowledge currentness;
+- DesignEpoch/configuration;
+- invalidators;
+- effect/admission state.
+
+A current versioned contract may explicitly certify a reuse class whose qualifying bindings remain valid without a fresh remote lookup; absence of an observed invalidator is not itself authorization to skip the contract's required currentness check.
+
+Failed revalidation -> STALE / UNKNOWN / REVALIDATION_REQUIRED / other owner-qualified non-PASS.
+
+6. RELIABILITY OBJECTIVE DOMAIN
+Reliability/churn/availability optimization operates only over the already-admissible option set:
+  options satisfying all applicable current hard authority/consent/rights/safety/privacy/law/evidence/effect requirements before reliability optimization.
+
+Reliability benefit cannot compensate for a hard-gate failure.
+
+7. GESTALT / APAO
+GESTALT coordination and APAO assurance outputs are typed coordination/assurance evidence. They do not mint authority, permission or proof by consensus. Any consequential use still binds separately valid authority and applicable assurance/proof owners.
+
+PROVISIONAL INVARIANTS
+P31-001 GSL-R exploration SHALL NOT become normative/operational use without DesignBinding/migration qualification.
+P31-002 GNR SHALL NOT acquire invented semantics from an incomplete Theory excerpt.
+P31-003 Retry count SHALL NOT override P021 effect identity/OUTCOME_UNKNOWN/reconciliation semantics.
+P31-004 Unknown non-idempotent external effect SHALL NOT blind-retry.
+P31-005 Fallback SHALL NOT weaken/bypass mandatory hard requirements even when logged.
+P31-006 Consequential cache/fallback reuse SHALL satisfy current contract revalidation.
+P31-007 Reliability optimization SHALL operate only inside the already-admissible option set.
+P31-008 GESTALT/APAO output SHALL NOT manufacture authority.
+
+PROVISIONAL TESTS
+TEST-P31-RETRY-001 payment commits remotely; acknowledgement lost -> OUTCOME_UNKNOWN blocks replay until reconciliation.
+TEST-P31-RETRY-002 same-effect idempotent request remains required and fence current -> replay permitted under contract.
+TEST-P31-FALLBACK-001 alternate provider cannot satisfy required verifier -> no lower-verification PASS.
+TEST-P31-CACHE-001 cached permission after authority revocation -> STALE/non-PASS.
+TEST-P31-MIGRATE-001 exploratory GSL-R profile routed into normative repository without DesignBinding -> blocked.
+TEST-P31-GNR-001 attempt to infer GNR normative behavior from name/reference only -> UNRESOLVED.
+TEST-P31-OPT-001 lower churn option violates hard privacy gate -> excluded before optimization.
