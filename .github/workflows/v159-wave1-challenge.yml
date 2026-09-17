@@ -1,0 +1,55 @@
+name: Garden v15.9 wave 012-016 challenge
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave1-012-016-*'
+    paths:
+      - 'review-inputs/v159-wave1/challenge-trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  challenge:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P012_ALGEBRAS
+            source: P012_ALGEBRAS.txt
+            candidate: P012_CANDIDATE.txt
+          - id: P013_COMPARE
+            source: P013_COMPARE.txt
+            candidate: P013_CANDIDATE.txt
+          - id: P014_REASON
+            source: P014_REASON.txt
+            candidate: P014_CANDIDATE.txt
+          - id: P015_PROOF_EXPLANATION
+            source: P015_PROOF_EXPLANATION.txt
+            candidate: P015_CANDIDATE.txt
+          - id: P016_ORCH_SEARCH_COMPILE_TRANSITION
+            source: P016_ORCH_SEARCH_COMPILE_TRANSITION.txt
+            candidate: P016_CANDIDATE.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial challenge
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave_challenge.py "review-inputs/v159-wave1/${{ matrix.source }}" "review-inputs/v159-wave1/challenge/${{ matrix.candidate }}"
+      - name: Upload challenge evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave1-challenge-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave1-challenge/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
