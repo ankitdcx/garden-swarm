@@ -1,0 +1,53 @@
+GARDEN v15.9 REVIEW PACKET P016 — ORCHESTRATE / SEARCH / COMPILE / TRANSITION
+Source basis: exact Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded review extract; proposal evidence only; no admission/certification.
+
+GOAL
+Review four meta-engine interfaces that connect planning, retrieval, machine projection and consequential state change. Strengthen boundaries and contracts without merging distinct engine responsibilities.
+
+ENGINE.ORCHESTRATE — CURRENT ROLE
+Engine.Orchestrate implements AAP v1.0. It controls which Garden machinery activates and how deeply an operation is assured. It consumes RegimeRiskAssessment, IntegrityHealth, ReasoningPreemptionContract and ProofResourceBudget where applicable. Before live IntegrityHealth exists, immutable-root-bound BootstrapIntegrityManifest and DiagnosticPrecedenceContract govern cold start.
+AAP/Orchestrate is also compiler/router for the Universal Per-Step Control Loop, selecting minimum sufficient Reason/Proof/Safety tiers, trace depth, authority checks, resources and activated architecture closure. Optimization may reduce cost/depth but cannot remove hard gates or falsely mark omitted checks passed.
+Unit 010 already strengthened AAP profile floors, reclassification, token separation, emergency bounds and bootstrap semantics.
+
+ENGINE.SEARCH — CURRENT ROLE
+Hybrid semantic + symbolic retrieval over typed Garden state. Retrieval never implies truth/validation.
+Search participates in GSL-COMPARE candidate retrieval and Reason/Research/Knowledge workflows. Mandatory symbolic sets, applicable policies/invariants/dependencies and exact references cannot be pruned by semantic similarity ranking where the consuming workflow requires them.
+
+ENGINE.COMPILE — CURRENT ROLE
+Compiles GSL/CIR/target artifacts under translation validation, typed dependencies and independent verification. Generated code is not trusted merely because the generator is trusted.
+Machine projection flow binds source semantic contract, qualified identity/version, retained SchemaID/type identity, field/type projection, invariant/proof/dependency bindings, generator/profile/environment/toolchain versions and roots, DesignEpoch/source/registry roots, InputRoot, equivalence criterion/verifier result, ArtifactOriginClass, validation and provenance.
+Generated != trusted != compiled != proved != empirically validated != authorized.
+AI-assisted development uses frozen/pinned source roots, bounded work packages, capability-bounded roles, adversarial review, independence assessment, garden_check, exact reviewed hashes, post-merge GTF validation and separate deployment authorization.
+Deterministic GENERATED qualification requires pinned source/input/generator/profile/hermetic/serialization bindings and declared BYTE_IDENTICAL/CIR_EQUIVALENT/SEMANTIC_EQUIVALENT criteria. Elision requires stronger qualification; generated layouts cannot override source semantic contracts.
+Unit 011 strengthened FunctionContract machine resolution and source-precedence semantics.
+
+ENGINE.TRANSITION — CURRENT ROLE
+Coordinates consequential state change; GTF is its high-assurance Process/Transition profile.
+Evolution/promotion flows use ApprovalPlan + DesignAuthorityDecision + GTF/DesignEpoch admission when changes cross timescale/domain/regime/authority or change authoritative architecture/semantics.
+Transition participates in the universal step loop: selected candidate -> final Guard -> execute/effect -> observe/reconcile. Unit 009 strengthened meaningful-transition boundaries, token attenuation, post-effect UNKNOWN reconciliation and bounded discrepancy loops.
+Critical-continuity semantics distinguish authority revocation, independent safe-control handoff, minimum-safe continuity and qualified recovery; abrupt shutdown is not a universal default.
+
+CROSS-ENGINE BOUNDARIES
+- Orchestrate selects/activates; it does not own Search truth, Reason semantics, Proof truth or Transition authority by itself.
+- Search retrieves; it does not validate truth.
+- Compile projects/builds; successful compilation does not prove semantic correctness or authorize deployment.
+- Transition executes/co-ordinates state change only after applicable gates/authority; it does not create authority.
+
+CURRENT DEPENDENCIES
+- Units 008–011: Process, Step Loop, AAP, FunctionContract.
+- Units 004–007: type/effect/scope, provenance, DesignEpoch, dependency.
+- Packet 013 Compare and Packet 014 Reason feed orchestration/search/transition decisions.
+- Packet 015 Proof/Explanation consumes compile/transition evidence and traces.
+
+REVIEW QUESTIONS
+1. Orchestrate: define activation-plan idempotency/replanning under mid-process change, prevent recursive orchestration explosion and self-approval.
+2. Search: distinguish mandatory closure retrieval from ranked retrieval; define stale/partial/search-budget result semantics and provenance; prevent retrieval bias from becoming evidence.
+3. Search: handle contradiction/negative evidence and diversity without arbitrary top-k suppression.
+4. Compile: define source-of-truth precedence, semantic-preservation obligations, translation validation, nondeterministic compiler/generator handling and stale generated artifacts.
+5. Compile: ensure generated artifacts cannot be sole verifier of their own compiler/trust-boundary change.
+6. Transition: define prepare/commit/effect/reconcile phases, partial effect, cancellation, fencing and external irreversibility; coordinate with Process retry/compensation semantics.
+7. Transition: distinguish proposal/admission/commit/observable-effect receipts; prevent post-hoc audit from becoming authorization.
+8. Cross-engine recursion: Search may call Reason, Reason may call Search, Orchestrate may call all—define termination/resource/dependency boundaries and avoid hidden cycles.
+9. Check GTF role: high-assurance profile versus competing process engine.
+10. Compare DO_NOTHING/simplification and request EXPAND_REQUIRED rather than inventing missing source context.
