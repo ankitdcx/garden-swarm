@@ -1,0 +1,37 @@
+name: Garden v15.9 next-ten review board
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-next10-gemini-*'
+    paths:
+      - 'review-inputs/v159-batch-002-011/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-next-ten:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Review ten packets with four OpenRouter families plus direct Gemini
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.8-flash
+        run: python tools/v159_batch_board.py review-inputs/v159-batch-002-011
+      - name: Upload all review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-next10-board-${{ github.run_id }}-${{ github.run_attempt }}
+          path: review-results/v159-batch-002-011/
+          if-no-files-found: warn
+          retention-days: 30
