@@ -1,0 +1,35 @@
+name: Garden v15.9 Gemini OpenRouter retrospective
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-next10-gemini-*'
+    paths:
+      - 'review-inputs/v159-batch-001-011/retro-trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gemini-retro:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Gemini OpenRouter retrospective over packets 001-011
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.v159_gemini_openrouter_retro
+      - name: Upload Gemini retrospective evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-gemini-retro-${{ github.run_id }}-${{ github.run_attempt }}
+          path: review-results/v159-gemini-retro-001-011/
+          if-no-files-found: warn
+          retention-days: 30
