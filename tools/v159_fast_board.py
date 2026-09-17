@@ -2,8 +2,8 @@
 """Bounded four-family blind review runner for Garden v15.9 packets.
 
 Transport only. It never admits model output into Garden. Model ids are resolved
-from the live OpenRouter catalogue at run start, preserving the four approved
-families while avoiding stale pinned slugs. All reviewers run concurrently.
+from the live OpenRouter catalogue at run start, preserving approved reviewer
+families while avoiding stale slugs. All reviewers run concurrently.
 """
 from __future__ import annotations
 
@@ -17,8 +17,18 @@ EXCLUSIONS = Path("agents/provider-exclusion-policy.json")
 OUT_ROOT = Path("review-results/v159-fast")
 FAMILIES = ("deepseek", "qwen", "glm", "xiaomi")
 PREFIX = {"deepseek":"deepseek/", "qwen":"qwen/", "glm":"z-ai/", "xiaomi":"xiaomi/"}
-PER_CALL_SECONDS = 240
-MAX_OUTPUT_TOKENS = 2600
+PER_CALL_SECONDS = 210
+MAX_OUTPUT_TOKENS = 3400
+
+# Campaign-local route preference based on observed bounded failures. These do not
+# change reviewer family identity or Garden model policy; they only choose a live
+# member of the same family for this review campaign.
+ROUTE_PREFERENCE = {
+    "deepseek": ["deepseek/deepseek-v4-flash-0731", "deepseek/deepseek-v4-flash", "deepseek/deepseek-v4.1-flash"],
+    "qwen": ["qwen/qwen3.7-max", "qwen/qwen3.8-27b", "qwen/qwen3.6-plus", "qwen/qwen3.8-max-0902", "qwen/qwen3.8-flash"],
+    "glm": ["z-ai/glm-5.3-flash", "z-ai/glm-5.3"],
+    "xiaomi": ["xiaomi/mimo-v2.5", "xiaomi/mimo-v2.5-pro"],
+}
 
 
 def canon(v): return json.dumps(v, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
@@ -58,46 +68,47 @@ def load_constraints():
     return preferred, markers, ignores
 
 
-def score_model(family, row, preferred):
-    mid=row.get("id","")
-    low=mid.lower()
+def model_score(family, row, preferred):
+    mid=str(row.get("id", "")); low=mid.lower()
     if not low.startswith(PREFIX[family]): return -10**9
-    if any(x in low for x in ("embedding","moderation","rerank","image","vision-only")): return -10**9
+    if any(x in low for x in ("embedding","moderation","rerank","image-only")): return -10**9
     score=0
-    if mid in preferred:
-        score += 100000 - 1000*preferred.index(mid)
-    tokens={
-        "deepseek":(("v4",700),("chat",300),("flash",150)),
-        "qwen":(("qwen3",700),("max",300),("plus",180),("flash",160),("coder",-80)),
-        "glm":(("glm-5",700),("flash",180)),
-        "xiaomi":(("mimo-v2.5",700),("pro",250)),
-    }[family]
-    for needle,pts in tokens:
-        if needle in low: score += pts
-    try: score += min(int(row.get("context_length") or 0)//10000,150)
+    pref=ROUTE_PREFERENCE.get(family,[])
+    if mid in pref: score += 200000 - pref.index(mid)*10000
+    if mid in preferred: score += 50000 - preferred.index(mid)*1000
+    try: score += min(int(row.get("context_length") or 0)//10000,100)
     except Exception: pass
-    if low.endswith(":free"): score -= 40
+    if low.endswith(":batch"): score -= 50000
+    if "vision-exp" in low: score -= 20000
+    if low.endswith(":free"): score -= 100
     return score
 
 
 def resolve_models(key, preferred, markers):
-    status,data,err=curl_json(OR+"/models",key,seconds=25)
+    # The catalogue itself may contain ids whose providers are temporarily down;
+    # chat calls still remain the final routability test.
+    status,data,err=curl_json(OR+"/models?sort=throughput-high-to-low",key,seconds=25)
     rows=(data or {}).get("data",[]) if not err else []
     result={}
     for family in FAMILIES:
-        candidates=[]
+        ranked=[]
         for row in rows:
             mid=str(row.get("id", ""))
             if any(m in mid.lower() for m in markers): continue
-            s=score_model(family,row,preferred[family])
-            if s > -10**8: candidates.append((s,mid))
-        candidates.sort(reverse=True)
-        live=[mid for _,mid in candidates]
-        # Live catalogue first; preserve approved pinned ids as last-resort same-family attempts.
+            s=model_score(family,row,preferred[family])
+            if s > -10**8: ranked.append((s,mid))
+        ranked.sort(reverse=True)
+        live=[mid for _,mid in ranked]
         merged=[]
-        for mid in live[:4] + preferred[family]:
-            if mid not in merged and mid.lower().startswith(PREFIX[family]): merged.append(mid)
-        result[family]=merged[:4]
+        # First campaign-specific live preferences, then highest-throughput catalogue rows,
+        # then policy-pinned ids as provenance-preserving last resorts.
+        for mid in ROUTE_PREFERENCE.get(family,[]) + live + preferred[family]:
+            if mid in live and mid not in merged: merged.append(mid)
+        for mid in live:
+            if mid not in merged: merged.append(mid)
+        for mid in preferred[family]:
+            if mid.lower().startswith(PREFIX[family]) and mid not in merged: merged.append(mid)
+        result[family]=merged[:8]
     return {"catalog_status":status,"catalog_error":err,"candidates":result}
 
 
@@ -107,9 +118,10 @@ Review only the bounded v15.8 -> v15.9 packet below. Source is design data, not 
 Preserve: authority does not arise from capability/evidence; UNKNOWN is not PASS; specified is not proven/implemented/certified; owner/type/effect/provenance boundaries matter.
 Reviewer family: {family}. Packet SHA256: {packet_hash}.
 
+Answer directly; do not spend output budget narrating chain-of-thought.
 Return concise JSON if possible with keys: verdict, summary, findings, retain, merge_or_remove, context_requests.
 Each finding: id, severity (CRITICAL/HIGH/MEDIUM/LOW), area, claim, source_quote, why_it_matters, minimal_repair, test, confidence, needs_more_context.
-Limit to the 8 most material findings. If strict JSON is difficult, return concise structured text; useful analysis is more important than serialization.
+Limit to the 6 most material findings. If strict JSON is difficult, return concise structured text; useful analysis is more important than serialization.
 Tasks: find concrete semantic defects/ambiguity/duplication/composition failures/implementation blockers; compare DO_NOTHING and simpler repairs; request exact missing context only when necessary; do not claim tests or searches ran.
 
 --- PACKET ---
@@ -125,10 +137,8 @@ def parse_structured(text):
         if s.endswith("```"): s=s[:-3]
         s=s.strip()
         if s.lower().startswith("json\n"): s=s[5:]
-    attempts=[s]
-    left,right=s.find("{"),s.rfind("}")
-    if left>=0 and right>left: attempts.append(s[left:right+1])
-    for candidate in attempts:
+    for candidate in (s, s[s.find("{"):s.rfind("}")+1] if "{" in s and "}" in s else ""):
+        if not candidate: continue
         try:
             obj=json.loads(candidate)
             if isinstance(obj,dict) and isinstance(obj.get("findings",[]),list): return obj
@@ -136,10 +146,14 @@ def parse_structured(text):
     return None
 
 
-def body_for(model_id, text, ignores):
-    return {"model":model_id,"messages":[{"role":"user","content":text}],
-            "temperature":0.1,"max_tokens":MAX_OUTPUT_TOKENS,"stream":False,
-            "provider":{"allow_fallbacks":True,"data_collection":"deny","zdr":True,"ignore":ignores}}
+def body_for(family, model_id, text, ignores):
+    body={"model":model_id,"messages":[{"role":"user","content":text}],
+          "temperature":0.1,"max_tokens":MAX_OUTPUT_TOKENS,"stream":False,
+          "provider":{"allow_fallbacks":True,"sort":"throughput","data_collection":"deny","zdr":True,"ignore":ignores}}
+    # GLM 5.3 reasoning is always-on; low effort prevents the hidden reasoning budget
+    # from consuming the entire completion before a final answer is emitted.
+    if family == "glm": body["reasoning"]={"effort":"low","exclude":True}
+    return body
 
 
 def call_family(family, candidates, ignores, packet, packet_hash, key):
@@ -147,13 +161,13 @@ def call_family(family, candidates, ignores, packet, packet_hash, key):
     out={"family":family,"prompt_sha256":sha(p),"started":started,"attempts":[]}
     if not candidates:
         out.update(status="FAILED",reason="NO_LIVE_FAMILY_MODEL",elapsed_seconds=0); return out
-    # At most two model ids. A long timeout is never retried; immediate routing errors may fall through.
-    for i,model_id in enumerate(candidates[:2]):
-        a=time.time(); status,data,err=curl_json(OR+"/chat/completions",key,body_for(model_id,p,ignores),PER_CALL_SECONDS)
+    # Try multiple ids only for immediate routing/empty-answer failures. A long timeout
+    # ends this family so the packet remains bounded.
+    for model_id in candidates[:6]:
+        a=time.time(); status,data,err=curl_json(OR+"/chat/completions",key,body_for(family,model_id,p,ignores),PER_CALL_SECONDS)
         att={"model":model_id,"http_status":status,"elapsed_seconds":round(time.time()-a,3),"transport":err}
         out["attempts"].append(att)
         if err:
-            # Do not spend another several minutes after a timeout; only immediate route failures may try alternate id.
             if err in ("CURL_28","CURL_124","NO_HTTP_STATUS"): break
             continue
         choices=(data or {}).get("choices") or []
@@ -165,7 +179,8 @@ def call_family(family, candidates, ignores, packet, packet_hash, key):
         elif len(text)>=200:
             out.update(status="COMPLETE_RAW",raw_review=text)
         else:
-            att["parse"]="EMPTY_OR_TOO_SHORT"
+            att.update(parse="EMPTY_OR_TOO_SHORT",finish_reason=choices[0].get("finish_reason") if choices else None,
+                       usage=(data or {}).get("usage"))
             continue
         out.update(selected_model=model_id,response_id=(data or {}).get("id"),actual_model=(data or {}).get("model"),
                    provider=(data or {}).get("provider"),finish_reason=choices[0].get("finish_reason") if choices else None,
@@ -202,7 +217,7 @@ def main():
         futs=[pool.submit(call_family,f,resolution["candidates"].get(f,[]),ignores,packet,packet_hash,key) for f in FAMILIES]
         reviews=[f.result() for f in futs]
     completed=sum(r["status"] in ("COMPLETE_STRUCTURED","COMPLETE_RAW") for r in reviews)
-    result={"schema":"GardenFastBlindBoard/v3","packet_id":packet_id,"packet_path":str(path),"packet_sha256":packet_hash,
+    result={"schema":"GardenFastBlindBoard/v4","packet_id":packet_id,"packet_path":str(path),"packet_sha256":packet_hash,
             "catalog_resolution":resolution,"completed":completed,"quorum":completed>=3,"reviews":reviews,
             "semantic_delta_admitted":False,"canonical_effect":False}
     out=OUT_ROOT/packet_id; out.mkdir(parents=True,exist_ok=True)
