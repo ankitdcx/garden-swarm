@@ -1,0 +1,108 @@
+GARDEN v15.9 REVIEW PACKET P023
+Topic: GSL-PHYSICS / physical semantics / DigitalTwin / PhysicalTwin / critical continuity
+Frozen source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Queue position: 023; predecessor review candidates are not canonical merely by review.
+
+BOUNDARY
+Review the physical substrate and twin/continuity contracts for unsafe ambiguity, duplicated ownership, false precision, timing overclaim, or broken fallback composition. Preserve typed quantities/units/frames/calibration, uncertainty, separate authority for physical effects, and profile-specific timing. Do not invent a second physics kernel or a universal shutdown rule.
+
+SOURCE EXCERPT — GSL-PHYSICS v1.1, PHYSICAL INGRESS / EGRESS
+Physical boundary crossing or transformation
+→ identify typed material/energy flows and measurement/calibration context
+→ conservation/uncertainty accounting
+→ disposition + PhysicalIngressEgressReceipt
+→ domain-specific validation/audit.
+
+SOURCE EXCERPT — PHYSICAL TELEMETRY / DATA-ASSIMILATION FLOW
+  typed Measurement<T> and immutable source payload
+  → bind source event/observation time separately from ingest/processing time
+  → bind clock domain, synchronization uncertainty and sequence/causal metadata
+  → detect and classify latency, jitter, duplicates, gaps, late arrival and out-of-order delivery
+  → reorder/deduplicate only under the declared bounded watermark/window policy
+  → check units, frames, calibration, instrument/environment context and source provenance
+  → evaluate observability/identifiability for the requested latent physical state
+  → admit, reject, quarantine or defer the measurement through the current DataAssimilationProfile
+  → update the owner-qualified PhysicalTwin specialization in causal/event-time order where required
+  → propagate covariance/uncertainty, drift, staleness, model residuals and affected dependency invalidation
+  → continue event-loop monitoring or invoke the prevalidated fallback/controlled-safe-state contract.
+
+Arrival order is never silently treated as physical causal order. A timestamp without a declared clock domain,
+synchronization uncertainty and provenance is insufficient for certified assimilation. Non-identifiable or
+non-observable state remains UNKNOWN/DEGRADED rather than receiving false precision. A failed assimilation loop cannot
+self-authorize a new fallback; its fallback must already be qualified for the exact physical scope.
+
+GSL-PHYSICS v1.1 retains the v1.0 quantity/unit/frame/calibration/model/simulation/conservation foundation and adds the
+temporal telemetry, out-of-order/jitter, causal-order, identifiability and event-loop contracts above.
+
+SOURCE EXCERPT — TECHNICAL SCHEMAS / TWIN SPECIALIZATION
+TelemetryTemporalBinding includes:
+source_event_or_observation_time; ingest_or_processing_time; clock_domain; clock_synchronization_uncertainty;
+monotonic_sequence?; causal_clock_or_parent_refs?; transport_latency_measure_or_bound; jitter_measure_or_bound;
+reorder_window; watermark_policy; duplicate_gap_late_classification; timestamp_precision_and_resolution; source_provenance.
+
+DataAssimilationProfile includes:
+profile_id; target_physical_twin_ref; accepted_measurement_types; required_units_frames_and_transforms;
+instrument_calibration_and_environment_requirements; temporal_binding_requirement;
+reordering_deduplication_gap_and_late_data_policy; latency_jitter_and_staleness_bounds;
+observability_and_identifiability_requirements; model_filter_update_and_correction_semantics;
+uncertainty_covariance_and_residual_propagation; event_loop_trigger_scheduling_backpressure_and_liveness;
+correction_replay_and_history_policy; prevalidated_fallback_or_controlled_safe_state; invalidators; provenance.
+
+PhysicalTwin is the owner-qualified GSL-PHYSICS specialization of DigitalTwin. It binds physical state/model identity,
+units/frames, event-time frontier, last admitted telemetry, uncertainty/covariance, synchronization drift, staleness,
+calibration/environment state, immutable assimilation history, model residuals, validity regime and fallback binding.
+It is not a second unqualified DigitalTwin definition.
+
+TelemetryAdmissionResult =
+  ADMIT_IN_EVENT_TIME_ORDER
+  | ADMIT_WITH_DECLARED_APPROXIMATION
+  | BUFFER_UNTIL_WATERMARK
+  | DUPLICATE_IGNORED
+  | LATE_DATA_CORRECTION_REQUIRED
+  | GAP_DETECTED
+  | QUARANTINED
+  | REJECTED
+  | NON_IDENTIFIABLE
+  | UNKNOWN
+  | STALE
+  | BLOCKED.
+
+PhysicalDataAssimilationResult records admitted/rejected/quarantined sample identities, ordering/watermark decision,
+pre/post PhysicalTwin roots, state delta, uncertainty and residual changes, identifiability/observability assessment,
+late-data correction/replay action, dependency invalidation, event-loop disposition, fallback action and provenance.
+
+The function pair preserves immutable raw telemetry and historical assimilation results. Latest arrival is never
+silently equated with latest physical state. Late correction never rewrites past evidence in place; it creates a linked
+successor state and invalidates affected dependents. A deterministic ordering algorithm is not safety evidence.
+
+FUNCTION BOUNDARY
+assimilate_physical_telemetry effects include updates_twin_projection; writes_audit; may_activate_prevalidated_fallback;
+physical_effect_only_if_separately_authorized. Authority is profile-bound twin-update authority; actuation remains
+separately safety/authority gated. Failures include non_identifiable, non_observable, order_unknown,
+calibration_invalid, model_invalid, constraint_breach, timeout, resource_unknown, stale, blocked.
+
+RELATED CPI BOUNDARIES
+- Prediction is not observation: simulated/model-generated success cannot independently validate real-world claims.
+- Material model/environment/horizon drift invalidates dependent assurances.
+- Consequential sensor-derived conclusions preserve measurement provenance and interpretation uncertainty.
+- Exploratory/learning physical actions pass the same physical and authority constraints as other actions.
+
+CRITICAL-CONTINUITY DEPENDENCY
+The existing design separates authority revocation from physical shutdown. Critical continuity may require a bounded,
+prequalified safe-control handoff when abrupt loss of control would itself be dangerous. A fallback/control path does
+not gain authority from failure; it must carry independent legitimate authority/credentials, verified state transfer,
+and unresolved-effect state. Suspect/revoked commands remain fenced or stale.
+
+CROSS-LAYER QUESTIONS THAT MUST REMAIN DISTINCT
+- PhysicalTwin model state != observation.
+- Logical/causal ordering != a universal physical-clock accuracy guarantee.
+- Telemetry admission != actuation authority.
+- Deterministic filtering/order != safety proof.
+- DigitalTwin/PhysicalTwin ownership must not duplicate the canonical DigitalTwin root.
+- Controlled-safe-state/shutdown choice is domain/profile specific; no universal halt shortcut.
+
+OMISSION / UNCERTAINTY LEDGER
+The packet omits most domain-specific Hardware/Mobility/Energy/Health schemas and executable validators. If a finding
+requires an exact domain safety case, DigitalTwin root contract, or continuity receipt not supplied, request the anchor.
+Do not treat missing implementation evidence as proof that the normative design is absent.
