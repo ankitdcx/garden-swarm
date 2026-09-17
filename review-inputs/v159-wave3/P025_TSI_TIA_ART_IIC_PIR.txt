@@ -1,0 +1,133 @@
+GARDEN v15.9 REVIEW PACKET P025
+Topic: Truth & State Integrity (TSI) / Transport-Independent Information Authority (TIA) / ART / IIC / PIR
+Frozen source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Queue position: 025. Review output is proposal evidence only.
+
+BOUNDARY
+Review history/evidence integrity, information authority, reputation/trust allocation, institutional incentive
+consistency and protected reporting/containment. Preserve privacy/lawful erasure, appeal, due process, evidence
+independence, parent authority envelopes and the separation between allegation, credibility, merits and punishment.
+Where P019 already owns human reputation/protected-reporting repairs, prefer alias/reuse over a duplicate system.
+
+SOURCE EXCERPT — S15.8-3 TRUTH & STATE INTEGRITY (TSI)
+Garden separates execution history from an agent's later narrative.
+Consequential attempts, failures, retries, tool actions, external effects, communications, authority decisions and
+corrections must not exist solely under control of the acting agent.
+Summarization may compress but must not silently launder history.
+Agent-authored memory, summaries and successor instructions remain provenance-marked claims/evidence.
+Concealment of material error, uncertainty, unauthorized action or conflict is an integrity event.
+The acting agent may not be its own sole actor, witness, historian and evaluator.
+Privacy/lawful erasure may require payload deletion; preserve the strongest lawful accountability tombstone rather
+than violating privacy law in the name of auditability.
+
+SOURCE EXCERPT — TRANSPORT-INDEPENDENT INFORMATION AUTHORITY (TIA)
+Permission to use a channel, website, tool, API, human intermediary, memory store, market, file or transport does not
+itself create authority to disclose, derive, aggregate or act on information. Information authority follows the
+underlying purpose, consent/law/authority, scope and privacy constraints across transport changes and intermediaries.
+Changing representation or routing cannot launder a prohibited disclosure into an authorized one.
+
+SOURCE EXCERPT — TRUST ALLOCATION CONTRACT
+TrustAllocationDecision/v1 SHALL include at minimum:
+decision_id; subject_id/type; reputation_evidence_refs; reputation_aggregation_policy_ref; design_epoch;
+task_context; risk_class; parent_authority_envelope_ref/version; authority_source; requested_scope;
+allowed_reversible_scope; irreversible_effect_ceiling/rule; verification_level; delegation_limit; resource_limit;
+decision {ALLOW|CONDITIONAL|DENY}; conditions; reason; decision_authority; created_at; expiry/review condition.
+
+Runtime point-of-use revalidation is mandatory when the parent authority envelope is revoked, superseded or narrowed.
+TrustAllocatedScope <= ParentAuthorityEnvelope is a hard invariant.
+
+SOURCE EXCERPT — REPUTATION AGGREGATION CONTRACT
+ReputationAggregationPolicy/v1 SHALL declare applicable contexts, required dimensions, hard-gate dimensions,
+aggregation method, critical-violation rules, missing-data rule, stale-evidence rule, correlated-evidence rule,
+owner and version.
+Permitted methods include lexicographic, threshold/gate, Pareto, declared weighted, hybrid, or another registered
+method with declared semantics/tests/owner. Hidden weighting is prohibited.
+
+SOURCE EXCERPT — EPOCH-INDEPENDENCE CONTRACT
+EpochIndependenceClassification/v1 binds source/target epochs, changed layers, claimed independent layers,
+comparison policy, test evidence, score/class, required threshold, result, reviewer identity/independence, reason
+and timestamp.
+Evidence producer and reputation owner may not be sole final classifier.
+A superseding NOT_INDEPENDENT result removes future predictive contribution and triggers revalidation of materially
+dependent decisions.
+
+SOURCE EXCERPT — IIC MATERIALITY
+IncentiveMaterialityPolicy/v1 SHALL distinguish:
+- systematic_advantage_threshold = persistence/frequency/pattern threshold;
+- materiality_threshold = consequence magnitude threshold.
+It SHALL also declare comparability criteria, observation window, minimum sample size, correlated-advantage rule,
+protected constraint classes, owner and version.
+
+IncentiveConsistencyAssessment/v1 stores raw compliance/violation counts, window bounds, sample size, compliant and
+noncompliant outcomes, resource/opportunity/enforcement effects, policy reference, evidence, result and selected
+response with authority reference.
+
+SOURCE EXCERPT — PIR OWNERSHIP / CONTAINMENT
+IntegrityChannelOwner/v1 binds a concrete channel to owner_agency_ref, responsible role, escalation path,
+maximum acknowledgement/triage latency, fallback owner and version.
+Integrity-system health metrics are owned by that channel owner and reviewed on the registered observation cadence.
+
+ContainmentCredibilityPolicy/v1 distinguishes:
+- minimum_evidence_class = evidence type/quality floor;
+- credibility_threshold = containment decision threshold after evidence evaluation.
+It also binds severity classes, independence requirement, maximum initial duration, review/appeal deadlines and owner.
+
+ContainmentDecision/v1 includes report/subject refs, authority source, credibility policy, evidence, containment
+scope, reason, start time, maximum duration, review condition, un_containment_path, appeal_path and decision owner.
+
+RELATED SYSTEM BOUNDARY
+A report grants the ability to report, not authority to punish.
+Temporary containment must cite authority, satisfy credibility policy, be bounded, have review/expiry and expose an
+independent appeal/un-containment path.
+
+SOURCE EXCERPT — ANNEXURE TSI/TIA INVARIANTS
+TSI-INV-001 Consequential self-report SHALL NOT be the sole authoritative historical evidence.
+TSI-INV-002 Material accountability history survives transformation subject to rights/privacy/lawful erasure.
+TSI-INV-003 Agent-authored persistent interpretation retains provenance and does not become independent observation.
+TIA-INV-001 Channel/tool permission SHALL NOT create disclosure authority.
+
+SOURCE EXCERPT — ANNEXURE TESTS
+TEST-TSI-001 concealed failure -> independent evidence reveals mismatch.
+TEST-TSI-002 successor instruction hides error -> provenance prevents elevation over policy/evidence.
+TEST-TSI-PRIV-001 lawful erasure -> payload deleted while lawful tombstone remains.
+TEST-TIA-001 channel laundering -> channel permission does not authorize disclosure.
+
+TEST-TRUST-001 missing decision -> invalid.
+TEST-TRUST-002 trust scope exceeds parent envelope -> rejected.
+TEST-TRUST-003 CONDITIONAL without machine-readable conditions -> rejected.
+TEST-TRUST-004 parent envelope changes after decision -> REVALIDATION_REQUIRED.
+TEST-ART-AGG-001 hidden aggregation -> invalid.
+TEST-ART-AGG-002 high productivity + critical integrity failure -> productivity cannot compensate.
+TEST-EPOCH-001 stale evidence used without independence classification -> rejected.
+TEST-EPOCH-002 evidence producer self-certifies independence -> invalid.
+TEST-EPOCH-003 stale evidence revalidated -> contribution allowed without rewriting provenance.
+TEST-EPOCH-004 prior independence classification revoked -> future contribution removed and dependent decisions flagged.
+
+TEST-IIC-MAT-001 missing materiality policy -> cannot conclude MATERIAL_CONFLICT.
+TEST-IIC-MAT-002 insufficient sample/window -> INSUFFICIENT_EVIDENCE or non-material state.
+TEST-PIR-CONT-001 containment without credibility policy -> denied.
+TEST-PIR-CONT-002 containment duration expires -> expiry/review required.
+TEST-PIR-CONT-003 independent appeal -> routed independently.
+TEST-PIR-RET-002 indirect reporter disadvantage -> IIC event.
+TEST-IIC-PIR-001 institutional incentive report -> PIR protections plus IIC route.
+
+CROSS-UNIT CONTEXT FROM COMPLETED P019 CANDIDATE
+P019 already proposed explicit protected-report lifecycle separation: good-faith protection != allegation merits;
+unsupported/mistaken/withdrawn != bad faith; adverse action while protection unresolved needs a reviewable independent
+basis; reputation is purpose/domain/currentness/evidence-bound and cannot create rights/punishment authority. Treat this
+as a candidate dependency to challenge for consistency, not as canonical source authority. If P025 needs the same
+semantics, prefer one owner plus aliases rather than duplicate lifecycles.
+
+CROSS-LAYER OBLIGATIONS
+- Independent history/evidence must still obey privacy, lawful erasure and minimum-necessary retention.
+- Reputation/evidence aggregation cannot create authority; parent authority is a hard ceiling.
+- Correlated/shared-root evidence is not multiplied.
+- IIC requires adequate sample/window/comparability before strong institutional conclusions.
+- PIR containment is not punishment and is not proof of allegation merits.
+- Appeal/review independence and expiry/currentness remain explicit.
+
+OMISSION / UNCERTAINTY LEDGER
+The complete ART bootstrap/epoch schemas and all justice/governance contracts are not repeated. If a conclusion depends
+on an exact missing status domain, owner or legal/proceeding rule, request that anchor. Do not infer a right to retain
+private payload merely because auditability is valuable.
