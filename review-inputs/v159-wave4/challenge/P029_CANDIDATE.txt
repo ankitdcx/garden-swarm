@@ -1,0 +1,63 @@
+GARDEN v15.9 — P029 VSM/RPM/PPM/TFT/FET/COMPOSITION SYNTHESIZED CANDIDATE
+Status: KEEP-HEAVY DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+
+DISPOSITION
+The reviewed VSM, RPM, PPM, TFT, FET and theory-to-reality families retain their existing architecture. No new theory engine, evidence algebra, emergency authority source, identity rule or universal physical model is added.
+
+1. VSM MERGE / CONTINUITY PROJECTION
+VSM fork/merge SHALL preserve the source lineage of every materially contributing branch and SHALL NOT silently discard material uncertainty, invalidators, unresolved obligations or conflicting context merely to produce a single continuity representation.
+
+The active owner-qualified merge policy determines how compatible uncertainty representations are combined. Where no valid conservative/compatible merge is defined, the result is typed UNKNOWN / CONFLICT / INCOMPATIBLE rather than a fabricated unified state.
+
+VSM continuity/context/lineage scores are operational/model state. They SHALL NOT by themselves establish personhood, consciousness, ownership, rights or authority. Any such inference is a separately typed external claim under the applicable evidence/rights/authority process.
+
+2. RPM / PPM COMPOSITION
+Reactive and proactive regulation remain separate qualified components. When they jointly affect the same bounded actuator/resource, their composition SHALL be governed by an explicit owner-qualified joint envelope/arbitration or composition contract covering material saturation, delay, priority and conflict behavior.
+
+If the applicable coupling is materially noncommutative, execution order or conflict-resolution semantics SHALL be declared. Absent a required composition rule, the combined result is non-PASS/UNKNOWN; commutativity or independence SHALL NOT be assumed merely because each component is individually qualified.
+
+This does not impose one universal ordering across all RPM/PPM deployments.
+
+3. TFT PROFILE BOUNDARY
+TFT conservation/constitutive/transport statements remain profile- and domain-science-bound. Conservation SHALL NOT be inferred for a profile that does not declare and justify the relevant conserved quantity under its domain assumptions.
+
+Information/graph influence, probability flow and physical material/energy transport remain semantically distinct; finite-speed or conservation conclusions do not silently transfer across these types.
+
+4. FET AUTHORITY / UNKNOWN / RECOVERY
+FET creates no emergency authority. Every emergency action is selected only from the intersection of:
+- current legitimate authority / pre-authorized emergency grant;
+- active safety/rights/law constraints;
+- current emergency profile/action envelope.
+
+UNKNOWN hazard/admission state remains typed non-PASS for any action requiring resolved admission. It SHALL NOT be consumed downstream as weak PASS.
+
+FET recovery/handoff SHALL preserve applicable controller state/invalidators and shall not re-enable stale primary commands or accumulated controller state unless the active recovery profile explicitly requalifies them. Existing critical-continuity/safe-handoff owners remain authoritative; no duplicate recovery engine is created.
+
+5. THEORY COUPLING DEFAULT
+A coupling profile that materially depends on order, common cause, shared state or noncommutation must declare those semantics. If required dependence/order semantics are absent, the composition is unresolved/non-PASS rather than assumed independent/commutative.
+
+6. THEORY-TO-REALITY / UPS
+Theory/model/simulation output remains model-qualified until an observation/provenance path establishes a real-world evidence claim. UPS and DimensionSelectionProfile remain research hypotheses/profiles. Their outputs SHALL retain research/model provenance and cannot be promoted to discovered physical law by downstream repetition, retrieval or use.
+
+7. UNDEFINED RESEARCH LABELS
+A named research target lacking an admitted profile (for example a retained Gaia2026 label) remains a research label with no operational or certification semantics until its exact profile is admitted.
+
+PROVISIONAL INVARIANTS
+P29-001 VSM merge SHALL NOT silently discard material lineage or uncertainty.
+P29-002 VSM continuity SHALL NOT manufacture identity/rights/authority.
+P29-003 Materially interacting RPM/PPM controllers require an explicit qualified composition rule.
+P29-004 Missing required noncommutation/order semantics SHALL NOT default to commutative PASS.
+P29-005 TFT conservation is profile/domain-science bound and does not transfer across semantic quantity types without proof.
+P29-006 FET emergency selection SHALL NOT mint or expand authority.
+P29-007 FET UNKNOWN is not weak PASS.
+P29-008 Recovery SHALL NOT silently reactivate stale controller/command state.
+P29-009 Research/model outputs remain model/research-qualified until independently grounded.
+
+PROVISIONAL TESTS
+TEST-P29-VSM-001 merge branches with incompatible uncertainty/context -> explicit conflict/unknown, not silent overwrite.
+TEST-P29-COMP-001 two individually qualified controllers saturate shared actuator -> joint envelope/arbitration required.
+TEST-P29-ORDER-001 noncommutative coupling with no declared order -> non-PASS.
+TEST-P29-TFT-001 profile lacking conservation premise -> no conservation inference.
+TEST-P29-FET-001 UNKNOWN hazard + no resolved admission -> no emergency action except separately preauthorized minimum-risk path.
+TEST-P29-REC-001 stale primary command after handoff -> remains fenced until requalified.
+TEST-P29-UPS-001 research dimension/model output repeated downstream -> remains research/model-qualified, not observed law.
