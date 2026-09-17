@@ -3,7 +3,8 @@ Status: DESIGN CANDIDATE / NOT JURISDICTION-SPECIFIC LEGAL CERTIFICATION / NOT C
 
 1. JUSTICE FLOW IS A GUARDED TRANSITION GRAPH
 The compact retained justice sequence is a non-exhaustive projection, not an unconditional chain.
-A JusticeProceedingProfile (existing law/governance owner or qualified equivalent) binds at minimum:
+`JusticeProceedingProfile` here is an annotation/reference pattern over the existing applicable law/governance/proceeding owner or qualified equivalent; it is not a new top-level justice schema and does not replace an existing proceeding owner.
+The referenced proceeding profile binds at minimum:
 - proceeding type and jurisdiction/applicability;
 - lawful authority anchor and competent owner;
 - purpose/scope;
@@ -18,7 +19,7 @@ A JusticeProceedingProfile (existing law/governance owner or qualified equivalen
 A transition is enabled only when its profile applicability/authority is resolved and current. UNKNOWN potentially mandatory authority/applicability -> non-PASS.
 
 2. INTAKE / CONFLICT / PRESERVATION
-At intake, conflict screening and time-sensitive preservation MAY proceed in parallel where the applicable profile permits.
+At intake, conflict screening and time-sensitive preservation MAY proceed in parallel where the applicable profile permits or where a documented, reviewable justification exists under the profile's current authority. Any such justification is recorded on the hold and does not create new authority.
 A preservation hold requires:
 - lawful purpose/authority;
 - defined evidence/data scope;
@@ -40,7 +41,7 @@ The urgent hold SHALL carry owner/profile-defined:
 - scope/access limitations;
 - release/deletion/further-processing disposition if review/renewal does not occur.
 
-No universal 24/48/72-hour constant is introduced; applicable law/proceeding profile owns deadlines. Expiry does not self-renew. Renewal requires current competent authority and the profile's evidence/review conditions.
+No universal 24/48/72-hour constant is introduced; applicable law/proceeding profile owns deadlines. Expiry does not self-renew. Renewal requires current competent authority, a fresh re-evaluation of the exigency conditions, and the profile's current evidence/review conditions; mere procedural continuation is insufficient.
 
 4. TERMINAL / OPTIONAL / COERCIVE STATES
 CLOSED_WITH_REASON is terminal by default for the active proceeding instance.
@@ -56,13 +57,13 @@ ENFORCEMENT requires:
 No linear fall-through from CLOSED_WITH_REASON, mere allegation or incomplete evidence to enforcement.
 
 5. DEFENSE / REPRESENTATION
-Defense/representation is provided when required by the applicable proceeding/law/rights profile and before the consequential stage for which that participation is a required due-process condition.
+Defense/representation is a guarded due-process transition/opportunity when required by the applicable proceeding/law/rights profile. Where the profile requires that opportunity before a consequential stage, the transition to that consequential stage is non-PASS until the required opportunity and its profile-defined access/disclosure conditions are satisfied or a profile-authorized exception is validly established.
 This candidate does not invent one universal timing or disclosure rule across jurisdictions. The profile must explicitly encode the required opportunity, access/disclosure constraints, conflict/privilege/privacy rules and consequences of non-satisfaction.
 
 6. EVIDENCE CONTROL RISK
 EvidenceControlRisk is procedural/evidentiary-risk assessment, not offence evidence and not guilt probability.
 It binds the evidence/subject/controller scope, relevant control powers/dependencies/conflicts, preservation/access risk, independent custody/access alternatives, authority/privacy constraints, uncertainty and disposition.
-Any consuming interface SHALL retain the semantic label that it measures evidentiary-control/procedural risk only and SHALL NOT use the score/result as direct actor-specific wrongdoing evidence.
+Any interface displaying, logging, or exporting EvidenceControlRisk SHALL carry a persistent non-removable semantic label equivalent to `PROCEDURAL RISK ONLY — NOT GUILT EVIDENCE`, and SHALL NOT use the score/result as direct actor-specific wrongdoing evidence.
 
 7. OBSTRUCTION EVENT
 ObstructionEvent is not established by missing/destroyed evidence alone.
@@ -91,13 +92,15 @@ Required fields per entry:
 - current anchor(s) and source hash/version;
 - current status;
 - historical aliases/owners retained for citation;
+- retained-history snapshot/hash or equivalent immutable lineage anchor where applicable;
 - supersession/navigation relation where applicable;
 - EXTERNAL/UNRESOLVED dependency refs;
 - resolution owner/review condition for unresolved refs.
 
 Every active primary current link must resolve to an exact source/overlay anchor. If the anchor cannot be proved, mark EXTERNAL/UNRESOLVED; do not emit an invented active link.
+The existing overlay/release owner owns deterministic map regeneration/review as part of release/current-reading closure; no new registry owner is created. The release binds the generated map hash so consumers can detect stale maps.
 
-On conflict between a derived map and the underlying current overlay/source, the source/overlay owner governs and the map defect is recorded/rebuilt.
+On conflict between a derived map and the underlying current overlay/source, the admitted source/overlay owner governs and the map defect is recorded/rebuilt.
 
 10. HISTORICAL OWNER DIFFERENCES
 When historical and current owner/name differ:
@@ -115,22 +118,26 @@ The current-reading layer SHALL NOT use them as active anchors. It resolves to t
 PROVISIONAL INVARIANTS
 P34-001 Justice proceeding transitions SHALL be profile/authority gated, not unconditional linear fall-through.
 P34-002 Allegation alone SHALL NOT create preservation or coercive authority.
-P34-003 Urgent preservation SHALL be bounded by explicit profile-owned expiry/review/release rules and cannot self-renew.
+P34-003 Urgent preservation SHALL be bounded by explicit profile-owned expiry/review/release rules, cannot self-renew, and renewal SHALL require fresh exigency evaluation.
 P34-004 CLOSED_WITH_REASON SHALL not automatically route to adjudication/enforcement.
 P34-005 APPEAL SHALL be optional/profile-enabled and ENFORCEMENT SHALL require finality/stay/authority checks.
 P34-006 Missing evidence or evidentiary-control risk SHALL NOT become guilt evidence by itself.
 P34-007 Obstruction allegation and adjudicated obstruction outcome SHALL remain distinct.
 P34-008 Justice candidate artifacts SHALL prefer existing Evidence/Incident/Custody hosts until P032 proves need for new schemas.
-P34-009 CurrentReadingMap SHALL be derived/source-anchored and SHALL NOT manufacture current owners.
+P34-009 CurrentReadingMap SHALL be derived/source-anchored, hash-bound to the release, and SHALL NOT manufacture current owners.
 P34-010 Historical alias/supersession SHALL NOT transfer authority by naming alone.
+P34-011 A transition to a consequential stage for which representation is a required due-process condition SHALL be non-PASS while the profile-required representation opportunity remains unsatisfied.
 
 PROVISIONAL TESTS
 TEST-P34-HOLD-001 unsupported complaint + no hold authority -> no preservation hold.
 TEST-P34-URGENT-001 urgent hold expires without required review/renewal -> no self-extension; execute profile's release/deletion/further-processing rule.
+TEST-P34-URGENT-002 renewal request with no fresh exigency assessment -> renewal non-PASS.
 TEST-P34-CLOSE-001 CLOSED_WITH_REASON -> no automatic adjudication/enforcement edge.
 TEST-P34-APPEAL-001 appeal right exists but not invoked -> no mandatory appeal state; finality follows profile.
 TEST-P34-STAY-001 controlling stay exists -> enforcement non-PASS.
+TEST-P34-DEFENSE-001 profile requires defense/representation opportunity before adjudication and opportunity is unsatisfied -> adjudication transition non-PASS.
 TEST-P34-RISK-001 high EvidenceControlRisk -> cannot be consumed as direct guilt evidence.
 TEST-P34-OBSTRUCT-001 evidence missing with no actor-specific duty/conduct/required intent proof -> no adjudicated obstruction.
 TEST-P34-MAP-001 current owner entry lacks exact anchor -> EXTERNAL/UNRESOLVED, not active mapping.
+TEST-P34-MAP-002 release map hash differs from regenerated current map -> stale-map defect/non-PASS until rebuilt.
 TEST-P34-ALIAS-001 historical alias changes name only -> no new authority.
