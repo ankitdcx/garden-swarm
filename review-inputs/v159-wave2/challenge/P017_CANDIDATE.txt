@@ -1,0 +1,66 @@
+P017 SYNTHESIZED v15.9 CANDIDATE — POLICY / COMPLIANCE / EVOLVE / RESEARCH
+Proposal-only; challenge this candidate against P017 source.
+
+1. ENGINE.POLICY — FRESHNESS / EFFECT BINDING
+PolicyDecision remains a normative result, not an authority source. Every consequential PolicyDecision binds the exact applicable policy/version set, authority/consent basis, context/scope, DesignEpoch and invalidators used for evaluation. Before consequential effect, the consumer revalidates all point-of-use-invalidatable bindings required by the active FunctionContract/ExecutionAdmissionToken. Revoked/superseded/stale basis -> re-evaluate or DEFER/INDETERMINATE/BLOCK according to owner policy; stale PERMIT never survives by cache alone.
+
+Self-authored policy does not gain authority from authorship. A subsystem may propose/evaluate a policy, but any policy that changes its own protected authority/trust/verification boundary requires the independently legitimate authority/approval already required by AAP/DesignEpoch. Same-origin evidence is tagged and cannot satisfy an independence requirement.
+
+2. ENGINE.COMPLIANCE — SIX-LAYER SEPARATION
+Preserve separately typed stages:
+  source_authenticity
+  formalization_fidelity
+  applicability
+  conformance
+  operational_admissibility
+  external_certification.
+GardenConformanceAssessmentReceipt never means operational permission or official external certification.
+
+A mandatory RequirementInstance may be satisfied through its declared formal, human-interpretive, empirical or mixed route. PARTIALLY_FORMALIZED / HUMAN_INTERPRETATION_REQUIRED does NOT automatically fail if the unresolved portion is explicitly routed to the required competent human/legal process and satisfied there. But unresolved/UNKNOWN/AMBIGUOUS mandatory residuals cannot be silently dropped or counted as CONFORMANT.
+
+Waivers/exceptions remain explicit typed RequirementInstance dispositions with issuing authority, scope, validity, provenance and non-waivable bounds. Conflicting applicable jurisdictions/instruments remain CONFLICT/UNRESOLVED until resolved by the named legitimate authority; Compliance itself does not choose law.
+
+3. ENGINE.EVOLVE — CUMULATIVE DRIFT / PROTECTED EVALUATOR CHANGE
+Evolution impact is computed over the cumulative semantic delta from the last independently qualified/admitted baseline, not only one patch at a time. Fragmenting one material change into many individually small updates cannot avoid DesignEpoch/AAP thresholds.
+
+Changes to protected evaluator/comparator/benchmark/assurance rules are treated as protected verification/trust-boundary changes: DO_NOTHING baseline, independent evaluation and applicable authority are mandatory. A candidate-generating subsystem cannot be sole evaluator of the evidence used to admit itself.
+
+Rollback restores design/software state where possible but does not erase irreversible external effects; residual obligations route to reconciliation/compensation/remedy.
+
+4. ENGINE.RESEARCH — TYPED RESULT / NEGATIVE / REPLICATION SEMANTICS
+ResearchResult primary status includes, as applicable:
+  SUPPORTED
+  REFUTED_WITHIN_DECLARED_FALSIFICATION_SCOPE
+  INCONCLUSIVE
+  REPLICATION_FAILED
+  RESOURCE_BOUND
+  EXPIRED
+  STOPPED_BY_POLICY
+  UNKNOWN.
+
+A negative/null observation becomes REFUTED only when the predeclared falsification criterion and evidence/identification obligations were actually satisfied. Replication failure is not automatically falsification. RESOURCE_BOUND/STOPPED/EXPIRED alter scheduling/status, not truth.
+
+Hypothesis, retrieval result, LLM output, publication or ConceptCandidate is not Evidence merely because produced by Research. Evidence promotion requires the applicable observation/provenance/validation path. Synthetic/generated data are labeled and cannot masquerade as independent empirical roots.
+
+5. RESEARCH / EVOLVE ANTI-GOODHART
+Benchmarks/evaluators used for protected promotion bind provenance, selection process, contamination/leakage status, DesignEpoch and evaluator identity. Same-origin benchmarks may support exploration but cannot independently satisfy protected promotion/assurance. Shared-root evidence is de-duplicated through existing provenance/evidence-dependence semantics.
+
+6. RESEARCH SOURCE / IP / LICENSE BOUNDARY
+Public accessibility or retrievability does not itself create permission to copy, redistribute, train on, publish or deploy. Research/RTR preserves source license/terms/access authority and routes uncertain permission to the applicable legal/policy owner.
+
+7. HUMAN RIGHTS REALITY SWEEP
+Sweep findings may nominate RightsGapEscalation and interim non-regression controls, but cannot create/remove/weaken a right. Ratification remains constitutional/governance authority. Interim controls are scope/validity bound, contestable where required, and cannot be used as covert permanent amendment.
+
+Candidate invariants:
+- stale PolicyDecision cannot authorize a later effect;
+- policy authorship does not manufacture authority;
+- partial formalization cannot hide mandatory unresolved requirements;
+- conformance != operational permission != external certification;
+- cumulative small changes cannot bypass material evolution review;
+- protected evaluator change cannot self-admit;
+- research stopping/null result does not fabricate falsification;
+- generated/retrieved material is not automatically Evidence;
+- public availability does not create legal permission.
+
+CHALLENGE REQUEST
+Attack policy TOCTOU, compliance partial-formalization routes, cumulative evolution drift, self-confirming evaluation, research negative/replication semantics and source/IP boundaries. Return ACCEPT / CHANGE / BLOCK / EXPAND_REQUIRED with minimal repair and falsifiable test.
