@@ -1,0 +1,86 @@
+GARDEN v15.9 — P022 SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Basis: frozen v15.8 packet + pre-review ChatGPT baseline + preserved four-family blind review.
+
+1. KNOWLEDGE LAYER SEPARATION
+Retain the five distinct layers:
+(1) raw evidence;
+(2) typed semantic world state;
+(3) purpose-limited agency/reputation profiles;
+(4) active retrieved context;
+(5) model weights/general learned structure.
+No bridge, compression, retrieval rank, solver output or migration may silently collapse these layers.
+Weight memory, model inference and synthetic material are not independent observations.
+
+2. EVIDENCE DEPENDENCE / CAUSAL ROOTS
+Evidence aggregation SHALL use the existing provenance/dependence owner to retain stable evidence identity and source-root/dependence references sufficient to detect copies, summaries, citations, derived transforms and later-discovered common roots.
+Shared-root material is not independent corroboration and is de-duplicated for independence-sensitive support.
+If dependence is materially UNKNOWN, the result retains that uncertainty; it is not counted as independent merely because a root could not be resolved.
+No new universal evidence-voting engine is created.
+
+3. ACTIVE RETRIEVAL SUFFICIENCY / FRONTIER
+"Smallest-sufficient relevant subgraph" means the smallest bounded subgraph that satisfies the active RetrievalProfile for the stated purpose and includes, when known and material within the search frontier:
+- provenance/source identity;
+- material contradictors and competing explanations;
+- uncertainty/status;
+- applicable authority/rights/policy constraints;
+- required exceptions/dependencies.
+The profile declares its stopping/resource rule and omission/frontier semantics.
+If a depth/resource/context bound is reached before the profile's sufficiency conditions are established, retrieval returns INCOMPLETE plus a continuation/omission frontier.
+Any materially derived conclusion SHALL carry the INCOMPLETE/frontier binding until a later qualified completion supersedes it. Stripping this marker is epistemic laundering.
+
+4. CONFLICT POLICY IS NOT UNIVERSAL TRUTH PRECEDENCE
+A registered GSL-KR conflict ordering such as Tier > Specificity > Confidence > TrustScore > Timestamp applies only after currentness, scope/applicability, type compatibility and authority boundaries required by that profile have been checked.
+It cannot:
+- turn a stale/inapplicable claim into a current fact;
+- collapse proof, observation, probability, preference or policy into one scalar status;
+- hide material contradiction;
+- override rights/authority/safety/law.
+Where materially incompatible epistemic states or unresolved currentness/scope conflicts remain, preserve CONFLICT/UNKNOWN/CONTESTED rather than manufacturing one winner.
+
+5. TRUST PROFILE BINDING
+Beta(alpha,beta) or another source-trust profile is a repository profile, not a universal truth operator.
+Its update/decay/prior semantics, evidence dependencies, validity/currentness and invalidators SHALL be declared by the active profile.
+Lawful erasure, discovered dependence, source invalidation or material definition/scope drift triggers recomputation or STALE/REVALIDATION_REQUIRED for dependent trust/assessment artifacts.
+
+6. APPEND-ONLY HISTORY + LAWFUL ERASURE
+Append-only epistemic history does not require immortal private payload.
+Where privacy/lawful erasure requires deletion:
+- delete/quarantine the protected payload according to the owning privacy process;
+- retain only the strongest lawful minimum accountability/provenance tombstone or structural record;
+- never relabel erasure as empirical refutation or pretend the historical event never occurred when lawful history can be retained;
+- tombstoned payload does not contribute current evidential support unless a separately lawful retained representation remains usable;
+- materially dependent current assessments are invalidated/recomputed as required.
+Merge/split reversal is additive: append correction/split/supersession records rather than destructively rewriting prior history.
+
+7. MODEL/SYNTHETIC OUTPUT LABEL CONSERVATION
+Solver/model-generated/synthetic outputs preserve their epistemic type and provenance through ledger storage, retrieval and migration.
+A model-generated record cannot be reclassified as an independent real-world observation by storage, repetition, summarization or graph placement.
+If a bridge cannot preserve claim status, time, units, scope or effect semantics, it reports semantic loss under the existing CPI/Bridge rules.
+
+8. KNOWLEDGE DOES NOT AUTHORIZE ACTION
+The optional governed-action stage SHALL resolve a separately valid current authority/purpose/consent/law/policy basis before consequential use.
+A trust score, retrieval result, reputation value, evidence count or model conclusion can inform an authorized decision but cannot itself create permission, punishment, eligibility, disclosure or other rights-affecting authority.
+
+9. ENTITY MERGE/SPLIT
+High-consequence entity merges require profile-qualified evidence and uncertainty. Merge/split lineage is reversible at the semantic-view level through append-only successor/correction records; historical evidence is not rewritten in place.
+
+PROVISIONAL INVARIANTS
+P22-001 Copies/derivatives sharing a material root never count as independent corroboration.
+P22-002 UNKNOWN dependence is not independent-by-default.
+P22-003 Resource-bound retrieval propagates INCOMPLETE/frontier status.
+P22-004 Conflict precedence applies only inside its declared compatible/current scope.
+P22-005 Epistemic types are not collapsed into a hidden scalar truth order.
+P22-006 Lawful erasure does not require immortal payload and does not fabricate refutation.
+P22-007 Model-generated material remains model-generated through storage/retrieval/migration.
+P22-008 Knowledge/reputation/trust never manufactures authority.
+P22-009 Merge/split correction is append-only and provenance-preserving.
+
+PROVISIONAL TESTS
+TEST-P22-ROOT-001: two summaries of one sensor event -> one independent evidence root.
+TEST-P22-FRONTIER-001: bounded retrieval omits unresolved material contradiction -> INCOMPLETE/frontier propagates to derived conclusion.
+TEST-P22-CONFLICT-001: stale high-tier assertion vs current lower-tier assertion -> no silent winner solely from tier ordering.
+TEST-P22-TYPE-001: proof/probability/preference conflict -> typed statuses remain distinct.
+TEST-P22-ERASE-001: erase private payload -> lawful tombstone remains; payload inaccessible; dependent support revalidated; no false REFUTED label.
+TEST-P22-SYNTH-001: simulated success stored/retrieved -> remains model_generated and cannot independently certify real-world claim.
+TEST-P22-AUTH-001: low reputation score with no separate authority -> cannot deny eligibility/action.
