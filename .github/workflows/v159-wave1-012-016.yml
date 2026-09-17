@@ -1,0 +1,45 @@
+name: Garden v15.9 wave 012-016 review
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave1-012-016-*'
+    paths:
+      - 'review-inputs/v159-wave1/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        packet:
+          - P012_ALGEBRAS.txt
+          - P013_COMPARE.txt
+          - P014_REASON.txt
+          - P015_PROOF_EXPLANATION.txt
+          - P016_ORCH_SEARCH_COMPILE_TRANSITION.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Four-family blind review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave_board.py "review-inputs/v159-wave1/${{ matrix.packet }}"
+      - name: Upload packet evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave1-${{ matrix.packet }}-${{ github.run_id }}
+          path: review-results/v159-wave1/${{ matrix.packet }}/
+          if-no-files-found: warn
+          retention-days: 30
