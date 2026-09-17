@@ -1,0 +1,64 @@
+{
+  "schema": "GardenV159MaterializationSourceManifest/v1",
+  "campaign": "GARDEN-V159-20260917",
+  "status": "MATERIALIZATION_INPUTS_STAGED_NOT_FINAL",
+  "prepared_on": "2026-09-18",
+  "frozen_source": {
+    "name": "Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt",
+    "sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
+    "bytes": 2905770,
+    "lines": 43492,
+    "verified_against_campaign": true
+  },
+  "pre_review_v159_layer_inputs": [
+    {
+      "layer": "User",
+      "name": "Garden_User_v15.9_WORKING_CANDIDATE_2026-09-17.txt",
+      "sha256": "f4d055170405396bc99f0fcc863e92d396599676e221036a542b6bc9b4d7794a",
+      "bytes": 119605,
+      "lines": 2023
+    },
+    {
+      "layer": "System",
+      "name": "Garden_System_v15.9_WORKING_CANDIDATE_2026-09-17.txt",
+      "sha256": "2514cc63a21be44bf4623b658d062bcbc2a66794b765593b713b95a56f08be52",
+      "bytes": 266170,
+      "lines": 5198
+    },
+    {
+      "layer": "Technical",
+      "name": "Garden_Technical_v15.9_WORKING_CANDIDATE_2026-09-17.txt",
+      "sha256": "b6285fd425f6a80c4e04487f010d4b12938f6afcaff2a3d1afafb0d39055ea79",
+      "bytes": 1052252,
+      "lines": 15759
+    },
+    {
+      "layer": "Annexure",
+      "name": "Garden_Annexure_v15.9_WORKING_CANDIDATE_2026-09-17.txt",
+      "sha256": "b475d63669efb2637cf21bd6517c478cbca719b461291d618bbbc58b52fc9e23",
+      "bytes": 1285318,
+      "lines": 16653
+    },
+    {
+      "layer": "Theories",
+      "name": "Garden_Theories_v15.9_WORKING_CANDIDATE_2026-09-17.txt",
+      "sha256": "6d7180f464de6c29aad0929c6350cd24b0b03f36c5c54d9475211fb700d139e2",
+      "bytes": 196604,
+      "lines": 4037
+    }
+  ],
+  "review_synthesis_inputs": {
+    "P001_P036": "Use existing packet/candidate artifacts already committed under review-inputs/v159-*; do not rerun any reviewer call.",
+    "P037_overlay_path": "review-inputs/v159-final/P037_FINAL_CORRECTIVE_OVERLAY.txt",
+    "P037_overlay_blob_sha": "3be890de990dccdb99b7d77d99366753ac890cd9",
+    "P037_disposition_path": "review-inputs/v159-final/final-disposition.json"
+  },
+  "release_constraints": {
+    "predecessor_gsl_compatibility_status": "NOT_STATED",
+    "canonical_effect": false,
+    "executable_certification_claimed": false,
+    "release_label_claimable": false,
+    "source_files_are_inputs_not_final_deliverables": true
+  },
+  "next": "Build the consolidated upgrade deliverable and explicit P001-P037 final-anchor traceability, then project accepted semantics into the five final layer bytes before CurrentReadingMap/ReleaseManifest generation."
+}
