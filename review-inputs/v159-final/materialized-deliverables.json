@@ -1,0 +1,104 @@
+{
+  "artifacts": {
+    "Annexure": {
+      "bytes": 1294801,
+      "file_id": "file_00000000415481f7a6836f4bc128cbda",
+      "filename": "Garden_Annexure_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_61ca48142dd4819194c68e86c9bad172",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_Annexure_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "37bb987758205ba5a82a9946666f7efd245a495700eb392c4face31db0dae06a"
+    },
+    "Consolidated": {
+      "bytes": 26345,
+      "file_id": "file_0000000029b481f7b4f45cd629bef474",
+      "filename": "Garden_v15.9_CONSOLIDATED_UPGRADE_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_44f04b12a96881918a5d2262e08f11e9",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_v15.9_CONSOLIDATED_UPGRADE_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "e61d3c22cda8a936717f360fe37a195f023e67cfce17674c1ffd5b5eacd3799e"
+    },
+    "CurrentReadingMap": {
+      "bytes": 8980,
+      "file_id": "file_00000000351c820cb30ae5c10e98b478",
+      "filename": "CurrentReadingMap.json",
+      "library_file_id": "libfile_dc8c69f97eac8191afceeb16a6533de1",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/CurrentReadingMap.json",
+      "sha256": "e3e5caf18262292298620e7be2eb9be923bf4a1d3947a40e32ae9ce9656559f4"
+    },
+    "ReleaseClosureReport": {
+      "bytes": 3481,
+      "file_id": "file_00000000174881f785ce27029bb68c3e",
+      "filename": "release-closure-report.json",
+      "library_file_id": "libfile_baff1623ff048191b441919ac85b51d5",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/release-closure-report.json",
+      "sha256": "3f2e95ddae13cc3823028f2374c704ef92652e7b0ea9050f6c27d3258e0ab485"
+    },
+    "ReleaseManifest": {
+      "bytes": 3892,
+      "file_id": "file_0000000077d481f7826110ff6794bd80",
+      "filename": "ReleaseManifest.json",
+      "library_file_id": "libfile_a96396c873d88191951fbe962b27ba6a",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/ReleaseManifest.json",
+      "sha256": "967cf577d690442ae2760d87f6bb61b945aa0173e31e3ecc1db78bae2611f9f4"
+    },
+    "ReleaseManifestDigest": {
+      "bytes": 87,
+      "file_id": "file_00000000726881f7af80278f0b26398b",
+      "filename": "ReleaseManifest.sha256",
+      "library_file_id": "libfile_78afa48377a48191a7b93e13f04c2086",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/ReleaseManifest.sha256",
+      "sha256": "35556a493650625864dfa30412d6843ad79ebaadb0dfc43644d96237f16fc384"
+    },
+    "System": {
+      "bytes": 276124,
+      "file_id": "file_00000000eea081f7b83363b75e17d512",
+      "filename": "Garden_System_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_5026f54cd3348191b9ce4453244b3a5a",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_System_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "f800703ae004144ec50c31ac41ea8c0bde8486f15af4fa66838f785708485382"
+    },
+    "Technical": {
+      "bytes": 1062486,
+      "file_id": "file_000000000c5481f59ec1072fc049839c",
+      "filename": "Garden_Technical_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_1c1ff75cb0dc8191838722c3b71e3427",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_Technical_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "eb794368c550decefe6b37a5734a4515e9338504d5d1e2f4c4c4365ce05be5e1"
+    },
+    "Theories": {
+      "bytes": 201794,
+      "file_id": "file_000000001cd481f78e3a676b124e42cd",
+      "filename": "Garden_Theories_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_46ed061aacd8819197e43a0302576337",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_Theories_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "e090d07a602bf35129bff1601b9c46a754ff5e2bd4e65204304376256d41b438"
+    },
+    "UpgradeTraceabilityTable": {
+      "bytes": 17986,
+      "file_id": "file_0000000042d881f7b5e3aa5ced799d6e",
+      "filename": "UpgradeTraceabilityTable.md",
+      "library_file_id": "libfile_71994678c7648191ad51bf8141346bc1",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/UpgradeTraceabilityTable.md",
+      "sha256": "e53122e8e38d21967dec9d9035c230a84e95e6ca5891ec2f733fe0267908a64f"
+    },
+    "User": {
+      "bytes": 125796,
+      "file_id": "file_00000000d00481f7af260dccfdabaa35",
+      "filename": "Garden_User_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "library_file_id": "libfile_b722be2ec56c819195821c838b7d524f",
+      "library_path": "/Garden/v15.9-review-campaign-2026-09-18/Garden_User_v15.9_COMPLETE_CROSS_REVIEWED_WORKING_CANDIDATE_2026-09-18.txt",
+      "sha256": "61f3e002762c41dfc8988fea22cf63ef5c9bd609b52d92f7d6e70fa02e0eac6b"
+    }
+  },
+  "campaign": "GARDEN-V159-20260917",
+  "canonical_effect": false,
+  "executable_certification_claimed": false,
+  "integrity_note": "Exact Library snapshots are identified by file_id/library_file_id and SHA-256. GitHub release-support artifacts hash-bind the six deliverables; no authority is created by storage or hashing.",
+  "library_folder": "/Garden/v15.9-review-campaign-2026-09-18",
+  "predecessor_gsl_compatibility_status": "NOT_STATED",
+  "production_certification_claimed": false,
+  "release_date": "2026-09-18",
+  "release_label_claimable": true,
+  "review_evidence_commit": "9b3e7840147cde7d680f5a2f168ade8b4681514b",
+  "schema": "GardenV159MaterializedDeliverables/v1",
+  "status": "FINAL_MATERIALIZATION_COMPLETE"
+}
