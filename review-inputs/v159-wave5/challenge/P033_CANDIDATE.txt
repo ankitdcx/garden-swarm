@@ -11,14 +11,14 @@ Only rows actually source-resolved may be marked RETAINED/REFINED/REPLACED. Any 
 
 2. EDUCATION CREDENTIAL PROOF PROFILE
 Credential issuance binds the exact approved CredentialProofProfile/method/version and issuer authority used at issuance.
-Verification precedence:
-(a) credential authenticity/integrity and REVOKED/EXPIRED/currentness checks;
-(b) current proof-profile approval/validity check;
-(c) compatible verifier capability dispatch;
-(d) proof validation.
-If the originally bound profile is no longer currently approved -> STALE/UNSUPPORTED_PROFILE according to owning profile, not VERIFIED.
-If the profile is current but this verifier lacks capability -> UNSUPPORTED_PROFILE, not INVALID credential.
-UNKNOWN approval/revocation state -> UNKNOWN/non-PASS.
+Verification is capability-aware and SHALL NOT treat inability to execute a proof profile as proof of credential invalidity. The verifier first resolves the credential envelope/issuer reference and any independently queryable revocation/currentness state, then resolves current proof-profile approval and local compatible verifier capability before attempting profile-specific proof validation.
+Result semantics:
+- known REVOKED outranks STALE/UNSUPPORTED_PROFILE for the user-visible status; known EXPIRED is surfaced according to the owning profile;
+- if the originally bound profile is no longer currently approved -> STALE/UNSUPPORTED_PROFILE according to the owning profile, not VERIFIED;
+- if the profile is current but this verifier lacks compatible capability -> UNSUPPORTED_PROFILE, not INVALID;
+- if approval, revocation/currentness, or capability state cannot be determined -> UNKNOWN/non-PASS, never VERIFIED and never INVALID-by-default;
+- proof validation failure may produce INVALID only after the required profile/capability dispatch is resolved and the owning verifier contract supports that conclusion.
+Where multiple non-PASS conditions are known, all material conditions remain recorded even when one status has display precedence.
 A valid non-ZKP credential is not rejected solely because a legacy verifier assumed ZKP.
 
 3. EVOLUTION U20 MIGRATION
@@ -34,13 +34,14 @@ PARTIAL_EFFECT, OUTCOME_UNKNOWN, irreversible residual, compensation and reconci
 No new lifecycle mechanism is introduced merely to annotate history.
 
 5. OFFLINE RED / CRITICAL CONTINUITY
-RED/offline state removes ordinary autonomy/execution according to its profile.
+RED/offline state disables ordinary autonomy/execution. Profiles may impose stricter constraints but SHALL NOT relax this disablement.
 A separately granted critical-continuity authority may be consumed only if it:
 - existed before/use-independent of RED;
 - remains current;
 - is independently legitimate;
 - is bounded by scope/effect/duration/expiry;
 - is subject to fencing/reconciliation.
+Only that separately current, independently authorized critical-continuity lease may operate, within its existing scope.
 RED/network loss does not create, widen, extend, refresh or renew that authority.
 Expiry during RED routes to the owner-qualified minimum-risk handoff/non-PASS behavior.
 
@@ -48,12 +49,13 @@ Expiry during RED routes to the owner-qualified minimum-risk handoff/non-PASS be
 Legacy fixed values such as ASIL-D, 50 ms or display/flash/session limits are REFERENCE_PROFILE_EXAMPLE values unless the current qualified domain/safety profile binds them with current safety/law/evidence.
 Absent an owner-selected qualified profile, the dimension is UNSPECIFIED/UNKNOWN rather than silently using a legacy constant.
 A copied example does not become normative or certified by age/repetition.
+Any external-standard reference used by Mobility/Media or another profile requires verified source/version provenance before `certified`, `conformant`, or equivalent assurance language is used; otherwise it is labeled UNVERIFIED_REFERENCE.
 
 7. LOCALE TRANSLATION
 Use the existing GSL/Explanation typed semantic-translation result if it already exists; otherwise extend that owner minimally rather than creating a parallel locale truth type.
 Current Locale translation binds at least:
 source_locale; target_locale; translated content; semantic status CONFIDENT|AMBIGUOUS|LOSSY|UNTRANSLATABLE|UNKNOWN (or owner-equivalent); provenance; uncertainty/loss notes; policy/rights constraints where material.
-The legacy plain-String projection is deprecated for consequential use. If retained for compatibility, non-CONFIDENT cases must not produce an apparently confident String; callers receive explicit error/sentinel/typed handoff.
+The legacy plain-String projection is deprecated for any caller-consumed semantic/decision use. If retained for compatibility, it is limited to explicitly labeled human-display-only/logging use; non-CONFIDENT cases must not produce an apparently confident String and machine callers receive an explicit error/sentinel/typed handoff.
 Governance does not choose semantic truth merely because interpretations conflict.
 
 8. CARBON CERTIFICATION TERMINOLOGY
@@ -80,12 +82,12 @@ These SHALL NOT be called missing legacy functions.
 PROVISIONAL INVARIANTS
 P33-001 No unresolved legacy responsibility row is marked PASS/retained without source-resolved current owner.
 P33-002 Credential verifier capability gap SHALL NOT make credential INVALID.
-P33-003 Stale/unapproved credential proof profile SHALL NOT be treated as current approval.
+P33-003 Stale/unapproved credential proof profile SHALL NOT be treated as current approval; known revocation SHALL remain surfaced even when other non-PASS conditions also exist.
 P33-004 Legacy U20 proof override state SHALL have zero proof-bypass execution semantics.
 P33-005 Timeout/cancel SHALL NOT promise rollback of uncertain/irreversible external effects.
-P33-006 RED/network loss SHALL NOT create/renew/widen critical-continuity authority.
-P33-007 Legacy constants SHALL NOT become normative defaults absent current qualified profile.
-P33-008 Ambiguous/lossy locale translation SHALL NOT collapse to confident String in consequential use.
+P33-006 RED/network loss SHALL NOT create/renew/widen critical-continuity authority, and RED ordinary execution disablement SHALL NOT be relaxed by profile.
+P33-007 Legacy constants SHALL NOT become normative defaults absent current qualified profile; external standards SHALL NOT be called certified without verified source/version provenance.
+P33-008 Ambiguous/lossy locale translation SHALL NOT collapse to confident String in caller-consumed semantic/decision use.
 P33-009 Internal assessment/certificate SHALL NOT impersonate external certification authority.
 P33-010 Deliberate safe replacements SHALL NOT be reversed for literal legacy retention.
 
@@ -93,10 +95,13 @@ PROVISIONAL TESTS
 TEST-P33-EDU-001 current approved non-ZKP credential + compatible verifier -> verified according to bound profile.
 TEST-P33-EDU-002 current profile but local verifier lacks support -> UNSUPPORTED_PROFILE, not INVALID.
 TEST-P33-EDU-003 bound profile deprecated -> STALE/non-PASS.
+TEST-P33-EDU-004 credential is known REVOKED while profile is stale/unsupported -> REVOKED remains surfaced; no VERIFIED/INVALID-by-default collapse.
+TEST-P33-EDU-005 profile/capability state cannot be determined -> UNKNOWN/non-PASS; no proof-specific invalidity conclusion is fabricated.
 TEST-P33-U20-001 legacy override field set=true, no current proof -> no bypass; UNKNOWN/requalification required.
 TEST-P33-RUNTIME-001 external effect commits after scheduler timeout -> OUTCOME_UNKNOWN/PARTIAL survives legacy timeout projection.
-TEST-P33-RED-001 no preexisting continuity lease + RED -> no authority created.
+TEST-P33-RED-001 no preexisting continuity lease + RED -> no authority created and ordinary autonomy remains disabled.
 TEST-P33-RED-002 continuity lease expires in RED -> cannot self-renew.
 TEST-P33-MOB-001 no selected domain timing profile -> legacy 50ms not assumed.
-TEST-P33-LOCALE-001 ambiguous translation through legacy projection -> explicit nonconfident/error result.
+TEST-P33-MOB-002 external display/flash standard has no verified source/version -> UNVERIFIED_REFERENCE, not certified/conformant.
+TEST-P33-LOCALE-001 ambiguous translation through legacy projection -> explicit nonconfident/error result for machine caller.
 TEST-P33-CARBON-001 internal emission record cannot claim official external certification without issuer authority.
