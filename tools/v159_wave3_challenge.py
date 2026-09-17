@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import tools.v159_wave2_challenge as base
+import v159_wave2_challenge as base
 
 base.OUT = Path('review-results/v159-wave3-challenge')
 _original_prompt = base.prompt
