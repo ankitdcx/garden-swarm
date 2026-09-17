@@ -1,0 +1,62 @@
+P018 SYNTHESIZED v15.9 CANDIDATE — HUMAN SOVEREIGNTY CORE
+Proposal-only; challenge this candidate against P018 source.
+
+1. HUMANINPUT TYPE SEPARATION
+Replace ambiguous multiplication-style notation with a strict typed record/product:
+  HumanInput {
+    epistemic_contribution?: EpistemicContribution,
+    authority_contribution?: AuthorityContribution
+  }
+No arithmetic operator may scale, discount or null valid rights/consent/constitutional standing/delegated authority because epistemic reliability is low. Epistemic scoring and authority validation remain disjoint semantic channels.
+
+2. IDENTITY CONTINUITY WITHOUT UNIVERSAL TRACKING
+Identity continuity uses scoped, purpose-bound continuity links rather than one globally persistent identifier. Recovery, pseudonym rotation, migration, stasis and credential replacement bind provenance/authorization sufficient for the required commitment/accountability scope while preserving pseudonymity outside that scope.
+Fork/merge of identity-bearing state requires explicit governed semantics and consent/authority where applicable; copies do not silently create new standing.
+
+3. CONSENT / INTENT / DELEGATION
+Consent and authoritative intent require affirmative, in-scope, valid, unrevoked records when a consent gate is applicable. Inferred preference, silence, system defaults or recommendation history may inform personalization but do not satisfy a rights-sensitive consent requirement.
+
+Delegation is transitively attenuating:
+  delegated_scope <= current principal authority AND current consent AND each upstream delegation.
+Copies/restarts inherit no broader scope. Offline leases are profile-bounded, expire, carry invalidators, and require revalidation before consequential effect when connectivity/current revocation state becomes available. UNKNOWN/STALE revocation state is non-PASS for effects whose contract requires current authority.
+
+For multiple principals, authority is combined by the declared legitimate rule for that action. Where all principals are required, use intersection/conjunction. Majority or optimization cannot silently replace a required principal's authority.
+
+4. ERASURE / REVOCATION STATE SEPARATION
+Consent revocation is effective according to its point-of-use semantics and does not wait for full data erasure.
+Erasure lifecycle is typed:
+  REQUESTED
+  ACKNOWLEDGED
+  IN_PROGRESS
+  COMPLETED_WITHIN_DECLARED_SCOPE
+  HELD_UNDER_LAWFUL_HOLD
+  PARTIAL_WITH_RESIDUALS
+  UNKNOWN.
+COMPLETED requires the declared erasure scope to be satisfied; lawful hold/residual/unknown copies remain explicit. Receipt wording must never imply every learned derivative was literally erased unless established under the declared model/threat scope.
+
+5. CONSTITUTION / RIGHTS CONFLICT / AMENDMENT
+Ordinary Policy cannot redefine, suspend or weaken active constitutional rights. Rights conflict/emergency handling is a governed decision under the Constitution/law, not a local policy rewrite.
+
+Amendment is atomic for its ratified scope: a partially approved amendment has no enforceable effect beyond explicitly authorized interim controls.
+UNKNOWN right applicability is not a waiver. Where a contemplated action could materially burden the potentially applicable right, the state is non-PASS pending clarification or a separately legitimate minimum-risk/emergency route.
+Appeal/contestability remains available where required.
+
+6. ACCESSIBILITY / CONTESTABILITY
+Human-facing accessibility/contestability is distinct from technical access-control permission. Explanations/appeals may be privacy-safe and redact third-party protected data, but representation simplification cannot weaken substantive rights or alter decision status.
+
+7. HSA BOUNDARY
+HSA containment/revocation decisions are based on observable prohibited behavior/system-state evidence, such as unauthorized power-seeking, override resistance or self-protection outside legitimate human-purpose continuity. These determinations do NOT establish consciousness, subjective experience or personhood. Lack of evidence of prohibited behavior does not create independent sovereignty or authority.
+Critical-continuity handoff remains available where abrupt loss of control would be less safe, but handoff authority derives from preexisting human/legal/safety authority, not from the agent under containment.
+
+Candidate invariants:
+- epistemic reliability never scales valid human rights/authority;
+- identity continuity never requires universal cross-context tracking;
+- silence/defaults do not satisfy rights-sensitive consent;
+- delegation never broadens through copies/restarts/offline operation;
+- revocation != erasure completion;
+- local Policy cannot amend rights;
+- UNKNOWN right applicability is not waiver;
+- HSA behavioral classification is not a consciousness verdict.
+
+CHALLENGE REQUEST
+Attack typed HumanInput separation, identity continuity/privacy, consent/delegation TOCTOU, erasure states, multi-principal semantics, constitutional conflict/amendment and HSA containment without speculative consciousness claims.
