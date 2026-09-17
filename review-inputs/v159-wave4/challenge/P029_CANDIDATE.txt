@@ -7,6 +7,8 @@ The reviewed VSM, RPM, PPM, TFT, FET and theory-to-reality families retain their
 1. VSM MERGE / CONTINUITY PROJECTION
 VSM fork/merge SHALL preserve the source lineage of every materially contributing branch and SHALL NOT silently discard material uncertainty, invalidators, unresolved obligations or conflicting context merely to produce a single continuity representation.
 
+Materiality classification for branch contribution is an owner-qualified profile rule. A contribution classified non-material may be excluded from the active merged state only with a retained dropped-with-reason lineage record; it does not vanish from history merely because it was excluded from the active projection.
+
 The active owner-qualified merge policy determines how compatible uncertainty representations are combined. Where no valid conservative/compatible merge is defined, the result is typed UNKNOWN / CONFLICT / INCOMPATIBLE rather than a fabricated unified state.
 
 VSM continuity/context/lineage scores are operational/model state. They SHALL NOT by themselves establish personhood, consciousness, ownership, rights or authority. Any such inference is a separately typed external claim under the applicable evidence/rights/authority process.
@@ -31,6 +33,8 @@ FET creates no emergency authority. Every emergency action is selected only from
 
 UNKNOWN hazard/admission state remains typed non-PASS for any action requiring resolved admission. It SHALL NOT be consumed downstream as weak PASS.
 
+A preauthorized minimum-risk path is not an exception to this intersection. It must itself be enumerated/bound in the active emergency/continuity profile and remain subject to its current authority, safety, rights and law constraints.
+
 FET recovery/handoff SHALL preserve applicable controller state/invalidators and shall not re-enable stale primary commands or accumulated controller state unless the active recovery profile explicitly requalifies them. Existing critical-continuity/safe-handoff owners remain authoritative; no duplicate recovery engine is created.
 
 5. THEORY COUPLING DEFAULT
@@ -43,7 +47,7 @@ Theory/model/simulation output remains model-qualified until an observation/prov
 A named research target lacking an admitted profile (for example a retained Gaia2026 label) remains a research label with no operational or certification semantics until its exact profile is admitted.
 
 PROVISIONAL INVARIANTS
-P29-001 VSM merge SHALL NOT silently discard material lineage or uncertainty.
+P29-001 VSM merge SHALL NOT silently discard material lineage or uncertainty; excluded non-material contributions retain dropped-with-reason lineage.
 P29-002 VSM continuity SHALL NOT manufacture identity/rights/authority.
 P29-003 Materially interacting RPM/PPM controllers require an explicit qualified composition rule.
 P29-004 Missing required noncommutation/order semantics SHALL NOT default to commutative PASS.
@@ -55,9 +59,10 @@ P29-009 Research/model outputs remain model/research-qualified until independent
 
 PROVISIONAL TESTS
 TEST-P29-VSM-001 merge branches with incompatible uncertainty/context -> explicit conflict/unknown, not silent overwrite.
+TEST-P29-VSM-002 branch contribution excluded as non-material -> dropped-with-reason lineage remains inspectable.
 TEST-P29-COMP-001 two individually qualified controllers saturate shared actuator -> joint envelope/arbitration required.
 TEST-P29-ORDER-001 noncommutative coupling with no declared order -> non-PASS.
 TEST-P29-TFT-001 profile lacking conservation premise -> no conservation inference.
-TEST-P29-FET-001 UNKNOWN hazard + no resolved admission -> no emergency action except separately preauthorized minimum-risk path.
+TEST-P29-FET-001 UNKNOWN hazard + no resolved admission -> no emergency action unless an explicitly preauthorized minimum-risk action is already inside the active authority/safety/rights/law intersection.
 TEST-P29-REC-001 stale primary command after handoff -> remains fenced until requalified.
 TEST-P29-UPS-001 research dimension/model output repeated downstream -> remains research/model-qualified, not observed law.
