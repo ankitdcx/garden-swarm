@@ -1,0 +1,44 @@
+GARDEN v15.9 REVIEW PACKET P023 — GSL-PHYSICS / DIGITAL TWIN / CRITICAL CONTINUITY
+Source basis: exact frozen Garden v15.8 combined five-file working candidate, 2026-09-17.
+Status: bounded source-grounded review packet; proposal evidence only; no admission/certification.
+
+GOAL
+Review GSL-PHYSICS v1.1, physical ingress/egress accounting, measurements, telemetry/data assimilation, DigitalTwin/PhysicalTwin credibility, physical DO_NOTHING baselines and critical-continuity handoff. Preserve typed quantities/frames/uncertainty and do not universalize one physical implementation.
+
+CORE PHYSICAL CONTRACT
+Shared schemas include ReferenceFrame, CalibrationRecord, Measurement<T>, PhysicalModel, SimulationRun, ModelCredibility, DigitalTwin, MultiphysicsCoupling and PhysicalIngressEgressReceipt. Physical applications inherit typed quantities, units, frames, uncertainty/error and calibration/model semantics.
+
+TELEMETRY / ASSIMILATION
+- event/observation time is distinct from ingest/processing time;
+- bind clock domain, synchronization uncertainty, sequence/causal metadata, latency/jitter, duplicate/gap/late/out-of-order status and provenance;
+- reorder/deduplicate only under a declared bounded watermark/window policy;
+- check units, frames, calibration, environment and source provenance;
+- evaluate observability/identifiability for requested latent state;
+- admit/reject/quarantine/defer using DataAssimilationProfile;
+- update PhysicalTwin in causal/event-time order where required;
+- propagate covariance/uncertainty, drift, staleness, model residual and dependency invalidation;
+- failed assimilation uses a prequalified fallback; it cannot self-authorize a new one.
+Arrival order != causal order. Timestamp without clock domain/uncertainty/provenance is insufficient for certified assimilation. Non-identifiable state remains UNKNOWN/DEGRADED rather than false precision.
+
+DIGITAL TWIN / MODEL CREDIBILITY
+PhysicalTwin is owner-qualified refinement of DigitalTwin; no duplicate unqualified SchemaID. Twin state is model-mediated, not reality. ModelCredibility binds assumptions, evidence, calibration/validation domain, uncertainty, residuals, validity and invalidators. Simulation/twin agreement is not observation.
+
+PHYSICAL DO_NOTHING
+DO_NOTHING means no new Garden intervention, not frozen world. Baseline trajectory binds endogenous/environment dynamics, horizon, uncertainty, monitoring, decay/wear/disease/hazard/exogenous forcing and handoff/review conditions.
+
+CRITICAL CONTINUITY
+HSA/safety uncertainty or violation in critical infrastructure:
+revoke suspect agency/authority/credentials/leases/actuation -> fence stale commands -> select independently qualified fallback controller -> verify independence from suspect mutable cognition/goals/credentials/authority -> authenticated bounded state/control transfer -> minimum-safe continuity -> observation/escalation -> qualified recovery after root cause/repair/revalidation/reauthorization.
+Abrupt shutdown is chosen only when domain safety case establishes it is safer/feasible. Determinism/replication/majority/isolation alone do not prove safety/independence.
+
+REVIEW QUESTIONS
+1. Check physical ingress/egress conservation semantics under uncertainty, open boundaries and unobserved flows.
+2. Check telemetry event-time/processing-time and late correction for causality/duplication.
+3. Define observability vs identifiability vs estimation uncertainty; prevent a filter/twin from fabricating precision.
+4. Check DigitalTwin identity/currentness across model/calibration/environment/DesignEpoch changes.
+5. Check model-credibility transfer across operating regimes and simulation-to-reality boundary.
+6. Check DO_NOTHING baseline for evolving systems and non-identifiable baseline trajectories.
+7. Check safe-control handoff state transfer, unresolved effects, stale commands, fallback independence and degraded sensors.
+8. Check fallback cannot self-authorize or silently weaken K0P/rights/authority.
+9. Check units/frames/conversion and coupled-domain error propagation.
+10. Prefer profile-bound physical thresholds; request EXPAND_REQUIRED where needed.
