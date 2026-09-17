@@ -40,12 +40,12 @@ A supersession/replacement relation names exact predecessor and successor anchor
 Preserve source `existing_status` domain:
   ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT.
 Add a separate closure/knowledge field when status itself cannot yet be established:
-  closure_status = RESOLVED | UNKNOWN | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
-Do not overload existing_status with UNKNOWN if the source enum does not contain it.
+  closure_status = RESOLVED | UNKNOWN | STALE | CONFLICT | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
+Do not overload existing_status with UNKNOWN/STALE/CONFLICT if the source enum does not contain them.
 
 For new deltas use:
-  delta_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
-Only exact evidence can justify ENFORCED/CHECKED.
+  delta_status = ENFORCED | CHECKED | SPECIFIED | NOT_PRESENT | UNKNOWN | STALE | CONFLICT | INCOMPLETE | NEEDS_SCHEMA_ADMISSION | BLOCKED.
+UNKNOWN, STALE, CONFLICT, INCOMPLETE, NEEDS_SCHEMA_ADMISSION and BLOCKED are non-PASS wherever hard resolution/admission is required. Only exact evidence can justify ENFORCED/CHECKED.
 
 5. EXECUTABLE TEST RECEIPT
 Every prose TEST-* defaults to SPECIFIED.
@@ -60,17 +60,17 @@ A TEST-* may be reported PASS/CHECKED only when a bound executable receipt inclu
 Missing binding -> remains SPECIFIED.
 
 6. UPGRADE TRACEABILITY TABLE
-Generate an UpgradeTraceabilityTable with one row for every accepted upgrade/invariant group from P001–P036 and any final integration corrective overlay:
+Generate an UpgradeTraceabilityTable with one row for every reviewed/proposed upgrade or invariant group from P001–P036 and any final integration corrective overlay, including accepted, rejected and no-change dispositions:
 - upgrade_id / packet_id;
-- disposition KEEP|CHANGE|ALIAS|DEFERRED|UNRESOLVED|REJECTED;
+- disposition KEEP|CHANGE|ALIAS|DEFERRED|UNRESOLVED|REJECTED|NO_CHANGE;
 - owning layer(s);
-- final anchor(s);
+- final anchor(s) where applicable;
 - source/review evidence refs;
 - current status;
 - dependencies;
 - unresolved implementation/proof/test obligations.
 
-Final release validation fails if an accepted CHANGE/KEEP-required-current-semantic item has no owning-layer anchor, unless explicitly DEFERRED/UNRESOLVED with no active dependency pretending otherwise.
+Final release validation fails if an accepted CHANGE/KEEP-required-current-semantic item has no owning-layer anchor, unless explicitly DEFERRED/UNRESOLVED with no active dependency pretending otherwise. REJECTED/NO_CHANGE rows preserve review lineage but do not require a new semantic anchor unless the disposition itself must be recorded in the current-reading layer.
 
 7. CURRENT READING MAP
 CurrentReadingMap is mandatory and DERIVED/NON-AUTHORITY-BEARING.
@@ -87,14 +87,14 @@ It SHALL carry:
 - resolution owner/review condition for unresolved entries.
 
 Each active current reference resolves to exactly one current-view row or a declared multi-owner composition row. Broken/ambiguous active references fail current-reference closure.
-If map and underlying current overlay disagree, the underlying admitted/declared current source wins and the map is defective/non-PASS until regenerated.
+If map and underlying current overlay disagree, the underlying admitted source or dependency admitted in the same authorized bundle governs and the map is defective/non-PASS until regenerated. A merely declared but non-admitted source does not outrank the map; it is flagged NEEDS_SCHEMA_ADMISSION/non-PASS until admitted.
 
 8. UNRESOLVED / DEFERRED DEPENDENCIES
 Every active invariant/function/artifact declares material dependencies.
-If a required dependency is DEFERRED/UNRESOLVED/INCOMPLETE:
-- the dependent function/invariant is tagged DEPENDS_ON_UNRESOLVED:<id> or owner-equivalent;
+If a required dependency is DEFERRED/UNRESOLVED/UNKNOWN/STALE/CONFLICT/INCOMPLETE:
+- the dependent function/invariant is tagged with the unresolved dependency or owner-equivalent;
 - its executable/admission status cannot be ENFORCED/PASS merely from prose;
-- it remains SPECIFIED/BLOCKED/INCOMPLETE according to owner semantics.
+- it remains SPECIFIED/BLOCKED/INCOMPLETE or the owning non-PASS status according to owner semantics.
 
 An unresolved optional research profile does not block the entire five-file working candidate when no active required function depends on it as if admitted.
 
@@ -103,53 +103,68 @@ A candidate may bundle dependencies into the same successor admission only when 
 A non-admitted prerequisite cannot be cited as canonical. If any required bundled prerequisite fails/rejects/remains unresolved, the dependent admission is HELD/BLOCKED.
 
 10. SOURCE / GSL COMPATIBILITY
-The final release binds compatibility to the frozen v15.8 source root SHA-256 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2 and the embedded/current declared GSL baseline. If an exact predecessor GSL v45.1 schema/hash anchor is available in the frozen source/current map, include it. If not, state compatibility as SOURCE-DECLARED/UNVERIFIED at that finer granularity rather than fabricating a SchemaID/hash.
+The final release binds compatibility to the frozen v15.8 source root SHA-256 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2 and the embedded/current declared GSL baseline.
+GSL semantic-core compatibility with predecessor v45.1 is a release-closure item unless a separately reviewed successor delta explicitly changes it. If an exact predecessor GSL v45.1 schema/hash anchor is available in the frozen source/current map, include it. If not, state compatibility as SOURCE-DECLARED/UNVERIFIED or UNKNOWN at that finer granularity rather than fabricating a SchemaID/hash; no executable/certification claim may depend on an unverified compatibility assertion.
 
 11. RELEASE-CLOSURE DEFINITION
 Semantic release closure is complete only when:
 - all scheduled P001–P036 packets and final integration review are dispositioned;
 - CurrentReadingMap active-reference validation passes with no undeclared dangling/ambiguous active anchors;
-- UpgradeTraceabilityTable contains every accepted upgrade;
+- UpgradeTraceabilityTable contains every reviewed/proposed upgrade group and preserves accepted/rejected/no-change lineage;
 - source-retention/hash checks pass for all five predecessor slices;
 - aliases/supersessions used in current reading resolve;
 - no accepted upgrade is lost between consolidated upgrade document and layer documents;
 - unresolved dependencies are explicitly propagated to dependent statuses;
-- release manifest hashes all six final deliverables;
+- rights/consent/privacy/authority/safety/law hard gates survive every applicable layer projection;
+- no duplicate newly introduced owner/schema exists unless a reviewed deliberate qualified identity/alias/refinement relation establishes why it is not duplication;
+- topology remains unchanged unless an explicit reviewed architectural change authorizes and records the delta;
+- GSL semantic-core compatibility with predecessor v45.1 is stated and resolved to the level required by any dependent claim; absent an exact anchor it remains SOURCE-DECLARED/UNVERIFIED or UNKNOWN and cannot support certification/executable claims;
+- release manifest hashes all six final deliverables after their final bytes are materialized;
 - status/non-claim preamble is present in every final file.
 
+Any violation of a hard-gate survival, duplicate-owner/schema, unauthorized-topology-change, required-compatibility, or active-reference condition fails release closure.
 This closure is semantic/documentary. It does not imply executable certification.
 
 12. FINAL INTEGRATION FINDING HANDLING
 The final P037 whole-integration review does NOT restart all earlier packet calls.
-It checks only cross-wave contradiction/duplication/drop/status/reference propagation.
+It checks only cross-wave contradiction/duplication/drop/status/reference propagation, including the release-closure gates in §11.
 A local integration defect is repaired by a minimal final corrective overlay and recorded in UpgradeTraceabilityTable.
 Only if the finding invalidates the substantive conclusion of an earlier multi-layer packet would targeted re-review of that affected packet be required; no blanket restart.
 
 13. FINAL FIVE DOCUMENTS
-Final working-candidate filenames:
-- Garden_User_v15.9_COMPLETE_WORKING_CANDIDATE_2026-09-17.txt
-- Garden_System_v15.9_COMPLETE_WORKING_CANDIDATE_2026-09-17.txt
-- Garden_Technical_v15.9_COMPLETE_WORKING_CANDIDATE_2026-09-17.txt
-- Garden_Annexure_v15.9_COMPLETE_WORKING_CANDIDATE_2026-09-17.txt
-- Garden_Theories_v15.9_COMPLETE_WORKING_CANDIDATE_2026-09-17.txt
+The release process binds `RELEASE_DATE` at materialization time in the ReleaseManifest; filenames are finalized in the same step before hashes are computed.
+Final working-candidate filename pattern:
+- Garden_User_v15.9_COMPLETE_WORKING_CANDIDATE_<RELEASE_DATE>.txt
+- Garden_System_v15.9_COMPLETE_WORKING_CANDIDATE_<RELEASE_DATE>.txt
+- Garden_Technical_v15.9_COMPLETE_WORKING_CANDIDATE_<RELEASE_DATE>.txt
+- Garden_Annexure_v15.9_COMPLETE_WORKING_CANDIDATE_<RELEASE_DATE>.txt
+- Garden_Theories_v15.9_COMPLETE_WORKING_CANDIDATE_<RELEASE_DATE>.txt
 Consolidated upgrades:
-- Garden_v15.9_ALL_REVIEWED_UPGRADES_2026-09-17.txt
-Final hashes are populated only after generation.
+- Garden_v15.9_ALL_REVIEWED_UPGRADES_<RELEASE_DATE>.txt
+Final hashes are populated only after generation and filename/date finalization.
 
 PROVISIONAL INVARIANTS
 P36-001 Review consensus SHALL NOT create canonical authority/certification.
 P36-002 TEST-* without exact executable receipt SHALL remain SPECIFIED.
 P36-003 Accepted upgrade SHALL map to final layer anchor or explicit nonactive unresolved disposition.
-P36-004 CurrentReadingMap SHALL be derived/source-bound and non-authority-bearing.
-P36-005 Required unresolved dependency SHALL propagate non-PASS/incomplete status to dependent executable/admission claim.
+P36-004 CurrentReadingMap SHALL be derived/source-bound and non-authority-bearing; merely declared non-admitted overlays SHALL NOT become current authority.
+P36-005 Required unresolved/UNKNOWN/STALE/CONFLICT dependency SHALL propagate non-PASS/incomplete status to dependent executable/admission claim.
 P36-006 Historical supersession naming SHALL NOT alter artifact relation enum or mint authority.
-P36-007 Final file hashes SHALL be generated after materialization, never guessed.
+P36-007 Final file hashes SHALL be generated after release date/filenames and final bytes are materialized, never guessed.
 P36-008 Semantic closure SHALL NOT be reported as executable certification.
+P36-009 Rights/consent/privacy/authority/safety/law hard-gate survival SHALL be checked across all applicable final layer projections before release closure.
+P36-010 Duplicate owner/schema and topology changes SHALL be non-PASS unless covered by an explicit reviewed relation/change.
+P36-011 Required GSL v45.1 compatibility status SHALL be represented explicitly and unverified compatibility SHALL NOT support stronger claims.
 
 PROVISIONAL TESTS
 TEST-P36-TEST-001 prose TEST with no harness receipt -> SPECIFIED only.
 TEST-P36-TRACE-001 accepted upgrade missing final anchor -> release closure fails.
+TEST-P36-TRACE-002 rejected/no-change packet disappears from traceability -> release traceability incomplete.
 TEST-P36-MAP-001 active reference maps to zero/two ambiguous owners without composition -> closure fails.
-TEST-P36-DEFER-001 active function depends on deferred profile -> function status non-PASS/incomplete.
+TEST-P36-MAP-002 non-admitted merely declared overlay conflicts with map -> NEEDS_SCHEMA_ADMISSION/non-PASS; overlay does not silently win.
+TEST-P36-DEFER-001 active function depends on deferred/UNKNOWN/STALE/CONFLICT profile -> function status non-PASS/incomplete.
 TEST-P36-REVIEW-001 unanimous reviewers but no authorized admission -> candidate remains noncanonical.
-TEST-P36-HASH-001 release manifest built before final bytes -> invalid; rebuild after materialization.
+TEST-P36-HARDGATE-001 any final layer projection drops a required rights/consent/privacy/authority/safety/law hard gate -> release closure fails.
+TEST-P36-TOPOLOGY-001 new owner/schema/topology edge lacks reviewed identity/change record -> release closure fails.
+TEST-P36-GSL-001 required v45.1 compatibility anchor unavailable -> mark SOURCE-DECLARED/UNVERIFIED or UNKNOWN; stronger certification/executable claim blocked.
+TEST-P36-HASH-001 release manifest built before final date/filenames/bytes -> invalid; rebuild after materialization.
