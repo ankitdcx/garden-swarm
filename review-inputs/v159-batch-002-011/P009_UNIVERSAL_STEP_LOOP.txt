@@ -1,0 +1,54 @@
+GARDEN v15.9 REVIEW PACKET P009 — UNIVERSAL PER-STEP CONTROL LOOP
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review the universal meaningful-transition control loop for completeness, efficiency, guard placement, trace semantics and recursion boundaries. Do not require heavyweight processing for micro-operations.
+
+CURRENT CANONICAL STEP
+Observe
+-> Understand / Type
+-> Compare actual vs expected / desired
+-> Reason
+-> Generate candidate transitions
+-> Select candidate
+-> Guard selected candidate
+-> Act / Derive / Communicate
+-> Observe resulting state
+-> Compare expected vs actual
+-> Record / Update / Learn / Escalate
+-> Next State
+
+A pre-selection constraint filter may remove obviously inadmissible candidates before Select. It does not replace the final effect guard on the selected transition.
+
+MEANINGFUL TRANSITION BOUNDARY
+The loop applies at declared semantic process boundaries, not every CPU instruction, tensor operation or neural activation. A lower-level operation inherits the enclosing transition contract unless it crosses a declared effect, state, authority, epistemic, resource, persistence, audit or risk boundary requiring its own TransitionStep.
+
+TRANSITION ARTIFACT
+Every meaningful transition emits TransitionStep recording before/after control-loop state and applicable assurance outcome. Schema: SCHEMA-B23C042B9C.
+
+BEFORE EFFECT
+current state -> compare actual/desired and alternatives -> reason -> select -> guard.
+AFTER EFFECT
+effect -> observe -> compare expected/actual -> reason about material discrepancy -> ACCEPT/CORRECT/RETRY/REPLAN/RESEARCH/ESCALATE/LEARN/TERMINATE as applicable.
+
+TIERING
+Reason tiers R1..R4; Proof/Verity V0..V4; Safety S0..S4. A higher Reason tier does not automatically imply same-number Proof/Safety tier. AAP derives floors independently. Unit 001 moved historical R0 transition sanity to a non-Reason SanityGate to avoid recursion.
+
+ASSURANCE CONTEXT REUSE
+AssuranceContextToken may inherit validated predicates with exact scope, expiry/review condition, DesignEpoch, KnowledgeSnapshot, EnvironmentCommitment, dependency/assumption closure, invalidators, authority/assurance floor and provenance. Child verifies token and recomputes invalidated predicates; reuse is not authority to skip newly applicable obligations.
+
+CLOSING RULE
+No conforming material step is invisible. No conforming persistent mutation bypasses process graph. Baseline kernel is cheap; escalation proportional.
+
+CONSTRAINTS
+Review:
+- exact meaningful-transition trigger and nested transitions;
+- candidate generation/select/guard ordering;
+- pure derivations vs communications vs external effects;
+- post-effect failure/unknown reconciliation;
+- when TransitionStep can be aggregated without losing auditability;
+- assurance-token inheritance race/staleness;
+- loop termination/livelock and repeated escalation;
+- interaction with Process Algebra/AAP without duplicate ownership.
+Compare DO_NOTHING and minimal repair.
