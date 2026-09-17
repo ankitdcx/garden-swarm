@@ -1,0 +1,36 @@
+{
+  "schema": "GardenV159Wave5Disposition/v1",
+  "campaign": "GARDEN-V159-WAVE5-032-036-20260917",
+  "source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
+  "packets": [32, 33, 34, 35, 36],
+  "blind_review_run_id": 35255993070,
+  "blind_review_run_conclusion": "success",
+  "blind_review_artifacts_present": 5,
+  "challenge_run_id": 35256718065,
+  "challenge_run_conclusion": "success",
+  "challenge_status": {
+    "P032": "4_FAMILY_QUORUM_PASS",
+    "P033": "3_FAMILY_QUORUM_PASS",
+    "P034": "3_FAMILY_QUORUM_PASS",
+    "P035": "4_FAMILY_QUORUM_PASS",
+    "P036": "3_FAMILY_QUORUM_PASS"
+  },
+  "challenge_corrections_incorporated": true,
+  "correction_commits": {
+    "P032": "ad81217564c783b598756dc539eff1edd32800b2",
+    "P033": "21f71da8ba1c62d2f646a3e8cfba45d8991c432d",
+    "P034": "5d94dc766891df7704f81e2bb0b3324017c8bfb8",
+    "P035": "cceedc79b92728f874307158fb52f023b7e1ae49",
+    "P036": "96bbd9334e572ae6a117dad3197dff99c96dd3de"
+  },
+  "status": "CROSS_REVIEWED_WAVE5_SYNTHESIS_COMPLETE_READY_FOR_FINAL_INTEGRATION",
+  "canonical_effect": false,
+  "executable_certification_claimed": false,
+  "next_packet": 37,
+  "next_step": "MATERIALIZE_P037_FINAL_INTEGRATION_PACKET_THEN_TRIGGER_EXISTING_V159_FINAL_INTEGRATION_WORKFLOW",
+  "do_not_repeat": [
+    "blind review P032-P036",
+    "challenge review P032-P036",
+    "P032-P036 challenge correction synthesis"
+  ]
+}
