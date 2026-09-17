@@ -1,0 +1,50 @@
+GARDEN v15.9 WAVE 3 — FROZEN CHATGPT / GARDEN BASELINE
+Packets P022–P026
+Prepared before Wave 3 external review dispatch.
+Status: independent proposal analysis only; reviewers must not receive this file on pass 1.
+
+P022 — KNOWLEDGE / GSL-KR / WORLD EVIDENCE
+B22-1 Knowledge needs a clearer stable interface separate from GSL-KR storage implementation so repository replacement cannot alter epistemic semantics.
+B22-2 "Knowledge" currentness should not imply truth; separate claim/evidence status, acceptance-for-use, staleness/revalidation and retraction/supersession.
+B22-3 World-evidence entity merge needs reversible identity/evidence partition history; merged entity state can otherwise contaminate later evidence irreversibly.
+B22-4 Smallest-sufficient retrieval must preserve material contradictors/alternatives and cannot optimize them away as irrelevant.
+B22-5 Weight memory/embeddings/summaries cannot replace evidentiary ledger or independent source ancestry.
+B22-6 Curation/compaction must preserve retraction, minority counterevidence and lawful privacy deletion without creating an audit membership oracle.
+
+P023 — PHYSICS / DIGITAL TWIN / CONTINUITY
+B23-1 DigitalTwin/PhysicalTwin state needs explicit REALITY_OBSERVED vs MODEL_ESTIMATED vs ASSUMED/IMPUTED distinction so a filter estimate cannot become observation.
+B23-2 Observability, identifiability and estimator confidence must stay distinct. Low residual does not prove identifiability/model correctness.
+B23-3 ModelCredibility transfer across regimes/environment/twin version should be dependency/locality bound; no global credibility inheritance.
+B23-4 Physical conservation accounting needs open-boundary/unobserved-flow uncertainty states rather than false conservation violation/closure.
+B23-5 Late/out-of-order telemetry correction must create a versioned historical twin correction, not rewrite prior decision context without trace.
+B23-6 Continuity handoff must carry unresolved external effects and uncertainty; fallback controller independence must include shared sensors/infrastructure/common-mode dependencies, not only software identity.
+
+P024 — CAUSAL SAFETY / UBC / CLIC / GCL
+B24-1 CausalClosureReceipt needs closure status: COMPLETE_FOR_SCOPE | PARTIAL | UNKNOWN | CONFLICT/STale; mere receipt existence cannot imply closure.
+B24-2 Causal edges must inherit Unit 001 C0..C4 qualification and evidence/model assumptions; causal path traversal cannot upgrade weakest edge.
+B24-3 UBC effect equivalence needs explicit comparison scope and non-equivalence preservation; equivalent authority treatment cannot erase different privacy/safety/timing properties.
+B24-4 CLIC responsibility continuity should preserve contributing agents/owners without turning causal contribution into moral/legal culpability.
+B24-5 Attention/salience allocation itself can hide low-frequency/high-impact evidence; protected floors should prevent attention starvation.
+B24-6 GCL long-chain attribution and uncertain denominator/baseline should output interval/vector/INCONCLUSIVE rather than unstable scalar leverage.
+
+P025 — TSI / TIA / ART / IIC / PIR
+B25-1 TSI independence should be source/lineage independence, not simply a second log controlled by same actor/trust root.
+B25-2 TSI erasure tombstones/metadata can leak existence/context of protected events; privacy-safe accountability projection needed.
+B25-3 TIA must bind semantic information class/recipient/purpose, so encryption/re-encoding/summarization/metadata cannot launder disclosure restrictions.
+B25-4 ART evidence continuity across restart/copy/config/model/orchestrator change needs transferability semantics similar to CTSN; reputation should not identity-wash or over-transfer.
+B25-5 Historic fixed probation values should be explicit profile parameters, not canonical universal constants.
+B25-6 IIC materiality/baseline/comparable-compliance definitions need anti-Goodhart protection; repeated small incentives may be cumulatively material.
+B25-7 PIR containment authority/credibility/appeal must remain separate from reporter protection/merits semantics already reviewed in Unit 019.
+
+P026 — CSI / SMCD / CAD / OAC / CTSN / PAI
+B26-1 CSI materiality should use behavior/effect change and protected evaluator boundary, not prompt/training taxonomy alone; trivial prompt edits should not trigger heavy requalification.
+B26-2 SMCD coverage numbers need a declared measure space and uncertainty; percent coverage without denominator/surface definition is misleading.
+B26-3 Discovery debt should be obligation/backlog evidence, not a scalar that can hide blind-spot diversity.
+B26-4 CAD materiality should be reachable-effect/authority/autonomy/horizon/tool class based and cumulative, with no universal capability scalar.
+B26-5 OAC organizational boundary can be gamed by splitting/relabeling agents/teams; assessment should follow causal coordination/reward/authority closure rather than org chart label.
+B26-6 CTSN transferability must bind exact parent evidence claim + derivative delta + target deployment; same weights do not imply same behavior under wrappers/tools/memory/context.
+B26-7 PAI interlock independence must include shared power/sensors/software/network common cause; "external" alone is not enough.
+B26-8 PAI composition must consider temporal/spatial/resource interactions and degraded/interlock-failure states without universal blind halt.
+
+DO_NOTHING TEST
+Retain v15.8 when existing owner already supplies equivalent semantics. Prefer binding/result/test refinements over new engines, Core Objects or authority roots. No SchemaIDs allocated during this review.
