@@ -167,5 +167,7 @@
   "source_packet_sha256": "12206d7b8332fe4133c4ec66c89bad9bc0861a5b8e91ad010028fd70b1240f46",
   "start_on_matching_source_event": true,
   "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
-  "context_expansion_level": "L2_CROSS_LAYER_EXPANDED"
+  "context_expansion_level": "L2_CROSS_LAYER_EXPANDED",
+  "retry_of_attempt_sha256": "e1b73ccfe87dafa6b41943d880a916419d1aea562b9ee6612567490f9c4b14cf",
+  "retry_reason": "Received HTTP429 without generation identity on the expanded packet. Preserve the full USD0.10 reservation and UNKNOWN billing; use the exact receipt-bound same-model alternate-provider retry allowed by the campaign."
 }
