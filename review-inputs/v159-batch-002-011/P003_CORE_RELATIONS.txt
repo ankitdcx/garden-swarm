@@ -1,0 +1,45 @@
+GARDEN v15.9 REVIEW PACKET P003 — 24 CORE RELATIONS
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review relation identity, algebraic laws, composition and cycle semantics. Preserve 24 relations unless a concrete defect requires a change.
+
+CURRENT 24 CORE RELATIONS
+Foundational (10):
+identifies, causes, governs, values, frames, acts, obeys, assesses, contextualizes, controls
+
+Practical / lineage (14):
+partOf, dependsOn, owns, delegates, references, derivedFrom, equivalentTo, contradicts, supports, blocks, hasHypothesis, supersedes, conflictsWith, originatesFrom
+
+CURRENT RULES
+- equivalentTo symmetric + transitive; cycles permitted.
+- partOf transitive + antisymmetric; cycles forbidden.
+- dependsOn is kind-qualified: build/order dependencies are transitive over the admitted build DAG and cycles are forbidden; runtime/semantic dependencies may contain an explicitly declared SCC/fixed-point group only under registered semantics, initialization, and termination/service-liveness evidence. Antisymmetry applies to the acyclic/condensed dependency order, not raw nodes inside an admitted feedback SCC.
+- derivedFrom directed lineage; cycles forbidden.
+- controls authority/control edge; cycles forbidden.
+- supersedes directional/version aware; cycles forbidden; predecessor remains immutable.
+- originatesFrom directed provenance; cycles forbidden.
+- contradicts symmetric semantic opposition; cycles permitted.
+- conflictsWith symmetric declared conflict; cycles permitted, explicit resolution required.
+- causes feedback cycles permitted.
+- references cycles permitted.
+- delegates capability(delegate) subset-of capability(principal).
+- supports does not by itself promote epistemic status.
+
+CANONICAL COMPOSITION CANDIDATES
+- delegates o acts -> acts
+- owns o controls -> derivedControl
+- supports o supports -> candidate indirect support; becomes supports only through explicit valid warrant.
+- causes o causes -> causalPath; becomes a causal Claim only under valid causal model, compatible context and assumptions.
+- hasHypothesis o assesses -> evaluatedHypothesis.
+All undeclared normative compositions raise CompositionError or require explicit domain rule. Non-core vocabulary does not silently become a Core Relation.
+
+RELATION REGISTRY REQUIREMENT
+Each relation has exact ID/name, domain, range, cardinality, inverse where defined, algebraic laws, context/version behavior and failure/error semantics.
+
+CONSTRAINTS
+- Unit 001 already strengthened `causes` level qualification without creating causes_C0..C4 identities.
+- Relation projection/matrix reachability never becomes causality, equivalence or authoritative dependency closure.
+- Check overloaded words (owns/controls/governs/obeys/blocks), composition soundness, transitivity assumptions, context scoping and relation-vs-derived-relation boundaries.
+- Compare DO_NOTHING and minimal repair.
