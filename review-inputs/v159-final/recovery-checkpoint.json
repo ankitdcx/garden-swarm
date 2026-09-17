@@ -2,17 +2,22 @@
   "schema": "GardenV159RecoveryCheckpoint/v1",
   "campaign": "GARDEN-V159-20260917",
   "source_root_sha256": "835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2",
-  "last_completed_step": "P037_FINAL_INTEGRATION_SYNTHESIS",
+  "last_completed_step": "FINAL_MATERIALIZATION_SOURCE_INTAKE_AND_TRACEABILITY_START",
   "review_run_id": 35268180631,
   "review_run_conclusion": "success",
   "review_evidence_complete": true,
   "p037_disposition_path": "review-inputs/v159-final/final-disposition.json",
   "p037_overlay_path": "review-inputs/v159-final/P037_FINAL_CORRECTIVE_OVERLAY.txt",
-  "next_incomplete_step": "FINAL_MATERIALIZATION_AND_RELEASE_CLOSURE",
+  "materialization_source_manifest_path": "review-inputs/v159-final/materialization-source-manifest.json",
+  "traceability_draft_path": "review-inputs/v159-final/UpgradeTraceabilityTable.DRAFT.md",
+  "next_incomplete_step": "CONSOLIDATED_UPGRADE_AND_FINAL_LAYER_ANCHOR_MATERIALIZATION",
   "next_step_instructions": [
     "Use the frozen v15.8 source matching SHA-256 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2.",
     "Use existing P001-P037 candidates, reviewer artifacts and dispositions; do not rerun completed model calls or packets.",
-    "Materialize six final v15.9 working-candidate deliverables, then build/freeze UpgradeTraceabilityTable, validate hard-gate and reference closure, generate CurrentReadingMap, build ReleaseManifest and detached manifest digest in the ordering required by P037_FINAL_CORRECTIVE_OVERLAY.txt.",
+    "Build the consolidated upgrade deliverable from existing synthesis artifacts and resolve every P001-P037 disposition to exact final layer anchors or explicit nonactive unresolved/deferred state.",
+    "Project accepted semantics into the five final v15.9 layer bytes; keep every final file explicitly NOT CANONICAL and NOT EXECUTABLY CERTIFIED.",
+    "Freeze UpgradeTraceabilityTable only after accepted-change-to-final-anchor and final-delta-to-traceability consistency passes.",
+    "Generate CurrentReadingMap only from fixed final document bytes, then build ReleaseManifest, then detached manifest digest.",
     "Keep predecessor_gsl_compatibility_status NOT_STATED unless an exact compatibility proof artifact is available.",
     "Do not claim the reviewed release label until every P037 materialization-closure checklist item passes."
   ],
@@ -22,10 +27,23 @@
     "Wave 5 challenge run 35256718065",
     "P037 packet materialization",
     "P037 review run 35268180631",
-    "P037 corrective synthesis and disposition"
+    "P037 corrective synthesis and disposition",
+    "Final-materialization source intake and SHA-256 verification",
+    "Initial P001-P037 UpgradeTraceabilityTable draft"
   ],
+  "materialization_progress": {
+    "frozen_source_reverified": true,
+    "pre_review_v159_layer_inputs_hashed": true,
+    "p001_p037_traceability_rows_staged": true,
+    "consolidated_upgrade_deliverable_fixed": false,
+    "five_final_layer_bytes_fixed": false,
+    "traceability_frozen": false,
+    "current_reading_map_validated": false,
+    "release_manifest_finalized": false,
+    "detached_manifest_digest_computed": false
+  },
   "release_label_claimable": false,
   "canonical_effect": false,
   "executable_certification_claimed": false,
-  "status": "READY_FOR_FINAL_MATERIALIZATION"
+  "status": "FINAL_MATERIALIZATION_IN_PROGRESS"
 }
