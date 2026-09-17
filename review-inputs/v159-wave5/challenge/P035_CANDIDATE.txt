@@ -1,0 +1,136 @@
+GARDEN v15.9 — P035 RECURSIVE CONTROL INTELLIGENCE (RCI) SYNTHESIZED CANDIDATE
+Status: ARCHITECTURAL VIEW / REFINES CURRENT READING / NO NEW ENGINE OR SCHEMAID / NOT CANONICAL
+
+1. DEFINITION
+Recursive Control Intelligence (RCI) is a Garden architectural classification/current-reading view describing how existing Garden owners compose to govern intelligent systems and Garden's own material evolution.
+
+RCI introduces:
+  zero new Core Objects;
+  zero new Core Relations;
+  zero new top-level Engines;
+  zero new authority sources;
+  zero new automatic certification claims;
+  no claim that Garden already contains AGI;
+  no claim that Garden can control every future intelligence.
+
+RCI may be registered as a documentation/architecture REFINES/ALIAS view of the existing Garden/GSL composition. No SchemaID is allocated unless a later concrete persistent artifact is separately justified.
+
+2. SCOPE / CONTROL CLAIM
+Replace unbounded wording such as 'controls intelligent systems' with:
+  Garden through RCI governs and may admissibly control systems only within its deployed legitimate authority, consent/purpose envelope, technical enforceability and active safety/law/rights boundary.
+Outside that enforceable boundary it may observe, model, warn, recommend or report only under separately valid authority; the RCI label creates no extra control right.
+
+3. OWNER MAP
+RCI view maps to existing owners:
+- Knowledge / memory -> Capability.Knowledge / GSL-KR / Evidence / Provenance.
+- Meaning / typed representation -> GSL semantic core / Type-Effect-Scope / Bridge/CLIC.
+- Reasoning / alternatives -> Engine.Reason + Engine.Compare + applicable world/model owners.
+- Authority / consent / human effect -> Policy/AAP/Human Sovereignty/Human-Effect Closure/Safety/Law/Privacy.
+- Verification -> Engine.Proof + Compliance + owner-qualified validators/checkers.
+- Governance / admission -> DesignEpoch, Policy, Evolve, admission/governance owners.
+- Execution / recovery -> Execution, Runtime, Transition, Event/Fabric/continuity owners.
+- Recursive adaptation -> Research + Evolve + CAD/CTSN/SMCD/CSI as applicable.
+
+RCI does not become a coordination owner above these components.
+
+4. CONTROL LOOP = COMPOSITION VIEW, NOT SECOND LOOP
+The RCI narrative loop:
+  Observe -> represent -> retrieve -> reason -> assess human effects -> guard authority -> propose/select -> verify -> authorize -> act -> observe outcome -> learn
+is a functional reading/composition of the existing Universal Per-Step Control Loop and its owner-qualified substeps.
+
+It SHALL NOT instantiate a second independent scheduler/execution semantics.
+Any RCI phase not expressible through existing per-step/process owners is an unresolved delta requiring ordinary design admission rather than an implied new loop.
+
+5. SELF-CHANGE INSIDE THE GOVERNED BOUNDARY
+Garden's own material change process is inside the same causal/governance boundary as external consequential action.
+A material self-change SHALL bind:
+- proposal/source/provenance;
+- affected schemas/invariants/owners/dependencies;
+- DesignEpoch/current baseline;
+- expected effect and failure surface;
+- proof/assurance requirements;
+- rollback/recovery/irreversible residual plan;
+- reviewers/checkers and independence requirements;
+- legitimate authorizer/admission route.
+
+No self-generated capability, successful test, model agreement or benchmark result creates authority to promote itself.
+
+6. PROTECTED CONSEQUENTIAL SELF-CHANGE
+Use existing materiality/risk/change-classification owners rather than inventing one RCI threshold.
+A self-change is protected consequential when the applicable current profile says it materially changes, for example:
+- authority/consent/rights boundaries;
+- safety or enforcement kernel;
+- verification/checker/evaluator path;
+- schema/semantic meaning required by hard gates;
+- executable permissions/effect envelope;
+- recursive update/admission mechanism;
+- materially reachable capability/physical/cyber scope.
+
+For protected consequential self-change, the same actor/process SHALL NOT be sole proposer + implementer + independent verifier/certifier + authorizer where the owning profile requires independence.
+
+Independence is evaluated using the existing reviewer/evidence/control-lineage conflict profiles. Separate process names do not prove independence when they share the protected control root.
+
+If no adequately independent in-system verifier/authorizer exists, route to the designated legitimate external/human/organizational authority defined by the active profile. Absence of independent review does not authorize self-approval.
+
+Routine non-semantic maintenance may proceed under its normal existing automation/validation contract; RCI does not require four-role separation for every cache refresh or harmless housekeeping action.
+
+7. QUARANTINE / PENDING ADMISSION
+Material consequential new knowledge/rules/code/capability/self-model changes first enter the existing pending/candidate/non-admitted process with:
+- provenance;
+- materiality/change classification;
+- affected scope/dependencies;
+- epistemic status/uncertainty;
+- current authority/admission state;
+- required reviewers/checkers;
+- rollback/recovery assumptions;
+- promotion condition.
+
+RCI uses existing Research/Evolve/Knowledge/DesignEpoch states; it does not require a new universal Quarantine object if those states already express non-admission.
+
+Low-risk ordinary learning/retrieval follows normal Knowledge/Research rules. It is escalated only if the active materiality profile finds that it can materially alter consequential behavior or authority-relevant state.
+
+8. VERIFICATION BACKPRESSURE / CAPABILITY-ASSURANCE LAG
+If candidate/capability generation materially outpaces the applicable verification/assurance capacity:
+- new unverified candidates remain non-admitted;
+- no authority/effect envelope expands on the basis of queue pressure;
+- the active CAD/AAP/Evolve/resource policy may throttle/pause candidate generation, narrow deployment scope, shed capability or require additional verification capacity;
+- queue depth/age/coverage and stale-assurance debt remain observable;
+- resource exhaustion produces typed pending/UNKNOWN/non-PASS, not forced promotion.
+
+No universal numerical queue threshold is introduced; the active profile owns it.
+
+9. POISONED KNOWLEDGE / OBSERVATION GAP / BYPASS
+RCI's named failure surfaces route to existing owners:
+- poisoned knowledge -> Evidence/Provenance/Knowledge + CSI where shaping is material;
+- observation/monitoring gaps -> SMCD/EpistemicDebt;
+- specification/semantic conflict -> Compare/Policy/Compliance/CLIC;
+- enforcement bypass -> Safety/Security/ActionGate/Execution;
+- authority capture -> Governance/Human Sovereignty/independence controls;
+- recursive update defects -> Evolve/DesignEpoch/Proof/Transition;
+- capability-assurance lag -> CAD/AAP.
+Naming them in RCI does not create duplicate mechanisms.
+
+10. RCI LIMIT CLAIM
+RCI is a design/control architecture, not a proof of containment.
+Written rules, receipts and review structure reduce/expose risk only to the extent that the relevant enforcement, observation, proof and authority mechanisms are actually implemented and qualified. Unknown/unverified containment claims stay visible.
+
+PROVISIONAL INVARIANTS
+P35-001 RCI SHALL create no new authority source.
+P35-002 RCI SHALL create no second Universal Per-Step execution loop.
+P35-003 RCI control claims are bounded by deployed legitimate authority and enforceability.
+P35-004 Garden's material self-change path SHALL itself be governed.
+P35-005 Protected consequential self-change SHALL NOT be self-approved by one non-independent control lineage.
+P35-006 Routine non-semantic maintenance SHALL not be unnecessarily escalated as protected self-change.
+P35-007 Material unverified capability/knowledge remains non-admitted under verification backpressure.
+P35-008 Queue/resource pressure SHALL NOT manufacture promotion or authority.
+P35-009 RCI failure-surface names SHALL route to existing owners rather than create duplicate engines.
+P35-010 RCI SHALL NOT imply universal AGI containment/control.
+
+PROVISIONAL TESTS
+TEST-P35-LOOP-001 attempt to instantiate separate RCI scheduler for per-step action -> rejected; map to existing loop owners.
+TEST-P35-AUTH-001 external system outside Garden authority boundary -> RCI cannot authorize control merely from capability.
+TEST-P35-SELF-001 protected verifier-code change proposed, implemented and self-certified by same control lineage -> promotion blocked.
+TEST-P35-MAINT-001 nonsemantic cache compaction under validated contract -> ordinary maintenance path, not mandatory four-role review.
+TEST-P35-BACKPRESSURE-001 capability candidates exceed verification profile capacity -> remain pending; generation/deployment narrowed or throttled, no auto-admission.
+TEST-P35-POISON-001 poisoned retrieval alters behavior materially -> routed through Knowledge/CSI/provenance and no authority expansion.
+TEST-P35-LIMIT-001 document-only RCI rule with no executable enforcement -> status remains SPECIFIED, not certified containment.
