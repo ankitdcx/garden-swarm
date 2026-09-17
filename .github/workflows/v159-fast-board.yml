@@ -1,0 +1,38 @@
+name: Garden v15.9 fast blind board
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-fast-board-*'
+    paths:
+      - 'review-inputs/v159-fast/trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PACKET: review-inputs/v159-fast/P001_GSL_CORE.txt
+
+jobs:
+  fast-board:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run four blind reviewers concurrently
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_fast_board.py "$PACKET"
+      - name: Upload board artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-fast-board-${{ github.run_id }}-${{ github.run_attempt }}
+          path: review-results/v159-fast/P001_GSL_CORE/
+          if-no-files-found: warn
+          retention-days: 30
