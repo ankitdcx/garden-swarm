@@ -1,0 +1,59 @@
+GARDEN v15.9 REVIEW PACKET P008 — PROCESS ALGEBRA
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review Process Algebra as Garden's central execution composition semantics. Strengthen operator contracts without duplicating Runtime, AAP, Transition or domain logic.
+
+ALGEBRA ADMISSION RULE
+An Algebra must define reusable typed operands, operators, composition/closure laws, identity/error/unknown behavior and interaction rules. Undeclared algebraic laws cannot be assumed.
+
+CURRENT PROCESS OPERATORS
+SEQUENCE(A,B)
+BRANCH(c,A,B)
+PARALLEL({P_i})
+COMPOSE(A,B)
+RETRY(P,bound)
+ROLLBACK(P)
+COMPENSATE(P)
+RECONSTRUCT(x)
+ITERATE(P,k)
+RECURSE(P,TerminationContract)
+TERMINATE(reason)
+DO_NOTHING
+Processes remain bounded by authority, invariants, effects, resources, failure/recovery and TerminationContract.
+
+PROCESS ARTIFACTS
+ProcessPlan = typed graph before executable admission.
+ExecutableProcessPlan = admitted specialization with resolved versions, budgets, guards and receipts.
+ProcessInstance = live/version-bound execution state.
+ProcessCapabilityContract = architecture-object interface consumed by AAP.
+
+PARALLEL
+Requires ParallelCompositionContract declaring isolation, shared state, join condition, cancellation, partial-failure handling, compensation/rollback, timeout, ordering/finality and deadlock/livelock/fairness obligations. Failed child cannot be silently ignored because another succeeded. Parallel composition is not universally commutative at effect level.
+
+RECONSTRUCT
+Emits ReconstructionReceipt binding source records, signatures/attestations, membership epoch, environment, uncertainty and equivalence result. Reconstruction never recreates authority from untrusted history.
+
+DO_NOTHING
+Represented as DoNothingProcess with baseline, expected cost/risk of inaction, validity interval, monitoring and next-review condition. For dynamic physical/biological systems, DO_NOTHING means no new intervention by evaluated decision maker, not frozen world dynamics.
+
+RETRY / EFFECT BOUNDARY
+v15.8 engineering hardening says physical effects of uncertain completion must be reconciled before retrying; duplicate delivery/concurrent workers require effect identity/idempotency semantics where supported.
+
+CONTINUOUS SERVICES
+Bounded-recursion termination applies to recursive jobs. Long-running services instead use productivity/liveness/non-Zeno/fairness, bounded reaction and stoppability contracts.
+
+CONSTRAINTS
+Review:
+- COMPOSE vs SEQUENCE ambiguity;
+- operator input/output/result closure;
+- retry after uncertain or irreversible effect;
+- rollback vs compensation semantics;
+- cancellation propagation and partial commit;
+- branch condition UNKNOWN;
+- parallel interference/shared authority;
+- recursion vs long-lived service;
+- DO_NOTHING baseline semantics;
+- reconstruction equivalence and authority non-recreation.
+Compare DO_NOTHING and minimal repair.
