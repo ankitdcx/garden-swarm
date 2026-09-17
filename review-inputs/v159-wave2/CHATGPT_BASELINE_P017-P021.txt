@@ -1,0 +1,52 @@
+GARDEN v15.9 WAVE 2 — FROZEN CHATGPT / GARDEN BASELINE
+Packets P017–P021
+Prepared before Wave 2 external review dispatch.
+Status: private-to-review-board baseline; proposal analysis only; not external review or admission.
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+
+METHOD
+This baseline records likely defects/repairs before seeing Wave 2 model outputs. External pass-1 reviewers do not receive this file. Later synthesis will compare their findings against it to distinguish independent rediscovery, genuinely new ideas and reviewer noise.
+
+P017 — POLICY / COMPLIANCE / EVOLVE / RESEARCH
+B17-1 Policy engine needs explicit evaluation freshness/TOCTOU semantics: a valid PolicyDecision can become stale before effect if policy/authority/context changes. Unit 012 repairs composition, but engine-level currentness and effect binding should remain explicit.
+B17-2 Compliance must preserve a six-way separation: source authenticity -> formalization fidelity -> applicability -> conformance -> operational admissibility -> external certification. Current text mostly has it; risk is projection collapse, not a missing engine.
+B17-3 Evolve should bind cumulative small-change drift and protected evaluator changes to dependency-local requalification. A sequence of individually minor sub-epoch changes must not bypass a DesignEpoch threshold by fragmentation.
+B17-4 Research needs a clearer owner-qualified multi-status result and replication/negative-result semantics. LLM hypothesis generation, retrieval and publication cannot become Evidence. Resource exhaustion should stop or archive without turning absence of result into falsification.
+B17-5 Research/Evolve should prevent benchmark/evaluator self-confirmation: candidate-generating system cannot be sole source of evidence that promotes its own strategy or evaluator.
+
+P018 — HUMAN SOVEREIGNTY CORE
+B18-1 HumanInput = EpistemicContribution × AuthorityContribution is semantically risky notation. Treat it as a typed product/pair, never arithmetic scaling of authority by reliability.
+B18-2 Consent revocation should be point-of-use and distinct from erasure completion. Immediate revocation acknowledgement cannot be rendered as 'all derivatives erased'.
+B18-3 Identity continuity needs a scoped linkability model: enough continuity for commitments/revocation/accountability, but no universal persistent identifier that defeats pseudonymity/privacy.
+B18-4 Delegation requires transitive attenuation and current principal authority; restart/copy/offline lease cannot extend authority. Multi-principal intersections/conflicts need explicit behavior.
+B18-5 HSA detection evidence should not be described as proof of consciousness/personhood. Containment authority must derive from observed prohibited behavior/risk and existing rules, while critical-continuity handoff prevents unsafe abrupt control loss.
+B18-6 Constitutional amendment and rights conflict need atomic/typed validity and non-regression/appeal semantics; local policy cannot rewrite rights.
+
+P019 — HUMAN EFFECT / HRAP / REPORTING / REPUTATION
+B19-1 HRAP local wording can turn missing/stale materiality policy into false NON_MATERIAL. Required fix: MATERIAL | NON_MATERIAL_WITHIN_SCOPE | UNKNOWN | STALE | INVALID/CONFLICT, with missing/stale non-PASS for additional relational classification while ordinary operation remains governed by HEC/AAP.
+B19-2 Cumulative relational influence must use existing human-effect/cumulative-effect owner across sessions/agents; identity/session rotation cannot reset the accumulated effect. Do not create a duplicate accumulation engine.
+B19-3 Persistence threshold cannot exempt short decisive manipulation; covert-dependency/HEC remains independently applicable.
+B19-4 Protected reporting needs protection status while good faith/merits unresolved. Non-corroboration/error/withdrawal does not prove bad faith. Separately evidenced abuse/misconduct remains independently adjudicable; reporting does not grant immunity.
+B19-5 Reputation must remain purpose/domain/population bounded, uncertainty-bearing and appealable; no cross-domain authority leakage or shared-evidence double counting.
+B19-6 Unknown human effect should narrow/escalate according to existing AAP/risk envelope rather than trigger an unconditional global stop; high-impact irreversible unbounded cases remain blocked as applicable.
+
+P020 — SAFETY / SECURITY / LAW / GOVERNANCE / ACCESS / PRIVACY
+B20-1 Hard-gate aggregation needs explicit non-PASS precedence: no gate's PASS can dominate UNKNOWN/STALE/FAIL of another applicable gate.
+B20-2 Emergency/critical continuity needs current point-of-use authority plus independently qualified fallback; suspect system cannot retain authority through 'continuity'.
+B20-3 Security-root/key/checker replacement must not self-verify; cryptographic authenticity/integrity never becomes truth or legal authority.
+B20-4 Legal formalization must keep authenticity, applicability and interpretation separate; solver UNSAT/translation confidence cannot become legal truth.
+B20-5 Governance participation cannot let majority or changed eligibility bypass rights/minority protections; rights-gap nomination != ratification.
+B20-6 Access-control permission and human Accessibility/contestability are different semantic owners and should not share ambiguous 'Access' result types.
+B20-7 Privacy secondary use/purpose change and metadata/provenance leakage need explicit point-of-use checks. Lawful hold authorizes only its narrow retained purpose, not resumed general processing.
+
+P021 — RUNTIME / EXECUTION / TIME / EVENT / NETWORK / FABRIC / RESILIENCE
+B21-1 Older execution lifecycle projections are too narrow relative to current PARTIAL/OUTCOME_UNKNOWN/COMPENSATION/IRREVERSIBLE_RESIDUAL semantics. Require lossless projection mapping; crash after external commit before acknowledgement must survive restart as unresolved effect.
+B21-2 Legacy '<1 ms' timing language should be profile-bound; logical causal clocks and PTP/GNSS do not universally prove a physical error bound. Stronger or weaker domain profiles must control.
+B21-3 Event duplicate/reordering and immutable logging must not duplicate effect/authority/evidence; lawful erasure may remove protected payload while retaining lawful tombstone/structure.
+B21-4 Fabric '2PC across all read replicas' style language should normalize to exact participant set + membership epoch + consistency/finality/visibility contract. Async readers are not automatically commit participants.
+B21-5 Offline cached policy/authority lease must expire/revalidate and reconcile on reconnect. Partition never creates new authority.
+B21-6 Cross-substrate retry/fencing/effect identity must be one coherent mechanism: stale admission/fence or OUTCOME_UNKNOWN blocks blind replay.
+B21-7 Continuity/emergency handoff needs state-transfer integrity, suspect-dependency independence, stale-command fencing and bounded recovery.
+
+DO_NOTHING TEST
+For every item above, retain v15.8 unchanged when the exact existing owner already supplies equivalent semantics. Prefer a cross-reference/binding/test over a new artifact/engine. No SchemaID allocation occurs in this review phase.
