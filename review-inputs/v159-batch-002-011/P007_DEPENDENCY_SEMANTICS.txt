@@ -1,0 +1,46 @@
+GARDEN v15.9 REVIEW PACKET P007 — DEPENDENCY SEMANTICS
+Source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Status: bounded review extract; proposal evidence only.
+
+GOAL
+Review dependency-edge taxonomy, closure, invalidation, SCC/fixed-point handling, blast radius and cache/proof reuse. Keep dependency semantics separate from causality, provenance, authority and mere reference.
+
+CURRENT EDGE KINDS
+BUILD_IMPORT
+RUNTIME_READ
+RUNTIME_WRITE
+SEMANTIC_DEPENDENCY
+AUTHORITY_DEPENDENCY
+PROOF_DEPENDENCY
+EVIDENCE_DEPENDENCY
+FEEDBACK_SCC
+PROFILE_BINDING
+
+Build/import dependency remains acyclic. Runtime feedback or semantic mutual dependence uses typed SCC/fixed-point contracts rather than redefining acyclic build dependency. Every FEEDBACK_SCC declares initialization, consistency, liveness/termination or productivity, failure, authority and recovery contracts.
+
+ENGINE.DEPENDENCY
+Owns typed dependency graphs, impact closure, invalidation and SCC/fixed-point contracts. Cached results may bind to CacheBindingManifest cryptographically committing the relevant transitive dependency/source/environment closure.
+
+INVALIDATION
+Relevant contract, implementation/source/build/adapter root, transitive dependency/schema/registry/proof root, authority/consent/lease/fencing epoch or revocation, DesignEpoch/KnowledgeSnapshot/EnvironmentCommitment, hardware/scheduler/clock/resource/fault assumptions, model/controller/policy/trust-root basis, expiry or contradictory evidence can invalidate dependent assurance as applicable.
+
+DESIGN IMPACT
+Design Diff -> Impact Closure determines affected requirements, invariants, architecture objects, interfaces, schemas, state machines, dependencies, assumptions, proof obligations, safety/security constraints and deployed bindings. Proofs with changed assumptions/dependencies/interfaces become STALE.
+
+SECURITY HARDENING CANDIDATE
+Required dependency closure is independently recomputed from version-bound source/owners rather than relying only on a proposer-selected subset. Manual exclusions require typed reason and verifiable justification. Missing/stale/unavailable/unbound/incomplete required checks produce non-PASS.
+
+OPTIMIZATION BOUNDARY
+Matrix reachability may accelerate candidate closure discovery, but Engine.Dependency establishes final typed dependency/blast-radius closure. Cached/optimized artifacts are valid only while semantic, representation, dependency, assumption, model, environment, hardware, compiler, precision and DesignEpoch bindings remain valid.
+
+CONSTRAINTS
+Review:
+- edge-kind overlap and missing distinctions;
+- transitive closure rules per edge kind;
+- SCC condensation and hidden cycles across mixed edge kinds;
+- dependency vs causal/provenance/reference semantics;
+- invalidation propagation granularity and denial-of-service risk;
+- optional/manual exclusion semantics;
+- cache/proof reuse, stale closure and partial availability;
+- authority dependency freshness/revocation.
+Compare DO_NOTHING and minimal repair.
