@@ -1,0 +1,55 @@
+name: Garden v15.9 wave 017-021 challenge
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-wave1-012-016-*'
+    paths:
+      - 'review-inputs/v159-wave2/challenge-trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  challenge:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: P017_POLICY_COMPLIANCE_EVOLVE_RESEARCH
+            source: P017_POLICY_COMPLIANCE_EVOLVE_RESEARCH.txt
+            candidate: P017_CANDIDATE.txt
+          - id: P018_HUMAN_SOVEREIGNTY_CORE
+            source: P018_HUMAN_SOVEREIGNTY_CORE.txt
+            candidate: P018_CANDIDATE.txt
+          - id: P019_HUMAN_EFFECT_HRAP_REPORTING_REPUTATION
+            source: P019_HUMAN_EFFECT_HRAP_REPORTING_REPUTATION.txt
+            candidate: P019_CANDIDATE.txt
+          - id: P020_SAFETY_SECURITY_LAW_GOV_ACCESS_PRIVACY
+            source: P020_SAFETY_SECURITY_LAW_GOV_ACCESS_PRIVACY.txt
+            candidate: P020_CANDIDATE.txt
+          - id: P021_RUNTIME_EXEC_TIME_EVENT_NETWORK_FABRIC_RESILIENCE
+            source: P021_RUNTIME_EXEC_TIME_EVENT_NETWORK_FABRIC_RESILIENCE.txt
+            candidate: P021_CANDIDATE.txt
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial challenge
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_wave2_challenge.py "review-inputs/v159-wave2/${{ matrix.source }}" "review-inputs/v159-wave2/challenge/${{ matrix.candidate }}"
+      - name: Upload challenge evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-wave2-challenge-${{ matrix.id }}-${{ github.run_id }}
+          path: review-results/v159-wave2-challenge/${{ matrix.id }}/
+          if-no-files-found: error
+          retention-days: 30
