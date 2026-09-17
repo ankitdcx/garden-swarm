@@ -144,12 +144,10 @@
     "created_before_openrouter_calls": true,
     "neutral_query_sha256": "5923cf3e28f61b2f68e489d6c34397942facb6b75283feb55099a441cceb26e4",
     "schema": "GardenPrivateBaselineCommitment/v1",
-    "source_packet_sha256": "f373088c77b2bbe42d968846f3249af21145874b03418c544558f764c2a3ed83"
+    "source_packet_sha256": "12206d7b8332fe4133c4ec66c89bad9bc0861a5b8e91ad010028fd70b1240f46"
   },
   "protocol": "GardenIndependentBranchConvergence/v1",
   "public_only": true,
-  "retry_of_attempt_sha256": "ec9d7a107cb72c21c8b1d1d6c1edc5d57e0b8d1c8c478c56936508201e520f12",
-  "retry_reason": "Received HTTP429 without generation identity. Preserve full USD0.10 reservation and UNKNOWN billing, exact campaign allowance, conservative15-minute cooldown elapsed; at most one retry using same pinned model and eligible endpoint.",
   "review_profile": "DEEP",
   "reviewer_families": [
     "deepseek",
@@ -160,7 +158,7 @@
   "same_context_capsule_for_all_reviewers": true,
   "same_neutral_query_for_all_reviewers": true,
   "schema": "GardenIndependentBranchDirective/v1",
-  "source_packet_sha256": "f373088c77b2bbe42d968846f3249af21145874b03418c544558f764c2a3ed83",
+  "source_packet_sha256": "12206d7b8332fe4133c4ec66c89bad9bc0861a5b8e91ad010028fd70b1240f46",
   "start_on_matching_source_event": true,
   "target_id": "DRM-V159-HUMAN-EFFECT-CLOSURE",
   "context_expansion_level": "L2_CROSS_LAYER_EXPANDED"
