@@ -1,0 +1,85 @@
+GARDEN v15.9 REVIEW PACKET P022
+Topic: Knowledge / Curation / GSL-KR / epistemic and world-evidence semantics
+Frozen source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Queue position: 022; predecessors P001–P021 are review candidates, not authority or canonical proof.
+
+BOUNDARY
+Review whether the existing Knowledge/GSL-KR/world-evidence design is coherent, nonredundant and safely composable. Do not invent a new truth engine merely because implementation detail is absent. Preserve: authority != evidence; retrieval/model output != observation; UNKNOWN != PASS; privacy/lawful erasure; evidence dependence/provenance; currentness and scope.
+
+SOURCE EXCERPT — USER U15.8-3 WORLD EVIDENCE / PRIVACY BOUNDARY
+Garden may maintain a provenance-rich world evidence graph separating:
+(1) raw evidence,
+(2) typed semantic world state,
+(3) purpose-limited agency profiles,
+(4) active retrieved context,
+(5) model weights/general learned structure.
+
+Weight memory != evidentiary ledger.
+Copies do not multiply evidence weight.
+Minority evidence may not be destroyed merely because it is rare or unpopular.
+Private-device or private-record ingestion requires valid purpose plus applicable consent/law/authority/privacy
+and minimum-necessary controls. Technical access capability creates no permission.
+
+RELATED REPUTATION BOUNDARY IMMEDIATELY ABOVE
+Relative ranking requires a defined population, provenance, uncertainty and contestability.
+Sparse evidence widens uncertainty rather than manufacturing extreme rank.
+No demographic identity substitutes for behavior evidence.
+No reputation score may silently become eligibility, policing, punishment, medical authority or reduction of
+fundamental rights without separately valid law/policy, authority and rights review.
+
+SOURCE EXCERPT — TECHNICAL T15.8-15 WORLD EVIDENCE GRAPH TECHNICAL RULES
+Maintain evidence lineage/dependence so copies do not inflate support.
+High-consequence entity merge requires stronger evidence and reversible merge/split history.
+Active retrieval returns a smallest-sufficient relevant subgraph including provenance, contradictions, competing
+explanations, uncertainty and applicable authority/rights/policy.
+Current, disputable, privacy-sensitive or provenance-critical facts remain explicit when possible rather than being
+treated as unchallengeable weight memory.
+
+SOURCE EXCERPT — CURRENT GSL-KR PROFILE (THEORIES 8.2)
+GSL-KR v1.3 — normative repository baseline: API Gateway → skeptical/default truth-maintenance/model solver →
+append-only Hot/Warm/Cold/Archive ledger → optional governed action. Source trust may use Beta(α,β) profiles; conflict
+policy may use Tier > Specificity > Confidence > TrustScore > Timestamp. A reference query-depth bound of 12 returns
+INCOMPLETE plus a continuation frontier when reached; it is not a proof-completeness claim. These are repository
+profiles, not universal truth rules.
+
+GSL-AR v3.3 is an operational architecture baseline and GSL-R v1.0 is an exploratory/non-normative continuous-manifold
+profile. Neither silently replaces GSL-KR; replacement requires ordinary versioned DesignBinding/migration gates.
+
+SOURCE EXCERPT — CPI KNOWLEDGE RULES RETAINED IN THE SOURCE
+CPI-017 — Qualified reuse only
+Requirement: Reuse SHALL require current applicability, dependency, authority, and qualification bindings; UNKNOWN SHALL not be treated as APPLICABLE.
+
+CPI-019 — No epistemic laundering
+Requirement: Compression, repetition, retrieval rank, or migration SHALL NOT upgrade an assertion to established fact or erase material disagreement.
+
+CPI-020 — Maintenance preserves material exceptions
+Requirement: Retirement or abstraction SHALL preserve required exception coverage and lawful provenance; privacy deletion and retention conflicts SHALL have explicit dispositions.
+
+CPI-021 — Typed epistemic outcomes
+Requirement: Proof, likelihood, source trust, uncertainty, and preference SHALL retain distinct meanings; no undeclared scalar conversion may authorise action.
+
+CPI-022 — Bounded uncertainty
+Requirement: Resource exhaustion or inconsistency SHALL produce an explicit partial/unknown result rather than an invented proof or forced agreement.
+
+CPI-023 — Semantic preservation boundary
+Requirement: A bridge SHALL retain claim status, units, time, scope, and effects or explicitly report loss; graph or embedding similarity is not equivalence.
+
+CPI-025 — Prediction is not observation
+Requirement: Imagined states, synthetic rewards, and simulated successes SHALL remain labelled as model-generated and cannot independently validate real-world claims.
+
+CPI-026 — Drift invalidates dependent assurances
+Requirement: A material model, environment, or horizon change SHALL trigger re-evaluation of the policies and claims qualified using it.
+
+CPI-027 — Grounding provenance
+Requirement: Every consequential sensor-derived conclusion SHALL preserve measurement provenance and interpretation uncertainty.
+
+CROSS-LAYER OBLIGATIONS
+- Evidence copies/summaries sharing a causal root are not independent corroboration.
+- An incomplete/resource-bounded retrieval must preserve its frontier/omissions rather than appear complete.
+- Current-use claims must retain time/scope/applicability and dependency bindings.
+- Privacy/lawful erasure may require payload removal; epistemic history must not be rewritten as if the evidence was refuted or never existed when a lawful non-identifying tombstone can be retained.
+- Knowledge may inform decisions but creates no authority to act.
+
+OMISSION / UNCERTAINTY LEDGER
+This packet is intentionally bounded. It does not contain the entire GSL-KR implementation, every generated schema, or every historical repository profile. If a material conclusion requires an exact owner/schema/operator not quoted here, request that anchor rather than assuming absence. Review proposals must distinguish design defects from implementation/certification gaps.
