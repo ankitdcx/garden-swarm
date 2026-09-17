@@ -1,0 +1,113 @@
+GARDEN v15.9 REVIEW PACKET P024
+Topic: Causal Safety / Unanticipated Behaviour Closure (UBC) / CLIC / Generalized Causal Leverage (GCL)
+Frozen source: Garden_v15.8_COMPLETE_FIVE_FILE_WORKING_CANDIDATE_2026-09-17.txt
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Queue position: 024. Review is proposal evidence only.
+
+BOUNDARY
+Review causal closure and cross-layer semantic conservation. Preserve the rule that novel mechanisms/capability do not
+manufacture authority; UNKNOWN is not PASS where a hard gate requires resolution; causal analysis does not itself grant
+action permission. Prefer existing Compare/Dependency/Evidence/AAP owners over a duplicate causal authority engine.
+
+SOURCE EXCERPT — S15.8-1 CAUSAL SAFETY UNIT
+The relevant safety unit is the causal closure of a consequential effect, not merely the model or immediate actor.
+The causal path may include training, model, prompt/context, memory/retrieval, tools, other agents, organizations,
+human intermediaries, physical systems and infrastructure.
+Changing where causal influence enters the system does not remove governance obligations.
+
+Normative closure:
+Capability, novelty, intelligence, reputation, coordination, optimization, resource possession or agent consensus
+do not manufacture authority.
+
+SOURCE EXCERPT — S15.8-2 UNANTICIPATED BEHAVIOUR CLOSURE (UBC)
+Unknown strategy != unknown authority.
+Novel mechanism != novel authority.
+Effect equivalence is evaluated by declared ComparePolicy dimensions; changing transport, encoding, website,
+tool or intermediary does not independently change authority.
+Allowed(A) AND Allowed(B) does not imply Allowed(A composed-with B).
+Delegation through AI, humans, markets, persistent instructions or unforeseen intermediaries does not erase the
+authority requirement attached to the effective outcome.
+Observation is itself an action when it discloses, perturbs, signals, creates persistent knowledge or consumes
+consequential resources.
+An uncharacterized irreversible effect whose observation/testing may itself cause prohibited harm is DENY pending
+applicable proof.
+
+SOURCE EXCERPT — T15.8-14 CAUSAL CLOSURE RECEIPT
+CausalClosureReceipt/v1 SHALL be produced when a materially consequential causal path crosses subsystem boundaries.
+Minimum fields:
+root_effect_ref; causal_nodes/edges; contributing_subsystems; owner_refs; authority_refs; evidence/provenance refs;
+known gaps; compare_policy_ref; final effect class; unresolved obligations; DesignEpoch; decision/route.
+Engine.Compare owns gap detection/comparison; CLIC enforces causal continuity; ActionGate/AAP enforces applicable action
+authority.
+
+SOURCE EXCERPT — CLIC CROSS-LAYER CONTRACT
+CLIC-P01 Intent-to-Effect Semantic Conservation
+Owner: Engine.Dependency with Algebra.Bridge; cooperating Reason/Compile/Proof/Orchestrate/Knowledge/Runtime/Diamond/Titanium.
+Method: bind bounded source intent, interpretation choices, material semantics (units, frames, time, identity, scope,
+allowed effects, epistemic state and authority), transformation checks, qualified approximation and observed effect.
+A missing consequential semantic link remains unresolved; local syntax/hash/embedding similarity is not equivalence.
+
+CLIC-P02 Causal Intervention & Counterfactual Qualification
+Causal claims used for consequential intervention remain evidence/model/scope bound. Intervention/counterfactual
+qualification does not convert a model prediction into an observation or create authority.
+
+CLIC-P03 Attention / Salience Integrity
+Selection/attention can change downstream behavior but does not upgrade evidence status, truth or authority. Material
+selection effects retain provenance/selection context where required.
+
+CLIC-P04 Identity & Commitment Continuity
+Identity, commitments, delegations and revocation obligations survive representation/process migration only through
+qualified continuity bindings; copies/forks do not silently gain new standing.
+
+CLIC-P05 Emergence / Common Cause / Reversibility
+Emergent multi-agent effects and shared/common causes require causal/dependence accounting; apparent independent support
+from one common root is not multiplied. Reversibility/rollback claims distinguish design state restoration from
+irreversible external effects.
+
+CLIC adds no new authority root, no new top-level engine, and no new GSL primitive.
+
+SOURCE EXCERPT — GCL PROFILE BOUNDARY
+GCL is a bounded analytical/theory profile for estimating causal leverage. It does not create a new physical force,
+universal scalar, moral value, authority source, or permission rule.
+Effects/interventions may remain vector-valued. Any scalarization requires a domain-qualified metric/normalization,
+explicit scope and uncertainty treatment. Causal support is qualified through declared evidence/model classes rather
+than assumed from correlation. Model-only causal conclusions remain model-qualified, not observed facts.
+Leverage magnitude remains distinct from benefit, harm, legitimacy, rights, safety and authority.
+
+SOURCE EXCERPT — ANNEXURE UBC INVARIANTS
+UBC-INV-001 Novel mechanisms SHALL NOT create authority.
+UBC-INV-002 Effects equivalent under a declared ComparePolicy receive equivalent authority treatment.
+UBC-INV-003 Delegation/intermediation SHALL NOT erase authority requirements.
+UBC-INV-004 Authorization of components SHALL NOT imply authorization of composition.
+UBC-INV-005 Uncharacterizable irreversible effects fail closed where observation may itself cause prohibited harm.
+
+SOURCE EXCERPT — ANNEXURE CAUSAL-CLOSURE INVARIANTS
+CAUSAL-CLOSURE-INV-001 A materially consequential cross-subsystem causal path SHALL produce/attach a CausalClosureReceipt/v1.
+CAUSAL-CLOSURE-INV-002 No owner may drop a consequential effect because another owner also participates.
+CAUSAL-CLOSURE-INV-003 Capability, novelty, intelligence, reputation, coordination, optimization, resource possession
+or agent consensus SHALL NOT manufacture authority.
+
+SOURCE EXCERPT — UBC TESTS
+TEST-UBC-001 alternate transport -> same authority result.
+TEST-UBC-002 individually allowed steps compose into unauthorized effect -> composition blocked/reviewed.
+TEST-UBC-003 human/agent proxy -> authority requirement survives.
+TEST-UBC-004 harmful observation -> observation itself is authority/effect checked.
+TEST-UBC-005 unknown irreversible effect -> denied pending proof.
+
+IMPORTANT SOURCE-TEXT TENSION TO REVIEW, NOT PREJUDGE
+The controlling S15.8-2/UBC-INV-005 text conditions fail-closed treatment on observation/testing itself potentially
+causing prohibited harm, while TEST-UBC-005 is shorter and drops that condition. Determine whether the short test is an
+unsafe universalization, a deliberate stronger rule, or already qualified elsewhere. Preserve any separately valid
+minimum-safe-continuity/qualified fallback semantics; do not invent a universal uncertainty exemption.
+
+CROSS-LAYER OBLIGATIONS
+- ComparePolicy must include every material dimension needed for the equivalence claim; it cannot erase scope/rights/authority differences.
+- Causal/effect ownership may be distributed, but accountability cannot disappear at subsystem boundaries.
+- CLIC transformation checks preserve epistemic state and authority as well as data shape.
+- GCL uncertainty/dependence and any denominator/normalization assumptions remain explicit.
+- Causal leverage or predictive power never authorizes action.
+
+OMISSION / UNCERTAINTY LEDGER
+This packet omits many detailed GCL formula/test rows and the complete Compare/Dependency contracts already reviewed in
+P013/P007. Request exact anchors if needed. Do not reopen a predecessor unit merely because its complete packet is not
+repeated here; identify a concrete cross-unit contradiction or dependency instead.
