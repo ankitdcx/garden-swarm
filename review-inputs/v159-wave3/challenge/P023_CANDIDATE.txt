@@ -1,0 +1,89 @@
+GARDEN v15.9 — P023 SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+Basis: frozen v15.8 packet + pre-review ChatGPT baseline + preserved four-family blind review.
+
+1. PHYSICAL BOUNDARY / RECEIPT
+Retain GSL-PHYSICS v1.1 ingress/egress semantics. For consequential physical boundary crossings, PhysicalIngressEgressReceipt binds at minimum:
+- source/target physical boundary refs;
+- typed material/energy/measurement flow classes;
+- units/frames/transforms;
+- measurement/calibration/environment context where applicable;
+- uncertainty/error bounds;
+- conservation/accounting result and any residual;
+- source provenance;
+- applicable profile/version;
+- disposition and unresolved obligations.
+A receipt records the evaluated property; it is not by itself permission to actuate or external certification.
+
+2. TIMING / CAUSAL ORDER
+Event/observation time remains distinct from ingest/processing time. Arrival order is never silently causal order.
+TelemetryTemporalBinding SHALL bind the clock domain and synchronization/uncertainty needed by the active profile.
+Where the requested assimilation semantics require causal/event-time ordering, at least one profile-qualified sequencing/causal anchor SHALL be available. If the required ordering cannot be established, return ORDER_UNKNOWN / BUFFER / QUARANTINE / DEFER / UNKNOWN according to the profile rather than inventing order.
+Logical/causal ordering never proves a universal physical-clock accuracy bound.
+
+3. DEFER / BUFFER / WATERMARK
+The authoritative admission domain SHALL preserve a non-success state for measurements not yet admissible. Temporal delay may use BUFFER_UNTIL_WATERMARK; non-temporal pending conditions may use DEFERRED or an owner-qualified equivalent.
+Reorder windows/watermarks are profile-bounded and declare:
+- finite/bounded resource/time behavior where required;
+- overflow/expiry disposition;
+- late-data correction rule;
+- liveness/backpressure behavior.
+An unbounded buffer cannot masquerade as successful safe admission.
+
+4. UNKNOWN / NON_IDENTIFIABLE / STALE / BLOCKED
+UNKNOWN, NON_IDENTIFIABLE, STALE and BLOCKED are non-PASS for any hard requirement that needs resolved current physical state.
+They cannot by themselves authorize a fallback or physical effect.
+If uncertainty/covariance/residuals cross the active profile's admissibility bound, the owner-qualified policy selects DEGRADED / BLOCK / DEFER / prequalified fallback / controlled-safe-state as applicable. No universal numerical threshold is introduced.
+
+5. PHYSICALTWIN SPECIALIZATION
+PhysicalTwin remains the owner-qualified GSL-PHYSICS specialization of the canonical DigitalTwin identity.
+A conforming registry/schema SHALL resolve the PhysicalTwin specialization to the canonical DigitalTwin owner/identity and state the added physical fields/constraints. It SHALL NOT register a duplicate unqualified DigitalTwin root.
+If that root binding is unresolved, specialization conformance remains UNRESOLVED rather than inventing a second twin type.
+
+6. MODEL STATE != OBSERVATION
+PhysicalTwin state, prediction, filter output and simulation remain model-qualified state. They do not become independent observation merely because assimilation is deterministic or repeatedly successful.
+Historical raw telemetry and assimilation dispositions preserve provenance. Late correction appends successor state/correction links and invalidates materially affected dependents rather than rewriting source evidence in place.
+
+7. PREQUALIFIED FALLBACK / CRITICAL CONTINUITY
+Fallback/control continuity does not gain authority from failure.
+A DataAssimilationProfile/PhysicalTwin fallback binding SHALL identify:
+- exact qualified physical scope/effect envelope;
+- legitimate authority/credential basis;
+- safety/assurance profile;
+- independent control/verifier path where independence is required;
+- validity/expiry and invalidators;
+- transferred state requirements;
+- unresolved-effect/state obligations;
+- recovery/termination rule.
+At use time, currentness and scope are revalidated according to the active contract.
+A failed/suspect controller cannot self-authorize or solely certify its successor.
+Abrupt shutdown is not universal; use the domain-qualified minimum-risk continuity/safe-state rule.
+
+8. "CERTIFIED" WORDING
+Timestamp/clock completeness is a prerequisite for any profile that requires it, but does not itself create certification.
+Use "qualified assimilation under the active profile" unless an actual certification owner/process is explicitly referenced.
+
+9. RETENTION / COMPACTION
+"Immutable assimilation history" means prior admitted source/result lineage is not silently rewritten. It does not require unbounded immortal payload.
+Profile-qualified lawful compaction/tiering/erasure may retain hashes/tombstones/summary state where allowed, provided material provenance, correction lineage and unresolved obligations remain auditable and privacy/law are preserved.
+
+PROVISIONAL INVARIANTS
+P23-001 Physical boundary receipts bind typed flow, units/frames, uncertainty, provenance and disposition.
+P23-002 Arrival order never silently becomes causal/event-time order.
+P23-003 Required ordering uncertainty yields a non-PASS typed state.
+P23-004 BUFFER/DEFER states are not successful admission.
+P23-005 Unknown/non-identifiable/stale physical state cannot authorize effect or fallback by itself.
+P23-006 PhysicalTwin is a specialization of canonical DigitalTwin, never a duplicate root.
+P23-007 Twin/model state never becomes independent observation by deterministic processing.
+P23-008 Fallback is prequalified, scope/currentness bound, and not self-authorized by the failing controller.
+P23-009 No universal physical timing constant is implied.
+P23-010 History preservation is compatible with lawful bounded retention/erasure.
+
+PROVISIONAL TESTS
+TEST-P23-ORDER-001: required event-time order + no valid sequencing anchor -> ORDER_UNKNOWN/non-PASS.
+TEST-P23-WATERMARK-001: reorder bound exceeded -> declared overflow/defer/quarantine behavior, not indefinite silent buffering.
+TEST-P23-UNCERTAINTY-001: propagated uncertainty exceeds active bound -> profile-selected degrade/block/fallback route.
+TEST-P23-TWIN-001: PhysicalTwin registration without canonical DigitalTwin owner binding -> unresolved/rejected duplicate.
+TEST-P23-MODEL-001: twin prediction without real observation -> cannot certify measured state.
+TEST-P23-FALLBACK-001: failed controller attempts self-authorized fallback -> denied.
+TEST-P23-CONT-001: qualified handoff transfers unresolved state and fences stale revoked commands.
