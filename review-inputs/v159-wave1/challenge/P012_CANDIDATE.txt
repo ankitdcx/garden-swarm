@@ -1,0 +1,47 @@
+P012 SYNTHESIZED v15.9 CANDIDATE — ALGERBAS
+Proposal-only; challenge this candidate against P012 source.
+
+1. SIMPLIFY DECISION ALGEBRA
+Decision Algebra is removed as an independent admitted universal Algebra because v15.8 supplies no independent operand/operator/law closure beyond typed decision/result semantics. Preserve its useful semantics as owner-qualified DecisionResult/DecisionEffect types consumed by Policy, Process and other engines. REG-ALGEBRA-001 therefore retains Process, Policy, Conformance, Evidence and Bridge/Representation algebras unless another packet independently justifies a sixth algebra. Migration aliases preserve historic Decision Algebra references; no semantic result type is lost.
+
+2. POLICY ALGEBRA
+Authority precedence is applied BEFORE any local ResolveStrategy. A lower-authority PERMIT_OVERRIDES can never override a higher-authority DENY/hard constraint.
+
+NOT_D is not a general negation over operational PolicyDecision. Negation applies to typed policy predicates/conditions before decision lifting. Attempting NOT_D(PERMIT/DENY/REQUIRE_APPROVAL/DEFER/INDETERMINATE/CONFLICT/SAFE_FALLBACK) as an operational decision is MALFORMED unless an explicit registered decision-dual exists. This prevents DENY -> PERMIT manufacture.
+
+AND_D / OR_D operate only over applicable decisions at the same resolved authority stratum after precedence/exception processing. NOT_APPLICABLE is contextual absence, not PERMIT. INDETERMINATE remains non-PASS. CONFLICT remains conflict until registered RESOLVE_D or escalation. REQUIRE_APPROVAL values compose as approval-requirement set union; no approval can be silently dropped.
+
+If no valid ResolveStrategy applies, result = CONFLICT/ESCALATE, never PERMIT.
+
+SAFE_FALLBACK is typed:
+  SAFE_FALLBACK(trigger: FailureOrUncertaintyCondition, action_ref, authority_ref, scope, expiry)
+It activates only when trigger occurs, must satisfy ordinary authority/rights/K0P/effect gates, and cannot widen triggering scope.
+
+3. CONFORMANCE ALGEBRA
+PASS requires complete applicable RequirementSet coverage, current required Evidence/Proof bindings and no unresolved mandatory GAP/UNKNOWN/STALE/BLOCKED. NOT_APPLICABLE is valid only after applicability resolution.
+Waiver/exception is a typed authoritative input with scope/validity/provenance and becomes part of the requirement closure; it does not erase the original gap from history.
+STALE evidence/proof contaminates only dependent obligations, not unrelated conformance dimensions.
+
+4. EVIDENCE COMPOSITION ALGEBRA
+Evidence composition separates:
+  support/contradiction relation
+  dependence structure
+  uncertainty
+  evidence credibility/applicability.
+Shared-root/circular evidence cannot multiply support. Cyclic dependence is evaluated only under a declared convergent/fixed-point or otherwise terminating model; if no valid semantics exists -> BLOCKED/INCONCLUSIVE.
+Detected dependence-model misspecification weakens to INCONCLUSIVE/CONDITIONAL and triggers re-estimation/research; it never increases confidence.
+Conflicting evidence remains explicit rather than averaged away.
+Probability/confidence output requires calibrated probabilistic model.
+
+5. CROSS-ALGEBRA TYPING
+PolicyDecision, ConformanceResult and EvidenceCompositionResult are distinct owner-qualified types. Similar labels (PASS/UNKNOWN/etc.) do not permit substitution. Cross-algebra conversion requires explicit adapter/bridge and cannot create truth or authority.
+
+Candidate invariants:
+- lower authority resolution never overrides higher hard constraint;
+- operational decision negation cannot manufacture PERMIT;
+- incomplete mandatory conformance cannot PASS;
+- shared/cyclic evidence cannot inflate independent support;
+- cross-algebra status labels are not implicit casts.
+
+CHALLENGE REQUEST
+Find blockers, regressions or missing semantics. Pay special attention to whether demoting Decision Algebra loses a genuinely independent closed operation, and to AND_D/OR_D semantics after authority resolution. Return ACCEPT / CHANGE / BLOCK with minimal repair and falsifiable test.
