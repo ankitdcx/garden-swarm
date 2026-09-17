@@ -1,0 +1,53 @@
+GARDEN v15.9 WAVE 4 — INDEPENDENT CHATGPT BASELINE
+Date: 2026-09-17
+Status: FROZEN BEFORE EXTERNAL REVIEW / NOT SHOWN TO BLIND REVIEWERS
+Source root SHA-256: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Predecessor review state: P001–P026 completed as cross-reviewed design candidates only.
+
+P027 — SCT STRUCTURAL COHERENCE
+Expected material questions:
+- The retained coherence score needs explicit cardinality/normalization semantics; zero discrepancy should not accidentally worsen only because parser/source count grows unless the profile intentionally models cardinality.
+- Joint co-error frequency and correlation are different statistics; dependence must retain typed meaning, marginals, estimator and uncertainty.
+- Soft numerical/estimation bands must not widen a hard safety/rights/authority ceiling. Optimization domain should already satisfy mandatory hard gates.
+- Human epistemic contribution and human authority/consent are disjoint channels; reliability cannot scale rights or authority. P018 already repairs this globally, so SCT should alias that semantics rather than create a second construct.
+- Reference equations stay conditional under THEORY-EQ; underspecified formula -> non-PASS, not fake numeric certainty.
+
+P028 — TRAIN / GAIA / DOMAIN PROFILES
+Expected material questions:
+- Every local 'halt', 'safe-halt', watchdog/disconnect shorthand must resolve to the domain-qualified minimum-risk transition. Blind zero-output is not universally safe.
+- Robotics single-step Slater/strict feasibility does not prove recursive feasibility. Future feasibility requires dynamics/disturbance/constraint/timing viability evidence.
+- Closed-form fallback must cover the actual coupled constraint set and verified worst-case timing; illustrative microsecond claims remain profile/evidence-bound.
+- MEDIA curvature regularization can support smoothness but cannot by itself guarantee identity preservation or semantic/content-policy compliance.
+- Reference constants/claims remain profile-specific and unvalidated unless receipts exist; hardware veto and physical hard floors are preserved.
+
+P029 — VSM / RPM / PPM / TFT / FET / COMPOSITION
+Expected disposition may largely be KEEP.
+- Preserve VSM uncertainty, timescale-correct baselines, forgetting, fork/merge, lineage, resource limits and anti-self-preservation bounds.
+- RPM/PPM composition, delay/saturation/fidelity/mode-transition assumptions must remain explicit; no model equation creates authority.
+- TFT already distinguishes typed transport, constitutive closure, conservation, causal identification and finite-speed profiles. Do not force a universal PDE/physics model.
+- FET already separates hazard detection, bounded emergency actions, authority and recovery; UNKNOWN hazard does not fabricate authority.
+- Seven-theory composition and theory-to-reality binding must preserve noncommutation, domain science and observation/provenance boundaries.
+
+P030 — RESEARCH / LEARNING / DEFERRED / COMPARATIVE
+Expected questions:
+- GSL-GENERATIVE/CPI/CDDT/OCF/MSC/TML/HCA/CMUR/CLIC/GCL research profiles must stay under ordinary Research/Evolve/Proof/admission; no autonomous reproduction or self-ratification.
+- Undefined/deferred UCAS, Kindergarten, CASI adapter activation, GAC, FDE/CFBR, GTAH and manufacturing-transfer profiles must remain UNRESOLVED/DEFERRED rather than reconstructed from names or memory.
+- Comparative cognitive coverage/Candidate B is a program, not an executed superiority finding. Each comparator needs pinned artifacts/mechanism evidence before conclusions.
+- Historic operational prices/budgets/repo states remain dated observations, not current design axioms.
+- External experiment/theorem claims remain claim/evidence-labeled until independently verified.
+
+P031 — RELIABILITY / GSL ARCHITECTURES
+Expected material questions:
+- GSL-KR, GSL-AR and GSL-R are distinct normative/operational/exploratory profiles; replacement requires versioned DesignBinding/migration and cannot silently occur.
+- GESTALT/APAO/GNR remain coordination/assurance/runtime profiles under existing owners; none mints authority.
+- Reliability OS generic retry/backoff/fallback must delegate to effect identity, idempotency, OUTCOME_UNKNOWN/reconciliation and current authority/consent/knowledge epoch. Non-idempotent uncertain effects cannot blind-retry.
+- Cache/fallback reuse must revalidate current evidence/authority/privacy/epoch; provider failure cannot relax mandatory assurance.
+- Reliability optimization objective applies only over already-admissible choices; favorable churn/availability cannot compensate for a hard gate.
+
+GLOBAL BASELINE RULES
+- Authority never arises from capability, evidence, model agreement, reputation, access, optimization or successful outcome.
+- UNKNOWN/STALE/CONFLICT/BLOCKED/INCOMPLETE are not PASS where hard resolution is required.
+- Specification != proof != implementation != empirical validation != certification.
+- Preserve privacy, consent, rights, law, safety and human agency.
+- Prefer existing owner/alias/minimal repair and DO_NOTHING over ontology growth.
+- External consensus is proposal evidence only.
