@@ -1,0 +1,88 @@
+GARDEN v15.9 — P028 TRAIN / GAIA / DOMAIN PROFILE SYNTHESIZED CANDIDATE
+Status: DESIGN CANDIDATE / NOT CANONICAL / NOT EXECUTABLY CERTIFIED
+
+1. MINIMUM-RISK TRANSITION BINDING
+Every TRAIN/Titanium/domain reference phrase such as:
+  halt
+  safe-halt
+  disconnect
+  watchdog fallback
+  below-floor => halt
+SHALL resolve to the active domain-qualified minimum-risk transition under the governing GSL-PHYSICS / Safety / Continuity / FET profile.
+
+'Halt' does not universally mean zero output. Zero output is selected only where the qualified domain safety case establishes it as the appropriate minimum-risk action.
+
+If the preferred nominal safe state is physically unreachable, the system SHALL:
+- record assurance loss/degraded-emergency state;
+- select the prequalified least-risk continuity/handoff/controlled-safe-state action available under current authority;
+- preserve unresolved physical/effect state;
+- not issue a 'guaranteed safe' claim merely because a fallback path executed.
+
+2. ROBOTICS RECURSIVE FEASIBILITY
+Present-step strict feasibility / Slater-style constraint qualification SHALL NOT by itself be described as guaranteeing recursive feasibility.
+
+Recursive feasibility is a separate proof/qualification obligation under the selected:
+- dynamics;
+- disturbance set;
+- constraint evolution;
+- relative degree where relevant;
+- actuator limits/slew;
+- discretization;
+- observation/calibration error;
+- timing/WCET;
+- composition assumptions;
+- viability/reachable-set or qualified equivalent semantics.
+
+A Slater-style condition may support the instantaneous optimization problem where mathematically appropriate, but does not discharge forward physical safety.
+
+3. ROBOTICS FALLBACK SCOPE
+A closed-form/simplified barrier fallback SHALL NOT be treated as qualified for a larger coupled physical problem unless the fallback evidence covers the actual active constraint set.
+
+Qualification SHALL bind all materially active:
+- barriers/constraints;
+- actuator bounds;
+- shared-resource/inter-robot effects;
+- observation/timing assumptions;
+- composition conditions.
+
+If that coverage is absent or the intended safe state is unreachable, return the active owner-qualified assurance-loss/minimum-risk outcome rather than manufacturing a safety guarantee.
+
+4. TIMING / PERFORMANCE VALUES
+Reference values such as microsecond deadlines, fixed percentages or example thresholds remain illustrative/non-normative unless bound to exact:
+- hardware/runtime/solver/model version;
+- workload/constraint scale;
+- measurement method;
+- uncertainty/coverage;
+- qualified domain profile.
+
+The global illustrative-label rule applies locally as well; a copied profile excerpt must not turn a benchmark into a universal guarantee.
+
+5. MEDIA v1.11
+Latent curvature/smoothness regularization is a candidate optimization/training objective. It MAY improve temporal smoothness under declared decoder/metric/data assumptions.
+
+It SHALL NOT by itself be claimed to ensure:
+- identity persistence;
+- no flicker;
+- semantic consistency;
+- rights/content-policy compliance.
+
+Those are separately evaluated output-level properties under the appropriate identity, perception, policy, rights and safety owners.
+
+6. DOMAIN PROFILE STATUS
+MEDICAL, AUTOMOTIVE, POWER/GRID, CLOUD/DC, FINANCIAL, INDUSTRIAL, MEDIA and ROBOTICS remain profile/specification families. Local equations, constants, N-1 assumptions and claimed performance benefits are conditional on their declared model/evidence and do not become certification by inclusion in Garden.
+
+PROVISIONAL INVARIANTS
+TRAIN-159-001 Halt shorthand SHALL resolve to domain-qualified minimum-risk transition, not universal zero-output.
+TRAIN-159-002 Unreachable nominal safe state SHALL record assurance loss rather than 'guaranteed safe'.
+ROBOTICS-159-001 Instantaneous strict feasibility SHALL NOT imply recursive feasibility without separate qualified proof.
+ROBOTICS-159-002 Fallback qualification SHALL cover the actual coupled active constraint/timing problem.
+PROFILE-159-001 Illustrative performance constants SHALL NOT become normative without exact qualification evidence.
+MEDIA-159-001 Latent smoothness regularization SHALL NOT substitute for output identity/flicker/semantic/rights checks.
+
+PROVISIONAL TESTS
+TEST-TRAIN-159-001 zero output increases hazard while bounded continuity reduces it -> qualified continuity selected.
+TEST-TRAIN-159-002 preferred safe state unreachable -> assurance loss + least-risk handoff, no guaranteed-safe receipt.
+TEST-ROBOTICS-159-001 current QP strictly feasible; next state under allowed disturbance infeasible -> present-step proof does not certify recursion.
+TEST-ROBOTICS-159-002 simplified fallback violates second active barrier/actuator constraint -> fallback non-PASS.
+TEST-PROFILE-159-001 illustrative 50us value on untested target -> cannot satisfy runtime safety deadline.
+TEST-MEDIA-159-001 low-curvature latent path crosses identity/policy boundary -> smoothness PASS does not imply identity/policy PASS.
