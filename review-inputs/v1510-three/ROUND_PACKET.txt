@@ -1,164 +1,143 @@
-GARDEN v15.10 THREE-ARTIFACT REBUILD — ROUND 1 ARCHITECTURE CHALLENGE
+GARDEN v15.10 THREE-ARTIFACT REBUILD — ROUND 2 PATCH CHALLENGE
 
 TASK-SPECIFIC HUMAN OVERRIDE
-The user explicitly authorizes frontier OpenRouter review for this task even from families previously excluded by Garden routing policy, including Anthropic, NVIDIA and Mistral. This override is only for this review campaign; it does not amend persistent provider policy or grant model output authority.
+The user explicitly authorizes this campaign to use all listed frontier OpenRouter families, including Anthropic/NVIDIA/Mistral. This grants review access only and does not amend persistent provider policy or grant semantic authority.
 
-GOAL
-Replace the v15.9 five-file design with exactly three canonical artifacts while preserving or strengthening every v15.9/15.x semantic item:
-1. BOOK — normal human-readable explanation, diagrams/trees/tables; subordinate human projection.
-2. TECHNICAL CORE — executable deterministic reference code defining how Garden semantics type, compose, derive, expand, validate and project.
-3. CATALOGUE — content-addressed declarative semantic DAG containing every specific/irreducible Garden fact, identity, equation, algorithm, assumption, exception, state machine, authority condition, non-claim and lineage item.
-All schemas, tests, registries, receipts, canonical semantic graph and alternate reader views are generated build outputs, not extra canonical documents.
+ROUND-1 EVIDENCE
+Substantive visible reviewers: GPT-6 Astra, Gemini 3.1 Pro, MiMo-V2.5-Pro, Grok 4.6, Fugu Ultra v2, Nemotron 3 Ultra, Pareto.
+Round-1 consensus: the 3-artifact split is viable, but the first deterministic/no-loss claim was underspecified.
+No model vote is authority; the patches below were selected because they address concrete counterexamples.
 
-GSL FOUNDATION — UNCHANGED
-Six Pillars: Existence, Change, Agency, Law, Value, Frame.
-Ten Core Objects: TIME, SPACE, THING, EVENT, ACTION, AGENCY, RULE, VALUE, CONTEXT, CLAIM.
-24 Core Relations remain unchanged.
-Seven Design Forms are metamodel patterns expressed with existing GSL, not new ontology:
-CONSTRUCT, CONTRACT, STATE, RELATION, PROCESS, RULE, PROJECTION.
+THREE PRIMARY ARTIFACTS — RETAINED
+1 BOOK — human reader projection. It is a primary distribution artifact but NON-NORMATIVE: if it conflicts with Technical+Catalogue it is repaired.
+2 TECHNICAL CORE — normative generic GSL/metamodel/composition/expansion semantics and deterministic executable reference code.
+3 CATALOGUE — normative Garden-specific semantic content and content-addressed identity/lineage/structure records.
+Generated graph/schemas/tests/receipts/indexes are build outputs, not fourth canonical documents.
 
-TEN FACETS
-IdentityLifecycle; ScopeContext; EpistemicsProvenance; AuthorityHumanBoundary; EffectsSafety; DependencyValidity; ResourceTermination; PrivacyRetention; AuditExplanation; RecoveryEvolution.
+R1 PATCHES NOW APPLIED
 
-DERIVED MACROS — NOT NEW FORMS
-ArchitectureObject = all 7 forms.
-Function = CONTRACT + PROCESS.
-Lifecycle = STATE + PROCESS + RULE.
-Schema = RULE + PROJECTION.
-Receipt = CONSTRUCT + STATE + RELATION + PROJECTION.
-Registry = CONSTRUCT + STATE + RELATION + RULE + PROJECTION.
-Test = PROCESS + RULE + PROJECTION.
-ProofObligation = CONTRACT + PROCESS + RULE.
-Theory = all 7 forms with unique model/equation payload.
-Algebra = CONSTRUCT + CONTRACT + RELATION + PROCESS + RULE + PROJECTION.
-Profile = all 7 forms with unique profile payload.
-Binding = RELATION + RULE.
-Plan = CONTRACT + PROCESS.
-FailureMode = STATE + PROCESS + RULE.
+A. CLOSED RECONSTRUCTION BOUNDARY
+- Technical now pins six GSL Pillars, ten Core Objects, 24 Core Relations, 14 primitive/control families, effect dimensions and key relation laws.
+- Canonical design expansion performs no network, wall-clock, LLM or ambient-environment read.
+- The canonical build context is an immutable typed snapshot with its own hash.
+- Runtime context/observations are explicit inputs to runtime evaluation, not hidden design-build inputs.
 
-18 FUNDAMENTAL LAW FAMILIES
-L01 single controlling owner.
-L02 protected human/constitutional boundary explicit.
-L03 authority non-amplification.
-L04 Human-Effect Closure.
-L05 scope/context non-widening.
-L06 epistemic non-promotion.
-L07 provenance/evidence dependence preservation.
-L08 privacy/information-flow preservation.
-L09 hard-gate preservation.
-L10 dependency invalidation.
-L11 revocation propagation.
-L12 conflict/UNKNOWN preservation.
-L13 no self-certification of protected boundaries.
-L14 bounded execution / liveness.
-L15 identity/commitment continuity.
-L16 failure containment/recovery.
-L17 reversibility/option preservation.
-L18 projection fidelity.
+B. SEVEN FORMS CLAIM NARROWED
+- CONSTRUCT/CONTRACT/STATE/RELATION/PROCESS/RULE/PROJECTION are overlapping metamodel patterns, NOT claimed minimal/nonredundant ontology.
+- GSL Core Objects/Relations remain ontology.
+- Orthogonal semantic-role qualifiers are explicit: RIGHT, obligation/proof/test, non-claim/prohibition-of-inference, eligibility/authority, model-equation, profile assumption, observation/measurement, etc.
+- No eighth Form is added merely for Query/Event/NonClaim; these are semantic roles or macros over existing Forms.
+- Macro name is an explicit discriminator even when two macros share the same Form set.
+- Added reusable macros: Query, EventSubscription, ContinuousWorker, DynamicalSystemProfile, AuthorityGatedContract, RecoveryEnvelope.
 
-TECHNICAL/CATALOGUE SEPARATION
-Technical Core contains only generic semantics and deterministic expansion logic. It must not contain Garden-specific rights, theory equations, thresholds, legal exceptions or named-profile payload.
-Catalogue stores all unique Garden content. Shared structures appear once as forms/macros/templates and concrete entries reference them.
-Canonical expansion uses no LLM:
-pinned GSL + Technical Core + Catalogue + DesignEpoch/context -> content-addressed monotone least fixed point -> CanonicalSemanticGraph.
-Rules add nodes; they never silently mutate or delete seed semantics.
-Derived obligations cannot create rights, authority, empirical truth or evidence.
+C. STORAGE DAG != SEMANTIC GRAPH
+- Catalogue record stream/content addressing is acyclic storage.
+- Semantic relations may be cyclic through stable symbolic identity/reference edges.
+- Catalogue now carries explicit STRUCTURAL_EDGE records:
+  * DOCUMENT_CONTAINS
+  * SOURCE_NEXT
+  * IDENTIFIER_REFERENCE
+- Current structural edge count: 9,119.
+- Semantic envelopes bind payload to canonical ID, definition owner, status, source span/root, macro/forms/facets/laws/roles and predecessor family metadata.
 
-NO-LOSS MIGRATION RULE
-Every normalized v15.9 semantic leaf currently has a Catalogue item preserving the exact semantic payload and semantic SHA-256.
-Current mechanical audit:
-- 2,660 / 2,660 normalized predecessor semantic leaves present; 0 changed.
-- 733 / 733 SchemaIDs.
-- 27 / 27 RIGHT IDs.
-- 788 / 788 normalized TEST IDs.
-- 62 / 62 REG identifiers.
-- all tracked theory/reference-profile formula lines: 219 / 219.
-Catalogue is intentionally conservative: a predecessor leaf may only later be removed as an explicit seed after owner-qualified equivalence/refinement evidence proves deterministic derivability. There is no DROP operation.
+D. FINITE STRATIFIED EXPANSION
+The old generic "monotone least fixed point" claim is removed.
+Canonical expansion is:
+  STRATUM 0: validate and materialize immutable laws/seeds/residuals/index/structural/formula records.
+  STRATUM 1: generate only finite seed-local facet bindings, check obligations and projections.
+  STRATUM 2: canonical ordering + hash.
+Derived nodes are never fed back as rule inputs. A computed finite node bound is checked.
+Current build:
+  graph nodes = 34,992
+  expansion_mode = FINITE_STRATIFIED_SEED_LOCAL
+  no ambient reads
+  no LLM
+  completion must be COMPLETE; budget exhaustion may never produce canonical PASS.
 
-WHAT MUST NOT BE LOST
-This applies to ALL 15.x semantics, not only GAIA Titanium:
-- rights/HSA/consent/revocation/Human-Effect Closure;
-- CPI, OCF, MSC, TML, CDDT, CMUR, CLIC, GCL, algebra formalization;
-- AI development/deterministic projection, standards, engineering design, assurance hardening, RRCTX;
-- TED, SEA, MAC, NRS, VIP, SHE, EC, CSR, AR, MI;
-- event-driven triggering/subscription/scheduling/continuous-work semantics;
-- DesignMirror, future stress, belief timeline, global consistency, failure learning, ontological debt, historical summarization;
-- GSL-PHYSICS, Bridge, AAP, UPA/GTF, HSA, Productive Finance;
-- SRT/VSM/RPM/PPM/TFT/FET/SCT, UPS and every named reference architecture;
-- owner-specific result/failure states, exceptions, non-laws, non-claims, uncertainty, status and authority limits;
-- every unique equation, algorithm, timing constraint, threshold, safety envelope, state machine, validity/breakdown assumption, falsifier, fallback/recovery rule and profile-specific behavior.
+E. HISTORY != CURRENT APPLICABILITY
+- Immutable historical assertion/derivation is never deleted merely because current applicability changes.
+- Technical defines separate applicability outcomes including APPLICABLE, NOT_APPLICABLE, CONDITIONAL, UNKNOWN, STALE, CONFLICT, BLOCKED, REVOKED, INVALID.
+- Revocation/expiry/dependency invalidation change current effective status, not historical bytes.
+- Design build itself performs no runtime applicability filtering.
 
-ADVERSARIAL UNIQUE-PAYLOAD EXAMPLES
-GAIA Titanium remains a reference profile seed with, among other semantics:
-- 5.5 kHz heartbeat / 181.8 us nominal cycle;
-- 100 ms PB-CBF reference look-ahead;
-- h_dot(x,u) + alpha(h(x)) >= 0 forward-invariance condition;
-- Diamond token = bounded authorization eligibility only, never safety proof;
-- local eligibility requires token + CBF safety + constitutional/justice checks + K0P;
-- delay-aware actuation, watchdog/fallback/safe-halt semantics;
-- identity/continuity behavior such as Gamma(t)=product 1[heartbeat_i=1] where applicable;
-- BFT assumptions such as n>3f remain model/profile-bound, not universal truth.
+F. CONTEXT/TIME
+- Canonical build context is content-addressed and fixed.
+- No ambient clock.
+- Runtime implementations must keep validity/event/record time explicit where applicable.
+- Context widening remains forbidden unless an explicit authorized rule admits it.
 
-VSM unique examples:
-E_T z = F_persist(z,b,c;theta) + F_coupled(z,u,c) + Q_z + Xi_z;
-dz/dt = -B_dyn(z-b) only as a specialization;
-baseline/timescale equations, observation model, context transition, lineage/fork/merge, HSA/TED firewall and explicit non-claims about selfhood/consciousness remain unique payload.
+G. DEFINITION OWNER != ACTION AUTHORITY
+- Graph now uses definition_owner semantics.
+- A Catalogue owner string never supplies authority to act, approve empirical equivalence, waive another person's rights, or self-certify a protected boundary.
+- Derived/index/projection nodes explicitly create no action/epistemic authority.
 
-TFT unique examples:
-E_T x = F_D[x,u,c;theta] + Q_x + Xi_x;
-E_T x + Div_D J_x = R_x + G_x + Q_x + Xi_x;
-constitutive closure, finite-speed caveats, graph/manifold/probability-domain operator semantics, identifiability, well-posedness, scale/breakdown and physical-vs-analogy boundaries remain explicit.
+H. EPISTEMIC/CONFLICT FOUNDATION
+Technical pins the v15.9 epistemic dispositions and UNKNOWN subtypes and retains the rule that UNKNOWN/CONFLICT/STALE/NOT_APPLICABLE are distinct.
+Absence of a fact is not FALSE; duplicate/correlated support cannot become independent confirmation without a declared model.
+Formal proof, empirical evidence, validation and certification remain non-substitutable.
 
-FET unique examples:
-independently grounded HazardPredicate + EmergencyAdmissionContract; HazardGate(... ) o R_safe; internal VSM/PPM state cannot self-authorize emergency authority.
+I. PRIVACY/RETENTION BOUNDARY
+- Catalogue contains public/static design semantics, not personal runtime evidence/data.
+- Instance data/evidence remains governed by Privacy/Law/DataLifecycle semantics in the Catalogue/runtime.
+- Hashing is never treated as anonymization.
+- Human projection cannot require protected instance data merely for explanation completeness.
 
-SCT unique examples:
-G' = G*(1+sigma_parser), robust identifiability, OOD uncertainty injection, signal-dependence handling, coverage/abstention, experiment/market/human epistemic separation; benchmark claims remain benchmark claims.
+J. STRONGER MIGRATION ORACLE
+The old leaf audit has been strengthened:
+- 2,660/2,660 normalized v15.9 semantic leaves retained byte-semantically by exact payload SHA; 0 changed/missing.
+- The old normalizer missed 431 non-empty source lines; every one is now retained as a content-addressed PRESERVED_UNCLASSIFIED_PREDECESSOR_SOURCE residual. Residuals may not be discarded/downclassified until explicitly classified.
+- Every v15.9 non-empty source line is therefore covered by normalized leaf span or residual.
+- 733 SchemaIDs, 788 TestIDs, 62 RegistryIDs, 27 RightIDs and 225 explicit SemanticAnchor declarations have one identity-index record each.
+- 9,119 structural source/reference edges retained.
+- Each of 2,660 leaves has a semantic envelope hash separate from payload hash.
+- 219 theory/reference-profile formula lines have explicit FORMULA_BINDING records to their profile section seed, not merely line-presence checks.
+- High-risk source-line audit covers equations/operators, numeric/timing values, state machines/pipelines, assumptions/validity/falsifiers, failure/fallback/recovery, authority/rights/consent, non-claims and conflict/UNKNOWN semantics; current missing exact-line count = 0 in each class.
+- Named 15.x family audit covers 54 families including CPI/OCF/MSC/TML/CDDT/CMUR/CLIC/GCL/Human-Effect/HRAP/justice/lethal-force/protected reporting/AI-dev/standards/engineering/assurance/RRCTX/TED/SEA/MAC/NRS/VIP/SHE/EC/CSR/AR/MI/event-driven/DesignMirror/future-stress/belief/global consistency/failure learning/ontological debt/history/GSL-PHYSICS/Bridge/AAP/UPA/GTF/HSA/Productive Finance/SRT/VSM/RPM/PPM/TFT/FET/SCT/UPS/TRAIN/Titanium/Diamond/Reliability OS; all present in current predecessor->Catalogue coverage.
+This is stronger structural/source preservation, not a claim that arbitrary natural-language behavior is formally proved equivalent.
 
-CLIC unique semantics:
-intent-to-effect semantic conservation; causal qualification; salience governance; identity/commitment continuity; emergence/common-cause/reversibility/option preservation.
+K. UNIQUE MATHEMATICS/PROFILE CONTENT
+- Every unique equation/algorithm/timing/assumption/exception/non-claim remains Catalogue payload.
+- Formula bindings preserve profile attachment.
+- Examples such as Titanium hdot+alpha(h)>=0, 5.5kHz/181.8us/100ms, Diamond eligibility != safety proof, n>3f model boundary; VSM/TFT/FET/SCT equations/qualifiers all remain source-bound.
+- No equation is made universal merely because a template resembles another equation.
 
-HUMAN BOOK
-Default reader projection targets roughly 20–25 chapters/modules, but this is not architecture topology. Humans see ordinary explanations, diagrams and material equations/parameters; machine IDs and thousands of leaf rules stay in drill-down catalogue views.
+L. GENERATED TEST INDEPENDENCE
+- Old acceptance/test semantics remain Catalogue seeds.
+- Technical generates only test HARNESS/projection nodes; it does not invent expected PASS answers from the same implementation.
+- Critical assurance remains subject to existing Proof/independent-check/HSA/authority semantics.
+- Local Technical selftests include corrupted payload, macro mismatch, unknown facet/law, duplicate leaf and orphan identity negative cases.
 
-BOOK OUTLINE
-1 GSL and simple model
-2 Seven Design Forms
-3 Facets
-4 Human sovereignty/rights/agency
-5 Identity/consent/privacy/human effects/justice
-6 Knowledge/evidence/provenance
-7 Context/time/validity
-8 Process/transition/AAP
-9 Compare/Reason/Search/Explanation
-10 Proof/validation/conformance
-11 Safety/security/emergency
-12 Authority/law/governance/policy
-13 Resources/runtime/execution
-14 Infrastructure/physical world
-15 Dependency/continuity/recovery
-16 Evolution/learning/self-audit
-17 Research/CDDT
-18 Theory/model system
-19 Algebras/Bridge
-20 Domains/engineering/standards
-21 Multi-agent/embodiment/novelty
-22 Development/compilation/tooling
-23 Finance/societal applications
-24 Profiles/instances/deployment
-Final sections explain catalogue, deterministic expansion and no-loss migration.
+M. BOOK PROJECTION
+- Book is non-normative.
+- It now has 24 core chapters plus reader-reference maps and 28 Mermaid diagrams.
+- It includes co-presented warnings such as token eligibility != safety proof, persistence != selfhood, prediction != evidence, mathematical control != authority.
+- Chapter count remains reader-view only.
 
-ROUND-1 CHALLENGE
-A. Is exactly Book + Technical Core + Catalogue a sound canonical split, or is there a materially better design?
-B. Are seven Design Forms complete and nonredundant? Give a concrete 15.x counterexample if not.
-C. Is the Technical/Catalogue boundary correct? What semantic class is misplaced?
-D. Can a fresh implementation reconstruct Garden deterministically without predecessor prose or an LLM? Attack fixed-point determinism, confluence, owner/authority handling, context, conflicts, epistemics and evolution.
-E. Find ways unique equations/algorithms/timing/exceptions/non-claims could still be lost despite exact leaf preservation.
-F. Is exact normalized-leaf payload preservation sufficient as the migration oracle? What additional equivalence tests are mandatory?
-G. Is 20–25 human chapters the right projection? What should merge/split?
-H. Find any stronger abstraction that reduces repetition without erasing unique meaning.
+N. TECHNICAL/CATALOGUE OWNERSHIP
+- Technical owns generic GSL/metamodel Forms/Facets/Macros/semantic-role system/serialization/finite expansion/applicability mechanics.
+- Catalogue owns specific Garden laws (including L01-L18 textual law instances), rights, equations, thresholds, profile/domain/legal content, exceptions and historical semantics.
+- Technical does not hard-code the current L01-L18 IDs as its accepted law list; it generically validates Catalogue law records. Generic non-amplification/no-self-certification behavior is enforced through protected semantic classes and existing Garden semantics, while concrete law content remains Catalogue-owned.
+
+O. CANONICAL SERIALIZATION
+- Content hashing uses SHA-256 over deterministic UTF-8 JSON with sorted keys and fixed separators.
+- Preserved semantic payload strings remain byte-exact; Unicode normalization is NOT applied to old payloads because it would change their predecessor hashes.
+- Binary floating-point is forbidden in canonical semantic structures; semantic numbers use exact typed representations/strings/rationals as applicable.
+
+CURRENT DESIGN BOUNDARY
+The three artifacts are a DESIGN SPECIFICATION. They do not claim implementation/empirical/deployment certification.
+Where complete formal behavioral equivalence from predecessor prose is undecidable/unproved, the exact predecessor seed remains active rather than being deleted.
+
+ROUND-2 REVIEW
+1. Attack each R1 patch above. Which blockers remain?
+2. Does finite stratified expansion actually close termination/confluence for the current rule class?
+3. Is the history/applicability split sufficient for revocation/invalidation semantics without violating append-only provenance?
+4. Does semantic-envelope + source-span + structural-edge + formula-binding preservation close the "same leaves, changed meaning" attack? Give a concrete remaining counterexample.
+5. Is keeping old seeds active whenever equivalence is unproved sufficient to make this a no-loss successor specification?
+6. Are Technical vs Catalogue ownership and Book non-normative status now coherent while retaining exactly three primary artifacts?
+7. Find any 15.x construct/equation/algorithm/exception/non-claim still at risk of being flattened.
+8. Recommend ONLY patches that materially improve correctness, abstraction or human comprehension.
 
 RETURN
 VERDICT: APPROVE | APPROVE_WITH_PATCH | BLOCK
-Then numbered MATERIAL findings only, each with severity, exact problem, why it matters, concrete patch.
-End with BETTER_DESIGN only if materially superior.
+Numbered material findings with severity/problem/concrete patch.
+No vote-counting. No model output has authority.
