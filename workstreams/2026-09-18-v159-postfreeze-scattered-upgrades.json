@@ -8,8 +8,8 @@
     "chatgpt:git-process-v2-swarm:20260916"
   ],
   "integration_strategy": "REVALIDATE_AGAINST_CURRENT_MAIN_AND_OPEN_REVIEW_PROCESS_BEFORE_MERGE",
-  "draft_pr_created_before_substantial_edit": false,
-  "substantial_edit_started": false,
+  "draft_pr_created_before_substantial_edit": true,
+  "substantial_edit_started": true,
   "status": "ACTIVE",
   "bounded_scope": {
     "purpose": "Recover recent chat-scattered v15.9 candidates outside the frozen P001-P037 campaign, deduplicate against final v15.9, obtain blind OpenRouter review evidence, synthesize/final-challenge accepted deltas, and materialize a successor v15.9 working candidate without changing canonical authority.",
@@ -41,5 +41,7 @@
     ".github/workflows/v159-postfreeze-review.yml"
   ],
   "authority_effect": "NONE",
-  "canonical_effect": false
+  "canonical_effect": false,
+  "draft_pr_number": 218,
+  "last_activity_at": "2026-09-18"
 }
