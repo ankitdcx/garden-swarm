@@ -42,7 +42,7 @@ def call(model,prompt,key):
     "max_price":{"prompt":1.0,"completion":4.0}
   }
  }
- if model.startswith("deepseek/") or model.startswith("z-ai/glm-"):
+ if model.startswith("deepseek/") or model.startswith("z-ai/glm-") or model.startswith("xiaomi/"):
   body["reasoning"]={"effort":"none"}
  cmd=["curl","-sS","--connect-timeout","10","--max-time","360",OPENROUTER,"-X","POST",
       "-H","Authorization: Bearer "+key,"-H","Content-Type: application/json",
