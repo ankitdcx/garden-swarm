@@ -1,0 +1,46 @@
+{
+  "schema": "GardenV159FinalBoardEvidenceIndex/v1",
+  "candidate_r1_sha256": "48009861a796c4a05e6fdfaaf68a8cf9be935cff35240e247544b1d7c2807ae2",
+  "quorum_rule": "three complete independent families; fourth partial supplemental retained",
+  "complete_reviews": [
+    {
+      "family": "gemini",
+      "run_id": 35305548597,
+      "artifact_id": 10531624276,
+      "verdict": "ACCEPT_WITH_PATCH"
+    },
+    {
+      "family": "deepseek",
+      "run_id": 35306124969,
+      "artifact_id": 10531975248,
+      "verdict": "ACCEPT_WITH_PATCH"
+    },
+    {
+      "family": "glm",
+      "run_id": 35306373993,
+      "artifact_id": 10531054108,
+      "verdict": "ACCEPT_WITH_PATCH"
+    }
+  ],
+  "supplemental_reviews": [
+    {
+      "family": "xiaomi",
+      "run_id": 35306204903,
+      "artifact_id": 10531940704,
+      "status": "SUBSTANTIVE_BUT_TRUNCATED_JSON",
+      "verdict_prefix": "ACCEPT_WITH_PATCH"
+    },
+    {
+      "scope": "P038-P041 earlier successful branch reviews",
+      "status": "SUPPORTING_EVIDENCE"
+    }
+  ],
+  "synthesis_principles": [
+    "DO_NOTHING comparison",
+    "existing-owner precedence",
+    "no-review-to-authority",
+    "unknown-not-pass",
+    "private raw histories not sent to OpenRouter"
+  ],
+  "canonical_effect": false
+}
