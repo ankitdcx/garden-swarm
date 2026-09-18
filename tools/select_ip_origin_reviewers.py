@@ -40,8 +40,8 @@ def build_selection(policy: dict[str, Any]) -> dict[str, Any]:
         ordered.append(row)
 
     daily_ceiling = float(policy.get("daily_openrouter_cost_ceiling_usd", 0))
-    if not (0 < daily_ceiling <= 2.0):
-        raise ValueError("daily OpenRouter cost ceiling must be >0 and <= $2.00")
+    if not (0 < daily_ceiling <= 10.0):
+        raise ValueError("daily OpenRouter cost ceiling must be >0 and <= $10.00")
     provider_policy = policy.get("provider_policy") or {}
     if provider_policy.get("data_collection") != "deny":
         raise ValueError("provider data_collection must remain deny")
