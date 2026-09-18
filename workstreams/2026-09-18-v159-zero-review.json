@@ -1,0 +1,26 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v159-zero-review:20260918",
+  "work_package_id": "GARDEN-V159-ZERO-BASE-ATOMIC-REVIEW-20260918",
+  "branch": "chatgpt/v159-zero-review-20260918",
+  "base_sha": "03623306662473fea6b050055489912a9e0ad1c4",
+  "status": "ACTIVE",
+  "substantial_edit_started": false,
+  "review_basis": {
+    "current_v159_only": true,
+    "chat_history_excluded": true,
+    "prior_review_verdicts_excluded": true,
+    "effective_atomic_unit_method": "latest occurrence of each semantic anchor in each final v15.9 file, plus seven final cross-layer units",
+    "atomic_units": 321,
+    "packet_count": 29,
+    "packet_manifest_sha256": "916092655c5cfc094a998585fedfb8d3008df7d555b9b8ed3434049301080665"
+  },
+  "phases": [
+    "fresh atomic first-pass review of all 321 units",
+    "ChatGPT synthesis/deduplication against current v15.9 only",
+    "multi-family challenge of surviving upgrade candidates",
+    "materialization only if user later asks to update v15.9"
+  ],
+  "authority_effect": "NONE",
+  "canonical_effect": false
+}
