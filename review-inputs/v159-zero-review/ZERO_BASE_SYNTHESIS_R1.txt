@@ -1,0 +1,184 @@
+GARDEN v15.9 ZERO-BASE REVIEW — SYNTHESIS R1
+Date: 2026-09-18
+Campaign: GARDEN-V159-ZERO-BASE-ATOMIC-REVIEW-20260918
+Status: SYNTHESIZED CURRENT-ONLY UPGRADE CANDIDATE / NOT YET MATERIALIZED
+Source basis: current final v15.9 five-file corpus only
+Chat history used: NO
+Prior P001-P042 reviewer verdicts used as semantic evidence: NO
+Atomic first-pass: 288/288 units dispositioned
+Fresh blind board: DeepSeek + GLM + Xiaomi + Gemini, all usable
+Canonical effect: NONE
+Executable certification effect: NONE
+
+FRESH REVIEW SUMMARY
+- 224 units: KEEP / NO_FRESH_SEMANTIC_DELTA
+- 64 units affected by 12 cross-cutting upgrade candidates
+- No duplicate SemanticAnchor declarations among the 238 explicit declarations
+- No @CAT SchemaID was observed reused for two different concept names
+- Strongest weaknesses are source-architecture clarity and executable-binding closure, not a need to redesign the core control loop.
+
+ZR-001 — EMERGENCY SOURCE-INDEPENDENCE NORMALIZATION
+Disposition: PATCH
+Owner: existing emergency detector / hazard profile / evidence contract
+Rule:
+1. Applicable qualified hazard/profile evidence contract owns source-diversity and independence requirements.
+2. If no qualified profile is available for a high-consequence emergency trigger, preserve the existing safety floor: require at least two materially independent external observations before escalation beyond baseline authority.
+3. “Two sensors” is not sufficient by itself. Sources sharing a material upstream feed, controller, calibration chain, model, data path, or common-mode failure are not independent merely by count.
+4. Internal urgency/model state cannot satisfy the external-hazard-evidence requirement when doing so would expand acting authority.
+5. A qualified profile may require one, two, or more sources only when its evidence contract explicitly justifies that cardinality and the resulting action remains within existing authority/safety law.
+6. EMG-003 is superseded in current reading by this rule; the historical text remains lineage.
+Tests: common upstream feed; shared calibration; forged/stale attestations; profile with one qualified source but no authority expansion; absent profile retains >=2 materially independent external observations.
+
+ZR-002 — CONSENT VALIDITY PROFILE OVER EXISTING OWNERS
+Disposition: PATCH / NO NEW PRIMARY SCHEMA
+Owner: ConsentContract + UnderstandingRecord + existing human/authority/privacy/legal gates
+Rule:
+1. Do not admit a new standalone persistent ConsentValidityAssessment SchemaID at this stage.
+2. Define a derived machine-resolvable ConsentValidityResult/FunctionContract profile over existing artifacts.
+3. Result binds subject/principal, requested action/effect/scope, authentication evidence, freshness/expiry/revocation, disclosure/explanation, UnderstandingRecord/comprehension, voluntariness/coercion evidence, jurisdiction/profile requirements, applicable independent review, material invalidators, DesignEpoch/KnowledgeSnapshot/environment, and provenance.
+4. Status vocabulary: VALID_FOR_SCOPE | INVALID | UNKNOWN | INCONCLUSIVE | STALE | BLOCKED, mapped to existing result/status algebra where available rather than creating a parallel algebra.
+5. Signature/authentication proves only its declared authentication properties; it never alone proves comprehension, voluntariness, legal validity, waiver, or authority.
+6. Consent validity does not replace legality, rights, safety, policy, evidence, capability, or authority gates.
+7. Promote to a dedicated persistent artifact only after an owner-gap/schema-admission review proves the derived profile insufficient.
+
+ZR-003 — CONSTITUTIONALEVENT CROSS-FIELD COHERENCE
+Disposition: KEEP
+Owner: existing ConstitutionalEvent schema
+Rule:
+- check_result=PASS => kind=CHECK.
+- kind=VIOLATION MUST NOT coexist with check_result=PASS.
+- PASS/CHECK event is observable/auditable but is not itself a blocking predicate.
+- VETO/INCONCLUSIVE/UNKNOWN behavior comes only from existing constitutional/policy owners; enum ordering creates no semantics.
+Tests: reject VIOLATION+PASS; PASS/CHECK remains eligible for ordinary flow; UNKNOWN/INCONCLUSIVE cannot be promoted to PASS.
+
+ZR-004 — CONSTITUTIONALEVENT NON-AUTHORIZING RESPONSE + PRIVACY-PRESERVING OBSERVABILITY
+Disposition: PATCH / CLARIFY EXISTING OWNER
+Owner: ConstitutionalEvent + existing Authority/Privacy/Evidence/Action owners
+Rule:
+1. Event existence, VETO, VIOLATION, severity, containment criteria, evidence refs, or routing never by themselves authorize containment/restriction.
+2. Any executed containment/restriction must resolve to a separately valid current authorization/action/admission artifact under existing authority, scope, expiry, privacy, safety and evidence rules.
+3. The original event remains immutable; later authorization/action may backlink through existing relation/receipt mechanisms. Do not require a new ConstitutionalEvent field unless existing relation owners prove insufficient.
+4. Event observability/query/subscription is an authority-preserving projection. Seeing an event does not grant permission to dereference protected evidence/context/identity.
+5. Referenced data retains source access, consent, taint, minimization, retention and jurisdiction constraints.
+
+ZR-005 — DERIVED ACTIVE-DEFINITION INDEX / EFFECTIVE SEMANTIC SNAPSHOT
+Disposition: PATCH
+Owner: release/current-reading metadata; non-normative derived index
+Rule:
+1. Generate a hash-bound ActiveDefinitionIndex/EffectiveSemanticSnapshot near the front of each release.
+2. It maps each active anchor/package to current owner, effective source range/hash, effective version/status, aliases, superseded lineage, unresolved/deferred state and assurance dimensions.
+3. The index is DERIVED_NAVIGATION_METADATA_ONLY. It cannot override the normative owner, append-only precedence, or active source bytes.
+4. If the index conflicts with normative source, the source wins and the index is INVALID/STALE until regenerated.
+5. Retained staged/historical review prose is explicitly HISTORICAL/INACTIVE in the index so a new reader/parser cannot mistake it for current release status.
+6. Regeneration must be deterministic from release source + current-reading rules.
+
+ZR-006 — NORMATIVE / REVIEW-EVIDENCE SEPARATION
+Disposition: KEEP
+Owner: release/traceability semantics
+Rule:
+1. Review packets, model outputs, hashes, reviewer IDs and synthesis reports are TRACEABILITY_EVIDENCE_ONLY.
+2. Every admitted semantic delta must be materialized in normative final source bytes under an explicit current owner/anchor.
+3. Missing review evidence may reduce assurance/release validity but cannot supply normative semantics that are absent from source.
+4. CurrentReadingMap, UpgradeTraceability and ReleaseManifest required for release interpretation must be embedded or bundled as first-class hash-bound release artifacts.
+5. Phrases stating that reviewer packets are “part of the semantic reading” are superseded by this separation rule.
+
+ZR-007 — SINGLE OWNER FOR CROSS-LAYER RELEASE OVERLAYS
+Disposition: PATCH / FIVE-FILE BOUNDARY PRESERVED
+Owner: Annexure release/current-reading section
+Rule:
+1. Preserve the five-file corpus. Do not create a sixth normative file.
+2. Annexure release/current-reading section is the normative owner of future cross-layer overlay semantics.
+3. User/System/Technical/Theories contain only applicable projections plus a hash/reference to the Annexure owner.
+4. Existing byte-identical P038-P042 copies remain historical/current-release lineage and are not rewritten merely for deduplication.
+5. Future material edits occur at the normative owner and regenerate projections deterministically.
+6. Projection mismatch is a release-integrity failure, not an alternative semantic branch.
+
+ZR-008 — SOURCE-DECLARED GSL VERSION VS COMPATIBILITY ASSURANCE
+Disposition: KEEP
+Owner: release manifest / compatibility metadata
+Fields:
+- source_declared_gsl_version
+- gsl_compatibility_assurance
+Allowed assurance examples: SOURCE_DECLARED_NOT_INDEPENDENTLY_PROVEN | PROVED | UNKNOWN | STALE | INAPPLICABLE.
+Rule: a declared version is not a compatibility proof; formal compatibility requires an exact proof/evidence artifact.
+
+ZR-009 — MACHINE-BINDING CLOSURE LEDGER + ASSURANCE-STATUS SPLIT
+Disposition: KEEP
+Owner: release assurance / Technical executable-admission metadata
+Rule:
+1. Preserve T-EH-01..T-EH-20 semantic profiles exactly; do not invent machine IDs.
+2. Release assurance surface explicitly separates:
+   DESIGN_SEMANTIC_REVIEW = COMPLETE_WITHIN_DECLARED_SCOPE
+   MACHINE_BINDING_CLOSURE = INCOMPLETE until required bindings close
+   EXECUTED_CONFORMANCE = NOT_CLAIMED or owner-qualified state
+   EMPIRICAL_VALIDATION = owner-qualified state
+   EXTERNAL_CERTIFICATION = NOT_CLAIMED unless separately certified
+3. Add MachineBindingClosureLedger aggregating each required binding’s owner, contract/result algebra/resource/termination obligations, current state, required tests, blockers, and evidence refs.
+4. Executable admission is blocked while any required entry remains unresolved.
+5. “Semantic review complete” never implies machine binding or executed conformance complete.
+
+ZR-010 — TYPED THEORY RELEASE REGISTRY
+Disposition: PATCH / EXTEND EXISTING THEORYARTIFACT METADATA
+Owner: existing TheoryArtifact/theory registry
+Rule:
+1. No second theory registry or Engine.
+2. Extend current metadata with optional/additive fields equivalent to:
+   artifact_kind / semantic_role
+   current_effective_semantic_version
+   release_effective_status
+   validation_mode / evidence_class
+   supersedes / refines lineage
+   current owner/source anchor
+   applicability / falsifiers
+3. Theory front matter shall expose a derived TheoryReleaseView using those existing records.
+4. Keep taxonomy minimal and extensible; do not force every item into a brittle closed enum. At minimum distinguish modeling/ontology, state/model, control/regulation, mathematical transport/transform, safety/reflex, epistemic/governance, reference architecture, and research profile when applicable.
+5. Different artifact kinds may require different proof/validation obligations; the registry makes that burden visible but does not itself satisfy it.
+6. A Garden release refinement must make the effective theory version/status clear even if retained historical headers remain unchanged.
+
+ZR-011 — PROFILE-BIND REFERENCE-ARCHITECTURE OPERATIONAL CONSTANTS
+Disposition: KEEP
+Owner: reference architecture / parameter profile owner
+Rule:
+1. Every operational numeric constant in a reference architecture is either:
+   a) bound to a versioned qualified parameter/profile with scope/evidence, or
+   b) explicitly tagged ILLUSTRATIVE_REFERENCE_DEFAULT / NON_NORMATIVE.
+2. A reference default never silently becomes a universal Garden invariant.
+3. Qualified domain safety limits already bound to an admitted safety case/profile remain valid.
+4. Runtime selection of a parameter value must bind applicable profile/version/evidence and DesignEpoch where material.
+5. Tests distinguish illustrative defaults from enforceable domain-qualified safety limits.
+
+ZR-012 — DEFINITION / ANCHOR COHERENCE
+Disposition: PATCH / MINIMAL METADATA EXTENSION
+Owner: existing semantic-anchor/current-reading registry machinery
+Rule:
+1. Do not create a second DefinitionRecord ontology if existing anchor/registry records can carry the fields.
+2. Every active semantic definition must be machine-resolvable to exactly one current definition record containing anchor ID, layer, owner, effective source range/hash, status and aliases.
+3. A contentless declaration must be explicitly ALIAS_OF or GROUP_REF; adjacency alone cannot create ownership.
+4. Backlinks/references are typed references, never competing definitions.
+5. Large sections need child-unit IDs only when multiple independently changeable semantic obligations exist; use semantic independence, not an arbitrary line-count threshold.
+6. Child-unit IDs and ranges are review/change-impact metadata and cannot silently alter semantic precedence.
+7. Deterministic validation must detect multiple active definitions, unresolved alias targets, backlink-as-definition confusion, or missing active owners.
+
+FRESH-SYNTHESIS CLOSURE
+- No new top-level Engine is created.
+- No new authority source is created.
+- No new universal legal threshold is created.
+- No current hard rights/safety/privacy/authority gate is weakened.
+- ZR-001 preserves the existing >=2-source safety floor when no qualified profile exists, while correcting false independence-by-count.
+- ZR-002 avoids a new consent schema unless a later owner-gap review proves it necessary.
+- ZR-005 remains derived/non-authoritative.
+- ZR-007 preserves the five-file corpus.
+- ZR-010 extends existing theory metadata rather than creating a duplicate theory registry.
+- ZR-012 reuses existing anchor/registry machinery rather than minting a parallel DefinitionRecord system.
+
+FINAL CHALLENGE REQUEST
+Try to falsify this synthesis using only the current-v15.9-derived candidate context above.
+Return JSON only:
+{
+ "verdict":"ACCEPT|ACCEPT_WITH_PATCH|BLOCK",
+ "material_findings":[{"id":"C1","severity":"CRITICAL|HIGH|MEDIUM|LOW","candidate_refs":["ZR-001"],"claim":"...","minimal_patch":"...","test":"..."}],
+ "must_retain":[],
+ "must_remove_or_defer":[],
+ "uncertainty":"..."
+}
+At most 6 material findings. Do not invent stylistic defects.
