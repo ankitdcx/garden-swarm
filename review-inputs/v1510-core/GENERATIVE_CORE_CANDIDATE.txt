@@ -1,0 +1,90 @@
+GARDEN v15.10 GENERATIVE ABSTRACTION CORE — TEMPORARY REVIEW CANDIDATE
+
+STATUS
+Noncanonical review material only. No authority, proof, implementation, certification or Garden promotion.
+
+GOAL
+Compress Garden by expressing repeated semantics once in GSL, while keeping the current ~48 human-readable architecture-object modules as the navigation/explanation view. The human modules remain recognizable; their repeated internals become generated/specialized from a small basis.
+
+EXISTING GSL FOUNDATION — MUST REMAIN, NOT DUPLICATE
+Pillars: Existence, Change, Agency, Law, Value, Frame.
+Core Objects: TIME, SPACE, THING, EVENT, ACTION, AGENCY, RULE, VALUE, CONTEXT, CLAIM.
+Existing cross-cutting semantic/control families already cover state, observation, authority, resource, provenance, causality, dependency, conflict, uncertainty, decision, validity, comparison and reasoning.
+Existing admitted algebras remain Process, Policy, Decision, Conformance, Evidence and Bridge.
+
+PROPOSED ABSTRACTION PILLARS — HUMAN QUESTIONS, NOT NEW ONTOLOGY
+1 IDENTITY — what is it?
+2 CONDITION — what state/validity/context is it in?
+3 CONNECTION — what is it related/bound to?
+4 BEHAVIOR — how does it operate/change/transform?
+5 CONSTRAINT — what contract/rule/authority/evidence/safety boundary applies?
+6 REPRESENTATION — how is the accepted meaning rendered for human/machine/math/runtime use?
+
+PROPOSED SEVEN CORE FORMS — GSL-NATIVE DESIGN FORMS
+A CONSTRUCT: stable typed design/semantic identity; normally an existing THING/ARTIFACT/ArchitectureObject.
+B CONTRACT: purpose plus inputs/outputs/preconditions/postconditions/effects/authority/consent/hard limits/evidence/proof/failures/resources/termination/dependencies/invalidators.
+C STATE: typed condition, lifecycle, validity and status over time/context.
+D RELATION: owner-qualified directional binding/relationship including scope, boundary and non-transitivity semantics.
+E PROCESS: state-changing/deriving/communicating behavior built from existing Process Algebra and ACTION/EVENT transitions.
+F RULE: condition to obligation/permission/prohibition/constraint/derivation using existing GSL RULE; protected owner remains controlling.
+G PROJECTION: representation of accepted semantics into a human view, machine schema, receipt, registry entry, API, mathematical/operator representation, executable test, etc.
+
+DERIVATION TARGETS
+Architecture object/module = Construct + Contract + State + Relations + Processes + Rules + Projections.
+Function = Contract + Process.
+Lifecycle = State + Process + Rule.
+Schema = machine Projection of accepted semantic structure; stable SchemaID remains owner/version bound.
+Receipt = Projection of process/event/result/state-delta plus evidence/provenance.
+Registry = Construct + State + Relations + Rules/Contract + Projection.
+Binding = Relation + Context + Contract/Rule.
+Plan = Process + Contract + State.
+Assessment = Process + Contract + result State/Projection.
+Invariant = Rule or accepted derived Rule instance.
+Test = Process that challenges a Rule/Contract and emits typed result/receipt.
+Proof obligation = formal discharge requirement on a Rule/Contract.
+Algebra = Construct whose Contract declares operands/operators; operators are typed Action/Process forms; laws/non-laws are Rules; closure/result semantics are Contract/State; representation is Projection. The six current algebras remain explicit specializations, not erased.
+Theory = Construct + existing CLAIM/RULE/model semantics + Contract for assumptions/applicability/falsifiers/validity + State for status/version + Relations for couplings + Process for testing/revalidation + Projection for equations/readable/machine forms.
+Reference architecture/profile = Construct + Contract + Context specialization + Relation bindings + Process + Rule + Projection.
+Domain = Construct containing typed claims/rules/theories/evidence/bindings and domain contracts.
+Existing GSL Context/Evidence/Claim/Event/Action/Agency/Value/Rule are reused directly, never duplicated by abstraction.
+
+INVARIANT COMPRESSION
+Candidate law families: authority non-amplification; scope non-widening; human-effect closure; epistemic non-promotion; provenance preservation; uncertainty preservation; revocation propagation; hard-gate preservation; dependency invalidation; conflict preservation; identity/commitment continuity; no self-certification; failure containment; resource-floor preservation; option/reversibility preservation.
+Static composition only generates CandidateObligation. It becomes an accepted DerivedObligation only through existing controlling owners plus required Reason/Proof/Evidence/Compliance/governance paths. Protected constitutional, safety, legal, HSA, theory/domain and exception semantics remain explicit where irreducible.
+
+INTERACTION COMPILATION
+typed endpoints + typed edge/path/SCC/feedback/hyperedge + context + admitted laws -> findings and CandidateObligations.
+Authority/consent/delegation default non-transitive. Epistemic status never promotes by graph reachability. Incomparable/conflicting/omitted semantics stay explicit.
+
+HUMAN MODULE VIEW
+Keep approximately the current 48 detailed architecture objects as module cards. A card answers:
+WHAT IS IT?
+WHAT DOES IT PROMISE?
+WHAT STATE/VALIDITY?
+WHAT IS IT CONNECTED TO?
+HOW DOES IT ACT/CHANGE?
+WHAT RULES/BOUNDARIES?
+HOW IS IT SHOWN/IMPLEMENTED?
+These are human projections, not separate semantic foundations.
+
+15.x COVERAGE — MUST ALSO REDUCE THROUGH THE SAME BASIS
+CPI v1.1; CDDT v1.1; Operational Closure Foundation; Minimum Stable Core; Living Theory/Module Lifecycle; Operational Action/Trust Hardening; external-design learning/rights boundary; Cross-Model Upgrade Review; Cross-Layer Integrity/Causality/Continuity; Algebra Formalization; Generalized Causal Leverage; release/reference closure and typed arithmetic/bindings; qualification/TRACE/explanation/skill/cognitive/system-comparison/design-closure additions; Human Assurance Reliability; Human-Effect/Privacy/Reputation/Justice/Migration/Relational-Agency/Protected-Reporting hardening; v15.9 semantic/source-rights/institutional/assurance closure.
+These should be expressible as specializations/compositions of existing GSL + the seven forms. If one genuinely requires an eighth form, identify the exact counterexample and why composition cannot represent it.
+
+NO-LOSS STANDARD
+Semantic preservation does not require text preservation.
+Every predecessor semantic item maps to one of:
+EXISTING_GSL_PRIMITIVE | CORE_FORM_SPECIALIZATION | EXPLICIT_IRREDUCIBLE_SPECIALIZATION | DERIVED_OBLIGATION | HUMAN_PROJECTION | MACHINE_PROJECTION | COMPATIBILITY_ALIAS | EXPLICIT_SEMANTIC_DELTA.
+No silent DROP.
+Protected boundaries, owner-specific result/failure/UNKNOWN semantics, theory mathematics/assumptions/falsifiers, legal/context exceptions and stable IDs remain explicit unless scope-bound equivalence is actually established.
+Machine expansion and human explanation must resolve to the same accepted semantic source.
+
+REVIEW QUESTIONS
+1 Is the 6-pillar / 7-core-form basis sufficient for modules, schemas, registries, receipts, functions, lifecycles, invariants/tests/proofs, all algebras, all theories/reference architectures, domains/profiles and all listed 15.x additions?
+2 Produce a concrete predecessor concept that cannot be losslessly represented, if any.
+3 If an eighth form is necessary, prove why existing GSL plus the seven cannot represent it.
+4 Identify places abstraction would hide owner, authority, evidence class, applicability/context, failure/UNKNOWN, legal or scientific/theory semantics.
+5 Is ALGEBRA-as-specialization correct? Is THEORY-as-specialization correct?
+6 Is ~48 stable human module cards + much smaller generative semantics a sound dual projection?
+7 Specify the strongest reconstruction/equivalence tests needed before deleting repeated predecessor source.
+8 Return APPROVE / APPROVE_WITH_PATCH / REJECT, then material findings only.
