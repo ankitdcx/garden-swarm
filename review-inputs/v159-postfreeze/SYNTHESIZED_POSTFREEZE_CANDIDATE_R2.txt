@@ -1,0 +1,180 @@
+GARDEN v15.9 FINAL POST-FREEZE + HISTORY-CLOSURE CANDIDATE R2
+Date: 2026-09-18
+Status: FINAL ADVERSARIAL-CHALLENGE CANDIDATE — NOT YET MATERIALIZED
+Base: Garden v15.9 COMPLETE CROSS-REVIEWED WORKING CANDIDATE (P001-P037)
+Additional review scope: P038-P042
+Canonical effect: NONE
+Executable certification: NONE
+Production certification: NONE
+
+BASE FILE ROOTS
+User      61f3e002762c41dfc8988fea22cf63ef5c9bd609b52d92f7d6e70fa02e0eac6b
+System    f800703ae004144ec50c31ac41ea8c0bde8486f15af4fa66838f785708485382
+Technical eb794368c550decefe6b37a5734a4515e9338504d5d1e2f4c4c4365ce05be5e1
+Annexure  37bb987758205ba5a82a9946666f7efd245a495700eb392c4face31db0dae06a
+Theories  e090d07a602bf35129bff1601b9c46a754ff5e2bd4e65204304376256d41b438
+
+REVIEW EVIDENCE USED
+- Gemini final blind review: run 35305548597 / artifact 10531624276 — ACCEPT_WITH_PATCH
+- DeepSeek recovered final blind review: run 35306124969 / artifact 10531975248 — ACCEPT_WITH_PATCH
+- GLM recovered final blind review: run 35306373993 / artifact 10531054108 — ACCEPT_WITH_PATCH
+- Xiaomi recovered review: run 35306204903 / artifact 10531940704 — substantive but JSON truncated; supplemental only, not counted toward final quorum.
+- Earlier usable P038-P041 branch evidence remains supplemental; no completed usable review is rerun.
+
+OWNER-RESOLUTION FINDINGS FROM CURRENT v15.9
+1. UCAS is explicitly named in the current User file as a separate candidate not part of the current release. Therefore historical recovery closes a real deferred-definition gap rather than duplicating an admitted UCAS owner.
+2. Current Annexure/Theories explicitly defer Kindergarten and FDE/CFBR because exact historical definitions were missing. The history audit supplies those definitions; admission must still use existing owners and ordinary DesignEpoch/review gates.
+3. CapabilityTransferAssessment/v1 is already present in Technical candidate artifacts. Manufacturing qualification transfer is therefore a specialization of that existing artifact plus Dependency/DesignEpoch/Compliance, not a new schema family.
+4. Current Technical already has a finite audit-closure contract and GSL-KR bounded retrieval/maintenance semantics. Topic completeness therefore becomes a clarification/profile of existing audit/research/KR coverage, not a new top-level owner.
+5. HumanSystemsMap is represented as a purpose-limited GSL-KR/WorldEvidence view using existing provenance, contradiction, jurisdiction/time/currentness, privacy and authority semantics; no new top-level SchemaID is created.
+6. Existing federation/branch/MAC/DesignEpoch machinery remains the owner of FDE/CFBR; the recovered history supplies a bounded reconciliation profile rather than a second federation engine.
+
+FINAL R2 SEMANTICS
+
+R2-A — OPERATIONAL RESILIENCE / CIAH REFINEMENTS
+A1. Saturation and overload SHALL resolve through existing typed runtime/AAP dispositions. No new saturation SchemaID or priority token is created. If a required rights/safety/authority/privacy/law gate cannot be satisfied under load, the affected work is BLOCKED/non-PASS or explicitly deferred with the gate preserved; queue pressure, volume, urgency or scarcity cannot make a required gate optional.
+A2. Downstream saturation/backpressure that can affect correctness, completion or timing SHALL be explicit upstream state. Silent loss and unbounded queue growth are prohibited. The current Runtime/Transition owner determines the exact registered state vocabulary; this overlay does not mint a parallel state algebra.
+A3. Recovery/failover revalidation explicitly includes recovered cache, in-memory state, authority/evidence/dependency bindings and uncertain external effects before ordinary restoration.
+A4. Handoff/failover closure is not a separate owner. It reuses B3 Process/Execution/CPI acknowledgement semantics. A control switch without resolved state/effect identity, current ownership/authority and applicable acknowledgement remains INCOMPLETE/OUTCOME_UNKNOWN; it is not success.
+A5. Monitor/alarm output creates no authority. Uncertain/false alarms remain typed and effect-bounded. Rights-affecting or irreversible protective action still requires the current applicable authority/safety profile; a noisy detector cannot self-authorize escalation.
+A6. Material hazard analysis includes action, suppression/non-action, fallback and shutdown consequences. No universal numerical threshold is created by this requirement.
+A7. Near-miss/precursor evidence may trigger NEEDS_REVALIDATION, research or bounded learning, but is not silently promoted to incident-grade truth, liability, guilt or authority.
+A8. Cumulative-change anti-fragmentation remains the existing DesignEpoch owner; end-to-end human-effect coverage remains Human-Effect Closure. No duplicate CIAH owner is added.
+
+R2-B — UAAC / DSDIH DISPOSITION
+B1. UAAC is NOT admitted as a new subsystem. Current Causal Safety, Human-Effect Closure, CTSN, CAD, OAC, Security and Authority owners remain controlling for capability != ceiling, self-report != independent evidence, hidden/open-world channels, copies/forks, cumulative effects and authority non-accretion.
+B2. Unresolved material adversarial channel/strategy coverage at the required assurance level is scoped UNKNOWN/INCOMPLETE and non-PASS for that assurance claim. “Bounded open-world” never lowers the required assurance level or turns UNKNOWN into PASS; exhaustive proof is not falsely claimed.
+B3. Process/Execution/CPI is the single owner for dispatch/commit/effect/acknowledgement semantics. Crash or loss after external effect but before acknowledgement is OUTCOME_UNKNOWN and blind replay is forbidden absent existing qualified fencing/idempotency/reconciliation semantics.
+B4. Cache, sidecar, proxy, adapter, queue or intermediary insertion cannot weaken applicable authority/rights/privacy/safety/law gates merely because it relays, caches or transforms work.
+B5. No new DSDIH Engine/schema family is admitted absent a later demonstrated owner gap.
+
+R2-C — SOURCE RIGHTS / DELTA MANAGEMENT
+C1. No new source-rights owner is created. Existing current v15.9 semantics remain controlling: public access != public domain; lawful facts/ideas may inform independent Garden reasoning; protected expression/code/data/figures/proprietary implementation require applicable permission/license/authorization for material reuse.
+C2. P036/P037 ReleaseManifest, UpgradeTraceability, CurrentReadingMap and DesignEpoch already own bounded delta-management/materialization closure. The recovered delta-management ideas are process lineage/alias only.
+
+R2-D — MACHINE PROCESSING / PRIVACY / JUSTICE
+D1. Universal everyone/all-the-time inspection of private devices/messages is explicitly REJECTED. Technical possibility, model confidence, security claims or social benefit do not create a general observation/search/surveillance authority.
+D2. Machine-only computation on private content is itself a privacy/human-effect event even if no human views the content. It requires independently valid purpose plus applicable authority/consent/law/rights/privacy, minimization, retention limits and current evidence; absence of human viewing waives none of these.
+D3. Computation/access, retention, human inspection, disclosure, evidentiary use, investigative threshold, adjudicative finding and guilt/liability are distinct stages. Every protected transition requires its own current legal/authority basis where applicable; no stage automatically authorizes or proves the next.
+D4. Scoped privacy-preserving/on-device analysis may be admissible only under the same independently valid purpose/authority/consent/law/rights/privacy/minimization constraints. Where the operation is rights-affecting or evidentiary, applicable auditability and contestability are mandatory. Technical capability or model confidence never creates observation rights.
+D5. Correlated suspicion remains epistemically distinct from jurisdiction-specific investigative thresholds, admissible evidence, finding of fact and guilt/liability. Garden does not invent one universal probable-cause or evidentiary threshold.
+D6. Missing, stale or conflicting purpose, authority, jurisdiction, minimization, model-validity, auditability or other required evidence yields non-PASS for the protected operation.
+D7. Existing Justice, TSI/TIA, Human-Effect Closure, Privacy and Authority owners remain controlling; no parallel police power, justice engine or surveillance subsystem is created.
+
+R2-E — FULL-HISTORY RECOVERY
+
+E1. UCAS — BOUNDED CONTRACT/AGREEMENT GOVERNANCE PROFILE
+Status: ADMIT as a profile/clarification over existing Contract/Policy/Compliance/Authority/Law/Knowledge/Evidence/Transition owners; no Contract Algebra and no automatic new SchemaID.
+Rules:
+- TechnicalContract != ActorAgreement != LegallyEnforceableAgreement.
+- Agreement/signature existence never manufactures authority, consent, truth, enforceability or waiver of non-derogable protections.
+- Formation/validity/enforceability are jurisdiction, actor-capacity, authority, type and context dependent; no universal contract-law test is invented.
+- Material terms are versioned/immutable in lineage; amendments create explicit successor lineage and revalidate dependent implementation/performance bindings.
+- Material obligations may bind human-readable meaning -> implementation binding -> observed performance evidence.
+- Observed nonperformance != established breach != liability/remedy determination.
+- Delegation of performance, delegation of authority, assignment, agency, subcontract and novation remain distinct.
+- Automated/technical contract execution remains subordinate to current rights/safety/law/authority constraints, competent dispute/stay mechanisms where applicable, and qualified emergency/minimum-risk controls; code execution cannot contract out of protected rights.
+- External-system agreements additionally bind applicable institutional authority, data use, security, continuity and exit/portability semantics.
+- Interpretation/diff/explanation preserves ambiguity, jurisdiction, provenance and competent-authority boundaries.
+No exact SchemaID is minted by this overlay; current owners host the profile until ordinary schema admission proves a distinct artifact is required.
+
+E2. KINDERGARTEN — CHILD-DEVELOPMENT BRANCH/PROFILE
+Status: ADMIT as a strengthened child-development profile on existing Human Sovereignty/Privacy/Constitution/Education/Accessibility/branch-federation owners; not a weaker Garden and no new constitutional root.
+Rules:
+- Developmentally appropriate language/explanation and accessibility.
+- Stronger privacy/data minimization; educational memory cannot silently become advertising/reputation/unrelated profiling.
+- No commercial manipulation, targeted persuasion or addictive engagement optimization.
+- Autonomy/tool/action scopes remain bounded by applicable child rights, safety, law, age, consent/assent, guardian/competent-authority and existing authority ceilings.
+- Child assent is additive, never substitutive for guardian/competent-authority/legal consent where required.
+- Guardian/parent/institutional authority cannot waive non-derogable child rights, statutory privacy protections or mandatory safety floors.
+- Developmental appropriateness changes interaction/explanation, never lowers a hard safeguard floor.
+- Demonstrated competence/maturity may inform an allowed profile only where law/rights permit; it never overrides statutory age, jurisdiction or child-protection law.
+- Curiosity, creativity, education, simulation and accessibility may be supported without ideological/political obedience engineering.
+- Improvements between Main and Kindergarten pass ordinary Compare/Reason/Proof/Evidence/Evolve/DesignEpoch admission; no automatic merge.
+
+E3. FDE / CFBR — VOLUNTARY FEDERATION + BRANCH RECONCILIATION PROFILE
+Status: ADMIT as a bounded profile of existing federation/MAC/branch/Authority/Security/DesignEpoch owners; no new federation engine or SchemaID.
+Rules:
+- Reachability != permission. Enrollment/mirroring/adoption is voluntary and authority-bound.
+- Do not bypass firewall, local security, jurisdictional control or revocation.
+- Releases are identity/version/provenance bound and verifiable; reproducibility claims require their own evidence.
+- Participation is revocable; revocation stops future synchronization/adoption without falsifying lawful committed history.
+- Connectivity, replication, success, creator identity, population or popularity cannot create constitutional supremacy or central authority.
+- Upgrades are pull/verify/authorize/adopt, not forced synchronization.
+- Local node separately checks release identity, applicable proof/evidence and compatibility, then decides whether/when adoption is authorized.
+- Branches can be experimental/jurisdiction/profile-specific, but a branch that weakens protected constitutional rights cannot claim canonical equivalence.
+- Partition/offline operation preserves local safety/authority and records divergence; reconnection requires explicit conflict/reconciliation handling, never silent material merge.
+- Reconciliation path: fork -> difference evidence -> candidate improvement -> ordinary canonical evaluation -> legitimate ratification/admission -> new DesignEpoch -> compatible rejoin.
+- Semantic convergence does not require implementation monoculture.
+
+E4. HUMAN SYSTEMS MAP
+Status: ADMIT only as a purpose-limited GSL-KR/WorldEvidence VIEW, not a top-level profile/schema.
+Rules:
+- Represent actor -> authority -> rule -> process -> evidence -> decision -> action -> appeal/audit relationships where applicable.
+- Formal rule/law, reported policy, observed practice and inference are distinct epistemic/view classes; observed practice cannot overwrite formal law.
+- Material claims bind provenance, jurisdiction/scope, effective/currentness time, uncertainty and contradiction state.
+- Contradictions remain explicit; no silent averaging into one truth.
+- Private-system ingestion/use requires applicable purpose/authority/privacy.
+- Knowledge about how a system works creates no access/action authority.
+- Updates bind normal receipts/DesignEpoch/dependency revalidation.
+This is implemented as a named purpose-limited view using existing GSL-KR/world-evidence primitives; no new SchemaID is admitted by name alone.
+
+E5. TOPIC COVERAGE / COMPLETENESS
+Status: MERGE into existing finite audit-closure + Research/KR/Audit coverage semantics; do NOT mint TopicCompletenessProfile as a separate owner unless later evidence proves a gap.
+Rules:
+- A declared finite review scope may define required coverage dimensions such as structural, evidence, operational, quantitative, regional, temporal, contradiction and rights/source-usage coverage where applicable.
+- A positive result means NO_KNOWN_GAP_WITHIN_DECLARED_SCOPE (or equivalent existing owner-qualified status), never COMPLETE_TRUTH, global safety, causal completeness or open-world omniscience.
+- Missing/weak dimension coverage is INCOMPLETE/UNKNOWN/STALE for that dimension; it does not make absent external facts false.
+- Coverage gaps may create research/work candidates but create no truth or authority.
+- Generated views/charts remain provenance-bound and cannot fabricate data.
+- Acceptance/update follows existing knowledge/dependency/revalidation semantics.
+
+E6. MANUFACTURING QUALIFICATION TRANSFER
+Status: ADMIT as a domain specialization of existing CapabilityTransferAssessment/v1 + Dependency/DesignEpoch/Compliance/Engineering owners; no new transfer schema.
+Rules:
+- Bind source and target product/process/context/standard roots.
+- Assess transfer per qualified claim/requirement, not whole-product similarity.
+- Preserve exact source qualification evidence lineage, scope and independence.
+- Invalidators include applicable material/process/equipment/tooling/fixture/environment/jurisdiction/standard/model/measurement changes.
+- Partial transfer is allowed only for unaffected qualified claims with established applicability.
+- Common supplier, resemblance or source certification does not transfer target certification.
+- Required output includes transfer assessment plus required retest/reinspection/requalification plan.
+- Unresolved material invalidators or missing required retest/reinspection plan is non-PASS for the transfer claim.
+- External/third-party certification is never claimed to transfer by similarity.
+
+E7. SUBSUMED HISTORICAL ITEMS
+GAC, GTAH, KR-CEA, Derived-View Divergence and Legal-SMT/encoding-vs-reality remain explicit lineage/subsumption records. No duplicate owner is reintroduced.
+
+E8. CASI ADAPTER ACTIVATION
+Remains DEFERRED. Exact operational qualification interface is still insufficiently recovered; no activation is inferred from historical mention.
+
+R2-F — HARD CLOSURE RULES
+F1. Review/model agreement is evidence only; it creates no truth, authority, canon, execution permission or certification.
+F2. No new SchemaID is minted merely from a convenient candidate/profile name.
+F3. Existing owner takes precedence over duplicate subsystem; overlays may specialize/clarify existing owners without creating a second control loop.
+F4. UNKNOWN/STALE/CONFLICT/INCOMPLETE/BLOCKED are non-PASS where hard resolution is required.
+F5. Rights, privacy, consent/assent, legitimate authority, safety, law, appeal/contestability and human agency survive federation, recovery, overload, optimization and domain/profile specialization.
+F6. Child specialization can strengthen safeguards but cannot waive protected rights or statutory floors.
+F7. Federation connectivity/adoption/popularity/creator identity cannot create constitutional supremacy.
+F8. Contract text/signature/code execution cannot manufacture authority, consent, legal enforceability or waiver of non-derogable protection.
+F9. Coverage claims remain declared-scope claims, never closed-world omniscience or proof of open-world safety.
+F10. Qualification transfer never claims external certification merely from similarity or source certification.
+F11. Material post-review semantic edits reopen the affected review/materialization closure.
+F12. The final v15.9 materialization SHALL preserve the previously reviewed P001-P037 base bytes and append/overlay these P038-P042 semantics with explicit owner/status/alias/defer mapping rather than silently rewriting predecessor evidence.
+
+CHALLENGE TASK
+Try to falsify R2 after these patches.
+- Identify any material contradiction, duplicate owner, hidden authority escalation, rights/privacy/child-safety/legal/federation regression, or unjustified admission.
+- Specifically test E1-E6 owner mappings and whether ADMIT/MERGE/VIEW/SPECIALIZATION statuses are the smallest correct deltas.
+- Test A1-A7/D1-D6 under adversarial overload, failover, false alarm, privacy, legal-threshold and evidence-boundary scenarios.
+- Verify E8 remains deferred.
+- If no material issue remains, verdict ACCEPT.
+Return only concise JSON:
+{
+ "verdict":"ACCEPT|ACCEPT_WITH_PATCH|BLOCK",
+ "summary":"...",
+ "material_findings":[{"id":"C1","severity":"CRITICAL|HIGH|MEDIUM|LOW","item_refs":["E1"],"claim":"...","minimal_patch":"...","test":"..."}],
+ "must_retain":[],
+ "must_remove_or_defer":[],
+ "uncertainty":"..."
+}
