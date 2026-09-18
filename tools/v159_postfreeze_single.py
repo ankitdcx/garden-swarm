@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, hashlib, json, os, subprocess, time
+import argparse, hashlib, json, math, os, subprocess, time
+from urllib import request, error
 from pathlib import Path
 
 OPENROUTER = "https://openrouter.ai/api/v1/chat/completions"
@@ -8,6 +9,9 @@ REGISTRY = Path("agents/reviewer-slot-registry.json")
 BASELINE = Path("review-inputs/v159-postfreeze/CHATGPT_BASELINE.txt")
 OUT = Path("review-results/v159-postfreeze")
 TIMEOUT = 240
+KEY_INFO = "https://openrouter.ai/api/v1/key"
+DAILY_CEILING = 2.0
+PER_CALL_CEILING = 0.10
 
 
 def sha(s: str) -> str:
@@ -77,13 +81,15 @@ def call(model: str, text: str, key: str):
         "temperature": 0.05,
         "max_tokens": 3500,
         "stream": False,
-        "provider": {"allow_fallbacks": False, "data_collection": "deny", "sort": "price"}
+        "provider": {"allow_fallbacks": True, "data_collection": "deny", "sort": "price", "ignore": ["anthropic", "mistral", "nvidia"], "max_price": {"prompt": 0.25, "completion": 1.0}}
     }
     cmd = [
         "curl", "-sS", "--connect-timeout", "10", "--max-time", str(TIMEOUT),
         OPENROUTER, "-X", "POST",
         "-H", "Authorization: Bearer " + key,
         "-H", "Content-Type: application/json",
+        "-H", "HTTP-Referer: https://github.com/ankitdcx/garden-swarm",
+        "-H", "X-Title: Garden v15.9 Post-Freeze Review",
         "--data-binary", "@-",
         "-w", "\\n%{http_code}"
     ]
@@ -104,9 +110,25 @@ def call(model: str, text: str, key: str):
     except Exception:
         data = {"raw_payload": payload}
     if not 200 <= status < 300:
-        return status, data, f"HTTP_{status}"
+        return status, data, f"HTTP_{status}:" + json.dumps(data, ensure_ascii=False)[:1000]
     return status, data, None
 
+
+def key_budget_status(key: str):
+    req = request.Request(KEY_INFO, headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+    try:
+        with request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read().decode("utf-8"))
+    except Exception as exc:
+        return None, {"status": "UNVERIFIED", "detail": f"{type(exc).__name__}: {exc}"}
+    payload = data.get("data") if isinstance(data, dict) and isinstance(data.get("data"), dict) else data
+    try:
+        usage = float(payload.get("usage_daily"))
+        if not math.isfinite(usage) or usage < 0:
+            raise ValueError("invalid usage")
+    except Exception:
+        return None, {"status": "UNVERIFIED", "raw_usage_daily": payload.get("usage_daily") if isinstance(payload, dict) else None}
+    return usage, {"status": "VERIFIED", "usage_daily": usage, "limit": payload.get("limit"), "limit_remaining": payload.get("limit_remaining")}
 
 def parse_content(data):
     choices = (data or {}).get("choices") or []
@@ -149,6 +171,11 @@ def main():
     packet = packet_path.read_text()
     baseline = BASELINE.read_text()
     model = load_model(args.family)
+    usage_daily, budget_receipt = key_budget_status(key)
+    if usage_daily is None:
+        raise SystemExit("OpenRouter daily usage could not be verified")
+    if usage_daily + PER_CALL_CEILING > DAILY_CEILING:
+        raise SystemExit("OpenRouter daily reserved budget exhausted")
     packet_sha = sha(packet)
     prompt = build_prompt(packet, baseline, args.family, packet_sha)
     start = time.time()
@@ -170,12 +197,17 @@ def main():
         "actual_model": (data or {}).get("model") if isinstance(data, dict) else None,
         "provider": (data or {}).get("provider") if isinstance(data, dict) else None,
         "usage": (data or {}).get("usage") if isinstance(data, dict) else None,
+        "daily_budget_receipt": budget_receipt,
         "canonical_effect": False,
         "semantic_delta_admitted": False
     }
     outdir = OUT / args.packet
     outdir.mkdir(parents=True, exist_ok=True)
     out = outdir / f"{args.family}.json"
+    cost = ((data or {}).get("usage") or {}).get("cost") if isinstance(data, dict) else None
+    if isinstance(cost, (int, float)) and float(cost) > PER_CALL_CEILING:
+        result["usable"] = False
+        result["error"] = "MODEL_COST_CEILING_EXCEEDED"
     out.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps({"packet": args.packet, "family": args.family, "usable": result["usable"], "error": error}))
     if not result["usable"]:
