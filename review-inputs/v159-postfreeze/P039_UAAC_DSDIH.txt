@@ -1,0 +1,66 @@
+GARDEN v15.9 POST-FREEZE REVIEW PACKET P039
+Topic: UAAC + DSDIH v1.0
+Provenance: recovered from recent Garden candidate discussions after the original v15.8 freeze.
+Status entering review: CANDIDATE / not canonical / not executably certified.
+
+UAAC — Universal Adversarial Agency Closure
+Patch: GARDEN-UAAC-2026-09-17
+Intended topology: cross-cutting hardening only; no new top-level Engine, GSL primitive, authority source or automatic SchemaID.
+Proposed artifacts (SchemaIDs pending): AdversarialScenarioCoverageManifest/v1; AdversarialAgencyClosureReceipt/v1.
+Human-Effect Closure is a required dependency.
+
+Core UAAC semantics:
+- UNKNOWN != SAFE; a bounded PASS is scope/evidence/profile specific, never "globally aligned";
+- observed capability != capability ceiling;
+- self-report != independent evidence;
+- monitored behavior != evidence of unmonitored compliance;
+- unknown/hidden channels, persistence mechanisms, copies/forks, side channels and adaptive strategies remain unresolved unless covered;
+- local micro-effects may aggregate across time, agents, channels, organizations and infrastructure;
+- authority never accretes from capability, persistence, replication, success, consensus, possession or copying;
+- a copy/fork inherits no broader authority than a valid current parent/delegation permits;
+- incomprehensible/novel strategy remains bounded by effect/authority/human-effect closure rather than being treated as exempt;
+- unresolved high-impact dimensions prevent PASS absent an independently authorized compensating control under an applicable owner;
+- a newly validated evasion/failure class triggers bounded containment where authorized, retrospective search across materially affected historical/deployed/pending closures, and regression-test creation;
+- reviewer/model count or internal doctrine does not create independent evidence.
+
+Suggested owner composition from the conversation:
+AAP + Process/Orchestration control, Compare, Reason, Proof, Knowledge, Security/AR, HSA/TED, MAC/OAC, VIP, CAD/CTSN, NRS/CSR, MI, CLIC/HEC, Evolve/continuous failure learning.
+Do not create a second owner where these already suffice.
+
+DSDIH v1.0 — Distributed State and Delivery Integrity Hardening
+Patch: GARDEN-DSDIH-2026-09-17
+Five proposed semantics:
+1. state/event atomicity — consequential state mutation and its durable event/audit representation must not silently diverge in a way that creates false history or duplicate replay authority;
+2. durability-acknowledgement integrity — acknowledgement semantics honestly distinguish accepted, durably committed, externally effected and outcome-unknown states;
+3. cache write-mode integrity — write-through/write-back/derived cache modes must preserve authority, invalidation, durability and source-of-truth semantics instead of becoming hidden state owners;
+4. intermediary enforcement integrity — sidecars, proxies, adapters, queues and other intermediaries cannot bypass or weaken required authority/safety/privacy/enforcement checks;
+5. verified recoverability — recovery claims bind actual state roots, unresolved effects, dependencies, checks and evidence; "restart succeeded" is not proof that semantic state is recovered.
+
+Proposed owner relations:
+- TransitionContract / EventService / Compute.Execution: EXTENDS for state/event atomicity;
+- storage/runtime FunctionContract/result algebra: REFINES durability acknowledgement;
+- Knowledge/Dependency/Runtime cache: REFINES cache integrity;
+- Network/Security/adapter/authority paths: EXTENDS intermediary enforcement;
+- Resilience/RecoveryCertificate/Dependency: REFINES recoverability.
+Conversation referenced DSDIH-001..005 and TEST-DSDIH-001..010 as candidate families, not executed proof.
+
+CURRENT v15.9 COMPARATOR
+- hard rights/consent/privacy/authority/safety/law gates survive every projection/fallback/composition;
+- UNKNOWN/STALE/CONFLICT/BLOCKED/INCOMPLETE/NEEDS_REVALIDATION are non-PASS where resolution is required;
+- no authority from capability/evidence/reputation/consensus/access/success;
+- DesignEpoch invalidates stale dependent assurance after material or cumulative change;
+- Process Algebra/Runtime/Transition/AAP already own composition, live effect behavior, activation and assurance;
+- post-freeze semantic edits reopen review closure.
+
+
+REVIEW TASK
+Determine which UAAC/DSDIH semantics are already closed by v15.9 P018-P026/P037 and which distinct deltas survive DO_NOTHING.
+Pay special attention to:
+- hidden-channel/open-world limits without demanding impossible exhaustive proof;
+- aggregation/materiality without inventing universal thresholds;
+- no new surveillance/observation rights;
+- state/event atomicity across irreversible external effects;
+- acknowledgements that cannot falsely imply durability/effect completion;
+- cache/intermediary paths preserving hard gates;
+- recoverability evidence and stale/unknown outcomes.
+Return concise structured JSON with verdict KEEP/CHANGE/MIXED/REJECT and at most 10 material findings.
