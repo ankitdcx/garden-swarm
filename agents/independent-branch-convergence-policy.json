@@ -130,10 +130,10 @@
     "easy_case_minimum_calls": 8,
     "absolute_maximum_openrouter_inference_calls_per_task": 20,
     "derivation": "4 initial + up to 8 branch followups + 4 final + up to 4 confirmation",
-    "daily_openrouter_cost_ceiling_usd": 2.0,
+    "daily_openrouter_cost_ceiling_usd": 10,
     "call_reservation_ceiling_usd": 0.1,
     "budget_exhaustion": "STOP_OR_DEFER; NEVER_DROP_REQUIRED_REVIEW_CONTEXT_OR_SHARE_BRANCHES_TO_SAVE_COST",
-    "audit_daily_openrouter_cost_ceiling_usd": 10.0
+    "audit_daily_openrouter_cost_ceiling_usd": 10
   },
   "transport": {
     "one_inference_call_per_dispatch": true,
