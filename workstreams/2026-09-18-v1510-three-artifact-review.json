@@ -1,0 +1,9 @@
+{
+  "schema":"GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id":"chatgpt:v1510-three-artifact-review:20260918",
+  "branch":"chatgpt/v1510-three-artifact-review-20260918",
+  "base_sha":"9e4bbce09b98353b45a5f7f72ffeef56da6f1831",
+  "status":"TEMPORARY_NONCANONICAL_REVIEW_ONLY",
+  "intent":"Run four iterative OpenRouter review rounds over the Garden v15.10 three-artifact architecture, including a task-specific human-authorized override for previously excluded Anthropic/NVIDIA/Mistral reviewer families. No persistent policy change, canonical merge, or semantic authority.",
+  "canonical_promotion":false
+}
