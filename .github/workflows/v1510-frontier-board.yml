@@ -1,0 +1,88 @@
+name: Garden v15.10 frontier board
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'review-inputs/v1510-three/**'
+      - '.github/workflows/v1510-frontier-board.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v1510-frontier-board-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm' && startsWith(github.head_ref, 'chatgpt/v1510-three-artifact-review-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run human-authorized frontier board
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import concurrent.futures, hashlib, json, os, pathlib, time, urllib.request, urllib.error
+          packet=pathlib.Path('review-inputs/v1510-three/ROUND_PACKET.txt').read_text()
+          models=[
+            ('openai','openai/gpt-6-astra'),
+            ('anthropic','anthropic/claude-opus-5'),
+            ('google','google/gemini-3.1-pro-preview'),
+            ('deepseek','deepseek/deepseek-v4-pro-0813'),
+            ('qwen','qwen/qwen3.8-2.4t-a95b'),
+            ('glm','z-ai/glm-5.3'),
+            ('xiaomi','xiaomi/mimo-v2.5-pro'),
+            ('moonshot','moonshotai/kimi-k3'),
+            ('xai','x-ai/grok-4.6'),
+            ('sakana','sakana/fugu-ultra-v2'),
+            ('nvidia','nvidia/nemotron-3-ultra-550b-a55b'),
+            ('mistral','mistralai/mistral-medium-3.5'),
+            ('pareto','unbiased/pareto'),
+          ]
+          system='''You are an independent frontier architecture reviewer. The human explicitly authorized all listed model families for this one review campaign, including families normally excluded by Garden routing. This gives you review access only, not semantic or governance authority. Be skeptical. Find concrete defects, semantic loss, nondeterminism, false equivalence, over-abstraction, under-abstraction and human-readability failures. Do not infer approval from other models.'''
+          def call(row):
+            family,model=row
+            rec={'family':family,'requested_model':model,'packet_sha256':hashlib.sha256(packet.encode()).hexdigest(),'status':'ERROR'}
+            body={'model':model,'messages':[{'role':'system','content':system},{'role':'user','content':packet}],'max_tokens':7000}
+            data=json.dumps(body).encode()
+            for attempt in range(2):
+              try:
+                req=urllib.request.Request('https://openrouter.ai/api/v1/chat/completions',data=data,headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY'],'Content-Type':'application/json','HTTP-Referer':'https://github.com/ankitdcx/garden-swarm','X-Title':'Garden v15.10 frontier review'})
+                with urllib.request.urlopen(req,timeout=600) as r: raw=json.loads(r.read())
+                rec.update(status='OK',actual_model=raw.get('model'),response_id=raw.get('id'),usage=raw.get('usage'),text=raw['choices'][0]['message'].get('content',''))
+                return rec
+              except urllib.error.HTTPError as e:
+                rec.update(error_type='HTTPError',http_status=e.code)
+                if e.code==429 and attempt==0:
+                  time.sleep(75); continue
+                return rec
+              except Exception as e:
+                rec.update(error_type=type(e).__name__); return rec
+            return rec
+          results=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
+            futs={ex.submit(call,m):m for m in models}
+            for fut in concurrent.futures.as_completed(futs):
+              results.append(fut.result())
+          order={m[0]:i for i,m in enumerate(models)}
+          results.sort(key=lambda r:order[r['family']])
+          pathlib.Path('review-results/v1510-three').mkdir(parents=True,exist_ok=True)
+          out={'schema':'GardenV1510FrontierBoard/v1','semantic_delta_admitted':False,'task_specific_exclusion_override':True,'persistent_provider_policy_changed':False,'packet_sha256':hashlib.sha256(packet.encode()).hexdigest(),'results':results}
+          pathlib.Path('review-results/v1510-three/board.json').write_text(json.dumps(out,indent=2,ensure_ascii=False))
+          ok=sum(r['status']=='OK' and r.get('text','').strip() for r in results)
+          print(json.dumps({'completed_visible_reviews':ok,'attempted':len(results),'statuses':[(r['family'],r['status'],r.get('http_status'),len(r.get('text',''))) for r in results]},indent=2))
+          if ok < 7: raise SystemExit('insufficient substantive frontier reviews')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v1510-frontier-board-${{ github.run_id }}
+          path: review-results/v1510-three/board.json
+          if-no-files-found: error
+          retention-days: 14
