@@ -50,7 +50,7 @@ class MultiTrackReviewPolicyTests(unittest.TestCase):
         self.assertTrue(self.quality["activation"]["clock_passage_never_authorizes_model_spend"])
         self.assertEqual(self.quality["activation"]["no_change_default"], "NO_MODEL_CALL")
         self.assertTrue(self.quality["activation"]["private_chatgpt_baseline_commitment_required_before_openrouter_inference"])
-        self.assertEqual(self.quality["budget"]["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertEqual(self.quality["budget"]["daily_openrouter_cost_ceiling_usd"], 10.0)
         self.assertEqual(self.quality["budget"]["absolute_openrouter_inference_calls_per_convergence_task"], 20)
         board_cfg = self.quality["tiers"]["MATERIAL_VALUE_BOARD"]
         board = board_cfg["openrouter_models"]
