@@ -8,12 +8,12 @@
   "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
   "event_driven_model_quality_policy": "agents/event-driven-model-quality-policy.json",
   "independent_branch_convergence_policy": "agents/independent-branch-convergence-policy.json",
-  "daily_openrouter_cost_ceiling_usd": 2.0,
+  "daily_openrouter_cost_ceiling_usd": 10,
   "budget_pools_usd": {
-    "routine": 9.0,
-    "challenger": 3.0,
-    "escalation": 5.0,
-    "emergency_reserve": 3.0
+    "routine": 9,
+    "challenger": 3,
+    "escalation": 5,
+    "emergency_reserve": 3
   },
   "routine_hourly_cost_ceiling_usd": 0.4,
   "routine_model_call_cost_ceiling_usd": 0.1,
@@ -49,7 +49,7 @@
     ],
     "max_price_usd_per_million_tokens": {
       "prompt": 0.25,
-      "completion": 1.0
+      "completion": 1
     }
   },
   "routine_reviewers": [
@@ -90,7 +90,7 @@
     "Agreement is evidence, not Proof or authority. Unresolved material disagreement after confirmation stops and escalates rather than looping.",
     "Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
     "Routine material review uses the current cost/quality value board: DeepSeek V4.1 Flash, Qwen3.8 Flash, GLM 5.3 Flash and Xiaomi MiMo-V2.5. Expensive flagship models are escalation-only under the separate event-driven quality policy.",
-    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls. A single convergence task can never exceed 20 inference calls or the selected $2/default or $10/dated-audit daily ceiling.",
+    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls. A single convergence task can never exceed 20 inference calls or the $10 daily ceiling.",
     "The legacy routine_hourly_cost_ceiling_usd field is an event-dispatch reservation envelope for compatibility; it is not a scheduling instruction.",
     "Moving latest aliases are intentionally not used for evidence lineage; exact model identities stay pinned until a later catalog-review event.",
     "Paid-model failure or budget-policy failure never weakens semantic admission requirements or authorizes sharing branches.",
@@ -108,7 +108,7 @@
   "budget_pool_scope": "LIFETIME_ALLOCATION_OF_INITIAL_20_USD_NOT_DAILY",
   "balance_remaining_usd": null,
   "balance_status": "UNKNOWN_REQUIRES_PROVIDER_RECONCILIATION",
-  "budget_relationship": "The four pools retain the initial $20 lifetime allocation. Default daily ceiling is $2; a dated target-bound AUDIT directive may use a $10 daily ceiling, always within the available $9 routine lifetime pool. Audit mode does not borrow the other pools or automatically refill funds.",
+  "budget_relationship": "The OpenRouter daily spend ceiling is USD 10.00. The historical budget-pool fields remain accounting partitions of the original allocation and do not silently lower the explicit human-authorized daily ceiling; actual account balance, per-call ceiling, task call ceiling, and provider-cost verification still fail closed.",
   "execution_limits": {
     "max_concurrent_model_calls": 1,
     "max_model_calls_per_dispatch": 1,
@@ -156,10 +156,10 @@
   },
   "spending_modes": {
     "DEFAULT": {
-      "daily_ceiling_usd": 2.0
+      "daily_ceiling_usd": 10
     },
     "AUDIT": {
-      "daily_ceiling_usd": 10.0,
+      "daily_ceiling_usd": 10,
       "requires_dated_target_bound_directive": true,
       "budget_pool": "routine"
     }
