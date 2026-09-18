@@ -13,5 +13,7 @@
   "per_call_ceiling_usd": 0.1,
   "chat_history_used": false,
   "prior_review_verdicts_used": false,
-  "canonical_effect": false
+  "canonical_effect": false,
+  "retry": 1,
+  "retry_reason": "previous workflow failed before inference due to Python prompt serialization SyntaxError"
 }
