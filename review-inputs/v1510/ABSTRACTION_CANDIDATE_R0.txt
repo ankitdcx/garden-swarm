@@ -1,305 +1,103 @@
-GARDEN v15.10 — LOSSLESS ABSTRACTION CANDIDATE R0
-Review status: NONCANONICAL TEMPORARY REVIEW MATERIAL.
-Semantic predecessor: the user-supplied five-file Garden v15.9 corpus dated 2026-09-18.
-This packet is an abstraction proposal, not canonical promotion, Proof, implementation, validation or certification.
+GARDEN v15.10 MINIMAL ABSTRACTION BASIS — FINAL CHALLENGE
 
-MECHANICAL v15.9 INVENTORY
-- 5 files, 31,905 lines, approximately 2.03 MB.
-- 733 unique SchemaIDs and 1,673 schema references.
-- 2,238 unique Annexure @D canonical definitions.
-- 741 unique TEST-* identifiers.
-- 62 REG-* registry families referenced.
-- 325 unique semantic anchors.
-- Technical repeats roughly 51 Classification blocks, 47 Internal State blocks, 50 Functions blocks, 44 Update Protocol blocks, 130 Invariant-reference blocks, 45 Dependencies & Math blocks, and 198 Schema-reference blocks.
+Goal: determine whether the full Garden v15.9 / 15.x semantic surface can be represented losslessly from a small GSL-native abstraction basis while retaining a simple human view.
 
-NONNEGOTIABLE PREDECESSOR RULES
-1. Rights, consent, privacy, legitimate authority, safety, law, required contestability and human agency remain hard applicable boundaries.
-2. Every semantic fact has one controlling owner; summaries, aliases and projections cannot override that owner.
-3. Specification != formal proof != implementation != empirical validation != external certification.
-4. Capability, reputation, model agreement, successful outcome, release labels or cryptographic authenticity create no authority by themselves.
-5. Missing/stale/conflicting required evidence remains explicit and cannot silently become PASS or non-material.
-6. No abstraction may create a new top-level Engine, authority source, execution loop, GSL Core Object or Core Relation merely to make documentation shorter.
-7. Abstraction must preserve semantic distinctions; similar-looking fields are not enough to merge concepts.
-8. Stable v15.9 IDs may remain compatibility identities even when their implementation becomes derived/generated.
+GSL remains unchanged: six Pillars = Existence, Change, Agency, Law, Value, Frame; ten Core Objects = TIME, SPACE, THING, EVENT, ACTION, AGENCY, RULE, VALUE, CONTEXT, CLAIM. The abstraction basis MUST NOT become a second ontology or authority source.
 
-PROPOSED v15.10 ARCHITECTURE
+PROPOSED SEVEN ABSTRACTION FORMS
+1 CONSTRUCT — a Garden-defined semantic entity/artifact/architecture object/theory/profile/etc.
+2 CONTRACT — typed promises/requirements: inputs, outputs, pre/postconditions, effects, authority, failures, resources, invalidators.
+3 STATE — time/context-bound condition, lifecycle and validity.
+4 RELATION — typed connections among constructs, with explicit direction, scope, algebraic/non-transitive laws.
+5 PROCESS — typed state/work transformation using existing Process Algebra/UPA.
+6 RULE — invariant, obligation, permission, prohibition, derivation or admissibility constraint.
+7 PROJECTION — representation of the same semantics into human text, schema, registry record, API, tensor/operator, receipt, test, diagram or machine package.
 
-A. META-CONSTRUCT KERNEL
-Represent repeated architecture-object descriptions as a compositional MetaConstruct rather than bespoke module boilerplate. A construct has stable identity/owner/kind, traits, relations, contracts, lifecycle, scope/context, authority/effects, evidence/proof requirements, invalidators and projection bindings. Existing architecture nodes remain nodes; this is not another architecture level.
+All seven are expressed using existing GSL Core Objects/Relations/primitives. They create no new Core Object, Core Relation, top-level Engine, authority source or execution loop.
 
-B. TRAIT / CAPABILITY COMPOSITION
-Replace repeated field lists with reusable semantic traits such as Versioned, Scoped, ContextBound, ProvenanceBearing, EvidenceBearing, AuthorityBearing, HumanAffecting, Revocable, Auditable, Executable, Verifiable, Temporal, ResourceBounded, Uncertain, PrivacyBound, SafetyBound, Stateful, EventEmitting, Explainable and Evolvable.
-Traits are contracts, not tags. Composition preserves the most restrictive applicable requirement and may strengthen but never silently weaken an inherited obligation. Avoid giant inheritance trees; prefer explicit trait composition.
+COMMON FACETS (constraint surfaces, not capabilities):
+Identity/Lifecycle; Scope/Context; Epistemics/Provenance; Authority/Human Boundary; Effects/Safety; Dependency/Validity; Resource/Termination; Privacy/Retention; Audit/Explanation; Recovery/Evolution.
 
-C. SCHEMA ALGEBRA / CONSTRUCTOR
-Schema = BaseConstruct + Traits + DomainFields + Constraints + Relations + Lifecycle + ResultSemantics.
-Use reusable constructors such as:
-  Ref<T>
-  Receipt<T>
-  Registry<T,Policy>
-  Event<T>
-  Assessment<T>
-  Profile<T>
-  Binding<A,B>
-  Manifest<T>
-  Plan<T>
-  Decision<T>
-  EvidenceBound<T>
-  VersionedState<T>
-Concrete machine layouts are deterministically generated. Existing SchemaIDs remain stable compatibility identities mapped to constructor expressions. Compression never changes a SchemaID's meaning.
+DERIVATIONS:
+ArchitectureObject = Construct + Contract + State + Relations + Processes + Rules + Projections.
+Function = Contract + Process.
+Schema = Projection of semantic form under frozen SchemaID/DesignEpoch.
+Receipt = Projection(Process result + state delta + evidence/provenance), owner-specialized.
+Registry = Construct + Relations + Rules + projection/index semantics.
+Lifecycle = State + Process + Rule.
+Invariant = Rule OR accepted derived Rule instance.
+Test = Process evaluating Contract/Rule/Projection correspondence.
+ProofObligation = Rule/Contract requiring formal discharge.
+Binding = Relation + Context + Rule.
+Plan = Process + Contract.
+FailureMode = State/Rule-triggered Process outcome, owner-specific.
+Profile = context-bound specialization.
+Theory = Construct + Claims/Rules + Model/State + Processes/Operators + applicability/assumptions/falsifiers + Projections.
+Algebra = Contract over typed operands/operators/laws/non-laws + Rules + Process/Projection realization. Process/Policy/Decision/Conformance/Evidence/Bridge remain distinct specializations.
+Human module = non-authoritative Projection grouping coherent constructs for comprehension.
 
-D. UNIFIED CONTRACT TEMPLATE
-Contract<T> contains:
-  WHY/purpose
-  represented state/artifacts
-  inputs/outputs
-  preconditions/postconditions
-  effects
-  authority/consent
-  hard limits
-  dependencies
-  evidence/proof
-  failure/result algebra
-  resources/termination
-  lifecycle/update
-  invalidators
-  explanation/provenance.
-FunctionContract is the executable specialization. Architecture-object, theory, profile and domain contracts use typed specializations instead of repeatedly restating the same headings.
+15.x COVERAGE THAT MUST BE LOSSLESS:
+- CPI recursive construction/qualification.
+- OCF operational closure/no descriptive leaf.
+- MSC minimum stable core.
+- TML living theory/module lifecycle.
+- CDDT cross-domain discovery/transfer.
+- CMUR/cross-model upgrade review.
+- CLIC intent/effect, causality, attention, continuity, emergence/options.
+- Algebra formalization and cross-algebra boundaries.
+- GCL causal leverage.
+- Human-Effect Closure; reputation/human-worth boundary; world evidence/privacy; justice evidence continuity; lethal-force non-autonomy; migration; HRAP; protected reporting.
+- AI-assisted development/deterministic projection.
+- standards compliance; engineering design; assurance hardening; RRCTX.
+- TED, SEA, MAC, NRS, VIP, SHE, EC, CSR, AR, MI.
+- event-driven triggers/subscriptions/scheduling/continuous work.
+- DesignMirror, future stress, belief timeline, global consistency, failure learning, ontological debt, historical summary, presentation/LSP/lifecycle tooling.
+- GSL-PHYSICS, Bridge, AAP, UPA/GTF, Reason/Compare/Proof, HSA, Productive Finance.
+- seven theories SRT/VSM/RPM/PPM/TFT/FET/SCT; UPS and other research/reference architectures.
+- all existing schemas, registries, invariants, tests, proof obligations, status distinctions and stable IDs.
 
-E. RESULT / LIFECYCLE / FAILURE GENERICS
-Preserve owner-qualified result algebras, but derive common dimensions from shared semantics: success strength, applicability, epistemic state, validity/freshness, resource/timeout, authority/safety block, conflict, malformed and explicit unknown.
-Do NOT erase owner-specific terminal states just to create one universal enum.
-Use Lifecycle<State,Transition,Guard> and FailureMode<Trigger,Effect,Containment,Recovery,Terminal> constructors where semantics genuinely align.
+HARD NON-LOSS RULES:
+- protected human/right/authority/safety/law/consent semantics stay explicit and inspectable;
+- theory mathematics, assumptions, applicability, falsifiers and validity/breakdown remain explicit unique payload, not flattened;
+- algebra operand/operator/law/non-law distinctions remain explicit;
+- owner-specific result/failure states remain explicit;
+- authority/consent/delegation default non-transitive;
+- empirical evidence/formal proof/validation/certification remain non-substitutable;
+- no generated obligation becomes law/authority without existing owner/admission path;
+- old stable IDs map one-to-one to current semantic expressions or explicit retained specializations;
+- if lossless derivation is not established, retain the old specialization.
 
-F. RECEIPT / EVENT / REGISTRY GENERICS
-Receipt<T> owns common identity, subject, actor/authority, inputs, outcome, evidence, provenance, time, version/DesignEpoch, validity and signatures. Specializations add only unique fields.
-Registry<T,Policy> owns identity/version/discovery/aliasing/equivalence/supersession/status/authority.
-Event<T> owns source/subject/occurrence or state delta/context/time and causal order/evidence/provenance/privacy-retention/delivery state.
-No generic constructor may imply evidence, truth, proof or authority from mere existence.
+HUMAN VIEW CANDIDATE:
+Use about 20–30 top-level human modules, not 50 independent semantic modules. Candidate 24:
+1 Human Sovereignty & Rights
+2 Identity/Consent/Privacy
+3 Intent/Delegation/Human Agency
+4 GSL & Meaning
+5 Knowledge/Evidence/Provenance
+6 Context/Time/Validity
+7 Process/Transition/AAP
+8 Compare/Reason/Search
+9 Proof/Verification
+10 Safety/Security/Emergency
+11 Authority/Law/Governance/Policy
+12 Resources/Runtime/Execution
+13 Infrastructure/Physical World
+14 Dependency/Continuity/Recovery
+15 Evolution/Learning/Self-Audit
+16 Research/Discovery/CDDT
+17 Theory & Model System
+18 Algebras/Representation/Bridge
+19 Domains/Engineering/Standards
+20 Multi-Agent/Embodied/Novelty
+21 Human-Effect/Relational/Justice Protections
+22 Development/Compilation/Tooling
+23 Finance/Societal Applications
+24 Profiles/Instances/Deployment.
 
-G. FUNDAMENTAL LAW + DERIVED OBLIGATION CALCULUS
-Stop representing every concrete case as an independent constitutional invariant.
-Use:
-  FundamentalLaw
-  DomainLaw
-  ProfileConstraint
-  typed RelationRule
-  DerivedObligationTemplate
-  generated ConformanceTest/ProofObligation.
-Candidate fundamental closure laws:
-  authority non-amplification;
-  human-effect closure;
-  evidence/provenance closure;
-  privacy/information-flow preservation;
-  revocation propagation;
-  uncertainty non-erasure;
-  hard-gate preservation;
-  context/scope non-widening;
-  dependency invalidation;
-  failure containment;
-  option/reversibility preservation;
-  identity/commitment continuity;
-  epistemic well-foundedness;
-  no self-certification of protected boundaries.
-
-Canonical invariant admission rule:
-If a proposed invariant is derivable from admitted higher-order laws + typed relations + construct traits under an auditable derivation, it is a DerivedObligation rather than a new independent invariant.
-
-Existing v15.9 invariant IDs remain traceable compatibility identities and are classified as one of:
-  FundamentalLaw
-  DomainLaw
-  DerivedObligationTemplate/instance
-  ProfileConstraint
-  Conformance/Test obligation.
-An unresolved equivalence remains explicit rather than being forced into a derived form.
-
-H. INTERACTION / COMPOSITION COMPILER
-Analyze ArchitectureObject A × typed Relation × ArchitectureObject B, not just untyped pairs.
-Useful relation classes include reads, writes, controls, delegates, authorizes, verifies, transforms, derives, stores, exposes, communicates, allocates, invalidates, supersedes, observes, actuates, learns-from, depends-on and shares-state-with.
-Fundamental laws + endpoint traits + relation semantics derive obligations.
-Extend analysis from edges to paths, cycles/SCCs, feedback loops and multi-party/hypergraph interactions.
-Material changes trigger event-driven recomputation only over the affected closure.
-
-I. META-MODULE ABSTRACTION
-A module is a human projection of an ArchitectureObject contract assembled from semantic roles/traits/relations.
-Families such as engines, capabilities, domains, profiles and AGI specializations share MetaModuleProfile templates.
-Abstraction must preserve each object's unique owner, authority, state, failure semantics and dependency role. Display abstraction cannot merge distinct semantic owners.
-
-J. TEST / PROOF TEMPLATE GENERATION
-Reusable test families:
-  property
-  boundary
-  composition
-  authority
-  revocation
-  privacy-flow
-  human-effect
-  failure
-  recovery
-  lifecycle
-  dependency invalidation
-  correspondence
-  falsification.
-Reusable proof-obligation templates derive concrete obligations from laws + contracts + interaction paths.
-Stable TEST/proof IDs may remain compatibility identities while their definitions become generated specializations.
-
-K. THEORY / PROFILE TEMPLATE
-TheoryContract contains state/ontology, operators/equations, assumptions, context/applicability, parameters, formal/empirical status, validity/breakdown, falsifiers, couplings, artifacts/functions and authority boundary.
-Reference ProfileContract contains purpose, bindings, guarantees/non-guarantees, resources, failure/degradation, validation and implementation parameters.
-All theory-specific mathematics, validity limits, falsifiers and unique assumptions remain explicit specializations.
-
-L. DOCUMENT / PROJECTION ABSTRACTION
-Keep the five-file ownership split:
-  Human = purpose/human meaning/sovereignty;
-  System = architecture relations and flow;
-  Technical = implementation-facing contracts;
-  Theories = complete theory/reference-architecture semantics;
-  Annexure = recurring canonical definitions/IDs/registries/invariants/tests/status metadata.
-All are projections of the same semantic graph.
-Repeated release/status/ownership/precedence boilerplate may derive from one ReleaseContract, while every distributed file remains self-identifying and fail-closed if detached.
-GCCR evolves from textual compaction toward semantic constructor expressions; generated readable views remain non-authoritative when declared.
-
-M. LOSSLESS MIGRATION / RETENTION
-Build a v15.9 SemanticInventory before rewrite. Every semantic anchor, SchemaID, registry, invariant/test/proof/right ID, canonical status, qualified name, FunctionContract, theory equation/limit and current/candidate/deferred/research status gets exactly one v15.10 disposition:
-  RETAINED_PRIMITIVE
-  RETAINED_SPECIALIZATION
-  DERIVED_EQUIVALENT
-  GENERATED_VIEW
-  COMPATIBILITY_ALIAS
-  SUPERSEDED_WITH_EQUIVALENCE
-  INTENTIONALLY_CHANGED_WITH_EXPLICIT_DELTA.
-Silent DROP is forbidden.
-
-N. NO-LOSS VERIFICATION
-After rewrite run:
-  exact identifier coverage;
-  owner coverage;
-  status preservation;
-  rights/authority/safety/epistemic-hard-boundary comparison;
-  cross-reference closure;
-  constructor expansion tests;
-  relation/path-derived obligation tests;
-  sampled semantic equivalence review.
-For every compressed family, expand constructor/derivation and compare with v15.9 meaning. If equivalence is unresolved, keep the old explicit contract until resolved.
-
-O. TARGET SHAPE
-v15.10 should have a small stable semantic kernel + typed constructors/operators + domain/theory specializations + generated obligations/tests/views.
-Complexity moves downward into deterministic derivation/generation while the constitutional and human-facing design becomes smaller and clearer.
-
-REVIEW REQUEST
-Independently attack this candidate. Do not optimize for agreement.
-Return:
-1. ACCEPT / ACCEPT_WITH_PATCHES / REJECT.
-2. Concrete abstraction defects and semantic-loss risks.
-3. What MUST remain explicit and must not be generically compressed.
-4. Corrections to the invariant/derived-obligation calculus.
-5. Corrections to schema/receipt/registry/result/lifecycle/test/proof abstraction.
-6. Corrections to meta-module and interaction/path abstraction.
-7. Migration/compatibility/no-loss tests that are missing.
-8. Worthy additional abstractions or simplifications.
-9. A concise patched architecture if changes are needed.
-
-
-======================================================================
-R1 CORRECTIONS AFTER INDEPENDENT R0 REVIEW — CONTROLLING FOR FINAL AUDIT
-======================================================================
-
-The R0 abstractions are amended as follows. Where this appendix conflicts with R0, this appendix controls.
-
-1. NO META-OBJECT / NO SHADOW AUTHORITY
-- Replace MetaConstruct as a semantic object with SemanticPattern: a compile-time/documentation descriptor only.
-- Meta-module means NON_AUTHORITATIVE reader/projection pattern only. It has no state, lifecycle, authority, resource budget, execution API or binding authority.
-- Abstraction remains under existing GSL/Compile/Dependency/Reason/Compare/Proof/Compliance/Evolve owners and cannot self-certify changes to protected boundaries.
-
-2. PROTECTED BOUNDARY MANIFEST
-- Add a non-authoritative ProtectedBoundaryManifest indexing the exact controlling sources for rights, consent, privacy, legitimate authority/delegation, K0P/safety, law, contestability/remedy, human agency/HSA and Human-Effect Closure.
-- The manifest never owns or derives those boundaries. Incomplete boundary coverage BLOCKS affected compression.
-
-3. FACETS ARE CONSTRAINT CHECKLISTS, NOT CAPABILITIES
-Use ten ContractFacet surfaces:
-IdentityLifecycle; ScopeContext; EpistemicsProvenance; AuthorityHumanBoundary; EffectsSafety; DependencyValidity; ResourceTermination; PrivacyRetention; AuditExplanation; RecoveryEvolution.
-- A facet label does not prove its property is satisfied.
-- Dynamic uncertainty/freshness/evidence state is data inside EpistemicsProvenance, not a static trait.
-- Each FacetBinding retains controlling owner, applicability, required explicit fields, constraints, invalidators and conflict rules.
-
-4. REMOVE UNIVERSAL "MOST RESTRICTIVE WINS"
-Composition is dimension-specific:
-- hard rights/K0P/safety: all simultaneously applicable hard gates remain required;
-- authority: explicit scope intersection/non-amplification; no inferred transitivity;
-- evidence/epistemics: preserve evidence class, source, dependence, uncertainty and status; no promotion;
-- privacy/retention/audit: propagate applicable constraints but preserve conflicts for competent resolution;
-- dependency/validity: invalidate affected closure;
-- resource: capability may degrade but protected floors are not shed;
-- soft preferences: only owner-specific comparator/algebra may aggregate;
-- owner failure/recovery semantics remain owner-specific.
-Incomparable requirements => CONFLICT/UNRESOLVED/BLOCKED. Source order, field order, vote count or generic strictness never resolves them.
-
-5. SCHEMA ABSTRACTION IS DESCRIPTIVE AND VERSION-FROZEN
-- SchemaPatternExpression describes common structure but does not become a new canonical owner.
-- Each concrete SchemaID retains visible owner, applicability/context, authority, evidence/epistemic class, owner result/failure semantics, uncertainty/freshness where applicable, invalidators and provenance.
-- Stable SchemaID + DesignEpoch binds a frozen semantic expansion hash. Constructor/facet change cannot silently alter an old SchemaID; semantic change requires ordinary successor/migration.
-- Exact serialization/wire contracts remain explicit where required.
-
-6. RECEIPT/REGISTRY/RESULT NON-FLATTENING
-- Shared structural headers may be factored, but consent/authority, formal-proof, empirical-validation, execution, security-attestation and audit/provenance receipts remain distinct owner specializations.
-- Registry lineage, supersession/tombstones, authority and conflict rules remain owner-specific.
-- Generic abstraction result algebras describe abstraction status only. Owner-specific terminal/failure/unknown states are never coerced into one universal result enum.
-
-7. DERIVATION IS CANDIDATE GENERATION, NOT NEW LAW
-- Existing v15.9 definitions DEFAULT TO RETAINED_SPECIALIZATION.
-- DefinitionRoleBinding is multi-valued metadata, not a rank: PROTECTED_BOUNDARY | FOUNDATIONAL_RULE | DOMAIN_RULE | PROFILE_RULE | AXIOMATIC_OWNER_RULE | EXPLICIT_SPECIALIZATION | DERIVATION_ELIGIBLE | PROOF_OR_METHOD | CONFORMANCE_TEST | RESEARCH_ONLY.
-- Static analysis may emit CandidateObligation.
-- It becomes accepted DerivedObligation only after an ObligationDerivationReceipt binds exact source rule IDs/hashes, owner acceptance, context/applicability, exact relation/path and boundary cuts, assumptions/exceptions, method/checker root, appropriate proof/evidence, expansion/round-trip result, DesignEpoch and invalidators; then the ordinary existing owner/admission process must accept it.
-- Runtime action never derives new rights, authority or protected-boundary law on the fly.
-- Existing concrete stable IDs remain first-class violation/reporting endpoints.
-
-8. STATIC INTERACTION ANALYSIS ONLY
-- Analyze directional owner-qualified edges, paths, SCC/feedback and hyperedges.
-- Explicit BoundaryCuts/non-transitivity declarations prevent invalid propagation.
-- A->delegates->B and B->authorizes->C never implies A authorizes C without explicit owner-authorized semantics.
-- Output is StaticAnalysisReport = findings + CandidateObligations + unresolved paths + boundary cuts + SCC findings + omitted scope + provenance.
-- Report creates no action authority, proof, evidence or legal applicability.
-
-9. CONSERVATIVE RETENTION / NO SOURCE ELISION IN v15.10
-RetentionDisposition =
-RETAINED_PRIMITIVE | RETAINED_SPECIALIZATION | DERIVED_EQUIVALENT | GENERATED_NONAUTHORITATIVE_VIEW |
-COMPATIBILITY_ALIAS | SUPERSEDED_WITH_EQUIVALENCE | INTENTIONALLY_CHANGED_WITH_EXPLICIT_DELTA | BLOCKED.
-There is no DROP.
-- GENERATED_NONAUTHORITATIVE_VIEW is prohibited where authoritative meaning would disappear.
-- Unresolved equivalence falls back to the explicit predecessor specialization.
-- v15.10 establishes safe abstraction machinery first; future per-item compaction requires actual accepted equivalence/round-trip receipts.
-
-10. NEW SMALL ABSTRACTION KERNEL
-Exactly 12 ABS laws govern abstraction:
-non-authority; single visible controlling owner; protected-boundary explicitness; dimension-specific composition;
-non-transitive authority/no epistemic promotion; frozen SchemaID expansion; no automatic derived/superseded classification;
-owner result/failure preservation; typed path/SCC/hyperedge analysis as findings; version/invalidation binding;
-one retention disposition/no DROP; generated projections subordinate to source.
-
-11. NO-LOSS VERIFICATION EXPANDED
-Required tests include:
-- exact identifier/owner/status coverage;
-- all canonical predecessor definitions retained unless explicitly and equivalently superseded;
-- semantic round-trip predecessor -> abstraction -> expansion;
-- authority-boundary/non-transitivity tests;
-- contradiction/UNRESOLVED preservation;
-- evidence-class/proof-vs-empirical downgrade detection;
-- negative/fault equivalence using stale evidence, forged authority, schema drift and projection divergence;
-- hard-boundary non-relaxation;
-- dependency/DesignEpoch invalidation;
-- owner-disambiguation sweep.
-
-MECHANICAL RETENTION RESULT FOR CURRENT FIVE-FILE DRAFT
-Status: PASS for source-retention boundary.
-- old SchemaIDs: 735/735 preserved
-- old Registry IDs: 62/62 preserved
-- old TEST IDs: 741/741 preserved
-- old RIGHT IDs: 27/27 preserved
-- old semantic anchors: 325/325 preserved
-- old Annexure canonical @D definitions: 2,238/2,238 preserved verbatim; 0 changed; 0 missing
-- nonmetadata predecessor unique-line retention: PASS after display-whitespace normalization
-Intentional predecessor changes are release metadata only: v15.9->v15.10 top/current labels, Human current-source label, and repair of the stale REG-VERSION current Document label from v14.8.3 to v15.10.
-This is a source-retention audit, NOT formal proof, implementation validation, empirical validation or certification.
-
-FINAL AUDIT REQUEST
-Audit R1 against the R0 defects. Return exactly APPROVE, APPROVE_WITH_PATCH, or BLOCK, followed only by material surviving defects. Specifically test for shadow authority, self-exempt abstraction machinery, non-monotonic conflict loss, owner masking, evidence/proof flattening, authority transitivity, SchemaID drift, owner-specific failure loss, interaction-analysis overclaim, and predecessor semantic loss.
+Review request:
+A. Can the seven forms reconstruct EVERY listed 15.x family without semantic loss? Name any counterexample requiring an eighth form.
+B. Are any of the seven redundant/derivable from the others?
+C. Does Theory or Algebra need a separate core form, or are they safe specializations?
+D. Is the 24-module human projection near a sensible optimum? Recommend 20–30 grouping only if materially better.
+E. Identify any loss risks in schemas/invariants/tests/registries/receipts and protected boundaries.
+F. Return APPROVE / APPROVE_WITH_PATCH / BLOCK plus a patched basis if needed.
