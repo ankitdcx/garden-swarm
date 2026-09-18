@@ -1,0 +1,77 @@
+{
+  "schema": "GardenV159PostFreezeFinalDisposition/v1",
+  "date": "2026-09-18",
+  "workstream": "chatgpt:v159-postfreeze-scattered-upgrades:20260918",
+  "status": "FINAL_MATERIALIZATION_COMPLETE",
+  "base_review": "P001-P037_COMPLETE",
+  "postfreeze_review": "P038-P042_COMPLETE",
+  "history_audit": {
+    "scope": "ChatGPT + DeepSeek + Gemini histories, oldest-to-newest, user and AI turns",
+    "normalized_messages": 28801,
+    "groups": 933,
+    "raw_private_history_sent_to_openrouter": false
+  },
+  "final_r3_candidate_sha256": "b9c2233a74b59b8c096c9f62dbf5c57a2750f0e43db50d95ff99b902d1865123",
+  "final_confirmation": {
+    "run_id": 35307081098,
+    "deepseek": {
+      "artifact_id": 10532146326,
+      "verdict": "ACCEPT",
+      "material_findings": 0
+    },
+    "glm": {
+      "artifact_id": 10532151349,
+      "verdict": "ACCEPT",
+      "material_findings": 0
+    },
+    "gemini": {
+      "artifact_id": 10531762181,
+      "verdict": "ACCEPT",
+      "material_findings": 0
+    }
+  },
+  "materialized_files": {
+    "User": {
+      "sha256": "e0f5e7f31077cb60b5f5fcf0f7ce5f039c448005ad950d65fb578a3b6058053d",
+      "bytes": 145663
+    },
+    "System": {
+      "sha256": "227ec5116f8e0a8fc454d4c3d5aec01c5fc4b74b0d8bdda99cd5a6d2d37c7300",
+      "bytes": 295991
+    },
+    "Technical": {
+      "sha256": "ab6d93bee3a8b08315852f1a9a35f123cf831adaccbbd13b3a1633567dc72367",
+      "bytes": 1082353
+    },
+    "Annexure": {
+      "sha256": "3bbfe6e4c48ae8d9d5ab4016fe66ad244706f4ac2f9197b37fb60f0ec2c6c003",
+      "bytes": 1314668
+    },
+    "Theories": {
+      "sha256": "599c0e1dba16c65f13f830f94422f29e23836d5fbd512b4dec63f278531df766",
+      "bytes": 221661
+    },
+    "Consolidated": {
+      "sha256": "0ae9675c3c419f868da99939052528225651a618678d16214d561bb012f9746c",
+      "bytes": 46212
+    }
+  },
+  "validation": {
+    "predecessor_prefixes_byte_exact": true,
+    "three_of_three_confirmation_accept": true,
+    "universal_surveillance_rejected": true,
+    "ucas_subsystem_not_revived": true,
+    "casi_activation_deferred": true,
+    "no_schemaid_by_name": true
+  },
+  "openrouter_policy": {
+    "branch_default_daily_ceiling_usd": 10,
+    "per_call_ceiling_usd": 0.1,
+    "max_calls_per_convergence_task": 20,
+    "note": "Policy change is on this feature branch; not claimed merged to main."
+  },
+  "canonical_effect": false,
+  "executable_certification_claimed": false,
+  "production_certification_claimed": false,
+  "next_incomplete_step": null
+}
