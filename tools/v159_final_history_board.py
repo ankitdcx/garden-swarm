@@ -42,7 +42,7 @@ def call(model,prompt,key):
     "max_price":{"prompt":1.0,"completion":4.0}
   }
  }
- cmd=["curl","-sS","--connect-timeout","10","--max-time","360",OPENROUTER,"-X","POST",
+ if model.startswith("deepseek/"):\n  body["reasoning"]={"effort":"none"}\n cmd=["curl","-sS","--connect-timeout","10","--max-time","360",OPENROUTER,"-X","POST",
       "-H","Authorization: Bearer "+key,"-H","Content-Type: application/json",
       "-H","HTTP-Referer: https://github.com/ankitdcx/garden-swarm",
       "-H","X-Title: Garden v15.9 Final History Review",
