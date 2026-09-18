@@ -1,0 +1,59 @@
+name: Temporary v15.10 fast abstraction check
+on:
+  pull_request:
+    types: [synchronize]
+    paths:
+      - 'review-inputs/v1510-core/**'
+      - '.github/workflows/v1510-core-fast-review.yml'
+permissions:
+  contents: read
+concurrency:
+  group: v1510-core-fast-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Parallel independent check
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json,os,urllib.request,urllib.error,pathlib,hashlib
+          from concurrent.futures import ThreadPoolExecutor,as_completed
+          packet=pathlib.Path('review-inputs/v1510-core/GENERATIVE_CORE_CANDIDATE.txt').read_text()
+          models=[('deepseek','deepseek/deepseek-v4.1-flash'),('glm','z-ai/glm-5.3-flash'),('gemini','google/gemini-3.8-flash')]
+          sys='''Independently falsify this proposed seven-form Garden abstraction basis. Find any irreducible eighth form or semantic loss. Check algebra, theory, 15.x patterns, authority/evidence/context/failure semantics and the ~50-module human projection. Return APPROVE, APPROVE_WITH_PATCH, or REJECT plus material findings only.'''
+          def go(x):
+            fam,model=x; rec={'family':fam,'requested_model':model}
+            body={'model':model,'messages':[{'role':'system','content':sys},{'role':'user','content':packet}],
+                  'temperature':0.1,'max_tokens':3000}
+            req=urllib.request.Request('https://openrouter.ai/api/v1/chat/completions',data=json.dumps(body).encode(),
+              headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY'],'Content-Type':'application/json'})
+            try:
+              with urllib.request.urlopen(req,timeout=180) as r: raw=json.loads(r.read())
+              rec.update(status='OK',actual_model=raw.get('model'),usage=raw.get('usage'),
+                         text=raw['choices'][0]['message'].get('content',''))
+            except Exception as e:
+              rec.update(status='ERROR',error_type=type(e).__name__)
+              if isinstance(e,urllib.error.HTTPError): rec['http_status']=e.code
+            return rec
+          with ThreadPoolExecutor(max_workers=3) as ex: out=[f.result() for f in as_completed([ex.submit(go,m) for m in models])]
+          pathlib.Path('review-results/v1510-core-fast').mkdir(parents=True,exist_ok=True)
+          pathlib.Path('review-results/v1510-core-fast/board.json').write_text(json.dumps({
+            'schema':'GardenV1510FastCoreReview/v1','semantic_delta_admitted':False,
+            'packet_sha256':hashlib.sha256(packet.encode()).hexdigest(),'results':out},indent=2))
+          if sum(r.get('status')=='OK' and r.get('text','').strip() for r in out)<2: raise SystemExit('insufficient review')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v1510-core-fast-${{ github.run_id }}
+          path: review-results/v1510-core-fast/board.json
+          if-no-files-found: error
+          retention-days: 7
