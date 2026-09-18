@@ -1,0 +1,58 @@
+GARDEN v15.9 POST-FREEZE SCATTERED-UPGRADE REVIEW
+Date: 2026-09-18
+Status: INDEPENDENT CHATGPT BASELINE / FROZEN BEFORE OPENROUTER CALLS
+Authority effect: NONE
+Canonical effect: NONE
+
+CURRENT MATERIALIZED v15.9 BASE
+Release label: GARDEN v15.9 — COMPLETE CROSS-REVIEWED WORKING CANDIDATE
+Status: SEMANTIC REVIEW COMPLETE / NOT EXECUTABLY CERTIFIED / NOT PRODUCTION CERTIFICATION / NOT CANONICAL UNLESS SEPARATELY ADMITTED
+Frozen v15.8 source root: 835ab5ad52cf68f79af1d33269d9f24b58290c2a5e96c0d889726ac85c8bacf2
+Final User SHA-256: 61f3e002762c41dfc8988fea22cf63ef5c9bd609b52d92f7d6e70fa02e0eac6b
+Final System SHA-256: f800703ae004144ec50c31ac41ea8c0bde8486f15af4fa66838f785708485382
+Final Technical SHA-256: eb794368c550decefe6b37a5734a4515e9338504d5d1e2f4c4c4365ce05be5e1
+Final Annexure SHA-256: 37bb987758205ba5a82a9946666f7efd245a495700eb392c4face31db0dae06a
+Final Theories SHA-256: e090d07a602bf35129bff1601b9c46a754ff5e2bd4e65204304376256d41b438
+
+CONTROLLING COMPARATOR SEMANTICS
+1. Rights, consent, privacy, legitimate authority, safety, law, appeal/contestability and human agency are hard applicable constraints.
+2. UNKNOWN / STALE / CONFLICT / BLOCKED / INCOMPLETE / NEEDS_REVALIDATION are not PASS where hard resolution is required.
+3. Authority never arises from capability, evidence, reputation, access, optimization, consensus, successful outcome, cryptographic authenticity, emergency status, offline state, continuity machinery or RCI.
+4. Specification != formal proof != implementation != empirical validation != external certification.
+5. Existing semantic owners are preferred. Naming convenience creates no new SchemaID, top-level Engine, evidence-truth system, authority source, justice lifecycle, reporting lifecycle, trust root or execution loop.
+6. Material post-freeze semantic edits reopen review/materialization closure.
+
+CURRENT OWNER BOUNDARIES
+- DesignEpoch: material changes can stale dependent evidence/assurance; cumulative small changes cannot evade requalification by fragmentation.
+- Process Algebra owns typed composition; Runtime/Transition own live effect/result behavior; AAP owns activation/assurance selection.
+- Retry after uncertain/irreversible external effect requires effect identity plus fencing/idempotency where available and reconciliation.
+- Timeout/cancel does not promise physical halt, total rollback or absence of external effect.
+- Duplicate/reordered events, retries, failover and cross-substrate execution preserve one effect identity and do not duplicate authority, evidence or effect.
+- Human-Effect Closure covers material direct, indirect, latent, cumulative, relational, emergent, institutional, tool-mediated and infrastructure-mediated effects.
+- Tool/channel possession grants no disclosure authority.
+- External interlocks/compensating controls require independence, currentness and temporal/spatial composition evidence.
+- RCI is an architectural/current-reading view only; Garden self-change remains governed and verification backlog cannot manufacture promotion.
+
+CHAT-SCATTERED CANDIDATES SELECTED FOR NEW REVIEW
+P038 — ORH v1.1.1 + CIAH v1.0.1
+P039 — UAAC + DSDIH v1.0
+P040 — SOURCE-RIGHTS-001..004 + V159-DM-001..005 bounded delta management
+P041 — machine-only inspection / privacy / justice candidate
+
+EXCLUDED AS ALREADY REVIEWED/INTEGRATED OR DIRECTLY SUBSUMED
+- RCI: P035
+- effect polymorphism
+- provenance privacy-leakage controls
+- epoch content-hash vs admission-receipt separation
+- FEEDBACK_SCC structural semantics
+- pure-derivation fast paths
+- assurance-token attenuation
+- stable FunctionContract semantics vs tunable operational profiles
+
+REVIEW RULE
+For every proposed semantic:
+- compare against DO_NOTHING and existing owner coverage;
+- reject duplicates/aliases/ontology growth where existing v15.9 already closes the need;
+- accept only the smallest distinct delta;
+- preserve hard rights/privacy/consent/authority/safety/law constraints;
+- do not infer implementation, certification or authority from review consensus.
