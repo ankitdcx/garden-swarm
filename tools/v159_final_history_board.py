@@ -32,7 +32,7 @@ def call(model,prompt,key):
   "model":model,
   "messages":[{"role":"user","content":prompt}],
   "temperature":0.05,
-  "max_tokens":5500,
+  "max_tokens": (12000 if model.startswith("z-ai/glm-") else 5500),
   "stream":False,
   "provider":{
     "allow_fallbacks":True,
@@ -42,8 +42,10 @@ def call(model,prompt,key):
     "max_price":{"prompt":1.0,"completion":4.0}
   }
  }
- if model.startswith("deepseek/") or model.startswith("z-ai/glm-") or model.startswith("xiaomi/"):
+ if model.startswith("deepseek/") or model.startswith("xiaomi/"):
   body["reasoning"]={"effort":"none"}
+ elif model.startswith("z-ai/glm-"):
+  body["reasoning"]={"effort":"low"}
  cmd=["curl","-sS","--connect-timeout","10","--max-time","360",OPENROUTER,"-X","POST",
       "-H","Authorization: Bearer "+key,"-H","Content-Type: application/json",
       "-H","HTTP-Referer: https://github.com/ankitdcx/garden-swarm",
