@@ -18,9 +18,9 @@ class PaidReviewRoutingTests(unittest.TestCase):
     def setUp(self):
         self.policy = json.loads(Path("agents/openrouter-paid-review-policy.json").read_text(encoding="utf-8"))
 
-    def test_budget_pools_are_bounded_and_daily_spend_is_two_dollars(self):
+    def test_budget_pools_are_bounded_and_daily_spend_is_ten_dollars(self):
         self.assertEqual(sum(self.policy["budget_pools_usd"].values()), 20.0)
-        self.assertEqual(self.policy["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertEqual(self.policy["daily_openrouter_cost_ceiling_usd"], 10.0)
         self.assertLessEqual(self.policy["routine_hourly_cost_ceiling_usd"], 0.40)
         self.assertLessEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.10)
         self.assertEqual(self.policy["event_driven_activation"]["no_change_default"], "NO_PAID_CALL")
@@ -63,7 +63,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(receipt["schema"], "GardenPaidModelSelection/v2")
         self.assertEqual([row["family"] for row in receipt["selected"]], expected)
         self.assertEqual(receipt["approved_families"], expected)
-        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 10.0)
         self.assertEqual(set(receipt["provider_policy"]["ignore"]), {"anthropic", "nvidia", "mistral"})
         self.assertFalse(receipt["semantic_delta_admitted"])
 
