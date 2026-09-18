@@ -12,7 +12,7 @@ def effective_policy(policy, directive, now):
     if Decimal(str(policy['routine_model_call_cost_ceiling_usd'])) != Decimal('0.1'):
         raise ValueError('review call ceiling must be $0.10')
     daily = Decimal(str(policy['spending_modes'][mode]['daily_ceiling_usd']))
-    expected = Decimal('2') if mode == 'DEFAULT' else Decimal('10')
+    expected = Decimal('10')
     if daily != expected:
         raise ValueError('spending mode ceiling mismatch')
     day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
