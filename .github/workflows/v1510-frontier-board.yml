@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: v1510-frontier-board-${{ github.event.pull_request.number }}
+  group: v1510-frontier-board-${{ github.event.pull_request.number }}-${{ github.sha }}
   cancel-in-progress: false
 
 jobs:
