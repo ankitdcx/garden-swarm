@@ -22,7 +22,7 @@
     "model_ids_are_pinned_until_a_new_catalog_review_event": true
   },
   "budget": {
-    "daily_openrouter_cost_ceiling_usd": 2.0,
+    "daily_openrouter_cost_ceiling_usd": 10,
     "routine_material_event_reserved_ceiling_usd": 0.4,
     "routine_model_call_reserved_ceiling_usd": 0.1,
     "absolute_openrouter_inference_calls_per_convergence_task": 20,
@@ -30,7 +30,7 @@
     "max_output_tokens": 32000,
     "budget_exhaustion_result": "BLOCK_OR_DEFER_WITH_EXPLICIT_RECEIPT; NEVER_SHARE_BRANCHES_OR_DROP_REQUIRED_REVIEW_TO_SAVE_COST",
     "full_context_fallback_does_not_bypass_budget_or_assurance": true,
-    "audit_daily_openrouter_cost_ceiling_usd": 10.0,
+    "audit_daily_openrouter_cost_ceiling_usd": 10,
     "review_profiles_source": "agents/openrouter-paid-review-policy.json:review_profiles"
   },
   "tiers": {
@@ -165,8 +165,8 @@
     "escalation_models": {
       "qwen/qwen3.8-max-0902": {
         "reference_input_output_usd_per_million": [
-          2.0,
-          6.0
+          2,
+          6
         ],
         "context_tokens": 1000000
       },
@@ -213,7 +213,7 @@
       "moonshotai/kimi-k3": {
         "observed_input_output_usd_per_million": [
           2.4,
-          12.0
+          12
         ],
         "context_tokens": 1048576,
         "reason_not_active": "Strong large-repository model but materially worse price/value for routine Garden review."
