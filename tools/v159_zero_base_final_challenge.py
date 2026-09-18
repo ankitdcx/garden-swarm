@@ -70,7 +70,7 @@ def main():
  key=os.environ.get('OPENROUTER_API_KEY')
  if not key: raise SystemExit('OPENROUTER_API_KEY missing')
  model=MODELS[args.family];receipt=budget(key);src=SRC.read_text()
- prompt=f'g'FINAL ADVERSARIAL CHALLENGE — GARDEN v15.9 ZERO-BASE R1.
+ prompt=f'''FINAL ADVERSARIAL CHALLENGE — GARDEN v15.9 ZERO-BASE R1.
 Reviewer family: {args.family}
 Candidate SHA-256: {sha(src)}
 
