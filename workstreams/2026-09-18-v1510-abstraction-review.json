@@ -1,0 +1,28 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v1510-abstraction-review:20260918",
+  "work_package_id": "V1510-LOSSLESS-ABSTRACTION-REVIEW",
+  "branch": "chatgpt/v1510-abstraction-review-20260918",
+  "base_sha": "9e4bbce09b98353b45a5f7f72ffeef56da6f1831",
+  "status": "TEMPORARY_NONCANONICAL_REVIEW_ONLY",
+  "target_paths": [
+    ".github/workflows/v1510-abstraction-review.yml",
+    "review-inputs/v1510/ABSTRACTION_CANDIDATE_R0.txt",
+    "workstreams/2026-09-18-v1510-abstraction-review.json"
+  ],
+  "semantic_domains": [
+    "DOCUMENTATION_ABSTRACTION",
+    "SCHEMA_AND_CONTRACT_COMPRESSION",
+    "INVARIANT_DERIVATION",
+    "CROSS_MODULE_COMPOSITION",
+    "PREDECESSOR_RETENTION"
+  ],
+  "affected_contracts": [
+    "v15.9 five-file semantic predecessor",
+    "one-owner rule",
+    "specification/proof/implementation/validation/certification separation",
+    "rights/consent/privacy/authority/safety/law/human-agency hard boundaries"
+  ],
+  "intended_effect": "Obtain independent OpenRouter critique of a lossless v15.10 abstraction architecture. No canonical files are changed, no semantic delta is admitted, and this PR is never to be merged.",
+  "parallel_mode": "ISOLATED_REVIEW"
+}
