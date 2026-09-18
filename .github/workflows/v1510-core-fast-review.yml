@@ -32,7 +32,7 @@ jobs:
           def go(x):
             fam,model=x; rec={'family':fam,'requested_model':model}
             body={'model':model,'messages':[{'role':'system','content':sys},{'role':'user','content':packet}],
-                  'temperature':0.1,'max_tokens':3000}
+                  'temperature':0.1,'max_tokens':3500,'reasoning':{'effort':'low'}}
             req=urllib.request.Request('https://openrouter.ai/api/v1/chat/completions',data=json.dumps(body).encode(),
               headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY'],'Content-Type':'application/json'})
             try:
