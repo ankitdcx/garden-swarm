@@ -43,8 +43,8 @@ def load_policy(payload: dict[str, Any]) -> dict[str, Any]:
     call_budget = payload.get("call_budget") or {}
     if int(call_budget.get("absolute_maximum_openrouter_inference_calls_per_task", 0)) != 20:
         raise ValueError("branch protocol absolute call ceiling must remain 20")
-    if float(call_budget.get("daily_openrouter_cost_ceiling_usd", 0)) != 2.0 or float(call_budget.get("audit_daily_openrouter_cost_ceiling_usd", 0)) != 10.0:
-        raise ValueError("branch protocol must bind $2 default and $10 audit ceilings")
+    if float(call_budget.get("daily_openrouter_cost_ceiling_usd", 0)) != 10.0 or float(call_budget.get("audit_daily_openrouter_cost_ceiling_usd", 0)) != 10.0:
+        raise ValueError("branch protocol must bind the $10 daily ceiling")
     if float(call_budget.get("call_reservation_ceiling_usd", 0)) != 0.1:
         raise ValueError("branch protocol must bind $0.10 per call")
     if int((payload.get("reviewer_board") or {}).get("required_distinct_families", 0)) != 4:
