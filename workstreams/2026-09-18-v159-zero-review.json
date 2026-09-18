@@ -4,16 +4,23 @@
   "work_package_id": "GARDEN-V159-ZERO-BASE-ATOMIC-REVIEW-20260918",
   "branch": "chatgpt/v159-zero-review-20260918",
   "base_sha": "03623306662473fea6b050055489912a9e0ad1c4",
-  "status": "ACTIVE",
-  "substantial_edit_started": false,
+  "status": "ZERO_BASE_FIRST_PASS_COMPLETE_AWAITING_INDEPENDENT_CHALLENGE",
+  "substantial_edit_started": true,
   "review_basis": {
     "current_v159_only": true,
     "chat_history_excluded": true,
     "prior_review_verdicts_excluded": true,
     "effective_atomic_unit_method": "latest occurrence of each semantic anchor in each final v15.9 file, plus seven final cross-layer units",
-    "atomic_units": 321,
-    "packet_count": 29,
-    "packet_manifest_sha256": "916092655c5cfc094a998585fedfb8d3008df7d555b9b8ed3434049301080665"
+    "atomic_units": 288,
+    "packet_count": null,
+    "packet_manifest_sha256": "916092655c5cfc094a998585fedfb8d3008df7d555b9b8ed3434049301080665",
+    "atomic_unit_method": "actual SemanticAnchor declarations + explicit V159 current-addendum declarations + P038-P042 cross-layer units + five top-status and five source-architecture units; backlinks/references excluded",
+    "atomic_audit_sha256": "428142f8ba31717dbdc119c28ecc9a895e5db198f9034ed067efe9bb81ee3bed",
+    "first_pass_disposition_counts": {
+      "KEEP_NO_FRESH_SEMANTIC_DELTA": 224,
+      "UPGRADE_CANDIDATE": 64
+    },
+    "fresh_upgrade_candidates": 12
   },
   "phases": [
     "fresh atomic first-pass review of all 321 units",
