@@ -1,103 +1,92 @@
-GARDEN v15.10 MINIMAL ABSTRACTION BASIS — FINAL CHALLENGE
+GARDEN v15.10 COLD-RECONSTRUCTION ARCHITECTURE — FINAL CHALLENGE
 
-Goal: determine whether the full Garden v15.9 / 15.x semantic surface can be represented losslessly from a small GSL-native abstraction basis while retaining a simple human view.
+Goal: a fresh Garden implementation that has never seen v15.9 must deterministically regenerate a semantic graph equivalent to or stronger than the entire v15.9/15.x design.
 
-GSL remains unchanged: six Pillars = Existence, Change, Agency, Law, Value, Frame; ten Core Objects = TIME, SPACE, THING, EVENT, ACTION, AGENCY, RULE, VALUE, CONTEXT, CLAIM. The abstraction basis MUST NOT become a second ontology or authority source.
+UNCHANGED FOUNDATION
+GSL v45.1; six Pillars; ten Core Objects; existing Core Relations/primitives.
+Seven non-ontological GSL-native Design Forms: CONSTRUCT, CONTRACT, STATE, RELATION, PROCESS, RULE, PROJECTION.
+These are metamodel patterns, never authority sources.
 
-PROPOSED SEVEN ABSTRACTION FORMS
-1 CONSTRUCT — a Garden-defined semantic entity/artifact/architecture object/theory/profile/etc.
-2 CONTRACT — typed promises/requirements: inputs, outputs, pre/postconditions, effects, authority, failures, resources, invalidators.
-3 STATE — time/context-bound condition, lifecycle and validity.
-4 RELATION — typed connections among constructs, with explicit direction, scope, algebraic/non-transitive laws.
-5 PROCESS — typed state/work transformation using existing Process Algebra/UPA.
-6 RULE — invariant, obligation, permission, prohibition, derivation or admissibility constraint.
-7 PROJECTION — representation of the same semantics into human text, schema, registry record, API, tensor/operator, receipt, test, diagram or machine package.
+CANONICAL BOOTSTRAP INPUTS
+1. pinned GSL version/grammar/type/effect semantics;
+2. seven Design Forms + common facets;
+3. Fundamental Law Seed Set;
+4. Semantic Seed Catalogue;
+5. deterministic Expansion/Derivation Profile version;
+6. DesignEpoch/context inputs.
 
-All seven are expressed using existing GSL Core Objects/Relations/primitives. They create no new Core Object, Core Relation, top-level Engine, authority source or execution loop.
+The old v15.9 prose is NOT a runtime/canonical semantic dependency after qualification. It remains a historical verification witness only.
 
-COMMON FACETS (constraint surfaces, not capabilities):
-Identity/Lifecycle; Scope/Context; Epistemics/Provenance; Authority/Human Boundary; Effects/Safety; Dependency/Validity; Resource/Termination; Privacy/Retention; Audit/Explanation; Recovery/Evolution.
+SEMANTIC SEED CATALOGUE
+Store only semantics that cannot be derived from more fundamental admitted semantics:
+A. protected normative seeds — substantive rights, HSA/human sovereignty, consent/revocation, Human-Effect Closure, core authority/legal boundaries;
+B. ontology/identity seeds — stable construct IDs, owners, statuses, aliases, relation semantics and boundary cuts;
+C. unique model/theory/profile payload — equations, algorithms, assumptions, validity/breakdown, falsifiers, numerical/profile parameters and exact non-claims;
+D. domain/legal/physical exception seeds — owner-specific rules that cannot be generated from generic law families;
+E. compatibility/lineage seeds — stable SchemaIDs/invariant/test/proof IDs, predecessor aliases, migrations, versions/statuses;
+F. external-source bindings — authenticated law/standard/science/profile roots when semantic content depends on reality rather than deduction.
 
-DERIVATIONS:
-ArchitectureObject = Construct + Contract + State + Relations + Processes + Rules + Projections.
-Function = Contract + Process.
-Schema = Projection of semantic form under frozen SchemaID/DesignEpoch.
-Receipt = Projection(Process result + state delta + evidence/provenance), owner-specialized.
-Registry = Construct + Relations + Rules + projection/index semantics.
-Lifecycle = State + Process + Rule.
-Invariant = Rule OR accepted derived Rule instance.
-Test = Process evaluating Contract/Rule/Projection correspondence.
-ProofObligation = Rule/Contract requiring formal discharge.
-Binding = Relation + Context + Rule.
-Plan = Process + Contract.
-FailureMode = State/Rule-triggered Process outcome, owner-specific.
-Profile = context-bound specialization.
-Theory = Construct + Claims/Rules + Model/State + Processes/Operators + applicability/assumptions/falsifiers + Projections.
-Algebra = Contract over typed operands/operators/laws/non-laws + Rules + Process/Projection realization. Process/Policy/Decision/Conformance/Evidence/Bridge remain distinct specializations.
-Human module = non-authoritative Projection grouping coherent constructs for comprehension.
+Everything else is generated.
 
-15.x COVERAGE THAT MUST BE LOSSLESS:
-- CPI recursive construction/qualification.
-- OCF operational closure/no descriptive leaf.
-- MSC minimum stable core.
-- TML living theory/module lifecycle.
-- CDDT cross-domain discovery/transfer.
-- CMUR/cross-model upgrade review.
-- CLIC intent/effect, causality, attention, continuity, emergence/options.
-- Algebra formalization and cross-algebra boundaries.
-- GCL causal leverage.
-- Human-Effect Closure; reputation/human-worth boundary; world evidence/privacy; justice evidence continuity; lethal-force non-autonomy; migration; HRAP; protected reporting.
-- AI-assisted development/deterministic projection.
-- standards compliance; engineering design; assurance hardening; RRCTX.
-- TED, SEA, MAC, NRS, VIP, SHE, EC, CSR, AR, MI.
-- event-driven triggers/subscriptions/scheduling/continuous work.
-- DesignMirror, future stress, belief timeline, global consistency, failure learning, ontological debt, historical summary, presentation/LSP/lifecycle tooling.
-- GSL-PHYSICS, Bridge, AAP, UPA/GTF, Reason/Compare/Proof, HSA, Productive Finance.
-- seven theories SRT/VSM/RPM/PPM/TFT/FET/SCT; UPS and other research/reference architectures.
-- all existing schemas, registries, invariants, tests, proof obligations, status distinctions and stable IDs.
+DETERMINISTIC EXPANSION
+seed catalogue
+ + GSL semantics
+ + typed graph/relation laws
+ + design-form expansion
+ + applicable context
+ -> CanonicalSemanticGraph
+ -> DerivedObligations
+ -> owner-specialized Contracts/Processes/States/Relations
+ -> Schema projections
+ -> tests/proof obligations/receipts/registries
+ -> human reader projections.
 
-HARD NON-LOSS RULES:
-- protected human/right/authority/safety/law/consent semantics stay explicit and inspectable;
-- theory mathematics, assumptions, applicability, falsifiers and validity/breakdown remain explicit unique payload, not flattened;
-- algebra operand/operator/law/non-law distinctions remain explicit;
-- owner-specific result/failure states remain explicit;
-- authority/consent/delegation default non-transitive;
-- empirical evidence/formal proof/validation/certification remain non-substitutable;
-- no generated obligation becomes law/authority without existing owner/admission path;
-- old stable IDs map one-to-one to current semantic expressions or explicit retained specializations;
-- if lossless derivation is not established, retain the old specialization.
+No runtime inference is needed to determine canonical expansion. LLMs may propose new seeds, laws or abstractions but cannot be part of deterministic canonical generation.
 
-HUMAN VIEW CANDIDATE:
-Use about 20–30 top-level human modules, not 50 independent semantic modules. Candidate 24:
-1 Human Sovereignty & Rights
-2 Identity/Consent/Privacy
-3 Intent/Delegation/Human Agency
-4 GSL & Meaning
-5 Knowledge/Evidence/Provenance
-6 Context/Time/Validity
-7 Process/Transition/AAP
-8 Compare/Reason/Search
-9 Proof/Verification
-10 Safety/Security/Emergency
-11 Authority/Law/Governance/Policy
-12 Resources/Runtime/Execution
-13 Infrastructure/Physical World
-14 Dependency/Continuity/Recovery
-15 Evolution/Learning/Self-Audit
-16 Research/Discovery/CDDT
-17 Theory & Model System
-18 Algebras/Representation/Bridge
-19 Domains/Engineering/Standards
-20 Multi-Agent/Embodied/Novelty
-21 Human-Effect/Relational/Justice Protections
-22 Development/Compilation/Tooling
-23 Finance/Societal Applications
-24 Profiles/Instances/Deployment.
+DERIVATION CLASSES
+SEED: irreducible current semantics.
+DERIVED: deterministic consequence of seeds/laws/relations/context.
+SPECIALIZATION: unique owner payload on a generic form.
+PROJECTION: representation only.
+EXTERNAL_BINDING: content sourced from authenticated reality/authority.
+No DROP.
 
-Review request:
-A. Can the seven forms reconstruct EVERY listed 15.x family without semantic loss? Name any counterexample requiring an eighth form.
-B. Are any of the seven redundant/derivable from the others?
-C. Does Theory or Algebra need a separate core form, or are they safe specializations?
-D. Is the 24-module human projection near a sensible optimum? Recommend 20–30 grouping only if materially better.
-E. Identify any loss risks in schemas/invariants/tests/registries/receipts and protected boundaries.
-F. Return APPROVE / APPROVE_WITH_PATCH / BLOCK plus a patched basis if needed.
+COLD-RECONSTRUCTION PROOF
+For every normalized v15.9 semantic leaf L, record exactly one mapping:
+  L -> generated semantic node(s)
+  OR L -> irreducible seed.
+A release is cold-reconstructable only when every predecessor leaf is covered and the reconstructed semantic graph preserves:
+identity/owner/status/scope/context/authority/human boundary/evidence basis/uncertainty/failure/result/dependencies/validity/relations/unique mathematical or legal payload/exceptions/non-claims.
+
+Textual wording need not be identical. Semantic comparison is owner-qualified and status-sensitive. An optional byte-exact historical source archive may exist solely as witness, never as active source needed for construction.
+
+TITANIUM ADVERSARIAL EXAMPLE — MUST SURVIVE AS PROFILE SEEDS
+GAIA Titanium is not recoverable merely from "safety profile". Its unique profile payload includes, among other v15.9 semantics:
+- hard-real-time 5.5 kHz heartbeat / 181.8 microsecond nominal cycle;
+- reference deadline 150 microseconds and jitter <5 microseconds in the consolidated profile;
+- PB-CBF reference 100 ms look-ahead;
+- forward-invariance equation: hdot(x,u) + alpha(h(x)) >= 0, with h safety manifold and alpha class-K;
+- local token eligibility AND CBF safety AND Justice Filter AND K0P composite gate;
+- GAIA Diamond asynchronous BFT/token authorization outside the Titanium tick; n>3f is model-bound reference, never reputation substitute;
+- identity continuity Gamma(t)=product 1[heartbeat_i=1], cumulative product over i=0..t, with failed qualified continuity revoking operational authority under recovery/safe-halt policy;
+- exact rule that a Diamond token is authorization eligibility, not safety proof, and Titanium may always reject;
+- safe-halt/watchdog/delay-aware actuation and non-blocking audit semantics;
+- deployment values are profile parameters/evidence-labelled references, not universal Garden invariants;
+- TRAIN-specific regulators/entropy channels/degradation/assurance geometry and correspondence remain seed/specialization payload where not derivable.
+
+Likewise all unique equations/algorithms/parameters/non-claims from SRT/VSM/RPM/PPM/TFT/FET/SCT, TRAIN, GAIA Diamond, Reliability OS, domain controllers, GSL-PHYSICS, Bridge, GCL, Productive Finance and other 15.x profiles must survive as explicit seeds/specializations.
+
+ABSTRACTION RULE
+Repeated shell is generated. Unique information is seed.
+A candidate seed may later be removed only if a deterministic derivation from more fundamental seeds is established with owner-qualified equivalence/refinement evidence.
+
+HUMAN PROJECTION
+Current default: about 22 reader modules. This count is a projection profile only. Human text explains concepts/rules in ordinary language and shows unique theory/profile equations where material; it need not expose machine seed syntax.
+
+CHALLENGE
+1. Is this sufficient for a fresh implementation to reconstruct the full semantic design without seeing predecessor prose?
+2. What seed categories are missing?
+3. What could still be lost, especially theory/profile equations, legal exceptions, safety timing, algorithms, status/non-claims, result/failure semantics?
+4. Is deterministic expansion possible without an LLM?
+5. What exact closure/round-trip tests are required before removing v15.9 as an active semantic dependency?
+6. Return APPROVE / APPROVE_WITH_PATCH / BLOCK and only material corrections.
