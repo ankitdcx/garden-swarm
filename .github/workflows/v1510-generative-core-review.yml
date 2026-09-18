@@ -1,0 +1,71 @@
+name: Temporary v15.10 generative-core OpenRouter review
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'review-inputs/v1510-core/**'
+      - '.github/workflows/v1510-generative-core-review.yml'
+permissions:
+  contents: read
+concurrency:
+  group: v1510-generative-core-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm' && startsWith(github.head_ref, 'chatgpt/v1510-generative-core-review-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run independent abstraction board
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request, urllib.error, pathlib, hashlib
+          packet=pathlib.Path('review-inputs/v1510-core/GENERATIVE_CORE_CANDIDATE.txt').read_text()
+          models=[
+            ('deepseek','deepseek/deepseek-v4.1-flash'),
+            ('qwen','qwen/qwen3.8-flash'),
+            ('glm','z-ai/glm-5.3-flash'),
+            ('xiaomi','xiaomi/mimo-v2.5'),
+            ('gemini','google/gemini-3.8-flash'),
+          ]
+          sys='''You are an independent formal architecture reviewer. Attack the proposed minimal generative basis. Do not reward elegance if it loses semantics. Try to construct a concrete predecessor concept that cannot be represented. Distinguish existing GSL semantics from genuinely new abstraction forms. Do not add a new form unless you can explain why composition of existing GSL plus the proposed seven fails. Return APPROVE, APPROVE_WITH_PATCH, or REJECT, then material findings only.'''
+          out=[]
+          for family,model in models:
+            rec={'family':family,'requested_model':model,'packet_sha256':hashlib.sha256(packet.encode()).hexdigest()}
+            body={'model':model,'messages':[{'role':'system','content':sys},{'role':'user','content':packet}],
+                  'temperature':0.1,'max_tokens':10000}
+            req=urllib.request.Request('https://openrouter.ai/api/v1/chat/completions',
+              data=json.dumps(body).encode(),
+              headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY'],'Content-Type':'application/json',
+                       'HTTP-Referer':'https://github.com/ankitdcx/garden-swarm',
+                       'X-Title':'Garden v15.10 generative-core review'})
+            try:
+              with urllib.request.urlopen(req,timeout=480) as r: raw=json.loads(r.read())
+              rec.update(status='OK',actual_model=raw.get('model'),response_id=raw.get('id'),usage=raw.get('usage'),
+                         text=raw['choices'][0]['message'].get('content',''))
+            except Exception as e:
+              rec.update(status='ERROR',error_type=type(e).__name__)
+              if isinstance(e,urllib.error.HTTPError): rec['http_status']=e.code
+            out.append(rec); time.sleep(2)
+          pathlib.Path('review-results/v1510-core').mkdir(parents=True,exist_ok=True)
+          pathlib.Path('review-results/v1510-core/board.json').write_text(json.dumps({
+             'schema':'GardenV1510GenerativeCoreReviewBoard/v1',
+             'semantic_delta_admitted':False,'canonical_promotion':False,
+             'packet_sha256':hashlib.sha256(packet.encode()).hexdigest(),'results':out},indent=2))
+          ok=sum(r['status']=='OK' and r.get('text','').strip() for r in out)
+          print(f'substantive reviews {ok}/{len(out)}')
+          if ok < 3: raise SystemExit('insufficient substantive reviewers')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v1510-generative-core-board-${{ github.run_id }}
+          path: review-results/v1510-core/board.json
+          if-no-files-found: error
+          retention-days: 7
