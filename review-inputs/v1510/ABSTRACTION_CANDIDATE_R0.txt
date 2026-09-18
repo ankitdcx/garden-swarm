@@ -198,3 +198,108 @@ Return:
 7. Migration/compatibility/no-loss tests that are missing.
 8. Worthy additional abstractions or simplifications.
 9. A concise patched architecture if changes are needed.
+
+
+======================================================================
+R1 CORRECTIONS AFTER INDEPENDENT R0 REVIEW — CONTROLLING FOR FINAL AUDIT
+======================================================================
+
+The R0 abstractions are amended as follows. Where this appendix conflicts with R0, this appendix controls.
+
+1. NO META-OBJECT / NO SHADOW AUTHORITY
+- Replace MetaConstruct as a semantic object with SemanticPattern: a compile-time/documentation descriptor only.
+- Meta-module means NON_AUTHORITATIVE reader/projection pattern only. It has no state, lifecycle, authority, resource budget, execution API or binding authority.
+- Abstraction remains under existing GSL/Compile/Dependency/Reason/Compare/Proof/Compliance/Evolve owners and cannot self-certify changes to protected boundaries.
+
+2. PROTECTED BOUNDARY MANIFEST
+- Add a non-authoritative ProtectedBoundaryManifest indexing the exact controlling sources for rights, consent, privacy, legitimate authority/delegation, K0P/safety, law, contestability/remedy, human agency/HSA and Human-Effect Closure.
+- The manifest never owns or derives those boundaries. Incomplete boundary coverage BLOCKS affected compression.
+
+3. FACETS ARE CONSTRAINT CHECKLISTS, NOT CAPABILITIES
+Use ten ContractFacet surfaces:
+IdentityLifecycle; ScopeContext; EpistemicsProvenance; AuthorityHumanBoundary; EffectsSafety; DependencyValidity; ResourceTermination; PrivacyRetention; AuditExplanation; RecoveryEvolution.
+- A facet label does not prove its property is satisfied.
+- Dynamic uncertainty/freshness/evidence state is data inside EpistemicsProvenance, not a static trait.
+- Each FacetBinding retains controlling owner, applicability, required explicit fields, constraints, invalidators and conflict rules.
+
+4. REMOVE UNIVERSAL "MOST RESTRICTIVE WINS"
+Composition is dimension-specific:
+- hard rights/K0P/safety: all simultaneously applicable hard gates remain required;
+- authority: explicit scope intersection/non-amplification; no inferred transitivity;
+- evidence/epistemics: preserve evidence class, source, dependence, uncertainty and status; no promotion;
+- privacy/retention/audit: propagate applicable constraints but preserve conflicts for competent resolution;
+- dependency/validity: invalidate affected closure;
+- resource: capability may degrade but protected floors are not shed;
+- soft preferences: only owner-specific comparator/algebra may aggregate;
+- owner failure/recovery semantics remain owner-specific.
+Incomparable requirements => CONFLICT/UNRESOLVED/BLOCKED. Source order, field order, vote count or generic strictness never resolves them.
+
+5. SCHEMA ABSTRACTION IS DESCRIPTIVE AND VERSION-FROZEN
+- SchemaPatternExpression describes common structure but does not become a new canonical owner.
+- Each concrete SchemaID retains visible owner, applicability/context, authority, evidence/epistemic class, owner result/failure semantics, uncertainty/freshness where applicable, invalidators and provenance.
+- Stable SchemaID + DesignEpoch binds a frozen semantic expansion hash. Constructor/facet change cannot silently alter an old SchemaID; semantic change requires ordinary successor/migration.
+- Exact serialization/wire contracts remain explicit where required.
+
+6. RECEIPT/REGISTRY/RESULT NON-FLATTENING
+- Shared structural headers may be factored, but consent/authority, formal-proof, empirical-validation, execution, security-attestation and audit/provenance receipts remain distinct owner specializations.
+- Registry lineage, supersession/tombstones, authority and conflict rules remain owner-specific.
+- Generic abstraction result algebras describe abstraction status only. Owner-specific terminal/failure/unknown states are never coerced into one universal result enum.
+
+7. DERIVATION IS CANDIDATE GENERATION, NOT NEW LAW
+- Existing v15.9 definitions DEFAULT TO RETAINED_SPECIALIZATION.
+- DefinitionRoleBinding is multi-valued metadata, not a rank: PROTECTED_BOUNDARY | FOUNDATIONAL_RULE | DOMAIN_RULE | PROFILE_RULE | AXIOMATIC_OWNER_RULE | EXPLICIT_SPECIALIZATION | DERIVATION_ELIGIBLE | PROOF_OR_METHOD | CONFORMANCE_TEST | RESEARCH_ONLY.
+- Static analysis may emit CandidateObligation.
+- It becomes accepted DerivedObligation only after an ObligationDerivationReceipt binds exact source rule IDs/hashes, owner acceptance, context/applicability, exact relation/path and boundary cuts, assumptions/exceptions, method/checker root, appropriate proof/evidence, expansion/round-trip result, DesignEpoch and invalidators; then the ordinary existing owner/admission process must accept it.
+- Runtime action never derives new rights, authority or protected-boundary law on the fly.
+- Existing concrete stable IDs remain first-class violation/reporting endpoints.
+
+8. STATIC INTERACTION ANALYSIS ONLY
+- Analyze directional owner-qualified edges, paths, SCC/feedback and hyperedges.
+- Explicit BoundaryCuts/non-transitivity declarations prevent invalid propagation.
+- A->delegates->B and B->authorizes->C never implies A authorizes C without explicit owner-authorized semantics.
+- Output is StaticAnalysisReport = findings + CandidateObligations + unresolved paths + boundary cuts + SCC findings + omitted scope + provenance.
+- Report creates no action authority, proof, evidence or legal applicability.
+
+9. CONSERVATIVE RETENTION / NO SOURCE ELISION IN v15.10
+RetentionDisposition =
+RETAINED_PRIMITIVE | RETAINED_SPECIALIZATION | DERIVED_EQUIVALENT | GENERATED_NONAUTHORITATIVE_VIEW |
+COMPATIBILITY_ALIAS | SUPERSEDED_WITH_EQUIVALENCE | INTENTIONALLY_CHANGED_WITH_EXPLICIT_DELTA | BLOCKED.
+There is no DROP.
+- GENERATED_NONAUTHORITATIVE_VIEW is prohibited where authoritative meaning would disappear.
+- Unresolved equivalence falls back to the explicit predecessor specialization.
+- v15.10 establishes safe abstraction machinery first; future per-item compaction requires actual accepted equivalence/round-trip receipts.
+
+10. NEW SMALL ABSTRACTION KERNEL
+Exactly 12 ABS laws govern abstraction:
+non-authority; single visible controlling owner; protected-boundary explicitness; dimension-specific composition;
+non-transitive authority/no epistemic promotion; frozen SchemaID expansion; no automatic derived/superseded classification;
+owner result/failure preservation; typed path/SCC/hyperedge analysis as findings; version/invalidation binding;
+one retention disposition/no DROP; generated projections subordinate to source.
+
+11. NO-LOSS VERIFICATION EXPANDED
+Required tests include:
+- exact identifier/owner/status coverage;
+- all canonical predecessor definitions retained unless explicitly and equivalently superseded;
+- semantic round-trip predecessor -> abstraction -> expansion;
+- authority-boundary/non-transitivity tests;
+- contradiction/UNRESOLVED preservation;
+- evidence-class/proof-vs-empirical downgrade detection;
+- negative/fault equivalence using stale evidence, forged authority, schema drift and projection divergence;
+- hard-boundary non-relaxation;
+- dependency/DesignEpoch invalidation;
+- owner-disambiguation sweep.
+
+MECHANICAL RETENTION RESULT FOR CURRENT FIVE-FILE DRAFT
+Status: PASS for source-retention boundary.
+- old SchemaIDs: 735/735 preserved
+- old Registry IDs: 62/62 preserved
+- old TEST IDs: 741/741 preserved
+- old RIGHT IDs: 27/27 preserved
+- old semantic anchors: 325/325 preserved
+- old Annexure canonical @D definitions: 2,238/2,238 preserved verbatim; 0 changed; 0 missing
+- nonmetadata predecessor unique-line retention: PASS after display-whitespace normalization
+Intentional predecessor changes are release metadata only: v15.9->v15.10 top/current labels, Human current-source label, and repair of the stale REG-VERSION current Document label from v14.8.3 to v15.10.
+This is a source-retention audit, NOT formal proof, implementation validation, empirical validation or certification.
+
+FINAL AUDIT REQUEST
+Audit R1 against the R0 defects. Return exactly APPROVE, APPROVE_WITH_PATCH, or BLOCK, followed only by material surviving defects. Specifically test for shadow authority, self-exempt abstraction machinery, non-monotonic conflict loss, owner masking, evidence/proof flattening, authority transitivity, SchemaID drift, owner-specific failure loss, interaction-analysis overclaim, and predecessor semantic loss.
