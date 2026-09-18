@@ -197,7 +197,7 @@ class ContextReviewTests(unittest.TestCase):
         self.assertIn('Please find any defects or gaps or worthy upgrades.', calls[0]['messages'][0]['content'])
         self.assertIn('support_passages', calls[0]['messages'][0]['content'])
         self.assertEqual(state['attempts'][-1]['review_profile']['name'], 'COMPLEX')
-        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '2.0')
+        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '10.0')
         self.assertEqual(calls[0]['max_tokens'],16000)
 
     def test_context_expansion_cannot_reset_twenty_call_task_budget(self):
