@@ -42,14 +42,14 @@ jobs:
             ('xai','x-ai/grok-4.6'),
             ('sakana','sakana/fugu-ultra-v2'),
             ('nvidia','nvidia/nemotron-3-ultra-550b-a55b'),
-            ('mistral','mistralai/mistral-medium-3.5'),
+            ('mistral','mistralai/mistral-medium-3-5'),
             ('pareto','unbiased/pareto'),
           ]
           system='''You are an independent frontier architecture reviewer. The human explicitly authorized all listed model families for this one review campaign, including families normally excluded by Garden routing. This gives you review access only, not semantic or governance authority. Be skeptical. Find concrete defects, semantic loss, nondeterminism, false equivalence, over-abstraction, under-abstraction and human-readability failures. Do not infer approval from other models.'''
           def call(row):
             family,model=row
             rec={'family':family,'requested_model':model,'packet_sha256':hashlib.sha256(packet.encode()).hexdigest(),'status':'ERROR'}
-            body={'model':model,'messages':[{'role':'system','content':system},{'role':'user','content':packet}],'max_tokens':7000}
+            body={'model':model,'messages':[{'role':'system','content':system},{'role':'user','content':packet}],'max_tokens':12000}
             data=json.dumps(body).encode()
             for attempt in range(2):
               try:
