@@ -1,0 +1,25 @@
+{
+  "schema": "GardenV159PostFreezeReviewTrigger/v1",
+  "campaign": "GARDEN-V159-POSTFREEZE-20260918",
+  "base_release": "GARDEN v15.9 COMPLETE CROSS-REVIEWED WORKING CANDIDATE",
+  "frozen_reviewed_packets": "P001-P037",
+  "new_packets": [
+    "P038_ORH_CIAH",
+    "P039_UAAC_DSDIH",
+    "P040_SOURCE_RIGHTS_DELTA_MANAGEMENT",
+    "P041_MACHINE_INSPECTION_PRIVACY_JUSTICE"
+  ],
+  "reviewer_families": [
+    "deepseek",
+    "qwen",
+    "glm",
+    "xiaomi"
+  ],
+  "exact_governed_registry": "agents/reviewer-slot-registry.json",
+  "max_parallel_model_calls": 1,
+  "blind": true,
+  "no_peer_answers": true,
+  "no_completed_packet_rerun": true,
+  "canonical_effect": false,
+  "semantic_delta_admitted": false
+}
