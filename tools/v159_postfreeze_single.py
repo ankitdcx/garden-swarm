@@ -10,7 +10,7 @@ BASELINE = Path("review-inputs/v159-postfreeze/CHATGPT_BASELINE.txt")
 OUT = Path("review-results/v159-postfreeze")
 TIMEOUT = 240
 KEY_INFO = "https://openrouter.ai/api/v1/key"
-DAILY_CEILING = 2.0
+DAILY_CEILING = 10.0
 PER_CALL_CEILING = 0.10
 
 
