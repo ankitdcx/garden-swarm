@@ -26,7 +26,8 @@ API = legacy.API
 STATE_BRANCH = legacy.STATE_BRANCH
 STATE_PATH = "review-state/group-review-ledger.json"
 LEDGER_SCHEMA = "GardenGroupReviewOpenRouterLedger/v1"
-WORKFLOW = "group-review-openrouter.yml"
+PROVIDER_WORKFLOW = "group-review-openrouter.yml"
+TRIGGER_WORKFLOW = "group-review-openrouter-trigger.yml"
 MAX_FINDING_CHARS = 10000
 
 
@@ -77,16 +78,16 @@ def _event_payload() -> dict:
 def trigger_issue_number() -> int:
     if os.environ.get("GITHUB_REPOSITORY") != REPO or os.environ.get("GITHUB_REF") != "refs/heads/main":
         raise ValueError("GROUP_REVIEW OpenRouter worker requires installed main")
-    expected = REPO + "/.github/workflows/" + WORKFLOW + "@refs/heads/main"
-    if os.environ.get("GITHUB_WORKFLOW_REF") != expected:
-        raise ValueError("unregistered GROUP_REVIEW OpenRouter workflow")
-
     event_name = os.environ.get("GITHUB_EVENT_NAME")
     payload = _event_payload()
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER")
     actor = os.environ.get("GITHUB_ACTOR")
+    expected_provider = REPO + "/.github/workflows/" + PROVIDER_WORKFLOW + "@refs/heads/main"
+    expected_trigger = REPO + "/.github/workflows/" + TRIGGER_WORKFLOW + "@refs/heads/main"
 
     if event_name == "issues":
+        if os.environ.get("GITHUB_WORKFLOW_REF") != expected_trigger:
+            raise ValueError("unregistered GROUP_REVIEW issue trigger workflow")
         if payload.get("action") != "opened":
             raise ValueError("only opened run issues may start GROUP_REVIEW OpenRouter")
         issue = payload.get("issue") or {}
@@ -97,6 +98,8 @@ def trigger_issue_number() -> int:
             raise ValueError("issue is not a GROUP_REVIEW run")
         number = int(issue.get("number", 0))
     elif event_name == "workflow_dispatch":
+        if os.environ.get("GITHUB_WORKFLOW_REF") != expected_provider:
+            raise ValueError("unregistered GROUP_REVIEW provider workflow")
         if actor not in {owner, "github-actions[bot]"}:
             raise ValueError("GROUP_REVIEW continuation actor not admitted")
         number = int((payload.get("inputs") or {}).get("trigger_issue_number", 0))
@@ -207,7 +210,7 @@ def _publish_result_issue(gh: str, packet: dict, issue_number: int, cycle: dict,
 
 def _dispatch_next(gh: str, issue_number: int) -> None:
     legacy.http(
-        API + "/actions/workflows/" + WORKFLOW + "/dispatches",
+        API + "/actions/workflows/" + PROVIDER_WORKFLOW + "/dispatches",
         gh,
         {"ref": "main", "inputs": {"trigger_issue_number": str(issue_number)}},
     )
@@ -399,8 +402,16 @@ def execute(mode: str, root: Path = Path(".")) -> None:
         issue_number, packet = preflight(root)
         print(f"GROUP_REVIEW_PREFLIGHT_OK:{issue_number}:{packet['packet_sha256']}")
         return
+    if mode == "dispatch":
+        issue_number, packet = preflight(root)
+        gh = os.environ.get("GH_REVIEW_TOKEN")
+        if not gh:
+            raise ValueError("GitHub review token unavailable")
+        _dispatch_next(gh, issue_number)
+        print(f"GROUP_REVIEW_PROVIDER_DISPATCHED:{issue_number}:{packet['packet_sha256']}")
+        return
     if mode != "run":
-        raise ValueError("mode must be preflight or run")
+        raise ValueError("mode must be preflight, dispatch or run")
     run(root)
 
 
