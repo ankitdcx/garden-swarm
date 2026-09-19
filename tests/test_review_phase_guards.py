@@ -12,7 +12,7 @@ from tools import single_review_worker as transport
 from tools import context_capsule
 
 
-FAMILIES = ['deepseek', 'qwen', 'glm', 'xiaomi']
+FAMILIES = ['deepseek', 'xiaomi', 'nvidia', 'pareto', 'mistral']
 
 
 def response(family, disposition='NO_CHANGE', verdict='APPROVE'):
@@ -21,20 +21,29 @@ def response(family, disposition='NO_CHANGE', verdict='APPROVE'):
 
 
 def cycle():
-    return {'baseline_sha256': p.sha256_text('Public baseline'), 'blind': {f: response(f) for f in FAMILIES}, 'reconcile': {}, 'final': {}, 'confirm': {}}
+    return {'baseline_sha256': p.sha256_text('Public baseline'),
+            'blind': {f: response(f) for f in FAMILIES},
+            'reconcile': {}, 'final': {}, 'confirm': {}}
 
 
-def final_directive(value):
+def final_directive(value, closure_overrides=None):
+    closure_overrides = closure_overrides or {}
+    closures = {}
+    for family in FAMILIES:
+        row = {'finding_sha256': value['blind'][family]['finding_sha256'],
+               'outcome': 'NO_FOLLOWUP_NEEDED',
+               'reason': 'No material issue found in the source-bound blind finding.'}
+        row.update(closure_overrides.get(family, {}))
+        closures[family] = row
+    evidence_keys = [*p.synthesis_evidence(value, FAMILIES), 'BASELINE']
     return {'phase': 'FINAL', 'merged_candidate_sha256': 'c' * 64,
             'source_packet_sha256': 'a' * 64,
             'private_baseline_commitment': {'baseline_sha256': value['baseline_sha256']},
             'synthesis_audit': {'baseline_text': 'Public baseline', 'public_baseline_approved': True,
-                'dispositions': {key: {'decision': 'RETAIN', 'reason': 'Source supports disposition', 'evidence_refs': ['source:fixture']}
-                                 for key in [*p.synthesis_evidence(value, FAMILIES), 'BASELINE']}},
-            'branch_closures': {f: {'finding_sha256': value['blind'][f]['finding_sha256'],
-                                   'outcome': 'NO_FOLLOWUP_NEEDED',
-                                   'reason': 'Existing source covers the attempted counterexample.'}
-                                for f in FAMILIES}}
+                'dispositions': {key: {'decision': 'RETAIN', 'reason': 'Source supports disposition',
+                                      'evidence_refs': ['source:fixture']}
+                                 for key in evidence_keys}},
+            'branch_closures': closures}
 
 
 class PhaseGuards(unittest.TestCase):
@@ -54,77 +63,89 @@ class PhaseGuards(unittest.TestCase):
                    'context_sufficiency': 'SUFFICIENT', 'missing_context_reason': '',
                    'requested_dependency_or_source_refs': []}
         with self.assertRaisesRegex(ValueError, 'APPROVE cannot'):
-            p.validate_final_review(finding, family='qwen', model_id='fixture', candidate_sha256='a'*64, phase='FINAL')
+            p.validate_final_review(finding, family='deepseek', model_id='fixture',
+                                    candidate_sha256='a'*64, phase='FINAL')
 
-    def test_final_cannot_skip_initial_reviewers(self):
+    def test_final_cannot_skip_any_initial_reviewer(self):
         value = cycle()
         directive = final_directive(value)
-        del value['blind']['qwen']
-        with self.assertRaisesRegex(ValueError, 'all four initial'):
+        del value['blind']['mistral']
+        with self.assertRaisesRegex(ValueError, 'all five initial'):
             w._plan(value, directive, FAMILIES)
 
-    def test_reconciliation_waits_for_all_blind_reviews(self):
-        value = cycle()
-        del value['blind']['glm']
-        with self.assertRaisesRegex(ValueError, 'all four initial'):
-            w._plan(value, {'phase': 'RECONCILE'}, FAMILIES)
+    def test_model_reconciliation_phase_is_not_live_v2(self):
+        policy = p.load_policy(__import__('json').loads(
+            Path('agents/independent-branch-convergence-policy.json').read_text()))
+        self.assertNotIn('RECONCILE', p.PHASES)
+        self.assertEqual(policy['branch_protocol']['model_followups_per_branch'], 0)
 
-    def test_no_change_easy_case_requires_explicit_closure(self):
+    def test_final_requires_five_explicit_closures(self):
         value = cycle()
-        with self.assertRaisesRegex(ValueError, 'four explicit branch closures'):
+        with self.assertRaisesRegex(ValueError, 'five explicit branch closures'):
             w._plan(value, {'phase': 'FINAL'}, FAMILIES)
-        self.assertEqual(w._plan(value, final_directive(value), FAMILIES), ('FINAL', 'deepseek', 'final:deepseek'))
+        self.assertEqual(w._plan(value, final_directive(value), FAMILIES),
+                         ('FINAL', 'deepseek', 'final:deepseek'))
 
-    def test_material_finding_cannot_waive_followup(self):
+    def test_material_finding_cannot_be_closed_as_no_followup(self):
         value = cycle()
-        value['blind']['qwen'] = response('qwen', disposition='PROPOSE_DELTA')
-        with self.assertRaisesRegex(ValueError, 'omit followup'):
-            w._plan(value, final_directive(value), FAMILIES)
-
-    def test_closure_binds_latest_branch_not_initial_answer(self):
-        value = cycle()
+        value['blind']['pareto'] = response('pareto', disposition='PROPOSE_DELTA')
         directive = final_directive(value)
-        value['reconcile']['qwen'] = [response('qwen', disposition='PROPOSE_DELTA')]
-        with self.assertRaisesRegex(ValueError, 'latest response'):
+        with self.assertRaisesRegex(ValueError, 'NO_FOLLOWUP_NEEDED requires'):
             w._plan(value, directive, FAMILIES)
-        directive['branch_closures']['qwen'].update(outcome='RECONCILED', finding_sha256=value['reconcile']['qwen'][-1]['finding_sha256'])
-        directive['synthesis_audit'] = final_directive(value)['synthesis_audit']
-        self.assertIsNotNone(w._plan(value, directive, FAMILIES))
+
+    def test_material_finding_can_close_only_with_evidence_bound_disposition(self):
+        value = cycle()
+        value['blind']['pareto'] = response('pareto', disposition='PROPOSE_DELTA')
+        directive = final_directive(value, {
+            'pareto': {'outcome': 'INTEGRATED_FOR_FINAL_AUDIT',
+                       'evidence_refs': ['patch:test', 'regression:test']}
+        })
+        self.assertEqual(w._plan(value, directive, FAMILIES),
+                         ('FINAL', 'deepseek', 'final:deepseek'))
+        bad = final_directive(value, {
+            'pareto': {'outcome': 'REJECTED_WITH_EVIDENCE', 'evidence_refs': []}
+        })
+        with self.assertRaisesRegex(ValueError, 'requires evidence_refs'):
+            w._plan(cycle() | {'blind': value['blind']}, bad, FAMILIES)
+
+    def test_unresolved_material_branch_blocks_final(self):
+        value = cycle()
+        directive = final_directive(value, {
+            'deepseek': {'outcome': 'UNRESOLVED_BLOCK'}
+        })
+        with self.assertRaisesRegex(ValueError, 'unresolved material'):
+            w._plan(value, directive, FAMILIES)
 
     def test_closure_cannot_change_during_final_review(self):
         value = cycle()
         directive = final_directive(value)
         w._plan(value, directive, FAMILIES)
-        directive['branch_closures']['glm']['reason'] = 'Different assessment'
+        directive['branch_closures']['xiaomi']['reason'] = 'Different assessment'
         with self.assertRaisesRegex(ValueError, 'closures changed'):
             w._plan(value, directive, FAMILIES)
-
-    def test_reconciliation_cannot_reopen_after_final_starts(self):
-        value = cycle()
-        value['final']['deepseek'] = response('deepseek')
-        with self.assertRaisesRegex(ValueError, 'after final review'):
-            w._plan(value, {'phase': 'RECONCILE'}, FAMILIES)
 
     def test_unresolved_confirmation_produces_disagreement_receipt(self):
         for verdict in ('BLOCK', 'APPROVE_WITH_PATCH'):
             value = cycle()
             value['confirm'] = {f: response(f) for f in FAMILIES}
-            value['confirm']['glm'] = response('glm', verdict=verdict)
+            value['confirm']['mistral'] = response('mistral', verdict=verdict)
             self.assertEqual(w._result_status(value, 'CONFIRM', FAMILIES), 'ESCALATE_UNRESOLVED')
-            self.assertEqual(value['disagreement_receipt']['families'], ['glm'])
+            self.assertEqual(value['disagreement_receipt']['families'], ['mistral'])
             self.assertFalse(value['disagreement_receipt']['semantic_delta_admitted'])
 
     def test_agreement_still_needs_chatgpt_final_decision(self):
         value = cycle()
         value['confirm'] = {f: response(f) for f in FAMILIES}
-        self.assertEqual(w._result_status(value, 'CONFIRM', FAMILIES), 'AWAITING_CHATGPT_FINAL_DECISION')
+        self.assertEqual(w._result_status(value, 'CONFIRM', FAMILIES),
+                         'AWAITING_CHATGPT_FINAL_DECISION')
 
     def test_retry_requires_receipt_binding_and_is_bounded(self):
         attempt = {'cycle': 'c', 'slot': 's', 'inference_reserved': True, 'status': 'INCOMPLETE'}
         state = {'attempts': [attempt]}
         with self.assertRaisesRegex(ValueError, 'explicit receipt-bound'):
             w._require_explicit_retry(state, 'c', 's', {})
-        directive = {'retry_of_attempt_sha256': p.sha256_value(attempt), 'retry_reason': 'Output truncation addressed'}
+        directive = {'retry_of_attempt_sha256': p.sha256_value(attempt),
+                     'retry_reason': 'Output truncation addressed'}
         w._require_explicit_retry(state, 'c', 's', directive)
         state['attempts'].append(copy.deepcopy(attempt))
         with self.assertRaisesRegex(ValueError, 'two attempts'):
@@ -134,7 +155,8 @@ class PhaseGuards(unittest.TestCase):
         attempt = {'cycle': 'c', 'slot': 's', 'inference_reserved': True, 'status': 'UNKNOWN'}
         with self.assertRaisesRegex(ValueError, 'unresolved'):
             w._require_explicit_retry({'attempts': [attempt]}, 'c', 's',
-                                     {'retry_of_attempt_sha256': p.sha256_value(attempt), 'retry_reason': 'retry'})
+                                      {'retry_of_attempt_sha256': p.sha256_value(attempt),
+                                       'retry_reason': 'retry'})
 
 
 class ActiveContinuationGuards(unittest.TestCase):
@@ -164,7 +186,7 @@ class ActiveContinuationGuards(unittest.TestCase):
 
     def test_unknown_call_remains_visible_across_source_change(self):
         self.state['admitted_source_commit'] = 'old'
-        self.state['attempts'] = [{'status': 'UNKNOWN', 'run_id': '123', 'model': 'qwen'}]
+        self.state['attempts'] = [{'status': 'UNKNOWN', 'run_id': '123', 'model': 'deepseek'}]
         self.assertEqual(self.dispatch('push'), 0)
         self.assertEqual(self.state['continuation']['status'], 'BLOCKED_UNRESOLVED_CALL')
         self.assertEqual(self.state['continuation']['attempts'][0]['run_id'], '123')
