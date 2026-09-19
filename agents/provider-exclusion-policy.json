@@ -1,28 +1,36 @@
 {
   "schema": "GardenProviderExclusionPolicy/v1",
   "status": "ACTIVE_HUMAN_OPERATOR_ROUTING_CONSTRAINT",
-  "effective_date": "2026-09-16",
-  "scope": "ALL_GARDEN_WORK",
+  "effective_date": "2026-09-19",
+  "scope": "ALL_GARDEN_MODEL_REVIEW_AND_CHALLENGE_ROUTING",
   "source_policy": "https://github.com/ankitdcx/garden-main/blob/main/governance/PROVIDER_EXCLUSION_POLICY_v1.json",
-  "basis": "Explicit human operator trust/procurement preference; no allegation of misconduct or poisoning is asserted as fact by this policy.",
+  "basis": "Explicit human operator routing preference. On 2026-09-19 the human explicitly re-authorized NVIDIA/Nemotron and Mistral/Mistral AI for future low-cost Garden review. No allegation of misconduct or poisoning is asserted by this policy.",
   "excluded": [
     {
       "organization": "Anthropic",
-      "family_aliases": ["anthropic", "claude"],
-      "model_markers": ["anthropic/", "claude"],
-      "provider_slugs": ["anthropic"]
-    },
+      "family_aliases": [
+        "anthropic",
+        "claude"
+      ],
+      "model_markers": [
+        "anthropic/",
+        "claude"
+      ],
+      "provider_slugs": [
+        "anthropic"
+      ]
+    }
+  ],
+  "superseded_exclusions": [
     {
       "organization": "NVIDIA",
-      "family_aliases": ["nvidia", "nemotron"],
-      "model_markers": ["nvidia/", "nemotron"],
-      "provider_slugs": ["nvidia"]
+      "effective_end": "2026-09-19",
+      "basis": "Explicit future human directive re-authorized Nemotron for low-cost OpenRouter review."
     },
     {
       "organization": "Mistral AI",
-      "family_aliases": ["mistral", "mistralai"],
-      "model_markers": ["mistralai/", "mistral"],
-      "provider_slugs": ["mistral"]
+      "effective_end": "2026-09-19",
+      "basis": "Explicit future human directive re-authorized Mistral for low-cost OpenRouter review."
     }
   ],
   "enforcement": {
@@ -35,5 +43,6 @@
     "fail_closed": true
   },
   "historical_reference_policy": "Historical and prior-art references may remain for audit/provenance. They do not authorize operational use.",
-  "override": "EXPLICIT_FUTURE_HUMAN_DIRECTIVE_ONLY"
+  "override": "EXPLICIT_FUTURE_HUMAN_DIRECTIVE_ONLY",
+  "canonical_effect": "NONE"
 }
