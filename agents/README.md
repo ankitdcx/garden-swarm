@@ -4,7 +4,7 @@ This directory defines the durable operational contract for Garden's public mode
 
 ## Current OpenRouter process
 
-Read [../docs/OPENROUTER_PROCESS_V2_2026-09-19.md](../docs/OPENROUTER_PROCESS_V2_2026-09-19.md).
+Read `docs/OPENROUTER_PROCESS_V2_2026-09-19.md`.
 
 The default paid board is five low-cost specialist families:
 
@@ -36,7 +36,7 @@ Deterministic checks come first. No material event means no paid call.
 
 Expensive models require explicit human opt-in for a specific unresolved question.
 
-Model-value evidence from the v15.10 campaign is recorded in [../docs/OPENROUTER_MODEL_VALUE_REVIEW_2026-09-19.md](../docs/OPENROUTER_MODEL_VALUE_REVIEW_2026-09-19.md).
+Model-value evidence from the v15.10 campaign is recorded in `docs/OPENROUTER_MODEL_VALUE_REVIEW_2026-09-19.md`.
 
 ## Reviewer quality
 
