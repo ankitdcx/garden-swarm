@@ -17,7 +17,7 @@
   "routine_model_call_cost_ceiling_usd": 0.05,
   "automatic_expensive_escalation_daily_ceiling_usd": 0,
   "max_prompt_characters": 200000,
-  "max_output_tokens": 16000,
+  "max_output_tokens": 32000,
   "provider_policy": {
     "sort": "price",
     "allow_fallbacks": true,
@@ -124,7 +124,11 @@
     "normal_expected_calls_if_candidate_changes": 10,
     "easy_case_calls": 5,
     "maximum_confirmation_rounds": 1,
-    "scope": "SHARED_ACROSS_ALL_LANES"
+    "scope": "SHARED_ACROSS_ALL_LANES",
+    "daily_free_call_cap": 48,
+    "hourly_free_call_cap": 2,
+    "enforcement_status": "ACTIVE_SINGLE_CALL_INDEPENDENT_REVIEW_LEDGER; LEGACY_BATCH_PATHS_NOT_ADMITTED",
+    "family_counts": "Five paid reviewer families are accumulated sequentially across isolated dispatches; counts are review-cycle diversity targets, never concurrency grants."
   },
   "review_profiles": {
     "ROUTINE": {
@@ -135,14 +139,14 @@
       "request_timeout_seconds": 180
     },
     "COMPLEX": {
-      "max_output_tokens": 12000,
+      "max_output_tokens": 16000,
       "context_characters": 64000,
       "max_support_passages": 16,
       "reasoning_effort": "high",
       "request_timeout_seconds": 240
     },
     "DEEP": {
-      "max_output_tokens": 16000,
+      "max_output_tokens": 32000,
       "context_characters": 100000,
       "max_support_passages": 24,
       "reasoning_effort": "high",
