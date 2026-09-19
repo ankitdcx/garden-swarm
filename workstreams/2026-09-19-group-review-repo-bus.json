@@ -25,7 +25,8 @@
       "tests/test_group_review_openrouter_worker.py",
       ".github/workflows/group-review-openrouter.yml",
       ".github/workflows/group-review-openrouter-trigger.yml",
-      "tools/check_dispatch_admission.py"
+      "tools/check_dispatch_admission.py",
+      "gsl/REFERENCE_POLICY.json"
     ],
     "target_symbols": [
       "GROUP_REVIEW_REPO_BUS",
@@ -46,7 +47,8 @@
       "OPENROUTER_USES_REAL_API_AND_PUBLIC_ONLY_PACKET",
       "ONE_OPENROUTER_CALL_PER_DISPATCH",
       "REPO_STATE_NOT_CHAT_MEMORY_IS_DURABLE_BUS",
-      "MATERIAL_PROCESS_FAILURE_BLOCKS_REVIEW_COMPLETION"
+      "MATERIAL_PROCESS_FAILURE_BLOCKS_REVIEW_COMPLETION",
+      "RUNTIME_STATE_REFERENCE_HAS_EXPLICIT_OWNER"
     ],
     "affected_contracts": [
       "GardenChatGPTWorkstreamPolicy/v1",
