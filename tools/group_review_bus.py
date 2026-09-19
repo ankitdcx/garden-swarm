@@ -10,19 +10,27 @@ PACKET_SCHEMA = "GardenGroupReviewPacket/v1"
 WORKER_RESULT_SCHEMA = "GardenGroupReviewWorkerResult/v1"
 OPENROUTER_FINDING_SCHEMA = "GardenGroupReviewOpenRouterFinding/v1"
 OPENROUTER_BUNDLE_SCHEMA = "GardenGroupReviewOpenRouterBundle/v1"
+CANDIDATE_SCHEMA = "GardenGroupReviewCandidate/v1"
+VERIFIER_SCHEMA = "GardenGroupReviewVerifierResult/v1"
 
 RUN_TITLE_PREFIX = "[GROUP_REVIEW_RUN]"
 WORKER_TITLE_PREFIX = "[GROUP_REVIEW_WORKER]"
 OPENROUTER_RESULT_TITLE_PREFIX = "[GROUP_REVIEW_OPENROUTER_RESULT]"
+CANDIDATE_TITLE_PREFIX = "[GROUP_REVIEW_CANDIDATE]"
+VERIFIER_TITLE_PREFIX = "[GROUP_REVIEW_VERIFIER]"
 
 PACKET_MARKER = "<!-- GARDEN_GROUP_REVIEW_PACKET -->"
 WORKER_MARKER = "<!-- GARDEN_GROUP_REVIEW_WORKER_RESULT -->"
 OPENROUTER_MARKER = "<!-- GARDEN_GROUP_REVIEW_OPENROUTER_RESULT -->"
+CANDIDATE_MARKER = "<!-- GARDEN_GROUP_REVIEW_CANDIDATE -->"
+VERIFIER_MARKER = "<!-- GARDEN_GROUP_REVIEW_VERIFIER_RESULT -->"
 
 TRIAGE = {"SMALL", "MATERIAL", "HIGH_RISK"}
 DATA_CLASS = {"PUBLIC", "PRIVATE", "SENSITIVE"}
 WORKER_ROLES = {"A", "B", "EXTERNAL_PHONE"}
 OPENROUTER_DISPOSITIONS = {"NO_CHANGE", "PROPOSE_CHANGE", "BLOCK", "UNKNOWN"}
+VERIFIER_VERDICTS = {"PASS", "FAIL", "UNKNOWN", "PASS_WITH_CAVEATS"}
+PROCESS_INTEGRITY = {"PASS", "FAIL", "UNKNOWN"}
 
 
 def canonical_json(value: Any) -> str:
@@ -183,6 +191,76 @@ def make_openrouter_bundle(
     bundle["bundle_sha256"] = openrouter_bundle_hash(bundle)
     return bundle
 
+
+
+def candidate_record_hash(candidate: dict[str, Any]) -> str:
+    return sha256_value(_without(candidate, "record_sha256"))
+
+
+def verifier_record_hash(report: dict[str, Any]) -> str:
+    return sha256_value(_without(report, "record_sha256"))
+
+
+def validate_candidate(candidate: dict[str, Any], packet: dict[str, Any]) -> dict[str, Any]:
+    validate_packet(packet)
+    if candidate.get("schema") != CANDIDATE_SCHEMA:
+        raise ValueError("unsupported GROUP_REVIEW candidate schema")
+    if candidate.get("problem_id") != packet["problem_id"]:
+        raise ValueError("candidate problem mismatch")
+    if int(candidate.get("run_issue_number", 0)) <= 0:
+        raise ValueError("candidate requires run issue number")
+    if candidate.get("packet_sha256") != packet["packet_sha256"]:
+        raise ValueError("candidate packet mismatch")
+    _nonempty(candidate.get("created_at"), "created_at", 80)
+    text = _nonempty(candidate.get("candidate"), "candidate", 60000)
+    if _hex64(candidate.get("candidate_sha256"), "candidate_sha256") != sha256_text(text):
+        raise ValueError("candidate SHA-256 mismatch")
+    _string_list(candidate.get("blind_artifact_refs"), "blind_artifact_refs", 64)
+    decisions = candidate.get("decision_log")
+    if not isinstance(decisions, list) or len(decisions) > 256:
+        raise ValueError("decision_log must be a bounded array")
+    for row in decisions:
+        if not isinstance(row, dict):
+            raise ValueError("decision_log entries must be objects")
+        _nonempty(row.get("finding"), "decision finding", 4000)
+        if row.get("disposition") not in {"RETAIN", "REJECT", "SUPERSEDE", "UNRESOLVED"}:
+            raise ValueError("invalid decision disposition")
+        _nonempty(row.get("reason"), "decision reason", 4000)
+        _string_list(row.get("evidence_refs"), "decision evidence_refs", 32)
+    if _hex64(candidate.get("record_sha256"), "record_sha256") != candidate_record_hash(candidate):
+        raise ValueError("candidate record SHA-256 mismatch")
+    return candidate
+
+
+def validate_verifier_result(report: dict[str, Any], packet: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
+    validate_candidate(candidate, packet)
+    if report.get("schema") != VERIFIER_SCHEMA:
+        raise ValueError("unsupported GROUP_REVIEW verifier schema")
+    if report.get("problem_id") != packet["problem_id"]:
+        raise ValueError("verifier problem mismatch")
+    if int(report.get("run_issue_number", 0)) != int(candidate["run_issue_number"]):
+        raise ValueError("verifier run issue mismatch")
+    if report.get("packet_sha256") != packet["packet_sha256"]:
+        raise ValueError("verifier packet mismatch")
+    if report.get("candidate_sha256") != candidate["candidate_sha256"]:
+        raise ValueError("verifier candidate mismatch")
+    _nonempty(report.get("created_at"), "created_at", 80)
+    process = report.get("process_integrity")
+    verdict = report.get("verdict")
+    if process not in PROCESS_INTEGRITY:
+        raise ValueError("invalid process-integrity result")
+    if verdict not in VERIFIER_VERDICTS:
+        raise ValueError("invalid verifier verdict")
+    if process != "PASS" and verdict in {"PASS", "PASS_WITH_CAVEATS"}:
+        raise ValueError("unresolved process integrity cannot PASS")
+    _nonempty(report.get("verified_scope"), "verified_scope", 10000)
+    _string_list(report.get("falsifiers"), "falsifiers", 64)
+    _string_list(report.get("reproduction_steps"), "reproduction_steps", 64)
+    _string_list(report.get("blocking_findings"), "blocking_findings", 64)
+    _string_list(report.get("caveats"), "caveats", 64)
+    if _hex64(report.get("record_sha256"), "record_sha256") != verifier_record_hash(report):
+        raise ValueError("verifier record SHA-256 mismatch")
+    return report
 
 def render_issue(marker: str, payload: dict[str, Any]) -> str:
     return marker + "\n\n```json\n" + json.dumps(payload, indent=2, ensure_ascii=False) + "\n```\n"
