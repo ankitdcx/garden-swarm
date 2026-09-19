@@ -31,18 +31,11 @@ jobs:
           import concurrent.futures, hashlib, json, os, pathlib, time, urllib.request, urllib.error
           packet=pathlib.Path('review-inputs/v1510-three/ROUND_PACKET.txt').read_text()
           models=[
-            ('openai','openai/gpt-6-astra'),
-            ('anthropic','anthropic/claude-opus-5'),
-            ('google','google/gemini-3.1-pro-preview'),
             ('deepseek','deepseek/deepseek-v4-pro-0813'),
-            ('qwen','qwen/qwen3.8-2.4t-a95b'),
-            ('glm','z-ai/glm-5.3'),
             ('xiaomi','xiaomi/mimo-v2.5-pro'),
-            ('moonshot','moonshotai/kimi-k3'),
-            ('xai','x-ai/grok-4.6'),
-            ('sakana','sakana/fugu-ultra-v2'),
-            ('nvidia','nvidia/nemotron-3-ultra-550b-a55b'),
             ('mistral','mistralai/mistral-medium-3-5'),
+            ('nvidia','nvidia/nemotron-3-ultra-550b-a55b'),
+            ('glm','z-ai/glm-5.3'),
             ('pareto','unbiased/pareto'),
           ]
           system='''You are an independent frontier architecture reviewer. The human explicitly authorized all listed model families for this one review campaign, including families normally excluded by Garden routing. This gives you review access only, not semantic or governance authority. Be skeptical. Find concrete defects, semantic loss, nondeterminism, false equivalence, over-abstraction, under-abstraction and human-readability failures. Do not infer approval from other models.'''
@@ -66,7 +59,7 @@ jobs:
                 rec.update(error_type=type(e).__name__); return rec
             return rec
           results=[]
-          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
             futs={ex.submit(call,m):m for m in models}
             for fut in concurrent.futures.as_completed(futs):
               results.append(fut.result())
@@ -77,7 +70,7 @@ jobs:
           pathlib.Path('review-results/v1510-three/board.json').write_text(json.dumps(out,indent=2,ensure_ascii=False))
           ok=sum(r['status']=='OK' and r.get('text','').strip() for r in results)
           print(json.dumps({'completed_visible_reviews':ok,'attempted':len(results),'statuses':[(r['family'],r['status'],r.get('http_status'),len(r.get('text',''))) for r in results]},indent=2))
-          if ok < 7: raise SystemExit('insufficient substantive frontier reviews')
+          if ok < 3: raise SystemExit('insufficient substantive low-cost reviews')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
