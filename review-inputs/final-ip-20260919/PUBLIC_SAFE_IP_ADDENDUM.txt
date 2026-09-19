@@ -1,94 +1,199 @@
-Garden final IP inventory addendum — public-safe review surface
-Rules:
-- Never delete historical patents/candidates because later design is better.
-- Superseded/alias records remain lineage.
-- Candidate != filed != published != granted.
-- Historical numbering is snapshot-bound.
-- Private enabling claim text withheld.
-Counts: baseline=151; late15x=48; SCT explicit=9; v15.10=15; historical-range records=9; CDDT idea corpus=445 (60 formal patent families/180 drafts); ChatGPT+DeepSeek raw historical patent/family records=1274; Gemini patent-related extracts=296; associated Ekaki/Ikaee claims=22.
-Unresolved: early P1-P182 and F1-F109 are partially recovered; never invent missing mappings.
+GARDEN FINAL IP INVENTORY — PUBLIC-SAFE FINAL CONFIRMATION
+Date: 2026-09-19
+Purpose: provenance/coverage/lineage audit only. NOT patentability/legal advice. Private enabling claim text is withheld.
 
-Addendum IDs/titles:
-V15X-HEC|Human-Effect Closure
-V15X-REPUTATION-WORTH|Reputation is not human worth or authority
-V15X-WORLD-EVIDENCE-PRIVACY|World Evidence / Privacy Boundary
-V15X-JUSTICE-EVIDENCE|Justice Evidence Continuity
-V15X-LETHAL-NONAUTONOMY|Lethal-Force Non-Autonomy
-V15X-PEACEFUL-MIGRATION|Privacy-First Peaceful Migration
-V15X-HRAP|Human Relational Agency Preservation (HRAP)
-V15X-PROTECTED-REPORTING|Protected Reporting
-V15X-CAUSAL-SAFETY-UNIT|Causal Safety Unit / consequential causal-closure safety unit
-V15X-UBC|Unanticipated Behaviour Closure (UBC)
-V15X-TSI|Truth & State Integrity (TSI)
-V15X-TIA|Transport-Independent Information Authority (TIA)
-V15X-ART|Agent Reputation & Trust (ART)
-V15X-EPOCH-REPUTATION|Design-Epoch-bound reputation and independent cross-epoch revalidation
-V15X-EMERGENT-AGENCY|Emergent Agent Structure classification without authority union
-V15X-IIC|Institutional Incentive Consistency (IIC)
-V15X-PIR|Protected Integrity Reporting (PIR)
-V15X-CSI|Cognition-Shaping Integrity (CSI)
-V15X-SMCD|Safety Monitoring Coverage & Discovery Debt (SMCD)
-V15X-CAD|Capability–Assurance Delta (CAD)
-V15X-OAC|Organizational Alignment Closure (OAC)
-V15X-CTSN|Capability-Transfer Safety Non-Transitivity (CTSN)
-V15X-PAI|Physical Agency Interlock (PAI)
-V15X-CROSS-SUBSYSTEM-CAUSAL|Cross-Subsystem Causal Closure Receipt
-V15X-WORLD-EVIDENCE-GRAPH|World Evidence Graph with privacy/use-boundary separation
-V15X-RCI|Recursive Control Intelligence (RCI) governed recursive-improvement projection
-V15X-PROCESS-ACTIVATION|Universal Activation / Trigger / Subscription / Scheduling / Continuous Work framework
-V15X-CONSTITUTIONAL-EVENT|Typed ConstitutionalEvent observability and resolution linkage
-V15X-BELIEF-TIMELINE|BeliefTimeline + EpistemicTransition historical reconstruction
-V15X-DESIGN-MIRROR|DesignMirror + DesignSimulationReceipt bounded design simulation
-V15X-FUTURE-STRESS|Forward Adversarial Future Stress Assessment
-V15X-GLOBAL-INVARIANT|Global invariant consistency checking across projections/owners
-V15X-CONTINUOUS-FAILURE|Continuous Failure Learning and bounded historical backscan
-V15X-ONTOLOGICAL-DEBT|Ontological Debt / Concept Radar routing
-V15X-HISTORICAL-SUMMARY|HistoricalSemanticSummary loss-aware lawful history compaction
-V15X-RRCTX|Jurisdiction-Sensitive Rights & Restrictions Context (RRCTX)
-V15X-ORH|Operational Resilience Harmonization (ORH v1.1.1)
-V15X-CIAH|Cross-Industry Assurance Hardening (CIAH v1.0.1)
-V15X-UAAC|Universal Adversarial Agency Closure (UAAC)
-V15X-DSDIH|Distributed State and Delivery Integrity Hardening (DSDIH)
-V15X-SOURCE-RIGHTS|Source-Rights / lawful public-idea and protected-expression boundary
-V15X-DELTA-MANAGEMENT|Frozen-base bounded delta management / exact-source-bound review ledger
-V15X-MACHINE-PRIVACY-JUSTICE|Typed machine-computation / retention / human-access / disclosure / evidentiary-use boundary
-V15X-UCAS|Universal Contract & Agreement Substrate (UCAS) profile
-V15X-KINDERGARTEN|Kindergarten / Child-Development Branch Profile
-V15X-FDE|Federated Distribution/Enrollment profile (FDE) with opt-in, signed releases and revocable participation
-V15X-CFBR|Constitutional Federation / Branch Reconciliation (CFBR) profile
-V15X-MFG-QUAL-TRANSFER-HIST|Manufacturing qualification-transfer historical proposal
-SCT-PATENT-A|G-Weighted Value Consensus
-SCT-PATENT-B|Anti-Gaming Training System
-SCT-PATENT-C|Coherence-Gated Hybrid Verifier
-SCT-PATENT-D|Convergence-Threshold Values Layer
-SCT-PATENT-E|SCT-Gated Infrastructure
-SCT-PATENT-F|Parser-Graph-Calibration Suite
-SCT-PATENT-G|Decision Transformation Layer
-SCT-PATENT-H|Deployment Architecture
-SCT-PATENT-I|Gated External Grounding & Signal Fusion
-V1510-IP-01|Deterministic three-artifact reconstruction architecture (Book / Technical Core / Catalogue)
-V1510-IP-02|Exact-predecessor-source semantic fallback migration
-V1510-IP-03|Interpretation-coverage state machine with source-controlling fallback
-V1510-IP-04|Non-self-admitting supersession and predecessor-elision firewall
-V1510-IP-05|Closed BuildIdentity with ambient-input exclusion
-V1510-IP-06|Finite stratified seed-local semantic graph expansion
-V1510-IP-07|GSL-native Design Forms, reusable facets and macro abstraction compiler
-V1510-IP-08|Canonical Catalogue encoding, root framing, total ordering and deterministic collision rules
-V1510-IP-09|Snapshot-bound typed reference requiredness and no-latest resolution
-V1510-IP-10|Six-axis ApplicabilityVector without universal scalar status
-V1510-IP-11|Point-of-use live authorization atomic-linearization or bounded-lease witness
-V1510-IP-12|Source-span-bound semantic, formula and identifier indexing with exact reconstruction
-V1510-IP-13|Independent deterministic dual-expander reconstruction verification
-V1510-IP-14|Generated legacy concept crosswalk from lineage to current semantic owners
-V1510-IP-15|Machine-readable separation of source preservation, interpretation, equivalence and assurance claims
-HIST-RANGE-20260505|TRAIN early core portfolio
-HIST-RANGE-20260506-0250|TRAIN 19-family architecture
-HIST-RANGE-20260506-0446|TRAIN 29-family consolidated snapshot
-HIST-RANGE-20260506-NORMALIZE|TRAIN normalization snapshots
-HIST-RANGE-20260507|TRAIN expansion/prosecutability snapshots
-HIST-RANGE-20260624-TRAIN|TRAIN v9.0
-HIST-RANGE-20260624-GARDEN-REAL|GARDEN-REAL v1.x
-HIST-RANGE-202608|Consolidated TRAIN public lineage
-HIST-RANGE-20260905-CDDT|CDDT formal catalogue
+HARD PRESERVATION RULES
+- A better/later design never deletes an earlier patent/invention candidate.
+- Superseded, merged, aliased, deferred and failed embodiments remain historical lineage.
+- Candidate != filed != published != granted. No Garden filing/grant is asserted without documentary filing/grant evidence.
+- Historical F/P/Patent numbering is snapshot-bound; missing mappings are never invented.
+- Raw historical ledgers remain controlling fallback for old labels not yet normalized.
+- This inventory is an additive bounded delta over the frozen 151-record public base; no predecessor record is elided.
 
-Review: compare this addendum plus the repository's archived 151-record IP_ORIGIN_INVENTORY. Find concrete major Garden family omissions, lineage-loss risks, mistaken filed/granted status, count inconsistencies, or accidental collapse of historic patents. Do not recommend deletion just because something is superseded. Return VERDICT APPROVE|APPROVE_WITH_PATCH|BLOCK plus numbered material findings only.
+REVISED NORMALIZED UNION
+Frozen public base: 151 records.
+Historical supplement + early GAIA/Diamond directions: 38.
+Late/current/historical v15.x mechanisms: 111.
+Explicit SCT proposed patent families: 9.
+v15.10 technical IP candidates: 15.
+Historical portfolio snapshot/range records: 11.
+CDDT grouped idea/programme corpus: 445.
+Associated historical Ekaki/Ikaee claims outside Garden 15.x: 22.
+TOTAL NORMALIZED UNION: 802.
+Arithmetic: 151+38+111+9+15+11+445+22 = 802.
+
+DETERMINISTIC INVENTORY BINDING
+Serialization profile: GardenIPInventoryDeterministicOrder/v1.
+Order: curated layer order, then stable record ID.
+Each record: SHA-256 of canonical JSON with sorted keys/no insignificant whitespace.
+Normalized record root SHA-256:
+7d36517eedc8b285c1fbc461e972a20e71b442308adba73525d95102eb8a5c43
+Full local JSON file SHA-256:
+06883edf58124be36827250311580264261b00ed9eb609dc299ec41b8b3d7c3c
+Frozen public base binding:
+garden-swarm@4219d267124abc7c1e29fd7fa3c951330b6012c7:
+docs/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.json.snapshot
+
+RAW HISTORICAL FALLBACKS — RETAINED, NOT COUNTED AGAIN IN THE 802 NORMALIZED UNION
+1. ChatGPT+DeepSeek dated explicit Patent/Family/F/P source-line events:
+   records=1274
+   SHA-256=70f4cba7dbc9801161a4ba7dbd31b6ba23640096ee6634aff5ea1dde669980e5
+2. Gemini patent/IP-related extracted historical records:
+   records=296
+   SHA-256=450b992d53f7814fd9c6520677cc582f5890f092417275dc375151f51b193756
+3. Old-design archive explicit Patent/Family/F/P source-line events:
+   records=1127 raw; 653 global identifier+name keys
+   SHA-256=fc9bbc6f4bf5c1e5afa2b97481487dc9ff0c09d70910ec7bd3c50a755fd4298c
+4. CDDT grouped idea/programme corpus:
+   records=445
+   SHA-256=e208d5e05fd79de2784a03b2105c0494955e2168e96daa50ed87424263a95dbc
+These ledgers are deliberately not collapsed into current names. They preserve old snapshot identity even when numbering changed.
+
+ROUND-1 PATCH CLOSURE
+- Early TRAIN F1-F109 / P1-P182 are not declared complete. Two explicit PARTIALLY_RECOVERED range records were added, and the raw ledgers retain all recovered labels/events. Missing labels are not invented.
+- Historical snapshot summary records are marked summary_only and point to raw ledgers; they are not substitutes for the underlying patent events.
+- Manufacturing qualification-transfer lineage is explicit:
+  V15X-MFG-QUAL-TRANSFER-HIST alias_of CDDT-P01; both related_to GARDEN-ENG-DESIGN-INGEST. Engineering ingestion is broader, not an alias.
+- GARDEN-SCT explicitly owns/links SCT-PATENT-A..I. CLIC-P01..P05 are explicitly DISTINCT_FROM SCT, not an SCT rename.
+- V15X-EMERGENT-AGENCY and GARDEN-MAC are explicitly related and compatible: neither permits authority widening.
+- TRAIN-PILLAR3 explicitly links ADAG/AgenticRed to TRAIN-F111/F112.
+- CDDT P01-P54 are the earlier formal proposed-claim set. NZ01-NZ06 are the final six candidate families introduced with preliminary drafts; the later edition reports 60 families / 180 drafts. The 445 corpus is separately retained and is NOT 445 asserted inventions and is not required to map one-to-one to the 60 claim families.
+- "NZ" is a historical CDDT identifier, not a New Zealand localization namespace. No GARDEN-NZ record is inferred.
+- Associated Ekaki/Ikaee 22-claim historical portfolio is locally retained as OUTSIDE_GARDEN_15X_ASSOCIATED_HISTORICAL_PORTFOLIO. Its enabling titles/text are withheld from this public review lane.
+- V1510-IP-14 legacy crosswalk is marked PARTIAL_FOR_EARLY_TRAIN_LABELS; raw history remains controlling for unresolved labels.
+- All normalized records carry filing_status = NO_DOCUMENTARY_FILING_OR_GRANT_ESTABLISHED_IN_REVIEWED_SOURCES.
+- The register explicitly self-applies the bounded-delta/history-compaction rule: frozen 151 base + additive records + raw fallback; no destructive compaction.
+
+LATE v15.x / v15.8 / v15.9 INVENTORY — 111 RECORDS
+Core/current/history-recovered IDs:
+V15X-ART, V15X-BELIEF-TIMELINE, V15X-CAD, V15X-CASI, V15X-CAUSAL-SAFETY-UNIT,
+V15X-CFBR, V15X-CIAH, V15X-CONSTITUTIONAL-EVENT, V15X-CONTINUOUS-FAILURE,
+V15X-CROSS-SUBSYSTEM-CAUSAL, V15X-CSI, V15X-CTSN, V15X-DELTA-MANAGEMENT,
+V15X-DESIGN-EPOCH, V15X-DESIGN-MIRROR, V15X-DSDIH, V15X-EMERGENT-AGENCY,
+V15X-EPOCH-REPUTATION, V15X-FDE, V15X-FUTURE-STRESS, V15X-GLOBAL-INVARIANT,
+V15X-GSL-BOOTSTRAP, V15X-GSL-COMPARE, V15X-GSL-EXPLAIN, V15X-GSL-PHYSICS,
+V15X-GSL-QUANTUM, V15X-HEC, V15X-HISTORICAL-SUMMARY, V15X-HRAP, V15X-HSA,
+V15X-IIC, V15X-JUSTICE-EVIDENCE, V15X-KINDERGARTEN, V15X-LETHAL-NONAUTONOMY,
+V15X-MACHINE-PRIVACY-JUSTICE, V15X-MFG-QUAL-TRANSFER-HIST, V15X-OAC,
+V15X-ONTOLOGICAL-DEBT, V15X-ORH, V15X-PAI, V15X-PEACEFUL-MIGRATION,
+V15X-PHYSICAL-COGNITIVE-HARDENING, V15X-PIR, V15X-PRESENTATION-BUILDER,
+V15X-PROCESS-ACTIVATION, V15X-PRODUCTIVE-FINANCE, V15X-PROTECTED-REPORTING,
+V15X-RCC, V15X-RCI, V15X-REFERENCE-CLOSURE, V15X-REPUTATION-WORTH, V15X-RRCTX,
+V15X-SMCD, V15X-SOURCE-RIGHTS, V15X-TIA, V15X-TSI, V15X-UAAC, V15X-UBC,
+V15X-UCAS, V15X-UNIVERSAL-PER-STEP, V15X-VLP, V15X-WORLD-EVIDENCE-GRAPH,
+V15X-WORLD-EVIDENCE-PRIVACY.
+
+v15.9 Technical §12.34 cross-cutting ratified extensions:
+V15X-XCUT-01 Regime / Non-Stationary Risk
+V15X-XCUT-02 Proof Resource / Energy Accounting
+V15X-XCUT-03 Advanced Typed Geometry / Topology
+V15X-XCUT-04 Compositional Mathematics Research Profile
+V15X-XCUT-05 Pre-Authorized Survival Contingency
+V15X-XCUT-06 Evidence / Regime Integration with GSL-COMPARE
+V15X-XCUT-07 Backward Preimage / Reachability Analysis
+V15X-XCUT-08 Measurement-Action Semantics
+V15X-XCUT-09 Comparator Evolution Assurance
+V15X-XCUT-10 Explicit Abstraction Reasoning Mode
+V15X-XCUT-11 End-to-End Verification-to-Use Integrity
+V15X-XCUT-12 Agent Session Integrity / Re-Grounding
+V15X-XCUT-13 Distributional / Worst-Affected Impact Analysis
+V15X-XCUT-14 Knowledge Stewardship Boundary
+V15X-XCUT-15 Temporal Context Binding
+V15X-XCUT-16 Conservation Breach Disposition
+V15X-XCUT-17 Reasoning Workload Preemption
+V15X-XCUT-18 Explanation Redaction Receipt
+V15X-XCUT-19 Temporal Epistemic Applicability
+V15X-XCUT-20 Transitive Cache Integrity Binding
+V15X-XCUT-21 Advance Personal Directive / Authority Delegation
+V15X-XCUT-22 Scalable Governance Participation Profile
+V15X-XCUT-23 Human Rights Reality Sweep — Evolution Profile
+
+v15.9 Technical §12.35 implementation-readiness/formalization:
+V15X-IMPLEMENT-01 Invariant-to-Proof Traceability
+02 Solver Escalation
+03 External Interface Contract
+04 Standardized Adapter / Migration Manifest
+05 Performance / SLO Contract
+06 Standardized Telemetry Profile
+07 Dependency-Generated BuildManifest
+08 Garden Version Manifest
+09 Deployment Configuration Store
+10 Executable GSL Reference Corpus
+11 Verification Complexity Estimate
+12 Offline / Partition Reconciliation Profile
+13 HSA Exceptional Authorization Receipt
+14 Emergency Timing Profile
+15 Trust-Root Ceremony State / Receipt
+16 Theory Demarcation
+17 Open Frontiers — Research / Open Problems (retained as research IP, not patent assertion)
+
+v15.9 Technical §12.36 operational-rigor:
+V15X-OPRIG-01 Projection Correspondence
+02 Bootstrap Integrity and Diagnostic Precedence
+03 Reasoning-to-Validation Routing
+04 Finite Self-Audit Closure
+05 Hardware Genesis and Boot Attestation
+06 Physical Ingress / Egress Accountability
+07 Epistemic Diminishing Return and Deep Archive
+08 Legal Source Authenticity and Rights-Preserving Synthesis
+
+v15.9 Technical §12.37:
+V15X-RCC Machine-Projection, Type, Design-Epoch and Self-Cross-Reference Closure.
+
+SCT EXPLICIT PROPOSED PATENT FAMILIES — 9 / 17 CLAIMS
+A G-Weighted Value Consensus
+B Anti-Gaming Training System
+C Coherence-Gated Hybrid Verifier
+D Convergence-Threshold Values Layer
+E SCT-Gated Infrastructure
+F Parser-Graph-Calibration Suite
+G Decision Transformation Layer
+H Deployment Architecture
+I Gated External Grounding & Signal Fusion
+All are proposed claim families, not filed/granted status.
+
+v15.10 TECHNICAL IP CANDIDATES — 15
+01 Deterministic three-artifact reconstruction (Book / Technical Core / Catalogue)
+02 Exact-predecessor-source semantic fallback migration
+03 Interpretation-coverage state machine with source-controlling fallback
+04 Non-self-admitting supersession / predecessor-elision firewall
+05 Closed BuildIdentity with ambient-input exclusion
+06 Finite stratified seed-local semantic graph expansion
+07 GSL-native Design Forms / facets / macro abstraction compiler
+08 Canonical Catalogue encoding/root/order/collision rules
+09 Snapshot-bound typed reference requiredness / no-latest resolution
+10 Six-axis ApplicabilityVector without universal scalar
+11 Point-of-use live-authorization atomic-linearization or bounded-lease witness
+12 Source-span-bound semantic/formula/identifier indexing + exact reconstruction
+13 Independent deterministic dual-expander verification
+14 Generated legacy concept crosswalk — PARTIAL for early TRAIN labels; raw-history fallback controls unresolved labels
+15 Machine-readable separation of source preservation, interpretation, equivalence and assurance claims
+These are additive reconstruction/migration IP and do NOT replace existing v15-profile mechanisms.
+
+HISTORICAL RANGE / SNAPSHOT RECORDS — 11
+2026-05-05 TRAIN early core
+2026-05-06 02:50 19-family architecture
+2026-05-06 04:46 29-family / 209 snapshot
+2026-05-06 normalization snapshots
+2026-05-07 expansion/prosecutability snapshots
+2026-06-24 TRAIN v9.0 67+/307+
+2026-06-24 GARDEN-REAL 75+/337+
+2026-08 consolidated TRAIN 60+/230+
+2026-09-05 CDDT 60-family/180-draft edition
+PARTIALLY_RECOVERED TRAIN F1-F109 range
+PARTIALLY_RECOVERED TRAIN P1-P182 range
+All summary records point to raw detailed ledgers; summary != replacement.
+
+FINAL REVIEW TASK
+Using the frozen 151-record public base plus this revised public-safe structure:
+1. Find any MATERIAL class/family missing from the v15.x or v15.10 inventory.
+2. Find any route by which a historical patent/family could be silently deleted/collapsed.
+3. Check arithmetic/count separation and snapshot binding.
+4. Check that no candidate is mislabeled filed/granted.
+5. Check lineage relations and identify only concrete remaining gaps.
+6. Do NOT require private enabling claim text and do NOT infer it.
+7. Do NOT recommend deleting a historical record merely because it is superseded.
+Return exactly:
+VERDICT: APPROVE | APPROVE_WITH_PATCH | BLOCK
+Then numbered MATERIAL findings only.
+If none: NO MATERIAL BLOCKER FOUND.
