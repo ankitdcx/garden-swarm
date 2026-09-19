@@ -102,5 +102,82 @@ class GroupReviewBusTests(unittest.TestCase):
             )
 
 
+    def test_candidate_and_verifier_are_hash_bound(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        candidate_text = "Integrated candidate"
+        candidate = {
+            "schema": bus.CANDIDATE_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "2026-09-19T14:40:00+05:30",
+            "candidate": candidate_text,
+            "candidate_sha256": bus.sha256_text(candidate_text),
+            "blind_artifact_refs": ["issue:43"],
+            "decision_log": [
+                {
+                    "finding": "Example finding",
+                    "disposition": "RETAIN",
+                    "reason": "Supported by reproduction.",
+                    "evidence_refs": ["test:fixture"],
+                }
+            ],
+        }
+        candidate["record_sha256"] = bus.candidate_record_hash(candidate)
+        self.assertEqual(bus.validate_candidate(candidate, value), candidate)
+
+        report = {
+            "schema": bus.VERIFIER_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "packet_sha256": value["packet_sha256"],
+            "candidate_sha256": candidate["candidate_sha256"],
+            "created_at": "2026-09-19T14:45:00+05:30",
+            "process_integrity": "PASS",
+            "verdict": "PASS_WITH_CAVEATS",
+            "verified_scope": "Candidate structure and process fixture.",
+            "falsifiers": ["A hash mismatch would falsify the binding."],
+            "reproduction_steps": ["Recompute all hashes."],
+            "blocking_findings": [],
+            "caveats": ["Fixture is synthetic."],
+        }
+        report["record_sha256"] = bus.verifier_record_hash(report)
+        self.assertEqual(bus.validate_verifier_result(report, value, candidate), report)
+
+    def test_process_integrity_failure_cannot_pass(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        text = "Candidate"
+        candidate = {
+            "schema": bus.CANDIDATE_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "now",
+            "candidate": text,
+            "candidate_sha256": bus.sha256_text(text),
+            "blind_artifact_refs": [],
+            "decision_log": [],
+        }
+        candidate["record_sha256"] = bus.candidate_record_hash(candidate)
+        report = {
+            "schema": bus.VERIFIER_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "packet_sha256": value["packet_sha256"],
+            "candidate_sha256": candidate["candidate_sha256"],
+            "created_at": "now",
+            "process_integrity": "FAIL",
+            "verdict": "PASS",
+            "verified_scope": "x",
+            "falsifiers": [],
+            "reproduction_steps": [],
+            "blocking_findings": ["peer leakage"],
+            "caveats": [],
+        }
+        report["record_sha256"] = bus.verifier_record_hash(report)
+        with self.assertRaisesRegex(ValueError, "cannot PASS"):
+            bus.validate_verifier_result(report, value, candidate)
+
+
 if __name__ == "__main__":
     unittest.main()
