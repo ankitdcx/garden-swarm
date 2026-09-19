@@ -67,6 +67,12 @@
       "class": "STATE_BRANCH_RUNTIME_DIRECTIVE",
       "owner": "tools/independent_branch_worker.py",
       "require_tracked_file": false
+    },
+    {
+      "reference": "review-state/group-review-ledger.json",
+      "class": "STATE_BRANCH_RUNTIME_LEDGER",
+      "owner": "tools/group_review_openrouter_worker.py",
+      "require_tracked_file": false
     }
   ],
   "rule": "A generated/runtime reference is not a dangling source-file reference merely because no tracked file exists. It must instead resolve to an explicit generating or consuming owner/class. Unknown untracked references remain failures."
