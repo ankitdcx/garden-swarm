@@ -37,12 +37,30 @@
     },
     "openrouter_branch": {
       "enabled": true,
+      "execution_mode": "REAL_GOVERNED_API_SUBPROCESS_ONLY",
       "process_ref": "docs/OPENROUTER_PROCESS_V2_2026-09-19.md",
+      "policy_ref": "agents/openrouter-paid-review-policy.json",
+      "workflow_ref": ".github/workflows/single-openrouter-review.yml",
+      "preflight_ref": "tools/independent_branch_preflight.py",
+      "worker_ref": "tools/independent_branch_worker.py",
+      "continuation_ref": "tools/independent_branch_continuation.py",
+      "credential_requirement": "OPENROUTER_API_KEY_IN_AUTHORIZED_EXECUTION_HOST",
+      "durable_receipt_required": true,
+      "chat_persona_or_simulated_multi_model_substitution": "FORBIDDEN",
       "blind_initial_phase": true
     },
     "verifier": {
       "enabled_for_material_work": true,
-      "also_process_auditor": true
+      "mandatory_for_high_risk_work": true,
+      "also_process_auditor": true,
+      "allowed_results": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN",
+        "PASS_WITH_CAVEATS"
+      ],
+      "material_process_failure_can_return_pass": false,
+      "material_process_failure_can_return_pass_with_caveats": false
     }
   },
   "review_flow": [
@@ -60,17 +78,46 @@
     "DURABLE_STATE_UPDATE"
   ],
   "triage": {
-    "small": "ONE_CHATGPT_WORKER_PLUS_LEADER_CHECK; verifier optional unless risk warrants.",
-    "material": "TWO_CHATGPT_WORKERS_PLUS_OPENROUTER_PLUS_VERIFIER_PROCESS_AUDIT.",
-    "escalation_triggers": [
-      "rights-affecting",
-      "authority-expanding",
-      "security-sensitive",
-      "irreversible",
-      "privacy-sensitive",
-      "high-uncertainty",
-      "foundational Garden architecture"
-    ]
+    "decision_rule": "Use the highest triggered class. SMALL is permitted only when every SMALL condition is satisfied. Any MATERIAL trigger upgrades to MATERIAL. Any HIGH_RISK trigger upgrades to HIGH_RISK.",
+    "small": {
+      "all_required": [
+        "readily reversible",
+        "no rights, authority, legal, safety, security, privacy or secret-bearing effect",
+        "no real-world actuation or consequential external action",
+        "localized to one owner/module with no material cross-layer dependency change",
+        "no new or changed schema, invariant, constitutional rule or foundational architecture",
+        "low novelty and low ambiguity",
+        "failure blast radius is local and easily recoverable",
+        "evidence/requirements are substantially known"
+      ],
+      "board": "ONE_BLIND_CHATGPT_WORKER_PLUS_LEADER_CHECK; verifier optional only if no higher-risk trigger appears."
+    },
+    "material": {
+      "any_trigger": [
+        "new or changed schema, invariant, FunctionContract or persistent-state semantics",
+        "cross-module, cross-owner, cross-layer or cross-repository dependency effect",
+        "model/provider/tool/API behavior materially affects correctness",
+        "nontrivial migration, compatibility or integration decision",
+        "material evidence disagreement or unresolved assumption",
+        "meaningful cost, performance, reliability or user-impact tradeoff",
+        "novel architecture or implementation mechanism",
+        "failure requires coordinated rollback or affects durable shared state"
+      ],
+      "board": "TWO_SYMMETRIC_BLIND_CHATGPT_WORKERS_PLUS_REAL_OPENROUTER_SUBPROCESS_PLUS_MANDATORY_VERIFIER_PROCESS_AUDIT."
+    },
+    "high_risk": {
+      "any_trigger": [
+        "irreversible or difficult-to-reverse consequence",
+        "rights-affecting or authority-expanding decision",
+        "security-sensitive, credential-bearing, secret-bearing or privacy-sensitive data/action",
+        "production deployment, consequential real-world actuation or safety-critical physical effect",
+        "broad human-effect blast radius or many affected parties",
+        "canonical/foundational Garden architecture or constitutional semantics",
+        "destructive migration, deletion, external enforcement or lockout risk",
+        "high uncertainty combined with high consequence"
+      ],
+      "board": "FULL_BOARD_REQUIRED; verifier/process audit mandatory; applicable human/Garden authority gate mandatory; stronger assurance/review profile as required, with expensive models only by explicit human opt-in."
+    }
   },
   "durable_state": {
     "repository_is_authoritative": true,
@@ -96,8 +143,51 @@
   },
   "openrouter_boundary": {
     "use_real_governed_process": true,
+    "required_execution_refs": [
+      ".github/workflows/single-openrouter-review.yml",
+      "tools/independent_branch_preflight.py",
+      "tools/independent_branch_worker.py",
+      "tools/independent_branch_continuation.py"
+    ],
+    "API_transport_required_when_openrouter_lane_is_selected": true,
+    "credentialed_execution_host_required": true,
+    "durable_receipt_required": true,
+    "simulated_personas_do_not_count_as_openrouter_review": true,
     "external_models_do_not_gain_authority": true,
     "sensitive_data_requires_applicable_privacy_approval": true
   },
-  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader for that situation and owns orchestration through final comparison/decision. The user need not restate the board protocol."
+  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader for that situation. The Leader discusses the situation, applies explicit v2.1 triage, uses real OpenRouter API execution whenever that lane is selected, hard-fails material process-integrity breaches, and owns orchestration through final comparison/decision. The user need not restate the board protocol.",
+  "protocol_version": "2.1",
+  "process_audit": {
+    "phase": "BEFORE_CANDIDATE_VERIFICATION",
+    "checks": [
+      "identical frozen packets for symmetric blind workers",
+      "packet/source hashes match",
+      "no peer output exposure before blind freeze",
+      "worker output hashes/timestamps exist",
+      "no silent edit of frozen worker artifacts",
+      "OpenRouter execution used the real governed API subprocess and durable receipt",
+      "privacy/data approval satisfied before any third-party model transmission",
+      "minority/blocking findings preserved",
+      "decision log records every disposition"
+    ],
+    "material_failures": [
+      "non-identical blind packets without declared reason",
+      "peer leakage or premature peer-answer exposure",
+      "hash mismatch or unverifiable frozen artifact",
+      "silent mutation of a frozen worker result",
+      "simulated/chat-persona OpenRouter substituted for real API review when OpenRouter was required",
+      "unauthorized sensitive-data transmission to an external model",
+      "discarded blocking/minority finding without recorded disposition"
+    ],
+    "on_material_failure": {
+      "run_status": "PROCESS_FAIL",
+      "block_candidate_verification": true,
+      "block_PASS": true,
+      "block_PASS_WITH_CAVEATS": true,
+      "discard_affected_blind_round": true,
+      "rerun_requirement": "Create a clean run with a newly frozen packet/run identity; preserve the failed run as audit evidence."
+    },
+    "nonmaterial_failure_rule": "Record as a caveat or repair before completion; never silently erase it."
+  }
 }
