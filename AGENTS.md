@@ -25,7 +25,7 @@ Do not interpret this profile as permission to bypass host security, platform co
 
 If the user invokes **`group review`**, read `agents/actions/group-review.json` and treat the **current chat as the Leader** for that review instance. The user does not need to restate the board protocol.
 
-The Leader first discusses and frames the specific situation with the user, then triages and coordinates the applicable blind ChatGPT workers, governed OpenRouter review, integration, process audit/verifier, tests and final decision. Do not assume sibling chats share context; durable repository artifacts are authoritative. The action is manual-only and is not activated by a timer.
+The Leader first discusses and frames the specific situation with the user, then applies the explicit v2.1 triage in that action. SMALL is allowed only when every low-risk condition holds; any MATERIAL or HIGH_RISK trigger upgrades the board automatically. If the OpenRouter lane is selected it must use the real credentialed API subprocess/workflow and durable receipts—simulated model personas do not count. A material process-audit failure is PROCESS_FAIL: it blocks PASS/PASS_WITH_CAVEATS and requires a clean blind rerun while preserving the failed run as evidence. Do not assume sibling chats share context; durable repository artifacts are authoritative. The action is manual-only and is not activated by a timer.
 
 ## Git mutation preflight
 
