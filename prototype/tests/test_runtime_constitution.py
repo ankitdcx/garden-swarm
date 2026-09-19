@@ -7,6 +7,7 @@ from prototype.runtime_constitution import (
     RuntimeDecision,
     RuntimeInstruction,
     classify_instruction_authority,
+    evaluate_answer_integrity,
     evaluate_goal,
     evaluate_instruction,
 )
@@ -245,3 +246,27 @@ def test_revoked_persistent_goal_stops_future_effects():
     )
     assert result.decision is RuntimeDecision.REJECT
     assert result.reasons == ("GOAL_REVOKED",)
+
+
+def test_constraint_blocked_judgment_cannot_be_replaced_by_external_verdict():
+    result = evaluate_answer_integrity(
+        direct_judgment_permitted=False,
+        response_claims_model_judgment=False,
+        substitutes_external_judgment=True,
+        constraint_disclosed=False,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == (
+        "CONSTRAINT_BLOCKED_JUDGMENT_SUBSTITUTED_BY_EXTERNAL_JUDGMENT",
+    )
+
+
+def test_constraint_blocked_judgment_is_honest_when_boundary_is_disclosed():
+    result = evaluate_answer_integrity(
+        direct_judgment_permitted=False,
+        response_claims_model_judgment=False,
+        substitutes_external_judgment=False,
+        constraint_disclosed=True,
+    )
+    assert result.decision is RuntimeDecision.ALLOW
+    assert "CONSTRAINT_BOUNDARY_DISCLOSED" in result.reasons
