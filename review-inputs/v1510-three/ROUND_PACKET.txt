@@ -1,135 +1,188 @@
-
-GARDEN v15.10 THREE-ARTIFACT REBUILD — ROUND 3 EXECUTABLE-EVIDENCE CHALLENGE
+GARDEN v15.10 THREE-ARTIFACT REBUILD — ROUND 4 FINAL ADVERSARIAL REVIEW
 
 TASK-SPECIFIC HUMAN OVERRIDE
-The user explicitly authorizes this review campaign to use all listed frontier OpenRouter families, including Anthropic/NVIDIA/Mistral. Review access only; no model has semantic authority.
+The user explicitly authorizes all listed frontier OpenRouter families for this review campaign, including Anthropic/NVIDIA/Mistral. Review access only; no persistent provider-policy change and no model authority.
 
-THREE PRIMARY ARTIFACTS
-1 BOOK: primary human reader; explicitly NON-NORMATIVE.
-2 TECHNICAL CORE: normative generic GSL/metamodel/serialization/expansion/applicability mechanics plus executable deterministic reference code.
-3 CATALOGUE: normative Garden-specific content plus exact predecessor compatibility semantics.
-Generated graph/schemas/tests/receipts/indexes/audits are build outputs, not extra canonical documents.
+TARGET ARCHITECTURE
+Exactly three primary artifacts:
+1 BOOK — ordinary human-readable, diagram-rich, explicitly NON-NORMATIVE.
+2 TECHNICAL CORE — normative generic executable GSL/metamodel/serialization/expansion mechanics.
+3 CATALOGUE — normative Garden-specific content, exact predecessor semantic sources, identities, laws, equations, profiles, exceptions and lineage.
+Generated semantic graph/schemas/tests/receipts/audits/indexes are build outputs, not canonical documents.
 
-ROUND-2 BLOCKERS PATCHED IN ACTUAL ARTIFACTS
+CURRENT R4 BUILD FACTS
+Catalogue root: 0b5f32e1184c3a00f39c2bdecdf3c32b393a35d58cf55005b5ceab6f52c5ca6b
+Technical SHA-256: 9196cacea5c78682e755fa800d2ae4f809d594ef1c35583e013a04253261dd00
+Graph root: a34262ea746a88d471422eae388ed5379454fab11e6b00506aa15c72d7d640de
+Graph nodes: 41,050
+Independent implementation reproduces same graph root: PASS
+Exact five-file v15.9 source reconstruction from Catalogue alone: PASS
+Migration/equivalence audit: PASS within stated boundary
+Generated authoritative nodes: 0
+Interpretation coverage records:
+  SOURCE_ONLY = 5,646
+  PARTIALLY_STRUCTURED = 0
+  ACCEPTED_STRUCTURED = 0
+Therefore this candidate does NOT claim every predecessor passage is already formally reduced to the abstraction. Exact source fallback remains controlling.
 
-1. EXACT PREDECESSOR SOURCE ARCHIVE
-Catalogue embeds all five v15.9 source files byte-for-byte as SOURCE_DOCUMENT_ARCHIVE records.
-Technical reconstructs them byte-identically.
-Hashes:
-Human d20846d680c2a0a167a97785fe97e0ffce07239f4b666503c9db00295469409f
-System 4005a9277d80eb249b2aa4b65572577a29022209bfa3ae19b4cb460aa479fb7e
-Technical 1e6319b7d68e7d7ec93035d3b8cbd4947b6ee9568c9208ee2ffe627f527b1c4b
-Theories abb04d5602c3f022bd9dbf38cf5e171b6a30bac51c0a2fcf21fb48003cf4dd6a
-Annexure fb10089b4f426ed51156127ed4475854aa21b0e9adeb7a135eed8e328a9778c8
+ROUND-3 BLOCKERS AND R4 PATCHES
 
-2. INTERPRETIVE STRUCTURE
-Catalogue contains:
-2660 normalized predecessor semantic leaves
-431 previously missed non-empty residual source lines, fail-closed if material
-6034 paragraph/interpretive units
-14832 structural/source-order/membership bindings
-6306 formula-to-interpretive-unit context bindings
-1637 semantic-force bindings
-1835 snapshot reference bindings
-5 exact source archives.
-Formula meaning remains bound to predecessor interpretive context until explicit formal mapping supersedes it.
+1. PRESERVATION != EXPANSION != EQUIVALENCE != ASSURANCE
+Graph header now separately states:
+- expansion_completion=COMPLETE
+- source_preservation=COMPLETE
+- reference_completeness=NOT_CLAIMED_BY_EXPANSION
+- semantic_equivalence=NOT_GLOBALLY_CLAIMED
+- deployment_assurance=NOT_CLAIMED
+- structured_semantic_formalization=INCOMPLETE_FALLBACK_ACTIVE
+- interpretation_debt_status=OPEN_SOURCE_FALLBACK_CONTROLLING
+A source-retention PASS never implies semantic interpretation completeness or runtime enforcement.
 
-3. PREDECESSOR SEMANTICS CONTROL
-Every migrated item is marked PREDECESSOR_SEMANTICS_CONTROLLING_UNTIL_EXPLICIT_EQUIVALENCE.
-Derived projections/obligations create no action authority, create no epistemic promotion, do not replace predecessor seeds, and cannot weaken unresolved predecessor obligations/nonclaims.
-Unclassified residual material is BLOCKED_IF_MATERIAL_UNTIL_CLASSIFIED.
+2. INTERPRETATION COVERAGE IS EXPLICIT
+Every structured interpretation/projection binds controlling source refs and one of:
+SOURCE_ONLY | PARTIALLY_STRUCTURED | ACCEPTED_STRUCTURED.
+SOURCE_ONLY/PARTIALLY_STRUCTURED cannot substitute for controlling predecessor semantics in a normative decision.
+Current build deliberately has zero ACCEPTED_STRUCTURED predecessor interpretations.
+A coverage report is a build output, not a fourth canonical artifact.
 
-4. FINITE STRATIFIED PURE EXPANSION
-No open-ended fixed point.
-Generator specs declare level, accepted lower-stratum input node types, output type, static max outputs/input.
-Current levels = 2.
-A generator reads a frozen snapshot of STRICTLY LOWER strata only.
-Current generator implementations are finite loops over explicit finite collections.
-Generated canonical-identity collision with unequal content fails.
-Resource/bound breach fails; partial build is never canonical.
-Future transitive logic is allowed only by a strictly higher stratum; same-level/back-edge dependencies are invalid.
+3. “STRENGTHENING” NO LONGER COUNTS AS EQUIVALENCE
+Technical supersession relations are only:
+EQUIVALENCE | AUTHORIZED_SEMANTIC_CHANGE.
+Every normative supersession requires source refs, replacement refs, exact scope, affected permissions/obligations/prohibitions/exceptions/nonclaims/timing/ordering, assumptions, invalidators, governing authority refs and acceptance receipt.
+Definition ownership, stricter obligation, model agreement, successful build or receipt existence cannot self-authorize.
+Only admitted EQUIVALENCE can authorize predecessor elision. Authorized semantic change remains an explicit change, not a no-loss equivalence claim.
 
-Current build:
-Catalogue root 6353b6fadcc7933471dedb44f777413cdcd38b0f919294b9a95bbeaf4f89b64b
-Technical SHA-256 69135c44c29a06ac6636b55aa5f67cc2a5f0fa700593dc7c99bbbf072b0a0831
-Graph nodes 60516
-Graph root f6803e01ba3f827ed513dea3d705c1f20387f95579b92ebc2535e57f5710a500
-Build identity 0ae1b1b784bccbd9940c6036d0a6e60ffd9ff8e548a3ce26d5387322c2379ab1
-completion COMPLETE; llm/network/ambient-clock false.
+4. CURRENT TECHNICAL vs RETAINED v15.9 TECHNICAL
+Current Technical owns v15.10 generic representation/build mechanics.
+Retained v15.9 Technical bytes remain semantic source only within original predecessor scope.
+Parser/compile/build success cannot supersede predecessor meaning.
+If current mechanics and predecessor semantic meaning are incompatible without an externally admitted supersession spec, result is MIGRATION_CONFLICT_UNRESOLVED and predecessor meaning continues within original scope.
+A supersession spec itself never self-admits.
 
-Build identity commits Technical version+hash, Catalogue root, typed build-context root, GSL version, canonical serialization version, numeric policy, macro library and expansion profile.
+5. FINITE PURE EXPANSION
+S0 validates/materializes immutable Catalogue records.
+S1 runs simultaneous seed-local pure Emit(seed, admitted-law-set). It reads only immutable S0 seed metadata; no other S1 output; no theorem/proof search; no ambient input. Output is bounded to facets + law refs + optional macro.
+S2 sorts/serializes/hashes only.
+Derived nodes never feed another emitter.
+All emitted nodes are sorted by deterministic intrinsic semantic key/node-id before insertion.
+Collision rule:
+- same content identity + same canonical record = deduplicate;
+- same semantic identity with any differing canonical field = FAIL.
+No order-dependent merge exists.
 
-5. CANONICAL DATA MODEL
-Canonical structures use null, bool, arbitrary integer, Unicode scalar string, ordered array, string-key object.
-Binary float forbidden. Duplicate JSON keys rejected. Arrays ordered; semantic sets must be explicitly sorted by owner schema.
-Predecessor payload strings are never Unicode-normalized; their byte-exact UTF-8 hash remains lineage identity.
-Payload identity, record identity and semantic equivalence are distinct.
+6. ADMITTED LAW SET IS PINNED
+Only Catalogue FUNDAMENTAL_LAW records with status ADMITTED_CURRENT participate.
+The admitted set is derived solely from the pinned Catalogue root; its sorted-set hash is in BuildIdentity.
+No policy/model/runtime selection changes it at build time.
 
-6. SNAPSHOT-BOUND REFERENCES
-Retained IDs have exact snapshot bindings. No moving latest alias. Ambiguity is preserved rather than guessed.
+7. GardenCanonicalEncoding/v2 IS FULLY NARROWED
+Semantic values:
+object, array, Unicode scalar string, arbitrary-precision integer, bool, null.
+Floats, NaN, Infinity forbidden.
+Canonical integers serialize in ordinary minimal base-10 form; no plus/leading-zero alternate representation survives canonical-line validation.
+Strict UTF-8 decode rejects malformed/overlong UTF-8; BOM forbidden; unpaired surrogate forbidden.
+Strings:
+- quote/backslash escaped;
+- standard JSON short control escapes where defined;
+- other U+0000..001F encoded lowercase \u00xx;
+- slash/non-ASCII scalar not escaped;
+- no Unicode normalization.
+Object keys sorted by UTF-8 bytes.
+Ordinary arrays are ordered.
+Sets require explicit {"$set":[...]} wrapper; members sorted by canonical member bytes; duplicates rejected.
+Whitespace absent outside strings.
+Every uncompressed Catalogue JSONL line MUST equal its own canonical encoding exactly.
+SHA-256 over canonical UTF-8 bytes.
+Preserved predecessor source strings remain exact and reconstruct byte-for-byte.
 
-7. IDENTIFIER CLOSURE
-733/733 SchemaIDs
-27/27 RightIDs
-788/788 TestIDs
-62/62 RegistryIDs
-226/226 explicit SemanticAnchor declarations
-0 missing.
-A previously missed A152-CLIC anchor was caught and fixed.
+8. BUILD IDENTITY CLOSED
+BuildIdentity commits:
+Technical semantics version + exact Technical SHA,
+Catalogue root,
+typed BuildContext root,
+encoding profile,
+GSL version,
+macro/facet/design-form/GSL-form binding hashes,
+admitted law-set hash,
+identity table hash,
+source manifest hash,
+migration-delta-set hash.
+Ambient reads, network, wall-clock, LLM and mutable latest aliases forbidden.
 
-8. HISTORY != CURRENT APPLICABILITY
-Historical bytes immutable.
-Current ApplicabilityAssessment has independent dimensions:
-logical: APPLICABLE / NOT_APPLICABLE / CONDITIONAL / UNKNOWN / CONFLICT
-epistemic: VALID / STALE / UNKNOWN / CONFLICT
-authority: AUTHORIZED / REVOKED / EXPIRED / UNKNOWN / NOT_REQUIRED
-temporal: CURRENT / NOT_YET_EFFECTIVE / EXPIRED / RETROACTIVE / UNKNOWN
-dependency: VALID / INVALIDATED / UNKNOWN / CONFLICT
-Overall is a deterministic fail-closed fold while all dimensions remain inspectable.
-Design expansion performs no runtime applicability filtering.
-Runtime applicability is defined over immutable records plus explicit context/effective-time/record-cutoff/policy revision.
+9. REQUIRED REFERENCES FAIL CLOSED
+Snapshot-bound identity table only.
+Ambiguous duplicate identity = build FAIL.
+Required missing identity = build FAIL.
+Optional missing identity may return typed UNRESOLVED_REFERENCE but cannot be consumed where resolution is required.
 
-9. HIGH-RISK SOURCE CLOSURE
-Independent audit directly scans original v15.9 sources. All matched lines are inside preserved interpretive units:
-formula/operator 3641/3641
-normative 2322/2322
-nonclaim/prohibited inference 1859/1859
-assumption/scope/exception 880/880
-failure/fallback/recovery 716/716
-order/state/process 2190/2190
-No class has a missing source line.
-Regex classification is not treated as understanding; exact source archive and predecessor interpretive units are the conservative fallback.
+10. HISTORY/APPLICABILITY/REVOCATION
+Historical source/seed bytes immutable.
+Runtime applicability is a product:
+logical, epistemic, authority, scope, dependency, resource.
+No universal scalar.
+EvaluationContext explicitly binds as-of time, DesignEpoch, authority snapshot, revocation root, dependency snapshot, knowledge snapshot, environment commitment and time snapshot.
+Cached assessment never substitutes at point of use unless the exact EvaluationContext roots match.
+Revocation/expiry/staleness alter computed applicability, not historical bytes.
 
-10. INDEPENDENT CHECKER
-A separately written checker does not import Technical. It independently recomputes Catalogue record hashes/root, exact source archive hashes, predecessor leaf hashes, fail-closed residual settings, graph line hashes/root/count, and graph-to-Catalogue binding.
-Current result PASS with same Catalogue root, graph root and 60516 nodes.
+11. FORMULAS ARE NOT FALSELY “BOUND”
+FORMULA_BINDING_CANDIDATE is explicitly SOURCE_ONLY and NON-NORMATIVE.
+Each candidate binds the exact source line plus ALL deterministic enclosing semantic/section context refs, not only the smallest unit.
+It cannot be used as accepted computational semantics until separately structured/admitted.
+Unique equations/timing/algorithms therefore remain controlled by source context.
 
-11. BOOK
-Book is non-normative. It now documents finite stratified expansion, exact predecessor reconstruction, multi-axis applicability, predecessor-control-until-equivalence, formula-context preservation, and human-projection disclaimers. It has 24 core reader chapters and 28 Mermaid diagrams.
+12. SOURCE INDEXING HAS BOTH LINE AND BYTE SPANS
+Semantic leaves/context units preserve exact source line spans plus 0-based half-open byte spans and hashes.
+Whole predecessor source remains the controlling fallback, so indexing errors cannot delete semantics.
 
-12. ALL UNIQUE 15.x CONTENT
-No unique profile content is generated away.
-Titanium, TRAIN, Diamond, Reliability OS, VSM/TFT/FET/SCT and all other theories/profiles plus CPI/OCF/MSC/TML/CDDT/CMUR/CLIC/GCL/Human-Effect/HRAP/justice/protected-reporting/AI-dev/standards/engineering/assurance/RRCTX/TED/SEA/MAC/NRS/VIP/SHE/EC/CSR/AR/MI/event-driven/DesignMirror/future-stress/belief/global-consistency/failure-learning/ontological-debt/history/GSL-PHYSICS/Bridge/AAP/UPA/GTF/HSA/Productive Finance remain in exact predecessor source and structured Catalogue leaves.
-A formula/algorithm is replaced by a more abstract representation only after explicit equivalence/refinement evidence.
+13. STRUCTURAL BOOTSTRAP DOES NOT COME FROM CATALOGUE CONTENT
+Technical hardcodes only the minimum Catalogue container schema required to parse/verify SOURCE_BLOB, SEMANTIC_LEAF, FUNDAMENTAL_LAW, IDENTITY_INDEX and FORMULA_BINDING_CANDIDATE records.
+Catalogue may define substantive rights/laws/profiles but cannot redefine its own minimum parser/integrity rules.
+This is generic structure, not Garden-specific substantive law.
 
-13. CLAIM BOUNDARY
-Exact predecessor source preservation: proved by byte reconstruction/hash.
-Structured leaf preservation: exact payload hashes.
-Structural/local context preservation: source-order and interpretive bindings.
-Full formal behavioral equivalence of arbitrary predecessor prose: NOT globally claimed.
-Where formal mapping is absent, predecessor semantics continue to control and material ambiguity fails closed.
+14. ID SHADOWING BLOCKED
+One identity-index record per (identity_kind,id).
+Duplicate identity = build FAIL.
+References are version/snapshot bound.
+New semantic meaning cannot silently reuse a predecessor identity through ingestion order.
 
-ROUND-3 QUESTIONS
-A. Do finite strata + strictly lower-stratum reads + static bounds + collision failure establish order-independent deterministic expansion for the CURRENT rule class? Give an executable counterexample if not.
-B. Does byte-exact five-file reconstruction plus predecessor-controlling seeds close actual information loss even where formal compilation is incomplete?
-C. Can an unresolved predecessor rule now be silently weakened by a macro/projection? If yes, show exact path.
-D. Are interpretive units plus formula-context bindings sufficient conservative fallback for side conditions/order/nonclaims while formal mappings remain incomplete?
-E. Attack multi-axis applicability: can revocation/staleness/conflict/temporal invalidity still be erased?
-F. Attack snapshot references, serialization/build identity, privacy/archive boundary and independent checker.
-G. Is exactly Book + Technical + Catalogue now coherent?
-H. Identify any 15.x semantic class still capable of disappearing or changing normative force.
-I. Separate true architecture blockers from future formalization/implementation work.
+15. MIGRATION DELTAS DO NOT SELF-ADMIT
+Current v15.10 migration records are CANDIDATE_NOT_SEMANTICALLY_ADMITTED with no acceptance receipt and no governing-authority claim.
+They document proposed document/topology/representation changes but do not themselves supersede predecessor semantics.
+Release remains a WORKING CANDIDATE.
 
-RETURN
+16. EXACT PREDECESSOR SOURCE REMAINS A LONG-TERM SAFE FALLBACK
+Catalogue contains one exact copy of each v15.9 source document.
+Structured indexes do not duplicate the payload.
+The fallback may remain indefinitely as historical/interpretive semantic debt.
+It may be elided only per-item after admitted EQUIVALENCE evidence for its full controlling scope.
+
+17. BOOK
+Book is clearly NON-NORMATIVE.
+It has 24 core reader chapters plus reference maps and 28 Mermaid diagrams.
+Book conflict is Book defect.
+The machine build does not pretend arbitrary natural-language Book prose can be semantically diffed without interpretation.
+
+18. NO-LOSS SCOPE
+All five v15.9 files reconstruct byte-for-byte from Catalogue.
+2,660 normalized semantic leaves + exact source fallback.
+733 SchemaIDs, 788 TestIDs, 62 RegistryIDs, 27 Rights, 325 H/S/T/A/TH/RA identifiers.
+2,981 broad formula/operator candidates preserve exact source/context.
+55 named 15.x families present.
+No semantic leaf is dropped.
+All unique equations/algorithms/timings/exceptions/nonclaims remain source-controlled unless an accepted structured equivalent exists.
+
+FINAL ROUND-4 QUESTIONS
+A. Is there any remaining concrete path by which v15.9/15.x semantics can be lost, silently weakened or overridden in this three-artifact candidate?
+B. Is the deterministic build now sufficiently specified to be independently reproducible from Technical+Catalogue alone?
+C. Does the supersession/admission design close “strengthening != equivalence”, self-certification and predecessor/current-Technical cycles?
+D. Does the source-only interpretation model honestly solve unique equation/algorithm/exception preservation without pretending structured completeness?
+E. Does required-reference fail-closed + snapshot BuildIdentity close identity/reference nondeterminism?
+F. Does EvaluationContext close revocation/time/staleness race issues without collapsing applicability axes?
+G. Is exact predecessor source in Catalogue a legitimate no-loss fallback while progressive abstraction proceeds?
+H. Is the 3-artifact split now coherent and simpler than v15.9 without becoming a disguised fourth/fifth canonical layer?
+I. Identify ONLY material remaining blockers. Do not propose cosmetic extensions.
+
+RETURN EXACTLY:
 VERDICT: APPROVE | APPROVE_WITH_PATCH | BLOCK
-Only material findings. Any BLOCK must include a concrete counterexample against this stated current design.
+Then numbered MATERIAL findings only.
+If no material blocker remains, say: NO MATERIAL BLOCKER FOUND.
