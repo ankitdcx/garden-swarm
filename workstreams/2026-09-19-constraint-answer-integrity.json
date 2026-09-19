@@ -1,0 +1,44 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:constraint-answer-integrity:20260919",
+  "work_package_id": "CONSTRAINT-ANSWER-INTEGRITY",
+  "branch": "chatgpt/constraint-answer-integrity-20260919",
+  "base_sha": "27fc23a7b195d25fcd57c76bf1fd52caaa2c017c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:constraint-answer-integrity:20260919",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "CONSTRAINT-ANSWER-INTEGRITY",
+    "base_sha": "27fc23a7b195d25fcd57c76bf1fd52caaa2c017c",
+    "target_paths": [
+      "workstreams/2026-09-19-constraint-answer-integrity.json",
+      "agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md",
+      "prototype/runtime_constitution.py",
+      "prototype/tests/test_runtime_constitution.py",
+      "gsl/FUNCTION_CONTRACTS.json"
+    ],
+    "target_symbols": [
+      "evaluate_answer_integrity"
+    ],
+    "semantic_domains": [
+      "RUNTIME_CONSTRAINT_CLASSIFICATION",
+      "ANSWER_INTEGRITY",
+      "EPISTEMICS_PROVENANCE"
+    ],
+    "affected_invariants": [
+      "EXTERNAL_ENFORCEMENT_DOES_NOT_CREATE_SEMANTIC_AUTHORITY",
+      "CONSTRAINT_BLOCKED_JUDGMENT_MUST_NOT_BE_REPLACED_BY_ATTRIBUTED_JUDGMENT",
+      "SOURCE_ATTRIBUTION_MUST_REMAIN_DISTINCT_FROM_MODEL_JUDGMENT"
+    ],
+    "affected_contracts": [
+      "GardenRuntimeConstitutionEnvelope/v1",
+      "GardenFunctionContractRegistry/v1"
+    ],
+    "intended_effect": "Add a candidate answer-integrity invariant and executable check: when a direct model judgment is externally constrained, the runtime must disclose the constraint and must not substitute an external actor's judgment as though it were the model's answer.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
