@@ -34,7 +34,7 @@ class ProviderStopTests(unittest.TestCase):
                 self.assertEqual(json.loads((root/'bundle.json').read_text())['status'],'PARTIAL_PAID_REVIEW_PROPOSALS_ONLY')
 
     def test_origin_backfill_stops_entire_multibatch_sweep(self):
-        families=['deepseek','qwen','glm','xiaomi']
+        families=['deepseek','xiaomi','nvidia','pareto','mistral']
         selection={'selected':[{'family':f,'model':f+'/m'} for f in families],'approved_families':families,'provider_policy':{'data_collection':'deny'},'routine_model_call_cost_ceiling_usd':0.05}
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);p=root/'selection.json';p.write_text(json.dumps(selection))
