@@ -37,7 +37,7 @@ class ReviewBoundaryTests(unittest.TestCase):
     def test_rejects_real_boundary_violations(self):
         attacks = [
             ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(model='paid/model')),
-            ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(family='qwen')),
+            ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(family=x['selected'][1]['family'])),
             ('agents/runtime/paid-selection.json', lambda x: x['provider_policy'].update(data_collection='allow')),
             ('agents/outbox/hourly/paid-review-bundle.json', lambda x: x.update(target_id='other-cycle')),
             ('agents/outbox/hourly/paid-review-bundle.json', lambda x: x.update(semantic_delta_admitted=True)),
