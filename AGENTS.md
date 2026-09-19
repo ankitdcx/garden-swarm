@@ -14,7 +14,7 @@ Before any GitHub write, branch creation, file mutation, pull request, workflow 
 
 For parallel ChatGPT Git work, also read `CHATGPT_WORKSTREAM_POLICY.json`: one chat thread + one bounded work package uses its own `chatgpt/...` branch and early draft PR; genuine semantic collisions are reconciled on a fresh `integration/...` branch and final main admission is serialized through the merge train.
 
-For OpenRouter reviewer work, also read `agents/reviewer-quality-policy.json` and `agents/reviewer-slot-registry.json`. Reviewer slots are evidence-governed, not permanent model identities: bad task responses may be rejected; DEGRADED/QUARANTINED slots block new convergence admission; replacements require blind shadow evidence and a governed registry PR. Agreement with ChatGPT or peers is never a quality score by itself.
+For OpenRouter reviewer work, first read `docs/OPENROUTER_PROCESS_V2_2026-09-19.md`, then `agents/openrouter-paid-review-policy.json`, `agents/reviewer-quality-policy.json`, and `agents/reviewer-slot-registry.json`. Reviewer slots are evidence-governed, not permanent model identities: bad task responses may be rejected; DEGRADED/QUARANTINED slots block new convergence admission; replacements require blind shadow evidence and a governed registry PR. Agreement with ChatGPT or peers is never a quality score by itself.
 
 `GIT_OPERATING_CONTEXT.md`, `CHATGPT_WORKSTREAM_POLICY.json`, and reviewer-quality policies are operational process sources only. They do not change Garden canonical semantics, grant authority, create Proof, or authorize promotion. Do not bypass strict required checks, rewrite protected history, fabricate approval, silently substitute a reviewer, or weaken a fail-closed Garden gate merely to make CI green.
 
