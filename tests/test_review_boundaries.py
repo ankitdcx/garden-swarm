@@ -11,7 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def valid_inputs():
     policy = json.loads((ROOT/'agents/openrouter-paid-review-policy.json').read_text())
     families = [r['family'] for r in policy['routine_reviewers']]
-    free = [{'family':f,'model':f+'/m:free'} for f in families]
+    free_count = int(policy['free_swarm']['distinct_families_per_hour'])
+    free = [{'family':f,'model':f+'/m:free'} for f in families[:free_count]]
     selection = {'schema':'GardenPaidModelSelection/v2', 'selected':policy['routine_reviewers'],
                  'approved_families':families, 'provider_policy':{'data_collection':'deny'},
                  'daily_openrouter_cost_ceiling_usd':policy['daily_openrouter_cost_ceiling_usd'], 'semantic_delta_admitted':False}
