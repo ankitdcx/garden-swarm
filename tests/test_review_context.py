@@ -127,7 +127,7 @@ class ContextReviewTests(unittest.TestCase):
                     'supported_parameters': ['reasoning'], 'max_completion_tokens': 32000,
                     'pricing': {'prompt': '.00000015', 'completion': '.0000006'}}
         exclusions = json.loads((self.root / 'agents/provider-exclusion-policy.json').read_text())
-        body, _ = legacy.endpoint_request(endpoint, self.policy['routine_reviewers'][0], 'public', legacy.money('.1'), self.policy, exclusions, profile=profile)
+        body, _ = legacy.endpoint_request(endpoint, self.policy['routine_reviewers'][0], 'public', legacy.money('.05'), self.policy, exclusions, profile=profile)
         self.assertEqual(body['reasoning']['effort'], 'high')
         self.assertEqual(body['max_tokens'], 32000)
         endpoint['max_completion_tokens'] = 8000
@@ -137,14 +137,14 @@ class ContextReviewTests(unittest.TestCase):
     def test_audit_requires_current_dated_target_plan_and_preserves_pools(self):
         now = datetime(2026, 9, 16, tzinfo=timezone.utc).timestamp()
         normal, receipt = effective_policy(self.policy, {'target_id': 'T'}, now)
-        self.assertEqual(normal['daily_openrouter_cost_ceiling_usd'], 2)
-        self.assertEqual(receipt['per_call_usd'], '0.10')
+        self.assertEqual(normal['daily_openrouter_cost_ceiling_usd'], 1)
+        self.assertEqual(receipt['per_call_usd'], '0.05')
         directive = {'target_id': 'T', 'spending_mode': 'AUDIT'}
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now)
         directive['audit_window'] = {'utc_day': '2026-09-16', 'target_id': 'T', 'audit_id': 'audit-1', 'purpose': 'cross-module audit'}
         audit, _ = effective_policy(self.policy, directive, now)
-        self.assertEqual(audit['daily_openrouter_cost_ceiling_usd'], 10)
+        self.assertEqual(audit['daily_openrouter_cost_ceiling_usd'], 2)
         self.assertEqual(audit['budget_pools_usd'], self.policy['budget_pools_usd'])
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now + 86400)
@@ -197,14 +197,14 @@ class ContextReviewTests(unittest.TestCase):
         self.assertIn('Please find any defects or gaps or worthy upgrades.', calls[0]['messages'][0]['content'])
         self.assertIn('support_passages', calls[0]['messages'][0]['content'])
         self.assertEqual(state['attempts'][-1]['review_profile']['name'], 'COMPLEX')
-        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '2.0')
+        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '1.0')
         self.assertEqual(calls[0]['max_tokens'],16000)
 
-    def test_context_expansion_cannot_reset_twenty_call_task_budget(self):
+    def test_context_expansion_cannot_reset_fifteen_call_task_budget(self):
         packet = self.packet()
         task_key = p.sha256_value({'target': self.target['target_id'], 'source_root': packet['source_root_sha256'], 'target_source': self.trace['source_sha256']})
         state = {'scope': 'PUBLIC_MATRIX_REVIEW_ONLY', 'paused': False, 'cycles': {},
-                 'attempts': [{'inference_reserved': True, 'task_key': task_key, 'status': 'REVIEW_RECORDED'} for _ in range(20)]}
+                 'attempts': [{'inference_reserved': True, 'task_key': task_key, 'status': 'REVIEW_RECORDED'} for _ in range(15)]}
         class Ledger:
             def __init__(self, token): self.value = state
             def save(self, value): pass
