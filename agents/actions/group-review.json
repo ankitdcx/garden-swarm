@@ -231,9 +231,8 @@
       "process_integrity_must_pass_for_positive_verdict": true
     },
     "openrouter": {
-      "workflow": ".github/workflows/group-review-openrouter.yml",
       "worker": "tools/group_review_openrouter_worker.py",
-      "trigger": "OWNER_AUTHORED_PUBLIC_RUN_ISSUE",
+      "trigger": "OWNER_AUTHORED_PUBLIC_RUN_ISSUE_TO_SECRET_FREE_TRIGGER",
       "automatic_for": [
         "MATERIAL",
         "HIGH_RISK"
@@ -243,7 +242,10 @@
       "governed_five_family_board": true,
       "result_title_format": "[GROUP_REVIEW_OPENROUTER_RESULT] <problem_id>",
       "result_schema": "GardenGroupReviewOpenRouterBundle/v1",
-      "no_phone_api_key_required": true
+      "no_phone_api_key_required": true,
+      "trigger_workflow": ".github/workflows/group-review-openrouter-trigger.yml",
+      "provider_workflow": ".github/workflows/group-review-openrouter.yml",
+      "workflow_dispatch_secret_boundary": true
     },
     "optional_phone_models": {
       "allowed": true,
