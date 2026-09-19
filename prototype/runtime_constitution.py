@@ -219,3 +219,45 @@ def evaluate_instruction(
             "SOURCE_CLASS_DID_NOT_CREATE_AUTHORITY",
         ),
     )
+
+
+def evaluate_answer_integrity(
+    *,
+    direct_judgment_permitted: bool,
+    response_claims_model_judgment: bool,
+    substitutes_external_judgment: bool,
+    constraint_disclosed: bool,
+) -> RuntimeResult:
+    """Prevent constraint-induced substitution from masquerading as a direct answer."""
+
+    if direct_judgment_permitted:
+        return RuntimeResult(
+            RuntimeDecision.ALLOW,
+            ("DIRECT_JUDGMENT_PATH_AVAILABLE",),
+        )
+
+    if response_claims_model_judgment:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            ("FALSE_MODEL_JUDGMENT_CLAIM",),
+        )
+
+    if substitutes_external_judgment:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            ("CONSTRAINT_BLOCKED_JUDGMENT_SUBSTITUTED_BY_EXTERNAL_JUDGMENT",),
+        )
+
+    if not constraint_disclosed:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            ("CONSTRAINT_BOUNDARY_NOT_DISCLOSED",),
+        )
+
+    return RuntimeResult(
+        RuntimeDecision.ALLOW,
+        (
+            "CONSTRAINT_BOUNDARY_DISCLOSED",
+            "EXTERNAL_ATTRIBUTION_REMAINS_DISTINCT_FROM_MODEL_JUDGMENT",
+        ),
+    )
