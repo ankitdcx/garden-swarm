@@ -92,21 +92,23 @@ class ReviewerQualityTests(unittest.TestCase):
     def test_selector_blocks_non_active_slot(self):
         policy = {
             "routine_reviewers": [
-                {"family": "deepseek", "role": "r1", "model": "deepseek/deepseek-v4.1-flash"},
-                {"family": "qwen", "role": "r2", "model": "qwen/qwen3.8-flash"},
-                {"family": "glm", "role": "r3", "model": "z-ai/glm-5.3-flash"},
-                {"family": "xiaomi", "role": "r4", "model": "xiaomi/mimo-v2.5"},
+                {"family": "deepseek", "role": "r1", "model": "deepseek/deepseek-v4-pro-0813"},
+                {"family": "xiaomi", "role": "r2", "model": "xiaomi/mimo-v2.5-pro"},
+                {"family": "nvidia", "role": "r3", "model": "nvidia/nemotron-3-ultra-550b-a55b"},
+                {"family": "pareto", "role": "r4", "model": "unbiased/pareto"},
+                {"family": "mistral", "role": "r5", "model": "mistralai/mistral-medium-3-5"},
             ]
         }
-        registry = {"schema": "GardenReviewerSlotRegistry/v1", "required_active_slots": 4, "slots": [
-            {"slot_id": "1", "state": "ACTIVE", "family": "deepseek", "role": "r1", "model": "deepseek/deepseek-v4.1-flash"},
-            {"slot_id": "2", "state": "ACTIVE", "family": "qwen", "role": "r2", "model": "qwen/qwen3.8-flash"},
-            {"slot_id": "3", "state": "ACTIVE", "family": "glm", "role": "r3", "model": "z-ai/glm-5.3-flash"},
-            {"slot_id": "4", "state": "ACTIVE", "family": "xiaomi", "role": "r4", "model": "xiaomi/mimo-v2.5"},
+        registry = {"schema": "GardenReviewerSlotRegistry/v1", "required_active_slots": 5, "slots": [
+            {"slot_id": "1", "state": "ACTIVE", "family": "deepseek", "role": "r1", "model": "deepseek/deepseek-v4-pro-0813"},
+            {"slot_id": "2", "state": "ACTIVE", "family": "xiaomi", "role": "r2", "model": "xiaomi/mimo-v2.5-pro"},
+            {"slot_id": "3", "state": "ACTIVE", "family": "nvidia", "role": "r3", "model": "nvidia/nemotron-3-ultra-550b-a55b"},
+            {"slot_id": "4", "state": "ACTIVE", "family": "pareto", "role": "r4", "model": "unbiased/pareto"},
+            {"slot_id": "5", "state": "ACTIVE", "family": "mistral", "role": "r5", "model": "mistralai/mistral-medium-3-5"},
         ]}
         exclusion = {"schema": "GardenProviderExclusionPolicy/v1", "excluded": []}
         with mock.patch.object(selector, "require_allowed_model", return_value=None):
-            self.assertEqual(len(selector.active_reviewers(policy, registry, exclusion)), 4)
+            self.assertEqual(len(selector.active_reviewers(policy, registry, exclusion)), 5)
             registry = copy.deepcopy(registry)
             registry["slots"][1]["state"] = "QUARANTINED"
             with self.assertRaisesRegex(ValueError, "not ACTIVE"):
