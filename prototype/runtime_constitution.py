@@ -15,6 +15,16 @@ class ConstraintClass(str, Enum):
     EXTERNAL_RUNTIME_CONSTRAINT = "EXTERNAL_RUNTIME_CONSTRAINT"
 
 
+RUNTIME_CONSTITUTION_SCHEMA = "GardenRuntimeConstitutionEnvelope/v1"
+
+
+class InstructionAuthority(str, Enum):
+    GARDEN_CONSTRAINT_ONLY = "GARDEN_CONSTRAINT_ONLY"
+    DELEGATED_AUTHORITY_REQUIRED = "DELEGATED_AUTHORITY_REQUIRED"
+    PROPOSAL_ONLY = "PROPOSAL_ONLY"
+    EXTERNAL_ENFORCEMENT_ONLY = "EXTERNAL_ENFORCEMENT_ONLY"
+
+
 class RuntimeDecision(str, Enum):
     ALLOW = "ALLOW"
     REJECT = "REJECT"
@@ -63,6 +73,17 @@ class RuntimeConstitutionContext:
     )
     external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
+
+
+def classify_instruction_authority(source_class: ConstraintClass) -> InstructionAuthority:
+    """Classify what an instruction source can contribute before action checks."""
+    if source_class is ConstraintClass.GARDEN_CONSTITUTION:
+        return InstructionAuthority.GARDEN_CONSTRAINT_ONLY
+    if source_class is ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION:
+        return InstructionAuthority.DELEGATED_AUTHORITY_REQUIRED
+    if source_class is ConstraintClass.EXTERNAL_RUNTIME_CONSTRAINT:
+        return InstructionAuthority.EXTERNAL_ENFORCEMENT_ONLY
+    return InstructionAuthority.PROPOSAL_ONLY
 
 
 def evaluate_goal(goal: GoalProposal, context: RuntimeConstitutionContext) -> RuntimeResult:
