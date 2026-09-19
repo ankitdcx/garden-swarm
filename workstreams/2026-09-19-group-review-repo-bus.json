@@ -23,13 +23,16 @@
       "tools/group_review_openrouter_worker.py",
       "tests/test_group_review_bus.py",
       "tests/test_group_review_openrouter_worker.py",
-      ".github/workflows/group-review-openrouter.yml"
+      ".github/workflows/group-review-openrouter.yml",
+      ".github/workflows/group-review-openrouter-trigger.yml",
+      "tools/check_dispatch_admission.py"
     ],
     "target_symbols": [
       "GROUP_REVIEW_REPO_BUS",
       "GardenGroupReviewPacket/v1",
       "GardenGroupReviewWorkerResult/v1",
-      "GardenGroupReviewOpenRouterLedger/v1"
+      "GardenGroupReviewOpenRouterLedger/v1",
+      "GROUP_REVIEW_OPENROUTER_TRIGGER"
     ],
     "semantic_domains": [
       "CHATGPT_BOARD_ORCHESTRATION",
