@@ -8,6 +8,10 @@ def main() -> int:
         from tools.single_review_worker import preflight
         preflight()
         return 0
+    if sys.argv[1:] == ['--group-review']:
+        from tools.group_review_openrouter_worker import preflight
+        preflight()
+        return 0
     if sys.argv[1:]:
         raise SystemExit('DISPATCH_BLOCKED: unknown dispatcher mode')
     status = json.loads(Path('agents/coordinator-status.json').read_text())

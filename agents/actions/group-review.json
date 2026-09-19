@@ -135,11 +135,15 @@
       "verifier_hash",
       "timestamps",
       "decision_log"
-    ]
+    ],
+    "repo_bus_ref": "docs/GROUP_REVIEW_REPO_BUS_V1.md",
+    "run_artifacts_are_immutable_issues": true
   },
   "manual_handoff_boundary": {
     "chat_creation_or_message_delivery_may_require_user_ui_action": true,
-    "leader_should_minimize_user_work": "Generate exact worker packets/instructions and consume returned durable artifacts; do not ask the user to redesign the process."
+    "leader_should_minimize_user_work": "Generate exact worker packets/instructions and consume returned durable artifacts; do not ask the user to redesign the process.",
+    "minimum_user_steps": "Open the independent worker/verifier chats and send the one-line role/run command. Connected chats use GitHub as the bus; no manual file hashing or OpenRouter key handling is required.",
+    "external_phone_models_may_require_manual_copy_paste": true
   },
   "openrouter_boundary": {
     "use_real_governed_process": true,
@@ -156,7 +160,7 @@
     "external_models_do_not_gain_authority": true,
     "sensitive_data_requires_applicable_privacy_approval": true
   },
-  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader for that situation. The Leader discusses the situation, applies explicit v2.1 triage, uses real OpenRouter API execution whenever that lane is selected, hard-fails material process-integrity breaches, and owns orchestration through final comparison/decision. The user need not restate the board protocol.",
+  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader. The Leader uses the repo-native issue bus, explicit v2.1 triage, symmetric blind workers, automatic real OpenRouter review for eligible public MATERIAL/HIGH_RISK runs, hard-fail process auditing, frozen candidate/verifier artifacts, and durable resume checkpoints. The user need not restate the protocol.",
   "protocol_version": "2.1",
   "process_audit": {
     "phase": "BEFORE_CANDIDATE_VERIFICATION",
@@ -189,5 +193,74 @@
       "rerun_requirement": "Create a clean run with a newly frozen packet/run identity; preserve the failed run as audit evidence."
     },
     "nonmaterial_failure_rule": "Record as a caveat or repair before completion; never silently erase it."
+  },
+  "repo_bus": {
+    "schema": "GardenGroupReviewRepoBus/v1",
+    "status": "ACTIVE_WHEN_THIS_ACTION_VERSION_IS_ON_MAIN",
+    "transport": "GITHUB_ISSUES_PLUS_GITHUB_ACTIONS",
+    "documentation": "docs/GROUP_REVIEW_REPO_BUS_V1.md",
+    "durable_source_of_truth": true,
+    "run_issue": {
+      "title_format": "[GROUP_REVIEW_RUN] <problem_id>",
+      "packet_schema": "GardenGroupReviewPacket/v1",
+      "marker": "GARDEN_GROUP_REVIEW_PACKET",
+      "immutable_after_freeze": true
+    },
+    "commands": {
+      "leader_start": "group review",
+      "worker_a": "group review worker A #<run_issue_number>",
+      "worker_b": "group review worker B #<run_issue_number>",
+      "leader_resume": "continue group review #<run_issue_number>",
+      "verifier": "group review verify #<run_issue_number>"
+    },
+    "worker_output": {
+      "title_format": "[GROUP_REVIEW_WORKER] <problem_id> <role>",
+      "schema": "GardenGroupReviewWorkerResult/v1",
+      "blind_workers_read_exact_run_issue_only": true,
+      "peer_search_before_freeze": "FORBIDDEN",
+      "frozen_output_is_immutable": true
+    },
+    "candidate": {
+      "title_format": "[GROUP_REVIEW_CANDIDATE] <problem_id>",
+      "schema": "GardenGroupReviewCandidate/v1",
+      "immutable_after_freeze": true
+    },
+    "verifier": {
+      "title_format": "[GROUP_REVIEW_VERIFIER] <problem_id>",
+      "schema": "GardenGroupReviewVerifierResult/v1",
+      "process_integrity_must_pass_for_positive_verdict": true
+    },
+    "openrouter": {
+      "worker": "tools/group_review_openrouter_worker.py",
+      "trigger": "OWNER_AUTHORED_PUBLIC_RUN_ISSUE_TO_SECRET_FREE_TRIGGER",
+      "automatic_for": [
+        "MATERIAL",
+        "HIGH_RISK"
+      ],
+      "public_only": true,
+      "sequential_one_call_per_dispatch": true,
+      "governed_five_family_board": true,
+      "result_title_format": "[GROUP_REVIEW_OPENROUTER_RESULT] <problem_id>",
+      "result_schema": "GardenGroupReviewOpenRouterBundle/v1",
+      "no_phone_api_key_required": true,
+      "trigger_workflow": ".github/workflows/group-review-openrouter-trigger.yml",
+      "provider_workflow": ".github/workflows/group-review-openrouter.yml",
+      "workflow_dispatch_secret_boundary": true
+    },
+    "optional_phone_models": {
+      "allowed": true,
+      "examples": [
+        "Gemini",
+        "DeepSeek",
+        "Qwen"
+      ],
+      "rule": "Use the exact frozen packet; return raw output unchanged; Leader hashes it as EXTERNAL_PHONE evidence. These workers never replace a required governed OpenRouter lane."
+    },
+    "stop_resume": {
+      "stopping_midway_is_safe_when_last_completed_step_is_frozen": true,
+      "unfinished_chat_text_is_not_state": true,
+      "unknown_external_call_blocks_further_inference": true,
+      "resume_rule": "Leader retrieves the run issue and all currently frozen artifacts and continues from the last valid checkpoint."
+    }
   }
 }

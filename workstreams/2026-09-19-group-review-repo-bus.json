@@ -1,0 +1,61 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-repo-bus:20260919",
+  "work_package_id": "GROUP-REVIEW-REPO-BUS",
+  "branch": "chatgpt/group-review-repo-bus-20260919",
+  "base_sha": "b693becb8d6469409c1163614c229cd7b5ab9e54",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-repo-bus:20260919",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-REPO-BUS",
+    "base_sha": "b693becb8d6469409c1163614c229cd7b5ab9e54",
+    "target_paths": [
+      "workstreams/2026-09-19-group-review-repo-bus.json",
+      "agents/actions/group-review.json",
+      "AGENTS.md",
+      "docs/GROUP_REVIEW_REPO_BUS_V1.md",
+      "tools/group_review_bus.py",
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_bus.py",
+      "tests/test_group_review_openrouter_worker.py",
+      ".github/workflows/group-review-openrouter.yml",
+      ".github/workflows/group-review-openrouter-trigger.yml",
+      "tools/check_dispatch_admission.py",
+      "gsl/REFERENCE_POLICY.json"
+    ],
+    "target_symbols": [
+      "GROUP_REVIEW_REPO_BUS",
+      "GardenGroupReviewPacket/v1",
+      "GardenGroupReviewWorkerResult/v1",
+      "GardenGroupReviewOpenRouterLedger/v1",
+      "GROUP_REVIEW_OPENROUTER_TRIGGER"
+    ],
+    "semantic_domains": [
+      "CHATGPT_BOARD_ORCHESTRATION",
+      "MULTI_AGENT_REVIEW_PROCESS",
+      "OPENROUTER_REVIEW_ADMISSION",
+      "DURABLE_REVIEW_STATE"
+    ],
+    "affected_invariants": [
+      "ONE_FROZEN_PACKET_PER_BLIND_ROUND",
+      "WORKERS_READ_EXACT_RUN_ISSUE_ONLY",
+      "OPENROUTER_USES_REAL_API_AND_PUBLIC_ONLY_PACKET",
+      "ONE_OPENROUTER_CALL_PER_DISPATCH",
+      "REPO_STATE_NOT_CHAT_MEMORY_IS_DURABLE_BUS",
+      "MATERIAL_PROCESS_FAILURE_BLOCKS_REVIEW_COMPLETION",
+      "RUNTIME_STATE_REFERENCE_HAS_EXPLICIT_OWNER"
+    ],
+    "affected_contracts": [
+      "GardenChatGPTWorkstreamPolicy/v1",
+      "GardenOpenRouterPaidReviewPolicy/v1",
+      "GardenChatAction/v1"
+    ],
+    "intended_effect": "Use GitHub Issues as the durable GROUP_REVIEW bus. A Leader creates one immutable run issue containing the frozen packet; connected ChatGPT workers retrieve that exact issue and publish hashed blind outputs; a new issue-triggered GitHub Action automatically runs the real OpenRouter five-family blind lane sequentially under existing budgets and publishes a hashed result issue. The user only opens worker chats and invokes their role/run number.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
