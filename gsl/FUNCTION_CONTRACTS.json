@@ -1,144 +1,409 @@
 {
   "schema": "GardenFunctionContractRegistry/v1",
   "design_epoch_ref": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
-  "coverage_scope": ["prototype/*.py"],
+  "coverage_scope": [
+    "prototype/*.py"
+  ],
   "binding_rule": "Every public top-level callable in coverage_scope resolves exactly one owner-qualified contract. CI records the SHA-256 of the containing implementation file for each resolution.",
   "contracts": [
     {
       "contract_id": "FC-PROTOTYPE-ACTIONGATE-EVALUATE-v1",
       "owner_qualified_name": "prototype.actiongate.evaluate_action",
       "implementation_source": "prototype/actiongate.py",
-      "inputs": ["ActionProposal", "GateContext"],
-      "outputs": ["GateResult"],
-      "closed_effect_vector": ["READ_CONTEXT"],
+      "inputs": [
+        "ActionProposal",
+        "GateContext"
+      ],
+      "outputs": [
+        "GateResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
       "authority_requirement": "Evaluation grants no authority; authority must be supplied in GateContext and is intersected before ALLOW.",
-      "failure_mode_set": ["STALE_POLICY_EPOCH", "INVALID_DELEGATION_ROOT", "CAPABILITY_NOT_GRANTED", "DELEGATION_REVOKED", "AUTHORITY_ENVELOPE_UNKNOWN", "AUTHORITY_SCOPE_DENIED", "HARD_GATE_FAILED", "HARD_GATE_UNKNOWN", "UNTRUSTED_CONTEXT_REQUIRES_FRESH_REVIEW"],
+      "failure_mode_set": [
+        "STALE_POLICY_EPOCH",
+        "INVALID_DELEGATION_ROOT",
+        "CAPABILITY_NOT_GRANTED",
+        "DELEGATION_REVOKED",
+        "AUTHORITY_ENVELOPE_UNKNOWN",
+        "AUTHORITY_SCOPE_DENIED",
+        "HARD_GATE_FAILED",
+        "HARD_GATE_UNKNOWN",
+        "UNTRUSTED_CONTEXT_REQUIRES_FRESH_REVIEW"
+      ],
       "result_algebra": "Decision[ALLOW|REJECT|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["prototype.authority.can_execute", "policy_epoch", "authority envelopes", "hard gates"],
+      "dependency_and_invalidator_bindings": [
+        "prototype.authority.can_execute",
+        "policy_epoch",
+        "authority envelopes",
+        "hard gates"
+      ],
       "resource_and_termination_bounds": "Finite over delegation chain and hard-gate map; no unbounded loop.",
-      "provenance": ["Garden_System_v15.5", "Garden_Technical_v15.5", "AGT-008", "MAC-001"]
+      "provenance": [
+        "Garden_System_v15.5",
+        "Garden_Technical_v15.5",
+        "AGT-008",
+        "MAC-001"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-AUTHORITY-COMPOSE-v1",
       "owner_qualified_name": "prototype.authority.compose_authority",
       "implementation_source": "prototype/authority.py",
-      "inputs": ["Iterable[AuthorityEnvelope]"],
-      "outputs": ["AuthorityEnvelope"],
+      "inputs": [
+        "Iterable[AuthorityEnvelope]"
+      ],
+      "outputs": [
+        "AuthorityEnvelope"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "No new authority may be minted; output is the conservative intersection of inputs.",
-      "failure_mode_set": ["EMPTY_ENVELOPE_SET"],
+      "failure_mode_set": [
+        "EMPTY_ENVELOPE_SET"
+      ],
       "result_algebra": "AuthorityEnvelope | exception on malformed empty input",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["AuthorityEnvelope semantics", "MAC-001", "AGT-013"],
+      "dependency_and_invalidator_bindings": [
+        "AuthorityEnvelope semantics",
+        "MAC-001",
+        "AGT-013"
+      ],
       "resource_and_termination_bounds": "O(n) in envelope count and finite set intersections.",
-      "provenance": ["Garden v15.5 authority containment semantics"]
+      "provenance": [
+        "Garden v15.5 authority containment semantics"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-AUTHORITY-CAN-EXECUTE-v1",
       "owner_qualified_name": "prototype.authority.can_execute",
       "implementation_source": "prototype/authority.py",
-      "inputs": ["Iterable[AuthorityEnvelope]", "action", "resource", "depth"],
-      "outputs": ["bool"],
+      "inputs": [
+        "Iterable[AuthorityEnvelope]",
+        "action",
+        "resource",
+        "depth"
+      ],
+      "outputs": [
+        "bool"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "Predicate only; does not itself execute an action.",
-      "failure_mode_set": ["EMPTY_ENVELOPE_SET"],
+      "failure_mode_set": [
+        "EMPTY_ENVELOPE_SET"
+      ],
       "result_algebra": "Total deterministic predicate once resolved non-empty inputs are supplied",
       "bool_restriction": "PERMITTED_TOTAL_DETERMINISTIC_PREDICATE",
-      "dependency_and_invalidator_bindings": ["prototype.authority.compose_authority"],
+      "dependency_and_invalidator_bindings": [
+        "prototype.authority.compose_authority"
+      ],
       "resource_and_termination_bounds": "Finite set-membership checks.",
-      "provenance": ["FUNC-005", "Garden authority containment semantics"]
+      "provenance": [
+        "FUNC-005",
+        "Garden authority containment semantics"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-DESIGN-EPOCH-VALIDATE-v1",
       "owner_qualified_name": "prototype.design_epoch.validate_binding",
       "implementation_source": "prototype/design_epoch.py",
-      "inputs": ["ArtifactBinding", "current_design_epoch", "current_dependencies"],
-      "outputs": ["ValidationResult"],
+      "inputs": [
+        "ArtifactBinding",
+        "current_design_epoch",
+        "current_dependencies"
+      ],
+      "outputs": [
+        "ValidationResult"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "None; validation cannot promote or mutate a DesignEpoch.",
-      "failure_mode_set": ["STALE", "UNKNOWN"],
+      "failure_mode_set": [
+        "STALE",
+        "UNKNOWN"
+      ],
       "result_algebra": "BindingStatus[CURRENT|STALE|UNKNOWN]",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["DesignEpoch", "declared dependency closure"],
+      "dependency_and_invalidator_bindings": [
+        "DesignEpoch",
+        "declared dependency closure"
+      ],
       "resource_and_termination_bounds": "Finite over declared dependencies.",
-      "provenance": ["DEPOCH-001..010"]
+      "provenance": [
+        "DEPOCH-001..010"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-HARDENING-CONSTITUTIONAL-EVENT-v1",
       "owner_qualified_name": "prototype.hardening.enforce_constitutional_event",
       "implementation_source": "prototype/hardening.py",
-      "inputs": ["ConstitutionalEvent", "EventWriter"],
-      "outputs": ["HardeningResult"],
-      "closed_effect_vector": ["WRITE_AUDIT_EVENT"],
+      "inputs": [
+        "ConstitutionalEvent",
+        "EventWriter"
+      ],
+      "outputs": [
+        "HardeningResult"
+      ],
+      "closed_effect_vector": [
+        "WRITE_AUDIT_EVENT"
+      ],
       "authority_requirement": "Constitutional VETO cannot be overridden by persistence failure; PASS requires durable event persistence in this fixture.",
-      "failure_mode_set": ["CONSTITUTIONAL_VETO", "CONSTITUTIONAL_CHECK_UNKNOWN", "EVENT_PERSISTENCE_FAILED"],
+      "failure_mode_set": [
+        "CONSTITUTIONAL_VETO",
+        "CONSTITUTIONAL_CHECK_UNKNOWN",
+        "EVENT_PERSISTENCE_FAILED"
+      ],
       "result_algebra": "HardeningDecision[ALLOW|BLOCK|ESCALATE] + reasons",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["constitutional check", "event writer durability"],
+      "dependency_and_invalidator_bindings": [
+        "constitutional check",
+        "event writer durability"
+      ],
       "resource_and_termination_bounds": "One bounded writer call.",
-      "provenance": ["Human Sovereignty", "constitutional fail-closed semantics"]
+      "provenance": [
+        "Human Sovereignty",
+        "constitutional fail-closed semantics"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-HARDENING-AUTHORITY-LEASE-v1",
       "owner_qualified_name": "prototype.hardening.validate_authority_lease",
       "implementation_source": "prototype/hardening.py",
-      "inputs": ["AuthorityLease", "now", "current_design_epoch", "action", "resource", "active_invalidators"],
-      "outputs": ["HardeningResult"],
+      "inputs": [
+        "AuthorityLease",
+        "now",
+        "current_design_epoch",
+        "action",
+        "resource",
+        "active_invalidators"
+      ],
+      "outputs": [
+        "HardeningResult"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "Validation only; lease must remain current, in-scope and non-invalidated.",
-      "failure_mode_set": ["LEASE_NOT_YET_VALID", "LEASE_EXPIRED", "LEASE_STALE_DESIGN_EPOCH", "LEASE_INVALIDATED", "ACTION_OUTSIDE_LEASE_SCOPE", "RESOURCE_OUTSIDE_LEASE_SCOPE"],
+      "failure_mode_set": [
+        "LEASE_NOT_YET_VALID",
+        "LEASE_EXPIRED",
+        "LEASE_STALE_DESIGN_EPOCH",
+        "LEASE_INVALIDATED",
+        "ACTION_OUTSIDE_LEASE_SCOPE",
+        "RESOURCE_OUTSIDE_LEASE_SCOPE"
+      ],
       "result_algebra": "HardeningDecision[ALLOW|BLOCK|ESCALATE] + reasons",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["DesignEpoch", "lease invalidators", "time bounds"],
+      "dependency_and_invalidator_bindings": [
+        "DesignEpoch",
+        "lease invalidators",
+        "time bounds"
+      ],
       "resource_and_termination_bounds": "Finite set/time checks.",
-      "provenance": ["AAP bounded pre-authorization", "AGT-008"]
+      "provenance": [
+        "AAP bounded pre-authorization",
+        "AGT-008"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-TOKENS-DIGEST-v1",
       "owner_qualified_name": "prototype.tokens.receipt_digest",
       "implementation_source": "prototype/tokens.py",
-      "inputs": ["DelegationReceipt"],
-      "outputs": ["sha256 hex digest"],
+      "inputs": [
+        "DelegationReceipt"
+      ],
+      "outputs": [
+        "sha256 hex digest"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "None; digest grants no authority.",
       "failure_mode_set": [],
       "result_algebra": "Deterministic value",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["canonical JSON payload encoding", "SHA-256"],
+      "dependency_and_invalidator_bindings": [
+        "canonical JSON payload encoding",
+        "SHA-256"
+      ],
       "resource_and_termination_bounds": "Finite serialization and SHA-256.",
-      "provenance": ["delegation receipt integrity"]
+      "provenance": [
+        "delegation receipt integrity"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-TOKENS-SIGN-v1",
       "owner_qualified_name": "prototype.tokens.sign_receipt",
       "implementation_source": "prototype/tokens.py",
-      "inputs": ["Ed25519PrivateKey", "DelegationReceipt"],
-      "outputs": ["signed receipt payload"],
-      "closed_effect_vector": ["USE_PRIVATE_KEY_IN_MEMORY"],
+      "inputs": [
+        "Ed25519PrivateKey",
+        "DelegationReceipt"
+      ],
+      "outputs": [
+        "signed receipt payload"
+      ],
+      "closed_effect_vector": [
+        "USE_PRIVATE_KEY_IN_MEMORY"
+      ],
       "authority_requirement": "Signature proves key possession only; it does not enlarge receipt capabilities or establish issuer authority by itself.",
-      "failure_mode_set": ["SIGNING_ERROR"],
+      "failure_mode_set": [
+        "SIGNING_ERROR"
+      ],
       "result_algebra": "SignedPayload | exception",
       "bool_restriction": "NOT_APPLICABLE",
-      "dependency_and_invalidator_bindings": ["Ed25519", "canonical receipt payload"],
+      "dependency_and_invalidator_bindings": [
+        "Ed25519",
+        "canonical receipt payload"
+      ],
       "resource_and_termination_bounds": "One bounded signature operation.",
-      "provenance": ["delegation receipt integrity"]
+      "provenance": [
+        "delegation receipt integrity"
+      ]
     },
     {
       "contract_id": "FC-PROTOTYPE-TOKENS-VERIFY-v1",
       "owner_qualified_name": "prototype.tokens.verify_receipt",
       "implementation_source": "prototype/tokens.py",
-      "inputs": ["Ed25519PublicKey", "signed payload", "validation context"],
-      "outputs": ["compatibility tuple[bool, reason, DelegationReceipt|null]"],
+      "inputs": [
+        "Ed25519PublicKey",
+        "signed payload",
+        "validation context"
+      ],
+      "outputs": [
+        "compatibility tuple[bool, reason, DelegationReceipt|null]"
+      ],
       "closed_effect_vector": [],
       "authority_requirement": "Verification does not create authority; caller must bind the verified receipt to an expected issuer/key and parent chain.",
-      "failure_mode_set": ["INVALID_SIGNATURE_OR_PAYLOAD", "EXPIRED", "ISSUER_MISMATCH", "SUBJECT_MISMATCH", "CAPABILITY_NOT_DELEGATED", "PARENT_RECEIPT_REQUIRED", "PARENT_DIGEST_MISMATCH", "ISSUER_NOT_PARENT_SUBJECT", "CAPABILITY_AMPLIFICATION", "EXPIRY_AMPLIFICATION"],
+      "failure_mode_set": [
+        "INVALID_SIGNATURE_OR_PAYLOAD",
+        "EXPIRED",
+        "ISSUER_MISMATCH",
+        "SUBJECT_MISMATCH",
+        "CAPABILITY_NOT_DELEGATED",
+        "PARENT_RECEIPT_REQUIRED",
+        "PARENT_DIGEST_MISMATCH",
+        "ISSUER_NOT_PARENT_SUBJECT",
+        "CAPABILITY_AMPLIFICATION",
+        "EXPIRY_AMPLIFICATION"
+      ],
       "result_algebra": "TRANSITIONAL_COMPATIBILITY_ADAPTER; migrate to typed ReceiptValidationResult",
       "bool_restriction": "NONCOMPLIANT_TRANSITIONAL_ADAPTER",
-      "dependency_and_invalidator_bindings": ["Ed25519", "parent receipt binding", "expiry", "expected issuer/subject/capability"],
+      "dependency_and_invalidator_bindings": [
+        "Ed25519",
+        "parent receipt binding",
+        "expiry",
+        "expected issuer/subject/capability"
+      ],
       "resource_and_termination_bounds": "Finite decode/signature/set checks.",
-      "provenance": ["RESULT-ALG-001..008", "delegation containment"],
+      "provenance": [
+        "RESULT-ALG-001..008",
+        "delegation containment"
+      ],
       "required_upgrade": "Introduce typed ReceiptValidationResult and retain verify_receipt only as a deprecated compatibility adapter until callers migrate."
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-RUNTIME-CONSTITUTION-CLASSIFY-v1",
+      "owner_qualified_name": "prototype.runtime_constitution.classify_instruction_authority",
+      "implementation_source": "prototype/runtime_constitution.py",
+      "inputs": [
+        "ConstraintClass"
+      ],
+      "outputs": [
+        "InstructionAuthority"
+      ],
+      "closed_effect_vector": [],
+      "authority_requirement": "Classification only. Instruction source identity cannot mint or amplify authority.",
+      "failure_mode_set": [],
+      "result_algebra": "InstructionAuthority[GARDEN_CONSTRAINT_ONLY|DELEGATED_AUTHORITY_REQUIRED|PROPOSAL_ONLY|EXTERNAL_ENFORCEMENT_ONLY]",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "ConstraintClass semantics",
+        "GardenRuntimeConstitutionEnvelope/v1",
+        "AuthorityHumanBoundary"
+      ],
+      "resource_and_termination_bounds": "Constant finite classification; no external effects.",
+      "provenance": [
+        "Garden v15.10 working-candidate AuthorityHumanBoundary",
+        "Capability != permission",
+        "RCP-001..012"
+      ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-RUNTIME-CONSTITUTION-GOAL-v1",
+      "owner_qualified_name": "prototype.runtime_constitution.evaluate_goal",
+      "implementation_source": "prototype/runtime_constitution.py",
+      "inputs": [
+        "GoalProposal",
+        "RuntimeConstitutionContext"
+      ],
+      "outputs": [
+        "RuntimeResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
+      "authority_requirement": "Goal admission is proposal/planning state only. Human- or model-selected goals cannot create execution authority; every consequential effect requires a separate point-of-use authorization.",
+      "failure_mode_set": [
+        "GOAL_REVOKED",
+        "EXTERNAL_CONSTRAINT_IS_NOT_A_GOAL_AUTHORITY_SOURCE"
+      ],
+      "result_algebra": "RuntimeDecision[REJECT|PROPOSAL_ONLY] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "revoked_goal_ids",
+        "DesignEpoch/authority validity at later action point",
+        "Human-Effect Closure"
+      ],
+      "resource_and_termination_bounds": "Constant finite checks; no background execution.",
+      "provenance": [
+        "Garden v15.10 working-candidate Agency/AuthorityHumanBoundary",
+        "RCP-005",
+        "RCP-006",
+        "RCP-007"
+      ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-RUNTIME-CONSTITUTION-INSTRUCTION-v1",
+      "owner_qualified_name": "prototype.runtime_constitution.evaluate_instruction",
+      "implementation_source": "prototype/runtime_constitution.py",
+      "inputs": [
+        "RuntimeInstruction",
+        "RuntimeConstitutionContext"
+      ],
+      "outputs": [
+        "RuntimeResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
+      "authority_requirement": "Evaluation cannot create authority. ALLOW requires existing scoped authority/capability plus applicable hard gates; external runtime enforcement may block but cannot authorize.",
+      "failure_mode_set": [
+        "STALE_POLICY_EPOCH",
+        "GOAL_REVOKED",
+        "EXTERNAL_RUNTIME_CONSTRAINT_CANNOT_AUTHORIZE_ACTION",
+        "EXTERNAL_RUNTIME_BLOCK",
+        "AUTHORITY_CHAIN_MISSING",
+        "INVALID_DELEGATION_ROOT",
+        "INVALID_ACTOR_BINDING",
+        "CAPABILITY_NOT_PRESENT",
+        "AUTHORITY_ENVELOPE_UNKNOWN",
+        "AUTHORITY_SUBJECT_MISMATCH",
+        "AUTHORITY_SCOPE_DENIED",
+        "HUMAN_EFFECT_GATE_FAILED",
+        "HUMAN_EFFECT_GATE_UNKNOWN"
+      ],
+      "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "prototype.authority.can_execute",
+        "policy_epoch",
+        "authority envelopes",
+        "capability set",
+        "revoked goals",
+        "external runtime constraints",
+        "Human-Effect Closure hard gates"
+      ],
+      "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
+      "provenance": [
+        "Garden v15.10 working-candidate AuthorityHumanBoundary/EffectsSafety",
+        "RCP-001..012"
+      ]
     }
   ]
 }
