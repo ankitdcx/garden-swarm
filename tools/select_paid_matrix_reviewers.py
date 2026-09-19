@@ -16,8 +16,8 @@ def active_reviewers(policy: dict, registry: dict, exclusion_policy: dict) -> li
         raise ValueError("unsupported reviewer slot registry")
     slots = list(registry.get("slots") or [])
     required = int(registry.get("required_active_slots", 0))
-    if len(slots) != required or required != 4:
-        raise ValueError("exactly four governed reviewer slots required")
+    if len(slots) != required or required != 5:
+        raise ValueError("exactly five governed reviewer slots required")
     if any(slot.get("state") != "ACTIVE" for slot in slots):
         raise ValueError("reviewer slot not ACTIVE; repair or governed replacement required before new convergence task")
     selected = [{"family": str(s["family"]), "role": str(s["role"]), "model": str(s["model"])} for s in slots]
