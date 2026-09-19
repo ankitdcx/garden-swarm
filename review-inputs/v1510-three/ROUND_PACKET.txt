@@ -1,80 +1,52 @@
-GARDEN v15.10 — FINAL LOW-COST POST-PATCH CONFIRMATION
+GARDEN v15.10 — FOUR-MODEL CHEAP CLOSURE CHECK
 
-Only material blockers. No vote creates authority.
+Review ONLY the two final hardenings below. Return a blocker only if a concrete remaining defect exists.
 
-FINAL THREE-ARTIFACT DESIGN
-1 BOOK — human-readable, diagram-rich, explicitly NON-NORMATIVE.
-2 TECHNICAL CORE — generic deterministic GSL/metamodel/encoding/validation/expansion mechanics.
-3 CATALOGUE — all Garden-specific semantics + exact byte-preserved v15.9 source fallback.
-Generated graph/audits/indexes/checkers are build outputs only.
+A. CATALOGUE BOOTSTRAP / SOURCE ORDER
+The Catalogue is a PRIMARY supplied artifact, not an output of canonical expansion.
+BUILD_CONTEXT and SOURCE_ORDER are read only after the already-supplied Catalogue passes hash/encoding validation.
+Therefore they do not participate in constructing the Catalogue and cannot form a bootstrap cycle.
+Changing either record changes the Catalogue root and therefore requires selection/admission of a different successor Catalogue artifact.
 
-CURRENT BUILD FACTS
-Catalogue root: d41c44fc28e5c43c5532846174ef46abca0f9b85c70f64813c481fb4f0856c9a
-Graph root: 932866da9e11f23a38d2ae62d4370b0e502b8f039d2ec7176e80a742c2926136
-Graph nodes: 41,053
-Independent separately written checker: SAME graph root + node count PASS.
-Exact v15.9 source reconstruction: PASS.
-Final local audit: PASS.
+SOURCE_BLOB content_sha256 binds the exact decoded predecessor UTF-8 source bytes independently of the Catalogue container encoding version.
+A future Catalogue encoding migration may change container bytes but MUST preserve SOURCE_BLOB content bytes/hash or FAIL source-preservation.
+SOURCE_ORDER fixes only deterministic reconstruction/display order; source position creates no semantic authority.
 
-CORE SAFETY/NO-LOSS BOUNDARY
-- zero self-admitted laws;
-- zero ACCEPTED_STRUCTURED;
-- zero predecessor elision;
-- exact predecessor source controls wherever structured formalization is incomplete;
-- generated nodes have no authority/epistemic promotion;
-- Catalogue membership/hash/receipt/model agreement/build success cannot self-admit semantic change;
-- successor Catalogue-root admission is explicitly external governance, outside build;
-- current release remains WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED.
+B. LIVE AUTHORIZATION / REVOCATION / TOCTOU
+LiveAuthorizationWitness now binds:
+- authority snapshot ref
+- revocation root ref
+- time snapshot ref
+- witness ref
+- exact decision nonce
+- exact effect commitment
+- lease expiry when lease mode is used.
 
-FINAL MISTRAL PATCHES NOW INCLUDED
-1. Canonical-set members are explicitly recursively canonicalized, including nested canonical sets.
-2. Catalogue root uses literal LF "\n" separators and terminal LF under GardenCanonicalEncoding/v3.
-3. ApplicabilityVector output always contains all six validated axes; Technical validates the product but does not infer owner/domain predicates.
-4. Catalogue includes one SOURCE_ORDER record fixing predecessor reconstruction order:
-   Human -> System -> Technical -> Theories -> Annexure.
-5. LiveAuthorizationWitness is now bound to:
-   authority snapshot,
-   revocation root,
-   time snapshot,
-   exact decision nonce,
-   exact effect commitment,
-   witness ref,
-   and lease expiry when lease mode is used.
-   Context/effect/nonce mismatch => RECHECK_REQUIRED.
-   Technical still does not invent the owner authority predicate.
-6. Generated semantic-key collision is rejected before insertion into canonical graph state; candidate construction is pure/non-effectful.
+Technical also REQUIRES an OwnerAuthorityEvaluation with:
+- evaluator_ref
+- evaluation_receipt_ref
+- authority_status == AUTHORIZED
+- revocation_status == NOT_REVOKED
+- time_freshness_status == FRESH
+- witness_authenticity == VERIFIED
+- lease_status == VALID for lease mode, NOT_APPLICABLE/VALID otherwise.
 
-OTHER CLOSED R4 ISSUES
-- BuildContext is a Catalogue record, not a hidden fourth input.
-- one closed ADMISSION_BOUNDARY required.
-- unknown Catalogue record type => build FAIL.
-- required reference positions are owned by Technical schema, not instances.
-- canonical JSON limits are pinned: depth 64, line 8 MiB, integer 4096 digits; duplicate keys, float/NaN/Infinity, -0/leading-zero alternate integers, malformed UTF-8, BOM and surrogate code points reject.
-- Catalogue records are in canonical total order (record_type,id,record_sha256).
-- Catalogue root uses sorted canonical record hashes; compression is non-identity-bearing.
-- full SHA-256 generated node IDs.
-- node canonical total ordering = canonical semantic-key bytes then full canonical node bytes.
-- law refs generate only LAW_APPLICABILITY_CHECK_SURFACE; no build-time normative derived obligations.
-- expansion status = COMPLETE_DECLARED_PROJECTION_PASS, not semantic closure.
-- runtime transitive/recursive reasoning remains governed by existing Reason/Dependency/Proof/source semantics.
-- applicability is a six-axis product; no universal scalar.
-- exact five-file predecessor semantics remain active Catalogue source, not merely archived evidence.
+Any context, effect, nonce, witness-id mismatch, missing evaluation, revoked authority, stale time, unverified witness, or invalid/missing lease returns RECHECK_REQUIRED.
+Technical does NOT invent or authenticate the owner authority predicate; controlling owner/source semantics define how the evaluation receipt is authenticated and how atomic linearization / lease validity is established.
+This generic gate prevents cached hash equality alone from authorizing a live effect.
 
-NO-LOSS INVENTORY
-- exact five v15.9 documents byte-reconstructable;
-- 2,660 semantic leaves;
-- 2,981 formula/operator candidates;
-- 733 SchemaIDs;
-- 788 TestIDs;
-- 62 RegistryIDs;
-- 27 Rights;
-- 325 anchor identities;
-- 55 named 15.x families indexed;
-- source order fixed;
-- structured semantic formalization explicitly incomplete/source-fallback-controlling.
+CURRENT LOCAL FACTS AFTER THESE PATCHES
+- final audit PASS
+- exact v15.9 source reconstruction PASS
+- independent checker same graph root/node count PASS
+- no self-admitted laws
+- no ACCEPTED_STRUCTURED
+- no predecessor elision
+- current release still WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED.
 
-CONFIRMATION QUESTION
-Is there any remaining concrete route, under the CURRENT candidate, for v15.9/15.x semantics to be silently lost/weakened/overridden, for build output to become nondeterministic, or for build machinery to self-create authority/semantic admission?
+QUESTION
+Do A and B close the remaining concrete blockers raised in the previous cheap round?
+Identify ONLY a material remaining correctness, determinism, semantic-loss or authority defect.
 
 RETURN EXACTLY:
 VERDICT: APPROVE | APPROVE_WITH_PATCH | BLOCK
