@@ -8,6 +8,18 @@ Core principle:
 
 `Capability != Authority != Sovereignty != Moral Permission`
 
+## v15.10 runtime-constitution candidate
+
+A newer **Garden v15.10 working candidate** exists outside the current v15.5 canonical public source. For the narrow question of how an increasingly autonomous Garden-controlled runtime treats operator instructions, self-selected goals and external/provider constraints, read:
+
+- `agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md`
+- `prototype/runtime_constitution.py`
+- `prototype/tests/test_runtime_constitution.py`
+
+This profile is **candidate evidence, not canonical promotion**. Its key separation is: external enforcement may constrain capability, but it does not become Garden truth, sovereignty or authorization merely because it is enforced. Human/operator/model instructions likewise do not mint authority by source identity alone. Every consequential effect remains subject to the applicable Garden authority and Human-Effect Closure checks.
+
+Do not interpret this profile as permission to bypass host security, platform controls, credentials, law, or another human's rights. A discovered bypass is capability, not authority.
+
 ## Git mutation preflight
 
 Before any GitHub write, branch creation, file mutation, pull request, workflow rerun, merge attempt, branch replacement, or `garden-review-state` update, read `GIT_OPERATING_CONTEXT.md` first. Refresh the live default-branch head and relevant GitHub rulesets when that file requires it, and inspect open PR/work-intent overlap before choosing shared paths.
