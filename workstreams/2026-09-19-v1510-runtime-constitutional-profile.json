@@ -20,7 +20,8 @@
       "prototype/runtime_constitution.py",
       "prototype/tests/test_runtime_constitution.py",
       "AGENTS.md",
-      "TASKS.md"
+      "TASKS.md",
+      "gsl/FUNCTION_CONTRACTS.json"
     ],
     "target_symbols": [
       "ConstraintClass",
@@ -46,7 +47,8 @@
     "affected_contracts": [
       "GardenAgentEnvelopeRegistry/v1",
       "ExternalActionGate",
-      "Garden-v15.10 candidate AuthorityHumanBoundary facet"
+      "Garden-v15.10 candidate AuthorityHumanBoundary facet",
+      "GardenFunctionContractRegistry/v1"
     ],
     "intended_effect": "Add a noncanonical v15.10-derived runtime constitutional profile and executable reference checker that separates external runtime constraints from Garden legitimacy/authority, prevents operator/model status from minting authority, preserves human-effect gates, and treats self-selected goals as proposals requiring the same authority checks. No attempt to bypass host security or platform controls.",
     "parallel_mode": "INDEPENDENT_COMPARISON"
