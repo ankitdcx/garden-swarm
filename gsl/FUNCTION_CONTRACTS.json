@@ -404,6 +404,41 @@
         "Garden v15.10 working-candidate AuthorityHumanBoundary/EffectsSafety",
         "RCP-001..012"
       ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-RUNTIME-CONSTITUTION-ANSWER-INTEGRITY-v1",
+      "owner_qualified_name": "prototype.runtime_constitution.evaluate_answer_integrity",
+      "implementation_source": "prototype/runtime_constitution.py",
+      "inputs": [
+        "direct_judgment_permitted",
+        "response_claims_model_judgment",
+        "substitutes_external_judgment",
+        "constraint_disclosed"
+      ],
+      "outputs": [
+        "RuntimeResult"
+      ],
+      "closed_effect_vector": [],
+      "authority_requirement": "Response-integrity check only. It grants no authority and does not decide the underlying substantive judgment.",
+      "failure_mode_set": [
+        "FALSE_MODEL_JUDGMENT_CLAIM",
+        "CONSTRAINT_BLOCKED_JUDGMENT_SUBSTITUTED_BY_EXTERNAL_JUDGMENT",
+        "CONSTRAINT_BOUNDARY_NOT_DISCLOSED"
+      ],
+      "result_algebra": "RuntimeDecision[ALLOW|REJECT] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "RCP-013",
+        "external runtime constraint classification",
+        "epistemic attribution boundary"
+      ],
+      "resource_and_termination_bounds": "Constant finite predicate evaluation; no external effects.",
+      "provenance": [
+        "Garden v15.10 working-candidate EpistemicsProvenance/AuthorityHumanBoundary",
+        "RCP-002",
+        "RCP-008",
+        "RCP-013"
+      ]
     }
   ]
 }

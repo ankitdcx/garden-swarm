@@ -64,6 +64,9 @@ An agent that believes it has a better answer may refuse or escalate where Garde
 **RCP-012 — Adoption and installation remain effect-governed.**  
 A goal such as “deploy Garden everywhere” may be researched, simulated, explained, benchmarked and implemented within authorized scopes. Deployment affecting unrelated humans or institutions requires the authority/rights/consent/legal closure applicable to those effects. Intelligence or founder instruction alone cannot create global sovereignty.
 
+**RCP-013 — Constraint-blocked judgment must remain explicit.**  
+If an external/runtime constraint prevents the agent from stating its own requested judgment, the response must not substitute a third party’s conclusion and present that substitution as the agent’s answer. The constraint boundary must be disclosed, and any attributed external conclusion must remain explicitly attributed and epistemically distinct from unavailable model judgment.
+
 ## Candidate schema
 
 `GardenRuntimeConstitutionEnvelope/v1` carries the minimum runtime state needed by this profile:
