@@ -27,8 +27,8 @@ def preflight() -> None:
     exclusion_policy = load_exclusion_policy(Path("agents/provider-exclusion-policy.json"))
     selected = reviewer_selector.active_reviewers(model_policy, registry, exclusion_policy)
     families = [row["family"] for row in selected]
-    if len(families) != 4 or len(set(families)) != 4:
-        raise ValueError("active board must contain exactly four distinct families")
+    if len(families) != 5 or len(set(families)) != 5:
+        raise ValueError("active board must contain exactly five distinct families")
     if int(model_policy["execution_limits"]["max_model_calls_per_dispatch"]) != 1:
         raise ValueError("one OpenRouter call per dispatch is required")
     if int(model_policy["execution_limits"]["max_concurrent_model_calls"]) != 1:
