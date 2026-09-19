@@ -13,7 +13,7 @@ class IPOriginReviewSelectionTests(unittest.TestCase):
         )
 
     def test_ip_review_uses_all_current_approved_routine_families(self):
-        self.assertGreaterEqual(len(self.policy["routine_reviewers"]), 4)
+        self.assertEqual(len(self.policy["routine_reviewers"]), 5)
         payload = build_selection(self.policy)
         expected = []
         seen = set()
@@ -25,17 +25,17 @@ class IPOriginReviewSelectionTests(unittest.TestCase):
         self.assertEqual([row["family"] for row in payload["selected"]], expected)
         self.assertEqual(payload["approved_families"], expected)
         self.assertIn("deepseek", expected)
-        self.assertIn("qwen", expected)
-        self.assertEqual(payload["anchor_families"], ["deepseek", "qwen"])
+        self.assertIn("pareto", expected)
+        self.assertEqual(payload["anchor_families"], ["deepseek", "pareto"])
         self.assertEqual(payload["purpose"], "PUBLIC_IP_ORIGIN_REVIEW")
-        self.assertLessEqual(payload["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertLessEqual(payload["daily_openrouter_cost_ceiling_usd"], 1.0)
         self.assertEqual(payload["provider_policy"]["data_collection"], "deny")
         self.assertFalse(payload["semantic_delta_admitted"])
 
     def test_missing_required_anchor_family_fails_closed(self):
         policy = copy.deepcopy(self.policy)
         policy["routine_reviewers"] = [
-            row for row in policy["routine_reviewers"] if row["family"] != "qwen"
+            row for row in policy["routine_reviewers"] if row["family"] != "pareto"
         ]
         with self.assertRaisesRegex(ValueError, "missing required IP-origin anchor families"):
             build_selection(policy)
