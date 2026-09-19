@@ -246,7 +246,7 @@ ChatGPT branch-specific merged candidate:
 
 def final_prompt(*, target: dict[str, Any], source: str, trace: dict[str, Any], merged_candidate: str, phase: str, audit_packet: dict | None = None) -> str:
     return f"""{REVIEW_INSTRUCTION}
-You are independently reviewing the exact same merged Garden candidate as three other isolated reviewer families. You do not see their reviews and they do not see yours. Do not vote or infer consensus. Try to falsify the candidate. The supplied source packet includes the exact target plus the same source-bound Garden architecture context capsule. If context is insufficient, verdict must be BLOCK and you must request the missing source rather than approving by guesswork.
+You are independently reviewing the exact same merged Garden candidate as four other isolated reviewer families. You do not see their reviews and they do not see yours. Do not vote or infer consensus. Try to falsify the candidate. The supplied source packet includes the exact target plus the same source-bound Garden architecture context capsule. If context is insufficient, verdict must be BLOCK and you must request the missing source rather than approving by guesswork.
 Return one JSON object only with fields: verdict (APPROVE|BLOCK|APPROVE_WITH_PATCH), material_findings (array), missing_evidence (array), surviving_counterexamples (array), affected_invariants (array), proposed_patch (string; empty when none), uncertainty (string), overturn_conditions (string), context_sufficiency (SUFFICIENT|EXPAND_REQUIRED|FULL_CONTEXT_REQUIRED), missing_context_reason (string; empty only when SUFFICIENT), requested_dependency_or_source_refs (array).
 Phase: {phase}
 Target ID: {target['target_id']}
