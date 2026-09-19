@@ -563,7 +563,7 @@ def run(root: Path = Path(".")) -> None:
                 "requested_dependency_or_source_refs": finding.get("requested_dependency_or_source_refs", []),
                 "previous_context_capsule_sha256": capsule_hash,
                 "previous_context_expansion_level": expansion_level,
-                "rule": "EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_A_NEW_SOURCE_PACKET",
+                "rule": "EXPAND_CONTEXT_AND_RESTART_ALL_FIVE_INITIAL_REVIEWS_ON_A_NEW_SOURCE_PACKET",
             }
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
