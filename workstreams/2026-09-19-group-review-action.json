@@ -1,0 +1,40 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-action:20260919",
+  "work_package_id": "GROUP-REVIEW-ACTION",
+  "branch": "chatgpt/group-review-action-20260919",
+  "base_sha": "3226800a78de0522015e9ff62346120e3dc3b4bd",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-action:20260919",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-ACTION",
+    "base_sha": "3226800a78de0522015e9ff62346120e3dc3b4bd",
+    "target_paths": [
+      "workstreams/2026-09-19-group-review-action.json",
+      "agents/actions/group-review.json",
+      "AGENTS.md"
+    ],
+    "target_symbols": [
+      "GROUP_REVIEW"
+    ],
+    "semantic_domains": [
+      "CHATGPT_BOARD_ORCHESTRATION",
+      "MULTI_AGENT_REVIEW_PROCESS"
+    ],
+    "affected_invariants": [
+      "CURRENT_CHAT_BECOMES_GROUP_REVIEW_LEADER",
+      "BLIND_WORKERS_REMAIN_INDEPENDENT_UNTIL_FREEZE",
+      "REPOSITORY_DURABLE_STATE_OVERRIDES_CHAT_MEMORY"
+    ],
+    "affected_contracts": [
+      "GardenChatGPTWorkstreamPolicy/v1"
+    ],
+    "intended_effect": "Define one durable GROUP_REVIEW action. When the user invokes 'group review', the current chat becomes Leader, discusses/frames the specific situation with the user, then applies the governed blind-worker/OpenRouter/verifier process as appropriate. Repository state is authoritative so the action does not depend on cross-chat memory synchronization.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

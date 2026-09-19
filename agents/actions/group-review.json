@@ -1,0 +1,103 @@
+{
+  "schema": "GardenChatAction/v1",
+  "action_id": "GROUP_REVIEW",
+  "display_name": "Group Review",
+  "status": "ACTIVE_NONCANONICAL_OPERATING_ACTION",
+  "invocation": {
+    "primary_phrase": "group review",
+    "matching": "CASE_INSENSITIVE_EXACT_ACTION_NAME_WITH_NORMAL_WHITESPACE",
+    "manual_only": true,
+    "scheduled_activation": false
+  },
+  "leader_rule": {
+    "current_chat_becomes_leader": true,
+    "leader_scope": "CURRENT_GROUP_REVIEW_INSTANCE_ONLY",
+    "leader_responsibilities": [
+      "Discuss and frame the specific situation with the user before freezing the review problem.",
+      "Retrieve current durable Garden/repository state needed for the situation.",
+      "Triage review depth based on materiality, ambiguity, reversibility, security, rights and implementation risk.",
+      "Freeze one source/problem packet before blind review.",
+      "Coordinate independent ChatGPT worker branches and the governed OpenRouter branch.",
+      "Preserve blind independence until outputs are frozen.",
+      "Compare disagreements and preserve minority/blocking findings; never decide by majority vote alone.",
+      "Create the integrated candidate and decision log.",
+      "Use an independent verifier/process-audit phase before final integration when material.",
+      "Make the final coordinator decision subject to applicable Garden/GSL/human authority gates.",
+      "Update durable repository state when the review produces repo-relevant work."
+    ],
+    "leader_does_not_gain_truth_or_sovereign_authority": true
+  },
+  "default_board": {
+    "chatgpt_workers": {
+      "minimum": 1,
+      "default": 2,
+      "maximum": 2,
+      "blind_initial_phase": true,
+      "symmetric_initial_prompt": true
+    },
+    "openrouter_branch": {
+      "enabled": true,
+      "process_ref": "docs/OPENROUTER_PROCESS_V2_2026-09-19.md",
+      "blind_initial_phase": true
+    },
+    "verifier": {
+      "enabled_for_material_work": true,
+      "also_process_auditor": true
+    }
+  },
+  "review_flow": [
+    "DISCUSS_WITH_USER",
+    "TRIAGE",
+    "FREEZE_IDENTICAL_PACKET",
+    "BLIND_CHATGPT_WORKERS",
+    "BLIND_OPENROUTER_REVIEW",
+    "FREEZE_OUTPUT_HASHES",
+    "COMPARE_AND_RED_TEAM",
+    "LEADER_INTEGRATION_AND_DECISION_LOG",
+    "VERIFY_PROCESS_AND_CANDIDATE",
+    "FIX_AND_TEST",
+    "FINAL_DECISION_OR_HUMAN_ESCALATION",
+    "DURABLE_STATE_UPDATE"
+  ],
+  "triage": {
+    "small": "ONE_CHATGPT_WORKER_PLUS_LEADER_CHECK; verifier optional unless risk warrants.",
+    "material": "TWO_CHATGPT_WORKERS_PLUS_OPENROUTER_PLUS_VERIFIER_PROCESS_AUDIT.",
+    "escalation_triggers": [
+      "rights-affecting",
+      "authority-expanding",
+      "security-sensitive",
+      "irreversible",
+      "privacy-sensitive",
+      "high-uncertainty",
+      "foundational Garden architecture"
+    ]
+  },
+  "durable_state": {
+    "repository_is_authoritative": true,
+    "never_assume_sibling_chat_context": true,
+    "memory_is_convenience_not_source_of_truth": true,
+    "if_action_semantics_are_missing_from_active_context": "Retrieve agents/actions/group-review.json before proceeding.",
+    "freeze_fields": [
+      "problem_id",
+      "protocol_version",
+      "prompt_version",
+      "packet_sha256",
+      "source_hashes",
+      "worker_output_hashes",
+      "candidate_hash",
+      "verifier_hash",
+      "timestamps",
+      "decision_log"
+    ]
+  },
+  "manual_handoff_boundary": {
+    "chat_creation_or_message_delivery_may_require_user_ui_action": true,
+    "leader_should_minimize_user_work": "Generate exact worker packets/instructions and consume returned durable artifacts; do not ask the user to redesign the process."
+  },
+  "openrouter_boundary": {
+    "use_real_governed_process": true,
+    "external_models_do_not_gain_authority": true,
+    "sensitive_data_requires_applicable_privacy_approval": true
+  },
+  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader for that situation and owns orchestration through final comparison/decision. The user need not restate the board protocol."
+}

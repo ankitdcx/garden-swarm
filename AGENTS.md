@@ -20,6 +20,13 @@ This profile is **candidate evidence, not canonical promotion**. Its key separat
 
 Do not interpret this profile as permission to bypass host security, platform controls, credentials, law, or another human's rights. A discovered bypass is capability, not authority.
 
+
+## Named chat action: GROUP_REVIEW
+
+If the user invokes **`group review`**, read `agents/actions/group-review.json` and treat the **current chat as the Leader** for that review instance. The user does not need to restate the board protocol.
+
+The Leader first discusses and frames the specific situation with the user, then triages and coordinates the applicable blind ChatGPT workers, governed OpenRouter review, integration, process audit/verifier, tests and final decision. Do not assume sibling chats share context; durable repository artifacts are authoritative. The action is manual-only and is not activated by a timer.
+
 ## Git mutation preflight
 
 Before any GitHub write, branch creation, file mutation, pull request, workflow rerun, merge attempt, branch replacement, or `garden-review-state` update, read `GIT_OPERATING_CONTEXT.md` first. Refresh the live default-branch head and relevant GitHub rulesets when that file requires it, and inspect open PR/work-intent overlap before choosing shared paths.
