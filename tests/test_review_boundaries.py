@@ -11,7 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def valid_inputs():
     policy = json.loads((ROOT/'agents/openrouter-paid-review-policy.json').read_text())
     families = [r['family'] for r in policy['routine_reviewers']]
-    free = [{'family':f,'model':f+'/m:free'} for f in families]
+    free_count = int(policy['free_swarm']['distinct_families_per_hour'])
+    free = [{'family':f,'model':f+'/m:free'} for f in families[:free_count]]
     selection = {'schema':'GardenPaidModelSelection/v2', 'selected':policy['routine_reviewers'],
                  'approved_families':families, 'provider_policy':{'data_collection':'deny'},
                  'daily_openrouter_cost_ceiling_usd':policy['daily_openrouter_cost_ceiling_usd'], 'semantic_delta_admitted':False}
@@ -36,7 +37,7 @@ class ReviewBoundaryTests(unittest.TestCase):
     def test_rejects_real_boundary_violations(self):
         attacks = [
             ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(model='paid/model')),
-            ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(family='qwen')),
+            ('agents/runtime/free-selection.json', lambda x: x['selected'][0].update(family=x['selected'][1]['family'])),
             ('agents/runtime/paid-selection.json', lambda x: x['provider_policy'].update(data_collection='allow')),
             ('agents/outbox/hourly/paid-review-bundle.json', lambda x: x.update(target_id='other-cycle')),
             ('agents/outbox/hourly/paid-review-bundle.json', lambda x: x.update(semantic_delta_admitted=True)),

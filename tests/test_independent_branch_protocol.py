@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class IndependentBranchProtocolTests(unittest.TestCase):
     def setUp(self):
         self.policy = p.load_policy(json.loads((ROOT / "agents/independent-branch-convergence-policy.json").read_text(encoding="utf-8")))
-        self.families = ["deepseek", "qwen", "glm", "xiaomi"]
+        self.families = ["deepseek", "xiaomi", "nvidia", "pareto", "mistral"]
         self.source_hash = "a" * 64
         self.capsule = {
             "schema": context_capsule.CAPSULE_SCHEMA,
@@ -79,26 +79,10 @@ class IndependentBranchProtocolTests(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 p.validate_directive(bad, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
 
-    def test_reconciliation_is_one_branch_only_and_bounded(self):
+    def test_model_reconciliation_phase_is_disabled_in_v2(self):
         d = self.base_directive("RECONCILE")
-        d.update({
-            "family": "qwen",
-            "branch_round": 1,
-            "own_response_sha256": "d" * 64,
-            "branch_candidate": "branch-specific merged candidate",
-            "branch_inputs": ["CHATGPT_PRIVATE_BASELINE", "OWN_BRANCH:qwen"],
-            "no_peer_content_attested": True,
-            "peer_families": [],
-        })
-        p.validate_directive(d, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
-        bad = copy.deepcopy(d)
-        bad["branch_inputs"] = ["CHATGPT_PRIVATE_BASELINE", "OWN_BRANCH:qwen", "PEER:glm"]
-        with self.assertRaisesRegex(ValueError, "branch inputs"):
-            p.validate_directive(bad, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
-        bad = copy.deepcopy(d)
-        bad["branch_round"] = 3
-        with self.assertRaisesRegex(ValueError, "round must be 1 or 2"):
-            p.validate_directive(bad, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
+        with self.assertRaisesRegex(ValueError, "unsupported branch protocol phase"):
+            p.validate_directive(d, families=self.families, target_id="T", source_packet_sha256=self.source_hash)
 
     def test_final_review_candidate_is_bit_identical_and_hash_bound(self):
         candidate = "merged candidate v1"
@@ -180,8 +164,8 @@ class IndependentBranchProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must BLOCK"):
             p.validate_final_review(review, family="qwen", model_id="qwen/x", candidate_sha256="e" * 64, phase="FINAL")
 
-    def test_absolute_call_ceiling_is_twenty(self):
-        cycle = {"attempts": [{"inference_reserved": True} for _ in range(19)]}
+    def test_absolute_call_ceiling_is_fifteen(self):
+        cycle = {"attempts": [{"inference_reserved": True} for _ in range(14)]}
         p.assert_call_budget(cycle, self.policy)
         cycle["attempts"].append({"inference_reserved": True})
         with self.assertRaisesRegex(ValueError, "ceiling"):

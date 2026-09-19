@@ -8,7 +8,7 @@ from typing import Any
 
 POLICY = Path("agents/openrouter-paid-review-policy.json")
 OUTPUT = Path("agents/runtime/paid-selection.json")
-ANCHOR_FAMILIES = ("deepseek", "qwen")
+ANCHOR_FAMILIES = ("deepseek", "pareto")
 
 
 def build_selection(policy: dict[str, Any]) -> dict[str, Any]:

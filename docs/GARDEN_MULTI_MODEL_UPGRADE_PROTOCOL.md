@@ -5,6 +5,8 @@ Date: 2026-09-14
 Scope: `garden-swarm`, `garden-main`, and Garden successor-design evolution
 Authority boundary: this document defines the approved operational process. It does not by itself modify canonical Garden semantics, constitutional authority, HSA, or DesignEpoch. Protected changes remain human-gated.
 
+> **2026-09-19 routing/process update:** the model roster, OpenRouter routing, review-round count, and cost controls in this older protocol are superseded for new OpenRouter work by `docs/OPENROUTER_PROCESS_V2_2026-09-19.md` and the active machine-readable policies under `agents/`. The broader evidence/authority principles in this document remain historical design background unless separately superseded.
+
 ## 1. Purpose
 
 Garden continuously performs three distinct jobs:

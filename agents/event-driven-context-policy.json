@@ -54,7 +54,7 @@
     "levels": ["L0_CAPSULE", "L1_DEPENDENCY_EXPANDED", "L2_CROSS_LAYER_EXPANDED", "L3_AFFECTED_DOCUMENTS_FULL", "L4_FULL_GARDEN"],
     "reviewer_may_request_expansion": true,
     "material_expansion_request_must_not_be_overruled_by_cost_saving": true,
-    "if_initial_four_branch_round_needs_material_expansion": "STOP_EXPAND_AND_RESTART_ALL_FOUR_ON_BIT_IDENTICAL_EXPANDED_PACKET",
+    "if_initial_five_review_round_needs_material_expansion": "STOP_EXPAND_AND_RESTART_ALL_FIVE_ON_BIT_IDENTICAL_EXPANDED_PACKET",
     "do_not_give_only_one_initial_reviewer_extra_context": true
   },
   "quality_review": {

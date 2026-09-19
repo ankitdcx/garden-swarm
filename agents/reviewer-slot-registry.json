@@ -1,47 +1,58 @@
 {
   "schema": "GardenReviewerSlotRegistry/v1",
   "status": "ACTIVE_NONCANONICAL_OPERATIONAL_REGISTRY",
-  "effective_date": "2026-09-16",
+  "effective_date": "2026-09-19",
   "quality_policy": "agents/reviewer-quality-policy.json",
-  "required_active_slots": 4,
+  "required_active_slots": 5,
+  "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
   "slots": [
     {
-      "slot_id": "SLOT-REASONING",
-      "role": "primary_agentic_reasoning",
+      "slot_id": "SLOT-DETERMINISM",
+      "role": "determinism_hidden_inputs_and_derivation",
       "family": "deepseek",
-      "model": "deepseek/deepseek-v4.1-flash",
+      "model": "deepseek/deepseek-v4-pro-0813",
       "state": "ACTIVE",
-      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
+      "quality_receipt_count": 0,
+      "hard_failure_count": 0
+    },
+    {
+      "slot_id": "SLOT-IMPLEMENTATION",
+      "role": "implementation_interactions_and_failure_cases",
+      "family": "xiaomi",
+      "model": "xiaomi/mimo-v2.5-pro",
+      "state": "ACTIVE",
+      "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
       "hard_failure_count": 0
     },
     {
       "slot_id": "SLOT-ARCHITECTURE",
-      "role": "independent_architecture_and_code",
-      "family": "qwen",
-      "model": "qwen/qwen3.8-flash",
+      "role": "architecture_boundaries_ownership_and_scalability",
+      "family": "nvidia",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
       "state": "ACTIVE",
-      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
       "hard_failure_count": 0
     },
     {
-      "slot_id": "SLOT-FORMAL",
-      "role": "formal_semantics_and_long_context",
-      "family": "glm",
-      "model": "z-ai/glm-5.3-flash",
+      "slot_id": "SLOT-ASSURANCE",
+      "role": "claims_equivalence_proof_and_assurance_discipline",
+      "family": "pareto",
+      "model": "unbiased/pareto",
       "state": "ACTIVE",
-      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
       "hard_failure_count": 0
     },
     {
-      "slot_id": "SLOT-EXECUTION",
-      "role": "independent_agentic_execution",
-      "family": "xiaomi",
-      "model": "xiaomi/mimo-v2.5",
+      "slot_id": "SLOT-EDGE-CASES",
+      "role": "serialization_state_ordering_timing_and_edge_cases",
+      "family": "mistral",
+      "model": "mistralai/mistral-medium-3-5",
       "state": "ACTIVE",
-      "qualified_by": "CURRENT_VALUE_BOARD_BASELINE_2026-09-16",
+      "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
       "hard_failure_count": 0
     }
@@ -49,9 +60,10 @@
   "rules": {
     "exactly_one_active_model_per_slot": true,
     "families_must_be_distinct": true,
-    "non_active_slot_blocks_new_four_branch_review": true,
+    "non_active_slot_blocks_new_five_branch_review": true,
     "model_change_requires_shadow_benchmark_and_registry_PR": true,
     "registry_change_is_not_quality_proof_or_authority": true,
-    "moving_latest_aliases_forbidden": true
+    "moving_latest_aliases_forbidden": true,
+    "expensive_models_are_never_automatic": true
   }
 }

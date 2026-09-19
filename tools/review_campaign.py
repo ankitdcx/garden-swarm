@@ -166,12 +166,14 @@ def bind_campaign(directive, source_sha256, root=Path('.')):
 
 def spending_policy(policy, campaign):
     result = copy.deepcopy(policy)
-    result['daily_openrouter_cost_ceiling_usd'] = str(amount(campaign['daily_ceiling_usd']))
+    # A historical/source-bound campaign may tighten current operating ceilings
+    # but can never raise them. The latest human cost posture remains controlling.
+    result['daily_openrouter_cost_ceiling_usd'] = str(min(
+        amount(policy['daily_openrouter_cost_ceiling_usd']), amount(campaign['daily_ceiling_usd'])))
     result['routine_model_call_cost_ceiling_usd'] = str(min(
         amount(policy['routine_model_call_cost_ceiling_usd']), amount(campaign['per_call_ceiling_usd'])))
-    # This explicit total campaign authorization supersedes the old $9 routine
-    # allocation only for this exact source. No other pool is borrowed or reset.
-    result['budget_pools_usd']['routine'] = str(amount(campaign['total_ceiling_usd']))
+    result['budget_pools_usd']['routine'] = str(min(
+        amount(policy['budget_pools_usd']['routine']), amount(campaign['total_ceiling_usd'])))
     return result
 
 

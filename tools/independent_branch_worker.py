@@ -78,8 +78,8 @@ def _target_by_id(root: Path, target_id: str, directive=None) -> tuple[dict, dic
 def _families(policy: dict) -> list[str]:
     rows = list(policy.get("routine_reviewers") or [])
     families = [str(row.get("family") or "") for row in rows]
-    if len(families) != 4 or len(set(families)) != 4 or any(not f for f in families):
-        raise ValueError("active convergence board must contain four distinct families")
+    if len(families) != 5 or len(set(families)) != 5 or any(not f for f in families):
+        raise ValueError("active convergence board must contain five distinct families")
     return families
 
 
@@ -143,7 +143,7 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
                 return phase, family, "blind:" + family
         return None
     if set(cycle.get("blind") or {}) != set(families):
-        raise ValueError("all four initial reviews must finish before reconciliation or final review")
+        raise ValueError("all five initial reviews must finish before final review")
     if phase == "RECONCILE":
         if cycle.get("final") or cycle.get("confirm"):
             raise ValueError("branch reconciliation cannot change after final review starts")
@@ -160,7 +160,7 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         return phase, family, f"reconcile:{branch_round}:{family}"
     closures = directive.get("branch_closures") or {}
     if set(closures) != set(families):
-        raise ValueError("final review requires four explicit branch closures")
+        raise ValueError("final review requires five explicit branch closures")
     for family in families:
         closure, latest = closures[family], _latest_branch_result(cycle, family)
         if closure.get("finding_sha256") != latest.get("finding_sha256"):
@@ -170,12 +170,18 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         finding = latest["finding"]
         if finding.get("context_sufficiency") != "SUFFICIENT":
             raise ValueError("branch closure cannot waive missing context")
-        if cycle["reconcile"].get(family):
-            if closure.get("outcome") != "RECONCILED":
-                raise ValueError("followed-up branch must be closed as RECONCILED")
-        elif (closure.get("outcome") != "NO_FOLLOWUP_NEEDED" or
-              finding.get("disposition") != "NO_CHANGE"):
-            raise ValueError("only an explicit NO_CHANGE branch can omit followup")
+        outcome = closure.get("outcome")
+        if outcome == "UNRESOLVED_BLOCK":
+            raise ValueError("unresolved material branch finding blocks final review")
+        if outcome == "NO_FOLLOWUP_NEEDED":
+            if finding.get("disposition") != "NO_CHANGE":
+                raise ValueError("NO_FOLLOWUP_NEEDED requires an explicit NO_CHANGE finding")
+        elif outcome in {"INTEGRATED_FOR_FINAL_AUDIT", "REJECTED_WITH_EVIDENCE"}:
+            refs = closure.get("evidence_refs")
+            if not isinstance(refs, list) or not refs or any(not isinstance(x, str) or not x.strip() for x in refs):
+                raise ValueError("integrated/rejected branch closure requires evidence_refs")
+        else:
+            raise ValueError("unsupported five-specialist branch closure outcome")
     closures_hash = protocol.sha256_value(closures)
     if cycle.get("branch_closures_sha256", closures_hash) != closures_hash:
         raise ValueError("branch closures changed after final review began")
@@ -190,8 +196,8 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
     existing_hashes = {row.get("candidate_sha256") for row in cycle[bucket].values() if row.get("candidate_sha256")}
     if existing_hashes and existing_hashes != {candidate_hash}:
         raise ValueError("candidate changed inside a final-review round")
-    if phase == "CONFIRM" and len(cycle.get("final") or {}) != 4:
-        raise ValueError("confirmation requires a completed four-family final round")
+    if phase == "CONFIRM" and len(cycle.get("final") or {}) != len(families):
+        raise ValueError("confirmation requires a completed five-family final round")
     for family in families:
         if family not in cycle[bucket]:
             return phase, family, bucket + ":" + family
@@ -318,7 +324,7 @@ def _result_status(cycle: dict, phase: str, families: list[str]) -> str:
     if cycle.get("context_expansion_required"):
         return "AWAITING_CHATGPT_CONTEXT_EXPANSION"
     if phase == "BLIND":
-        return "READY" if len(cycle["blind"]) < len(families) else "AWAITING_CHATGPT_RECONCILIATION"
+        return "READY" if len(cycle["blind"]) < len(families) else "AWAITING_CHATGPT_SYNTHESIS"
     if phase == "RECONCILE":
         return "AWAITING_CHATGPT_RECONCILIATION"
     if phase == "FINAL":
@@ -557,7 +563,7 @@ def run(root: Path = Path(".")) -> None:
                 "requested_dependency_or_source_refs": finding.get("requested_dependency_or_source_refs", []),
                 "previous_context_capsule_sha256": capsule_hash,
                 "previous_context_expansion_level": expansion_level,
-                "rule": "EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_A_NEW_SOURCE_PACKET",
+                "rule": "EXPAND_CONTEXT_AND_RESTART_ALL_FIVE_INITIAL_REVIEWS_ON_A_NEW_SOURCE_PACKET",
             }
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:

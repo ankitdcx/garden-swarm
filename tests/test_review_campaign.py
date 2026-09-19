@@ -103,11 +103,11 @@ class ReviewCampaignTests(unittest.TestCase):
         bounded = campaign.spending_policy(policy, self.policy)
         key = {'usage': '.0024624', 'usage_daily': '0', 'limit_remaining': '20'}
         reserve, _, _ = legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
-        self.assertEqual(reserve, Decimal('.10'))
-        for edit in ({'usage': '9.90'}, {'usage_daily': '10'}, {'limit_remaining': '.09'}, {'usage_daily': None}):
+        self.assertEqual(reserve, Decimal('.05'))
+        for edit in ({'usage': '9.90'}, {'usage_daily': '10'}, {'limit_remaining': '.04'}, {'usage_daily': None}):
             with self.subTest(edit=edit), self.assertRaises(ValueError):
                 legacy.budget_check(self.state, {**key, **edit}, bounded, 100000, campaign=self.policy)
-        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.10', 'cost': None})
+        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.05', 'cost': None})
         with self.assertRaisesRegex(ValueError, 'reconciliation'):
             legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
 
@@ -116,21 +116,18 @@ class ReviewCampaignTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 campaign.amount(value)
 
-    def test_staged_source_bound_directive_can_start_on_material_event(self):
+    def test_historical_v159_launch_directive_is_not_replayed_under_v2(self):
         directive = json.loads(Path('review-inputs/v159/launch-directive.json').read_text())
-        with patch.object(worker, 'load_directive', return_value=directive):
-            ready = continuation.admitted_campaign_start(Path('.'), 'fixture')
-        self.assertEqual(ready['status'], 'READY')
-        self.assertEqual(ready['campaign_id'], 'GARDEN-V159-20260917')
+        # The old directive binds the predecessor packet/board. A process/context
+        # migration must not silently reinterpret it as a fresh v2 authorization.
+        with patch.object(worker, 'load_directive', return_value=directive), \
+                self.assertRaises(ValueError):
+            continuation.admitted_campaign_start(Path('.'), 'fixture')
 
-    def test_source_event_does_not_invent_a_directive_or_reset_a_phase(self):
+    def test_source_event_does_not_invent_a_directive(self):
         for directive in (None, {}, {'start_on_matching_source_event': False}):
             with patch.object(worker, 'load_directive', return_value=directive):
                 self.assertIsNone(continuation.admitted_campaign_start(Path('.'), 'fixture'))
-        directive = json.loads(Path('review-inputs/v159/launch-directive.json').read_text())
-        for edit in ({'phase': 'FINAL'}, {'source_packet_sha256': '0' * 64}):
-            with patch.object(worker, 'load_directive', return_value={**directive, **edit}), self.assertRaises(ValueError):
-                continuation.admitted_campaign_start(Path('.'), 'fixture')
 
     def test_registered_slice_must_belong_to_this_master(self):
         directive = json.loads(Path('review-inputs/v159/launch-directive.json').read_text())

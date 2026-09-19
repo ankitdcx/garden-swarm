@@ -9,10 +9,10 @@ def effective_policy(policy, directive, now):
     mode = directive.get('spending_mode', 'DEFAULT')
     if mode not in ('DEFAULT', 'AUDIT'):
         raise ValueError('unknown review spending mode')
-    if Decimal(str(policy['routine_model_call_cost_ceiling_usd'])) != Decimal('0.1'):
-        raise ValueError('review call ceiling must be $0.10')
+    if Decimal(str(policy['routine_model_call_cost_ceiling_usd'])) != Decimal('0.05'):
+        raise ValueError('review call ceiling must be $0.05')
     daily = Decimal(str(policy['spending_modes'][mode]['daily_ceiling_usd']))
-    expected = Decimal('2') if mode == 'DEFAULT' else Decimal('10')
+    expected = Decimal('1') if mode == 'DEFAULT' else Decimal('2')
     if daily != expected:
         raise ValueError('spending mode ceiling mismatch')
     day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
@@ -23,7 +23,7 @@ def effective_policy(policy, directive, now):
                 not isinstance(grant.get('purpose'), str) or not grant['purpose'].strip()):
             raise ValueError('AUDIT requires a current UTC-day, target-bound audit plan')
     result['daily_openrouter_cost_ceiling_usd'] = float(daily)
-    return result, {'mode': mode, 'utc_day': day, 'per_call_usd': '0.10',
+    return result, {'mode': mode, 'utc_day': day, 'per_call_usd': '0.05',
                     'daily_ceiling_usd': str(daily), 'pool': 'routine',
                     'pool_lifetime_allocation_usd': str(policy['budget_pools_usd']['routine']),
                     'audit_id': (directive.get('audit_window') or {}).get('audit_id')}

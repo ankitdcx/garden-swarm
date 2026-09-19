@@ -156,7 +156,7 @@
     ],
     "context_insufficiency_is_not_a_negative_quality_score": true
   },
-  "four_branch_consistency": {
+  "five_reviewer_consistency": {
     "all_initial_reviewers_receive_bit_identical_context_capsule": true,
     "context_capsule_sha256_must_match_across_initial_branches": true,
     "if_material_expansion_is_required": "STOP_CURRENT_BLIND_ROUND_EXPAND_CONTEXT_AND_RESTART_ALL_FOUR_INITIAL_BRANCHES_ON_IDENTICAL_EXPANDED_PACKET",

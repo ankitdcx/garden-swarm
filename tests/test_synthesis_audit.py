@@ -32,22 +32,20 @@ class SynthesisAuditTests(unittest.TestCase):
             self.packet()
 
     def test_integrator_cannot_drop_disposition(self):
-        del self.directive['synthesis_audit']['dispositions']['BLIND:qwen:0']
+        del self.directive['synthesis_audit']['dispositions']['BLIND:pareto:0']
         with self.assertRaisesRegex(ValueError, 'every original'):
             self.packet()
 
     def test_integrator_cannot_alter_original_finding(self):
-        self.cycle['blind']['qwen']['finding']['disposition'] = 'HIDDEN'
+        self.cycle['blind']['pareto']['finding']['disposition'] = 'HIDDEN'
         with self.assertRaisesRegex(ValueError, 'finding hash mismatch'):
             self.packet()
 
-    def test_rejected_initial_finding_survives_reconciliation(self):
-        self.cycle['reconcile']['qwen'] = [response('qwen', 'PROPOSE_DELTA')]
-        self.directive = final_directive(self.cycle)
-        self.directive['synthesis_audit']['dispositions']['BLIND:qwen:0']['decision'] = 'REJECT'
+    def test_rejected_initial_finding_survives_chatgpt_synthesis(self):
+        self.directive['synthesis_audit']['dispositions']['BLIND:pareto:0']['decision'] = 'REJECT'
         packet = self.packet()
-        self.assertIn('BLIND:qwen:0', packet['evidence'])
-        self.assertIn('RECONCILE:qwen:1', packet['evidence'])
+        self.assertIn('BLIND:pareto:0', packet['evidence'])
+        self.assertNotIn('RECONCILE:pareto:1', packet['evidence'])
         self.assertFalse(packet['independent_blind_evidence'])
 
     def test_audit_is_immutable_across_final_reviewers(self):
@@ -62,7 +60,7 @@ class SynthesisAuditTests(unittest.TestCase):
 
     def test_auditor_cannot_omit_original_finding(self):
         packet = self.packet(); review = self.review(packet)
-        del review['disposition_audit']['BLIND:qwen:0']
+        del review['disposition_audit']['BLIND:pareto:0']
         with self.assertRaisesRegex(ValueError, 'every synthesis'):
             p.validate_synthesis_audit_response(review, packet)
 
@@ -81,7 +79,7 @@ class SynthesisAuditTests(unittest.TestCase):
         prompt = p.final_prompt(target={'target_id': 'T', 'review_question': 'Q'}, source='source', trace={},
                                 merged_candidate='candidate', phase='FINAL', audit_packet=packet)
         self.assertIn('Public baseline', prompt)
-        self.assertIn('BLIND:qwen:0', prompt)
+        self.assertIn('BLIND:pareto:0', prompt)
         self.assertIn('not fresh independent blind evidence', prompt)
 
     def test_quality_queue_accepts_only_bound_post_blind_exposure(self):

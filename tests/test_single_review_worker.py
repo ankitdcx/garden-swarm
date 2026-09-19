@@ -61,10 +61,14 @@ class SingleReviewTests(unittest.TestCase):
             next_slot({'0:one': {'status': 'UNKNOWN'}}, ['one', 'two', 'three'])
 
     def test_provider_exclusions_apply_to_endpoint(self):
-        for name in ('Anthropic', 'NVIDIA', 'Mistral'):
+        endpoint = {**self.endpoint, 'tag': 'anthropic', 'provider_name': 'Anthropic'}
+        with self.assertRaises((ValueError, RuntimeError)):
+            endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
+        # Explicit 2026-09-19 human routing directive re-authorized NVIDIA and Mistral.
+        for name in ('NVIDIA', 'Mistral'):
             endpoint = {**self.endpoint, 'tag': name.lower(), 'provider_name': name}
-            with self.subTest(name=name), self.assertRaises((ValueError, RuntimeError)):
-                endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
+            body, _ = endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
+            self.assertEqual(body['provider']['only'], [name.lower()])
 
     def test_request_forbids_fallback_and_has_price_and_output_bounds(self):
         body, estimate = endpoint_request(self.endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
