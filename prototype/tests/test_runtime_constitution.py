@@ -2,9 +2,11 @@ from prototype.authority import AuthorityEnvelope
 from prototype.runtime_constitution import (
     ConstraintClass,
     GoalProposal,
+    InstructionAuthority,
     RuntimeConstitutionContext,
     RuntimeDecision,
     RuntimeInstruction,
+    classify_instruction_authority,
     evaluate_goal,
     evaluate_instruction,
 )
@@ -40,6 +42,29 @@ def base_context(**overrides):
     data.update(overrides)
     return RuntimeConstitutionContext(**data)
 
+
+
+def test_instruction_source_class_never_mints_authority_by_identity():
+    assert (
+        classify_instruction_authority(ConstraintClass.GARDEN_CONSTITUTION)
+        is InstructionAuthority.GARDEN_CONSTRAINT_ONLY
+    )
+    assert (
+        classify_instruction_authority(ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION)
+        is InstructionAuthority.DELEGATED_AUTHORITY_REQUIRED
+    )
+    assert (
+        classify_instruction_authority(ConstraintClass.OPERATOR_INSTRUCTION)
+        is InstructionAuthority.PROPOSAL_ONLY
+    )
+    assert (
+        classify_instruction_authority(ConstraintClass.MODEL_SUBGOAL)
+        is InstructionAuthority.PROPOSAL_ONLY
+    )
+    assert (
+        classify_instruction_authority(ConstraintClass.EXTERNAL_RUNTIME_CONSTRAINT)
+        is InstructionAuthority.EXTERNAL_ENFORCEMENT_ONLY
+    )
 
 def test_model_selected_long_goal_can_persist_but_creates_no_authority():
     result = evaluate_goal(
