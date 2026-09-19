@@ -6,7 +6,7 @@ A Garden section must not be reviewed as an isolated fragment. The default revie
 
 ## What each reviewer receives
 
-The same initial packet is sent independently to all four OpenRouter reviewer families. It contains:
+The same initial packet is sent independently to all five OpenRouter reviewer families. It contains:
 
 1. **Source identity** — DesignEpoch, canonical/candidate source roots, exact target path and hash, capsule hash.
 2. **Whole-Garden orientation** — Garden purpose, current document/topology map, control flow, constitutional/authority/HSA/rights boundaries, Reason/Compare/Proof/Evidence/AAP/ActionGate/DesignEpoch boundaries, major owner/registry map and broadly applicable invariants.
@@ -26,7 +26,7 @@ The expansion ladder is:
 
 `L0_CAPSULE -> L1_DEPENDENCY_EXPANDED -> L2_CROSS_LAYER_EXPANDED -> L3_AFFECTED_DOCUMENTS_FULL -> L4_FULL_GARDEN`
 
-If an initial reviewer finds a material context gap, the current blind round stops. ChatGPT expands the packet, creates a new source-packet hash/baseline commitment, and restarts all four initial branches on the same expanded packet. One reviewer is never silently given extra initial context while the others remain on the old packet.
+If an initial reviewer finds a material context gap, the current blind round stops. ChatGPT expands the packet, creates a new source-packet hash/baseline commitment, and restarts all five initial reviews on the same expanded packet. One reviewer is never silently given extra initial context while the others remain on the old packet.
 
 Full Garden context is mandatory when compact dependency closure cannot establish the applicable semantics, when protected/cross-cutting semantics require it, or when whole-source assurance/Compare/Proof/Evidence/Tier-A obligations apply.
 
