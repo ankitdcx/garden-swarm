@@ -1,0 +1,7 @@
+{
+  "schema": "GardenGroupReviewOpenRouterLedger/v1",
+  "repository": "ankitdcx/garden-swarm",
+  "paused": false,
+  "attempts": [],
+  "cycles": {}
+}
