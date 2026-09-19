@@ -1,136 +1,131 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "purpose": "EVENT_DRIVEN_PUBLIC_MULTI_TRACK_REVIEW",
-  "design_epoch": "v15.5",
-  "catalog_reference_date": "2026-09-16",
+  "revision": 2,
+  "purpose": "EVENT_DRIVEN_LOW_COST_SPECIALIST_REVIEW",
+  "design_epoch": "v15.10-working-candidate-process",
+  "catalog_reference_date": "2026-09-19",
   "public_only": true,
   "semantic_delta_admitted": false,
   "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
+  "reviewer_quality_policy": "agents/reviewer-quality-policy.json",
+  "reviewer_slot_registry": "agents/reviewer-slot-registry.json",
   "event_driven_model_quality_policy": "agents/event-driven-model-quality-policy.json",
   "independent_branch_convergence_policy": "agents/independent-branch-convergence-policy.json",
-  "daily_openrouter_cost_ceiling_usd": 2.0,
-  "budget_pools_usd": {
-    "routine": 9.0,
-    "challenger": 3.0,
-    "escalation": 5.0,
-    "emergency_reserve": 3.0
-  },
-  "routine_hourly_cost_ceiling_usd": 0.4,
-  "routine_model_call_cost_ceiling_usd": 0.1,
+  "daily_openrouter_cost_ceiling_usd": 1,
+  "routine_task_cost_ceiling_usd": 0.25,
+  "routine_hourly_cost_ceiling_usd": 0.25,
+  "routine_model_call_cost_ceiling_usd": 0.05,
+  "automatic_expensive_escalation_daily_ceiling_usd": 0,
   "max_prompt_characters": 200000,
-  "max_output_tokens": 32000,
-  "free_swarm": {
-    "enabled": true,
-    "distinct_families_per_hour": 4,
-    "minimum_available_families": 3,
-    "cross_examination": false,
-    "max_parallelism": 1,
-    "max_free_calls_per_hour": 8,
-    "cost_policy": "OpenRouter :free routes only; every successful free call must report zero cost."
-  },
-  "work_tracks": [
-    "canonical_design",
-    "implementation_correctness",
-    "test_and_verification",
-    "security_and_privacy",
-    "integration_and_provenance",
-    "operations_and_budget",
-    "authority_and_actiongate",
-    "adversarial_falsification"
-  ],
+  "max_output_tokens": 16000,
   "provider_policy": {
     "sort": "price",
     "allow_fallbacks": true,
     "data_collection": "deny",
     "ignore": [
-      "anthropic",
-      "mistral",
-      "nvidia"
+      "anthropic"
     ],
     "max_price_usd_per_million_tokens": {
-      "prompt": 0.25,
-      "completion": 1.0
+      "prompt": 1,
+      "completion": 3
     }
   },
   "routine_reviewers": [
     {
       "family": "deepseek",
-      "role": "primary_agentic_reasoning",
-      "model": "deepseek/deepseek-v4.1-flash"
-    },
-    {
-      "family": "qwen",
-      "role": "independent_architecture_and_code",
-      "model": "qwen/qwen3.8-flash"
-    },
-    {
-      "family": "glm",
-      "role": "formal_semantics_and_long_context",
-      "model": "z-ai/glm-5.3-flash"
+      "role": "determinism_hidden_inputs_and_derivation",
+      "model": "deepseek/deepseek-v4-pro-0813"
     },
     {
       "family": "xiaomi",
-      "role": "independent_agentic_execution",
-      "model": "xiaomi/mimo-v2.5"
+      "role": "implementation_interactions_and_failure_cases",
+      "model": "xiaomi/mimo-v2.5-pro"
+    },
+    {
+      "family": "nvidia",
+      "role": "architecture_boundaries_ownership_and_scalability",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "family": "pareto",
+      "role": "claims_equivalence_proof_and_assurance_discipline",
+      "model": "unbiased/pareto"
+    },
+    {
+      "family": "mistral",
+      "role": "serialization_state_ordering_timing_and_edge_cases",
+      "model": "mistralai/mistral-medium-3-5"
     }
   ],
   "event_driven_activation": {
     "paid_review_requires_material_event_or_explicit_high_risk_obligation": true,
+    "deterministic_gate_before_model": true,
     "clock_passage_alone_never_authorizes_spend": true,
     "identical_state_replay_never_authorizes_spend": true,
     "no_change_default": "NO_PAID_CALL",
-    "strong_board_selected_only_after_bounded_context_materiality": true,
     "private_chatgpt_baseline_commitment_required_before_first_openrouter_inference": true
   },
-  "notes": [
-    "All current Garden OpenRouter model-inference work is governed by agents/independent-branch-convergence-policy.json.",
-    "The four routine reviewers receive the same neutral initial query and source packet sequentially; they never receive one another's answers.",
-    "Branch reconciliation is ChatGPT-centered and branch-local: each model may see only its own prior branch result plus the ChatGPT branch-specific merged candidate. OpenRouter peer-answer cross-examination is superseded.",
-    "Final review sends the bit-identical ChatGPT-synthesized candidate separately to all four reviewers; final reviewers do not receive one another's reviews. One confirmation round is the maximum.",
-    "Agreement is evidence, not Proof or authority. Unresolved material disagreement after confirmation stops and escalates rather than looping.",
-    "Anthropic/Claude, NVIDIA/Nemotron and Mistral/Mistral AI are excluded by explicit human operator policy from Garden model use, provider routing, fallbacks, reviewer assignment and active contact. Historical references do not authorize operational use.",
-    "Routine material review uses the current cost/quality value board: DeepSeek V4.1 Flash, Qwen3.8 Flash, GLM 5.3 Flash and Xiaomi MiMo-V2.5. Expensive flagship models are escalation-only under the separate event-driven quality policy.",
-    "The daily OpenRouter spend ceiling is fail-closed and checked from GET /api/v1/key before paid calls. A single convergence task can never exceed 20 inference calls or the selected $2/default or $10/dated-audit daily ceiling.",
-    "The legacy routine_hourly_cost_ceiling_usd field is an event-dispatch reservation envelope for compatibility; it is not a scheduling instruction.",
-    "Moving latest aliases are intentionally not used for evidence lineage; exact model identities stay pinned until a later catalog-review event.",
-    "Paid-model failure or budget-policy failure never weakens semantic admission requirements or authorizes sharing branches.",
-    "The broad Coordinator remains paused; the bounded single-call review worker can advance only an admitted protocol phase and one model call per dispatch."
-  ],
-  "specialist_free_sweep": {
-    "enabled": true,
-    "preferred_families_per_hour": 8,
-    "minimum_families_per_hour": 3,
-    "cross_examination": false,
-    "target_slot_offset": 5,
-    "max_free_calls_per_hour": 16,
-    "cost_policy": "OpenRouter :free routes only; no paid fallback."
+  "review_process": {
+    "normal_initial_round": "FIVE_BLIND_SPECIALISTS_SAME_PACKET",
+    "chatgpt_reconciliation": "VERIFY_EACH_FINDING_AND_MAINTAIN_STRUCTURED_FINDING_LEDGER",
+    "easy_close": "IF_ALL_FIVE_RETURN_NO_CHANGE_AND_CHATGPT_LOCAL_GATES_FIND_NO_MATERIAL_ISSUE_CLOSE_AFTER_INITIAL_ROUND",
+    "repair": "INTEGRATE_ONLY_REPRODUCED_OR_EVIDENCE_SUPPORTED_FINDINGS_THEN_RERUN_DETERMINISTIC_TESTS",
+    "final_round": "IF_CANDIDATE_CHANGED_SEND_BIT_IDENTICAL_REVISED_CANDIDATE_TO_ALL_FIVE",
+    "confirmation": "AT_MOST_ONE_ADDITIONAL_FIVE_MODEL_ROUND_AFTER_A_VALID_FINAL_PATCH",
+    "unresolved": "STOP_WITH_EXPLICIT_DISAGREEMENT_OR_EVIDENCE_GAP_RECEIPT",
+    "peer_answer_sharing": "FORBIDDEN_DURING_INDEPENDENT_MODEL_ROUNDS",
+    "majority_vote": "FORBIDDEN_AS_ADMISSION_RULE"
   },
-  "budget_pool_scope": "LIFETIME_ALLOCATION_OF_INITIAL_20_USD_NOT_DAILY",
-  "balance_remaining_usd": null,
-  "balance_status": "UNKNOWN_REQUIRES_PROVIDER_RECONCILIATION",
-  "budget_relationship": "The four pools retain the initial $20 lifetime allocation. Default daily ceiling is $2; a dated target-bound AUDIT directive may use a $10 daily ceiling, always within the available $9 routine lifetime pool. Audit mode does not borrow the other pools or automatically refill funds.",
+  "structured_finding_required_fields": [
+    "finding_id",
+    "reviewer_family",
+    "candidate_sha256",
+    "affected_owner_or_location",
+    "claim_challenged",
+    "concrete_counterexample_or_gap",
+    "severity",
+    "proposed_patch",
+    "chatgpt_reproduction_status",
+    "disposition",
+    "patch_ref",
+    "regression_test",
+    "closed_by_candidate_sha256"
+  ],
+  "shadow_candidates": [
+    {
+      "family": "glm",
+      "model": "z-ai/glm-5.3",
+      "status": "SHADOW_ONLY_OUTPUT_RELIABILITY_INSUFFICIENT",
+      "campaign_visible_answers": 1,
+      "campaign_calls": 5
+    }
+  ],
+  "expensive_escalation": {
+    "automatic_dispatch": false,
+    "requires_explicit_human_opt_in": true,
+    "models_not_routinely_used": [
+      "openai/gpt-6-astra",
+      "anthropic/claude-opus-5",
+      "google/gemini-3.1-pro-preview",
+      "x-ai/grok-4.6",
+      "qwen/qwen3.8-2.4t-a95b",
+      "moonshotai/kimi-k3",
+      "sakana/fugu-ultra-v2"
+    ]
+  },
+  "campaign_value_evidence": {
+    "source": "docs/OPENROUTER_MODEL_VALUE_REVIEW_2026-09-19.md",
+    "boundary": "Observed usefulness/cost from one Garden v15.10 campaign; not general model-quality proof."
+  },
   "execution_limits": {
     "max_concurrent_model_calls": 1,
     "max_model_calls_per_dispatch": 1,
-    "daily_free_call_cap": 48,
-    "hourly_free_call_cap": 2,
-    "scope": "SHARED_ACROSS_ALL_LANES",
-    "enforcement_status": "ACTIVE_SINGLE_CALL_INDEPENDENT_BRANCH_LEDGER; LEGACY_BATCH_PATHS_NOT_ADMITTED",
-    "family_counts": "Review-cycle diversity targets accumulated over separate isolated event-driven dispatches; never simultaneous calls, peer-sharing permission or quota grants."
+    "absolute_inference_calls_per_task": 15,
+    "normal_expected_calls_if_candidate_changes": 10,
+    "easy_case_calls": 5,
+    "maximum_confirmation_rounds": 1,
+    "scope": "SHARED_ACROSS_ALL_LANES"
   },
-  "event_driven_context": {
-    "policy": "agents/event-driven-context-policy.json",
-    "quality_policy": "agents/event-driven-model-quality-policy.json",
-    "convergence_policy": "agents/independent-branch-convergence-policy.json",
-    "context_builder": "tools/event_context_gate.py",
-    "frontier_handoff_builder": "tools/run_frontier_council.py",
-    "frontier_handoff_schema": "GardenFrontierReviewRequest/v1",
-    "frontier_provider_boundary": "EXTERNAL_CHATGPT_NOT_OPENROUTER",
-    "event_key_routing": true,
-    "activation_status": "SINGLE_CALL_TRANSPORT_ACTIVE_ONLY_AFTER_CHATGPT_DIRECTIVE; BROAD_COORDINATOR_PAUSED",
-    "no_schedule_required": true
-  },
-  "review_context_policy": "agents/review-context-policy.json",
   "review_profiles": {
     "ROUTINE": {
       "max_output_tokens": 8000,
@@ -140,14 +135,14 @@
       "request_timeout_seconds": 180
     },
     "COMPLEX": {
-      "max_output_tokens": 16000,
+      "max_output_tokens": 12000,
       "context_characters": 64000,
       "max_support_passages": 16,
       "reasoning_effort": "high",
       "request_timeout_seconds": 240
     },
     "DEEP": {
-      "max_output_tokens": 32000,
+      "max_output_tokens": 16000,
       "context_characters": 100000,
       "max_support_passages": 24,
       "reasoning_effort": "high",
@@ -156,12 +151,23 @@
   },
   "spending_modes": {
     "DEFAULT": {
-      "daily_ceiling_usd": 2.0
+      "daily_ceiling_usd": 1,
+      "task_ceiling_usd": 0.25
     },
     "AUDIT": {
-      "daily_ceiling_usd": 10.0,
-      "requires_dated_target_bound_directive": true,
-      "budget_pool": "routine"
+      "daily_ceiling_usd": 2,
+      "task_ceiling_usd": 0.5,
+      "requires_dated_target_bound_directive": true
     }
-  }
+  },
+  "notes": [
+    "The five routine reviewers are assigned different failure-search roles; diversity comes from role specialization as well as model family.",
+    "No model sees another model's answer during blind/final/confirmation rounds.",
+    "ChatGPT verifies and dispositions findings; model agreement is evidence, never Proof or authority.",
+    "A single correct material counterexample defeats any number of approvals.",
+    "NO_SUBSTANTIVE_OUTPUT is recorded and not automatically retried against an unchanged packet.",
+    "Expensive frontier models require an explicit future human opt-in and are never automatic.",
+    "NVIDIA/Nemotron and Mistral were re-authorized for low-cost Garden review by explicit human directive on 2026-09-19; Anthropic remains excluded by operator routing policy.",
+    "This policy is operational only and creates no Garden semantic authority."
+  ]
 }
