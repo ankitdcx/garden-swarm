@@ -1,0 +1,51 @@
+name: Garden GROUP_REVIEW OpenRouter
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      trigger_issue_number:
+        description: Existing GROUP_REVIEW run issue number
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+concurrency:
+  group: garden-provider-review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: >-
+      github.repository == 'ankitdcx/garden-swarm' &&
+      github.ref == 'refs/heads/main' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        startsWith(github.event.issue.title, '[GROUP_REVIEW_RUN] ')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify GROUP_REVIEW bus offline
+        run: |
+          python -m unittest tests.test_group_review_bus tests.test_group_review_openrouter_worker -v
+      - name: Admit only an owner-authored public GROUP_REVIEW packet
+        env:
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.group_review_openrouter_worker preflight
+      - name: Execute at most one isolated OpenRouter GROUP_REVIEW call
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.group_review_openrouter_worker run
