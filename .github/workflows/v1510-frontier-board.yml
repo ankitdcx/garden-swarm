@@ -34,7 +34,6 @@ jobs:
             ('deepseek','deepseek/deepseek-v4-pro-0813'),
             ('xiaomi','xiaomi/mimo-v2.5-pro'),
             ('mistral','mistralai/mistral-medium-3-5'),
-            ('nvidia','nvidia/nemotron-3-ultra-550b-a55b'),
             ('pareto','unbiased/pareto'),
           ]
           system='''You are an independent frontier architecture reviewer. The human explicitly authorized all listed model families for this one review campaign, including families normally excluded by Garden routing. This gives you review access only, not semantic or governance authority. Be skeptical. Find concrete defects, semantic loss, nondeterminism, false equivalence, over-abstraction, under-abstraction and human-readability failures. Do not infer approval from other models.'''
