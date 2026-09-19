@@ -259,8 +259,8 @@ def main() -> int:
     selected_rows = [x for x in selection.get("selected", []) if isinstance(x, dict) and x.get("family")]
     selected = {str(x["family"]): x for x in selected_rows}
     approved = [str(x) for x in (selection.get("approved_families") or list(selected)) if str(x) in selected]
-    if "deepseek" not in approved or "qwen" not in approved or len(approved) < 4:
-        raise SystemExit("IP-origin backfill requires DeepSeek, Qwen and at least four approved families")
+    if "deepseek" not in approved or "pareto" not in approved or len(approved) < 5:
+        raise SystemExit("IP-origin backfill requires DeepSeek, Pareto and all five approved families")
     if selection.get("provider_policy", {}).get("data_collection") != "deny":
         raise SystemExit("data_collection must be deny")
 
