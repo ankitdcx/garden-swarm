@@ -1,8 +1,6 @@
 name: Garden GROUP_REVIEW OpenRouter
 
 on:
-  issues:
-    types: [opened]
   workflow_dispatch:
     inputs:
       trigger_issue_number:
@@ -21,13 +19,7 @@ concurrency:
 
 jobs:
   review:
-    if: >-
-      github.repository == 'ankitdcx/garden-swarm' &&
-      github.ref == 'refs/heads/main' &&
-      (
-        github.event_name == 'workflow_dispatch' ||
-        startsWith(github.event.issue.title, '[GROUP_REVIEW_RUN] ')
-      )
+    if: github.repository == 'ankitdcx/garden-swarm' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -43,7 +35,7 @@ jobs:
       - name: Admit only an owner-authored public GROUP_REVIEW packet
         env:
           GH_REVIEW_TOKEN: ${{ github.token }}
-        run: python -m tools.group_review_openrouter_worker preflight
+        run: python -m tools.check_dispatch_admission --group-review
       - name: Execute at most one isolated OpenRouter GROUP_REVIEW call
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
