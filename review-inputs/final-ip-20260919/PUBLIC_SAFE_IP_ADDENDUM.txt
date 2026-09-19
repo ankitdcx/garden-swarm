@@ -1,0 +1,94 @@
+Garden final IP inventory addendum — public-safe review surface
+Rules:
+- Never delete historical patents/candidates because later design is better.
+- Superseded/alias records remain lineage.
+- Candidate != filed != published != granted.
+- Historical numbering is snapshot-bound.
+- Private enabling claim text withheld.
+Counts: baseline=151; late15x=48; SCT explicit=9; v15.10=15; historical-range records=9; CDDT idea corpus=445 (60 formal patent families/180 drafts); ChatGPT+DeepSeek raw historical patent/family records=1274; Gemini patent-related extracts=296; associated Ekaki/Ikaee claims=22.
+Unresolved: early P1-P182 and F1-F109 are partially recovered; never invent missing mappings.
+
+Addendum IDs/titles:
+V15X-HEC|Human-Effect Closure
+V15X-REPUTATION-WORTH|Reputation is not human worth or authority
+V15X-WORLD-EVIDENCE-PRIVACY|World Evidence / Privacy Boundary
+V15X-JUSTICE-EVIDENCE|Justice Evidence Continuity
+V15X-LETHAL-NONAUTONOMY|Lethal-Force Non-Autonomy
+V15X-PEACEFUL-MIGRATION|Privacy-First Peaceful Migration
+V15X-HRAP|Human Relational Agency Preservation (HRAP)
+V15X-PROTECTED-REPORTING|Protected Reporting
+V15X-CAUSAL-SAFETY-UNIT|Causal Safety Unit / consequential causal-closure safety unit
+V15X-UBC|Unanticipated Behaviour Closure (UBC)
+V15X-TSI|Truth & State Integrity (TSI)
+V15X-TIA|Transport-Independent Information Authority (TIA)
+V15X-ART|Agent Reputation & Trust (ART)
+V15X-EPOCH-REPUTATION|Design-Epoch-bound reputation and independent cross-epoch revalidation
+V15X-EMERGENT-AGENCY|Emergent Agent Structure classification without authority union
+V15X-IIC|Institutional Incentive Consistency (IIC)
+V15X-PIR|Protected Integrity Reporting (PIR)
+V15X-CSI|Cognition-Shaping Integrity (CSI)
+V15X-SMCD|Safety Monitoring Coverage & Discovery Debt (SMCD)
+V15X-CAD|Capability–Assurance Delta (CAD)
+V15X-OAC|Organizational Alignment Closure (OAC)
+V15X-CTSN|Capability-Transfer Safety Non-Transitivity (CTSN)
+V15X-PAI|Physical Agency Interlock (PAI)
+V15X-CROSS-SUBSYSTEM-CAUSAL|Cross-Subsystem Causal Closure Receipt
+V15X-WORLD-EVIDENCE-GRAPH|World Evidence Graph with privacy/use-boundary separation
+V15X-RCI|Recursive Control Intelligence (RCI) governed recursive-improvement projection
+V15X-PROCESS-ACTIVATION|Universal Activation / Trigger / Subscription / Scheduling / Continuous Work framework
+V15X-CONSTITUTIONAL-EVENT|Typed ConstitutionalEvent observability and resolution linkage
+V15X-BELIEF-TIMELINE|BeliefTimeline + EpistemicTransition historical reconstruction
+V15X-DESIGN-MIRROR|DesignMirror + DesignSimulationReceipt bounded design simulation
+V15X-FUTURE-STRESS|Forward Adversarial Future Stress Assessment
+V15X-GLOBAL-INVARIANT|Global invariant consistency checking across projections/owners
+V15X-CONTINUOUS-FAILURE|Continuous Failure Learning and bounded historical backscan
+V15X-ONTOLOGICAL-DEBT|Ontological Debt / Concept Radar routing
+V15X-HISTORICAL-SUMMARY|HistoricalSemanticSummary loss-aware lawful history compaction
+V15X-RRCTX|Jurisdiction-Sensitive Rights & Restrictions Context (RRCTX)
+V15X-ORH|Operational Resilience Harmonization (ORH v1.1.1)
+V15X-CIAH|Cross-Industry Assurance Hardening (CIAH v1.0.1)
+V15X-UAAC|Universal Adversarial Agency Closure (UAAC)
+V15X-DSDIH|Distributed State and Delivery Integrity Hardening (DSDIH)
+V15X-SOURCE-RIGHTS|Source-Rights / lawful public-idea and protected-expression boundary
+V15X-DELTA-MANAGEMENT|Frozen-base bounded delta management / exact-source-bound review ledger
+V15X-MACHINE-PRIVACY-JUSTICE|Typed machine-computation / retention / human-access / disclosure / evidentiary-use boundary
+V15X-UCAS|Universal Contract & Agreement Substrate (UCAS) profile
+V15X-KINDERGARTEN|Kindergarten / Child-Development Branch Profile
+V15X-FDE|Federated Distribution/Enrollment profile (FDE) with opt-in, signed releases and revocable participation
+V15X-CFBR|Constitutional Federation / Branch Reconciliation (CFBR) profile
+V15X-MFG-QUAL-TRANSFER-HIST|Manufacturing qualification-transfer historical proposal
+SCT-PATENT-A|G-Weighted Value Consensus
+SCT-PATENT-B|Anti-Gaming Training System
+SCT-PATENT-C|Coherence-Gated Hybrid Verifier
+SCT-PATENT-D|Convergence-Threshold Values Layer
+SCT-PATENT-E|SCT-Gated Infrastructure
+SCT-PATENT-F|Parser-Graph-Calibration Suite
+SCT-PATENT-G|Decision Transformation Layer
+SCT-PATENT-H|Deployment Architecture
+SCT-PATENT-I|Gated External Grounding & Signal Fusion
+V1510-IP-01|Deterministic three-artifact reconstruction architecture (Book / Technical Core / Catalogue)
+V1510-IP-02|Exact-predecessor-source semantic fallback migration
+V1510-IP-03|Interpretation-coverage state machine with source-controlling fallback
+V1510-IP-04|Non-self-admitting supersession and predecessor-elision firewall
+V1510-IP-05|Closed BuildIdentity with ambient-input exclusion
+V1510-IP-06|Finite stratified seed-local semantic graph expansion
+V1510-IP-07|GSL-native Design Forms, reusable facets and macro abstraction compiler
+V1510-IP-08|Canonical Catalogue encoding, root framing, total ordering and deterministic collision rules
+V1510-IP-09|Snapshot-bound typed reference requiredness and no-latest resolution
+V1510-IP-10|Six-axis ApplicabilityVector without universal scalar status
+V1510-IP-11|Point-of-use live authorization atomic-linearization or bounded-lease witness
+V1510-IP-12|Source-span-bound semantic, formula and identifier indexing with exact reconstruction
+V1510-IP-13|Independent deterministic dual-expander reconstruction verification
+V1510-IP-14|Generated legacy concept crosswalk from lineage to current semantic owners
+V1510-IP-15|Machine-readable separation of source preservation, interpretation, equivalence and assurance claims
+HIST-RANGE-20260505|TRAIN early core portfolio
+HIST-RANGE-20260506-0250|TRAIN 19-family architecture
+HIST-RANGE-20260506-0446|TRAIN 29-family consolidated snapshot
+HIST-RANGE-20260506-NORMALIZE|TRAIN normalization snapshots
+HIST-RANGE-20260507|TRAIN expansion/prosecutability snapshots
+HIST-RANGE-20260624-TRAIN|TRAIN v9.0
+HIST-RANGE-20260624-GARDEN-REAL|GARDEN-REAL v1.x
+HIST-RANGE-202608|Consolidated TRAIN public lineage
+HIST-RANGE-20260905-CDDT|CDDT formal catalogue
+
+Review: compare this addendum plus the repository's archived 151-record IP_ORIGIN_INVENTORY. Find concrete major Garden family omissions, lineage-loss risks, mistaken filed/granted status, count inconsistencies, or accidental collapse of historic patents. Do not recommend deletion just because something is superseded. Return VERDICT APPROVE|APPROVE_WITH_PATCH|BLOCK plus numbered material findings only.
