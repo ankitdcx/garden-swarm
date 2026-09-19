@@ -103,11 +103,11 @@ class ReviewCampaignTests(unittest.TestCase):
         bounded = campaign.spending_policy(policy, self.policy)
         key = {'usage': '.0024624', 'usage_daily': '0', 'limit_remaining': '20'}
         reserve, _, _ = legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
-        self.assertEqual(reserve, Decimal('.10'))
+        self.assertEqual(reserve, Decimal('.05'))
         for edit in ({'usage': '9.90'}, {'usage_daily': '10'}, {'limit_remaining': '.09'}, {'usage_daily': None}):
             with self.subTest(edit=edit), self.assertRaises(ValueError):
                 legacy.budget_check(self.state, {**key, **edit}, bounded, 100000, campaign=self.policy)
-        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.10', 'cost': None})
+        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.05', 'cost': None})
         with self.assertRaisesRegex(ValueError, 'reconciliation'):
             legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
 
