@@ -37,7 +37,11 @@
         "max_prompt_characters",
         "review_profiles",
         "spending_modes",
-        "review_context_policy"
+        "review_context_policy",
+        "execution_limits.absolute_inference_calls_per_task",
+        "execution_limits.normal_expected_calls_if_candidate_changes",
+        "execution_limits.easy_case_calls",
+        "execution_limits.maximum_confirmation_rounds"
       ],
       "accepted_shape_sha256": "5362c89850874170182d048be6f90accf1a7a564e1b05fb884d89a343aecabb0",
       "consumers": [
