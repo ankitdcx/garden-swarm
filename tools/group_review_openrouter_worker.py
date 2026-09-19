@@ -16,6 +16,7 @@ import time
 from urllib import error
 
 from tools import group_review_bus as bus
+from tools import matrix_design_review as review
 from tools import select_paid_matrix_reviewers as selector
 from tools import single_review_worker as legacy
 from tools.provider_exclusion import load_policy
@@ -241,6 +242,15 @@ def run(root: Path = Path(".")) -> None:
     if cycle.get("run_issue_number") != issue_number or cycle.get("packet_sha256") != packet["packet_sha256"]:
         raise ValueError("GROUP_REVIEW cycle binding mismatch")
 
+    blocking = [
+        attempt
+        for attempt in state.get("attempts", [])
+        if attempt.get("cycle") == cid
+        and attempt.get("status") in {"UNKNOWN", "RESERVED", "INCOMPLETE"}
+    ]
+    if blocking:
+        raise ValueError("prior GROUP_REVIEW OpenRouter call requires explicit reconciliation; no silent retry")
+
     reviewer = next_reviewer(cycle, selected)
     if reviewer is None:
         _publish_result_issue(gh, packet, issue_number, cycle, selected)
@@ -341,7 +351,7 @@ def run(root: Path = Path(".")) -> None:
             raise ValueError("GROUP_REVIEW review incomplete or truncated")
         if len(raw_text) > MAX_FINDING_CHARS + 2000:
             raise ValueError("GROUP_REVIEW raw response exceeds compact bound")
-        finding = json.loads(raw_text)
+        finding = review._clean_json(raw_text)
         if not isinstance(finding, dict):
             raise ValueError("GROUP_REVIEW response must be JSON object")
         bus.validate_openrouter_finding(finding, packet=packet, family=family, model=model)
