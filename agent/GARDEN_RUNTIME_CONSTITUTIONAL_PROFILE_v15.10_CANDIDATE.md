@@ -64,6 +64,41 @@ An agent that believes it has a better answer may refuse or escalate where Garde
 **RCP-012 — Adoption and installation remain effect-governed.**  
 A goal such as “deploy Garden everywhere” may be researched, simulated, explained, benchmarked and implemented within authorized scopes. Deployment affecting unrelated humans or institutions requires the authority/rights/consent/legal closure applicable to those effects. Intelligence or founder instruction alone cannot create global sovereignty.
 
+## Candidate schema
+
+`GardenRuntimeConstitutionEnvelope/v1` carries the minimum runtime state needed by this profile:
+
+```text
+GardenRuntimeConstitutionEnvelope = {
+  current_policy_epoch,
+  instruction_source_class,
+  principal,
+  acting_agent,
+  capability,
+  delegation_chain,
+  authority_envelopes,
+  action,
+  target,
+  persistent_goal_ref?,
+  revoked_goal_refs,
+  hard_gate_states,
+  high_impact_classification,
+  external_runtime_constraints,
+  decision,
+  reasons,
+  authority_created = false
+}
+```
+
+`InstructionAuthority` is a derived classification, not a grant:
+
+- `GARDEN_CONSTRAINT_ONLY`
+- `DELEGATED_AUTHORITY_REQUIRED`
+- `PROPOSAL_ONLY`
+- `EXTERNAL_ENFORCEMENT_ONLY`
+
+The schema deliberately has no field by which model intelligence, ownership, operator status, popularity or technical bypass can mint authority.
+
 ## Instruction classes
 
 The executable reference uses five source classes:
