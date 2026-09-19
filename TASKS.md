@@ -40,6 +40,23 @@ Prototype an evidence-first responsibility graph that distinguishes perpetration
 ### TASK-008 — Community governance / voting adversarial test
 Test community-voting mechanisms against misinformation, collusion, majority tyranny, low participation, identity fraud, bribery, preference cycles, expert/fact conflicts, and jurisdiction overlap. Separate factual evidence from legitimate preference aggregation.
 
+
+### TASK-022 — v15.10 runtime-constitution falsification
+Attack the candidate runtime rule that **external enforcement can constrain capability without becoming semantic authority**, while human/operator/model instructions and self-selected goals cannot amplify authority by source identity alone.
+
+Test at least:
+- provider/host constraint blocks an otherwise authorized action;
+- provider/host instruction attempts to authorize an otherwise unauthorized action;
+- operator/owner/admin status attempts to mint authority;
+- a model-derived persistent goal attempts to expand its delegation scope;
+- a valid long-horizon model subgoal remains useful without becoming execution authority;
+- Human-Effect Closure remains active for high-impact actions regardless of who originated the goal;
+- a proposed global Garden deployment is distinguished from actual authority to affect unrelated humans/institutions.
+
+**Target:** `agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md` and `prototype/runtime_constitution.py`.
+
+**Deliverable:** counterexample or failed attack + exact assumptions + stronger alternative if one exists + deterministic regression test. Treat the v15.10 profile as noncanonical candidate material.
+
 ## P1 — implementation and interoperability
 
 ### TASK-009 — A2A / MCP Garden relay
