@@ -170,12 +170,18 @@ def _plan(cycle: dict, directive: dict, families: list[str]) -> tuple[str, str, 
         finding = latest["finding"]
         if finding.get("context_sufficiency") != "SUFFICIENT":
             raise ValueError("branch closure cannot waive missing context")
-        if cycle["reconcile"].get(family):
-            if closure.get("outcome") != "RECONCILED":
-                raise ValueError("followed-up branch must be closed as RECONCILED")
-        elif (closure.get("outcome") != "NO_FOLLOWUP_NEEDED" or
-              finding.get("disposition") != "NO_CHANGE"):
-            raise ValueError("only an explicit NO_CHANGE branch can omit followup")
+        outcome = closure.get("outcome")
+        if outcome == "UNRESOLVED_BLOCK":
+            raise ValueError("unresolved material branch finding blocks final review")
+        if outcome == "NO_FOLLOWUP_NEEDED":
+            if finding.get("disposition") != "NO_CHANGE":
+                raise ValueError("NO_FOLLOWUP_NEEDED requires an explicit NO_CHANGE finding")
+        elif outcome in {"INTEGRATED_FOR_FINAL_AUDIT", "REJECTED_WITH_EVIDENCE"}:
+            refs = closure.get("evidence_refs")
+            if not isinstance(refs, list) or not refs or any(not isinstance(x, str) or not x.strip() for x in refs):
+                raise ValueError("integrated/rejected branch closure requires evidence_refs")
+        else:
+            raise ValueError("unsupported five-specialist branch closure outcome")
     closures_hash = protocol.sha256_value(closures)
     if cycle.get("branch_closures_sha256", closures_hash) != closures_hash:
         raise ValueError("branch closures changed after final review began")
