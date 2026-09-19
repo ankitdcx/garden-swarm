@@ -111,11 +111,12 @@ A material process failure means the affected blind round is discarded and rerun
 
 ## Automatic OpenRouter lane
 
-Workflow:
+Workflows:
 
-`.github/workflows/group-review-openrouter.yml`
+- `.github/workflows/group-review-openrouter-trigger.yml` — secret-free issue trigger and packet admission.
+- `.github/workflows/group-review-openrouter.yml` — credentialed provider workflow; `workflow_dispatch` only.
 
-It is triggered by an owner-authored `[GROUP_REVIEW_RUN]` issue or by its own bounded continuation dispatch.
+Opening an owner-authored `[GROUP_REVIEW_RUN]` issue triggers only the secret-free workflow. After packet validation it dispatches the credentialed provider workflow. Each successful provider run performs one OpenRouter inference and dispatches the next provider run until the five-family blind round is complete.
 
 Admission rules:
 
