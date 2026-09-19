@@ -1,0 +1,67 @@
+name: Final IP public-safe OpenRouter board
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'review-inputs/final-ip-20260919/**'
+      - '.github/workflows/final-ip-public-safe-board.yml'
+permissions:
+  contents: read
+concurrency:
+  group: final-ip-public-safe-board-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run five low-cost isolated reviewers
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, urllib.request, urllib.error, time
+          policy=json.loads(pathlib.Path('agents/openrouter-paid-review-policy.json').read_text())
+          addendum=pathlib.Path('review-inputs/final-ip-20260919/PUBLIC_SAFE_IP_ADDENDUM.txt').read_text()
+          base=pathlib.Path('docs/branch_archive/2026-09-15/ip__final-origin-backfill-data-20260915/IP_ORIGIN_INVENTORY.json.snapshot').read_text()
+          system='''You are one independent Garden IP-inventory reviewer. This is engineering/provenance completeness review, NOT legal patentability advice. Do not infer filing/grant status. Search for omissions, accidental lineage deletion, count inconsistency, or current-vs-historical conflation. One valid counterexample matters more than approvals. Do not ask for private enabling claim text.'''
+          prompt='''PUBLIC BASE REGISTER (151 records):\n'''+base+'\n\nPUBLIC-SAFE ADDENDUM:\n'+addendum
+          out=[]
+          total_cost=0.0
+          for row in policy['routine_reviewers']:
+              rec={'family':row['family'],'model':row['model'],'role':row['role']}
+              body={'model':row['model'],'messages':[{'role':'system','content':system+'\nAssigned specialist role: '+row['role']},{'role':'user','content':prompt}],'max_tokens':5000,'temperature':0}
+              req=urllib.request.Request('https://openrouter.ai/api/v1/chat/completions',data=json.dumps(body).encode(),headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY'],'Content-Type':'application/json','HTTP-Referer':'https://github.com/ankitdcx/garden-swarm','X-Title':'Garden final IP inventory public-safe review'})
+              try:
+                  with urllib.request.urlopen(req,timeout=240) as resp:
+                      raw=json.loads(resp.read())
+                  rec['status']='OK'
+                  rec['actual_model']=raw.get('model')
+                  rec['response_id']=raw.get('id')
+                  rec['usage']=raw.get('usage')
+                  rec['text']=((raw.get('choices') or [{}])[0].get('message') or {}).get('content','')
+                  cost=((raw.get('usage') or {}).get('cost'))
+                  if isinstance(cost,(int,float)): total_cost+=float(cost)
+              except urllib.error.HTTPError as e:
+                  rec.update(status='HTTP_ERROR',http_status=e.code,text='')
+              except Exception as e:
+                  rec.update(status='ERROR',error_type=type(e).__name__,text='')
+              out.append(rec)
+              time.sleep(1)
+          pathlib.Path('review-results/final-ip-20260919').mkdir(parents=True,exist_ok=True)
+          payload={'schema':'GardenFinalIPOpenRouterBoard/v1','public_safe':True,'reviewers':out,'total_reported_cost_usd':total_cost,'boundary':'Private enabling patent details were not sent.'}
+          pathlib.Path('review-results/final-ip-20260919/board.json').write_text(json.dumps(payload,indent=2,ensure_ascii=False))
+          print(json.dumps({'visible':sum(r['status']=='OK' and r.get('text','').strip() for r in out),'total_reported_cost_usd':total_cost,'statuses':[(r['family'],r['status'],len(r.get('text',''))) for r in out]},indent=2))
+          if total_cost > 0.25:
+              raise SystemExit('routine task cost ceiling exceeded')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-ip-public-safe-board-${{ github.run_id }}
+          path: review-results/final-ip-20260919/board.json
+          retention-days: 14
