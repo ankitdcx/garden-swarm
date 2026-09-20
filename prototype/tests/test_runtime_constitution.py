@@ -48,6 +48,11 @@ def base_context(**overrides):
             "human_effect": True,
         },
         high_impact_actions=frozenset({"deploy"}),
+        human_effect_materiality_by_action={
+            "notify": False,
+            "deploy": True,
+            "intrude_private_system": True,
+        },
     )
     data.update(overrides)
     return RuntimeConstitutionContext(**data)
@@ -508,3 +513,22 @@ def test_base_human_effect_gates_cannot_be_removed_by_empty_profile_set():
     )
     assert result.decision is RuntimeDecision.ESCALATE
     assert result.reasons == ("HUMAN_EFFECT_GATE_UNKNOWN:consent",)
+
+
+def test_missing_human_effect_materiality_cannot_be_treated_as_low_impact():
+    ctx = base_context(human_effect_materiality_by_action={})
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_UNKNOWN",)
