@@ -1,4 +1,4 @@
-name: One-use final retired branch cleanup 2026-09-20
+name: Post-budget retired branch cleanup 2026-09-20
 
 on:
   push:
@@ -11,113 +11,89 @@ permissions:
 jobs:
   cleanup:
     if: >-
-      github.event.before == '7a8abc77ad77fb1cea0918a6c4cc2c1ab0489029' &&
-      startsWith(github.event.head_commit.message, 'One-use final retired branch cleanup')
+      github.event.before == '732bf4d9dcb2bb4eca3599ae0510d9054162faa8' &&
+      startsWith(github.event.head_commit.message, 'Retire completed Claude and OpenRouter branches')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Delete only the verified final retired branch
+      - name: Delete only reviewed retired branches
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         shell: python
         run: |
-          import json
-          import os
-          import urllib.error
-          import urllib.parse
-          import urllib.request
+          import json, os, urllib.error, urllib.parse, urllib.request
 
-          token = os.environ["GITHUB_TOKEN"]
-          repository = os.environ["GITHUB_REPOSITORY"]
-          owner = os.environ["GITHUB_REPOSITORY_OWNER"]
-          api = "https://api.github.com/repos/" + repository
+          token=os.environ["GITHUB_TOKEN"]
+          repository=os.environ["GITHUB_REPOSITORY"]
+          owner=os.environ["GITHUB_REPOSITORY_OWNER"]
+          api="https://api.github.com/repos/"+repository
+          protected={"main","garden-review-state"}
+          candidates={
+            "chatgpt/claude-routing-sync-20260920":{"sha":"4f1d555224432d8224835b76843a566e2ba86b74","pr":268,"merged":True},
+            "chatgpt/group-review-dispatch-259-budget-epoch-20260920":{"sha":"735673ddc5d2456a2ffab3b64449050b3152f316","pr":269,"merged":True},
+            "chatgpt/openrouter-budget-epoch-20260920":{"sha":"3b57595d44c77edf7a23bf6fef671048c6a7b8f5","pr":264,"merged":True},
+            "chatgpt/openrouter-simple-budget-20260920":{"sha":"2f330ba517ba8ff1201d9292e4df9a6a94ca5196","pr":270,"merged":True},
+            "chatgpt/reauthorize-claude-review-20260920":{"sha":"766b864216e8969ddcb6f8a7e0f234a1b0fcc29b","pr":247,"merged":False},
+          }
 
-          target = "chatgpt/v1510-three-artifact-review-20260918"
-          expected_sha = "a27db5b19782cb03f58a4df96949115a45604dc6"
+          def request(url,method="GET"):
+              req=urllib.request.Request(url,method=method,headers={
+                  "Authorization":"Bearer "+token,
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+                  "User-Agent":"garden-post-budget-branch-cleanup",
+              })
+              with urllib.request.urlopen(req,timeout=30) as response:
+                  raw=response.read()
+                  return json.loads(raw.decode()) if raw else None
 
-          def request(url, *, method="GET"):
-              req = urllib.request.Request(
-                  url,
-                  method=method,
-                  headers={
-                      "Authorization": "Bearer " + token,
-                      "Accept": "application/vnd.github+json",
-                      "X-GitHub-Api-Version": "2022-11-28",
-                      "User-Agent": "garden-one-use-final-retired-branch-cleanup",
-                  },
-              )
-              with urllib.request.urlopen(req, timeout=30) as response:
-                  raw = response.read()
-                  return json.loads(raw.decode("utf-8")) if raw else None
-
-          deleted = []
-          skipped = []
-
-          # The current branch head was independently compared to this exact
-          # commit before this cleanup PR was created. Re-check live state.
-          ref_path = "heads/" + urllib.parse.quote(target, safe="/")
-          try:
-              live = request(api + "/git/ref/" + ref_path)
-          except urllib.error.HTTPError as exc:
-              if exc.code == 404:
-                  live = None
-              else:
+          deleted=[];skipped=[]
+          for name,meta in candidates.items():
+              if name in protected or name.startswith("chatgpt/v1510") or name.startswith("chatgpt/v1511") or "android" in name:
+                  raise SystemExit("protected/active work entered cleanup allowlist")
+              pr=request(api+"/pulls/"+str(meta["pr"]))
+              if pr.get("state")!="closed":
+                  skipped.append([name,"pr_not_closed"]);continue
+              if bool(pr.get("merged_at")) != meta["merged"]:
+                  skipped.append([name,"merge_state_changed"]);continue
+              if ((pr.get("head") or {}).get("ref"))!=name or ((pr.get("head") or {}).get("sha"))!=meta["sha"]:
+                  skipped.append([name,"pr_head_binding_changed"]);continue
+              q=urllib.parse.urlencode({"state":"open","head":owner+":"+name,"per_page":100})
+              if request(api+"/pulls?"+q):
+                  skipped.append([name,"open_pr_now_exists"]);continue
+              ref="heads/"+urllib.parse.quote(name,safe="/")
+              try:
+                  live=request(api+"/git/ref/"+ref)
+              except urllib.error.HTTPError as exc:
+                  if exc.code==404:
+                      skipped.append([name,"already_absent"]);continue
                   raise
-          if live is None:
-              skipped.append([target, "already_absent"])
-          elif ((live.get("object") or {}).get("sha")) != expected_sha:
-              skipped.append([target, "sha_changed"])
-          else:
-              q = urllib.parse.urlencode({
-                  "state": "open",
-                  "head": owner + ":" + target,
-                  "per_page": 100,
-              })
-              if request(api + "/pulls?" + q):
-                  skipped.append([target, "open_pr_now_exists"])
-              else:
-                  # Preserve historical proof that the identical commit was used
-                  # by the already-completed temporary closure PRs.
-                  p223 = request(api + "/pulls/223")
-                  p224 = request(api + "/pulls/224")
-                  if ((p223.get("head") or {}).get("sha")) != expected_sha:
-                      raise SystemExit("PR 223 no longer binds expected retired commit")
-                  if ((p224.get("head") or {}).get("sha")) != expected_sha:
-                      raise SystemExit("PR 224 no longer binds expected retired commit")
-                  if p223.get("state") != "closed" or p224.get("state") != "closed":
-                      raise SystemExit("temporary closure PRs are not closed")
-                  request(api + "/git/refs/" + ref_path, method="DELETE")
-                  deleted.append(target)
+              if ((live or {}).get("object") or {}).get("sha")!=meta["sha"]:
+                  skipped.append([name,"sha_changed"]);continue
+              request(api+"/git/refs/"+ref,method="DELETE")
+              deleted.append(name)
 
-          # Retire this one-use cleanup branch itself only after PR 267 merged.
-          cleanup_branch = "chatgpt/one-use-final-retired-branch-cleanup-20260920"
-          cleanup_pr = request(api + "/pulls/267")
-          cleanup_expected = ((cleanup_pr.get("head") or {}).get("sha"))
-          if cleanup_pr.get("merged_at") and cleanup_expected:
-              q = urllib.parse.urlencode({
-                  "state": "open",
-                  "head": owner + ":" + cleanup_branch,
-                  "per_page": 100,
-              })
-              if not request(api + "/pulls?" + q):
-                  ref_path = "heads/" + urllib.parse.quote(cleanup_branch, safe="/")
+          cleanup="chatgpt/post-budget-branch-cleanup-20260920"
+          pr=request(api+"/pulls/272")
+          expected=((pr.get("head") or {}).get("sha"))
+          if pr.get("merged_at") and expected:
+              q=urllib.parse.urlencode({"state":"open","head":owner+":"+cleanup,"per_page":100})
+              if not request(api+"/pulls?"+q):
+                  ref="heads/"+urllib.parse.quote(cleanup,safe="/")
                   try:
-                      live = request(api + "/git/ref/" + ref_path)
+                      live=request(api+"/git/ref/"+ref)
                   except urllib.error.HTTPError as exc:
-                      if exc.code == 404:
-                          live = None
-                      else:
-                          raise
-                  if live and ((live.get("object") or {}).get("sha")) == cleanup_expected:
-                      request(api + "/git/refs/" + ref_path, method="DELETE")
-                      deleted.append(cleanup_branch)
+                      live=None if exc.code==404 else (_ for _ in ()).throw(exc)
+                  if live and ((live.get("object") or {}).get("sha"))==expected:
+                      request(api+"/git/refs/"+ref,method="DELETE")
+                      deleted.append(cleanup)
                   elif live:
-                      skipped.append([cleanup_branch, "sha_changed"])
+                      skipped.append([cleanup,"sha_changed"])
 
-          print("DELETED_FINAL_RETIRED_BRANCHES=" + json.dumps(deleted, sort_keys=True))
-          print("SKIPPED_FINAL_RETIRED_BRANCHES=" + json.dumps(skipped, sort_keys=True))
+          print("DELETED="+json.dumps(deleted,sort_keys=True))
+          print("SKIPPED="+json.dumps(skipped,sort_keys=True))
