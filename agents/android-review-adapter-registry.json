@@ -1,23 +1,31 @@
 {
   "schema": "GardenAndroidReviewAdapterRegistry/v1",
-  "status": "PROTOTYPE_UNQUALIFIED",
+  "status": "PACKAGE_DISCOVERY_CONFIRMED",
   "bridge": "SHIZUKU_ADB_IDENTITY",
   "reviewers": [
     {
       "id": "deepseek",
-      "state": "NEEDS_CALIBRATION"
+      "state": "PACKAGE_CONFIRMED_NEEDS_UI_CALIBRATION",
+      "package": "com.deepseek.chat",
+      "version": "2.5.2"
     },
     {
       "id": "gemini",
-      "state": "NEEDS_CALIBRATION"
+      "state": "PACKAGE_CONFIRMED_NEEDS_UI_CALIBRATION",
+      "package": "com.google.android.apps.bard",
+      "version": "1.0.971139365"
     },
     {
       "id": "claude",
-      "state": "NEEDS_CALIBRATION"
+      "state": "PACKAGE_CONFIRMED_NEEDS_UI_CALIBRATION",
+      "package": "com.anthropic.claude",
+      "version": "1.260918.19"
     },
     {
       "id": "grok",
-      "state": "NEEDS_CALIBRATION"
+      "state": "PACKAGE_CONFIRMED_NEEDS_UI_CALIBRATION",
+      "package": "ai.x.grok",
+      "version": "1.2.37-release.00"
     }
   ],
   "qwen": {
@@ -27,5 +35,11 @@
     "running_requires_dispatch_receipt": true,
     "complete_requires_response_sha256": true
   },
-  "semantic_delta_admitted": false
+  "semantic_delta_admitted": false,
+  "discovery_receipt": {
+    "source": "USER_DEVICE_V0_6_BOUNDED_PROBE",
+    "date": "2026-09-20",
+    "shizuku_uid": 2000,
+    "authorized": true
+  }
 }
