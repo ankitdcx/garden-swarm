@@ -616,7 +616,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires a declared audited scope, completed search coverage, all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence, required independent review, and separate protected authorization for protected changes.",
+      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires a declared audited scope, completed search coverage, all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence/review and protected authorization where applicable; every closure-evidence result must bind the exact candidate SHA-256 being closed.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -638,7 +638,24 @@
         "FINAL_REAUDIT_UNKNOWN",
         "AUDITED_SCOPE_NOT_DECLARED",
         "SEARCH_COVERAGE_FAILED",
-        "SEARCH_COVERAGE_UNKNOWN"
+        "SEARCH_COVERAGE_UNKNOWN",
+        "CANDIDATE_HASH_MISSING",
+        "SEARCH_COVERAGE_BINDING_UNKNOWN",
+        "SEARCH_COVERAGE_BINDING_MISMATCH",
+        "PROPAGATION_CLOSURE_BINDING_UNKNOWN",
+        "PROPAGATION_CLOSURE_BINDING_MISMATCH",
+        "TESTS_BINDING_UNKNOWN",
+        "TESTS_BINDING_MISMATCH",
+        "RETENTION_NO_LOSS_BINDING_UNKNOWN",
+        "RETENTION_NO_LOSS_BINDING_MISMATCH",
+        "VERIFICATION_INDEPENDENCE_BINDING_UNKNOWN",
+        "VERIFICATION_INDEPENDENCE_BINDING_MISMATCH",
+        "INDEPENDENT_REVIEW_BINDING_UNKNOWN",
+        "INDEPENDENT_REVIEW_BINDING_MISMATCH",
+        "PROTECTED_AUTHORIZATION_BINDING_UNKNOWN",
+        "PROTECTED_AUTHORIZATION_BINDING_MISMATCH",
+        "FINAL_REAUDIT_BINDING_UNKNOWN",
+        "FINAL_REAUDIT_BINDING_MISMATCH"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -655,7 +672,8 @@
         "protected authorization",
         "final re-audit",
         "declared audited scope",
-        "search/audit coverage closure"
+        "search/audit coverage closure",
+        "exact candidate SHA-256 bindings for closure evidence"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
