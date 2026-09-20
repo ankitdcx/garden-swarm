@@ -567,7 +567,10 @@ def test_authority_delta_requires_evidence_and_revocation_appeal_bindings():
     )
     result = evaluate_transition(
         p,
-        context(authority_delta_validation={"d1": True}),
+        context(
+            authority_delta_validation={"d1": True},
+            authority_delta_digest_by_id={"d1": delta.digest()},
+        ),
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("AUTHORITY_DELTA_BINDING_INCOMPLETE:d1",)
@@ -582,9 +585,13 @@ def test_validated_authority_delta_can_transfer_without_minting_authority():
         effect_scope="institution:bounded",
         authority_deltas=(valid_authority_delta(),),
     )
+    delta = p.authority_deltas[0]
     result = evaluate_transition(
         p,
-        context(authority_delta_validation={"d1": True}),
+        context(
+            authority_delta_validation={"d1": True},
+            authority_delta_digest_by_id={"d1": delta.digest()},
+        ),
     )
     assert result.decision is TransitionDecision.ADVANCE
     assert result.authority_created is False
@@ -597,3 +604,37 @@ def test_unvalidated_transition_criteria_profile_cannot_pass():
     )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("TRANSITION_CRITERIA_PROFILE_UNVALIDATED",)
+
+
+def test_changed_authority_delta_cannot_reuse_old_validation_digest():
+    original = valid_authority_delta()
+    changed = AuthorityDelta(
+        delta_id=original.delta_id,
+        delegator=original.delegator,
+        recipient=original.recipient,
+        actions=frozenset({"review", "enforce"}),
+        resources=original.resources,
+        affected_subjects=original.affected_subjects,
+        jurisdiction=original.jurisdiction,
+        invalidation_conditions=original.invalidation_conditions,
+        revocation_path=original.revocation_path,
+        appeal_path=original.appeal_path,
+        evidence_refs=original.evidence_refs,
+    )
+    p = TransitionProposal(
+        transition_id="t1",
+        current_stage=TransitionStage.SHADOW,
+        next_stage=TransitionStage.PARALLEL,
+        declared_stage_plan=PLAN,
+        effect_scope="institution:bounded",
+        authority_deltas=(changed,),
+    )
+    result = evaluate_transition(
+        p,
+        context(
+            authority_delta_validation={"d1": True},
+            authority_delta_digest_by_id={"d1": original.digest()},
+        ),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("AUTHORITY_DELTA_DIGEST_MISMATCH:d1",)
