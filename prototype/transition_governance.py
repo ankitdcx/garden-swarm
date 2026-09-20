@@ -13,6 +13,19 @@ class TransitionStage(str, Enum):
     STABLE_OPERATION = "STABLE_OPERATION"
 
 
+STANDARD_TRANSITION_PLAN = (
+    TransitionStage.SHADOW,
+    TransitionStage.PARALLEL,
+    TransitionStage.BOUNDED_ACTIVE,
+    TransitionStage.EXPANDED_ACTIVE,
+    TransitionStage.STABLE_OPERATION,
+)
+
+BASE_TRANSITION_HARD_GATES = frozenset(
+    {"rights", "consent", "privacy", "law", "safety", "human_effect"}
+)
+
+
 class TransitionDecision(str, Enum):
     ADVANCE = "ADVANCE"
     HOLD = "HOLD"
@@ -30,15 +43,15 @@ class TransitionProposal:
     declared_stage_plan: tuple[TransitionStage, ...]
     effect_scope: str
     reversible_effect: bool = True
+    stage_omission_justifications: Mapping[TransitionStage, str] = field(default_factory=dict)
 
 
 @dataclass
 class TransitionContext:
     authority_validated: Optional[bool]
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
-    required_hard_gates: frozenset[str] = frozenset(
-        {"rights", "consent", "privacy", "law", "safety", "human_effect"}
-    )
+    required_hard_gates: frozenset[str] = frozenset()
+    stage_omission_approval: Mapping[TransitionStage, Optional[bool]] = field(default_factory=dict)
     independent_verification: Optional[bool] = None
     divergence_resolved: Optional[bool] = None
     capture_conflict_clear: Optional[bool] = None
@@ -92,6 +105,32 @@ def evaluate_transition(
             TransitionDecision.REJECT, ("INVALID_DECLARED_STAGE_PLAN",)
         )
 
+    ordered_projection = tuple(stage for stage in STANDARD_TRANSITION_PLAN if stage in plan)
+    if ordered_projection != plan:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("INVALID_DECLARED_STAGE_ORDER",)
+        )
+
+    omitted_stages = tuple(stage for stage in STANDARD_TRANSITION_PLAN if stage not in plan)
+    for stage in omitted_stages:
+        justification = proposal.stage_omission_justifications.get(stage, "").strip()
+        if not justification:
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"STAGE_OMISSION_UNJUSTIFIED:{stage.value}",),
+            )
+        approval = context.stage_omission_approval.get(stage)
+        if approval is False:
+            return TransitionResult(
+                TransitionDecision.HOLD,
+                (f"STAGE_OMISSION_NOT_APPROVED:{stage.value}",),
+            )
+        if approval is not True:
+            return TransitionResult(
+                TransitionDecision.ESCALATE,
+                (f"STAGE_OMISSION_APPROVAL_UNKNOWN:{stage.value}",),
+            )
+
     try:
         current_index = plan.index(proposal.current_stage)
     except ValueError:
@@ -113,9 +152,10 @@ def evaluate_transition(
             TransitionDecision.ESCALATE, ("TRANSITION_AUTHORITY_UNKNOWN",)
         )
 
+    required_hard_gates = BASE_TRANSITION_HARD_GATES | context.required_hard_gates
     failed_gates = sorted(
         gate
-        for gate in context.required_hard_gates
+        for gate in required_hard_gates
         if context.hard_gates.get(gate) is False
     )
     if failed_gates:
@@ -126,7 +166,7 @@ def evaluate_transition(
 
     unknown_gates = sorted(
         gate
-        for gate in context.required_hard_gates
+        for gate in required_hard_gates
         if context.hard_gates.get(gate) is not True
         and context.hard_gates.get(gate) is not False
     )
@@ -159,6 +199,15 @@ def evaluate_transition(
     if context.operational_readiness is not True:
         return TransitionResult(
             TransitionDecision.ESCALATE, ("OPERATIONAL_READINESS_UNKNOWN",)
+        )
+
+    if not context.entry_criteria:
+        return TransitionResult(
+            TransitionDecision.ESCALATE, ("ENTRY_CRITERIA_MISSING",)
+        )
+    if not context.exit_criteria:
+        return TransitionResult(
+            TransitionDecision.ESCALATE, ("EXIT_CRITERIA_MISSING",)
         )
 
     entry = _criteria_result("ENTRY_CRITERION", context.entry_criteria)
