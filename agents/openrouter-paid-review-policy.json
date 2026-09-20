@@ -22,7 +22,9 @@
     "sort": "price",
     "allow_fallbacks": true,
     "data_collection": "deny",
-    "ignore": [],
+    "ignore": [
+      "anthropic"
+    ],
     "max_price_usd_per_million_tokens": {
       "prompt": 1,
       "completion": 3
@@ -169,8 +171,8 @@
     "A single correct material counterexample defeats any number of approvals.",
     "NO_SUBSTANTIVE_OUTPUT is recorded and not automatically retried against an unchanged packet.",
     "Expensive frontier models require an explicit future human opt-in and are never automatic.",
-    "This policy is operational only and creates no Garden semantic authority.",
-    "Anthropic/Claude was re-authorized for Garden review by explicit human directive on 2026-09-20. Automatic paid frontier use remains separately budget-gated."
+    "NVIDIA/Nemotron and Mistral were re-authorized for low-cost Garden review by explicit human directive on 2026-09-19; Anthropic remains excluded by operator routing policy.",
+    "This policy is operational only and creates no Garden semantic authority."
   ],
   "budget_pools_usd": {
     "routine": 9,
