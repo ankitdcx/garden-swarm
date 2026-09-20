@@ -78,6 +78,7 @@ class RuntimeInstruction:
 @dataclass
 class RuntimeConstitutionContext:
     current_policy_epoch: str
+    assurance_policy_epoch: str | None
     capabilities_by_subject: Mapping[str, frozenset[str]]
     authority_by_subject: Mapping[str, AuthorityEnvelope] = field(default_factory=dict)
     authority_validation_by_subject: Mapping[str, Optional[bool]] = field(default_factory=dict)
@@ -88,7 +89,7 @@ class RuntimeConstitutionContext:
     human_effect_materiality_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
     human_effect_materiality_validation_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
     required_human_effect_gates: frozenset[str] = frozenset()
-    external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
+    external_runtime_blocks: Mapping[str, frozenset[tuple[str, str]]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
     goal_validity_by_id: Mapping[str, GoalValidity] = field(default_factory=dict)
 
@@ -164,12 +165,17 @@ def evaluate_goal(goal: GoalProposal, context: RuntimeConstitutionContext) -> Ru
     )
 
 
-def _external_block_sources(action: str, context: RuntimeConstitutionContext) -> tuple[str, ...]:
+def _external_block_sources(
+    action: str, target: str, context: RuntimeConstitutionContext
+) -> tuple[str, ...]:
+    effect = (action, target)
     return tuple(
         sorted(
             source
-            for source, blocked_actions in context.external_runtime_blocks.items()
-            if action in blocked_actions or "*" in blocked_actions
+            for source, blocked_effects in context.external_runtime_blocks.items()
+            if effect in blocked_effects
+            or (action, "*") in blocked_effects
+            or ("*", "*") in blocked_effects
         )
     )
 
@@ -185,6 +191,15 @@ def evaluate_instruction(
 
     if instruction.policy_epoch != context.current_policy_epoch:
         return RuntimeResult(RuntimeDecision.REJECT, ("STALE_POLICY_EPOCH",))
+
+    if context.assurance_policy_epoch is None:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("RUNTIME_ASSURANCE_EPOCH_UNKNOWN",)
+        )
+    if context.assurance_policy_epoch != context.current_policy_epoch:
+        return RuntimeResult(
+            RuntimeDecision.REJECT, ("RUNTIME_ASSURANCE_EPOCH_STALE",)
+        )
 
     if instruction.goal_id:
         validity_result = _goal_validity_result(instruction.goal_id, context)
@@ -330,7 +345,9 @@ def evaluate_instruction(
                 tuple(f"HUMAN_EFFECT_GATE_UNKNOWN:{gate}" for gate in unknown),
             )
 
-    block_sources = _external_block_sources(instruction.action, context)
+    block_sources = _external_block_sources(
+        instruction.action, instruction.target, context
+    )
     if block_sources:
         return RuntimeResult(
             RuntimeDecision.EXTERNALLY_BLOCKED,
