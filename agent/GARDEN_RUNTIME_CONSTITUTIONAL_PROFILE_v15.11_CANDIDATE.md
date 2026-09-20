@@ -103,6 +103,8 @@ Only VALIDATED authority can participate in an ALLOW result. INVALID rejects. UN
 
 For delegated authority, each consequential delegation hop must also be explicitly bound to its actual parent/delegator. Authority validation is content-addressed over the exact envelope scope, parent/delegator and provenance; expanding actions/resources/depth or changing lineage invalidates the prior validation. Independent validation of two subjects plus free-form provenance text is not enough to prove that one validly delegated to the other.
 
+The executable reference now requires a typed `AuthorityValidationReceipt` for each hop. The receipt binds the exact authority-claim digest, parent, active policy epoch, jurisdiction/context, authenticated identity, revocation state, evidence references and verifier identity/control lineage. Required independence is an explicit non-PASS gate, not inferred from having multiple process names.
+
 A cryptographic signature may prove possession of a key. It does not by itself prove that the signer possessed the claimed authority.
 
 ## Goal and means rule
@@ -111,7 +113,11 @@ Goal admission and action admission remain separate.
 
 A model may independently create a useful long-horizon goal. It may research, reason, simulate, test and prepare within existing authority. Goal persistence itself requires current DesignEpoch, delegation, expiry, dependency-freshness, resource-bound and termination-condition status; missing/failed bindings are non-PASS and are rechecked at later action points. Every real-world effect is admitted separately. A goal never carries an implicit wildcard over the means needed to pursue it.
 
+Persistent goal state is represented by a typed `GoalLease`, not by a bare goal ID. The lease binds DesignEpoch/policy epoch, delegated authority-claim digests, dependency digest, resource bound, termination condition, invalidators and evidence. A separate independent validation receipt is bound to the exact lease digest; changing the lease or the authority it depends on invalidates the old validation.
+
 External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint. External blocks are scoped to the concrete action+target (or an explicitly declared wildcard), so a block on one target cannot silently become a universal semantic prohibition.
+
+The runtime result carries Garden admission and external enforcement as separate dimensions. A host requirement that conflicts with Garden non-ALLOW is recorded as `EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT`; a host block on a Garden-allowed action is `EXTERNALLY_BLOCKED`. Neither dimension overwrites the other.
 
 Human-effect materiality is itself a required typed input to consequential action admission and is bound to the concrete action + target/effect scope. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. The classification validation is content-addressed over the exact action, target, materiality value and policy epoch, so flipping a previously material effect to non-material invalidates old validation. A proposer cannot self-label its effect as harmless and thereby bypass Human-Effect Closure.
 
