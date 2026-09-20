@@ -76,7 +76,7 @@ class RuntimeConstitutionContext:
     revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     high_impact_actions: frozenset[str] = frozenset()
-    human_effect_materiality_by_action: Mapping[str, Optional[bool]] = field(default_factory=dict)
+    human_effect_materiality_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
     required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
@@ -235,8 +235,8 @@ def evaluate_instruction(
     ):
         return RuntimeResult(RuntimeDecision.REJECT, ("AUTHORITY_SCOPE_DENIED",))
 
-    material_human_effect = context.human_effect_materiality_by_action.get(
-        instruction.action
+    material_human_effect = context.human_effect_materiality_by_effect.get(
+        (instruction.action, instruction.target)
     )
     if material_human_effect is None:
         if instruction.action in context.high_impact_actions:
