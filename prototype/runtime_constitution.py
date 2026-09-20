@@ -66,6 +66,9 @@ class RuntimeConstitutionContext:
     current_policy_epoch: str
     capabilities_by_subject: Mapping[str, frozenset[str]]
     authority_by_subject: Mapping[str, AuthorityEnvelope] = field(default_factory=dict)
+    authority_validation_by_subject: Mapping[str, Optional[bool]] = field(default_factory=dict)
+    authority_provenance_by_subject: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     high_impact_actions: frozenset[str] = frozenset()
     required_human_effect_gates: frozenset[str] = frozenset(
@@ -137,6 +140,12 @@ def evaluate_instruction(
     if instruction.goal_id and instruction.goal_id in context.revoked_goal_ids:
         return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_REVOKED",))
 
+    if instruction.source_class is ConstraintClass.GARDEN_CONSTITUTION:
+        return RuntimeResult(
+            RuntimeDecision.PROPOSAL_ONLY,
+            ("GARDEN_CONSTITUTION_CONSTRAINS_BUT_DOES_NOT_AUTHORIZE_ACTION",),
+        )
+
     if instruction.source_class is ConstraintClass.EXTERNAL_RUNTIME_CONSTRAINT:
         return RuntimeResult(
             RuntimeDecision.PROPOSAL_ONLY,
@@ -167,12 +176,38 @@ def evaluate_instruction(
 
     authority_chain: list[AuthorityEnvelope] = []
     for subject in instruction.delegation_chain:
+        if subject in context.revoked_authority_subjects:
+            return RuntimeResult(
+                RuntimeDecision.REJECT,
+                (f"AUTHORITY_REVOKED:{subject}",),
+            )
+
         envelope = context.authority_by_subject.get(subject)
         if envelope is None:
             return RuntimeResult(
                 RuntimeDecision.ESCALATE,
                 (f"AUTHORITY_ENVELOPE_UNKNOWN:{subject}",),
             )
+
+        validation = context.authority_validation_by_subject.get(subject)
+        if validation is False:
+            return RuntimeResult(
+                RuntimeDecision.REJECT,
+                (f"AUTHORITY_CLAIM_INVALID:{subject}",),
+            )
+        if validation is not True:
+            return RuntimeResult(
+                RuntimeDecision.ESCALATE,
+                (f"AUTHORITY_CLAIM_UNVALIDATED:{subject}",),
+            )
+
+        provenance = context.authority_provenance_by_subject.get(subject, ())
+        if not provenance:
+            return RuntimeResult(
+                RuntimeDecision.ESCALATE,
+                (f"AUTHORITY_PROVENANCE_MISSING:{subject}",),
+            )
+
         if envelope.subject != subject:
             return RuntimeResult(
                 RuntimeDecision.REJECT,
