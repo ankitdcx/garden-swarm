@@ -96,6 +96,15 @@ def _push_dispatch_request() -> dict:
     return value
 
 
+def validate_push_dispatch_binding(
+    request: dict, issue_number: int, packet: dict
+) -> None:
+    if int(request.get("run_issue_number", 0)) != issue_number:
+        raise ValueError("GROUP_REVIEW push dispatch issue binding mismatch")
+    if request.get("packet_sha256") != packet.get("packet_sha256"):
+        raise ValueError("GROUP_REVIEW push dispatch packet binding mismatch")
+
+
 def trigger_issue_number() -> int:
     if os.environ.get("GITHUB_REPOSITORY") != REPO or os.environ.get("GITHUB_REF") != "refs/heads/main":
         raise ValueError("GROUP_REVIEW OpenRouter worker requires installed main")
@@ -284,10 +293,7 @@ def preflight(root: Path = Path(".")) -> tuple[int, dict]:
     _, packet = fetch_run_issue(gh, issue_number)
     if os.environ.get("GITHUB_EVENT_NAME") == "push":
         request = _push_dispatch_request()
-        if int(request["run_issue_number"]) != issue_number:
-            raise ValueError("GROUP_REVIEW push dispatch issue binding mismatch")
-        if request["packet_sha256"] != packet["packet_sha256"]:
-            raise ValueError("GROUP_REVIEW push dispatch packet binding mismatch")
+        validate_push_dispatch_binding(request, issue_number, packet)
     ledger = GroupReviewLedger(gh)
     if ledger.value.get("paused") is not False:
         raise ValueError("GROUP_REVIEW OpenRouter ledger paused")
