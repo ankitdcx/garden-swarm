@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Garden Review Bridge
 // @namespace    https://github.com/ankitdcx/garden-swarm
-// @version      0.2.0
+// @version      0.2.1
 // @description  Local-only Garden bridge for AI web reviewers
 // @match        https://chat.deepseek.com/*
 // @match        https://gemini.google.com/*
@@ -11,6 +11,7 @@
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @connect      127.0.0.1
+// @connect      localhost
 // @run-at       document-idle
 // ==/UserScript==
 (function(){
@@ -44,8 +45,8 @@
    try{const j=JSON.parse(r.responseText); if(!j||!j.job_id||!j.prompt||GM_getValue('last_job_'+provider,'')===j.job_id)return;
     const e=composer(); if(!e)return; setComposer(e,j.prompt); GM_setValue('last_job_'+provider,j.job_id);
     GM_xmlhttpRequest({method:'POST',url:'http://127.0.0.1:17351/job/'+provider+'/prepared',headers:{'Content-Type':'application/json'},data:JSON.stringify({job_id:j.job_id,prepared:true})});
-   }catch(_){}
-  }});
+   }catch(err){GM_xmlhttpRequest({method:'POST',url:'http://127.0.0.1:17351/debug',headers:{'Content-Type':'application/json'},data:JSON.stringify({provider,stage:'poll-parse',error:String(err),status:r.status,body:String(r.responseText).slice(0,500)})});}
+  },onerror:e=>GM_xmlhttpRequest({method:'POST',url:'http://127.0.0.1:17351/debug',headers:{'Content-Type':'application/json'},data:JSON.stringify({provider,stage:'poll-http-error',error:String(e.error||e)})})});
  }
  setTimeout(post,2500); setInterval(post,10000); setInterval(pollJob,3000);
 })();
