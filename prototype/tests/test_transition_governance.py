@@ -53,6 +53,7 @@ def context(**overrides):
         exit_criteria={"exit": True},
         rollback_ready=True,
         compensation_recovery_ready=True,
+        last_qualified_stage=TransitionStage.PARALLEL,
     )
     values.update(overrides)
     return TransitionContext(**values)
@@ -355,3 +356,35 @@ def test_recovery_requires_independent_verification():
     )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",)
+
+
+def test_rollback_target_must_equal_last_qualified_stage():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.EXPANDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(last_qualified_stage=TransitionStage.BOUNDED_ACTIVE),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("ROLLBACK_TARGET_NOT_LAST_QUALIFIED",)
+
+
+def test_unknown_last_qualified_stage_blocks_rollback():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(last_qualified_stage=None),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("LAST_QUALIFIED_STAGE_UNKNOWN",)
