@@ -7,7 +7,19 @@ from prototype.upgrade_process import (
 
 
 def complete_context(**overrides):
+    candidate_hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     values = dict(
+        candidate_sha256=candidate_hash,
+        gate_candidate_bindings={
+            "SEARCH_COVERAGE": candidate_hash,
+            "PROPAGATION_CLOSURE": candidate_hash,
+            "TESTS": candidate_hash,
+            "RETENTION_NO_LOSS": candidate_hash,
+            "VERIFICATION_INDEPENDENCE": candidate_hash,
+            "INDEPENDENT_REVIEW": candidate_hash,
+            "PROTECTED_AUTHORIZATION": candidate_hash,
+            "FINAL_REAUDIT": candidate_hash,
+        },
         audited_scope_declared=True,
         search_coverage_complete=True,
         finding_dispositions={
@@ -126,3 +138,22 @@ def test_undeclared_audit_scope_cannot_close_candidate():
     )
     assert result.decision is UpgradeDecision.HOLD
     assert result.reasons == ("AUDITED_SCOPE_NOT_DECLARED",)
+
+
+def test_old_test_pass_cannot_be_replayed_after_candidate_changes():
+    old_hash = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    ctx = complete_context(candidate_sha256=old_hash)
+    result = evaluate_upgrade_closure(ctx)
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("SEARCH_COVERAGE_BINDING_MISMATCH",)
+
+
+def test_missing_final_reaudit_candidate_binding_blocks_closure():
+    ctx = complete_context()
+    bindings = dict(ctx.gate_candidate_bindings)
+    bindings.pop("FINAL_REAUDIT")
+    result = evaluate_upgrade_closure(
+        complete_context(gate_candidate_bindings=bindings)
+    )
+    assert result.decision is UpgradeDecision.ESCALATE
+    assert result.reasons == ("FINAL_REAUDIT_BINDING_UNKNOWN",)
