@@ -8,6 +8,8 @@ from prototype.upgrade_process import (
 
 def complete_context(**overrides):
     values = dict(
+        audited_scope_declared=True,
+        search_coverage_complete=True,
         finding_dispositions={
             "F-1": FindingDisposition.FIXED,
             "F-2": FindingDisposition.REJECTED_WITH_EVIDENCE,
@@ -105,3 +107,22 @@ def test_unbounded_recursive_cycle_cannot_close():
     )
     assert result.decision is UpgradeDecision.HOLD
     assert result.reasons == ("BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",)
+
+
+def test_empty_finding_list_without_search_coverage_cannot_close():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            finding_dispositions={},
+            search_coverage_complete=False,
+        )
+    )
+    assert result.decision is UpgradeDecision.CONTINUE_WORK
+    assert result.reasons == ("SEARCH_COVERAGE_FAILED",)
+
+
+def test_undeclared_audit_scope_cannot_close_candidate():
+    result = evaluate_upgrade_closure(
+        complete_context(audited_scope_declared=False)
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("AUDITED_SCOPE_NOT_DECLARED",)
