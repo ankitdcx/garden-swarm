@@ -372,7 +372,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound and parent-bound scoped authority/capability plus applicable Human-Effect Closure gates; the existence of an AuthorityEnvelope, free-form provenance text, instruction source identity, or external block is insufficient.",
+      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound and parent-bound scoped authority/capability, explicit human-effect materiality classification, and applicable Human-Effect Closure gates; missing materiality, an AuthorityEnvelope, free-form provenance text, source identity, or external block cannot create permission.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -393,7 +393,8 @@
         "HUMAN_EFFECT_GATE_FAILED",
         "HUMAN_EFFECT_GATE_UNKNOWN",
         "AUTHORITY_PARENT_UNKNOWN",
-        "AUTHORITY_PARENT_MISMATCH"
+        "AUTHORITY_PARENT_MISMATCH",
+        "HUMAN_EFFECT_MATERIALITY_UNKNOWN"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -410,7 +411,8 @@
         "Human-Effect Closure hard gates",
         "authority parent/delegator binding",
         "immutable base Human-Effect Closure gate floor",
-        "external block classification after semantic admission"
+        "external block classification after semantic admission",
+        "human-effect materiality classification"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
