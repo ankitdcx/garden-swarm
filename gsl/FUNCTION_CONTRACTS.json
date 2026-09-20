@@ -486,7 +486,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation grants no authority. ADVANCE requires a separately validated transition authority claim, immutable base rights/consent/privacy/law/safety/Human-Effect gates, non-vacuous criteria, and any stage omission to be explicitly justified and approved; advancement cannot enlarge authority.",
+      "authority_requirement": "Evaluation grants no authority. ADVANCE requires all assurance inputs to be bound to the exact transition_id, effect_scope and current->next stage, plus validated authority, immutable base rights/consent/privacy/law/safety/Human-Effect gates, non-vacuous criteria and explicit omission approval.",
       "failure_mode_set": [
         "INVALID_DECLARED_STAGE_PLAN",
         "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
@@ -520,7 +520,9 @@
         "STAGE_OMISSION_NOT_APPROVED",
         "STAGE_OMISSION_APPROVAL_UNKNOWN",
         "ENTRY_CRITERIA_MISSING",
-        "EXIT_CRITERIA_MISSING"
+        "EXIT_CRITERIA_MISSING",
+        "TRANSITION_ASSURANCE_BINDING_UNKNOWN",
+        "TRANSITION_ASSURANCE_BINDING_MISMATCH"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -538,7 +540,8 @@
         "standard transition-stage order",
         "stage omission justification/approval",
         "immutable base transition hard-gate floor",
-        "non-vacuous entry/exit criteria"
+        "non-vacuous entry/exit criteria",
+        "exact transition/effect/stage assurance binding"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
@@ -561,7 +564,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Recovery evaluation grants no authority. ROLLBACK/COMPENSATE requires a confirmed material failure plus fresh recovery authority, immutable base hard gates, independent verification and capture/conflict review; reversible rollback may target only the recorded last qualified transition stage.",
+      "authority_requirement": "Recovery grants no authority. ROLLBACK/COMPENSATE requires assurance bound to the exact recovery transition/effect/current->target stage, confirmed material failure, fresh recovery authority, immutable base hard gates, independent verification and capture/conflict review; reversible rollback targets only the recorded last qualified stage.",
       "failure_mode_set": [
         "RECOVERY_TRIGGER_NOT_ESTABLISHED",
         "RECOVERY_TRIGGER_UNKNOWN",
@@ -580,7 +583,9 @@
         "RECOVERY_INDEPENDENT_VERIFICATION_FAILED",
         "RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",
         "LAST_QUALIFIED_STAGE_UNKNOWN",
-        "ROLLBACK_TARGET_NOT_LAST_QUALIFIED"
+        "ROLLBACK_TARGET_NOT_LAST_QUALIFIED",
+        "RECOVERY_ASSURANCE_BINDING_UNKNOWN",
+        "RECOVERY_ASSURANCE_BINDING_MISMATCH"
       ],
       "result_algebra": "TransitionDecision[ROLLBACK|COMPENSATE|HOLD|REJECT|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -594,7 +599,8 @@
         "compensation/recovery readiness",
         "standard transition-stage order",
         "independent recovery verification",
-        "last qualified transition stage"
+        "last qualified transition stage",
+        "exact transition/effect/stage assurance binding"
       ],
       "resource_and_termination_bounds": "Finite checks over fixed stage order and hard-gate set; no unbounded loop.",
       "provenance": [
