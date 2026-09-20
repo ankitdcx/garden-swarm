@@ -1,0 +1,39 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:one-use-final-retired-branch-cleanup:20260920",
+  "work_package_id": "ONE-USE-FINAL-RETIRED-BRANCH-CLEANUP-20260920",
+  "branch": "chatgpt/one-use-final-retired-branch-cleanup-20260920",
+  "base_sha": "7a8abc77ad77fb1cea0918a6c4cc2c1ab0489029",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:one-use-final-retired-branch-cleanup:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "ONE-USE-FINAL-RETIRED-BRANCH-CLEANUP-20260920",
+    "base_sha": "7a8abc77ad77fb1cea0918a6c4cc2c1ab0489029",
+    "target_paths": [
+      "workstreams/2026-09-20-one-use-final-retired-branch-cleanup.json",
+      ".github/workflows/one-use-merged-branch-cleanup-20260920.yml"
+    ],
+    "target_symbols": [
+      "final retired review branch cleanup"
+    ],
+    "semantic_domains": [
+      "REPOSITORY_HYGIENE",
+      "BRANCH_LIFECYCLE"
+    ],
+    "affected_invariants": [
+      "EXACT_HEAD_RECHECK_BEFORE_DELETE",
+      "NO_OPEN_PR_BEFORE_DELETE",
+      "PRESERVE_ACTIVE_AND_AMBIGUOUS_WORK"
+    ],
+    "affected_contracts": [
+      "RULE-BRANCH-LIFECYCLE-001"
+    ],
+    "intended_effect": "Retire only chatgpt/v1510-three-artifact-review-20260918 after proving its moved head is exactly the already retired temporary final-review commit, then retire this one-use cleanup branch. No other branch is eligible.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
