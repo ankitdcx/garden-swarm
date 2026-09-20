@@ -319,9 +319,9 @@
       ],
       "resource_and_termination_bounds": "Constant finite classification; no external effects.",
       "provenance": [
-        "Garden v15.10 working-candidate AuthorityHumanBoundary",
+        "Garden v15.11 runtime constitutional hardening candidate",
         "Capability != permission",
-        "RCP-001..012"
+        "RCP-001..018"
       ]
     },
     {
@@ -372,17 +372,22 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. ALLOW requires existing scoped authority/capability plus applicable hard gates; external runtime enforcement may block but cannot authorize.",
+      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound scoped authority/capability plus applicable hard gates; the existence of an AuthorityEnvelope or instruction source identity is insufficient.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
+        "GARDEN_CONSTITUTION_CONSTRAINS_BUT_DOES_NOT_AUTHORIZE_ACTION",
         "EXTERNAL_RUNTIME_CONSTRAINT_CANNOT_AUTHORIZE_ACTION",
         "EXTERNAL_RUNTIME_BLOCK",
         "AUTHORITY_CHAIN_MISSING",
         "INVALID_DELEGATION_ROOT",
         "INVALID_ACTOR_BINDING",
         "CAPABILITY_NOT_PRESENT",
+        "AUTHORITY_REVOKED",
         "AUTHORITY_ENVELOPE_UNKNOWN",
+        "AUTHORITY_CLAIM_INVALID",
+        "AUTHORITY_CLAIM_UNVALIDATED",
+        "AUTHORITY_PROVENANCE_MISSING",
         "AUTHORITY_SUBJECT_MISMATCH",
         "AUTHORITY_SCOPE_DENIED",
         "HUMAN_EFFECT_GATE_FAILED",
@@ -394,6 +399,9 @@
         "prototype.authority.can_execute",
         "policy_epoch",
         "authority envelopes",
+        "authority claim validation",
+        "authority provenance",
+        "authority revocation",
         "capability set",
         "revoked goals",
         "external runtime constraints",
@@ -402,7 +410,8 @@
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
         "Garden v15.10 working-candidate AuthorityHumanBoundary/EffectsSafety",
-        "RCP-001..012"
+        "Garden v15.11 runtime constitutional hardening candidate",
+        "RCP-001..018"
       ]
     },
     {
@@ -438,6 +447,71 @@
         "RCP-002",
         "RCP-008",
         "RCP-013"
+      ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-TRANSITION-GOVERNANCE-EVALUATE-v1",
+      "owner_qualified_name": "prototype.transition_governance.evaluate_transition",
+      "implementation_source": "prototype/transition_governance.py",
+      "inputs": [
+        "TransitionProposal",
+        "TransitionContext"
+      ],
+      "outputs": [
+        "TransitionResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
+      "authority_requirement": "Evaluation grants no authority. ADVANCE requires a separately validated transition authority claim and cannot enlarge authority merely by stage advancement or transition-coordinator status.",
+      "failure_mode_set": [
+        "INVALID_DECLARED_STAGE_PLAN",
+        "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
+        "DECLARED_STAGE_SKIP_OR_INVALID_NEXT_STAGE",
+        "TRANSITION_AUTHORITY_INVALID",
+        "TRANSITION_AUTHORITY_UNKNOWN",
+        "TRANSITION_HARD_GATE_FAILED",
+        "TRANSITION_HARD_GATE_UNKNOWN",
+        "INDEPENDENT_VERIFICATION_FAILED",
+        "INDEPENDENT_VERIFICATION_UNKNOWN",
+        "CAPTURE_OR_CONFLICT_CHECK_FAILED",
+        "CAPTURE_OR_CONFLICT_CHECK_UNKNOWN",
+        "OPERATIONAL_READINESS_FAILED",
+        "OPERATIONAL_READINESS_UNKNOWN",
+        "ENTRY_CRITERION_FAILED",
+        "ENTRY_CRITERION_UNKNOWN",
+        "EXIT_CRITERION_FAILED",
+        "EXIT_CRITERION_UNKNOWN",
+        "MATERIAL_DIVERGENCE_UNRESOLVED",
+        "DIVERGENCE_STATUS_UNKNOWN",
+        "MATERIAL_DISPUTE_PATH_NOT_READY",
+        "MATERIAL_DISPUTE_PATH_UNKNOWN",
+        "MATERIAL_DISPUTE_BLOCKS_EFFECT_SCOPE",
+        "DISPUTE_SEPARABILITY_UNKNOWN",
+        "ROLLBACK_NOT_READY",
+        "ROLLBACK_READINESS_UNKNOWN",
+        "IRREVERSIBLE_EFFECT_RECOVERY_NOT_READY",
+        "IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN"
+      ],
+      "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "Engine.Transition",
+        "Garden Transition Fabric",
+        "RCP-014..018",
+        "Human-Effect Closure",
+        "authority validation",
+        "independent verification",
+        "capture/conflict review",
+        "dual-run divergence",
+        "rollback/compensation",
+        "dispute path"
+      ],
+      "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
+      "provenance": [
+        "Garden v15.9 Engine.Transition/GTF retained semantics",
+        "TH15.8-13 PEACEFUL TRANSITION / JUSTICE SEPARATION",
+        "Garden Transition Fabric v15.11 Upgrade candidate"
       ]
     }
   ]
