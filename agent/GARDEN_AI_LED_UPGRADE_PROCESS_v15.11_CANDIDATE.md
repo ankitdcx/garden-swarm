@@ -132,6 +132,7 @@ A version may reach upgrade closure only when:
 - the audited scope is explicitly declared and the required systematic search/coverage pass has completed, so an empty finding list cannot masquerade as exhaustive review;
 - no currently known material defect remains unresolved in the audited scope;
 - all discovered material findings are FIXED, REJECTED_WITH_EVIDENCE, DEFERRED_WITH_OWNER/CONDITION, or ESCALATED under the explicit boundary above;
+- those dispositions are non-vacuous: FIXED/REJECTED carry evidence refs, DEFERRED carries an owner and reopen condition, and ESCALATED carries an explicit escalation target;
 - affected tests/proofs/checks pass;
 - retention/no-loss requirements pass;
 - independent checks required by materiality pass;
@@ -157,7 +158,7 @@ Changes to a verifier, admission gate, protected policy, trust root or independe
 
 ## Executable closure reference
 
-`prototype/upgrade_process.py` implements a narrow closure evaluator. It can return `CLOSE_CANDIDATE` only when audited scope and search coverage, material finding dispositions, bounded-cycle declaration, method authority, propagation, tests, retention/no-loss, verification independence, required independent review, protected authorization where applicable, and final re-audit are all resolved **and every closure-evidence gate is hash-bound to the exact candidate bytes**. `CLOSE_CANDIDATE` is not merge authority, canonical promotion, deployment certification or sovereignty.
+`prototype/upgrade_process.py` implements a narrow closure evaluator. It can return `CLOSE_CANDIDATE` only when audited scope and search coverage, evidence-backed typed finding dispositions, bounded-cycle declaration, method authority, propagation, tests, retention/no-loss, verification independence, required independent review, protected authorization where applicable, and final re-audit are all resolved **and every closure-evidence gate is hash-bound to the exact candidate bytes**. `CLOSE_CANDIDATE` is not merge authority, canonical promotion, deployment certification or sovereignty.
 
 ## Core invariants
 
