@@ -16,6 +16,19 @@ public final class UiProbeService extends IUiProbeService.Stub {
 
     @Override public void destroy() { System.exit(0); }
 
+    @Override public String calibrateDeepSeekTapAt(int x, int y, int width, int height) throws RemoteException {
+        try {
+            if (width < 300 || height < 600 || x < 0 || y < 0 || x >= width || y >= height)
+                return "invalid_tap=" + x + "," + y + "; display=" + width + "x" + height;
+            Process p = new ProcessBuilder("input","tap",String.valueOf(x),String.valueOf(y)).start();
+            int rc = p.waitFor();
+            return "uid=" + Os.getuid() + "; tap_rc=" + rc + "; display=" + width + "x" + height +
+                    "; tap=" + x + "," + y + "; text_inserted=false; message_sent=false";
+        } catch (Throwable t) {
+            throw new RemoteException(t.getClass().getSimpleName()+": "+String.valueOf(t.getMessage()));
+        }
+    }
+
     @Override public String calibrateDeepSeekTap(int width, int height) throws RemoteException {
         try {
             if (width < 300 || height < 600) return "invalid_display=" + width + "x" + height;
