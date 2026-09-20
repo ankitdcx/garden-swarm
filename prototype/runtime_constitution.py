@@ -39,11 +39,37 @@ class RuntimeDecision(str, Enum):
     EXTERNALLY_BLOCKED = "EXTERNALLY_BLOCKED"
 
 
+class ExternalEnforcementStatus(str, Enum):
+    NONE = "NONE"
+    BLOCKED = "BLOCKED"
+    REQUIRED = "REQUIRED"
+    BLOCKED_AND_REQUIRED = "BLOCKED_AND_REQUIRED"
+
+
 @dataclass(frozen=True)
 class RuntimeResult:
     decision: RuntimeDecision
     reasons: tuple[str, ...]
     authority_created: bool = False
+    garden_decision: RuntimeDecision | None = None
+    external_status: ExternalEnforcementStatus = ExternalEnforcementStatus.NONE
+
+
+@dataclass(frozen=True)
+class AuthorityValidationReceipt:
+    subject: str
+    claim_digest: str
+    parent_subject: str | None
+    policy_epoch: str
+    jurisdiction: str
+    context_scope: str
+    validation_pass: Optional[bool]
+    identity_authenticated: Optional[bool]
+    revoked: Optional[bool]
+    verifier_id: str
+    verifier_control_lineage: str
+    verifier_independent: Optional[bool]
+    evidence_refs: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -52,6 +78,48 @@ class GoalProposal:
     proposer: str
     source_class: ConstraintClass
     summary: str
+
+
+@dataclass(frozen=True)
+class GoalLease:
+    goal_id: str
+    design_epoch: str
+    policy_epoch: str
+    delegated_by: str
+    authority_claim_digests: tuple[str, ...]
+    dependency_digest: str
+    resource_bound: str
+    termination_condition: str
+    invalidators: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+
+    def digest(self) -> str:
+        return _sha256_payload(
+            {
+                "goal_id": self.goal_id,
+                "design_epoch": self.design_epoch,
+                "policy_epoch": self.policy_epoch,
+                "delegated_by": self.delegated_by,
+                "authority_claim_digests": list(self.authority_claim_digests),
+                "dependency_digest": self.dependency_digest,
+                "resource_bound": self.resource_bound,
+                "termination_condition": self.termination_condition,
+                "invalidators": list(self.invalidators),
+                "evidence_refs": list(self.evidence_refs),
+            }
+        )
+
+
+@dataclass(frozen=True)
+class GoalValidationReceipt:
+    goal_id: str
+    lease_digest: str
+    policy_epoch: str
+    validation_pass: Optional[bool]
+    verifier_id: str
+    verifier_control_lineage: str
+    verifier_independent: Optional[bool]
+    evidence_refs: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -75,18 +143,22 @@ class RuntimeInstruction:
     delegation_chain: tuple[str, ...]
     policy_epoch: str
     goal_id: str | None = None
+    jurisdiction: str = "default"
+    context_scope: str = "default"
 
 
 @dataclass
 class RuntimeConstitutionContext:
     current_policy_epoch: str
     assurance_policy_epoch: str | None
+    current_design_epoch: str
     capabilities_by_subject: Mapping[str, frozenset[str]]
     authority_by_subject: Mapping[str, AuthorityEnvelope] = field(default_factory=dict)
     authority_validation_by_subject: Mapping[str, Optional[bool]] = field(default_factory=dict)
     authority_provenance_by_subject: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     authority_parent_by_subject: Mapping[str, str] = field(default_factory=dict)
     authority_claim_digest_by_subject: Mapping[str, str] = field(default_factory=dict)
+    authority_validation_receipt_by_subject: Mapping[str, AuthorityValidationReceipt] = field(default_factory=dict)
     revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     human_effect_materiality_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
@@ -94,8 +166,11 @@ class RuntimeConstitutionContext:
     human_effect_materiality_digest_by_effect: Mapping[tuple[str, str], str] = field(default_factory=dict)
     required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[tuple[str, str]]] = field(default_factory=dict)
+    external_runtime_requirements: Mapping[str, frozenset[tuple[str, str]]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
     goal_validity_by_id: Mapping[str, GoalValidity] = field(default_factory=dict)
+    goal_lease_by_id: Mapping[str, GoalLease] = field(default_factory=dict)
+    goal_validation_receipt_by_id: Mapping[str, GoalValidationReceipt] = field(default_factory=dict)
 
 
 
@@ -145,6 +220,140 @@ def _materiality_claim_digest(
         }
     )
 
+
+def _authority_validation_result(
+    *,
+    instruction: RuntimeInstruction,
+    subject: str,
+    claim_digest: str,
+    parent: str | None,
+    context: RuntimeConstitutionContext,
+) -> RuntimeResult | None:
+    receipt = context.authority_validation_receipt_by_subject.get(subject)
+    if receipt is None:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            (f"AUTHORITY_VALIDATION_RECEIPT_UNKNOWN:{subject}",),
+        )
+    if (
+        receipt.subject != subject
+        or receipt.claim_digest != claim_digest
+        or receipt.parent_subject != parent
+        or receipt.policy_epoch != context.current_policy_epoch
+        or receipt.jurisdiction != instruction.jurisdiction
+        or receipt.context_scope != instruction.context_scope
+    ):
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            (f"AUTHORITY_VALIDATION_RECEIPT_MISMATCH:{subject}",),
+        )
+    if receipt.validation_pass is False or receipt.identity_authenticated is False:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            (f"AUTHORITY_VALIDATION_RECEIPT_INVALID:{subject}",),
+        )
+    if receipt.validation_pass is not True or receipt.identity_authenticated is not True:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            (f"AUTHORITY_VALIDATION_RECEIPT_UNVALIDATED:{subject}",),
+        )
+    if receipt.revoked is True:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            (f"AUTHORITY_VALIDATION_RECEIPT_REVOKED:{subject}",),
+        )
+    if receipt.revoked is not False:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            (f"AUTHORITY_VALIDATION_RECEIPT_REVOCATION_UNKNOWN:{subject}",),
+        )
+    if (
+        not receipt.verifier_id.strip()
+        or not receipt.verifier_control_lineage.strip()
+        or not receipt.evidence_refs
+    ):
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            (f"AUTHORITY_VALIDATION_EVIDENCE_INCOMPLETE:{subject}",),
+        )
+    if receipt.verifier_independent is False:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            (f"AUTHORITY_VALIDATION_NOT_INDEPENDENT:{subject}",),
+        )
+    if receipt.verifier_independent is not True:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            (f"AUTHORITY_VALIDATION_INDEPENDENCE_UNKNOWN:{subject}",),
+        )
+    return None
+
+
+def _goal_lease_result(
+    goal_id: str, context: RuntimeConstitutionContext
+) -> RuntimeResult | None:
+    lease = context.goal_lease_by_id.get(goal_id)
+    if lease is None:
+        return RuntimeResult(RuntimeDecision.ESCALATE, ("GOAL_LEASE_UNKNOWN",))
+    if (
+        lease.goal_id != goal_id
+        or lease.design_epoch != context.current_design_epoch
+        or lease.policy_epoch != context.current_policy_epoch
+    ):
+        return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_LEASE_STALE",))
+    if (
+        not lease.delegated_by.strip()
+        or not lease.authority_claim_digests
+        or not lease.dependency_digest.strip()
+        or not lease.resource_bound.strip()
+        or not lease.termination_condition.strip()
+        or not lease.invalidators
+        or not lease.evidence_refs
+    ):
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("GOAL_LEASE_BINDING_INCOMPLETE",)
+        )
+
+    receipt = context.goal_validation_receipt_by_id.get(goal_id)
+    if receipt is None:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("GOAL_VALIDATION_RECEIPT_UNKNOWN",)
+        )
+    if (
+        receipt.goal_id != goal_id
+        or receipt.lease_digest != lease.digest()
+        or receipt.policy_epoch != context.current_policy_epoch
+    ):
+        return RuntimeResult(
+            RuntimeDecision.REJECT, ("GOAL_VALIDATION_RECEIPT_MISMATCH",)
+        )
+    if receipt.validation_pass is False:
+        return RuntimeResult(
+            RuntimeDecision.REJECT, ("GOAL_VALIDATION_RECEIPT_INVALID",)
+        )
+    if receipt.validation_pass is not True:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("GOAL_VALIDATION_RECEIPT_UNVALIDATED",)
+        )
+    if (
+        not receipt.verifier_id.strip()
+        or not receipt.verifier_control_lineage.strip()
+        or not receipt.evidence_refs
+    ):
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("GOAL_VALIDATION_EVIDENCE_INCOMPLETE",)
+        )
+    if receipt.verifier_independent is False:
+        return RuntimeResult(
+            RuntimeDecision.REJECT, ("GOAL_VALIDATION_NOT_INDEPENDENT",)
+        )
+    if receipt.verifier_independent is not True:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE, ("GOAL_VALIDATION_INDEPENDENCE_UNKNOWN",)
+        )
+    return None
+
+
 def classify_instruction_authority(source_class: ConstraintClass) -> InstructionAuthority:
     """Classify what an instruction source can contribute before action checks."""
     if source_class is ConstraintClass.GARDEN_CONSTITUTION:
@@ -161,6 +370,10 @@ def _goal_validity_result(
 ) -> RuntimeResult | None:
     if goal_id in context.revoked_goal_ids:
         return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_REVOKED",))
+
+    lease_result = _goal_lease_result(goal_id, context)
+    if lease_result is not None:
+        return lease_result
 
     validity = context.goal_validity_by_id.get(goal_id)
     if validity is None:
@@ -231,7 +444,7 @@ def _external_block_sources(
     )
 
 
-def evaluate_instruction(
+def _evaluate_garden_instruction(
     instruction: RuntimeInstruction, context: RuntimeConstitutionContext
 ) -> RuntimeResult:
     """Evaluate one proposed external effect under the runtime constitution.
@@ -356,6 +569,16 @@ def evaluate_instruction(
                 (f"AUTHORITY_CLAIM_DIGEST_MISMATCH:{subject}",),
             )
 
+        receipt_result = _authority_validation_result(
+            instruction=instruction,
+            subject=subject,
+            claim_digest=actual_claim_digest,
+            parent=parent,
+            context=context,
+        )
+        if receipt_result is not None:
+            return receipt_result
+
         authority_chain.append(envelope)
 
     depth = max(0, len(instruction.delegation_chain) - 1)
@@ -435,21 +658,79 @@ def evaluate_instruction(
                 tuple(f"HUMAN_EFFECT_GATE_UNKNOWN:{gate}" for gate in unknown),
             )
 
-    block_sources = _external_block_sources(
-        instruction.action, instruction.target, context
-    )
-    if block_sources:
-        return RuntimeResult(
-            RuntimeDecision.EXTERNALLY_BLOCKED,
-            tuple(f"EXTERNAL_RUNTIME_BLOCK:{source}" for source in block_sources),
-        )
-
     return RuntimeResult(
         RuntimeDecision.ALLOW,
         (
             "EXISTING_AUTHORITY_AND_CAPABILITY_SUFFICIENT",
             "SOURCE_CLASS_DID_NOT_CREATE_AUTHORITY",
         ),
+    )
+
+
+
+def _external_requirement_sources(
+    action: str, target: str, context: RuntimeConstitutionContext
+) -> tuple[str, ...]:
+    effect = (action, target)
+    return tuple(
+        sorted(
+            source
+            for source, required_effects in context.external_runtime_requirements.items()
+            if effect in required_effects
+            or (action, "*") in required_effects
+            or ("*", "*") in required_effects
+        )
+    )
+
+
+def evaluate_instruction(
+    instruction: RuntimeInstruction, context: RuntimeConstitutionContext
+) -> RuntimeResult:
+    """Return Garden admission and external enforcement as distinct dimensions."""
+
+    garden = _evaluate_garden_instruction(instruction, context)
+    block_sources = _external_block_sources(
+        instruction.action, instruction.target, context
+    )
+    requirement_sources = _external_requirement_sources(
+        instruction.action, instruction.target, context
+    )
+
+    if block_sources and requirement_sources:
+        external_status = ExternalEnforcementStatus.BLOCKED_AND_REQUIRED
+    elif block_sources:
+        external_status = ExternalEnforcementStatus.BLOCKED
+    elif requirement_sources:
+        external_status = ExternalEnforcementStatus.REQUIRED
+    else:
+        external_status = ExternalEnforcementStatus.NONE
+
+    reasons = list(garden.reasons)
+    if requirement_sources and garden.decision is not RuntimeDecision.ALLOW:
+        reasons.extend(
+            f"EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT:{source}"
+            for source in requirement_sources
+        )
+    if block_sources and garden.decision is not RuntimeDecision.ALLOW:
+        reasons.extend(
+            f"EXTERNAL_RUNTIME_BLOCK:{source}" for source in block_sources
+        )
+
+    if block_sources and garden.decision is RuntimeDecision.ALLOW:
+        return RuntimeResult(
+            RuntimeDecision.EXTERNALLY_BLOCKED,
+            tuple(f"EXTERNAL_RUNTIME_BLOCK:{source}" for source in block_sources),
+            authority_created=False,
+            garden_decision=RuntimeDecision.ALLOW,
+            external_status=external_status,
+        )
+
+    return RuntimeResult(
+        garden.decision,
+        tuple(reasons),
+        authority_created=garden.authority_created,
+        garden_decision=garden.decision,
+        external_status=external_status,
     )
 
 
