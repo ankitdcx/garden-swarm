@@ -76,7 +76,7 @@ class SingleReviewTests(unittest.TestCase):
         self.assertTrue(body['provider']['zdr'])
         self.assertEqual(body['provider']['only'], ['allowed'])
         self.assertLessEqual(money(estimate), money('.05'))
-        self.assertEqual(body['max_tokens'], 8000)
+        self.assertEqual(body['max_tokens'], 3000)
 
     def test_large_context_never_silently_truncated(self):
         with self.assertRaises(ValueError):
