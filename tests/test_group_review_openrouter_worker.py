@@ -134,11 +134,130 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         self.assertNotEqual(one, two)
         self.assertNotEqual(one, three)
 
+    def epoch_policy(self):
+        return {
+            "routine_model_call_cost_ceiling_usd": 0.05,
+            "routine_task_cost_ceiling_usd": 0.25,
+            "daily_openrouter_cost_ceiling_usd": 1,
+            "group_review_budget_epoch": {
+                "schema": "GardenGroupReviewBudgetEpoch/v1",
+                "epoch_id": "EPOCH-1",
+                "status": "AUTHORIZED",
+                "scope": "GROUP_REVIEW_OPENROUTER_ONLY",
+                "incremental_allocation_usd": 1,
+            },
+        }
+
+    def paid_key_info(self, **overrides):
+        value = {
+            "is_management_key": False,
+            "is_free_tier": False,
+            "usage": 999,
+            "usage_daily": 999,
+            "limit_remaining": 10,
+        }
+        value.update(overrides)
+        return value
+
+    def test_group_review_budget_epoch_ignores_historical_account_usage(self):
+        state = {"paused": False, "attempts": []}
+        reserve, day, local_daily, epoch_id = worker.group_review_budget_check(
+            state,
+            self.paid_key_info(),
+            self.epoch_policy(),
+            1_758_000_000,
+            cycle_id="cycle-1",
+        )
+        self.assertEqual(str(reserve), "0.05")
+        self.assertEqual(local_daily, "0")
+        self.assertEqual(epoch_id, "EPOCH-1")
+        self.assertRegex(day, r"^\d{4}-\d{2}-\d{2}$")
+
+    def test_group_review_budget_epoch_enforces_task_cap(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "cycle-1",
+                    "utc_day": "2025-09-15",
+                    "status": "REVIEW_RECORDED",
+                    "cost": "0.24",
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "task reservation exhausted"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_enforces_incremental_total(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "older-cycle",
+                    "utc_day": "2025-09-14",
+                    "status": "REVIEW_RECORDED",
+                    "cost": "0.98",
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "epoch total reservation exhausted"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_preserves_credit_limit_gate(self):
+        state = {"paused": False, "attempts": []}
+        with self.assertRaisesRegex(ValueError, "key credit limit too low"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(limit_remaining=0.01),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_blocks_unresolved_reservation(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "cycle-1",
+                    "utc_day": "2025-09-15",
+                    "status": "RESERVED",
+                    "cost": None,
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "outstanding reservation"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
     def test_budget_rejection_diagnostics_are_normalized(self):
         cases = [
             (ValueError("paid inference key required"), "KEY_TYPE_NOT_PAID"),
             (ValueError("daily reservation exhausted"), "DAILY_BUDGET_EXHAUSTED"),
             (ValueError("routine lifetime allocation exhausted"), "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+            (ValueError("GROUP_REVIEW epoch total reservation exhausted"), "GROUP_REVIEW_EPOCH_EXHAUSTED"),
+            (ValueError("task reservation exhausted"), "TASK_BUDGET_EXHAUSTED"),
+            (ValueError("GROUP_REVIEW budget epoch unavailable"), "GROUP_REVIEW_BUDGET_EPOCH_UNAVAILABLE"),
             (ValueError("key credit limit too low"), "KEY_CREDIT_LIMIT_TOO_LOW"),
             (ValueError("unknown monetary value"), "KEY_USAGE_UNKNOWN"),
             (ValueError("invalid monetary value"), "KEY_USAGE_INVALID"),
