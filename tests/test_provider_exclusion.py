@@ -18,28 +18,20 @@ class ProviderExclusionTests(unittest.TestCase):
     def setUp(self) -> None:
         self.policy = load_policy(ROOT / "agents/provider-exclusion-policy.json")
 
-    def test_current_excluded_model_origins_fail_closed(self) -> None:
-        blocked = [
+    def test_2026_09_20_human_override_reauthorizes_claude_nemotron_and_mistral_review(self) -> None:
+        for model_id, family in [
             ("anthropic/claude-example", "anthropic"),
             ("third-party/claude-derived-example", "other"),
-        ]
-        for model_id, family in blocked:
-            with self.subTest(model=model_id):
-                with self.assertRaisesRegex(RuntimeError, "GARDEN_PROVIDER_EXCLUDED"):
-                    require_allowed_model(model_id=model_id, family=family, policy=self.policy)
-
-    def test_2026_09_19_human_override_reauthorizes_nemotron_and_mistral_review(self) -> None:
-        for model_id, family in [
             ("nvidia/nemotron-example", "nvidia"),
             ("mistralai/mistral-example", "mistral"),
             ("deepseek/example", "deepseek"),
         ]:
             require_allowed_model(model_id=model_id, family=family, policy=self.policy)
 
-    def test_openrouter_provider_routes_ignore_only_current_excluded_endpoints(self) -> None:
-        self.assertEqual(excluded_provider_slugs(self.policy), ["anthropic"])
+    def test_openrouter_provider_routes_have_no_current_exclusion_endpoints(self) -> None:
+        self.assertEqual(excluded_provider_slugs(self.policy), [])
         routed = openrouter_provider_policy({"allow_fallbacks": True, "ignore": ["other-provider"]}, self.policy)
-        self.assertEqual(routed["ignore"], ["anthropic", "other-provider"])
+        self.assertEqual(routed["ignore"], ["other-provider"])
 
     def test_active_role_sets_do_not_assign_currently_excluded_models(self) -> None:
         for rel in ("swarm/roles.json", "swarm/roles-free.json"):
