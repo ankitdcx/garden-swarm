@@ -1,38 +1,38 @@
 {
   "schema": "GardenReviewDashboardStatus/v1",
   "project": "MOCK REVIEW — Dashboard end-to-end test",
-  "updated_at": "2026-09-20T11:24:00+05:30",
-  "overall": "RUNNING",
+  "updated_at": "2026-09-20T11:31:00+05:30",
+  "overall": "INTEGRATING",
   "reviewers": [
     {
       "id": "gpt_worker",
       "label": "GPT Worker",
-      "status": "RUNNING"
+      "status": "COMPLETE"
     },
     {
       "id": "deepseek",
       "label": "DeepSeek",
-      "status": "RUNNING"
+      "status": "COMPLETE"
     },
     {
       "id": "gemini",
       "label": "Gemini",
-      "status": "RUNNING"
+      "status": "COMPLETE"
     },
     {
       "id": "claude",
       "label": "Claude",
-      "status": "RUNNING"
+      "status": "COMPLETE"
     },
     {
       "id": "grok",
       "label": "Grok",
-      "status": "RUNNING"
+      "status": "COMPLETE"
     },
     {
       "id": "lead",
       "label": "Lead integration",
-      "status": "WAITING"
+      "status": "RUNNING"
     },
     {
       "id": "gpt_verifier",
@@ -40,5 +40,5 @@
       "status": "LOCKED"
     }
   ],
-  "note": "MOCK TEST ONLY. These RUNNING states test dashboard transport/state transitions; they do not claim real provider calls have started. Refresh after the next mock transition."
+  "note": "MOCK TEST ONLY. Mock first-round stages are complete and mock Lead integration is running. No real provider execution is claimed."
 }
