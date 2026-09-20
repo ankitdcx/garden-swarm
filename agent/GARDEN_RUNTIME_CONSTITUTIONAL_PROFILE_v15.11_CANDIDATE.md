@@ -101,6 +101,8 @@ Before a consequential action can use an authority envelope, the runtime disting
 
 Only VALIDATED authority can participate in an ALLOW result. INVALID rejects. UNKNOWN escalates or preserves state.
 
+`VALIDATED` is represented by a typed `AuthorityValidationReceipt`, not a free boolean. The receipt binds the exact authority-claim digest and parent lineage, policy epoch + DesignEpoch, jurisdiction/context, authenticated identity, scope/delegation validity, current validity interval, revocation state, evidence refs and verifier/control-lineage independence. Changing any bound authority claim or using an expired/stale receipt makes the old validation non-PASS.
+
 For delegated authority, each consequential delegation hop must also be explicitly bound to its actual parent/delegator. Authority validation is content-addressed over the exact envelope scope, parent/delegator and provenance; expanding actions/resources/depth or changing lineage invalidates the prior validation. Independent validation of two subjects plus free-form provenance text is not enough to prove that one validly delegated to the other.
 
 The executable reference now requires a typed `AuthorityValidationReceipt` for each hop. The receipt binds the exact authority-claim digest, parent, active policy epoch, jurisdiction/context, authenticated identity, revocation state, evidence references and verifier identity/control lineage. Required independence is an explicit non-PASS gate, not inferred from having multiple process names.
