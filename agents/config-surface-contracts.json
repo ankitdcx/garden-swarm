@@ -43,107 +43,107 @@
         "execution_limits.easy_case_calls",
         "execution_limits.maximum_confirmation_rounds"
       ],
-      "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+      "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
       "consumers": [
         {
           "path": "tools/select_paid_matrix_reviewers.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "POLICY_DERIVED_EXACT"
         },
         {
           "path": "tools/select_ip_origin_reviewers.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "POLICY_DERIVED_EXACT_WITH_ANCHORS"
         },
         {
           "path": "tools/run_paid_matrix_review.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_SELECTION_CONSUMER_OUTPUT_NONADMISSIBLE_UNDER_V1_UNLESS_MIGRATED"
         },
         {
           "path": "tools/run_ip_origin_multi_agent_review.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_SELECTION_CONSUMER_OUTPUT_NONADMISSIBLE_UNDER_V1_UNLESS_MIGRATED"
         },
         {
           "path": "tools/run_one_use_ip_provenance_deepseek_review.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_ONE_USE_OUTPUT_NONADMISSIBLE_AS_CONVERGENCE_EVIDENCE"
         },
         {
           "path": ".github/workflows/hourly-free-agent-review.yml",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_DISPATCH_ONLY_NOT_CURRENT_CONVERGENCE_PATH"
         },
         {
           "path": ".github/workflows/ip-origin-multi-agent-review.yml",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_DISPATCH_ONLY_NOT_CURRENT_CONVERGENCE_PATH"
         },
         {
           "path": ".github/workflows/one-use-ip-provenance-deepseek-review.yml",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "LEGACY_ONE_USE_NOT_CURRENT_CONVERGENCE_PATH"
         },
         {
           "path": "tests/test_paid_review_routing.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "ROUTINE_COMPATIBILITY_TEST"
         },
         {
           "path": "tests/test_ip_origin_review_selection.py",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe",
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b",
           "binding": "IP_COMPATIBILITY_TEST"
         },
         {
           "path": ".github/workflows/hourly-specialist-agent-sweep.yml",
           "binding": "LEGACY_DISPATCH_ONLY_NOT_CURRENT_CONVERGENCE_PATH",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/matrix_design_review.py",
           "binding": "LEGACY_PEER_SHARING_SUPERSEDED_FOR_CURRENT_OPENROUTER_WORK",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/select_matrix_reviewers.py",
           "binding": "LEGACY_SELECTOR_NOT_CURRENT_CONVERGENCE_PATH",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/verify_review_boundaries.py",
           "binding": "LEGACY_BOUNDARY_CHECK_NOT_CURRENT_CONVERGENCE_PROOF",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/check_dispatch_admission.py",
           "binding": "LEGACY_BATCH_GATE; ACTIVE_SINGLE_PATH_USES_INDEPENDENT_BRANCH_PREFLIGHT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/review_context.py",
           "binding": "CONTEXT_DEPTH_AND_BUDGET_ENFORCEMENT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/review_budget.py",
           "binding": "CONTEXT_DEPTH_AND_BUDGET_ENFORCEMENT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/independent_branch_worker.py",
           "binding": "CONTEXT_DEPTH_AND_BUDGET_ENFORCEMENT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/independent_branch_protocol.py",
           "binding": "CONTEXT_DEPTH_AND_BUDGET_ENFORCEMENT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         },
         {
           "path": "tools/single_review_worker.py",
           "binding": "CONTEXT_DEPTH_AND_BUDGET_ENFORCEMENT",
-          "accepted_shape_sha256": "490c629778188a43f240bc9b8498053adb6938f10c61c748301088fa6cb97cfe"
+          "accepted_shape_sha256": "53fb4ff9a0307378595d1a926eabdd061d530a07ec2ac1fa33fe29396fc6c21b"
         }
       ],
       "rule": "Changing the watched producer shape invalidates this fingerprint. Every registered consumer must explicitly acknowledge the new fingerprint in the same governed change, and executable compatibility probes must still pass. This acknowledgement is not proof by itself; it prevents silent producer/consumer drift. Current OpenRouter convergence evidence additionally requires GardenIndependentBranchConvergencePolicy/v1; legacy consumers cannot create current convergence evidence merely by matching this fingerprint."
