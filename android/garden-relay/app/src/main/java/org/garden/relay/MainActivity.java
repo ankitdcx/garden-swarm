@@ -28,6 +28,10 @@ import android.os.IBinder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.net.HttpURLConnection;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.OutputStream;
+import java.util.concurrent.ConcurrentHashMap;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
@@ -47,6 +51,8 @@ public final class MainActivity extends Activity {
     private TextView calibration;
     private volatile boolean coordinateProbe = false;
     private volatile int coordinateAttempt = 0;
+    private volatile boolean localBridgeRunning = true;
+    private final ConcurrentHashMap<String,String> browserCalibration = new ConcurrentHashMap<>();
     private static final int SHIZUKU_REQ = 41;
     private final Shizuku.UserServiceArgs uiProbeArgs =
             new Shizuku.UserServiceArgs(new ComponentName("org.garden.reviewdashboard", UiProbeService.class.getName()))
@@ -87,12 +93,53 @@ public final class MainActivity extends Activity {
         buildUi();
         refresh();
         refreshShizuku();
+        startLocalBrowserBridge();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        localBridgeRunning = false;
         io.shutdownNow();
+    }
+
+    private void startLocalBrowserBridge() {
+        new Thread(() -> {
+            try (ServerSocket server = new ServerSocket(17351, 8, java.net.InetAddress.getByName("127.0.0.1"))) {
+                main.post(() -> note.setText("Browser bridge: READY on this phone only (127.0.0.1:17351)"));
+                while (localBridgeRunning) {
+                    try (Socket s = server.accept()) {
+                        s.setSoTimeout(3000);
+                        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
+                        String request = br.readLine();
+                        if (request == null) continue;
+                        int len=0; String line;
+                        while ((line=br.readLine())!=null && !line.isEmpty()) {
+                            if(line.toLowerCase().startsWith("content-length:")) len=Integer.parseInt(line.substring(15).trim());
+                        }
+                        char[] buf=new char[Math.max(0,Math.min(len,20000))]; int got=0,n;
+                        while(got<buf.length && (n=br.read(buf,got,buf.length-got))>0) got+=n;
+                        String body=new String(buf,0,got);
+                        if(request.startsWith("POST /calibration")) {
+                            try {
+                                JSONObject j=new JSONObject(body);
+                                String provider=j.optString("provider","unknown");
+                                browserCalibration.put(provider,body);
+                                main.post(() -> calibration.setText("Browser calibration received: " + provider +
+                                        "\ncomposerFound=" + j.optBoolean("composerFound",false) +
+                                        "\n" + j.optJSONObject("composer")));
+                            } catch(Throwable ignored){}
+                        }
+                        byte[] out="{\"ok\":true}".getBytes(StandardCharsets.UTF_8);
+                        OutputStream os=s.getOutputStream();
+                        os.write(("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: "+out.length+"\r\nConnection: close\r\n\r\n").getBytes(StandardCharsets.UTF_8));
+                        os.write(out); os.flush();
+                    } catch(Throwable ignored){}
+                }
+            } catch(Throwable t) {
+                main.post(() -> note.setText("Browser bridge failed: "+t.getClass().getSimpleName()));
+            }
+        },"GardenLocalBrowserBridge").start();
     }
 
     private void buildUi() {
