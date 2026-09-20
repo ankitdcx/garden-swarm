@@ -1,44 +1,63 @@
 {
-  "schema": "GardenTextReleaseManifest/v15.10-standalone-candidate",
+  "schema": "GardenPackageBindingManifest/v1",
+  "binding_id": "GARDEN-V15.10-STANDALONE-PACKAGE-BINDING-2026-09-20",
   "release": "Garden v15.10",
   "status": "WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED",
-  "primary_sources": {
-    "GARDEN_BOOK_v15.10.txt": {
+  "package": {
+    "artifact_uri": "garden://package/v15.10/Garden_v15.10_STANDALONE_NO_LOSS_CANDIDATE_2026-09-20.zip",
+    "zip_sha256": "9af4f13415c05c94c693ef9720c1917801cffa0ead86ff1b06895291d089561b"
+  },
+  "bound_package_manifest": {
+    "schema": "GardenTextReleaseManifest/v15.10-standalone-candidate",
+    "artifact_uri": "garden://package/v15.10/RELEASE_MANIFEST_v15.10.json",
+    "sha256": "804fae69707b0ba810e764476c0e82b38392f00f1c9d62b1a100e575eafa6854"
+  },
+  "primary_sources": [
+    {
+      "name": "GARDEN_BOOK_v15.10.txt",
+      "artifact_uri": "garden://package/v15.10/GARDEN_BOOK_v15.10.txt",
       "bytes": 15172,
       "sha256": "df52ecf0e9d34384b30d34acdbd48b6df0ef2f83554880f3ca22dcc29b20c598"
     },
-    "GARDEN_TECHNICAL_v15.10.txt": {
+    {
+      "name": "GARDEN_TECHNICAL_v15.10.txt",
+      "artifact_uri": "garden://package/v15.10/GARDEN_TECHNICAL_v15.10.txt",
       "bytes": 40724,
       "sha256": "e15bd6211c6d2130f5f15522d1b2bf8071c354ab0035c4660615853e6926494f"
     },
-    "GARDEN_CATALOGUE_v15.10.txt": {
+    {
+      "name": "GARDEN_CATALOGUE_v15.10.txt",
+      "artifact_uri": "garden://package/v15.10/GARDEN_CATALOGUE_v15.10.txt",
       "bytes": 4889844,
       "sha256": "6d6341e278ea1eab34b7ce188728b79b19bf1f5d6b6e4f576f1bcbc60d231153"
     },
-    "GARDEN_VERSION_HISTORY_v15.10.txt": {
+    {
+      "name": "GARDEN_VERSION_HISTORY_v15.10.txt",
+      "artifact_uri": "garden://package/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
       "bytes": 11984,
       "sha256": "c4bffaad33f187e552de891504a86767a2e148bea35a67270d0fef3485f5a183"
     }
-  },
+  ],
   "retention_receipt": {
-    "path": "RETENTION_CLOSURE_RECEIPT_v15.10.json",
+    "artifact_uri": "garden://package/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
     "sha256": "78de8a0fd59d18ec82a388b9e2a0fa0b2760deab18ae82850068948ad71cfcf5"
   },
+  "evidence_artifacts": [
+    {
+      "artifact_uri": "garden://package/v15.10/CURRENT_READING_MAP_v15.10.json",
+      "sha256": "d2605c916fe24a461a092c17a50e0dfb843575d347d75d3f036ebd6b6aa16773"
+    },
+    {
+      "artifact_uri": "garden://package/v15.10/SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
+      "sha256": "0001889bddb182fbbd12db1da0fd8684f5be9bafcd595c7a0938adab3535ec04"
+    },
+    {
+      "artifact_uri": "garden://package/v15.10/verify_v15.10_retention.py",
+      "sha256": "a74bf4ab90a4893e97ac00b765735c5b98e75ed39890ccabd37517394cd909eb"
+    }
+  ],
   "current_meaning_external_dependency": false,
   "history_controls_current_meaning": false,
   "semantic_admission_implied": false,
-  "evidence_artifacts": {
-    "current_reading_map": {
-      "path": "CURRENT_READING_MAP_v15.10.json",
-      "sha256": "d2605c916fe24a461a092c17a50e0dfb843575d347d75d3f036ebd6b6aa16773"
-    },
-    "semantic_retention_disposition": {
-      "path": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
-      "sha256": "0001889bddb182fbbd12db1da0fd8684f5be9bafcd595c7a0938adab3535ec04"
-    },
-    "retention_verifier": {
-      "path": "verify_v15.10_retention.py",
-      "sha256": "a74bf4ab90a4893e97ac00b765735c5b98e75ed39890ccabd37517394cd909eb"
-    }
-  }
+  "boundary": "This repository file binds exact package artifacts by URI/hash; it is not claimed byte-identical to the package-internal manifest."
 }
