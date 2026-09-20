@@ -61,10 +61,14 @@ class AuthorityValidationReceipt:
     claim_digest: str
     parent_subject: str | None
     policy_epoch: str
+    design_epoch: str
     jurisdiction: str
     context_scope: str
     validation_pass: Optional[bool]
     identity_authenticated: Optional[bool]
+    scope_validated: Optional[bool]
+    delegation_validated: Optional[bool]
+    validity_interval_current: Optional[bool]
     revoked: Optional[bool]
     verifier_id: str
     verifier_control_lineage: str
@@ -240,6 +244,7 @@ def _authority_validation_result(
         or receipt.claim_digest != claim_digest
         or receipt.parent_subject != parent
         or receipt.policy_epoch != context.current_policy_epoch
+        or receipt.design_epoch != context.current_design_epoch
         or receipt.jurisdiction != instruction.jurisdiction
         or receipt.context_scope != instruction.context_scope
     ):
@@ -247,15 +252,30 @@ def _authority_validation_result(
             RuntimeDecision.REJECT,
             (f"AUTHORITY_VALIDATION_RECEIPT_MISMATCH:{subject}",),
         )
-    if receipt.validation_pass is False or receipt.identity_authenticated is False:
+    hard_checks = {
+        "validation": receipt.validation_pass,
+        "identity": receipt.identity_authenticated,
+        "scope": receipt.scope_validated,
+        "delegation": receipt.delegation_validated,
+        "validity_interval": receipt.validity_interval_current,
+    }
+    failed = sorted(name for name, value in hard_checks.items() if value is False)
+    if failed:
         return RuntimeResult(
             RuntimeDecision.REJECT,
-            (f"AUTHORITY_VALIDATION_RECEIPT_INVALID:{subject}",),
+            tuple(
+                f"AUTHORITY_VALIDATION_RECEIPT_INVALID:{subject}:{name}"
+                for name in failed
+            ),
         )
-    if receipt.validation_pass is not True or receipt.identity_authenticated is not True:
+    unknown = sorted(name for name, value in hard_checks.items() if value is not True)
+    if unknown:
         return RuntimeResult(
             RuntimeDecision.ESCALATE,
-            (f"AUTHORITY_VALIDATION_RECEIPT_UNVALIDATED:{subject}",),
+            tuple(
+                f"AUTHORITY_VALIDATION_RECEIPT_UNVALIDATED:{subject}:{name}"
+                for name in unknown
+            ),
         )
     if receipt.revoked is True:
         return RuntimeResult(
