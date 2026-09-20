@@ -1,5 +1,6 @@
 from prototype.transition_governance import (
     RecoveryProposal,
+    TransitionAssuranceBinding,
     TransitionContext,
     TransitionDecision,
     TransitionProposal,
@@ -34,9 +35,26 @@ def proposal(
     )
 
 
+def assurance_binding(
+    *,
+    purpose="ADVANCE",
+    current=TransitionStage.SHADOW,
+    target=TransitionStage.PARALLEL,
+    effect_scope="institution:bounded",
+):
+    return TransitionAssuranceBinding(
+        purpose=purpose,
+        transition_id="t1",
+        effect_scope=effect_scope,
+        current_stage=current,
+        target_stage=target,
+    )
+
+
 def context(**overrides):
     values = dict(
         authority_validated=True,
+        assurance_binding=assurance_binding(),
         hard_gates={
             "rights": True,
             "consent": True,
@@ -103,7 +121,13 @@ def test_parallel_divergence_blocks_bounded_activation():
             current=TransitionStage.PARALLEL,
             next_stage=TransitionStage.BOUNDED_ACTIVE,
         ),
-        context(divergence_resolved=False),
+        context(
+            divergence_resolved=False,
+            assurance_binding=assurance_binding(
+                current=TransitionStage.PARALLEL,
+                target=TransitionStage.BOUNDED_ACTIVE,
+            ),
+        ),
     )
     assert result.decision is TransitionDecision.HOLD
     assert result.reasons == ("MATERIAL_DIVERGENCE_UNRESOLVED",)
@@ -250,7 +274,13 @@ def test_explicitly_approved_stage_omission_can_proceed_through_remaining_gates(
                 TransitionStage.PARALLEL: "Incumbent path is unavailable in the bounded synthetic profile."
             },
         ),
-        context(stage_omission_approval={TransitionStage.PARALLEL: True}),
+        context(
+            stage_omission_approval={TransitionStage.PARALLEL: True},
+            assurance_binding=assurance_binding(
+                current=TransitionStage.SHADOW,
+                target=TransitionStage.BOUNDED_ACTIVE,
+            ),
+        ),
     )
     assert result.decision is TransitionDecision.ADVANCE
 
@@ -288,7 +318,7 @@ def test_reversible_material_failure_can_rollback_only_to_earlier_stage():
             reversible_effect=True,
             material_failure_confirmed=True,
         ),
-        context(),
+        context(assurance_binding=assurance_binding(purpose="RECOVERY", current=TransitionStage.BOUNDED_ACTIVE, target=TransitionStage.PARALLEL)),
     )
     assert result.decision is TransitionDecision.ROLLBACK
     assert result.authority_created is False
@@ -304,7 +334,7 @@ def test_rollback_cannot_move_forward_or_sideways():
             reversible_effect=True,
             material_failure_confirmed=True,
         ),
-        context(),
+        context(assurance_binding=assurance_binding(purpose="RECOVERY", current=TransitionStage.BOUNDED_ACTIVE, target=TransitionStage.EXPANDED_ACTIVE)),
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("ROLLBACK_TARGET_NOT_EARLIER",)
@@ -320,7 +350,7 @@ def test_irreversible_material_failure_routes_to_compensation():
             reversible_effect=False,
             material_failure_confirmed=True,
         ),
-        context(),
+        context(assurance_binding=assurance_binding(purpose="RECOVERY", current=TransitionStage.BOUNDED_ACTIVE, target=TransitionStage.BOUNDED_ACTIVE)),
     )
     assert result.decision is TransitionDecision.COMPENSATE
     assert result.authority_created is False
@@ -352,7 +382,14 @@ def test_recovery_requires_independent_verification():
             reversible_effect=True,
             material_failure_confirmed=True,
         ),
-        context(independent_verification=None),
+        context(
+            independent_verification=None,
+            assurance_binding=assurance_binding(
+                purpose="RECOVERY",
+                current=TransitionStage.BOUNDED_ACTIVE,
+                target=TransitionStage.PARALLEL,
+            ),
+        ),
     )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",)
@@ -368,7 +405,14 @@ def test_rollback_target_must_equal_last_qualified_stage():
             reversible_effect=True,
             material_failure_confirmed=True,
         ),
-        context(last_qualified_stage=TransitionStage.BOUNDED_ACTIVE),
+        context(
+            last_qualified_stage=TransitionStage.BOUNDED_ACTIVE,
+            assurance_binding=assurance_binding(
+                purpose="RECOVERY",
+                current=TransitionStage.EXPANDED_ACTIVE,
+                target=TransitionStage.PARALLEL,
+            ),
+        ),
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("ROLLBACK_TARGET_NOT_LAST_QUALIFIED",)
@@ -384,7 +428,53 @@ def test_unknown_last_qualified_stage_blocks_rollback():
             reversible_effect=True,
             material_failure_confirmed=True,
         ),
-        context(last_qualified_stage=None),
+        context(
+            last_qualified_stage=None,
+            assurance_binding=assurance_binding(
+                purpose="RECOVERY",
+                current=TransitionStage.BOUNDED_ACTIVE,
+                target=TransitionStage.PARALLEL,
+            ),
+        ),
     )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("LAST_QUALIFIED_STAGE_UNKNOWN",)
+
+
+def test_transition_assurance_from_different_effect_scope_cannot_be_replayed():
+    result = evaluate_transition(
+        proposal(),
+        context(
+            assurance_binding=assurance_binding(effect_scope="institution:other")
+        ),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("TRANSITION_ASSURANCE_BINDING_MISMATCH",)
+
+
+def test_missing_transition_assurance_binding_cannot_advance():
+    result = evaluate_transition(proposal(), context(assurance_binding=None))
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("TRANSITION_ASSURANCE_BINDING_UNKNOWN",)
+
+
+def test_advance_assurance_cannot_be_replayed_for_recovery():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(
+            assurance_binding=assurance_binding(
+                purpose="ADVANCE",
+                current=TransitionStage.BOUNDED_ACTIVE,
+                target=TransitionStage.PARALLEL,
+            )
+        ),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("RECOVERY_ASSURANCE_BINDING_MISMATCH",)
