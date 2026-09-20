@@ -1,0 +1,51 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-context-isolation:20260920",
+  "work_package_id": "GROUP-REVIEW-CONTEXT-ISOLATION-20260920",
+  "branch": "chatgpt/group-review-context-isolation-20260920",
+  "base_sha": "522a84dc7091c98c8a84f7762063f2b311954911",
+  "dependency_intent_ids": [
+    "chatgpt:group-review-source-freeze-hardening:20260920"
+  ],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-context-isolation:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-CONTEXT-ISOLATION-20260920",
+    "base_sha": "522a84dc7091c98c8a84f7762063f2b311954911",
+    "target_paths": [
+      "workstreams/2026-09-20-group-review-context-isolation.json",
+      "agents/actions/group-review.json",
+      "docs/GROUP_REVIEW_REPO_BUS_V1.md",
+      "tools/group_review_bus.py",
+      "tests/test_group_review_bus.py"
+    ],
+    "target_symbols": [
+      "GardenGroupReviewWorkerResult/v1",
+      "GardenGroupReviewWorkerStatus/v1",
+      "validate_worker_result",
+      "validate_worker_status",
+      "GROUP_REVIEW context isolation"
+    ],
+    "semantic_domains": [
+      "MULTI_AGENT_REVIEW_PROCESS",
+      "BLIND_REVIEW_INDEPENDENCE",
+      "CONTEXT_ISOLATION"
+    ],
+    "affected_invariants": [
+      "BLIND_WORKER_HAS_NO_EXCLUDED_PRIOR_CONTEXT",
+      "PROCESS_FAIL_ON_CONTEXT_LEAKAGE",
+      "NO_FALSE_INDEPENDENCE_ATTESTATION",
+      "NO_ENDLESS_RERUN_ON_PLATFORM_ISOLATION_FAILURE"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewWorkerResult/v1",
+      "GardenGroupReviewRepoBus/v1"
+    ],
+    "intended_effect": "Make blind-worker independence depend on actual context isolation rather than chat identity; machine-validate PROCESS_FAIL/blocked isolation results, expose worker lifecycle checkpoints, and stop repeated reruns when platform memory/project context prevents blindness. Process infrastructure only; no Garden canonical semantic promotion.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
