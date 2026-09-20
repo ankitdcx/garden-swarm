@@ -108,16 +108,26 @@ Test at least:
 **Deliverable:** counterexample or failed attack + proposed repair + regression/conformance check.
 
 ### TASK-026 — v15.10/r7 no-loss text-source closure
-Finish the representation migration that v15.10-r7 specified but did not materialize.
+Finish the representation migration that the proposed v15.10-r7 normalization specified but did not materialize.
+
+**Exact predecessor identity:** use `GardenThreeArtifactReleaseManifest/v15.10-r6` as the last materialized v15.10 design identity:
+- Book SHA-256 `0d479ab40432a4d1e0d127335d02e8a0424616a3e03fd56c1975574cb927d5da`;
+- Technical SHA-256 `fe20d8f1b4cd18778002c6162de749b5250c760f8ad636d055682efe1172ebe4`;
+- Catalogue SHA-256 `88c425ac3f547aae2461fda97109ba9dbde774fc59b57eead9f7a05ddb92f555`.
+
+The r6 manifest's byte-exact predecessor reconstruction and graph reproduction are evidence inputs, **not** semantic-admission closure: r6 records `semantic_admissions_recognized_by_build=false` and `predecessor_elision_allowed=false`. The later small four-text reconstruction is excluded as a lossless source because it omitted exact schemas/tests/contracts/equations/mappings.
 
 Requirements:
 - current Garden semantics are fully self-contained in directly readable UTF-8 current sources;
 - no whole predecessor source embedding merely for byte reconstruction;
 - no old release is needed to supply current meaning;
 - every removed/reduced record has machine-checkable coverage;
-- reference closure passes;
-- Technical + Catalogue reproduce the declared current semantic graph/equivalence criterion;
-- an independent reproduction check passes;
+- close or explicitly preserve the v15.9→v15.10 blocker set B-01..B-09: missing candidate test obligations, dangling owners/anchors, duplicate owners, blank anchors, stale current-version wording, stale catalogue/count metadata, RVH-4 disposition, Human-Effect Closure owner/status/schema/test closure, and full scattered-upgrade accounting;
+- each B-01..B-09 disposition is evidence-backed; byte presence alone is not semantic closure;
+- reference closure passes with zero dangling current refs, duplicate controlling owners and invalid anchors;
+- status preservation keeps CURRENT/CANDIDATE/DEFERRED/RESEARCH/UNRESOLVED distinctions rather than silently promoting them;
+- Technical + Catalogue reproduce the declared current semantic graph/equivalence criterion without predecessor fallback;
+- an independent reproduction check passes against the final current bytes;
 - compactness is never achieved by lossy summarization.
 
 This task is owned by the AI-led upgrade loop as routine closure work. Human input is required only if a genuine semantic/constitutional choice appears.
