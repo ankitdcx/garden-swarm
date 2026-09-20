@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 9
-        versionName '0.5.0-shizuku-probe'
+        versionCode 10
+        versionName '0.6.0-reviewer-discovery'
     }
 
     signingConfigs {
