@@ -26,6 +26,14 @@ def load_json(path: Path) -> dict:
 def reconstruct_object(name: str) -> bytes:
     manifest = load_json(CONTENT / "CONTENT_OBJECTS_v15x.json")
     obj = manifest["objects"][name]
+    direct_path = obj.get("direct_path")
+    if direct_path:
+        path = CONTENT / direct_path
+        if path.exists():
+            raw = path.read_bytes()
+            if len(raw) != obj["raw_bytes"] or sha256(raw) != obj["raw_sha256"]:
+                raise ValueError(f"direct content-object mismatch: {name}")
+            return raw
     encoded = bytearray()
     for part in obj["parts"]:
         path = CONTENT / part["name"]
