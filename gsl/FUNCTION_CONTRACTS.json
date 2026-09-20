@@ -490,7 +490,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation grants no authority. Stage status cannot mint authority. Any authority migration is carried only by explicit typed AuthorityDelta records with delegator/recipient/scope/jurisdiction/invalidation/revocation/appeal/evidence bindings and separate validation. Stage admission additionally requires an exact DesignEpoch/effect assurance binding and a validated non-vacuous criteria profile.",
+      "authority_requirement": "Evaluation grants no authority. Authority migration is carried only by explicit typed AuthorityDelta records; each validation is bound to the deterministic SHA-256 of the full delta contents, so a changed scope cannot reuse an old delta_id approval. Stage status itself never mints authority.",
       "failure_mode_set": [
         "INVALID_DECLARED_STAGE_PLAN",
         "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
@@ -535,7 +535,9 @@
         "AUTHORITY_DELTA_INVALID",
         "AUTHORITY_DELTA_UNVALIDATED",
         "TRANSITION_CRITERIA_PROFILE_INVALID",
-        "TRANSITION_CRITERIA_PROFILE_UNVALIDATED"
+        "TRANSITION_CRITERIA_PROFILE_UNVALIDATED",
+        "AUTHORITY_DELTA_DIGEST_UNKNOWN",
+        "AUTHORITY_DELTA_DIGEST_MISMATCH"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -557,7 +559,8 @@
         "exact transition/effect/stage assurance binding",
         "DesignEpoch-bound transition assurance",
         "typed AuthorityDelta validation",
-        "validated transition criteria profile"
+        "validated transition criteria profile",
+        "full AuthorityDelta SHA-256 binding"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
