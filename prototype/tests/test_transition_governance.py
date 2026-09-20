@@ -156,3 +156,120 @@ def test_material_separable_dispute_can_continue_with_ready_path():
         ),
     )
     assert result.decision is TransitionDecision.ADVANCE
+
+
+def test_mandatory_transition_hard_gates_cannot_be_removed_by_empty_profile_set():
+    gates = dict(context().hard_gates)
+    gates["human_effect"] = None
+    result = evaluate_transition(
+        proposal(),
+        context(required_hard_gates=frozenset(), hard_gates=gates),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("TRANSITION_HARD_GATE_UNKNOWN:human_effect",)
+
+
+def test_empty_entry_criteria_cannot_vacuously_pass():
+    result = evaluate_transition(proposal(), context(entry_criteria={}))
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("ENTRY_CRITERIA_MISSING",)
+
+
+def test_empty_exit_criteria_cannot_vacuously_pass():
+    result = evaluate_transition(proposal(), context(exit_criteria={}))
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("EXIT_CRITERIA_MISSING",)
+
+
+def test_abbreviated_stage_plan_requires_explicit_omission_justification():
+    abbreviated = (
+        TransitionStage.SHADOW,
+        TransitionStage.BOUNDED_ACTIVE,
+        TransitionStage.EXPANDED_ACTIVE,
+        TransitionStage.STABLE_OPERATION,
+    )
+    result = evaluate_transition(
+        TransitionProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.SHADOW,
+            next_stage=TransitionStage.BOUNDED_ACTIVE,
+            declared_stage_plan=abbreviated,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("STAGE_OMISSION_UNJUSTIFIED:PARALLEL",)
+
+
+def test_stage_omission_requires_independent_approval_state():
+    abbreviated = (
+        TransitionStage.SHADOW,
+        TransitionStage.BOUNDED_ACTIVE,
+        TransitionStage.EXPANDED_ACTIVE,
+        TransitionStage.STABLE_OPERATION,
+    )
+    result = evaluate_transition(
+        TransitionProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.SHADOW,
+            next_stage=TransitionStage.BOUNDED_ACTIVE,
+            declared_stage_plan=abbreviated,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            stage_omission_justifications={
+                TransitionStage.PARALLEL: "Incumbent path is unavailable in the bounded synthetic profile."
+            },
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("STAGE_OMISSION_APPROVAL_UNKNOWN:PARALLEL",)
+
+
+def test_explicitly_approved_stage_omission_can_proceed_through_remaining_gates():
+    abbreviated = (
+        TransitionStage.SHADOW,
+        TransitionStage.BOUNDED_ACTIVE,
+        TransitionStage.EXPANDED_ACTIVE,
+        TransitionStage.STABLE_OPERATION,
+    )
+    result = evaluate_transition(
+        TransitionProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.SHADOW,
+            next_stage=TransitionStage.BOUNDED_ACTIVE,
+            declared_stage_plan=abbreviated,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            stage_omission_justifications={
+                TransitionStage.PARALLEL: "Incumbent path is unavailable in the bounded synthetic profile."
+            },
+        ),
+        context(stage_omission_approval={TransitionStage.PARALLEL: True}),
+    )
+    assert result.decision is TransitionDecision.ADVANCE
+
+
+def test_declared_stage_plan_must_preserve_standard_order():
+    reordered = (
+        TransitionStage.SHADOW,
+        TransitionStage.BOUNDED_ACTIVE,
+        TransitionStage.PARALLEL,
+        TransitionStage.EXPANDED_ACTIVE,
+        TransitionStage.STABLE_OPERATION,
+    )
+    result = evaluate_transition(
+        TransitionProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.SHADOW,
+            next_stage=TransitionStage.BOUNDED_ACTIVE,
+            declared_stage_plan=reordered,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("INVALID_DECLARED_STAGE_ORDER",)
