@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Garden Relay</string>
+    <string name="app_name">Garden Relay 0.3</string>
     <string name="accessibility_service_description">One-shot send helper for model apps explicitly bound in Garden Relay.</string>
 </resources>
