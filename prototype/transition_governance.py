@@ -28,6 +28,16 @@ BASE_TRANSITION_HARD_GATES = frozenset(
 )
 
 
+def _sha256_payload(payload: object) -> str:
+    encoded = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 @dataclass(frozen=True)
 class TransitionAssuranceBinding:
     purpose: str
@@ -36,6 +46,46 @@ class TransitionAssuranceBinding:
     current_stage: TransitionStage
     target_stage: TransitionStage
     design_epoch: str
+
+
+@dataclass(frozen=True)
+class TransitionAssuranceReceipt:
+    binding_digest: str
+    authority_validated: Optional[bool]
+    hard_gates_digest: str
+    independent_verification: Optional[bool]
+    divergence_resolved: Optional[bool]
+    capture_conflict_clear: Optional[bool]
+    operational_readiness: Optional[bool]
+    criteria_profile_digest: str
+    recovery_state_digest: str
+    authority_delta_digests: tuple[str, ...]
+    verifier_id: str
+    verifier_control_lineage: str
+    verifier_authenticated: Optional[bool]
+    verifier_independent: Optional[bool]
+    evidence_refs: tuple[str, ...]
+
+    def digest(self) -> str:
+        return _sha256_payload(
+            {
+                "binding_digest": self.binding_digest,
+                "authority_validated": self.authority_validated,
+                "hard_gates_digest": self.hard_gates_digest,
+                "independent_verification": self.independent_verification,
+                "divergence_resolved": self.divergence_resolved,
+                "capture_conflict_clear": self.capture_conflict_clear,
+                "operational_readiness": self.operational_readiness,
+                "criteria_profile_digest": self.criteria_profile_digest,
+                "recovery_state_digest": self.recovery_state_digest,
+                "authority_delta_digests": list(self.authority_delta_digests),
+                "verifier_id": self.verifier_id,
+                "verifier_control_lineage": self.verifier_control_lineage,
+                "verifier_authenticated": self.verifier_authenticated,
+                "verifier_independent": self.verifier_independent,
+                "evidence_refs": list(self.evidence_refs),
+            }
+        )
 
 
 @dataclass(frozen=True)
@@ -101,6 +151,7 @@ class TransitionProposal:
 class TransitionContext:
     authority_validated: Optional[bool]
     assurance_binding: Optional[TransitionAssuranceBinding] = None
+    assurance_receipt: Optional[TransitionAssuranceReceipt] = None
     current_design_epoch: str = "E1"
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     required_hard_gates: frozenset[str] = frozenset()
@@ -123,13 +174,164 @@ class TransitionContext:
 
 
 @dataclass(frozen=True)
+class TransitionReceipt:
+    transition_id: str
+    purpose: str
+    effect_scope: str
+    current_stage: TransitionStage
+    target_stage: TransitionStage
+    design_epoch: str
+    decision: TransitionDecision
+    reasons: tuple[str, ...]
+    assurance_receipt_digest: str
+    authority_delta_digests: tuple[str, ...]
+    verifier_id: str | None
+    verifier_control_lineage: str | None
+    evidence_refs: tuple[str, ...]
+
+    def digest(self) -> str:
+        return _sha256_payload(
+            {
+                "transition_id": self.transition_id,
+                "purpose": self.purpose,
+                "effect_scope": self.effect_scope,
+                "current_stage": self.current_stage.value,
+                "target_stage": self.target_stage.value,
+                "design_epoch": self.design_epoch,
+                "decision": self.decision.value,
+                "reasons": list(self.reasons),
+                "assurance_receipt_digest": self.assurance_receipt_digest,
+                "authority_delta_digests": list(self.authority_delta_digests),
+                "verifier_id": self.verifier_id,
+                "verifier_control_lineage": self.verifier_control_lineage,
+                "evidence_refs": list(self.evidence_refs),
+            }
+        )
+
+
+@dataclass(frozen=True)
 class TransitionResult:
     decision: TransitionDecision
     reasons: tuple[str, ...]
     authority_created: bool = False
+    receipt: TransitionReceipt | None = None
 
 
 
+
+
+def _binding_digest(binding: TransitionAssuranceBinding) -> str:
+    return _sha256_payload(
+        {
+            "purpose": binding.purpose,
+            "transition_id": binding.transition_id,
+            "effect_scope": binding.effect_scope,
+            "current_stage": binding.current_stage.value,
+            "target_stage": binding.target_stage.value,
+            "design_epoch": binding.design_epoch,
+        }
+    )
+
+
+def _hard_gates_digest(context: TransitionContext) -> str:
+    required = sorted(BASE_TRANSITION_HARD_GATES | context.required_hard_gates)
+    return _sha256_payload(
+        {
+            "required": required,
+            "values": {name: context.hard_gates.get(name) for name in required},
+        }
+    )
+
+
+def _criteria_profile_digest(context: TransitionContext) -> str:
+    return _sha256_payload(
+        {
+            "validated": context.criteria_profile_validated,
+            "entry": dict(sorted(context.entry_criteria.items())),
+            "exit": dict(sorted(context.exit_criteria.items())),
+        }
+    )
+
+
+def _recovery_state_digest(context: TransitionContext) -> str:
+    return _sha256_payload(
+        {
+            "rollback_ready": context.rollback_ready,
+            "compensation_recovery_ready": context.compensation_recovery_ready,
+            "material_dispute_open": context.material_dispute_open,
+            "last_qualified_stage": (
+                context.last_qualified_stage.value
+                if context.last_qualified_stage is not None
+                else None
+            ),
+            "dispute_path_ready": context.dispute_path_ready,
+            "dispute_separable_from_effect_scope": (
+                context.dispute_separable_from_effect_scope
+            ),
+        }
+    )
+
+
+def _transition_assurance_receipt_result(
+    *,
+    binding: TransitionAssuranceBinding,
+    context: TransitionContext,
+    authority_delta_digests: tuple[str, ...],
+) -> TransitionResult | None:
+    receipt = context.assurance_receipt
+    prefix = "TRANSITION" if binding.purpose == "ADVANCE" else "RECOVERY"
+    if receipt is None:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            (f"{prefix}_ASSURANCE_RECEIPT_UNKNOWN",),
+        )
+    if (
+        receipt.binding_digest != _binding_digest(binding)
+        or receipt.authority_validated != context.authority_validated
+        or receipt.hard_gates_digest != _hard_gates_digest(context)
+        or receipt.independent_verification != context.independent_verification
+        or receipt.divergence_resolved != context.divergence_resolved
+        or receipt.capture_conflict_clear != context.capture_conflict_clear
+        or receipt.operational_readiness != context.operational_readiness
+        or receipt.criteria_profile_digest != _criteria_profile_digest(context)
+        or receipt.recovery_state_digest != _recovery_state_digest(context)
+        or tuple(sorted(receipt.authority_delta_digests))
+        != tuple(sorted(authority_delta_digests))
+    ):
+        return TransitionResult(
+            TransitionDecision.REJECT,
+            (f"{prefix}_ASSURANCE_RECEIPT_MISMATCH",),
+        )
+    if (
+        not receipt.verifier_id.strip()
+        or not receipt.verifier_control_lineage.strip()
+        or not receipt.evidence_refs
+    ):
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            (f"{prefix}_ASSURANCE_EVIDENCE_INCOMPLETE",),
+        )
+    if receipt.verifier_authenticated is False:
+        return TransitionResult(
+            TransitionDecision.REJECT,
+            (f"{prefix}_ASSURANCE_VERIFIER_UNAUTHENTICATED",),
+        )
+    if receipt.verifier_authenticated is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            (f"{prefix}_ASSURANCE_VERIFIER_AUTH_UNKNOWN",),
+        )
+    if receipt.verifier_independent is False:
+        return TransitionResult(
+            TransitionDecision.REJECT,
+            (f"{prefix}_ASSURANCE_NOT_INDEPENDENT",),
+        )
+    if receipt.verifier_independent is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            (f"{prefix}_ASSURANCE_INDEPENDENCE_UNKNOWN",),
+        )
+    return None
 
 def _assurance_binding_result(
     *,
@@ -178,7 +380,7 @@ def _criteria_result(prefix: str, values: Mapping[str, Optional[bool]]) -> Trans
     return None
 
 
-def evaluate_transition(
+def _evaluate_transition_core(
     proposal: TransitionProposal, context: TransitionContext
 ) -> TransitionResult:
     """Evaluate one requested GTF stage advancement.
@@ -249,6 +451,14 @@ def evaluate_transition(
     )
     if assurance_binding is not None:
         return assurance_binding
+
+    assurance_receipt_result = _transition_assurance_receipt_result(
+        binding=context.assurance_binding,
+        context=context,
+        authority_delta_digests=tuple(delta.digest() for delta in proposal.authority_deltas),
+    )
+    if assurance_receipt_result is not None:
+        return assurance_receipt_result
 
     for delta in proposal.authority_deltas:
         if not delta.delta_id.strip():
@@ -459,7 +669,7 @@ class RecoveryProposal:
     design_epoch: str = "E1"
 
 
-def evaluate_recovery(
+def _evaluate_recovery_core(
     proposal: RecoveryProposal, context: TransitionContext
 ) -> TransitionResult:
     """Evaluate post-commit rollback or compensation without minting authority."""
@@ -489,6 +699,14 @@ def evaluate_recovery(
     )
     if assurance_binding is not None:
         return assurance_binding
+
+    assurance_receipt_result = _transition_assurance_receipt_result(
+        binding=context.assurance_binding,
+        context=context,
+        authority_delta_digests=(),
+    )
+    if assurance_receipt_result is not None:
+        return assurance_receipt_result
 
     if context.authority_validated is False:
         return TransitionResult(
@@ -596,4 +814,85 @@ def evaluate_recovery(
             "IRREVERSIBLE_EFFECT_USES_COMPENSATION_OR_RECOVERY",
             "NO_AUTHORITY_CREATED_BY_RECOVERY",
         ),
+    )
+
+
+
+def _build_transition_receipt(
+    *,
+    transition_id: str,
+    purpose: str,
+    effect_scope: str,
+    current_stage: TransitionStage,
+    target_stage: TransitionStage,
+    design_epoch: str,
+    authority_delta_digests: tuple[str, ...],
+    context: TransitionContext,
+    result: TransitionResult,
+) -> TransitionReceipt:
+    assurance = context.assurance_receipt
+    return TransitionReceipt(
+        transition_id=transition_id,
+        purpose=purpose,
+        effect_scope=effect_scope,
+        current_stage=current_stage,
+        target_stage=target_stage,
+        design_epoch=design_epoch,
+        decision=result.decision,
+        reasons=result.reasons,
+        assurance_receipt_digest=(assurance.digest() if assurance else ""),
+        authority_delta_digests=tuple(sorted(authority_delta_digests)),
+        verifier_id=(assurance.verifier_id if assurance else None),
+        verifier_control_lineage=(
+            assurance.verifier_control_lineage if assurance else None
+        ),
+        evidence_refs=(assurance.evidence_refs if assurance else ()),
+    )
+
+
+def evaluate_transition(
+    proposal: TransitionProposal, context: TransitionContext
+) -> TransitionResult:
+    core = _evaluate_transition_core(proposal, context)
+    receipt = _build_transition_receipt(
+        transition_id=proposal.transition_id,
+        purpose="ADVANCE",
+        effect_scope=proposal.effect_scope,
+        current_stage=proposal.current_stage,
+        target_stage=proposal.next_stage,
+        design_epoch=proposal.design_epoch,
+        authority_delta_digests=tuple(
+            delta.digest() for delta in proposal.authority_deltas
+        ),
+        context=context,
+        result=core,
+    )
+    return TransitionResult(
+        core.decision,
+        core.reasons,
+        authority_created=core.authority_created,
+        receipt=receipt,
+    )
+
+
+def evaluate_recovery(
+    proposal: RecoveryProposal, context: TransitionContext
+) -> TransitionResult:
+    core = _evaluate_recovery_core(proposal, context)
+    receipt = _build_transition_receipt(
+        transition_id=proposal.transition_id,
+        purpose="RECOVERY",
+        effect_scope=proposal.effect_scope,
+        current_stage=proposal.current_stage,
+        target_stage=proposal.target_stage,
+        design_epoch=proposal.design_epoch,
+        authority_delta_digests=(),
+        context=context,
+        result=core,
+    )
+    return TransitionResult(
+        core.decision,
+        core.reasons,
+        authority_created=core.authority_created,
+        receipt=receipt,
     )
