@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 15
-        versionName '0.10.0-deepseek-coordinate-calibration'
+        versionCode 16
+        versionName '0.10.1-deepseek-coordinate-grid'
     }
 
     signingConfigs {
