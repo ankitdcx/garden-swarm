@@ -80,7 +80,7 @@ A profile may omit a stage only when the TransitionContract records a non-empty 
 
 Stage advancement requires all applicable conditions to be resolved for the exact next effect scope:
 
-All authority/gate/independence/divergence/capture/readiness/criteria/recovery inputs used for that decision must be bound to the exact `transition_id + effect_scope + current_stage + next_stage + DesignEpoch`. A PASS from another transition, scope, stage pair or older DesignEpoch cannot be replayed.
+All authority/gate/independence/divergence/capture/readiness/criteria/recovery inputs used for that decision must be captured in a content-addressed `TransitionAssuranceReceipt` bound to the exact `transition_id + effect_scope + current_stage + next_stage + DesignEpoch`, the gate/criteria/recovery snapshots, authority-delta digests, evidence refs, and an authenticated independently qualified verifier/control lineage. Caller booleans alone are not assurance. A PASS from another transition, scope, stage pair, changed context or older DesignEpoch cannot be replayed.
 
 - authority claims VALIDATED, not merely present;
 - constitutional/rights floors pass;
@@ -192,6 +192,9 @@ Each material dispute is typed by:
 The owning subsystem determines the appropriate evidence, appeal, adjudication, community-choice or verification path. Effects outside the unresolved dispute may continue only when separable and independently authorized.
 
 ## Transition receipts
+
+The executable reference now emits a content-addressed `TransitionReceipt` for every public advance/recovery evaluation. The receipt binds the exact transition identity, purpose, effect scope, current/target stage, DesignEpoch, decision/reasons, assurance-receipt digest, authority-delta digests, verifier identity/control lineage and evidence refs. A receipt records the evaluated decision; its existence does not self-validate the underlying evidence or create authority.
+
 
 Every stage emits a receipt containing:
 - exact stage and effect scope;
