@@ -18,7 +18,10 @@ def packet(**overrides):
         "problem": "Find the strongest design for a shared multi-agent review bus.",
         "scope": "Operational GROUP_REVIEW process only.",
         "assumptions": ["GitHub repository is the durable bus."],
-        "source_refs": ["agents/actions/group-review.json"],
+        "source_refs": ["repo:ankitdcx/garden-swarm@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:agents/actions/group-review.json"],
+        "source_hashes": {
+            "repo:ankitdcx/garden-swarm@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:agents/actions/group-review.json": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
         "symmetric_worker_prompt": "Solve this frozen problem independently. Do not inspect peer outputs.",
     }
     value.update(overrides)
@@ -33,6 +36,61 @@ class GroupReviewBusTests(unittest.TestCase):
         recovered = bus.extract_marked_json(body, bus.PACKET_MARKER)
         self.assertEqual(recovered, value)
         self.assertEqual(bus.validate_packet(recovered), value)
+
+
+    def test_packet_requires_hash_for_every_source(self):
+        value = packet()
+        value.pop("source_hashes")
+        value["packet_sha256"] = bus.packet_hash(value)
+        with self.assertRaisesRegex(ValueError, "source_hashes"):
+            bus.validate_packet(value)
+
+    def test_packet_rejects_mutable_pr_or_branch_source(self):
+        mutable = packet(
+            source_refs=["https://github.com/ankitdcx/garden-swarm/pull/237"],
+            source_hashes={
+                "https://github.com/ankitdcx/garden-swarm/pull/237": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+        )
+        with self.assertRaisesRegex(ValueError, "exact-commit"):
+            bus.validate_packet(mutable)
+
+        branch_ref = "repo:ankitdcx/garden-swarm@main:AGENTS.md"
+        mutable = packet(
+            source_refs=[branch_ref],
+            source_hashes={branch_ref: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+        )
+        with self.assertRaisesRegex(ValueError, "exact-commit"):
+            bus.validate_packet(mutable)
+
+    def test_source_hash_keys_must_match_refs_exactly(self):
+        value = packet()
+        value["source_hashes"] = {"content:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:other": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+        value["packet_sha256"] = bus.packet_hash(value)
+        with self.assertRaisesRegex(ValueError, "exactly match"):
+            bus.validate_packet(value)
+
+    def test_validate_source_text_detects_drift(self):
+        text = "frozen source bytes"
+        ref = "content:sha256:" + bus.sha256_text(text) + ":fixture"
+        value = packet(
+            source_refs=[ref],
+            source_hashes={ref: bus.sha256_text(text)},
+        )
+        self.assertEqual(
+            bus.validate_source_text(
+                packet=value,
+                source_ref=ref,
+                source_text=text,
+            ),
+            bus.sha256_text(text),
+        )
+        with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
+            bus.validate_source_text(
+                packet=value,
+                source_ref=ref,
+                source_text="changed later",
+            )
 
     def test_packet_tampering_is_detected(self):
         value = packet()
