@@ -7,19 +7,22 @@
   },
   "files": [
     {
-      "name": "GARDEN_BOOK_v15.10_PLAIN.txt",
       "bytes": 26266,
-      "sha256": "a356b58e6a072572d5a4cefa11563609e3ce01cd496c94829b2be565af15509a"
+      "sha256": "a356b58e6a072572d5a4cefa11563609e3ce01cd496c94829b2be565af15509a",
+      "artifact_label": "v15.10 Book plain source",
+      "original_filename_sha256_bound": "GARDEN_BOOK_v15.10_PLAIN.txt"
     },
     {
-      "name": "GARDEN_TECHNICAL_DESIGN_v15.10.txt",
       "bytes": 52919,
-      "sha256": "5cecfcb9892d201108dcb46e52ffebe9e29bec153184ecf1ed239873adde41bd"
+      "sha256": "5cecfcb9892d201108dcb46e52ffebe9e29bec153184ecf1ed239873adde41bd",
+      "artifact_label": "v15.10 Technical Design source",
+      "original_filename_sha256_bound": "GARDEN_TECHNICAL_DESIGN_v15.10.txt"
     },
     {
-      "name": "GARDEN_CATALOGUE_v15.10.txt",
       "bytes": 13986947,
-      "sha256": "05fd5435f94beafd3241cd238117d8233b7c109a6c0cfab5293a4823424fa056"
+      "sha256": "05fd5435f94beafd3241cd238117d8233b7c109a6c0cfab5293a4823424fa056",
+      "artifact_label": "v15.10 Catalogue source",
+      "original_filename_sha256_bound": "GARDEN_CATALOGUE_v15.10.txt"
     }
   ],
   "catalogue_inventory": {
@@ -96,6 +99,6 @@
     "VIP",
     "VSM"
   ],
-  "materialization_boundary": "GitHub connector cannot ingest raw bytes from the chat-local uploaded ZIP. Hash identity and semantic inventory are durable here; byte materialization requires an upload/import channel capable of transferring the ZIP bytes.",
+  "materialization_boundary": "Exact source filenames are represented by their SHA-256-bound uploaded-package manifest; this repository record intentionally does not assert nonexistent repository paths. Raw bytes remain external to the GitHub connector until transferred through an approved byte-ingest channel.",
   "authority_effect": "NONE"
 }
