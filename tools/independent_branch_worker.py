@@ -412,9 +412,11 @@ def run(root: Path = Path(".")) -> None:
     spending_policy, spending_receipt = effective_policy(policy, directive, time.time())
     if campaign:
         spending_policy = review_campaign.spending_policy(spending_policy, campaign)
-        spending_receipt = {**spending_receipt, 'mode': 'AUTHORIZED_DOCUMENT_CAMPAIGN',
-                            'daily_ceiling_usd': spending_policy['daily_openrouter_cost_ceiling_usd'],
-                            'pool_lifetime_allocation_usd': spending_policy['budget_pools_usd']['routine']}
+        spending_receipt = {
+            **spending_receipt,
+            'mode': 'AUTHORIZED_DOCUMENT_CAMPAIGN',
+            'campaign_monetary_effect': 'NONE_GLOBAL_OPENROUTER_BUDGET_CONTROLS',
+        }
     identity = legacy.model_identity(key, model['model'])
     key_info = legacy.http(legacy.OR + "/key", key)["data"]
     reserve, day, daily = legacy.budget_check(state, key_info, spending_policy, time.time(), campaign=campaign)
