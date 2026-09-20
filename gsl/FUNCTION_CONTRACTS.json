@@ -398,7 +398,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. Garden admission is computed independently from external host enforcement. ALLOW requires a current typed AuthorityValidationReceipt for every delegation hop, bound to exact authority claim digest, parent, policy epoch, jurisdiction/context, authenticated identity, revocation state, evidence and real verifier independence; goal and Human-Effect checks remain point-of-use gates. Host BLOCKED/REQUIRED status cannot mint or erase Garden authority.",
+      "authority_requirement": "Consequential authority use requires a typed AuthorityValidationReceipt bound to the exact content-addressed authority claim and parent lineage, current policy+DesignEpoch, jurisdiction/context, authenticated identity, scope, delegation, current validity interval, revocation state, evidence refs, and independently qualified verifier/control lineage. A bare boolean or non-empty provenance string cannot validate authority.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -470,7 +470,11 @@
         "jurisdiction/context binding",
         "qualified verifier identity/control-lineage binding",
         "orthogonal Garden admission + external enforcement status",
-        "external runtime requirements"
+        "external runtime requirements",
+        "AuthorityValidationReceipt",
+        "authority receipt DesignEpoch",
+        "authority receipt scope/delegation/validity interval",
+        "authority receipt verifier identity/control lineage/evidence"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
