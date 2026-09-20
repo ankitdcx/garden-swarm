@@ -77,7 +77,7 @@ This table is **non-normative traceability**, not a claim that current public fi
 | RCP rule | Current public owner / supporting surface | Traceability role |
 |---|---|---|
 | RCP-001, RCP-004, RCP-005, RCP-010, RCP-011, RCP-012 | `prototype/authority.py`; `gsl/AGENT_ENVELOPES.json`; `prototype/runtime_constitution.py` | Scoped authority/delegation remains separate from capability, source identity, ownership, operator status and model reasoning. |
-| RCP-002, RCP-003, RCP-008, RCP-009 | `prototype/runtime_constitution.py`; FunctionContracts `FC-PROTOTYPE-RUNTIME-CONSTITUTION-CLASSIFY-v1` and `...-INSTRUCTION-v1` | External enforcement is typed separately from Garden authorization; bypass capability does not create authority. |
+| RCP-002, RCP-003, RCP-008, RCP-009 | `prototype/runtime_constitution.py`; FunctionContracts `FC-PROTOTYPE-RUNTIME-CONSTITUTION-CLASSIFY-v1` and `FC-PROTOTYPE-RUNTIME-CONSTITUTION-INSTRUCTION-v1` | External enforcement is typed separately from Garden authorization; bypass capability does not create authority. |
 | RCP-006 | `prototype/runtime_constitution.py`; `prototype/design_epoch.py`; `FC-PROTOTYPE-DESIGN-EPOCH-VALIDATE-v1` | Persistent goals remain subordinate to epoch validity, revocation, dependencies, bounds and later point-of-use checks. |
 | RCP-007 | `prototype/runtime_constitution.py`; `prototype/actiongate.py`; high-impact hard-gate checks | Human-Effect Closure remains active at consequential effects regardless of instruction source. |
 | RCP-013 | `prototype/runtime_constitution.py::evaluate_answer_integrity`; `FC-PROTOTYPE-RUNTIME-CONSTITUTION-ANSWER-INTEGRITY-v1` | A blocked direct judgment cannot be silently replaced by an attributed external judgment presented as the model's own. |
