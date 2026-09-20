@@ -51,14 +51,13 @@ class ReviewCampaignTests(unittest.TestCase):
             with self.subTest(edit=edit), self.assertRaises(ValueError):
                 campaign.abandonment_charge(self.attempt, p)
 
-    def test_total_ceiling_survives_day_and_target_changes(self):
+    def test_historical_campaign_total_is_not_active_spend_authority(self):
         self.state['attempts'].append({'status': 'REVIEW_RECORDED', 'cost': '9.85',
                                       'utc_day': '1970-01-01', 'target_id': 'old-target'})
         receipt = campaign.check_total(self.state, self.policy, '.10')
-        self.assertEqual(Decimal(receipt['accounted_before_usd']), Decimal('9.90'))
-        self.assertFalse(receipt['abandoned_allowance_is_actual_billing'])
-        with self.assertRaisesRegex(ValueError, 'total'):
-            campaign.check_total(self.state, self.policy, '.10001')
+        self.assertEqual(receipt['monetary_effect'], 'NONE_GLOBAL_OPENROUTER_BUDGET_CONTROLS')
+        self.assertEqual(receipt['global_daily_ceiling_usd'], '2')
+        self.assertEqual(receipt['global_per_call_ceiling_usd'], '0.01')
 
     def test_campaign_requires_exact_source_and_identity(self):
         with tempfile.TemporaryDirectory() as temp:
