@@ -705,7 +705,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure creates no authority. HARD_GATE findings cannot be deferred/escalated/open while the affected candidate scope claims closure. Finding classification and protected-surface scanning must themselves pass and bind the exact candidate hash. Each cycle has explicit iteration/work-item bounds and a residual-debt record.",
+      "authority_requirement": "Closure creates no authority. Finding classification and protected-surface scanning must be independently validated and bound to the exact candidate. HARD_GATE/PROTECTED findings cannot be deferred/escalated into closure; a PROTECTED finding automatically activates protected authorization even when the proposer labels the overall patch routine.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -764,7 +764,12 @@
         "PROTECTED_SURFACE_SCAN_BINDING_MISMATCH",
         "UPGRADE_ITERATION_BOUND_MISSING",
         "UPGRADE_WORK_ITEM_BOUND_MISSING",
-        "RESIDUAL_DEBT_RECORD_MISSING"
+        "RESIDUAL_DEBT_RECORD_MISSING",
+        "FINDING_CLASSIFICATION_INDEPENDENCE_FAILED",
+        "FINDING_CLASSIFICATION_INDEPENDENCE_UNKNOWN",
+        "PROTECTED_SURFACE_SCAN_INDEPENDENCE_FAILED",
+        "PROTECTED_SURFACE_SCAN_INDEPENDENCE_UNKNOWN",
+        "BLOCKING_FINDING_UNRESOLVED"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -790,7 +795,11 @@
         "candidate-bound finding classification validation",
         "candidate-bound protected-surface scan",
         "explicit iteration/work-item bounds",
-        "residual debt record"
+        "residual debt record",
+        "FindingClass[ROUTINE|MATERIAL|HARD_GATE|PROTECTED]",
+        "candidate-bound independent finding classification",
+        "candidate-bound independent protected-surface scan",
+        "PROTECTED findings automatically activate protected authorization"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
