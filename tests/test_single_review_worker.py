@@ -26,7 +26,7 @@ class SingleReviewTests(unittest.TestCase):
                 money(value)
 
     def test_daily_existing_spend_included(self):
-        self.key['usage_daily'] = '1.99'
+        self.key['usage_daily'] = '1.995'
         with self.assertRaisesRegex(ValueError, 'daily'):
             budget_check(self.state, self.key, self.policy, 100000)
 
@@ -36,10 +36,12 @@ class SingleReviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'reconciliation'):
                 budget_check(self.state, self.key, self.policy, 100000)
 
-    def test_routine_pool_exhaustion(self):
-        self.key['usage'] = 9
-        with self.assertRaisesRegex(ValueError, 'lifetime'):
-            budget_check(self.state, self.key, self.policy, 100000)
+    def test_historical_lifetime_usage_does_not_create_a_second_budget(self):
+        self.key['usage'] = 999
+        self.key['usage_daily'] = '0.50'
+        reserve, _, daily = budget_check(self.state, self.key, self.policy, 100000)
+        self.assertEqual(str(reserve), '0.01')
+        self.assertEqual(daily, '0.50')
 
     def test_blind_before_followup_and_four_round_bound(self):
         families = ['one', 'two', 'three', 'four']
@@ -65,20 +67,20 @@ class SingleReviewTests(unittest.TestCase):
         # 2026-09-19 and Anthropic/Claude on 2026-09-20.
         for name in ('Anthropic', 'NVIDIA', 'Mistral'):
             endpoint = {**self.endpoint, 'tag': name.lower(), 'provider_name': name}
-            body, _ = endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
+            body, _ = endpoint_request(endpoint, self.model, 'public source', money('.01'), self.policy, self.exclusions)
             self.assertEqual(body['provider']['only'], [name.lower()])
 
     def test_request_forbids_fallback_and_has_price_and_output_bounds(self):
-        body, estimate = endpoint_request(self.endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
+        body, estimate = endpoint_request(self.endpoint, self.model, 'public source', money('.01'), self.policy, self.exclusions)
         self.assertFalse(body['provider']['allow_fallbacks'])
         self.assertTrue(body['provider']['zdr'])
         self.assertEqual(body['provider']['only'], ['allowed'])
-        self.assertLessEqual(money(estimate), money('.05'))
+        self.assertLessEqual(money(estimate), money('.01'))
         self.assertEqual(body['max_tokens'], 8000)
 
     def test_large_context_never_silently_truncated(self):
         with self.assertRaises(ValueError):
-            endpoint_request(self.endpoint, self.model, 'x' * 1000000, money('.05'), self.policy, self.exclusions)
+            endpoint_request(self.endpoint, self.model, 'x' * 1000000, money('.01'), self.policy, self.exclusions)
 
     def test_cas_failure_is_not_retried(self):
         ledger = object.__new__(GitLedger)
