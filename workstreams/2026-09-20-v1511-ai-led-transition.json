@@ -34,7 +34,9 @@
       "evaluate_instruction",
       "TransitionStage",
       "TransitionContext",
-      "evaluate_transition"
+      "evaluate_transition",
+      "RecoveryProposal",
+      "evaluate_recovery"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
@@ -58,7 +60,8 @@
       "GardenFunctionContractRegistry/v1",
       "Engine.Transition",
       "Garden Transition Fabric",
-      "Recursive Control Intelligence current-reading"
+      "Recursive Control Intelligence current-reading",
+      "prototype.transition_governance.evaluate_recovery"
     ],
     "intended_effect": "Upgrade the v15.10/v15.9 candidate line so AI owns routine Garden gap closure, authority objects require validation/provenance rather than mere presence, legitimate goals cannot self-authorize intrusive means, and existing Engine.Transition/GTF gains staged shadow/parallel/bounded-active migration with divergence, anti-capture, dispute, rollback/compensation and no-sovereignty-bootstrap rules. Keep all changes noncanonical pending protected admission.",
     "parallel_mode": "INDEPENDENT_COMPARISON"
