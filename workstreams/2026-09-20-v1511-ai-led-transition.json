@@ -45,7 +45,9 @@
       "TransitionAssuranceBinding",
       "FindingRecord",
       "AuthorityDelta",
-      "FindingClass"
+      "FindingClass",
+      "TransitionAssuranceReceipt",
+      "TransitionReceipt"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
