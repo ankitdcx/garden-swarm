@@ -134,6 +134,25 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         self.assertNotEqual(one, two)
         self.assertNotEqual(one, three)
 
+    def test_budget_rejection_diagnostics_are_normalized(self):
+        cases = [
+            (ValueError("paid inference key required"), "KEY_TYPE_NOT_PAID"),
+            (ValueError("daily reservation exhausted"), "DAILY_BUDGET_EXHAUSTED"),
+            (ValueError("routine lifetime allocation exhausted"), "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+            (ValueError("key credit limit too low"), "KEY_CREDIT_LIMIT_TOO_LOW"),
+            (ValueError("unknown monetary value"), "KEY_USAGE_UNKNOWN"),
+            (ValueError("invalid monetary value"), "KEY_USAGE_INVALID"),
+            (ValueError("outstanding reservation/unknown cost; reconciliation required"), "OUTSTANDING_RESERVATION"),
+        ]
+        for exc, expected in cases:
+            self.assertEqual(worker._budget_rejection_code(exc), expected)
+
+    def test_unknown_budget_rejection_is_generic(self):
+        self.assertEqual(
+            worker._budget_rejection_code(ValueError("opaque account detail 123")),
+            "BUDGET_POLICY_REJECTED",
+        )
+
     def test_endpoint_rejection_diagnostics_are_normalized(self):
         cases = [
             (ValueError("endpoint above routing price cap"), "PRICE_CAP"),

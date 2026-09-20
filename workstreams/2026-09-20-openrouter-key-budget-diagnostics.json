@@ -1,0 +1,41 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:openrouter-key-budget-diagnostics:20260920",
+  "work_package_id": "OPENROUTER-KEY-BUDGET-DIAGNOSTICS-20260920",
+  "branch": "chatgpt/openrouter-key-budget-diagnostics-20260920",
+  "base_sha": "726e807a58093831183ed48a366a2c3c11d0a8c8",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:openrouter-key-budget-diagnostics:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "OPENROUTER-KEY-BUDGET-DIAGNOSTICS-20260920",
+    "base_sha": "726e807a58093831183ed48a366a2c3c11d0a8c8",
+    "target_paths": [
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "workstreams/2026-09-20-openrouter-key-budget-diagnostics.json"
+    ],
+    "target_symbols": [
+      "group_review_openrouter_worker",
+      "key and budget preflight diagnostics"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "OPERATIONS_AND_BUDGET"
+    ],
+    "affected_invariants": [
+      "NO_SECRET_LEAK_IN_DIAGNOSTICS",
+      "PRE_RESERVATION_FAILURE_IS_TYPED",
+      "NO_GATE_WEAKENING_FOR_DIAGNOSTICS"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewOpenRouter/v1"
+    ],
+    "intended_effect": "Separate OpenRouter key-metadata failures from budget-policy failures with bounded normalized diagnostics before any reservation/inference. No routing, spending, privacy, or reviewer gate is weakened.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

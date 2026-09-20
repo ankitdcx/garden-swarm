@@ -302,6 +302,24 @@ def _endpoint_rejection_code(exc: Exception) -> str:
     return "ENDPOINT_POLICY_REJECTED"
 
 
+def _budget_rejection_code(exc: Exception) -> str:
+    text = str(exc).lower()
+    rules = (
+        ("paid inference key required", "KEY_TYPE_NOT_PAID"),
+        ("daily reservation exhausted", "DAILY_BUDGET_EXHAUSTED"),
+        ("routine lifetime allocation exhausted", "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+        ("key credit limit too low", "KEY_CREDIT_LIMIT_TOO_LOW"),
+        ("unknown monetary value", "KEY_USAGE_UNKNOWN"),
+        ("invalid monetary value", "KEY_USAGE_INVALID"),
+        ("outstanding reservation/unknown cost", "OUTSTANDING_RESERVATION"),
+        ("single worker paused", "WORKER_PAUSED"),
+    )
+    for needle, code in rules:
+        if needle in text:
+            return code
+    return "BUDGET_POLICY_REJECTED"
+
+
 def _profile(policy: dict) -> dict:
     routine = dict((policy.get("review_profiles") or {}).get("ROUTINE") or {})
     return {
@@ -435,8 +453,26 @@ def run(root: Path = Path(".")) -> None:
     prompt_sha = bus.sha256_text(prompt)
     source_bundle_sha = bus.sha256_text(source_bundle)
 
-    key_info = legacy.http(legacy.OR + "/key", key)["data"]
-    reserve, day, daily = legacy.budget_check(state, key_info, policy, time.time())
+    try:
+        key_response = legacy.http(legacy.OR + "/key", key)
+        key_info = key_response["data"]
+    except error.HTTPError as exc:
+        print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_HTTP:" + str(exc.code))
+        raise
+    except (KeyError, ValueError, TypeError):
+        print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_INVALID")
+        raise
+    print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_OK")
+    try:
+        reserve, day, daily = legacy.budget_check(
+            state, key_info, policy, time.time()
+        )
+    except ValueError as exc:
+        print(
+            "GROUP_REVIEW_PREFLIGHT:BUDGET_REJECT:"
+            + _budget_rejection_code(exc)
+        )
+        raise
     print("GROUP_REVIEW_PREFLIGHT:BUDGET_OK")
     identity = legacy.model_identity(key, model)
     print("GROUP_REVIEW_PREFLIGHT:MODEL_IDENTITY_OK")
