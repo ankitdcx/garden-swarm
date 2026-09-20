@@ -22,6 +22,8 @@ class UpgradeDecision(str, Enum):
 
 @dataclass
 class UpgradeContext:
+    candidate_sha256: str = ""
+    gate_candidate_bindings: Mapping[str, str] = field(default_factory=dict)
     finding_dispositions: Mapping[str, FindingDisposition] = field(default_factory=dict)
     audited_scope_declared: bool = False
     search_coverage_complete: Optional[bool] = None
@@ -58,6 +60,30 @@ def _typed_gate(
     return None
 
 
+
+
+def _candidate_binding_gate(
+    gate_name: str, context: UpgradeContext
+) -> UpgradeResult | None:
+    expected = context.candidate_sha256.strip()
+    if not expected:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("CANDIDATE_HASH_MISSING",),
+        )
+    actual = context.gate_candidate_bindings.get(gate_name)
+    if actual is None:
+        return UpgradeResult(
+            UpgradeDecision.ESCALATE,
+            (f"{gate_name}_BINDING_UNKNOWN",),
+        )
+    if actual != expected:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            (f"{gate_name}_BINDING_MISMATCH",),
+        )
+    return None
+
 def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     """Evaluate whether an AI-led Garden upgrade may claim candidate closure.
 
@@ -71,6 +97,12 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
             ("AUDITED_SCOPE_NOT_DECLARED",),
         )
 
+    if not context.candidate_sha256.strip():
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("CANDIDATE_HASH_MISSING",),
+        )
+
     coverage = _typed_gate(
         "SEARCH_COVERAGE",
         context.search_coverage_complete,
@@ -78,6 +110,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     )
     if coverage is not None:
         return coverage
+
+    search_coverage_binding = _candidate_binding_gate("SEARCH_COVERAGE", context)
+    if search_coverage_binding is not None:
+        return search_coverage_binding
 
     if not context.bounded_cycle_declared:
         return UpgradeResult(
@@ -112,6 +148,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     if propagation is not None:
         return propagation
 
+    propagation_closure_binding = _candidate_binding_gate("PROPAGATION_CLOSURE", context)
+    if propagation_closure_binding is not None:
+        return propagation_closure_binding
+
     tests = _typed_gate(
         "TESTS",
         context.tests_pass,
@@ -119,6 +159,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     )
     if tests is not None:
         return tests
+
+    tests_binding = _candidate_binding_gate("TESTS", context)
+    if tests_binding is not None:
+        return tests_binding
 
     retention = _typed_gate(
         "RETENTION_NO_LOSS",
@@ -128,6 +172,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     if retention is not None:
         return retention
 
+    retention_no_loss_binding = _candidate_binding_gate("RETENTION_NO_LOSS", context)
+    if retention_no_loss_binding is not None:
+        return retention_no_loss_binding
+
     independence = _typed_gate(
         "VERIFICATION_INDEPENDENCE",
         context.verification_independence_pass,
@@ -135,6 +183,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     )
     if independence is not None:
         return independence
+
+    verification_independence_binding = _candidate_binding_gate("VERIFICATION_INDEPENDENCE", context)
+    if verification_independence_binding is not None:
+        return verification_independence_binding
 
     if context.independent_review_required:
         review = _typed_gate(
@@ -144,6 +196,9 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
         )
         if review is not None:
             return review
+        review_binding = _candidate_binding_gate("INDEPENDENT_REVIEW", context)
+        if review_binding is not None:
+            return review_binding
 
     if context.protected_change:
         protected = _typed_gate(
@@ -153,6 +208,9 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
         )
         if protected is not None:
             return protected
+        protected_binding = _candidate_binding_gate("PROTECTED_AUTHORIZATION", context)
+        if protected_binding is not None:
+            return protected_binding
 
     reaudit = _typed_gate(
         "FINAL_REAUDIT",
@@ -161,6 +219,10 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     )
     if reaudit is not None:
         return reaudit
+
+    final_reaudit_binding = _candidate_binding_gate("FINAL_REAUDIT", context)
+    if final_reaudit_binding is not None:
+        return final_reaudit_binding
 
     return UpgradeResult(
         UpgradeDecision.CLOSE_CANDIDATE,
