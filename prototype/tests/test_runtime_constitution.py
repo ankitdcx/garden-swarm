@@ -48,10 +48,10 @@ def base_context(**overrides):
             "human_effect": True,
         },
         high_impact_actions=frozenset({"deploy"}),
-        human_effect_materiality_by_action={
-            "notify": False,
-            "deploy": True,
-            "intrude_private_system": True,
+        human_effect_materiality_by_effect={
+            ("notify", "repo"): False,
+            ("deploy", "world"): True,
+            ("intrude_private_system", "repo"): True,
         },
     )
     data.update(overrides)
@@ -516,7 +516,7 @@ def test_base_human_effect_gates_cannot_be_removed_by_empty_profile_set():
 
 
 def test_missing_human_effect_materiality_cannot_be_treated_as_low_impact():
-    ctx = base_context(human_effect_materiality_by_action={})
+    ctx = base_context(human_effect_materiality_by_effect={})
     result = evaluate_instruction(
         RuntimeInstruction(
             principal="human:alice",
@@ -524,6 +524,31 @@ def test_missing_human_effect_materiality_cannot_be_treated_as_low_impact():
             source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
             action="notify",
             target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_UNKNOWN",)
+
+
+def test_human_effect_materiality_is_bound_to_action_and_target():
+    ctx = base_context(
+        capabilities_by_subject={"agent:A": frozenset({"notify"})},
+        authority_by_subject={
+            "human:alice": authority("human:alice", {"notify"}, {"human:patient"}),
+            "agent:A": authority("agent:A", {"notify"}, {"human:patient"}),
+        },
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="human:patient",
             capability="notify",
             delegation_chain=("human:alice", "agent:A"),
             policy_epoch="E1",
