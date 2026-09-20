@@ -20,9 +20,9 @@ class PaidReviewRoutingTests(unittest.TestCase):
 
     def test_budget_is_low_cost_and_fail_closed(self):
         self.assertEqual(sum(self.policy["budget_pools_usd"].values()), 20.0)
-        self.assertEqual(self.policy["daily_openrouter_cost_ceiling_usd"], 1.0)
-        self.assertEqual(self.policy["routine_task_cost_ceiling_usd"], 0.25)
-        self.assertLessEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.05)
+        self.assertEqual(self.policy["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertEqual(self.policy["routine_task_cost_ceiling_usd"], 2.0)
+        self.assertEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.01)
         self.assertEqual(self.policy["automatic_expensive_escalation_daily_ceiling_usd"], 0.0)
         self.assertEqual(self.policy["event_driven_activation"]["no_change_default"], "NO_PAID_CALL")
         self.assertTrue(self.policy["event_driven_activation"]["deterministic_gate_before_model"])
@@ -44,11 +44,11 @@ class PaidReviewRoutingTests(unittest.TestCase):
         ])
         self.assertEqual(len(set(families)), 5)
 
-    def test_provider_policy_denies_collection_and_keeps_anthropic_excluded(self):
+    def test_provider_policy_denies_collection_and_has_no_current_excluded_endpoint(self):
         provider = self.policy["provider_policy"]
         self.assertEqual(provider["data_collection"], "deny")
         self.assertTrue(provider["allow_fallbacks"])
-        self.assertEqual(set(provider["ignore"]), {"anthropic"})
+        self.assertEqual(set(provider["ignore"]), set())
         self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["prompt"], 1.0)
         self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["completion"], 3.0)
 
@@ -59,16 +59,16 @@ class PaidReviewRoutingTests(unittest.TestCase):
         expected = [row["family"] for row in self.policy["routine_reviewers"]]
         self.assertEqual([row["family"] for row in receipt["selected"]], expected)
         self.assertEqual(receipt["approved_families"], expected)
-        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 1.0)
-        self.assertEqual(set(receipt["provider_policy"]["ignore"]), {"anthropic"})
+        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 2.0)
+        self.assertEqual(set(receipt["provider_policy"]["ignore"]), set())
 
     def _selection(self):
         return {
             "approved_families":[self.policy["routine_reviewers"][0]["family"]],
             "max_prompt_characters":60000,
             "max_output_tokens":3000,
-            "routine_model_call_cost_ceiling_usd":0.05,
-            "daily_openrouter_cost_ceiling_usd":1.0,
+            "routine_model_call_cost_ceiling_usd":0.01,
+            "daily_openrouter_cost_ceiling_usd":2.0,
             "provider_policy":self.policy["provider_policy"]
         }
 
@@ -81,11 +81,11 @@ class PaidReviewRoutingTests(unittest.TestCase):
         body = json.loads(mocked.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(body["provider"]["data_collection"],"deny")
         self.assertEqual(body["provider"]["max_price"],{"prompt":1.0,"completion":3.0})
-        self.assertEqual(set(body["provider"]["ignore"]), {"anthropic"})
+        self.assertEqual(set(body["provider"]["ignore"]), set())
 
     def test_daily_budget_refuses_reserved_overrun(self):
         selection=self._selection(); model=self.policy["routine_reviewers"][0]
-        with patch.dict(os.environ,{"OPENROUTER_API_KEY":"test-key"}), patch("tools.run_paid_matrix_review._key_usage_daily", return_value=(0.96,{"status":"VERIFIED","usage_daily":0.96})):
+        with patch.dict(os.environ,{"OPENROUTER_API_KEY":"test-key"}), patch("tools.run_paid_matrix_review._key_usage_daily", return_value=(1.995,{"status":"VERIFIED","usage_daily":1.995})):
             raw, attempt = paid._call(model=model,prompt="bounded public target",selection=selection)
         self.assertIsNone(raw); self.assertEqual(attempt["status"],"DAILY_BUDGET_RESERVED_EXHAUSTED")
 

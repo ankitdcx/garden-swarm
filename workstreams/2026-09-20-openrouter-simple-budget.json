@@ -1,0 +1,56 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:openrouter-simple-budget:20260920",
+  "work_package_id": "OPENROUTER-SIMPLE-BUDGET-20260920",
+  "branch": "chatgpt/openrouter-simple-budget-20260920",
+  "base_sha": "d79168d5088a0cdf76ad668753ca48c419635fef",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:openrouter-simple-budget:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "OPENROUTER-SIMPLE-BUDGET-20260920",
+    "base_sha": "d79168d5088a0cdf76ad668753ca48c419635fef",
+    "target_paths": [
+      "agents/config-surface-contracts.json",
+      "agents/openrouter-paid-review-policy.json",
+      "tests/test_automation_audit.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "tests/test_ip_origin_review_selection.py",
+      "tests/test_paid_review_routing.py",
+      "tests/test_rate_limit_recovery.py",
+      "tests/test_review_campaign.py",
+      "tests/test_review_context.py",
+      "tests/test_single_review_worker.py",
+      "tools/group_review_openrouter_worker.py",
+      "tools/independent_branch_worker.py",
+      "tools/review_budget.py",
+      "tools/review_campaign.py",
+      "tools/single_review_worker.py",
+      "workstreams/2026-09-20-openrouter-simple-budget.json"
+    ],
+    "target_symbols": [
+      "OpenRouter budget rule",
+      "group_review_budget_check"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "OPERATIONS_AND_BUDGET"
+    ],
+    "affected_invariants": [
+      "OPENROUTER_DAILY_SPEND_LE_2_USD",
+      "OPENROUTER_CALL_SPEND_LE_0_01_USD",
+      "UNKNOWN_OR_INFLIGHT_CALLS_BLOCK",
+      "NO_LEGACY_EPOCH_OR_POOL_AUTHORITY"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewOpenRouter/v1",
+      "GardenOpenRouterPaidReviewPolicy/v1"
+    ],
+    "intended_effect": "Replace legacy lifetime pools, task/hour caps and scoped budget epochs for the active paid GROUP_REVIEW lane with one human-authorized rule: at most USD 2 total OpenRouter spend per UTC day and USD 0.01 per paid call. Preserve public-only, provider/privacy, model identity and fail-closed unknown-call checks.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

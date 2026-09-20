@@ -59,12 +59,12 @@ class AutomationAuditTests(unittest.TestCase):
         record['last_successful_dispatch_at']=(now+timedelta(hours=1)).isoformat()
         self.assertEqual(evaluate(record,now=now),'UNKNOWN')
 
-    def test_lifetime_pool_and_execution_scope_are_explicit(self):
+    def test_simple_paid_budget_and_execution_scope_are_explicit(self):
         policy=json.loads((ROOT/'agents/openrouter-paid-review-policy.json').read_text())
-        self.assertEqual(sum(policy['budget_pools_usd'].values()),20)
-        self.assertIn('NOT_DAILY',policy['budget_pool_scope'])
-        self.assertIsNone(policy['balance_remaining_usd'])
-        self.assertEqual(policy['daily_openrouter_cost_ceiling_usd'],1)
+        self.assertEqual(policy['daily_openrouter_cost_ceiling_usd'],2)
+        self.assertEqual(policy['routine_model_call_cost_ceiling_usd'],0.01)
+        self.assertIn('DEPRECATED',policy['budget_pool_scope'])
+        self.assertEqual(policy['balance_status'],'NOT_USED_BY_ACTIVE_GROUP_REVIEW_BUDGET_RULE')
         self.assertEqual(policy['free_swarm']['max_parallelism'],1)
         self.assertEqual(policy['execution_limits']['max_model_calls_per_dispatch'],1)
 

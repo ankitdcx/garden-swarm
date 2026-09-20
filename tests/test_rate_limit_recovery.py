@@ -38,9 +38,10 @@ class RateLimitRecoveryTests(unittest.TestCase):
         self.assertIsNone(self.attempt['cost'])
         self.assertFalse(self.attempt['full_review_complete'])
         self.state['attempts'].append({'status': 'REVIEW_RECORDED', 'cost': '9.8'})
-        campaign.check_total(self.state, self.policy, '.1')
-        with self.assertRaises(ValueError):
-            campaign.check_total(self.state, self.policy, '.1001')
+        receipt = campaign.check_total(self.state, self.policy, '.1')
+        self.assertEqual(receipt['monetary_effect'], 'NONE_GLOBAL_OPENROUTER_BUDGET_CONTROLS')
+        self.assertEqual(receipt['global_daily_ceiling_usd'], '2')
+        self.assertEqual(receipt['global_per_call_ceiling_usd'], '0.01')
 
     def test_no_exception_for_timeouts_5xx_identified_or_other_campaign(self):
         variants = [{'http_status': 500}, {'http_status': 503}, {'http_status': None},

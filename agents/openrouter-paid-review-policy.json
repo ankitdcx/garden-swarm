@@ -1,6 +1,6 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "revision": 3,
+  "revision": 4,
   "purpose": "EVENT_DRIVEN_LOW_COST_SPECIALIST_REVIEW",
   "design_epoch": "v15.10-working-candidate-process",
   "catalog_reference_date": "2026-09-19",
@@ -11,10 +11,10 @@
   "reviewer_slot_registry": "agents/reviewer-slot-registry.json",
   "event_driven_model_quality_policy": "agents/event-driven-model-quality-policy.json",
   "independent_branch_convergence_policy": "agents/independent-branch-convergence-policy.json",
-  "daily_openrouter_cost_ceiling_usd": 1,
-  "routine_task_cost_ceiling_usd": 0.25,
-  "routine_hourly_cost_ceiling_usd": 0.25,
-  "routine_model_call_cost_ceiling_usd": 0.05,
+  "daily_openrouter_cost_ceiling_usd": 2,
+  "routine_task_cost_ceiling_usd": 2,
+  "routine_hourly_cost_ceiling_usd": 2,
+  "routine_model_call_cost_ceiling_usd": 0.01,
   "automatic_expensive_escalation_daily_ceiling_usd": 0,
   "max_prompt_characters": 200000,
   "max_output_tokens": 32000,
@@ -22,9 +22,7 @@
     "sort": "price",
     "allow_fallbacks": true,
     "data_collection": "deny",
-    "ignore": [
-      "anthropic"
-    ],
+    "ignore": [],
     "max_price_usd_per_million_tokens": {
       "prompt": 1,
       "completion": 3
@@ -155,13 +153,8 @@
   },
   "spending_modes": {
     "DEFAULT": {
-      "daily_ceiling_usd": 1,
-      "task_ceiling_usd": 0.25
-    },
-    "AUDIT": {
       "daily_ceiling_usd": 2,
-      "task_ceiling_usd": 0.5,
-      "requires_dated_target_bound_directive": true
+      "per_call_ceiling_usd": 0.01
     }
   },
   "notes": [
@@ -171,9 +164,10 @@
     "A single correct material counterexample defeats any number of approvals.",
     "NO_SUBSTANTIVE_OUTPUT is recorded and not automatically retried against an unchanged packet.",
     "Expensive frontier models require an explicit future human opt-in and are never automatic.",
-    "NVIDIA/Nemotron and Mistral were re-authorized for low-cost Garden review by explicit human directive on 2026-09-19; Anthropic remains excluded by operator routing policy.",
     "This policy is operational only and creates no Garden semantic authority.",
-    "GROUP_REVIEW budget epoch GROUP_REVIEW_CHEAP_REAUTH_2026-09-20 authorizes at most $1 incremental local-ledger spend after explicit 2026-09-20 cheap-call reauthorization; historical account usage is not copied into public state and does not consume the new epoch allocation."
+    "Anthropic/Claude, NVIDIA/Nemotron and Mistral are currently re-authorized for Garden review by explicit human directives; eligibility does not imply automatic selection, authority, safety certification or paid-budget permission.",
+    "Controlling paid OpenRouter budget rule from the explicit 2026-09-20 human directive: maximum USD 2 total spend per UTC day and maximum USD 0.01 per paid call.",
+    "Legacy budget pool/task/hour fields remain only for compatibility with disabled historical tooling and are non-controlling for the active GROUP_REVIEW paid lane."
   ],
   "budget_pools_usd": {
     "routine": 9,
@@ -209,10 +203,10 @@
     "authority_and_actiongate",
     "adversarial_falsification"
   ],
-  "budget_pool_scope": "LEGACY_INITIAL_20_USD_ALLOCATION_NOT_DAILY_PLUS_EXPLICIT_SCOPED_REAUTHORIZATION_EPOCHS",
+  "budget_pool_scope": "DEPRECATED_COMPATIBILITY_ONLY_NOT_ACTIVE_SPEND_AUTHORITY",
   "balance_remaining_usd": null,
-  "balance_status": "UNKNOWN_REQUIRES_PROVIDER_RECONCILIATION",
-  "budget_relationship": "The original $20 pool remains the historical allocation for legacy review lanes. GROUP_REVIEW_CHEAP_REAUTH_2026-09-20 is a separate explicitly authorized $1 incremental GROUP_REVIEW-only epoch. The $1/day, $0.25/task and $0.05/call limits remain controlling; expensive escalation remains automatic-budget zero.",
+  "balance_status": "NOT_USED_BY_ACTIVE_GROUP_REVIEW_BUDGET_RULE",
+  "budget_relationship": "The active paid GROUP_REVIEW lane uses only the provider-reported UTC-day usage ceiling of USD 2 and a USD 0.01 per-call reservation. No lifetime pool, task cap, hourly cap or scoped budget epoch authorizes or further limits active GROUP_REVIEW spend.",
   "event_driven_context": {
     "policy": "agents/event-driven-context-policy.json",
     "quality_policy": "agents/event-driven-model-quality-policy.json",
@@ -225,16 +219,5 @@
     "activation_status": "SINGLE_CALL_TRANSPORT_ACTIVE_ONLY_AFTER_CHATGPT_DIRECTIVE; BROAD_COORDINATOR_PAUSED",
     "no_schedule_required": true
   },
-  "review_context_policy": "agents/review-context-policy.json",
-  "group_review_budget_epoch": {
-    "schema": "GardenGroupReviewBudgetEpoch/v1",
-    "epoch_id": "GROUP_REVIEW_CHEAP_REAUTH_2026-09-20",
-    "status": "AUTHORIZED",
-    "authorization_date": "2026-09-20",
-    "scope": "GROUP_REVIEW_OPENROUTER_ONLY",
-    "incremental_allocation_usd": 1,
-    "basis": "EXPLICIT_HUMAN_REAUTHORIZATION_FOR_CHEAP_CALLS",
-    "historical_key_usage_is_epoch_baseline": true,
-    "semantic_delta_admitted": false
-  }
+  "review_context_policy": "agents/review-context-policy.json"
 }
