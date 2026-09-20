@@ -128,6 +128,7 @@ No "patch applied" claim before propagation closure.
 ## Closure condition
 
 A version may reach upgrade closure only when:
+- every closure-evidence result (coverage, propagation, tests, no-loss, independent verification/review, protected authorization where applicable, and final re-audit) is bound to the exact candidate SHA-256 being closed; an older PASS cannot be replayed after candidate bytes change;
 - the audited scope is explicitly declared and the required systematic search/coverage pass has completed, so an empty finding list cannot masquerade as exhaustive review;
 - no currently known material defect remains unresolved in the audited scope;
 - all discovered material findings are FIXED, REJECTED_WITH_EVIDENCE, DEFERRED_WITH_OWNER/CONDITION, or ESCALATED under the explicit boundary above;
@@ -156,7 +157,7 @@ Changes to a verifier, admission gate, protected policy, trust root or independe
 
 ## Executable closure reference
 
-`prototype/upgrade_process.py` implements a narrow closure evaluator. It can return `CLOSE_CANDIDATE` only when audited scope and search coverage, material finding dispositions, bounded-cycle declaration, method authority, propagation, tests, retention/no-loss, verification independence, required independent review, protected authorization where applicable, and final re-audit are all resolved. `CLOSE_CANDIDATE` is not merge authority, canonical promotion, deployment certification or sovereignty.
+`prototype/upgrade_process.py` implements a narrow closure evaluator. It can return `CLOSE_CANDIDATE` only when audited scope and search coverage, material finding dispositions, bounded-cycle declaration, method authority, propagation, tests, retention/no-loss, verification independence, required independent review, protected authorization where applicable, and final re-audit are all resolved **and every closure-evidence gate is hash-bound to the exact candidate bytes**. `CLOSE_CANDIDATE` is not merge authority, canonical promotion, deployment certification or sovereignty.
 
 ## Core invariants
 
