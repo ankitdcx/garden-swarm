@@ -18,7 +18,9 @@
     "base_sha": "16faacc045d3494c3f4633d933f4868b5f1b9945",
     "target_paths": [
       "workstreams/2026-09-20-claude-routing-sync.json",
-      "agents/provider-exclusion-policy.json"
+      "agents/provider-exclusion-policy.json",
+      "tests/test_provider_exclusion.py",
+      "tests/test_single_review_worker.py"
     ],
     "target_symbols": [
       "Anthropic/Claude provider exclusion mirror"
