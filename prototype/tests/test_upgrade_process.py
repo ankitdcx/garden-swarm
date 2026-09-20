@@ -1,5 +1,6 @@
 from prototype.upgrade_process import (
     FindingDisposition,
+    FindingRecord,
     UpgradeContext,
     UpgradeDecision,
     evaluate_upgrade_closure,
@@ -22,9 +23,9 @@ def complete_context(**overrides):
         },
         audited_scope_declared=True,
         search_coverage_complete=True,
-        finding_dispositions={
-            "F-1": FindingDisposition.FIXED,
-            "F-2": FindingDisposition.REJECTED_WITH_EVIDENCE,
+        findings={
+            "F-1": FindingRecord(FindingDisposition.FIXED, evidence_refs=("test:F-1",)),
+            "F-2": FindingRecord(FindingDisposition.REJECTED_WITH_EVIDENCE, evidence_refs=("analysis:F-2",)),
         },
         bounded_cycle_declared=True,
         upgrade_methods_authorized=True,
@@ -51,7 +52,7 @@ def test_complete_upgrade_can_close_candidate_without_creating_authority():
 def test_open_material_finding_keeps_work_loop_running():
     result = evaluate_upgrade_closure(
         complete_context(
-            finding_dispositions={"F-1": FindingDisposition.OPEN},
+            findings={"F-1": FindingRecord(FindingDisposition.OPEN)},
         )
     )
     assert result.decision is UpgradeDecision.CONTINUE_WORK
@@ -124,7 +125,7 @@ def test_unbounded_recursive_cycle_cannot_close():
 def test_empty_finding_list_without_search_coverage_cannot_close():
     result = evaluate_upgrade_closure(
         complete_context(
-            finding_dispositions={},
+            findings={},
             search_coverage_complete=False,
         )
     )
@@ -157,3 +158,40 @@ def test_missing_final_reaudit_candidate_binding_blocks_closure():
     )
     assert result.decision is UpgradeDecision.ESCALATE
     assert result.reasons == ("FINAL_REAUDIT_BINDING_UNKNOWN",)
+
+
+def test_rejected_finding_without_evidence_cannot_close():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={
+                "F-1": FindingRecord(FindingDisposition.REJECTED_WITH_EVIDENCE)
+            }
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("FINDING_EVIDENCE_MISSING:F-1",)
+
+
+def test_deferred_finding_requires_owner_and_reopen_condition():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={
+                "F-1": FindingRecord(
+                    FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
+                    owner="Engine.Proof",
+                )
+            }
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("FINDING_REOPEN_CONDITION_MISSING:F-1",)
+
+
+def test_escalated_finding_requires_explicit_target():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={"F-1": FindingRecord(FindingDisposition.ESCALATED)}
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("FINDING_ESCALATION_TARGET_MISSING:F-1",)
