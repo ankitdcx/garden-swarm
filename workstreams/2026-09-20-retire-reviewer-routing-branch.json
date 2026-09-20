@@ -1,0 +1,37 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:retire-reviewer-routing-branch:20260920",
+  "work_package_id": "RETIRE-REVIEWER-ROUTING-BRANCH-20260920",
+  "branch": "chatgpt/retire-reviewer-routing-branch-20260920",
+  "base_sha": "2a14cf22e481d09b732d68b24cc30d5701d51e11",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:retire-reviewer-routing-branch:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "RETIRE-REVIEWER-ROUTING-BRANCH-20260920",
+    "base_sha": "2a14cf22e481d09b732d68b24cc30d5701d51e11",
+    "target_paths": [
+      "workstreams/2026-09-20-retire-reviewer-routing-branch.json",
+      ".github/workflows/one-use-merged-branch-cleanup-20260920.yml"
+    ],
+    "target_symbols": [
+      "one-use reviewer-routing branch retirement"
+    ],
+    "semantic_domains": [
+      "GIT_REPOSITORY_HYGIENE"
+    ],
+    "affected_invariants": [
+      "DELETE_ONLY_EXACT_MERGED_BRANCH",
+      "PRESERVE_ACTIVE_15_10_15_11_AND_ANDROID_WORK"
+    ],
+    "affected_contracts": [
+      "RULE-BRANCH-LIFECYCLE-001"
+    ],
+    "intended_effect": "Delete only the exact merged PR #278 branch after rechecking SHA and no open PR; then retire this cleanup branch. No v15.10, v15.11, Android, Dependabot, garden-review-state or main branch is eligible.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
