@@ -22,6 +22,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.net.HttpURLConnection;
@@ -165,43 +168,7 @@ public final class MainActivity extends Activity {
             }
             launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(launch);
-            calibration.setText("DeepSeek input calibration: opening app; inspecting input structure…");
-            main.postDelayed(() -> io.execute(() -> {
-                try {
-                    Process p = Shizuku.newProcess(new String[]{"sh","-c",
-                            "uiautomator dump /data/local/tmp/garden_deepseek_ui.xml >/dev/null 2>&1; cat /data/local/tmp/garden_deepseek_ui.xml; rm -f /data/local/tmp/garden_deepseek_ui.xml"},
-                            null, null);
-                    StringBuilder sb = new StringBuilder();
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-                        String line;
-                        while ((line = br.readLine()) != null) sb.append(line);
-                    }
-                    int rc = p.waitFor();
-                    String xml = sb.toString();
-                    Pattern edit = Pattern.compile("<node[^>]*(?:class=\\\"android\\.widget\\.EditText\\\"|editable=\\\"true\\\")[^>]*>");
-                    Matcher m = edit.matcher(xml);
-                    int count = 0;
-                    String first = "";
-                    while (m.find()) {
-                        count++;
-                        if (first.isEmpty()) first = m.group();
-                    }
-                    final int found = count;
-                    final int exit = rc;
-                    final String descriptor = first
-                            .replaceAll("text=\\\"[^\\\"]*\\\"", "text=\\\"[redacted]\\\"")
-                            .replaceAll("content-desc=\\\"([^\\\"]{80})[^\\\"]*\\\"", "content-desc=\\\"$1…\\\"");
-                    main.post(() -> calibration.setText(
-                            "DeepSeek input calibration: " +
-                            (exit == 0 && found > 0 ? "PASS" : "NEEDS ADAPTER") +
-                            " — editable nodes=" + found +
-                            (descriptor.isEmpty() ? "" : "\\nFirst input node: " + descriptor) +
-                            "\\nNo text inserted; no message sent."));
-                } catch (Throwable t) {
-                    main.post(() -> calibration.setText("DeepSeek input calibration: FAILED — " +
-                            t.getClass().getSimpleName() + ": " + String.valueOf(t.getMessage())));
-                }
-            }), 1800);
+            calibration.setText("DeepSeek input calibration: app launched. Shell UI probe requires Shizuku UserService; no text inserted and nothing sent.");
         } catch (Throwable t) {
             calibration.setText("DeepSeek input calibration: FAILED — " + t.getClass().getSimpleName());
         }
