@@ -121,6 +121,10 @@ public final class MainActivity extends Activity {
                         char[] buf=new char[Math.max(0,Math.min(len,20000))]; int got=0,n;
                         while(got<buf.length && (n=br.read(buf,got,buf.length-got))>0) got+=n;
                         String body=new String(buf,0,got);
+                        if(request.startsWith("POST /debug")) {
+                            final String dbg=body;
+                            main.post(() -> calibration.setText("Browser bridge diagnostic:\n"+dbg));
+                        }
                         if(request.startsWith("GET /job/")) {
                             String provider=request.split(" ")[1].substring("/job/".length());
                             String payload=browserJobs.get(provider);
