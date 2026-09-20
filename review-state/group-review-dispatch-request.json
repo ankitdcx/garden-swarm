@@ -1,9 +1,10 @@
 {
   "schema": "GardenGroupReviewDispatchRequest/v1",
   "status": "REQUESTED",
-  "run_issue_number": 254,
-  "packet_sha256": "f4d557d139344b640354295604a32394bcc5b3901d13f3bb56983a79d7366fb6",
+  "run_issue_number": 257,
+  "packet_sha256": "de3e90d3a5c887e0601f8d6b33212bb27af776d8a91315a83c477a7e4d73e513",
   "created_at": "2026-09-20T12:09:00+05:30",
-  "purpose": "Start the already-frozen cheap source-complete v15.11 OpenRouter GROUP_REVIEW after GitHub App issue creation did not emit the issues workflow event.",
+  "purpose": "Dispatch the reduced source-complete cheap v15.11 OpenRouter GROUP_REVIEW after the superseded #254 packet exceeded the conservative first-endpoint context/affordability bound.",
+  "supersedes_run_issue_number": 254,
   "semantic_delta_admitted": false
 }
