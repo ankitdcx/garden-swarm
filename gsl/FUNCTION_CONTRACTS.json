@@ -522,7 +522,8 @@
         "ENTRY_CRITERIA_MISSING",
         "EXIT_CRITERIA_MISSING",
         "TRANSITION_ASSURANCE_BINDING_UNKNOWN",
-        "TRANSITION_ASSURANCE_BINDING_MISMATCH"
+        "TRANSITION_ASSURANCE_BINDING_MISMATCH",
+        "STALE_TRANSITION_DESIGN_EPOCH"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -541,7 +542,8 @@
         "stage omission justification/approval",
         "immutable base transition hard-gate floor",
         "non-vacuous entry/exit criteria",
-        "exact transition/effect/stage assurance binding"
+        "exact transition/effect/stage assurance binding",
+        "DesignEpoch-bound transition assurance"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
@@ -585,7 +587,8 @@
         "LAST_QUALIFIED_STAGE_UNKNOWN",
         "ROLLBACK_TARGET_NOT_LAST_QUALIFIED",
         "RECOVERY_ASSURANCE_BINDING_UNKNOWN",
-        "RECOVERY_ASSURANCE_BINDING_MISMATCH"
+        "RECOVERY_ASSURANCE_BINDING_MISMATCH",
+        "RECOVERY_STALE_DESIGN_EPOCH"
       ],
       "result_algebra": "TransitionDecision[ROLLBACK|COMPENSATE|HOLD|REJECT|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -600,7 +603,8 @@
         "standard transition-stage order",
         "independent recovery verification",
         "last qualified transition stage",
-        "exact transition/effect/stage assurance binding"
+        "exact transition/effect/stage assurance binding",
+        "DesignEpoch-bound transition assurance"
       ],
       "resource_and_termination_bounds": "Finite checks over fixed stage order and hard-gate set; no unbounded loop.",
       "provenance": [
