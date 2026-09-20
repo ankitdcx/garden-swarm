@@ -98,7 +98,7 @@ A model may independently create a useful long-horizon goal. It may research, re
 
 External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint.
 
-Human-effect materiality is itself a required typed input to consequential action admission. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. A legacy or profile-specific high-impact list may positively force stricter treatment but cannot prove that an unlisted action is harmless.
+Human-effect materiality is itself a required typed input to consequential action admission and is bound to the concrete action + target/effect scope. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. The classification itself must be validated under the applicable effect-analysis/evidence path; a proposer cannot self-label its effect as harmless and thereby bypass Human-Effect Closure.
 
 ## Transition binding
 
