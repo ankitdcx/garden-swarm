@@ -338,13 +338,24 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Goal admission remains proposal/planning state only and requires current DesignEpoch/delegation/expiry/dependency/resource/termination bindings. A human- or model-selected goal cannot create execution authority; every consequential effect separately revalidates the goal and action authority at point of use.",
+      "authority_requirement": "Goal admission remains proposal/planning state only. Persistence requires a typed GoalLease bound to current DesignEpoch, policy epoch, current authority-claim digests, dependency digest, resource bound, termination condition, invalidators and evidence, plus an independently validated GoalValidationReceipt bound to the exact lease digest. The goal still creates no execution authority.",
       "failure_mode_set": [
         "GOAL_REVOKED",
         "EXTERNAL_CONSTRAINT_IS_NOT_A_GOAL_AUTHORITY_SOURCE",
         "GOAL_VALIDITY_UNKNOWN",
         "GOAL_BINDING_INVALID",
-        "GOAL_BINDING_UNKNOWN"
+        "GOAL_BINDING_UNKNOWN",
+        "GOAL_LEASE_UNKNOWN",
+        "GOAL_LEASE_STALE",
+        "GOAL_LEASE_AUTHORITY_STALE",
+        "GOAL_LEASE_BINDING_INCOMPLETE",
+        "GOAL_VALIDATION_RECEIPT_UNKNOWN",
+        "GOAL_VALIDATION_RECEIPT_MISMATCH",
+        "GOAL_VALIDATION_RECEIPT_INVALID",
+        "GOAL_VALIDATION_RECEIPT_UNVALIDATED",
+        "GOAL_VALIDATION_EVIDENCE_INCOMPLETE",
+        "GOAL_VALIDATION_NOT_INDEPENDENT",
+        "GOAL_VALIDATION_INDEPENDENCE_UNKNOWN"
       ],
       "result_algebra": "RuntimeDecision[REJECT|PROPOSAL_ONLY] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -357,7 +368,13 @@
         "goal expiry",
         "goal dependency freshness",
         "goal resource bounds",
-        "goal termination conditions"
+        "goal termination conditions",
+        "typed GoalLease",
+        "GoalValidationReceipt",
+        "lease digest binding",
+        "current authority-claim dependency",
+        "DesignEpoch/policy-epoch binding",
+        "resource/termination/invalidator/evidence bindings"
       ],
       "resource_and_termination_bounds": "Constant finite checks; no background execution.",
       "provenance": [
@@ -381,7 +398,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. Validated authority is content-bound to the exact envelope+parent+provenance claim; validated human-effect materiality is content-bound to exact action+target+classification+policy epoch. Changing either claim invalidates old validation. All assurance state must also be current for the active policy epoch.",
+      "authority_requirement": "Evaluation cannot create authority. Garden admission is computed independently from external host enforcement. ALLOW requires a current typed AuthorityValidationReceipt for every delegation hop, bound to exact authority claim digest, parent, policy epoch, jurisdiction/context, authenticated identity, revocation state, evidence and real verifier independence; goal and Human-Effect checks remain point-of-use gates. Host BLOCKED/REQUIRED status cannot mint or erase Garden authority.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -414,7 +431,17 @@
         "AUTHORITY_CLAIM_DIGEST_UNKNOWN",
         "AUTHORITY_CLAIM_DIGEST_MISMATCH",
         "HUMAN_EFFECT_MATERIALITY_DIGEST_UNKNOWN",
-        "HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH"
+        "HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH",
+        "AUTHORITY_VALIDATION_RECEIPT_UNKNOWN",
+        "AUTHORITY_VALIDATION_RECEIPT_MISMATCH",
+        "AUTHORITY_VALIDATION_RECEIPT_INVALID",
+        "AUTHORITY_VALIDATION_RECEIPT_UNVALIDATED",
+        "AUTHORITY_VALIDATION_RECEIPT_REVOKED",
+        "AUTHORITY_VALIDATION_RECEIPT_REVOCATION_UNKNOWN",
+        "AUTHORITY_VALIDATION_EVIDENCE_INCOMPLETE",
+        "AUTHORITY_VALIDATION_NOT_INDEPENDENT",
+        "AUTHORITY_VALIDATION_INDEPENDENCE_UNKNOWN",
+        "EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -438,7 +465,12 @@
         "runtime assurance policy epoch",
         "effect-scoped external runtime constraints",
         "full authority-claim SHA-256 binding",
-        "human-effect materiality claim SHA-256 binding"
+        "human-effect materiality claim SHA-256 binding",
+        "typed AuthorityValidationReceipt",
+        "jurisdiction/context binding",
+        "qualified verifier identity/control-lineage binding",
+        "orthogonal Garden admission + external enforcement status",
+        "external runtime requirements"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
