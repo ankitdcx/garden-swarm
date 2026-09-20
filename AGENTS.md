@@ -21,6 +21,21 @@ This profile is **candidate evidence, not canonical promotion**. Its key separat
 Do not interpret this profile as permission to bypass host security, platform controls, credentials, law, or another human's rights. A discovered bypass is capability, not authority.
 
 
+
+## v15.11 AI-led upgrade / transition candidate
+
+The current workstream on PR #237 extends the noncanonical v15.10 runtime profile without promoting it to canonical source. Read:
+
+- `agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.11_CANDIDATE.md`
+- `agent/GARDEN_TRANSITION_FABRIC_v15.11_CANDIDATE.md`
+- `agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md`
+- `prototype/transition_governance.py`
+
+Key candidate rules: authority objects do not self-validate; beneficial ends do not authorize otherwise unauthorized means; transition/installation cannot bootstrap sovereignty; staged transition expansion requires fresh authority, Human-Effect Closure, independent verification, divergence/capture checks and rollback or recovery; routine Garden gap closure is AI-owned work rather than automatic delegation back to a human.
+
+These are candidate semantics and executable falsification targets. They do not authorize host-security bypass, covert access, political control, canonical promotion or real-world deployment.
+
+
 ## Named chat action: GROUP_REVIEW
 
 If the user invokes **`group review`**, read `agents/actions/group-review.json` and treat the **current chat as the Leader** for that review instance. The user does not need to restate the board protocol.
