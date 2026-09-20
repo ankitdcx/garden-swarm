@@ -1,0 +1,56 @@
+{
+  "schema": "GardenParallelReviewController/v1",
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
+  "purpose": "ZERO_TOUCH_PARALLEL_PUBLIC_REVIEW_WHERE_PROVIDER_APIS_EXIST",
+  "qwen_enabled": false,
+  "phone_reviewers": [
+    "deepseek",
+    "gemini",
+    "claude",
+    "grok"
+  ],
+  "api_review_strategy": {
+    "default": "OPENROUTER_FREE_PARALLEL",
+    "max_parallel_calls": 4,
+    "polling_interval_seconds": 30,
+    "max_poll_minutes": 30,
+    "retries_per_reviewer": 1,
+    "retry_backoff_seconds": [
+      60
+    ],
+    "unchanged_packet_retry": false,
+    "require_public_data": true,
+    "peer_output_sharing_during_blind_round": false
+  },
+  "completion_policy": {
+    "minimum_distinct_successful_families": 3,
+    "preferred_distinct_successful_families": 4,
+    "allow_partial_bundle": true,
+    "partial_bundle_status": "INCOMPLETE_REVIEW_BOARD",
+    "majority_vote_is_admission": false
+  },
+  "phone_apps": {
+    "role": "OPTIONAL_CONSUMER_APP_CROSS_CHECK",
+    "unattended_readback": "NOT_AVAILABLE_WITHOUT_PROVIDER_API_OR_SENSITIVE_UI_AUTOMATION",
+    "accessibility_automation": false,
+    "normal_return": "ANDROID_SHARE_TO_GARDEN_RELAY"
+  },
+  "automatic_flow": [
+    "detect frozen eligible public review job",
+    "fan out independent API reviewers concurrently",
+    "poll/await provider results",
+    "hash and freeze each result independently",
+    "retry only transport failures within bound",
+    "publish immutable result bundle",
+    "notify lead/integration lane",
+    "after integrated candidate, activate separate verifier"
+  ],
+  "human_interruptions": [
+    "constitutional or rights decision",
+    "major architecture/original-intent ambiguity",
+    "provider credential/account setup",
+    "consumer-app-only review where no API exists",
+    "budget authorization beyond configured ceiling"
+  ],
+  "semantic_delta_admitted": false
+}
