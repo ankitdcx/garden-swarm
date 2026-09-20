@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
 from enum import Enum
 from typing import Mapping, Optional
 
@@ -50,6 +52,28 @@ class AuthorityDelta:
     appeal_path: str
     evidence_refs: tuple[str, ...]
 
+    def digest(self) -> str:
+        payload = {
+            "delta_id": self.delta_id,
+            "delegator": self.delegator,
+            "recipient": self.recipient,
+            "actions": sorted(self.actions),
+            "resources": sorted(self.resources),
+            "affected_subjects": sorted(self.affected_subjects),
+            "jurisdiction": self.jurisdiction,
+            "invalidation_conditions": list(self.invalidation_conditions),
+            "revocation_path": self.revocation_path,
+            "appeal_path": self.appeal_path,
+            "evidence_refs": list(self.evidence_refs),
+        }
+        encoded = json.dumps(
+            payload,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
+
 
 class TransitionDecision(str, Enum):
     ADVANCE = "ADVANCE"
@@ -82,6 +106,7 @@ class TransitionContext:
     required_hard_gates: frozenset[str] = frozenset()
     stage_omission_approval: Mapping[TransitionStage, Optional[bool]] = field(default_factory=dict)
     authority_delta_validation: Mapping[str, Optional[bool]] = field(default_factory=dict)
+    authority_delta_digest_by_id: Mapping[str, str] = field(default_factory=dict)
     criteria_profile_validated: Optional[bool] = None
     independent_verification: Optional[bool] = None
     divergence_resolved: Optional[bool] = None
@@ -261,6 +286,18 @@ def evaluate_transition(
             return TransitionResult(
                 TransitionDecision.ESCALATE,
                 (f"AUTHORITY_DELTA_UNVALIDATED:{delta.delta_id}",),
+            )
+
+        bound_digest = context.authority_delta_digest_by_id.get(delta.delta_id)
+        if bound_digest is None:
+            return TransitionResult(
+                TransitionDecision.ESCALATE,
+                (f"AUTHORITY_DELTA_DIGEST_UNKNOWN:{delta.delta_id}",),
+            )
+        if bound_digest != delta.digest():
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"AUTHORITY_DELTA_DIGEST_MISMATCH:{delta.delta_id}",),
             )
 
     if context.authority_validated is False:
