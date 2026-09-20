@@ -62,7 +62,7 @@ class AutomationAuditTests(unittest.TestCase):
     def test_simple_paid_budget_and_execution_scope_are_explicit(self):
         policy=json.loads((ROOT/'agents/openrouter-paid-review-policy.json').read_text())
         self.assertEqual(policy['daily_openrouter_cost_ceiling_usd'],2)
-        self.assertEqual(policy['routine_model_call_cost_ceiling_usd'],0.01)
+        self.assertEqual(policy['routine_model_call_cost_ceiling_usd'],0.05)
         self.assertIn('DEPRECATED',policy['budget_pool_scope'])
         self.assertEqual(policy['balance_status'],'NOT_USED_BY_ACTIVE_GROUP_REVIEW_BUDGET_RULE')
         self.assertEqual(policy['free_swarm']['max_parallelism'],1)

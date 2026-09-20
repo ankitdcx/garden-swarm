@@ -22,7 +22,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(sum(self.policy["budget_pools_usd"].values()), 20.0)
         self.assertEqual(self.policy["daily_openrouter_cost_ceiling_usd"], 2.0)
         self.assertEqual(self.policy["routine_task_cost_ceiling_usd"], 2.0)
-        self.assertEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.01)
+        self.assertEqual(self.policy["routine_model_call_cost_ceiling_usd"], 0.05)
         self.assertEqual(self.policy["automatic_expensive_escalation_daily_ceiling_usd"], 0.0)
         self.assertEqual(self.policy["event_driven_activation"]["no_change_default"], "NO_PAID_CALL")
         self.assertTrue(self.policy["event_driven_activation"]["deterministic_gate_before_model"])
@@ -49,8 +49,8 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(provider["data_collection"], "deny")
         self.assertTrue(provider["allow_fallbacks"])
         self.assertEqual(set(provider["ignore"]), set())
-        self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["prompt"], 1.0)
-        self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["completion"], 3.0)
+        self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["prompt"], 3.0)
+        self.assertLessEqual(provider["max_price_usd_per_million_tokens"]["completion"], 8.0)
 
     def test_selector_is_offline_and_uses_five_slots(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(selector, "OUTPUT", Path(tmp) / "selection.json"), patch.dict(os.environ, {}, clear=True):
@@ -67,7 +67,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
             "approved_families":[self.policy["routine_reviewers"][0]["family"]],
             "max_prompt_characters":60000,
             "max_output_tokens":3000,
-            "routine_model_call_cost_ceiling_usd":0.01,
+            "routine_model_call_cost_ceiling_usd":0.05,
             "daily_openrouter_cost_ceiling_usd":2.0,
             "provider_policy":self.policy["provider_policy"]
         }
@@ -80,7 +80,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         self.assertEqual(raw,{"ok":True}); self.assertEqual(attempt["status"],"CALLED")
         body = json.loads(mocked.call_args.args[0].data.decode("utf-8"))
         self.assertEqual(body["provider"]["data_collection"],"deny")
-        self.assertEqual(body["provider"]["max_price"],{"prompt":1.0,"completion":3.0})
+        self.assertEqual(body["provider"]["max_price"],{"prompt":3.0,"completion":8.0})
         self.assertEqual(set(body["provider"]["ignore"]), set())
 
     def test_daily_budget_refuses_reserved_overrun(self):

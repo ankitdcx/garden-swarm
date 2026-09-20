@@ -78,6 +78,8 @@
     "qualified_but_unavailable_does_not_complete_required_slot": true,
     "challenger_only_may_continue_when_explicitly_authorized": true,
     "challenger_only_never_satisfies_required_slot": true,
-    "final_high_risk_convergence_requires_all_required_slots_or_governed_replacement": true
+    "final_high_risk_convergence_requires_all_required_slots_or_governed_replacement": true,
+    "availability_must_be_reprobed_after_budget_or_provider_policy_change": true,
+    "unavailable_evidence_is_policy_snapshot_not_permanent_model_state": true
   }
 }

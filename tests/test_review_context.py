@@ -138,14 +138,14 @@ class ContextReviewTests(unittest.TestCase):
         now = datetime(2026, 9, 16, tzinfo=timezone.utc).timestamp()
         normal, receipt = effective_policy(self.policy, {'target_id': 'T'}, now)
         self.assertEqual(normal['daily_openrouter_cost_ceiling_usd'], 2)
-        self.assertEqual(receipt['per_call_usd'], '0.01')
+        self.assertEqual(receipt['per_call_usd'], '0.05')
         directive = {'target_id': 'T', 'spending_mode': 'AUDIT'}
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now)
         directive['audit_window'] = {'utc_day': '2026-09-16', 'target_id': 'T', 'audit_id': 'audit-1', 'purpose': 'cross-module audit'}
         audit, _ = effective_policy(self.policy, directive, now)
         self.assertEqual(audit['daily_openrouter_cost_ceiling_usd'], 2)
-        self.assertEqual(audit['routine_model_call_cost_ceiling_usd'], 0.01)
+        self.assertEqual(audit['routine_model_call_cost_ceiling_usd'], 0.05)
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now + 86400)
         with self.assertRaisesRegex(ValueError, 'daily'):

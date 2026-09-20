@@ -1,6 +1,6 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "revision": 4,
+  "revision": 5,
   "purpose": "EVENT_DRIVEN_LOW_COST_SPECIALIST_REVIEW",
   "design_epoch": "v15.10-working-candidate-process",
   "catalog_reference_date": "2026-09-19",
@@ -14,7 +14,7 @@
   "daily_openrouter_cost_ceiling_usd": 2,
   "routine_task_cost_ceiling_usd": 2,
   "routine_hourly_cost_ceiling_usd": 2,
-  "routine_model_call_cost_ceiling_usd": 0.01,
+  "routine_model_call_cost_ceiling_usd": 0.05,
   "automatic_expensive_escalation_daily_ceiling_usd": 0,
   "max_prompt_characters": 200000,
   "max_output_tokens": 32000,
@@ -24,8 +24,8 @@
     "data_collection": "deny",
     "ignore": [],
     "max_price_usd_per_million_tokens": {
-      "prompt": 1,
-      "completion": 3
+      "prompt": 3,
+      "completion": 8
     }
   },
   "routine_reviewers": [
@@ -154,7 +154,7 @@
   "spending_modes": {
     "DEFAULT": {
       "daily_ceiling_usd": 2,
-      "per_call_ceiling_usd": 0.01
+      "per_call_ceiling_usd": 0.05
     }
   },
   "notes": [
@@ -167,7 +167,8 @@
     "This policy is operational only and creates no Garden semantic authority.",
     "Anthropic/Claude, NVIDIA/Nemotron and Mistral are currently re-authorized for Garden review by explicit human directives; eligibility does not imply automatic selection, authority, safety certification or paid-budget permission.",
     "Controlling paid OpenRouter budget rule from the explicit 2026-09-20 human directive: maximum USD 2 total spend per UTC day and maximum USD 0.01 per paid call.",
-    "Legacy budget pool/task/hour fields remain only for compatibility with disabled historical tooling and are non-controlling for the active GROUP_REVIEW paid lane."
+    "Legacy budget pool/task/hour fields remain only for compatibility with disabled historical tooling and are non-controlling for the active GROUP_REVIEW paid lane.",
+    "2026-09-20 explicit human directive: fix the external-review blocker. Per-call ceiling raised from USD 0.01 to USD 0.05 while retaining the USD 2/day ceiling, public-only/data-collection-deny routing, sequential execution, exact model identity and no silent substitution."
   ],
   "budget_pools_usd": {
     "routine": 9,
@@ -228,7 +229,7 @@
     "may_satisfy_independent_convergence": false,
     "same_public_source_binding_required": true,
     "peer_answers_hidden": true,
-    "budget_rule": "SAME_ACTIVE_USD_2_PER_UTC_DAY_AND_USD_0_01_PER_CALL",
+    "budget_rule": "SAME_ACTIVE_USD_2_PER_UTC_DAY_AND_USD_0_05_PER_CALL",
     "provider_privacy_context_fee_gates_unchanged": true,
     "candidate_selection": "MUST_BE_EXPLICITLY_IDENTIFIED_AND_RECORDED; QUALITY_QUALIFICATION_NOT_IMPLIED"
   }

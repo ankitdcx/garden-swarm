@@ -345,8 +345,8 @@ def group_review_budget_check(
 
     reserve = legacy.money(policy["routine_model_call_cost_ceiling_usd"])
     daily_ceiling = legacy.money(policy["daily_openrouter_cost_ceiling_usd"])
-    if reserve != legacy.money("0.01") or daily_ceiling != legacy.money("2"):
-        raise ValueError("active OpenRouter budget rule must be USD 2/day and USD 0.01/call")
+    if reserve != legacy.money("0.05") or daily_ceiling != legacy.money("2"):
+        raise ValueError("active OpenRouter budget rule must be USD 2/day and USD 0.05/call")
 
     usage_daily = legacy.money(key_info.get("usage_daily"))
     if usage_daily + reserve > daily_ceiling:
@@ -357,7 +357,7 @@ def group_review_budget_check(
         raise ValueError("key credit limit too low")
 
     day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
-    return reserve, day, str(usage_daily), "OPENROUTER_2_USD_DAY_0_01_CALL"
+    return reserve, day, str(usage_daily), "OPENROUTER_2_USD_DAY_0_05_CALL"
 
 
 def _profile(policy: dict) -> dict:
