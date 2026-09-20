@@ -10,6 +10,7 @@ class FindingClass(str, Enum):
     ROUTINE = "ROUTINE"
     MATERIAL = "MATERIAL"
     HARD_GATE = "HARD_GATE"
+    PROTECTED = "PROTECTED"
 
 
 class FindingDisposition(str, Enum):
@@ -58,7 +59,9 @@ class UpgradeContext:
     protected_authorization_pass: Optional[bool] = None
     final_reaudit_complete: Optional[bool] = None
     finding_classification_validated: Optional[bool] = None
+    finding_classification_independent: Optional[bool] = None
     protected_surface_scan_pass: Optional[bool] = None
+    protected_surface_scan_independent: Optional[bool] = None
     max_iterations: int = 0
     max_work_items: int = 0
     residual_debt_recorded: bool = False
@@ -186,6 +189,19 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     if classification_binding is not None:
         return classification_binding
 
+    classification_independence = _typed_gate(
+        "FINDING_CLASSIFICATION_INDEPENDENCE",
+        context.finding_classification_independent,
+        false_decision=UpgradeDecision.HOLD,
+    )
+    if classification_independence is not None:
+        return classification_independence
+    classification_independence_binding = _candidate_binding_gate(
+        "FINDING_CLASSIFICATION_INDEPENDENCE", context
+    )
+    if classification_independence_binding is not None:
+        return classification_independence_binding
+
     protected_scan = _typed_gate(
         "PROTECTED_SURFACE_SCAN",
         context.protected_surface_scan_pass,
@@ -198,6 +214,19 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     )
     if protected_scan_binding is not None:
         return protected_scan_binding
+
+    protected_scan_independence = _typed_gate(
+        "PROTECTED_SURFACE_SCAN_INDEPENDENCE",
+        context.protected_surface_scan_independent,
+        false_decision=UpgradeDecision.HOLD,
+    )
+    if protected_scan_independence is not None:
+        return protected_scan_independence
+    protected_scan_independence_binding = _candidate_binding_gate(
+        "PROTECTED_SURFACE_SCAN_INDEPENDENCE", context
+    )
+    if protected_scan_independence_binding is not None:
+        return protected_scan_independence_binding
 
     if context.max_iterations <= 0:
         return UpgradeResult(
@@ -217,7 +246,7 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
 
     for finding_id, record in sorted(context.findings.items()):
         if (
-            record.finding_class is FindingClass.HARD_GATE
+            record.finding_class in {FindingClass.HARD_GATE, FindingClass.PROTECTED}
             and record.disposition
             in {
                 FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
@@ -227,7 +256,7 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
         ):
             return UpgradeResult(
                 UpgradeDecision.HOLD,
-                (f"HARD_GATE_FINDING_UNRESOLVED:{finding_id}",),
+                (f"BLOCKING_FINDING_UNRESOLVED:{finding_id}",),
             )
         if record.disposition in {
             FindingDisposition.FIXED,
@@ -327,7 +356,11 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
         if review_binding is not None:
             return review_binding
 
-    if context.protected_change:
+    protected_finding_present = any(
+        record.finding_class is FindingClass.PROTECTED
+        for record in context.findings.values()
+    )
+    if context.protected_change or protected_finding_present:
         protected = _typed_gate(
             "PROTECTED_AUTHORIZATION",
             context.protected_authorization_pass,
