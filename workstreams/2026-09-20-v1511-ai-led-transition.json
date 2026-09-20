@@ -1,0 +1,67 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v1511-ai-led-transition:20260920",
+  "work_package_id": "V1511-AI-LED-TRANSITION",
+  "branch": "chatgpt/v1511-ai-led-transition-20260920",
+  "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+  "dependency_intent_ids": [
+    "chatgpt:v1510-runtime-constitutional-profile:20260919"
+  ],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:v1511-ai-led-transition:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "V1511-AI-LED-TRANSITION",
+    "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+    "target_paths": [
+      "workstreams/2026-09-20-v1511-ai-led-transition.json",
+      "agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.11_CANDIDATE.md",
+      "agent/GARDEN_TRANSITION_FABRIC_v15.11_CANDIDATE.md",
+      "agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md",
+      "prototype/runtime_constitution.py",
+      "prototype/transition_governance.py",
+      "prototype/tests/test_runtime_constitution.py",
+      "prototype/tests/test_transition_governance.py",
+      "gsl/FUNCTION_CONTRACTS.json",
+      "TASKS.md",
+      "AGENTS.md"
+    ],
+    "target_symbols": [
+      "RuntimeConstitutionContext",
+      "evaluate_instruction",
+      "TransitionStage",
+      "TransitionContext",
+      "evaluate_transition"
+    ],
+    "semantic_domains": [
+      "AUTHORITY_AND_ACTIONGATE",
+      "HUMAN_SOVEREIGNTY",
+      "RUNTIME_CONSTRAINT_CLASSIFICATION",
+      "TRANSITION_GOVERNANCE",
+      "AUTONOMOUS_SPECIFICATION_CLOSURE",
+      "REPRESENTATION_RETENTION"
+    ],
+    "affected_invariants": [
+      "CAPABILITY_DOES_NOT_CREATE_AUTHORITY",
+      "AUTHORITY_CLAIMS_DO_NOT_SELF_VALIDATE",
+      "LEGITIMATE_ENDS_DO_NOT_AUTHORIZE_MEANS",
+      "TRANSITION_CANNOT_BOOTSTRAP_SOVEREIGNTY",
+      "HUMAN_EFFECT_CLOSURE_PERSISTS",
+      "REQUIRED_INDEPENDENCE_IS_REAL",
+      "NO_LOSS_REPRESENTATION_CLOSURE"
+    ],
+    "affected_contracts": [
+      "GardenRuntimeConstitutionEnvelope/v1",
+      "GardenFunctionContractRegistry/v1",
+      "Engine.Transition",
+      "Garden Transition Fabric",
+      "Recursive Control Intelligence current-reading"
+    ],
+    "intended_effect": "Upgrade the v15.10/v15.9 candidate line so AI owns routine Garden gap closure, authority objects require validation/provenance rather than mere presence, legitimate goals cannot self-authorize intrusive means, and existing Engine.Transition/GTF gains staged shadow/parallel/bounded-active migration with divergence, anti-capture, dispute, rollback/compensation and no-sovereignty-bootstrap rules. Keep all changes noncanonical pending protected admission.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  },
+  "process_recovery_note": "A scratch candidate branch was created before the repository Git operating policy was reread. This workstream branch starts from the verified current main and opens its draft PR before substantive edits; the scratch branch is not an integration/admission source."
+}
