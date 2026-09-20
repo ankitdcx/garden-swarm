@@ -616,7 +616,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence, required independent review, and separate protected authorization for protected changes.",
+      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires a declared audited scope, completed search coverage, all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence, required independent review, and separate protected authorization for protected changes.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -635,7 +635,10 @@
         "PROTECTED_AUTHORIZATION_FAILED",
         "PROTECTED_AUTHORIZATION_UNKNOWN",
         "FINAL_REAUDIT_FAILED",
-        "FINAL_REAUDIT_UNKNOWN"
+        "FINAL_REAUDIT_UNKNOWN",
+        "AUDITED_SCOPE_NOT_DECLARED",
+        "SEARCH_COVERAGE_FAILED",
+        "SEARCH_COVERAGE_UNKNOWN"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -650,7 +653,9 @@
         "verification independence",
         "independent review",
         "protected authorization",
-        "final re-audit"
+        "final re-audit",
+        "declared audited scope",
+        "search/audit coverage closure"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
