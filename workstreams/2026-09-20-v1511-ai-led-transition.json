@@ -43,7 +43,8 @@
       "UpgradeContext",
       "evaluate_upgrade_closure",
       "TransitionAssuranceBinding",
-      "FindingRecord"
+      "FindingRecord",
+      "AuthorityDelta"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
