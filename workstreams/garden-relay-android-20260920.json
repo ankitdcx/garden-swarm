@@ -14,7 +14,10 @@
     "docs/GARDEN_RELAY_ANDROID.md",
     ".github/workflows/garden-relay-android.yml",
     "workstreams/garden-relay-android-20260920.json",
-    "gsl/REPO_PROFILE.json"
+    "gsl/REPO_PROFILE.json",
+    "agents/provider-exclusion-policy.json",
+    "agents/openrouter-paid-review-policy.json",
+    "docs/PARALLEL_ZERO_TOUCH_REVIEW.md"
   ],
-  "intended_effect": "Add a noncanonical Android review relay prototype, mobile job manifest and repo classification; no Garden semantic changes."
+  "intended_effect": "Add the no-Qwen Android review relay, Claude/Grok reviewer bindings, and noncanonical parallel zero-touch review policy; no Garden semantic changes."
 }
