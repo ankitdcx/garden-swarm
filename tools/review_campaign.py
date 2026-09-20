@@ -165,26 +165,22 @@ def bind_campaign(directive, source_sha256, root=Path('.')):
 
 
 def spending_policy(policy, campaign):
-    result = copy.deepcopy(policy)
-    # A historical/source-bound campaign may tighten current operating ceilings
-    # but can never raise them. The latest human cost posture remains controlling.
-    result['daily_openrouter_cost_ceiling_usd'] = str(min(
-        amount(policy['daily_openrouter_cost_ceiling_usd']), amount(campaign['daily_ceiling_usd'])))
-    result['routine_model_call_cost_ceiling_usd'] = str(min(
-        amount(policy['routine_model_call_cost_ceiling_usd']), amount(campaign['per_call_ceiling_usd'])))
-    result['budget_pools_usd']['routine'] = str(min(
-        amount(policy['budget_pools_usd']['routine']), amount(campaign['total_ceiling_usd'])))
-    return result
+    """Campaign metadata cannot create a separate monetary budget.
+
+    Campaigns remain source/target/retry/call-count governance objects. The
+    globally authorized paid OpenRouter limits (USD 2/day and USD 0.01/call)
+    stay controlling regardless of historical campaign monetary fields.
+    """
+    return copy.deepcopy(policy)
 
 
 def check_total(state, campaign, reserve):
-    # Count ALL retained ledger attempts, including earlier known costs and the
-    # abandoned allowance. Changing day/target/cycle cannot reset the ceiling.
-    spent = sum((accounting_charge(a, campaign) for a in state.get('attempts', [])), Decimal(0))
-    if spent + amount(reserve) > amount(campaign['total_ceiling_usd']):
-        raise ValueError('campaign total reservation exhausted')
-    return {'campaign_id': campaign['campaign_id'], 'campaign_policy_sha256': digest(campaign),
-            'source_sha256': campaign['source_sha256'],
-            'total_ceiling_usd': str(amount(campaign['total_ceiling_usd'])),
-            'accounted_before_usd': str(spent),
-            'abandoned_allowance_is_actual_billing': False}
+    """Return campaign binding metadata without imposing a monetary pool."""
+    return {
+        'campaign_id': campaign['campaign_id'],
+        'campaign_policy_sha256': digest(campaign),
+        'source_sha256': campaign['source_sha256'],
+        'monetary_effect': 'NONE_GLOBAL_OPENROUTER_BUDGET_CONTROLS',
+        'global_daily_ceiling_usd': '2',
+        'global_per_call_ceiling_usd': '0.01',
+    }
