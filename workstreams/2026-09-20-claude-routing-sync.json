@@ -1,0 +1,40 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:claude-routing-sync:20260920",
+  "work_package_id": "CLAUDE-ROUTING-SYNC-20260920",
+  "branch": "chatgpt/claude-routing-sync-20260920",
+  "base_sha": "16faacc045d3494c3f4633d933f4868b5f1b9945",
+  "dependency_intent_ids": [
+    "garden-main:pr97"
+  ],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:claude-routing-sync:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "CLAUDE-ROUTING-SYNC-20260920",
+    "base_sha": "16faacc045d3494c3f4633d933f4868b5f1b9945",
+    "target_paths": [
+      "workstreams/2026-09-20-claude-routing-sync.json",
+      "agents/provider-exclusion-policy.json",
+      "tests/test_provider_exclusion.py",
+      "tests/test_single_review_worker.py"
+    ],
+    "target_symbols": [
+      "Anthropic/Claude provider exclusion mirror"
+    ],
+    "semantic_domains": [
+      "MODEL_PROVIDER_ROUTING_POLICY"
+    ],
+    "affected_invariants": [
+      "EXPLICIT_HUMAN_OVERRIDE_REQUIRED_FOR_PROVIDER_EXCLUSION_CHANGE"
+    ],
+    "affected_contracts": [
+      "GardenProviderExclusionPolicy/v1"
+    ],
+    "intended_effect": "Synchronize garden-swarm provider routing with the authoritative garden-main 2026-09-20 Claude reauthorization. Operational routing only; no canonical semantic or authority effect.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
