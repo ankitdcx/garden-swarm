@@ -303,7 +303,9 @@ public final class MainActivity extends Activity {
             Intent intent = buildShareIntent(target, pkg, attachments);
             if (intent.resolveActivity(getPackageManager()) == null && attachments.size() > 1) {
                 File combined = buildCombinedInput(currentJob, target, attachments);
-                intent = buildShareIntent(target, pkg, List.of(combined));
+                ArrayList<File> singleCombined = new ArrayList<>();
+                singleCombined.add(combined);
+                intent = buildShareIntent(target, pkg, singleCombined);
             }
 
             if (intent.resolveActivity(getPackageManager()) == null) {
@@ -377,7 +379,9 @@ public final class MainActivity extends Activity {
             if (raw.length == 0 || raw[raw.length - 1] != '\n') sb.append("\n");
             sb.append("===== END ATTACHMENT =====\n");
         }
-        java.nio.file.Files.writeString(out.toPath(), sb.toString(), StandardCharsets.UTF_8);
+        try (java.io.FileOutputStream stream = new java.io.FileOutputStream(out)) {
+            stream.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+        }
         return out;
     }
 
