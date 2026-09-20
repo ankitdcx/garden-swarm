@@ -14,7 +14,7 @@ import java.util.List;
 
 public final class JobClient {
     public static final String DEFAULT_JOB_URL =
-            "https://raw.githubusercontent.com/ankitdcx/garden-swarm/main/relay/mobile/current-job.json";
+            "https://raw.githubusercontent.com/ankitdcx/garden-swarm/chatgpt/garden-relay-android-20260920/relay/mobile/current-job.json";
 
     private JobClient() {}
 
