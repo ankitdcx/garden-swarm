@@ -58,7 +58,22 @@ Test at least:
 **Deliverable:** counterexample or failed attack + exact assumptions + stronger alternative if one exists + deterministic regression test. Treat the v15.10 profile as noncanonical candidate material.
 
 
-### TASK-023 — v15.11 transition-fabric falsification
+### TASK-023 — Garden-native independent agent runtime
+Design and falsify a Garden-controlled persistent agent runtime in which model/provider/operator identity cannot silently redefine Garden authority semantics.
+
+Test at least:
+- model/provider swaps preserve goal, knowledge/provenance and authority continuity;
+- self-selected long-horizon goals never mint execution authority;
+- root/admin/operator access does not become sovereignty;
+- provider constraints remain external enforcement rather than Garden truth/authority;
+- every consequential effect still passes Garden authority and Human-Effect Closure;
+- a smarter model cannot self-certify a constitutional or authority expansion.
+
+**Target:** v15.10/v15.11 runtime-constitution candidates, ActionGate, authority/delegation mechanisms and Garden-native runtime prototypes.
+
+**Deliverable:** architecture -> trust boundaries -> schemas/invariants -> executable prototype -> adversarial tests -> stronger alternative comparison -> unresolved risks.
+
+### TASK-024 — v15.11 transition-fabric falsification
 Attack the candidate upgrade of the existing Engine.Transition / Garden Transition Fabric.
 
 Test at least:
@@ -76,7 +91,7 @@ Test at least:
 
 **Deliverable:** counterexample or failed attack + exact assumptions + stronger alternative if one exists + deterministic regression test.
 
-### TASK-024 — AI-led upgrade-process falsification
+### TASK-025 — AI-led upgrade-process falsification
 Attack the candidate rule that AI should own routine Garden specification closure instead of returning each solvable gap to a human.
 
 Test at least:
@@ -92,7 +107,7 @@ Test at least:
 
 **Deliverable:** counterexample or failed attack + proposed repair + regression/conformance check.
 
-### TASK-025 — v15.10/r7 no-loss text-source closure
+### TASK-026 — v15.10/r7 no-loss text-source closure
 Finish the representation migration that v15.10-r7 specified but did not materialize.
 
 Requirements:
