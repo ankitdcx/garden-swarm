@@ -622,7 +622,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires a declared audited scope, completed search coverage, all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence/review and protected authorization where applicable; every closure-evidence result must bind the exact candidate SHA-256 being closed.",
+      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. Every material finding must carry a typed, non-vacuous disposition: FIXED/REJECTED require evidence refs; DEFERRED requires owner+reopen condition; ESCALATED requires a target. All closure-evidence results remain bound to the exact candidate SHA-256.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -661,7 +661,11 @@
         "PROTECTED_AUTHORIZATION_BINDING_UNKNOWN",
         "PROTECTED_AUTHORIZATION_BINDING_MISMATCH",
         "FINAL_REAUDIT_BINDING_UNKNOWN",
-        "FINAL_REAUDIT_BINDING_MISMATCH"
+        "FINAL_REAUDIT_BINDING_MISMATCH",
+        "FINDING_EVIDENCE_MISSING",
+        "FINDING_DEFERRED_OWNER_MISSING",
+        "FINDING_REOPEN_CONDITION_MISSING",
+        "FINDING_ESCALATION_TARGET_MISSING"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -679,7 +683,8 @@
         "final re-audit",
         "declared audited scope",
         "search/audit coverage closure",
-        "exact candidate SHA-256 bindings for closure evidence"
+        "exact candidate SHA-256 bindings for closure evidence",
+        "typed finding records with evidence/owner/reopen/escalation bindings"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
