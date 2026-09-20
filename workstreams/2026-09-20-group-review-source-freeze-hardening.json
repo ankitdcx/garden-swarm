@@ -19,7 +19,8 @@
       "tools/group_review_bus.py",
       "tests/test_group_review_bus.py",
       "docs/GROUP_REVIEW_REPO_BUS_V1.md",
-      "agents/actions/group-review.json"
+      "agents/actions/group-review.json",
+      "tests/test_group_review_openrouter_worker.py"
     ],
     "target_symbols": [
       "GardenGroupReviewPacket/v1",
