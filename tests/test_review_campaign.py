@@ -98,16 +98,18 @@ class ReviewCampaignTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'unidentified'):
             worker._reconcile_known_attempts(Ledger(), 'fixture')
 
-    def test_live_key_and_total_budget_still_apply(self):
+    def test_campaign_does_not_create_a_second_monetary_budget(self):
         policy = json.loads(Path('agents/openrouter-paid-review-policy.json').read_text())
         bounded = campaign.spending_policy(policy, self.policy)
-        key = {'usage': '.0024624', 'usage_daily': '0', 'limit_remaining': '20'}
+        key = {'usage': '999', 'usage_daily': '0', 'limit_remaining': '20'}
         reserve, _, _ = legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
-        self.assertEqual(reserve, Decimal('.05'))
-        for edit in ({'usage': '9.90'}, {'usage_daily': '10'}, {'limit_remaining': '.04'}, {'usage_daily': None}):
+        self.assertEqual(reserve, Decimal('.01'))
+        self.assertEqual(bounded['daily_openrouter_cost_ceiling_usd'], 2)
+        self.assertEqual(bounded['routine_model_call_cost_ceiling_usd'], 0.01)
+        for edit in ({'usage_daily': '1.995'}, {'limit_remaining': '.005'}, {'usage_daily': None}):
             with self.subTest(edit=edit), self.assertRaises(ValueError):
                 legacy.budget_check(self.state, {**key, **edit}, bounded, 100000, campaign=self.policy)
-        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.05', 'cost': None})
+        self.state['attempts'].append({'status': 'UNKNOWN', 'reserved': '.01', 'cost': None})
         with self.assertRaisesRegex(ValueError, 'reconciliation'):
             legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
 
