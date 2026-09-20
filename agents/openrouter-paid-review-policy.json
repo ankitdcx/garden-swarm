@@ -130,10 +130,10 @@
   },
   "review_profiles": {
     "ROUTINE": {
-      "max_output_tokens": 8000,
+      "max_output_tokens": 3000,
       "context_characters": 32000,
       "max_support_passages": 8,
-      "reasoning_effort": "medium",
+      "reasoning_effort": "low",
       "request_timeout_seconds": 180
     },
     "COMPLEX": {
@@ -168,7 +168,8 @@
     "Anthropic/Claude, NVIDIA/Nemotron and Mistral are currently re-authorized for Garden review by explicit human directives; eligibility does not imply automatic selection, authority, safety certification or paid-budget permission.",
     "Controlling paid OpenRouter budget rule from the explicit 2026-09-20 human directive: maximum USD 2 total spend per UTC day and maximum USD 0.01 per paid call.",
     "Legacy budget pool/task/hour fields remain only for compatibility with disabled historical tooling and are non-controlling for the active GROUP_REVIEW paid lane.",
-    "2026-09-20 explicit human directive: fix the external-review blocker. Per-call ceiling raised from USD 0.01 to USD 0.05 while retaining the USD 2/day ceiling, public-only/data-collection-deny routing, sequential execution, exact model identity and no silent substitution."
+    "2026-09-20 explicit human directive: fix the external-review blocker. Per-call ceiling raised from USD 0.01 to USD 0.05 while retaining the USD 2/day ceiling, public-only/data-collection-deny routing, sequential execution, exact model identity and no silent substitution.",
+    "2026-09-20 endpoint reprobe after the five-cent affordability fix removed PRICE_CAP from the DeepSeek rejection set. Remaining endpoint blockers include reasoning-effort/output reserve compatibility, so ROUTINE review is narrowed to low reasoning effort and 3000 output tokens for bounded retention falsification. Source text remains untruncated."
   ],
   "budget_pools_usd": {
     "routine": 9,
