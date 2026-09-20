@@ -1,0 +1,21 @@
+{
+  "schema": "GardenMobileReviewJob/v1",
+  "job_id": "example-review-001",
+  "title": "Example blind review",
+  "status": "READY",
+  "targets": [
+    {
+      "slot": "deepseek",
+      "display_name": "DeepSeek",
+      "prompt": "Read every attached source. Do the frozen review. Return the result by Share -> Garden Relay.",
+      "attachments": [
+        {
+          "filename": "FROZEN_REVIEW_PACKET.txt",
+          "url": "https://example.invalid/FROZEN_REVIEW_PACKET.txt",
+          "sha256": "<64-hex-sha256>",
+          "mime": "text/plain"
+        }
+      ]
+    }
+  ]
+}
