@@ -39,7 +39,8 @@
           "bytes": 79341,
           "sha256": "0c970d4dbfde4183d17a339f3abc4b2817f1a27c4e0caa75c6b5864d935c27f3"
         }
-      ]
+      ],
+      "direct_path": "GARDEN_CATALOGUE_v15.10.txt"
     },
     "retention_disposition": {
       "raw_name": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
@@ -59,7 +60,8 @@
           "bytes": 66793,
           "sha256": "ef835d3a7577f5a4f0a2158a49aca6c020f4fe5c0f1f1a590a17849c4a7bff2d"
         }
-      ]
+      ],
+      "direct_path": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl"
     }
   }
 }
