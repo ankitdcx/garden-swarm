@@ -11,6 +11,8 @@ def complete_context(**overrides):
     candidate_hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     values = dict(
         candidate_sha256=candidate_hash,
+        audited_scope_sha256="cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        search_coverage_scope_sha256="cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
         gate_candidate_bindings={
             "SEARCH_COVERAGE": candidate_hash,
             "PROPAGATION_CLOSURE": candidate_hash,
@@ -195,3 +197,19 @@ def test_escalated_finding_requires_explicit_target():
     )
     assert result.decision is UpgradeDecision.HOLD
     assert result.reasons == ("FINDING_ESCALATION_TARGET_MISSING:F-1",)
+
+
+def test_narrow_search_scope_cannot_close_broader_audit_scope():
+    result = evaluate_upgrade_closure(
+        complete_context(search_coverage_scope_sha256="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("SEARCH_COVERAGE_SCOPE_MISMATCH",)
+
+
+def test_candidate_hash_must_be_real_sha256_shape():
+    result = evaluate_upgrade_closure(
+        complete_context(candidate_sha256="not-a-hash")
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("CANDIDATE_HASH_INVALID",)
