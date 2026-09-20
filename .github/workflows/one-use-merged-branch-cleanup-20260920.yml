@@ -1,4 +1,4 @@
-name: One-use retired branch cleanup 2026-09-20
+name: One-use final retired branch cleanup 2026-09-20
 
 on:
   push:
@@ -11,20 +11,15 @@ permissions:
 jobs:
   cleanup:
     if: >-
-      github.event.before == '0d89b2c18ecf88fdaa020116f7d7d2257e0fa927' &&
-      startsWith(github.event.head_commit.message, 'One-use retired branch cleanup')
+      github.event.before == '7a8abc77ad77fb1cea0918a6c4cc2c1ab0489029' &&
+      startsWith(github.event.head_commit.message, 'One-use final retired branch cleanup')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Verify branch lifecycle scanner
-        run: python -m unittest tests.test_branch_lifecycle -v
-      - name: Retire only explicitly reviewed branches
+      - name: Delete only the verified final retired branch
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -41,57 +36,9 @@ jobs:
           repository = os.environ["GITHUB_REPOSITORY"]
           owner = os.environ["GITHUB_REPOSITORY_OWNER"]
           api = "https://api.github.com/repos/" + repository
-          protected = {"main", "garden-review-state"}
 
-          # User-authorized retirement set after explicit branch/PR review.
-          # Exact SHA binding makes this fail closed if another chat changed a branch.
-          candidates = {
-              "candidate/v15.11-ai-led-transition-2026-09-20": {
-                  "sha": "def743153dfbf63ba0276c16a534a12da30741d1",
-                  "pr": None,
-                  "reason": "initial scratch lineage superseded by formal PR 237 and integration PR 253",
-              },
-              "chatgpt/final-ip-openrouter-review-20260919": {
-                  "sha": "c498c0900f928991584b64bf8e21b9367691b9d0",
-                  "pr": 226,
-                  "reason": "temporary public-safe review lane closed without merge",
-              },
-              "chatgpt/v159-zero-review-20260918": {
-                  "sha": "c661a1a9d8ec1d1e897e6730ad5db9f97cd81992",
-                  "pr": 219,
-                  "reason": "completed review campaign closed without merge",
-              },
-              "chatgpt/v1510-abstraction-review-20260918": {
-                  "sha": "1d828f8da68688d3a62e6c368fa63b6a9784a851",
-                  "pr": 220,
-                  "reason": "temporary review lane completed",
-              },
-              "chatgpt/v1510-generative-core-review-20260918": {
-                  "sha": "1b848eff8497df22d1c5b0a0b97ae97e2a00bc0f",
-                  "pr": 221,
-                  "reason": "temporary review lane completed",
-              },
-              "chatgpt/v1510-three-artifact-review-20260918": {
-                  "sha": "27c7224506c19ae7516ee3e5a8167723488ad7bd",
-                  "pr": 222,
-                  "reason": "temporary review campaign completed",
-              },
-              "chatgpt/v1510-final-cheap-closure-20260919": {
-                  "sha": "a27db5b19782cb03f58a4df96949115a45604dc6",
-                  "pr": 223,
-                  "reason": "temporary lane closed with no model calls",
-              },
-              "chatgpt/v1510-three-artifact-review-final-20260919": {
-                  "sha": "a27db5b19782cb03f58a4df96949115a45604dc6",
-                  "pr": 224,
-                  "reason": "temporary final review completed",
-              },
-              "chatgpt/v1511-ai-led-transition-20260920": {
-                  "sha": "8e5bfc3e535e99d69bd3ea6c08be4ad632c3978a",
-                  "pr": 237,
-                  "reason": "source PR explicitly superseded by integration PR 253",
-              },
-          }
+          target = "chatgpt/v1510-three-artifact-review-20260918"
+          expected_sha = "a27db5b19782cb03f58a4df96949115a45604dc6"
 
           def request(url, *, method="GET"):
               req = urllib.request.Request(
@@ -101,70 +48,55 @@ jobs:
                       "Authorization": "Bearer " + token,
                       "Accept": "application/vnd.github+json",
                       "X-GitHub-Api-Version": "2022-11-28",
-                      "User-Agent": "garden-one-use-retired-branch-cleanup",
+                      "User-Agent": "garden-one-use-final-retired-branch-cleanup",
                   },
               )
               with urllib.request.urlopen(req, timeout=30) as response:
                   raw = response.read()
                   return json.loads(raw.decode("utf-8")) if raw else None
 
-          # Prove the scratch/source lineage still has the declared successor path.
-          source_pr = request(api + "/pulls/237")
-          successor_pr = request(api + "/pulls/253")
-          if source_pr.get("state") != "closed" or source_pr.get("merged_at") is not None:
-              raise SystemExit("PR 237 is not the expected closed-unmerged source")
-          if successor_pr.get("state") != "open" and successor_pr.get("merged_at") is None:
-              raise SystemExit("PR 253 is no longer an active/merged successor")
-
           deleted = []
           skipped = []
 
-          for branch, meta in candidates.items():
-              if branch in protected:
-                  raise SystemExit("protected branch entered retirement allowlist")
-
-              pr_number = meta["pr"]
-              if pr_number is not None:
-                  pr = request(api + "/pulls/" + str(pr_number))
-                  if pr.get("state") != "closed" or pr.get("merged_at") is not None:
-                      skipped.append([branch, "pr_not_closed_unmerged"])
-                      continue
-                  if ((pr.get("head") or {}).get("ref")) != branch:
-                      skipped.append([branch, "pr_head_mismatch"])
-                      continue
-                  if ((pr.get("head") or {}).get("sha")) != meta["sha"]:
-                      skipped.append([branch, "pr_head_sha_mismatch"])
-                      continue
-
-              ref_path = "heads/" + urllib.parse.quote(branch, safe="/")
-              try:
-                  live = request(api + "/git/ref/" + ref_path)
-              except urllib.error.HTTPError as exc:
-                  if exc.code == 404:
-                      skipped.append([branch, "already_absent"])
-                      continue
+          # The current branch head was independently compared to this exact
+          # commit before this cleanup PR was created. Re-check live state.
+          ref_path = "heads/" + urllib.parse.quote(target, safe="/")
+          try:
+              live = request(api + "/git/ref/" + ref_path)
+          except urllib.error.HTTPError as exc:
+              if exc.code == 404:
+                  live = None
+              else:
                   raise
-              live_sha = ((live or {}).get("object") or {}).get("sha")
-              if live_sha != meta["sha"]:
-                  skipped.append([branch, "sha_changed"])
-                  continue
-
+          if live is None:
+              skipped.append([target, "already_absent"])
+          elif ((live.get("object") or {}).get("sha")) != expected_sha:
+              skipped.append([target, "sha_changed"])
+          else:
               q = urllib.parse.urlencode({
                   "state": "open",
-                  "head": owner + ":" + branch,
+                  "head": owner + ":" + target,
                   "per_page": 100,
               })
               if request(api + "/pulls?" + q):
-                  skipped.append([branch, "open_pr_now_exists"])
-                  continue
+                  skipped.append([target, "open_pr_now_exists"])
+              else:
+                  # Preserve historical proof that the identical commit was used
+                  # by the already-completed temporary closure PRs.
+                  p223 = request(api + "/pulls/223")
+                  p224 = request(api + "/pulls/224")
+                  if ((p223.get("head") or {}).get("sha")) != expected_sha:
+                      raise SystemExit("PR 223 no longer binds expected retired commit")
+                  if ((p224.get("head") or {}).get("sha")) != expected_sha:
+                      raise SystemExit("PR 224 no longer binds expected retired commit")
+                  if p223.get("state") != "closed" or p224.get("state") != "closed":
+                      raise SystemExit("temporary closure PRs are not closed")
+                  request(api + "/git/refs/" + ref_path, method="DELETE")
+                  deleted.append(target)
 
-              request(api + "/git/refs/" + ref_path, method="DELETE")
-              deleted.append(branch)
-
-          # Retire this one-use cleanup branch itself only if PR 266 is now merged
-          # and its historical head SHA still matches the live ref.
-          cleanup_branch = "chatgpt/one-use-retired-branch-cleanup-20260920"
-          cleanup_pr = request(api + "/pulls/266")
+          # Retire this one-use cleanup branch itself only after PR 267 merged.
+          cleanup_branch = "chatgpt/one-use-final-retired-branch-cleanup-20260920"
+          cleanup_pr = request(api + "/pulls/267")
           cleanup_expected = ((cleanup_pr.get("head") or {}).get("sha"))
           if cleanup_pr.get("merged_at") and cleanup_expected:
               q = urllib.parse.urlencode({
@@ -187,5 +119,5 @@ jobs:
                   elif live:
                       skipped.append([cleanup_branch, "sha_changed"])
 
-          print("DELETED_RETIRED_BRANCHES=" + json.dumps(deleted, sort_keys=True))
-          print("SKIPPED_RETIRED_BRANCHES=" + json.dumps(skipped, sort_keys=True))
+          print("DELETED_FINAL_RETIRED_BRANCHES=" + json.dumps(deleted, sort_keys=True))
+          print("SKIPPED_FINAL_RETIRED_BRANCHES=" + json.dumps(skipped, sort_keys=True))
