@@ -1,0 +1,123 @@
+name: One-use final retired branch cleanup 2026-09-20
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    if: >-
+      github.event.before == '7a8abc77ad77fb1cea0918a6c4cc2c1ab0489029' &&
+      startsWith(github.event.head_commit.message, 'One-use final retired branch cleanup')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Delete only the verified final retired branch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        shell: python
+        run: |
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          token = os.environ["GITHUB_TOKEN"]
+          repository = os.environ["GITHUB_REPOSITORY"]
+          owner = os.environ["GITHUB_REPOSITORY_OWNER"]
+          api = "https://api.github.com/repos/" + repository
+
+          target = "chatgpt/v1510-three-artifact-review-20260918"
+          expected_sha = "a27db5b19782cb03f58a4df96949115a45604dc6"
+
+          def request(url, *, method="GET"):
+              req = urllib.request.Request(
+                  url,
+                  method=method,
+                  headers={
+                      "Authorization": "Bearer " + token,
+                      "Accept": "application/vnd.github+json",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "garden-one-use-final-retired-branch-cleanup",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  raw = response.read()
+                  return json.loads(raw.decode("utf-8")) if raw else None
+
+          deleted = []
+          skipped = []
+
+          # The current branch head was independently compared to this exact
+          # commit before this cleanup PR was created. Re-check live state.
+          ref_path = "heads/" + urllib.parse.quote(target, safe="/")
+          try:
+              live = request(api + "/git/ref/" + ref_path)
+          except urllib.error.HTTPError as exc:
+              if exc.code == 404:
+                  live = None
+              else:
+                  raise
+          if live is None:
+              skipped.append([target, "already_absent"])
+          elif ((live.get("object") or {}).get("sha")) != expected_sha:
+              skipped.append([target, "sha_changed"])
+          else:
+              q = urllib.parse.urlencode({
+                  "state": "open",
+                  "head": owner + ":" + target,
+                  "per_page": 100,
+              })
+              if request(api + "/pulls?" + q):
+                  skipped.append([target, "open_pr_now_exists"])
+              else:
+                  # Preserve historical proof that the identical commit was used
+                  # by the already-completed temporary closure PRs.
+                  p223 = request(api + "/pulls/223")
+                  p224 = request(api + "/pulls/224")
+                  if ((p223.get("head") or {}).get("sha")) != expected_sha:
+                      raise SystemExit("PR 223 no longer binds expected retired commit")
+                  if ((p224.get("head") or {}).get("sha")) != expected_sha:
+                      raise SystemExit("PR 224 no longer binds expected retired commit")
+                  if p223.get("state") != "closed" or p224.get("state") != "closed":
+                      raise SystemExit("temporary closure PRs are not closed")
+                  request(api + "/git/refs/" + ref_path, method="DELETE")
+                  deleted.append(target)
+
+          # Retire this one-use cleanup branch itself only after PR 267 merged.
+          cleanup_branch = "chatgpt/one-use-final-retired-branch-cleanup-20260920"
+          cleanup_pr = request(api + "/pulls/267")
+          cleanup_expected = ((cleanup_pr.get("head") or {}).get("sha"))
+          if cleanup_pr.get("merged_at") and cleanup_expected:
+              q = urllib.parse.urlencode({
+                  "state": "open",
+                  "head": owner + ":" + cleanup_branch,
+                  "per_page": 100,
+              })
+              if not request(api + "/pulls?" + q):
+                  ref_path = "heads/" + urllib.parse.quote(cleanup_branch, safe="/")
+                  try:
+                      live = request(api + "/git/ref/" + ref_path)
+                  except urllib.error.HTTPError as exc:
+                      if exc.code == 404:
+                          live = None
+                      else:
+                          raise
+                  if live and ((live.get("object") or {}).get("sha")) == cleanup_expected:
+                      request(api + "/git/refs/" + ref_path, method="DELETE")
+                      deleted.append(cleanup_branch)
+                  elif live:
+                      skipped.append([cleanup_branch, "sha_changed"])
+
+          print("DELETED_FINAL_RETIRED_BRANCHES=" + json.dumps(deleted, sort_keys=True))
+          print("SKIPPED_FINAL_RETIRED_BRANCHES=" + json.dumps(skipped, sort_keys=True))

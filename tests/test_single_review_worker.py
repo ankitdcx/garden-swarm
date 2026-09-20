@@ -61,11 +61,9 @@ class SingleReviewTests(unittest.TestCase):
             next_slot({'0:one': {'status': 'UNKNOWN'}}, ['one', 'two', 'three'])
 
     def test_provider_exclusions_apply_to_endpoint(self):
-        endpoint = {**self.endpoint, 'tag': 'anthropic', 'provider_name': 'Anthropic'}
-        with self.assertRaises((ValueError, RuntimeError)):
-            endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
-        # Explicit 2026-09-19 human routing directive re-authorized NVIDIA and Mistral.
-        for name in ('NVIDIA', 'Mistral'):
+        # Explicit human routing directives re-authorized NVIDIA/Mistral on
+        # 2026-09-19 and Anthropic/Claude on 2026-09-20.
+        for name in ('Anthropic', 'NVIDIA', 'Mistral'):
             endpoint = {**self.endpoint, 'tag': name.lower(), 'provider_name': name}
             body, _ = endpoint_request(endpoint, self.model, 'public source', money('.05'), self.policy, self.exclusions)
             self.assertEqual(body['provider']['only'], [name.lower()])

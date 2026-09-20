@@ -1,0 +1,43 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:one-use-merged-branch-cleanup:20260920",
+  "work_package_id": "ONE-USE-MERGED-BRANCH-CLEANUP-20260920",
+  "branch": "chatgpt/one-use-merged-branch-cleanup-20260920",
+  "base_sha": "791e97b90c4ea628642a92f11d411c3eb94aea7c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:one-use-merged-branch-cleanup:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "ONE-USE-MERGED-BRANCH-CLEANUP-20260920",
+    "base_sha": "791e97b90c4ea628642a92f11d411c3eb94aea7c",
+    "target_paths": [
+      "workstreams/2026-09-20-one-use-merged-branch-cleanup.json",
+      ".github/workflows/one-use-merged-branch-cleanup-20260920.yml"
+    ],
+    "target_symbols": [
+      "CHECK-BRANCH-LIFECYCLE-001",
+      "MERGED_DELETE_ELIGIBLE",
+      "one-use exact-base branch cleanup"
+    ],
+    "semantic_domains": [
+      "REPOSITORY_HYGIENE",
+      "BRANCH_LIFECYCLE"
+    ],
+    "affected_invariants": [
+      "DELETE_ONLY_MERGED_BRANCHES",
+      "PRESERVE_OPEN_PR_BRANCHES",
+      "PRESERVE_GARDEN_REVIEW_STATE",
+      "EXACT_HEAD_RECHECK_BEFORE_DELETE"
+    ],
+    "affected_contracts": [
+      "BranchLifecycleReceipt/v1",
+      "RULE-BRANCH-LIFECYCLE-001"
+    ],
+    "intended_effect": "Run one exact-base-guarded cleanup on garden-swarm after merge. Delete only non-default branches classified MERGED_DELETE_ELIGIBLE by the existing branch lifecycle scanner, after live SHA and open-PR rechecks. Preserve active, frozen, closed-unmerged, unclassified, main and garden-review-state branches.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
