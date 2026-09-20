@@ -381,7 +381,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. The complete runtime-assurance snapshot must be current for the policy epoch. ALLOW then requires validated, provenance/parent-bound scoped authority/capability, validated action+target human-effect materiality and applicable Human-Effect Closure gates. External runtime blocks are effect-scoped and are classified only after Garden admission.",
+      "authority_requirement": "Evaluation cannot create authority. Validated authority is content-bound to the exact envelope+parent+provenance claim; validated human-effect materiality is content-bound to exact action+target+classification+policy epoch. Changing either claim invalidates old validation. All assurance state must also be current for the active policy epoch.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -410,7 +410,11 @@
         "GOAL_BINDING_INVALID",
         "GOAL_BINDING_UNKNOWN",
         "RUNTIME_ASSURANCE_EPOCH_UNKNOWN",
-        "RUNTIME_ASSURANCE_EPOCH_STALE"
+        "RUNTIME_ASSURANCE_EPOCH_STALE",
+        "AUTHORITY_CLAIM_DIGEST_UNKNOWN",
+        "AUTHORITY_CLAIM_DIGEST_MISMATCH",
+        "HUMAN_EFFECT_MATERIALITY_DIGEST_UNKNOWN",
+        "HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -432,7 +436,9 @@
         "human-effect materiality validation",
         "persistent goal validity recheck",
         "runtime assurance policy epoch",
-        "effect-scoped external runtime constraints"
+        "effect-scoped external runtime constraints",
+        "full authority-claim SHA-256 binding",
+        "human-effect materiality claim SHA-256 binding"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
