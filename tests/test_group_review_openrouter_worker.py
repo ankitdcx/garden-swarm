@@ -55,6 +55,44 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         finally:
             Path(path).unlink(missing_ok=True)
 
+    def test_push_trigger_uses_hash_bound_request_file(self):
+        path = write_event({})
+        request = {
+            "schema": worker.PUSH_REQUEST_SCHEMA,
+            "status": "REQUESTED",
+            "run_issue_number": 254,
+            "packet_sha256": "a" * 64,
+        }
+        request_path = Path(tempfile.mkstemp()[1])
+        request_path.write_text(json.dumps(request), encoding="utf-8")
+        env = self.base_env("trigger") | {
+            "GITHUB_EVENT_NAME": "push",
+            "GITHUB_ACTOR": "ankitdcx",
+            "GITHUB_EVENT_PATH": path,
+        }
+        try:
+            with patch.object(worker, "PUSH_REQUEST_PATH", request_path):
+                with patch.dict(os.environ, env, clear=True):
+                    self.assertEqual(worker.trigger_issue_number(), 254)
+        finally:
+            Path(path).unlink(missing_ok=True)
+            request_path.unlink(missing_ok=True)
+
+    def test_push_dispatch_binding_rejects_packet_drift(self):
+        request = {
+            "schema": worker.PUSH_REQUEST_SCHEMA,
+            "status": "REQUESTED",
+            "run_issue_number": 254,
+            "packet_sha256": "a" * 64,
+        }
+        worker.validate_push_dispatch_binding(
+            request, 254, {"packet_sha256": "a" * 64}
+        )
+        with self.assertRaisesRegex(ValueError, "packet binding mismatch"):
+            worker.validate_push_dispatch_binding(
+                request, 254, {"packet_sha256": "b" * 64}
+            )
+
     def test_workflow_dispatch_continuation_accepts_owner_or_actions_bot(self):
         path = write_event({"inputs": {"trigger_issue_number": "101"}})
         try:
