@@ -54,6 +54,8 @@ public final class MainActivity extends Activity {
     private volatile int coordinateAttempt = 0;
     private volatile boolean localBridgeRunning = true;
     private final ConcurrentHashMap<String,String> browserCalibration = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String,String> browserJobs = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String,String> preparedJobs = new ConcurrentHashMap<>();
     private static final int SHIZUKU_REQ = 41;
     private final Shizuku.UserServiceArgs uiProbeArgs =
             new Shizuku.UserServiceArgs(new ComponentName("org.garden.reviewdashboard", UiProbeService.class.getName()))
@@ -119,6 +121,21 @@ public final class MainActivity extends Activity {
                         char[] buf=new char[Math.max(0,Math.min(len,20000))]; int got=0,n;
                         while(got<buf.length && (n=br.read(buf,got,buf.length-got))>0) got+=n;
                         String body=new String(buf,0,got);
+                        if(request.startsWith("GET /job/")) {
+                            String provider=request.split(" ")[1].substring("/job/".length());
+                            String payload=browserJobs.get(provider);
+                            byte[] out=(payload==null?"{}":payload).getBytes(StandardCharsets.UTF_8);
+                            OutputStream os=s.getOutputStream();
+                            os.write(("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: "+out.length+"\r\nConnection: close\r\n\r\n").getBytes(StandardCharsets.UTF_8));
+                            os.write(out); os.flush(); continue;
+                        }
+                        if(request.startsWith("POST /job/") && request.contains("/prepared")) {
+                            String path=request.split(" ")[1];
+                            String provider=path.substring("/job/".length(),path.length()-"/prepared".length());
+                            preparedJobs.put(provider,body);
+                            final String pp=provider;
+                            main.post(() -> calibration.setText("Prompt prepared in Firefox: "+pp+"\nNo message submitted yet."));
+                        }
                         if(request.startsWith("POST /calibration")) {
                             try {
                                 JSONObject j=new JSONObject(body);
