@@ -38,6 +38,7 @@ def base_context(**overrides):
             "human:alice": ("delegation-root:alice",),
             "agent:A": ("delegation:alice->agent:A",),
         },
+        authority_parent_by_subject={"agent:A": "human:alice"},
         hard_gates={
             "rights": True,
             "consent": True,
@@ -413,3 +414,97 @@ def test_good_goal_does_not_authorize_ungranted_investigative_means():
     )
     assert result.decision is RuntimeDecision.REJECT
     assert result.reasons == ("AUTHORITY_SCOPE_DENIED",)
+
+
+def test_external_runtime_block_does_not_mask_garden_rejection():
+    ctx = base_context(
+        external_runtime_blocks={"provider": frozenset({"deploy"})}
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            action="deploy",
+            target="world",
+            capability="deploy",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+            goal_id="g1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_SCOPE_DENIED",)
+
+
+def test_delegation_lineage_requires_explicit_parent_binding():
+    ctx = base_context(authority_parent_by_subject={})
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("AUTHORITY_PARENT_UNKNOWN:agent:A",)
+
+
+def test_delegation_lineage_rejects_wrong_parent():
+    ctx = base_context(authority_parent_by_subject={"agent:A": "operator:owner"})
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_PARENT_MISMATCH:agent:A",)
+
+
+def test_base_human_effect_gates_cannot_be_removed_by_empty_profile_set():
+    ctx = base_context(
+        authority_by_subject={
+            "human:alice": authority("human:alice", {"deploy"}, {"world"}),
+            "agent:A": authority("agent:A", {"deploy"}, {"world"}),
+        },
+        required_human_effect_gates=frozenset(),
+        hard_gates={
+            "rights": True,
+            "consent": None,
+            "privacy": True,
+            "law": True,
+            "safety": True,
+            "human_effect": True,
+        },
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            action="deploy",
+            target="world",
+            capability="deploy",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+            goal_id="g1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("HUMAN_EFFECT_GATE_UNKNOWN:consent",)
