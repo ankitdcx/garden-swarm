@@ -9,12 +9,12 @@
   "draft_pr_created_before_substantial_edit": true,
   "status": "ACTIVE",
   "target_paths": [
-    "android/garden-relay/**",
+    "android/garden-relay",
+    "relay/mobile",
     "docs/GARDEN_RELAY_ANDROID.md",
-    "server/relay_api.py",
-    "server/app.py",
-    "server/tests/**",
-    ".github/workflows/garden-relay-android.yml"
+    ".github/workflows/garden-relay-android.yml",
+    "workstreams/garden-relay-android-20260920.json",
+    "gsl/REPO_PROFILE.json"
   ],
-  "intended_effect": "Add a noncanonical Android review relay prototype plus optional narrow server handoff; no Garden semantic changes."
+  "intended_effect": "Add a noncanonical Android review relay prototype, mobile job manifest and repo classification; no Garden semantic changes."
 }
