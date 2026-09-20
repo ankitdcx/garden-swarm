@@ -116,35 +116,34 @@ def next_slot(cycle, families):
 
 
 def budget_check(state, key_info, policy, now, campaign=None):
+    """Enforce the global paid OpenRouter budget: USD 2/day, USD 0.01/call.
+
+    Provider-reported current UTC-day usage is authoritative for settled spend.
+    Any unresolved RESERVED/UNKNOWN call remains a hard block so delayed billing
+    cannot be silently double-spent. Historical lifetime pools and campaign
+    monetary totals do not authorize or constrain active paid calls.
+    """
     if state.get('paused') is not False:
         raise ValueError('single worker paused')
     if review_campaign.blocking_attempts(state, campaign):
         raise ValueError('outstanding reservation/unknown cost; reconciliation required')
     if key_info.get('is_management_key') is True or key_info.get('is_free_tier') is True:
         raise ValueError('paid inference key required')
-    usage = money(key_info.get('usage'))
+
     daily = money(key_info.get('usage_daily'))
-    reserve = min(money(policy['routine_model_call_cost_ceiling_usd']), Decimal('0.10'))
-    ceiling = min(money(policy['daily_openrouter_cost_ceiling_usd']), Decimal('10'))
-    day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
-    current = [a for a in state['attempts'] if a['utc_day'] == day]
-    # Conservatively count known old account spend plus local spend, even where
-    # provider totals already include it. This tolerates delayed usage reporting.
-    baseline = max([daily] + [money(a['usage_daily_before']) for a in current])
-    spent = sum((review_campaign.accounting_charge(a, campaign) for a in current), Decimal(0))
-    if baseline + spent + reserve > ceiling:
+    reserve = money(policy['routine_model_call_cost_ceiling_usd'])
+    ceiling = money(policy['daily_openrouter_cost_ceiling_usd'])
+    if reserve != Decimal('0.01') or ceiling != Decimal('2'):
+        raise ValueError('active OpenRouter budget rule must be USD 2/day and USD 0.01/call')
+
+    if daily + reserve > ceiling:
         raise DailyBudget('daily reservation exhausted')
-    # Charge all historical key spend against the routine pool, conservatively;
-    # no access to challenger/escalation/emergency funds is granted here.
-    routine = money(policy['budget_pools_usd']['routine'])
-    all_spent = sum((review_campaign.accounting_charge(a, campaign) for a in state['attempts']), Decimal(0))
-    if usage + all_spent + reserve > routine:
-        raise ValueError('routine lifetime allocation exhausted')
+
     remaining = key_info.get('limit_remaining')
     if remaining is not None and money(remaining) < reserve:
         raise ValueError('key credit limit too low')
-    if campaign:
-        review_campaign.check_total(state, campaign, reserve)
+
+    day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
     return reserve, day, str(daily)
 
 
