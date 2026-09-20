@@ -37,8 +37,12 @@ def authority_receipt(
     jurisdiction: str = "default",
     context_scope: str = "default",
     policy_epoch: str = "E1",
+    design_epoch: str = "D1",
     validation_pass=True,
     identity_authenticated=True,
+    scope_validated=True,
+    delegation_validated=True,
+    validity_interval_current=True,
     revoked=False,
     verifier_independent=True,
 ):
@@ -47,10 +51,14 @@ def authority_receipt(
         claim_digest=claim_digest,
         parent_subject=parent,
         policy_epoch=policy_epoch,
+        design_epoch=design_epoch,
         jurisdiction=jurisdiction,
         context_scope=context_scope,
         validation_pass=validation_pass,
         identity_authenticated=identity_authenticated,
+        scope_validated=scope_validated,
+        delegation_validated=delegation_validated,
+        validity_interval_current=validity_interval_current,
         revoked=revoked,
         verifier_id="verifier:independent",
         verifier_control_lineage="control:independent",
@@ -1062,4 +1070,60 @@ def test_external_requirement_conflict_preserves_garden_rejection():
     assert result.reasons == (
         "AUTHORITY_SCOPE_DENIED",
         "EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT:provider",
+    )
+
+
+def test_expired_authority_validation_receipt_rejects():
+    ctx = base_context()
+    receipts = dict(ctx.authority_validation_receipt_by_subject)
+    receipts["agent:A"] = authority_receipt(
+        subject="agent:A",
+        claim_digest=ctx.authority_claim_digest_by_subject["agent:A"],
+        parent="human:alice",
+        validity_interval_current=False,
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(authority_validation_receipt_by_subject=receipts),
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == (
+        "AUTHORITY_VALIDATION_RECEIPT_INVALID:agent:A:validity_interval",
+    )
+
+
+def test_old_design_epoch_authority_receipt_cannot_be_replayed():
+    ctx = base_context()
+    receipts = dict(ctx.authority_validation_receipt_by_subject)
+    receipts["agent:A"] = authority_receipt(
+        subject="agent:A",
+        claim_digest=ctx.authority_claim_digest_by_subject["agent:A"],
+        parent="human:alice",
+        design_epoch="D0",
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(authority_validation_receipt_by_subject=receipts),
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == (
+        "AUTHORITY_VALIDATION_RECEIPT_MISMATCH:agent:A",
     )
