@@ -8,6 +8,7 @@ from typing import Any
 
 PACKET_SCHEMA = "GardenGroupReviewPacket/v1"
 WORKER_RESULT_SCHEMA = "GardenGroupReviewWorkerResult/v1"
+WORKER_STATUS_SCHEMA = "GardenGroupReviewWorkerStatus/v1"
 OPENROUTER_FINDING_SCHEMA = "GardenGroupReviewOpenRouterFinding/v1"
 OPENROUTER_BUNDLE_SCHEMA = "GardenGroupReviewOpenRouterBundle/v1"
 CANDIDATE_SCHEMA = "GardenGroupReviewCandidate/v1"
@@ -15,12 +16,14 @@ VERIFIER_SCHEMA = "GardenGroupReviewVerifierResult/v1"
 
 RUN_TITLE_PREFIX = "[GROUP_REVIEW_RUN]"
 WORKER_TITLE_PREFIX = "[GROUP_REVIEW_WORKER]"
+WORKER_STATUS_TITLE_PREFIX = "[GROUP_REVIEW_WORKER_STATUS]"
 OPENROUTER_RESULT_TITLE_PREFIX = "[GROUP_REVIEW_OPENROUTER_RESULT]"
 CANDIDATE_TITLE_PREFIX = "[GROUP_REVIEW_CANDIDATE]"
 VERIFIER_TITLE_PREFIX = "[GROUP_REVIEW_VERIFIER]"
 
 PACKET_MARKER = "<!-- GARDEN_GROUP_REVIEW_PACKET -->"
 WORKER_MARKER = "<!-- GARDEN_GROUP_REVIEW_WORKER_RESULT -->"
+WORKER_STATUS_MARKER = "<!-- GARDEN_GROUP_REVIEW_WORKER_STATUS -->"
 OPENROUTER_MARKER = "<!-- GARDEN_GROUP_REVIEW_OPENROUTER_RESULT -->"
 CANDIDATE_MARKER = "<!-- GARDEN_GROUP_REVIEW_CANDIDATE -->"
 VERIFIER_MARKER = "<!-- GARDEN_GROUP_REVIEW_VERIFIER_RESULT -->"
@@ -31,6 +34,9 @@ WORKER_ROLES = {"A", "B", "EXTERNAL_PHONE"}
 OPENROUTER_DISPOSITIONS = {"NO_CHANGE", "PROPOSE_CHANGE", "BLOCK", "UNKNOWN"}
 VERIFIER_VERDICTS = {"PASS", "FAIL", "UNKNOWN", "PASS_WITH_CAVEATS"}
 PROCESS_INTEGRITY = {"PASS", "FAIL", "UNKNOWN"}
+WORKER_RESULT_STATUS = {"FROZEN_RESULT", "PROCESS_FAIL", "BLOCKED_BY_CONTEXT_ISOLATION"}
+WORKER_LIFECYCLE = {"STARTED", "SOURCE_HASH_VERIFIED", "BLIND_REVIEW", "FROZEN_RESULT", "PROCESS_FAIL", "BLOCKED_BY_CONTEXT_ISOLATION"}
+CONTEXT_ISOLATION_STATUS = {"VERIFIED", "FAILED", "UNAVAILABLE", "UNKNOWN"}
 
 
 def canonical_json(value: Any) -> str:
@@ -55,6 +61,10 @@ def packet_hash(packet: dict[str, Any]) -> str:
 
 def worker_result_hash(result: dict[str, Any]) -> str:
     return sha256_value(_without(result, "result_sha256"))
+
+
+def worker_status_hash(status: dict[str, Any]) -> str:
+    return sha256_value(_without(status, "status_sha256"))
 
 
 def openrouter_bundle_hash(bundle: dict[str, Any]) -> str:
@@ -183,6 +193,76 @@ def validate_packet(packet: dict[str, Any]) -> dict[str, Any]:
     return packet
 
 
+def _validate_context_isolation(value: Any) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise ValueError("context_isolation must be an object")
+    status = str(value.get("status") or "")
+    if status not in CONTEXT_ISOLATION_STATUS:
+        raise ValueError("invalid context isolation status")
+    mode = _nonempty(value.get("isolation_mode"), "context isolation mode", 200)
+    excluded = value.get("excluded_context_detected")
+    project = value.get("project_context_present")
+    memory = value.get("memory_or_personal_context_present")
+    prior_review = value.get("prior_review_context_present")
+    peer = value.get("peer_output_present")
+    for name, item in {
+        "excluded_context_detected": excluded,
+        "project_context_present": project,
+        "memory_or_personal_context_present": memory,
+        "prior_review_context_present": prior_review,
+        "peer_output_present": peer,
+    }.items():
+        if not isinstance(item, bool):
+            raise ValueError(f"context isolation {name} must be boolean")
+    evidence = _string_list(value.get("evidence_refs", []), "context isolation evidence_refs", 32)
+    return {
+        "status": status,
+        "isolation_mode": mode,
+        "excluded_context_detected": excluded,
+        "project_context_present": project,
+        "memory_or_personal_context_present": memory,
+        "prior_review_context_present": prior_review,
+        "peer_output_present": peer,
+        "evidence_refs": evidence,
+    }
+
+
+def validate_worker_status(status: dict[str, Any], packet: dict[str, Any]) -> dict[str, Any]:
+    validate_packet(packet)
+    if status.get("schema") != WORKER_STATUS_SCHEMA:
+        raise ValueError("unsupported worker status schema")
+    if status.get("problem_id") != packet["problem_id"]:
+        raise ValueError("worker status problem mismatch")
+    if int(status.get("run_issue_number", 0)) <= 0:
+        raise ValueError("worker status requires run issue number")
+    if status.get("role") not in WORKER_ROLES:
+        raise ValueError("invalid worker role")
+    if status.get("packet_sha256") != packet["packet_sha256"]:
+        raise ValueError("worker status packet mismatch")
+    _nonempty(status.get("created_at"), "created_at", 80)
+    state = str(status.get("state") or "")
+    if state not in WORKER_LIFECYCLE:
+        raise ValueError("invalid worker lifecycle state")
+    isolation = _validate_context_isolation(status.get("context_isolation"))
+    if state in {"SOURCE_HASH_VERIFIED", "BLIND_REVIEW", "FROZEN_RESULT"}:
+        if isolation["status"] != "VERIFIED" or any(
+            isolation[name]
+            for name in (
+                "excluded_context_detected",
+                "project_context_present",
+                "memory_or_personal_context_present",
+                "prior_review_context_present",
+                "peer_output_present",
+            )
+        ):
+            raise ValueError("blind worker lifecycle requires verified context isolation")
+    if state == "BLOCKED_BY_CONTEXT_ISOLATION" and isolation["status"] not in {"FAILED", "UNAVAILABLE"}:
+        raise ValueError("blocked worker status requires failed/unavailable isolation")
+    if _hex64(status.get("status_sha256"), "status_sha256") != worker_status_hash(status):
+        raise ValueError("worker status SHA-256 mismatch")
+    return status
+
+
 def validate_worker_result(result: dict[str, Any], packet: dict[str, Any]) -> dict[str, Any]:
     validate_packet(packet)
     if result.get("schema") != WORKER_RESULT_SCHEMA:
@@ -196,11 +276,42 @@ def validate_worker_result(result: dict[str, Any], packet: dict[str, Any]) -> di
     if result.get("packet_sha256") != packet["packet_sha256"]:
         raise ValueError("worker result packet mismatch")
     _nonempty(result.get("created_at"), "created_at", 80)
-    if result.get("peer_exposure_before_freeze") != "NONE":
-        raise ValueError("blind worker result must attest no peer exposure")
-    output = _nonempty(result.get("output"), "output", 60000)
-    if _hex64(result.get("output_sha256"), "output_sha256") != sha256_text(output):
-        raise ValueError("worker output SHA-256 mismatch")
+
+    status = str(result.get("status") or "")
+    if status not in WORKER_RESULT_STATUS:
+        raise ValueError("invalid worker result status")
+
+    isolation = _validate_context_isolation(result.get("context_isolation"))
+
+    if status == "FROZEN_RESULT":
+        if isolation["status"] != "VERIFIED" or any(
+            isolation[name]
+            for name in (
+                "excluded_context_detected",
+                "project_context_present",
+                "memory_or_personal_context_present",
+                "prior_review_context_present",
+                "peer_output_present",
+            )
+        ):
+            raise ValueError("semantic worker result requires verified context isolation")
+        if result.get("peer_exposure_before_freeze") != "NONE":
+            raise ValueError("blind worker result must attest no peer exposure")
+        output = _nonempty(result.get("output"), "output", 60000)
+        if _hex64(result.get("output_sha256"), "output_sha256") != sha256_text(output):
+            raise ValueError("worker output SHA-256 mismatch")
+        if result.get("failure_code") or result.get("failure_detail"):
+            raise ValueError("frozen semantic result cannot also claim process failure")
+    else:
+        if isolation["status"] not in {"FAILED", "UNAVAILABLE"}:
+            raise ValueError("failed/blocked worker result requires failed or unavailable isolation")
+        if "output" in result or "output_sha256" in result:
+            raise ValueError("process-failed worker result must not publish semantic output")
+        _nonempty(result.get("failure_code"), "failure_code", 200)
+        _nonempty(result.get("failure_detail"), "failure_detail", 4000)
+        if status == "BLOCKED_BY_CONTEXT_ISOLATION" and isolation["status"] != "UNAVAILABLE":
+            raise ValueError("blocked isolation result requires UNAVAILABLE context isolation")
+
     if _hex64(result.get("result_sha256"), "result_sha256") != worker_result_hash(result):
         raise ValueError("worker result SHA-256 mismatch")
     return result
