@@ -36,6 +36,21 @@ class TransitionAssuranceBinding:
     design_epoch: str
 
 
+@dataclass(frozen=True)
+class AuthorityDelta:
+    delta_id: str
+    delegator: str
+    recipient: str
+    actions: frozenset[str]
+    resources: frozenset[str]
+    affected_subjects: frozenset[str]
+    jurisdiction: str
+    invalidation_conditions: tuple[str, ...]
+    revocation_path: str
+    appeal_path: str
+    evidence_refs: tuple[str, ...]
+
+
 class TransitionDecision(str, Enum):
     ADVANCE = "ADVANCE"
     HOLD = "HOLD"
@@ -55,6 +70,7 @@ class TransitionProposal:
     design_epoch: str = "E1"
     reversible_effect: bool = True
     stage_omission_justifications: Mapping[TransitionStage, str] = field(default_factory=dict)
+    authority_deltas: tuple[AuthorityDelta, ...] = ()
 
 
 @dataclass
@@ -65,6 +81,8 @@ class TransitionContext:
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     required_hard_gates: frozenset[str] = frozenset()
     stage_omission_approval: Mapping[TransitionStage, Optional[bool]] = field(default_factory=dict)
+    authority_delta_validation: Mapping[str, Optional[bool]] = field(default_factory=dict)
+    criteria_profile_validated: Optional[bool] = None
     independent_verification: Optional[bool] = None
     divergence_resolved: Optional[bool] = None
     capture_conflict_clear: Optional[bool] = None
@@ -207,6 +225,44 @@ def evaluate_transition(
     if assurance_binding is not None:
         return assurance_binding
 
+    for delta in proposal.authority_deltas:
+        if not delta.delta_id.strip():
+            return TransitionResult(
+                TransitionDecision.REJECT, ("AUTHORITY_DELTA_ID_MISSING",)
+            )
+        if not delta.delegator.strip() or not delta.recipient.strip():
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"AUTHORITY_DELTA_PARTY_MISSING:{delta.delta_id}",),
+            )
+        if not delta.actions or not delta.resources:
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"AUTHORITY_DELTA_SCOPE_EMPTY:{delta.delta_id}",),
+            )
+        if (
+            not delta.jurisdiction.strip()
+            or not delta.invalidation_conditions
+            or not delta.revocation_path.strip()
+            or not delta.appeal_path.strip()
+            or not delta.evidence_refs
+        ):
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"AUTHORITY_DELTA_BINDING_INCOMPLETE:{delta.delta_id}",),
+            )
+        validation = context.authority_delta_validation.get(delta.delta_id)
+        if validation is False:
+            return TransitionResult(
+                TransitionDecision.REJECT,
+                (f"AUTHORITY_DELTA_INVALID:{delta.delta_id}",),
+            )
+        if validation is not True:
+            return TransitionResult(
+                TransitionDecision.ESCALATE,
+                (f"AUTHORITY_DELTA_UNVALIDATED:{delta.delta_id}",),
+            )
+
     if context.authority_validated is False:
         return TransitionResult(
             TransitionDecision.REJECT, ("TRANSITION_AUTHORITY_INVALID",)
@@ -263,6 +319,15 @@ def evaluate_transition(
     if context.operational_readiness is not True:
         return TransitionResult(
             TransitionDecision.ESCALATE, ("OPERATIONAL_READINESS_UNKNOWN",)
+        )
+
+    if context.criteria_profile_validated is False:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("TRANSITION_CRITERIA_PROFILE_INVALID",)
+        )
+    if context.criteria_profile_validated is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE, ("TRANSITION_CRITERIA_PROFILE_UNVALIDATED",)
         )
 
     if not context.entry_criteria:
