@@ -84,7 +84,7 @@ public final class MainActivity extends Activity {
         header.setText("Refreshing…");
         io.execute(() -> {
             try {
-                String raw = get(STATUS_URL);
+                String raw = get(STATUS_URL + "?t=" + System.currentTimeMillis());
                 JSONObject root = new JSONObject(raw);
                 main.post(() -> render(root));
             } catch (Exception e) {
@@ -131,7 +131,10 @@ public final class MainActivity extends Activity {
     private static String get(String url) throws Exception {
         HttpURLConnection c=(HttpURLConnection)new URL(url).openConnection();
         c.setConnectTimeout(15000); c.setReadTimeout(30000);
-        c.setRequestProperty("User-Agent","GardenReviewDashboard/0.4");
+        c.setUseCaches(false);
+        c.setRequestProperty("Cache-Control","no-cache, no-store, max-age=0");
+        c.setRequestProperty("Pragma","no-cache");
+        c.setRequestProperty("User-Agent","GardenReviewDashboard/0.4.1");
         int code=c.getResponseCode();
         if(code<200||code>=300) throw new IllegalStateException("HTTP "+code);
         try(InputStream in=c.getInputStream(); ByteArrayOutputStream out=new ByteArrayOutputStream()){
