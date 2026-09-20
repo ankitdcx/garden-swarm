@@ -30,8 +30,9 @@ The current workstream on PR #237 extends the noncanonical v15.10 runtime profil
 - `agent/GARDEN_TRANSITION_FABRIC_v15.11_CANDIDATE.md`
 - `agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md`
 - `prototype/transition_governance.py`
+- `prototype/upgrade_process.py`
 
-Key candidate rules: authority objects do not self-validate; beneficial ends do not authorize otherwise unauthorized means; transition/installation cannot bootstrap sovereignty; staged transition expansion requires fresh authority, Human-Effect Closure, independent verification, divergence/capture checks and rollback or recovery; routine Garden gap closure is AI-owned work rather than automatic delegation back to a human.
+Key candidate rules: authority objects do not self-validate; delegated authority is lineage-bound; beneficial ends do not authorize otherwise unauthorized means; unknown or unvalidated human-effect materiality is non-PASS; transition/installation cannot bootstrap sovereignty; staged transition expansion requires fresh authority, Human-Effect Closure, independent verification, divergence/capture checks and rollback or recovery; routine Garden gap closure is AI-owned work rather than automatic delegation back to a human, while executable closure gates prevent premature completion claims.
 
 These are candidate semantics and executable falsification targets. They do not authorize host-security bypass, covert access, political control, canonical promotion or real-world deployment.
 
