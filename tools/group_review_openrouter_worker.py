@@ -308,6 +308,9 @@ def _budget_rejection_code(exc: Exception) -> str:
         ("paid inference key required", "KEY_TYPE_NOT_PAID"),
         ("daily reservation exhausted", "DAILY_BUDGET_EXHAUSTED"),
         ("routine lifetime allocation exhausted", "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+        ("group_review epoch total reservation exhausted", "GROUP_REVIEW_EPOCH_EXHAUSTED"),
+        ("task reservation exhausted", "TASK_BUDGET_EXHAUSTED"),
+        ("group_review budget epoch unavailable", "GROUP_REVIEW_BUDGET_EPOCH_UNAVAILABLE"),
         ("key credit limit too low", "KEY_CREDIT_LIMIT_TOO_LOW"),
         ("unknown monetary value", "KEY_USAGE_UNKNOWN"),
         ("invalid monetary value", "KEY_USAGE_INVALID"),
@@ -318,6 +321,93 @@ def _budget_rejection_code(exc: Exception) -> str:
         if needle in text:
             return code
     return "BUDGET_POLICY_REJECTED"
+
+
+def group_review_budget_check(
+    state: dict,
+    key_info: dict,
+    policy: dict,
+    now: float,
+    *,
+    cycle_id: str,
+):
+    """Bound new GROUP_REVIEW spend to the explicit local budget epoch.
+
+    Historical provider-account spend is deliberately not persisted or charged
+    against a newly authorized epoch. The hash-bound GROUP_REVIEW ledger is the
+    spend source for this epoch; unresolved reservations still block before this
+    function is reached.
+    """
+
+    if state.get("paused") is not False:
+        raise ValueError("single worker paused")
+    if review.review_campaign.blocking_attempts(state, None):
+        raise ValueError("outstanding reservation/unknown cost; reconciliation required")
+    if key_info.get("is_management_key") is True or key_info.get("is_free_tier") is True:
+        raise ValueError("paid inference key required")
+
+    epoch = policy.get("group_review_budget_epoch") or {}
+    if (
+        epoch.get("schema") != "GardenGroupReviewBudgetEpoch/v1"
+        or epoch.get("status") != "AUTHORIZED"
+        or epoch.get("scope") != "GROUP_REVIEW_OPENROUTER_ONLY"
+    ):
+        raise ValueError("GROUP_REVIEW budget epoch unavailable")
+    epoch_id = str(epoch.get("epoch_id") or "")
+    if not epoch_id:
+        raise ValueError("GROUP_REVIEW budget epoch unavailable")
+
+    reserve = min(
+        legacy.money(policy["routine_model_call_cost_ceiling_usd"]),
+        legacy.money("0.10"),
+    )
+    allocation = legacy.money(epoch.get("incremental_allocation_usd"))
+    daily_ceiling = min(
+        legacy.money(policy["daily_openrouter_cost_ceiling_usd"]),
+        legacy.money("10"),
+    )
+    task_ceiling = legacy.money(policy["routine_task_cost_ceiling_usd"])
+    day = __import__("datetime").datetime.fromtimestamp(
+        now, __import__("datetime").timezone.utc
+    ).date().isoformat()
+
+    epoch_attempts = [
+        attempt
+        for attempt in state.get("attempts", [])
+        if attempt.get("budget_epoch_id") == epoch_id
+    ]
+    local_total = sum(
+        (review.review_campaign.accounting_charge(a, None) for a in epoch_attempts),
+        legacy.money(0),
+    )
+    local_daily = sum(
+        (
+            review.review_campaign.accounting_charge(a, None)
+            for a in epoch_attempts
+            if a.get("utc_day") == day
+        ),
+        legacy.money(0),
+    )
+    local_task = sum(
+        (
+            review.review_campaign.accounting_charge(a, None)
+            for a in epoch_attempts
+            if a.get("cycle") == cycle_id
+        ),
+        legacy.money(0),
+    )
+
+    if local_total + reserve > allocation:
+        raise ValueError("GROUP_REVIEW epoch total reservation exhausted")
+    if local_daily + reserve > daily_ceiling:
+        raise legacy.DailyBudget("daily reservation exhausted")
+    if local_task + reserve > task_ceiling:
+        raise ValueError("task reservation exhausted")
+
+    remaining = key_info.get("limit_remaining")
+    if remaining is not None and legacy.money(remaining) < reserve:
+        raise ValueError("key credit limit too low")
+    return reserve, day, str(local_daily), epoch_id
 
 
 def _profile(policy: dict) -> dict:
@@ -464,8 +554,8 @@ def run(root: Path = Path(".")) -> None:
         raise
     print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_OK")
     try:
-        reserve, day, daily = legacy.budget_check(
-            state, key_info, policy, time.time()
+        reserve, day, daily, budget_epoch_id = group_review_budget_check(
+            state, key_info, policy, time.time(), cycle_id=cid
         )
     except ValueError as exc:
         print(
@@ -524,6 +614,7 @@ def run(root: Path = Path(".")) -> None:
         "utc_day": day,
         "started": time.time(),
         "usage_daily_before": daily,
+        "budget_epoch_id": budget_epoch_id,
         "reserved": str(reserve),
         "estimated_upper_cost": str(estimate),
         "cost": None,
