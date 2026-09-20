@@ -490,7 +490,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation grants no authority. ADVANCE requires all assurance inputs to be bound to the exact transition_id, effect_scope and current->next stage, plus validated authority, immutable base rights/consent/privacy/law/safety/Human-Effect gates, non-vacuous criteria and explicit omission approval.",
+      "authority_requirement": "Evaluation grants no authority. Stage status cannot mint authority. Any authority migration is carried only by explicit typed AuthorityDelta records with delegator/recipient/scope/jurisdiction/invalidation/revocation/appeal/evidence bindings and separate validation. Stage admission additionally requires an exact DesignEpoch/effect assurance binding and a validated non-vacuous criteria profile.",
       "failure_mode_set": [
         "INVALID_DECLARED_STAGE_PLAN",
         "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
@@ -527,7 +527,15 @@
         "EXIT_CRITERIA_MISSING",
         "TRANSITION_ASSURANCE_BINDING_UNKNOWN",
         "TRANSITION_ASSURANCE_BINDING_MISMATCH",
-        "STALE_TRANSITION_DESIGN_EPOCH"
+        "STALE_TRANSITION_DESIGN_EPOCH",
+        "AUTHORITY_DELTA_ID_MISSING",
+        "AUTHORITY_DELTA_PARTY_MISSING",
+        "AUTHORITY_DELTA_SCOPE_EMPTY",
+        "AUTHORITY_DELTA_BINDING_INCOMPLETE",
+        "AUTHORITY_DELTA_INVALID",
+        "AUTHORITY_DELTA_UNVALIDATED",
+        "TRANSITION_CRITERIA_PROFILE_INVALID",
+        "TRANSITION_CRITERIA_PROFILE_UNVALIDATED"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -547,7 +555,9 @@
         "immutable base transition hard-gate floor",
         "non-vacuous entry/exit criteria",
         "exact transition/effect/stage assurance binding",
-        "DesignEpoch-bound transition assurance"
+        "DesignEpoch-bound transition assurance",
+        "typed AuthorityDelta validation",
+        "validated transition criteria profile"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
