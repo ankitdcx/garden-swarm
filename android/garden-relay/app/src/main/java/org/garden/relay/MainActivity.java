@@ -43,6 +43,7 @@ public final class MainActivity extends Activity {
     private static final String PREF_JOB_URL = "job_url";
     private static final String PREF_AUTO_SEND = "auto_send";
     private static final String PREF_AUTO_ADVANCE = "auto_advance";
+    private static final String PREF_AUTO_RETURN = "auto_return";
     private static final String PREF_ACTIVE_JOB = "active_job";
     private static final String PREF_ACTIVE_SLOT = "active_slot";
     private static final String PREF_PENDING_SEND_PACKAGE = "pending_send_package";
@@ -56,6 +57,7 @@ public final class MainActivity extends Activity {
     private ReviewJob currentJob;
     private CheckBox autoSend;
     private CheckBox autoAdvance;
+    private CheckBox autoReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +131,12 @@ public final class MainActivity extends Activity {
         autoAdvance.setChecked(prefs().getBoolean(PREF_AUTO_ADVANCE, true));
         autoAdvance.setOnCheckedChangeListener((b, checked) -> prefs().edit().putBoolean(PREF_AUTO_ADVANCE, checked).apply());
         root.addView(autoAdvance);
+
+        autoReturn = new CheckBox(this);
+        autoReturn.setText("Automatically return the completed result bundle to ChatGPT");
+        autoReturn.setChecked(prefs().getBoolean(PREF_AUTO_RETURN, true));
+        autoReturn.setOnCheckedChangeListener((b, checked) -> prefs().edit().putBoolean(PREF_AUTO_RETURN, checked).apply());
+        root.addView(autoReturn);
 
         autoSend = new CheckBox(this);
         autoSend.setText("One-shot Accessibility helper: tap Send automatically when exactly one safe Send/Submit button is found");
@@ -274,6 +282,9 @@ public final class MainActivity extends Activity {
         }
         toast("All external reviewer results are present.");
         renderJobStatus();
+        if (prefs().getBoolean(PREF_AUTO_RETURN, true)) {
+            main.postDelayed(this::shareBundleToChatGpt, 500);
+        }
     }
 
     private void sendTarget(ReviewJob.Target target) {
