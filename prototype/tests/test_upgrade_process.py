@@ -1,4 +1,5 @@
 from prototype.upgrade_process import (
+    FindingClass,
     FindingDisposition,
     FindingRecord,
     UpgradeContext,
@@ -22,12 +23,14 @@ def complete_context(**overrides):
             "INDEPENDENT_REVIEW": candidate_hash,
             "PROTECTED_AUTHORIZATION": candidate_hash,
             "FINAL_REAUDIT": candidate_hash,
+            "FINDING_CLASSIFICATION": candidate_hash,
+            "PROTECTED_SURFACE_SCAN": candidate_hash,
         },
         audited_scope_declared=True,
         search_coverage_complete=True,
         findings={
-            "F-1": FindingRecord(FindingDisposition.FIXED, evidence_refs=("test:F-1",)),
-            "F-2": FindingRecord(FindingDisposition.REJECTED_WITH_EVIDENCE, evidence_refs=("analysis:F-2",)),
+            "F-1": FindingRecord(FindingClass.MATERIAL, FindingDisposition.FIXED, evidence_refs=("test:F-1",)),
+            "F-2": FindingRecord(FindingClass.ROUTINE, FindingDisposition.REJECTED_WITH_EVIDENCE, evidence_refs=("analysis:F-2",)),
         },
         bounded_cycle_declared=True,
         upgrade_methods_authorized=True,
@@ -40,6 +43,11 @@ def complete_context(**overrides):
         protected_change=False,
         protected_authorization_pass=None,
         final_reaudit_complete=True,
+        finding_classification_validated=True,
+        protected_surface_scan_pass=True,
+        max_iterations=8,
+        max_work_items=256,
+        residual_debt_recorded=True,
     )
     values.update(overrides)
     return UpgradeContext(**values)
@@ -54,7 +62,7 @@ def test_complete_upgrade_can_close_candidate_without_creating_authority():
 def test_open_material_finding_keeps_work_loop_running():
     result = evaluate_upgrade_closure(
         complete_context(
-            findings={"F-1": FindingRecord(FindingDisposition.OPEN)},
+            findings={"F-1": FindingRecord(FindingClass.MATERIAL, FindingDisposition.OPEN)},
         )
     )
     assert result.decision is UpgradeDecision.CONTINUE_WORK
@@ -166,7 +174,7 @@ def test_rejected_finding_without_evidence_cannot_close():
     result = evaluate_upgrade_closure(
         complete_context(
             findings={
-                "F-1": FindingRecord(FindingDisposition.REJECTED_WITH_EVIDENCE)
+                "F-1": FindingRecord(FindingClass.MATERIAL, FindingDisposition.REJECTED_WITH_EVIDENCE)
             }
         )
     )
@@ -179,6 +187,7 @@ def test_deferred_finding_requires_owner_and_reopen_condition():
         complete_context(
             findings={
                 "F-1": FindingRecord(
+                    FindingClass.MATERIAL,
                     FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
                     owner="Engine.Proof",
                 )
@@ -192,7 +201,7 @@ def test_deferred_finding_requires_owner_and_reopen_condition():
 def test_escalated_finding_requires_explicit_target():
     result = evaluate_upgrade_closure(
         complete_context(
-            findings={"F-1": FindingRecord(FindingDisposition.ESCALATED)}
+            findings={"F-1": FindingRecord(FindingClass.MATERIAL, FindingDisposition.ESCALATED)}
         )
     )
     assert result.decision is UpgradeDecision.HOLD
@@ -213,3 +222,63 @@ def test_candidate_hash_must_be_real_sha256_shape():
     )
     assert result.decision is UpgradeDecision.HOLD
     assert result.reasons == ("CANDIDATE_HASH_INVALID",)
+
+
+def test_hard_gate_finding_cannot_be_deferred_and_still_close():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={
+                "F-HARD": FindingRecord(
+                    FindingClass.HARD_GATE,
+                    FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
+                    owner="Engine.Rights",
+                    reopen_condition="rights proof becomes available",
+                )
+            }
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("HARD_GATE_FINDING_UNRESOLVED:F-HARD",)
+
+
+def test_hard_gate_finding_cannot_be_escalated_and_still_close():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={
+                "F-HARD": FindingRecord(
+                    FindingClass.HARD_GATE,
+                    FindingDisposition.ESCALATED,
+                    escalation_target="human-constitutional-process",
+                )
+            }
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("HARD_GATE_FINDING_UNRESOLVED:F-HARD",)
+
+
+def test_unvalidated_finding_classification_blocks_closure():
+    result = evaluate_upgrade_closure(
+        complete_context(finding_classification_validated=None)
+    )
+    assert result.decision is UpgradeDecision.ESCALATE
+    assert result.reasons == ("FINDING_CLASSIFICATION_UNKNOWN",)
+
+
+def test_protected_surface_scan_is_candidate_bound():
+    ctx = complete_context()
+    bindings = dict(ctx.gate_candidate_bindings)
+    bindings["PROTECTED_SURFACE_SCAN"] = "b" * 64
+    result = evaluate_upgrade_closure(
+        complete_context(gate_candidate_bindings=bindings)
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("PROTECTED_SURFACE_SCAN_BINDING_MISMATCH",)
+
+
+def test_upgrade_cycle_requires_real_resource_bounds_and_residual_debt_record():
+    result = evaluate_upgrade_closure(
+        complete_context(max_iterations=0)
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("UPGRADE_ITERATION_BOUND_MISSING",)
