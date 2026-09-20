@@ -1,0 +1,42 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:openrouter-budget-epoch:20260920",
+  "work_package_id": "OPENROUTER-BUDGET-EPOCH-20260920",
+  "branch": "chatgpt/openrouter-budget-epoch-20260920",
+  "base_sha": "791e97b90c4ea628642a92f11d411c3eb94aea7c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:openrouter-budget-epoch:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "OPENROUTER-BUDGET-EPOCH-20260920",
+    "base_sha": "791e97b90c4ea628642a92f11d411c3eb94aea7c",
+    "target_paths": [
+      "agents/openrouter-paid-review-policy.json",
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "workstreams/2026-09-20-openrouter-budget-epoch.json"
+    ],
+    "target_symbols": [
+      "GardenGroupReviewBudgetEpoch/v1",
+      "group_review_budget_check"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "OPERATIONS_AND_BUDGET"
+    ],
+    "affected_invariants": [
+      "NEW_HUMAN_BUDGET_AUTHORIZATION_DOES_NOT_INHERIT_EXHAUSTED_OLD_POOL",
+      "PER_CALL_TASK_DAILY_CAPS_REMAIN",
+      "NO_DOUBLE_COUNT_OR_SILENT_OVERRUN"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewOpenRouter/v1"
+    ],
+    "intended_effect": "Start a new bounded $1 incremental GROUP_REVIEW routine budget epoch under the user's 2026-09-20 cheap-call reauthorization, while retaining existing per-call/task/daily/provider/privacy gates. Historical key usage becomes the epoch baseline rather than permanently blocking newly authorized budget.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
