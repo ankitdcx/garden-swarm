@@ -112,7 +112,7 @@ Each authority delta is an explicit runtime artifact; stage advancement alone ne
 - evidence proving the transfer;
 - independence/conflict checks where material.
 
-The executable reference rejects structurally incomplete deltas and requires a separate validation result for every `delta_id`; a transition cannot turn a merely present delta into authority.
+The executable reference rejects structurally incomplete deltas and requires a separate validation result for every `delta_id`. That validation is bound to a deterministic SHA-256 over the full delta contents, so changing scope, parties, jurisdiction, invalidators, appeal/revocation paths or evidence invalidates the prior approval. A transition cannot turn a merely present or renamed delta into authority.
 
 The transfer is revalidated at point of consequential use. Transition coordinator status cannot self-authorize the transfer.
 
