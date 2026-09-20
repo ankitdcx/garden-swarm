@@ -18,7 +18,8 @@
       "workstreams/2026-09-20-openrouter-simple-budget.json",
       "agents/openrouter-paid-review-policy.json",
       "tools/group_review_openrouter_worker.py",
-      "tests/test_group_review_openrouter_worker.py"
+      "tests/test_group_review_openrouter_worker.py",
+      "tests/test_paid_review_routing.py"
     ],
     "target_symbols": [
       "OpenRouter budget rule",
