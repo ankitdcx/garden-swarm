@@ -206,6 +206,21 @@ public final class MainActivity extends Activity {
         sitesView.setPadding(0,0,0,dp(18));
         root.addView(sitesView);
 
+        Button prepare = new Button(this);
+        prepare.setAllCaps(false);
+        prepare.setText("Prepare harmless test prompt in all connected reviewers");
+        prepare.setOnClickListener(v -> {
+            String jobId="browser-cal-"+System.currentTimeMillis();
+            String prompt="GARDEN BROWSER CALIBRATION — do not answer yet";
+            try {
+                JSONObject job=new JSONObject(); job.put("job_id",jobId); job.put("prompt",prompt);
+                String raw=job.toString();
+                for(String pvd:new String[]{"deepseek","gemini","claude","grok"}) if(browserCalibration.containsKey(pvd)) browserJobs.put(pvd,raw);
+                calibration.setText("Calibration job queued for connected reviewers.\nPrompt will be inserted only; nothing will be submitted.");
+            } catch(Throwable t){ calibration.setText("Could not queue calibration job: "+t.getClass().getSimpleName()); }
+        });
+        root.addView(prepare);
+
         TextView help = new TextView(this);
         help.setText("Open a supported AI website in Firefox with the Garden userscript enabled. Composer calibration will appear here automatically. No Shizuku or Android app automation is used by this browser workflow.");
         help.setTextSize(14);
