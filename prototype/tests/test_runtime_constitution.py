@@ -47,9 +47,13 @@ def base_context(**overrides):
             "safety": True,
             "human_effect": True,
         },
-        high_impact_actions=frozenset({"deploy"}),
         human_effect_materiality_by_effect={
             ("notify", "repo"): False,
+            ("deploy", "world"): True,
+            ("intrude_private_system", "repo"): True,
+        },
+        human_effect_materiality_validation_by_effect={
+            ("notify", "repo"): True,
             ("deploy", "world"): True,
             ("intrude_private_system", "repo"): True,
         },
@@ -557,3 +561,28 @@ def test_human_effect_materiality_is_bound_to_action_and_target():
     )
     assert result.decision is RuntimeDecision.ESCALATE
     assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_UNKNOWN",)
+
+
+def test_unvalidated_human_effect_materiality_cannot_admit_action():
+    ctx = base_context(
+        human_effect_materiality_validation_by_effect={
+            ("notify", "repo"): None,
+            ("deploy", "world"): True,
+            ("intrude_private_system", "repo"): True,
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_UNVALIDATED",)
