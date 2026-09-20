@@ -1,0 +1,39 @@
+{
+  "schema": "GardenReviewerTransportAvailabilityProposal/v1",
+  "date": "2026-09-20",
+  "status": "NONCANONICAL_OPERATIONAL_PROPOSAL",
+  "problem": "A quality-qualified required reviewer can be temporarily impossible to execute under active provider, privacy, price, context or fee gates.",
+  "separation": {
+    "quality_qualification": "Evidence that a model may satisfy a required independent-review slot.",
+    "transport_availability": "Whether that exact qualified model can execute now under active operational gates."
+  },
+  "states": [
+    "QUALIFIED_AND_AVAILABLE",
+    "QUALIFIED_BUT_UNAVAILABLE",
+    "NOT_QUALITY_QUALIFIED",
+    "UNKNOWN"
+  ],
+  "rules": [
+    "Transport unavailability is not a quality failure.",
+    "Transport unavailability does not complete the required reviewer slot.",
+    "No silent model substitution is permitted.",
+    "An explicitly authorized cheap CHALLENGER_ONLY model may provide adversarial proposal evidence while a required slot is unavailable.",
+    "CHALLENGER_ONLY evidence never counts as required-slot completion or independent convergence.",
+    "Final high-risk convergence remains non-PASS until the required slot is available or a replacement is qualified under the governed shadow-replacement policy.",
+    "Provider, privacy, budget, context and fee gates are not weakened by this proposal.",
+    "Reviewer agreement creates no semantic or canonical authority."
+  ],
+  "trigger_evidence": {
+    "run_issue": 277,
+    "source_bundle_bytes": 38846,
+    "endpoints_discovered": 24,
+    "eligible_endpoints": 0,
+    "rejection_classes": [
+      "ADDITIONAL_FEES",
+      "ENDPOINT_POLICY_REJECTED",
+      "PRICE_CAP",
+      "RESERVE_OR_CONTEXT"
+    ]
+  },
+  "candidate_note": "deepseek/deepseek-v4.1-flash may be explored only as CHALLENGER_ONLY or through the existing shadow-qualification process; this proposal does not qualify it as a replacement."
+}
