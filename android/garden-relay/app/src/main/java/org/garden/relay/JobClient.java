@@ -32,7 +32,7 @@ public final class JobClient {
             File file = new File(dir, safe(attachment.filename));
             byte[] raw = get(attachment.url);
             String got = Hashing.sha256(raw);
-            if (!attachment.sha256.isBlank() && !got.equalsIgnoreCase(attachment.sha256)) {
+            if (!attachment.sha256.trim().isEmpty() && !got.equalsIgnoreCase(attachment.sha256)) {
                 throw new SecurityException("Attachment hash mismatch for " + attachment.filename);
             }
             try (FileOutputStream out = new FileOutputStream(file)) {
