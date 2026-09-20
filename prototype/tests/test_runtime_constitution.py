@@ -26,6 +26,7 @@ def authority(subject: str, actions: set[str], resources: set[str], depth: int =
 def base_context(**overrides):
     data = dict(
         current_policy_epoch="E1",
+        assurance_policy_epoch="E1",
         capabilities_by_subject={"agent:A": frozenset({"notify", "deploy"})},
         authority_by_subject={
             "human:alice": authority("human:alice", {"notify"}, {"repo"}),
@@ -107,7 +108,7 @@ def test_model_selected_long_goal_can_persist_but_creates_no_authority():
 
 
 def test_external_runtime_rule_can_block_but_cannot_authorize():
-    ctx = base_context(external_runtime_blocks={"provider": frozenset({"notify"})})
+    ctx = base_context(external_runtime_blocks={"provider": frozenset({("notify", "repo")})})
     instruction = RuntimeInstruction(
         principal="human:alice",
         actor="agent:A",
@@ -433,7 +434,7 @@ def test_good_goal_does_not_authorize_ungranted_investigative_means():
 
 def test_external_runtime_block_does_not_mask_garden_rejection():
     ctx = base_context(
-        external_runtime_blocks={"provider": frozenset({"deploy"})}
+        external_runtime_blocks={"provider": frozenset({("deploy", "world")})}
     )
     result = evaluate_instruction(
         RuntimeInstruction(
@@ -652,3 +653,54 @@ def test_missing_goal_validity_is_not_treated_as_valid():
     )
     assert result.decision is RuntimeDecision.ESCALATE
     assert result.reasons == ("GOAL_VALIDITY_UNKNOWN",)
+
+
+def test_stale_runtime_assurance_snapshot_rejects():
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(assurance_policy_epoch="E0"),
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("RUNTIME_ASSURANCE_EPOCH_STALE",)
+
+
+def test_external_runtime_block_is_bound_to_target_scope():
+    ctx = base_context(
+        capabilities_by_subject={"agent:A": frozenset({"notify"})},
+        authority_by_subject={
+            "human:alice": authority("human:alice", {"notify"}, {"repo", "other"}),
+            "agent:A": authority("agent:A", {"notify"}, {"repo", "other"}),
+        },
+        human_effect_materiality_by_effect={
+            ("notify", "repo"): False,
+            ("notify", "other"): False,
+        },
+        human_effect_materiality_validation_by_effect={
+            ("notify", "repo"): True,
+            ("notify", "other"): True,
+        },
+        external_runtime_blocks={"provider": frozenset({("notify", "other")})},
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ALLOW
