@@ -15,11 +15,21 @@
     "task_id": "OPENROUTER-SIMPLE-BUDGET-20260920",
     "base_sha": "d79168d5088a0cdf76ad668753ca48c419635fef",
     "target_paths": [
-      "workstreams/2026-09-20-openrouter-simple-budget.json",
+      "agents/config-surface-contracts.json",
       "agents/openrouter-paid-review-policy.json",
-      "tools/group_review_openrouter_worker.py",
+      "tests/test_automation_audit.py",
       "tests/test_group_review_openrouter_worker.py",
-      "tests/test_paid_review_routing.py"
+      "tests/test_ip_origin_review_selection.py",
+      "tests/test_paid_review_routing.py",
+      "tests/test_review_campaign.py",
+      "tests/test_review_context.py",
+      "tests/test_single_review_worker.py",
+      "tools/group_review_openrouter_worker.py",
+      "tools/independent_branch_worker.py",
+      "tools/review_budget.py",
+      "tools/review_campaign.py",
+      "tools/single_review_worker.py",
+      "workstreams/2026-09-20-openrouter-simple-budget.json"
     ],
     "target_symbols": [
       "OpenRouter budget rule",
