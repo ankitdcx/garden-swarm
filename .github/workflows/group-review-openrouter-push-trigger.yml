@@ -1,0 +1,35 @@
+name: Garden GROUP_REVIEW OpenRouter push trigger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'review-state/group-review-dispatch-request.json'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: garden-provider-review
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    if: github.repository == 'ankitdcx/garden-swarm' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify GROUP_REVIEW bus offline
+        run: |
+          python -m unittest tests.test_group_review_bus tests.test_group_review_openrouter_worker -v
+      - name: Validate hash-bound push request and dispatch provider workflow
+        env:
+          GH_REVIEW_TOKEN: ${{ github.token }}
+        run: python -m tools.group_review_openrouter_worker dispatch
