@@ -78,7 +78,7 @@ A profile may omit a stage only when the TransitionContract records a non-empty 
 
 Stage advancement requires all applicable conditions to be resolved for the exact next effect scope:
 
-All authority/gate/independence/divergence/capture/readiness/criteria/recovery inputs used for that decision must be bound to the exact `transition_id + effect_scope + current_stage + next_stage`. A PASS from another transition, scope or stage pair cannot be replayed.
+All authority/gate/independence/divergence/capture/readiness/criteria/recovery inputs used for that decision must be bound to the exact `transition_id + effect_scope + current_stage + next_stage + DesignEpoch`. A PASS from another transition, scope, stage pair or older DesignEpoch cannot be replayed.
 
 - authority claims VALIDATED, not merely present;
 - constitutional/rights floors pass;
@@ -225,6 +225,6 @@ A receipt records a decision. It does not make that decision valid merely becaus
 `prototype/transition_governance.py` now exercises two separate paths:
 
 1. **stage advancement** — validates ordered stage plans, explicit omission justification/approval, immutable base hard gates, non-vacuous entry/exit criteria, authority, independence, capture, divergence, disputes and recovery readiness;
-2. **post-commit recovery** — requires a confirmed material failure plus fresh recovery admission and independent verification, with assurance bound to the exact recovery transition/effect/current→target stage; it allows rollback only to the recorded last qualified stage for reversible effects and routes irreversible effects to compensation/recovery instead of fictional rollback.
+2. **post-commit recovery** — requires a confirmed material failure plus fresh recovery admission and independent verification, with assurance bound to the exact recovery transition/effect/current→target stage and DesignEpoch; it allows rollback only to the recorded last qualified stage for reversible effects and routes irreversible effects to compensation/recovery instead of fictional rollback.
 
 The prototype remains a narrow reference, not deployment certification, proof of institutional legitimacy, or authority to perform a real transition.
