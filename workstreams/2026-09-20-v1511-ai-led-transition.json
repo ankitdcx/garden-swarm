@@ -36,7 +36,8 @@
       "TransitionContext",
       "evaluate_transition",
       "RecoveryProposal",
-      "evaluate_recovery"
+      "evaluate_recovery",
+      "GoalValidity"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
