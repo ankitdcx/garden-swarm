@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name         Garden Review Bridge
 // @namespace    https://github.com/ankitdcx/garden-swarm
-// @version      0.1.0
+// @version      0.2.0
 // @description  Local-only Garden bridge for AI web reviewers
 // @match        https://chat.deepseek.com/*
 // @match        https://gemini.google.com/*
 // @match        https://claude.ai/*
 // @match        https://grok.com/*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_getValue
+// @grant        GM_setValue
 // @connect      127.0.0.1
 // @run-at       document-idle
 // ==/UserScript==
@@ -22,9 +24,28 @@
   const e=es[0]; const r=e&&e.getBoundingClientRect();
   return {provider,href:location.origin,composerFound:!!e,composer:e?{tag:e.tagName,role:e.getAttribute('role')||'',id:e.id||'',classes:String(e.className||'').slice(0,120),bounds:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}:null};
  }
+ function setComposer(e,text){
+  e.focus();
+  if(e.tagName==='TEXTAREA'||e.tagName==='INPUT'){
+   const proto=e.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:HTMLInputElement.prototype;
+   const setter=Object.getOwnPropertyDescriptor(proto,'value').set; setter.call(e,text);
+   e.dispatchEvent(new Event('input',{bubbles:true})); e.dispatchEvent(new Event('change',{bubbles:true}));
+  } else {
+   e.textContent=text; e.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:text}));
+  }
+ }
+ function composer(){return [...document.querySelectorAll('textarea,[contenteditable=true],[role=textbox],input[type=text]')].filter(visible).sort((a,b)=>score(b)-score(a))[0]}
  function post(){
   const body=JSON.stringify(probe());
   GM_xmlhttpRequest({method:'POST',url:'http://127.0.0.1:17351/calibration',headers:{'Content-Type':'application/json'},data:body});
  }
- setTimeout(post,2500); setInterval(post,10000);
+ async function pollJob(){
+  GM_xmlhttpRequest({method:'GET',url:'http://127.0.0.1:17351/job/'+provider,onload:r=>{
+   try{const j=JSON.parse(r.responseText); if(!j||!j.job_id||!j.prompt||GM_getValue('last_job_'+provider,'')===j.job_id)return;
+    const e=composer(); if(!e)return; setComposer(e,j.prompt); GM_setValue('last_job_'+provider,j.job_id);
+    GM_xmlhttpRequest({method:'POST',url:'http://127.0.0.1:17351/job/'+provider+'/prepared',headers:{'Content-Type':'application/json'},data:JSON.stringify({job_id:j.job_id,prepared:true})});
+   }catch(_){}
+  }});
+ }
+ setTimeout(post,2500); setInterval(post,10000); setInterval(pollJob,3000);
 })();
