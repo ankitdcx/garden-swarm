@@ -336,6 +336,16 @@ def evaluate_recovery(
             tuple(f"RECOVERY_HARD_GATE_UNKNOWN:{gate}" for gate in unknown_gates),
         )
 
+    if context.independent_verification is False:
+        return TransitionResult(
+            TransitionDecision.HOLD, ("RECOVERY_INDEPENDENT_VERIFICATION_FAILED",)
+        )
+    if context.independent_verification is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            ("RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",),
+        )
+
     if context.capture_conflict_clear is False:
         return TransitionResult(
             TransitionDecision.HOLD, ("RECOVERY_CAPTURE_OR_CONFLICT_CHECK_FAILED",)
