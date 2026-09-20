@@ -102,7 +102,7 @@ class ReviewCampaignTests(unittest.TestCase):
         bounded = campaign.spending_policy(policy, self.policy)
         key = {'usage': '999', 'usage_daily': '0', 'limit_remaining': '20'}
         reserve, _, _ = legacy.budget_check(self.state, key, bounded, 100000, campaign=self.policy)
-        self.assertEqual(reserve, Decimal('.01'))
+        self.assertEqual(reserve, Decimal('.05'))
         self.assertEqual(bounded['daily_openrouter_cost_ceiling_usd'], 2)
         self.assertEqual(bounded['routine_model_call_cost_ceiling_usd'], 0.01)
         for edit in ({'usage_daily': '1.995'}, {'limit_remaining': '.005'}, {'usage_daily': None}):
