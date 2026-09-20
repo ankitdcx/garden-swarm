@@ -116,7 +116,7 @@ def next_slot(cycle, families):
 
 
 def budget_check(state, key_info, policy, now, campaign=None):
-    """Enforce the global paid OpenRouter budget: USD 2/day, USD 0.01/call.
+    """Enforce the global paid OpenRouter budget: USD 2/day, USD 0.05/call.
 
     Provider-reported current UTC-day usage is authoritative for settled spend.
     Any unresolved RESERVED/UNKNOWN call remains a hard block so delayed billing
@@ -134,7 +134,7 @@ def budget_check(state, key_info, policy, now, campaign=None):
     reserve = money(policy['routine_model_call_cost_ceiling_usd'])
     ceiling = money(policy['daily_openrouter_cost_ceiling_usd'])
     if reserve != Decimal('0.01') or ceiling != Decimal('2'):
-        raise ValueError('active OpenRouter budget rule must be USD 2/day and USD 0.01/call')
+        raise ValueError('active OpenRouter budget rule must be USD 2/day and USD 0.05/call')
 
     if daily + reserve > ceiling:
         raise DailyBudget('daily reservation exhausted')
