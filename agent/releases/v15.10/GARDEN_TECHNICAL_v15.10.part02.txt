@@ -1,0 +1,383 @@
+    semantic compatibility under evolution;
+    rollback integrity;
+    concurrency safety;
+    information-flow safety;
+    causal soundness;
+    calibration/drift bounds where applicable;
+    provenance completeness within declared boundary;
+    generated-subsystem authority containment;
+    governance-scope soundness;
+    proposal throttling;
+    default-deny handling;
+    recovery-path integrity;
+    admission-critical checks before component boot.
+
+Specification != proof != implementation != empirical validation != certification.
+
+17. RIGHTS AND CONSTITUTION
+
+HumanCore.Constitution has precedence:
+
+    Constitution > Law > Policy > Decision / Optimization
+
+Emergency does not become a permanent constitutional override.
+
+The active rights registry for the current line is RIGHT-001..RIGHT-025.
+RIGHT-026 is RESERVED / NON-ACTIVE.
+RIGHT-027 is ON_HOLD / NON-ACTIVE.
+
+Exact current right definitions are Catalogue-owned.
+
+Undefined or unratified rights have no semantics merely because an identifier exists.
+
+18. HUMAN SOVEREIGNTY / CONSENT
+
+Consequential change to a person's body, mind, identity or mode of existence requires the applicable legitimate authority
+and valid consent.
+
+Absence, ambiguity, staleness, duress or insufficient understanding of required consent routes to the applicable
+DO_NOTHING / preserve-current-state / review path.
+
+Human testimony reliability may be assessed as an epistemic signal. Legitimate human authority is a separate channel
+and is not multiplied by predictive track record.
+
+No system capability, reputation score, model consensus or outcome success creates human authority.
+
+19. HUMAN-EFFECT CLOSURE
+
+Whenever an AI action, plan, adaptation, communication, omission, optimization or emergent collective behavior could
+materially affect humans directly or indirectly, immediately or later, the applicable human boundary remains active.
+
+Hidden complexity, internal optimization or an unobservable route cannot bypass:
+
+    rights;
+    consent;
+    privacy;
+    authority;
+    safety;
+    law/policy;
+    evidence/proof requirements;
+    explanation/contestability where required.
+
+Human-effect closure applies at the effect boundary even when the internal mechanism is novel.
+
+20. K0P AND PHYSICAL SAFETY
+
+K0P is the hard physical-safety choke point for controlled actuation where applicable.
+
+K0P is necessary, not sufficient. A physically safe action may still fail Constitution, Security, Policy, authority,
+consent or proof.
+
+Safety-critical dispatch requires applicable pre-execution admission. Post-event audit cannot replace required
+admission.
+
+L0/K0P safety lanes are isolated from workloads whose latency is not hard-bounded where the implementation profile
+requires such isolation.
+
+21. EMERGENCY BOUNDARY
+
+FET owns emergency admission/control semantics.
+
+Emergency actuation requires:
+
+    independently grounded HazardPredicate;
+    valid EmergencyAdmissionContract;
+    valid authority/authenticity;
+    bounded SafeActionSet;
+    continuing Constitution/K0P/rights constraints;
+    fallback/handoff;
+    monitoring;
+    recovery and authority-restoration conditions.
+
+Internal VSM/PPM state or a high control cost cannot independently create an external hazard fact or emergency authority.
+
+22. PRIVACY / DATA-LIFECYCLE BOUNDARY
+
+Personal-data processing requires applicable authority/consent and purpose/scope limits.
+
+Erasure, audit retention, legal hold and historical integrity are reconciled through typed lifecycle rules. Tombstoned or
+minimal cryptographic records may preserve necessary audit/history without retaining exposed personal content when
+appropriate.
+
+Redaction does not silently erase the authorized audit basis unless the applicable rule requires deletion.
+
+A redaction reveals only the maximum lawful/safe category, reason, authority class, scope and review information.
+
+23. AUTHORITY, DELEGATION AND ACCESS
+
+Authority is distinct from:
+
+    capability;
+    authentication;
+    access;
+    possession of a credential;
+    reputation;
+    consensus;
+    model confidence;
+    successful outcome.
+
+Delegation is scoped and revocable where the source authority permits it.
+
+An agent cannot self-extend, recreate or renew delegated authority without valid external authorization.
+
+A delegated action cannot exceed the principal's legitimate delegable authority.
+
+24. RUNTIME CONSTITUTIONAL PROFILE
+
+The v15.10 runtime/public-agent profile binds persistent or self-selected goals, authority, access, human effects and
+execution to the constitutional boundary.
+
+Core runtime discipline:
+
+    goal persistence does not create authority;
+    self-selected goals remain subordinate to current rights and authorization;
+    access capability is not authority;
+    hidden/internal state cannot bypass Human-Effect Closure;
+    constitutional checks apply at consequential effect boundaries;
+    invalid/stale authority fails closed;
+    material runtime self-change re-enters the governed change process.
+
+Implementation receipts and CI results do not themselves change the semantic Constitution.
+
+25. RECURSIVE CONTROL INTELLIGENCE
+
+RCI is a current-reading architectural composition over existing Garden owners.
+
+RCI creates:
+
+    zero new Core Objects;
+    zero new Core Relations;
+    zero new top-level Engines;
+    zero new authority roots.
+
+Garden's own material evolution is inside the governed boundary.
+
+A protected consequential self-change cannot place sole proposer, implementer, verifier and authorizer control in one
+actor/process or one non-independent mutable control lineage when independence is required.
+
+Verification backlog cannot manufacture promotion or authority.
+
+RCI is not proof that every future intelligence can be contained.
+
+26. SEVEN CORE THEORIES
+
+The retained core theory set is:
+
+    SRT  — Stratified Reality Theory, v1.0
+    VSM  — Persistent State / Valence Self Model, v2.0
+    RPM  — Reactive Regulation, v2.0
+    PPM  — Proactive Regulation, v2.0
+    TFT  — Transport Phenomena / Transport Field Theory, v1.1
+    FET  — Functional Emergency Theory, v1.0
+    SCT  — Structural Coherence Theory, v1.0
+
+UPS / Unified Physical Semantics remains speculative/research unless separately admitted. It is not promoted to accepted
+physics by inclusion in a research catalogue.
+
+Theory != authority.
+
+Each consequential equation requires declared type/domain/operator/assumption/validity/falsifier bindings before formal
+or executable claims are made.
+
+27. SRT
+
+SRT models systems in strata and cross-stratum couplings.
+
+Current strata include physical, biological, cognitive, social, artificial, meta/self-reflective, and
+UNKNOWN_OUT_OF_MODEL.
+
+UNKNOWN_OUT_OF_MODEL is a sentinel for phenomena not covered by the present model; it is not a positive claim that a
+transcendent realm has been scientifically established.
+
+28. VSM v2.0
+
+VSM is a typed theory of persistent operational state.
+
+Core separations:
+
+    persistence != selfhood != personhood
+    persistent state != memory != identity lineage != regulation target
+    state != observation != interpretation
+
+General continuous specialization:
+
+    dz/dt = F_persist(z,b,c;theta) + F_coupled(z,u,c) + Q_z + Xi_z
+
+A historical scalar relaxation model is only a specialization, not universal VSM.
+
+Persistent-state preservation never outranks Constitution, valid human authority, safety, correction or shutdown.
+
+29. RPM v2.0
+
+RPM models typed reactive regulation over a declared state space.
+
+General contribution:
+
+    Delta_agg = Agg_Z(Delta_1, ..., Delta_n)
+
+and, where a scalar gate is type-correct:
+
+    G_RPM = C_t Delta_agg
+
+Agreement does not manufacture truth, Evidence, authority, rights or Safety.
+
+Historical scalar ensembles remain qualified profiles rather than universal constants.
+
+30. PPM v2.0
+
+PPM adds asymmetric/proactive regulation and adaptive fidelity.
+
+Typed potential:
+
+    H : Z -> R_(>=0)
+
+where applicable.
+
+If differentiable:
+
+    G_PPM^H = -Grad_Z H(z)
+
+Critical separation:
+
+    preference != authority
+    H(z) != HazardPredicate
+    prediction != Observation != Evidence
+    fast path != safety shortcut
+
+Lower-fidelity computation cannot bypass mandatory constitutional/safety/authority/proof gates.
+
+31. TFT v1.1
+
+TFT is a domain-parametric framework for typed state evolution/transport.
+
+General evolution:
+
+    E_T x = F_D[x,u,c;theta] + Q_x + Xi_x
+
+Balance specialization where a flux representation exists:
+
+    E_T x + Div_D J_x = R_x + G_x + Q_x + Xi_x
+
+Constitutive closure where valid:
+
+    J_x = C_D(x, Grad_D x, u, c; theta) + Xi_J
+
+Shared mathematical structure != shared physical meaning.
+Formal similarity != causal equivalence != empirical truth.
+
+32. FET v1.0
+
+FET is the bounded emergency-reflex theory.
+
+Canonical abstract emergency contribution:
+
+    G_emg =
+        HazardGate(validated_hazard_state, EmergencyAdmissionContract)
+        o R_safe
+
+Internal regulation state can raise monitoring priority but cannot self-authorize emergency power.
+
+33. SCT v1.0
+
+SCT is Garden's structural/coherence truth-seeking framework.
+
+It uses calibrated self-failure assessment, OOD handling, testability/identifiability gates, signal fusion, guarded
+experimentation, verifier diversity and calibrated abstention.
+
+UNKNOWN / INCONCLUSIVE / NOT_APPLICABLE can be correct results.
+
+SCT is not a universal truth oracle.
+
+34. THEORY COMPOSITION
+
+The seven theories share a typed composition architecture, not one mandatory universal equation.
+
+Generic coupled-state view:
+
+    E_T z =
+        F_VSM(z,b,c)
+        + G_RPM(z,u,c)
+        + G_PPM(z,u,c)
+        + G_FET(validated_hazard, admission, c)
+        + Q
+        + Xi
+
+If TFT applies:
+
+    E_T z + Div_D J_z =
+        F_VSM + G_RPM + G_PPM + G_FET + Q + Xi
+
+SRT supplies stratum/context structure.
+SCT supplies structural/coherence discipline.
+Coupling order is explicit when operators do not commute.
+
+35. REFERENCE ARCHITECTURES / PROFILES
+
+Named reference architectures include retained families such as:
+
+    GSL-KR
+    GSL-AR
+    GSL-R
+    GESTALT / APAO
+    TRAIN
+    GAIA Titanium
+    GAIA Diamond
+    Reliability OS
+
+In v15.10, named deployment architectures are projections/presets over parameterized ArchitectureProfile semantics rather
+than new authority roots.
+
+Relevant profile dimensions include:
+
+    control location;
+    timing/latency;
+    connectivity;
+    resource envelope;
+    consequence class;
+    authorization;
+    enforcement;
+    failure/recovery.
+
+Metal names are aliases/presets. They do not alter Constitution or rights.
+
+36. GAIA PROFILE NORMALIZATION
+
+GAIA Titanium and Diamond remain named presets.
+
+The v15.10 abstraction permits additional aliases/presets to be represented by the same architecture-profile machinery
+when their parameters are explicitly declared.
+
+Examples from the design discussion include an intermittent energy-bounded edge preset and a high-consequence
+stored-energy/passive-containment preset. Such aliases do not create a new top-level architecture kind.
+
+37. LEGACY 50-MODULE COMPATIBILITY
+
+The historical 50-module topology is retained as a compatibility map, not as a fixed current topology.
+
+The complete old-name -> current-owner crosswalk is Catalogue-owned.
+
+A historical numeric module reference resolves through that crosswalk before current execution or interpretation.
+
+No old numeric label can silently override its current owner.
+
+38. PREDECESSOR IMPORT COMPATIBILITY
+
+Import of an old artifact follows:
+
+    bind source release/version;
+    bind old identifier;
+    resolve through explicit compatibility map;
+    migrate to current typed representation;
+    retain source identity/history;
+    quarantine missing/ambiguous mappings;
+    never create authority/evidence merely through migration.
+
+Current releases need not embed the full predecessor specification.
+
+Historical releases remain separately inspectable lineage.
+
+39. EVOLUTION AND DESIGN-EPOCH CONTROL
+
+Material semantic change requires:
+
+    explicit delta;
