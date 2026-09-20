@@ -301,6 +301,12 @@ def _goal_lease_result(
         or lease.policy_epoch != context.current_policy_epoch
     ):
         return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_LEASE_STALE",))
+    current_authority_digests = set(context.authority_claim_digest_by_subject.values())
+    if not set(lease.authority_claim_digests).issubset(current_authority_digests):
+        return RuntimeResult(
+            RuntimeDecision.REJECT, ("GOAL_LEASE_AUTHORITY_STALE",)
+        )
+
     if (
         not lease.delegated_by.strip()
         or not lease.authority_claim_digests
