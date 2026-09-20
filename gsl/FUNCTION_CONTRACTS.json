@@ -602,6 +602,63 @@
         "GTF-T08",
         "RCP-014..018"
       ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-UPGRADE-PROCESS-CLOSURE-v1",
+      "owner_qualified_name": "prototype.upgrade_process.evaluate_upgrade_closure",
+      "implementation_source": "prototype/upgrade_process.py",
+      "inputs": [
+        "UpgradeContext"
+      ],
+      "outputs": [
+        "UpgradeResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
+      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. CLOSE_CANDIDATE requires all material findings disposed, authorized upgrade methods, propagation/tests/no-loss/final re-audit closure, required verification independence, required independent review, and separate protected authorization for protected changes.",
+      "failure_mode_set": [
+        "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
+        "UPGRADE_METHOD_AUTHORITY_FAILED",
+        "UPGRADE_METHOD_AUTHORITY_UNKNOWN",
+        "MATERIAL_FINDING_OPEN",
+        "PROPAGATION_CLOSURE_FAILED",
+        "PROPAGATION_CLOSURE_UNKNOWN",
+        "TESTS_FAILED",
+        "TESTS_UNKNOWN",
+        "RETENTION_NO_LOSS_FAILED",
+        "RETENTION_NO_LOSS_UNKNOWN",
+        "VERIFICATION_INDEPENDENCE_FAILED",
+        "VERIFICATION_INDEPENDENCE_UNKNOWN",
+        "INDEPENDENT_REVIEW_FAILED",
+        "INDEPENDENT_REVIEW_UNKNOWN",
+        "PROTECTED_AUTHORIZATION_FAILED",
+        "PROTECTED_AUTHORIZATION_UNKNOWN",
+        "FINAL_REAUDIT_FAILED",
+        "FINAL_REAUDIT_UNKNOWN"
+      ],
+      "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "AUP-001..013",
+        "material finding dispositions",
+        "bounded recursive work declaration",
+        "upgrade-method authority",
+        "propagation closure",
+        "tests",
+        "retention/no-loss",
+        "verification independence",
+        "independent review",
+        "protected authorization",
+        "final re-audit"
+      ],
+      "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
+      "provenance": [
+        "Garden AI-Led Upgrade Process v15.11 candidate",
+        "RCI / Engine.Evolve",
+        "RCP-015",
+        "RCP-018"
+      ]
     }
   ]
 }
