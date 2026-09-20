@@ -18,11 +18,13 @@
       "agents/openrouter-paid-review-policy.json",
       "tools/group_review_openrouter_worker.py",
       "tests/test_group_review_openrouter_worker.py",
-      "workstreams/2026-09-20-openrouter-budget-epoch.json"
+      "workstreams/2026-09-20-openrouter-budget-epoch.json",
+      "agents/config-surface-contracts.json"
     ],
     "target_symbols": [
       "GardenGroupReviewBudgetEpoch/v1",
-      "group_review_budget_check"
+      "group_review_budget_check",
+      "OPENROUTER_PAID_REVIEW_SHAPE"
     ],
     "semantic_domains": [
       "OPENROUTER_REVIEW_TRANSPORT",
@@ -31,7 +33,8 @@
     "affected_invariants": [
       "NEW_HUMAN_BUDGET_AUTHORIZATION_DOES_NOT_INHERIT_EXHAUSTED_OLD_POOL",
       "PER_CALL_TASK_DAILY_CAPS_REMAIN",
-      "NO_DOUBLE_COUNT_OR_SILENT_OVERRUN"
+      "NO_DOUBLE_COUNT_OR_SILENT_OVERRUN",
+      "CONFIG_SURFACE_FINGERPRINT_MATCHES_POLICY"
     ],
     "affected_contracts": [
       "GardenGroupReviewOpenRouter/v1"
