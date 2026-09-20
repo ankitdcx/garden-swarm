@@ -72,25 +72,25 @@
   },
   "primary_sources": [
     {
-      "name": "GARDEN_BOOK_v15.10.txt",
+      "artifact_id": "GARDEN_BOOK_V15_10",
       "artifact_uri": "garden://package/v15.10/GARDEN_BOOK_v15.10.txt",
       "bytes": 15172,
       "sha256": "df52ecf0e9d34384b30d34acdbd48b6df0ef2f83554880f3ca22dcc29b20c598"
     },
     {
-      "name": "GARDEN_TECHNICAL_v15.10.txt",
+      "artifact_id": "GARDEN_TECHNICAL_V15_10",
       "artifact_uri": "garden://package/v15.10/GARDEN_TECHNICAL_v15.10.txt",
       "bytes": 40724,
       "sha256": "e15bd6211c6d2130f5f15522d1b2bf8071c354ab0035c4660615853e6926494f"
     },
     {
-      "name": "GARDEN_CATALOGUE_v15.10.txt",
+      "artifact_id": "GARDEN_CATALOGUE_V15_10",
       "artifact_uri": "garden://package/v15.10/GARDEN_CATALOGUE_v15.10.txt",
       "bytes": 4889844,
       "sha256": "6d6341e278ea1eab34b7ce188728b79b19bf1f5d6b6e4f576f1bcbc60d231153"
     },
     {
-      "name": "GARDEN_VERSION_HISTORY_v15.10.txt",
+      "artifact_id": "GARDEN_VERSION_HISTORY_V15_10",
       "artifact_uri": "garden://package/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
       "bytes": 11984,
       "sha256": "c4bffaad33f187e552de891504a86767a2e148bea35a67270d0fef3485f5a183"
