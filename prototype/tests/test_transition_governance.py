@@ -339,3 +339,19 @@ def test_unknown_recovery_trigger_cannot_act():
     )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("RECOVERY_TRIGGER_UNKNOWN",)
+
+
+def test_recovery_requires_independent_verification():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(independent_verification=None),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",)
