@@ -39,7 +39,8 @@
           "sha256": "f13a67e831910c681d8deeb010a7d02070bc67810a6239ebccc4e2627d528278"
         },
         {
-          "name": "GARDEN_TECHNICAL_v15.11.part02.txt",
+          "name": "GARDEN_TECHNICAL_v15.10.part02.txt",
+          "source_version": "15.10",
           "bytes": 11974,
           "sha256": "c2dcf8adc840ec4e8e10614691b3bc1739739fb828d2bfebb0272d4254bce120"
         },
