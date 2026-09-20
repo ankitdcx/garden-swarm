@@ -94,7 +94,7 @@ A cryptographic signature may prove possession of a key. It does not by itself p
 
 Goal admission and action admission remain separate.
 
-A model may independently create a useful long-horizon goal. It may research, reason, simulate, test and prepare within existing authority. Every real-world effect is admitted separately. A goal never carries an implicit wildcard over the means needed to pursue it.
+A model may independently create a useful long-horizon goal. It may research, reason, simulate, test and prepare within existing authority. Goal persistence itself requires current DesignEpoch, delegation, expiry, dependency-freshness, resource-bound and termination-condition status; missing/failed bindings are non-PASS and are rechecked at later action points. Every real-world effect is admitted separately. A goal never carries an implicit wildcard over the means needed to pursue it.
 
 External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint.
 
