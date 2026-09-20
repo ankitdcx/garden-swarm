@@ -30,6 +30,7 @@ STATE_PATH = "review-state/group-review-ledger.json"
 LEDGER_SCHEMA = "GardenGroupReviewOpenRouterLedger/v1"
 PROVIDER_WORKFLOW = "group-review-openrouter.yml"
 TRIGGER_WORKFLOW = "group-review-openrouter-trigger.yml"
+PUSH_TRIGGER_WORKFLOW = "group-review-openrouter-push-trigger.yml"
 MAX_FINDING_CHARS = 10000
 PUSH_REQUEST_SCHEMA = "GardenGroupReviewDispatchRequest/v1"
 PUSH_REQUEST_PATH = Path("review-state/group-review-dispatch-request.json")
@@ -114,6 +115,7 @@ def trigger_issue_number() -> int:
     actor = os.environ.get("GITHUB_ACTOR")
     expected_provider = REPO + "/.github/workflows/" + PROVIDER_WORKFLOW + "@refs/heads/main"
     expected_trigger = REPO + "/.github/workflows/" + TRIGGER_WORKFLOW + "@refs/heads/main"
+    expected_push_trigger = REPO + "/.github/workflows/" + PUSH_TRIGGER_WORKFLOW + "@refs/heads/main"
 
     if event_name == "issues":
         if os.environ.get("GITHUB_WORKFLOW_REF") != expected_trigger:
@@ -128,7 +130,7 @@ def trigger_issue_number() -> int:
             raise ValueError("issue is not a GROUP_REVIEW run")
         number = int(issue.get("number", 0))
     elif event_name == "push":
-        if os.environ.get("GITHUB_WORKFLOW_REF") != expected_trigger:
+        if os.environ.get("GITHUB_WORKFLOW_REF") != expected_push_trigger:
             raise ValueError("unregistered GROUP_REVIEW push trigger workflow")
         if actor not in {owner, "github-actions[bot]"}:
             raise ValueError("GROUP_REVIEW push trigger actor not admitted")
