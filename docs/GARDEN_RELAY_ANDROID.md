@@ -38,9 +38,7 @@ the package chosen by the user.
    Otherwise it does nothing.
 6. When the model finishes, use that app's Share function and select Garden Relay.
    Relay stores the exact shared text/file/link, hashes it, and automatically advances to the next reviewer when enabled.
-7. After all external reviewers return, tap "Share completed bundle to ChatGPT".
-   Relay produces one plain UTF-8 result bundle containing the exact raw text responses (or Base64 for non-text bytes)
-   plus SHA-256 hashes and shares it directly to the bound ChatGPT app.
+7. After all external reviewers return, Relay automatically builds one plain UTF-8 result bundle containing the exact raw text responses (or Base64 for non-text bytes) plus SHA-256 hashes and opens the bound ChatGPT app. Automatic return is enabled by default and can be turned off.
 
 The only recurring human action intended in the common path is sharing the completed model answer back to Garden Relay
 when the source app does not expose an automatable return path.
