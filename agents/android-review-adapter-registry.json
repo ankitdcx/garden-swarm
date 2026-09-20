@@ -5,9 +5,16 @@
   "reviewers": [
     {
       "id": "deepseek",
-      "state": "PACKAGE_CONFIRMED_NEEDS_UI_CALIBRATION",
+      "state": "LAUNCH_CALIBRATED_NEEDS_INPUT_CALIBRATION",
       "package": "com.deepseek.chat",
-      "version": "2.5.2"
+      "version": "2.5.2",
+      "launch_receipt": {
+        "date": "2026-09-20",
+        "app_version": "2.5.2",
+        "result": "PASS",
+        "prompt_inserted": false,
+        "message_sent": false
+      }
     },
     {
       "id": "gemini",
