@@ -1,0 +1,44 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-source-freeze-hardening:20260920",
+  "work_package_id": "GROUP-REVIEW-SOURCE-FREEZE-HARDENING-20260920",
+  "branch": "chatgpt/group-review-source-freeze-hardening-20260920",
+  "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-source-freeze-hardening:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-SOURCE-FREEZE-HARDENING-20260920",
+    "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+    "target_paths": [
+      "workstreams/2026-09-20-group-review-source-freeze-hardening.json",
+      "tools/group_review_bus.py",
+      "tests/test_group_review_bus.py",
+      "docs/GROUP_REVIEW_REPO_BUS_V1.md",
+      "agents/actions/group-review.json"
+    ],
+    "target_symbols": [
+      "GardenGroupReviewPacket/v1",
+      "validate_packet",
+      "GROUP_REVIEW source freeze"
+    ],
+    "semantic_domains": [
+      "MULTI_AGENT_REVIEW_PROCESS",
+      "FROZEN_SOURCE_INTEGRITY"
+    ],
+    "affected_invariants": [
+      "ONE_FROZEN_PACKET_PER_BLIND_ROUND",
+      "PACKET_SOURCE_HASHES_REQUIRED",
+      "MUTABLE_SOURCE_REFS_FORBIDDEN"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewPacket/v1"
+    ],
+    "intended_effect": "Require every blind GROUP_REVIEW packet to bind exact immutable source references and hashes so mutable PR/branch/URL drift cannot contaminate a frozen review round. Process tooling only; no Garden canonical semantic promotion.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
