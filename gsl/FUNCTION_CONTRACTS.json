@@ -649,7 +649,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure evaluation creates no authority. Candidate identity and audited scope are explicit SHA-256 values; search coverage must bind the exact audited scope and all closure evidence the exact candidate hash. A narrow audit cannot close a broader candidate scope.",
+      "authority_requirement": "Closure creates no authority. HARD_GATE findings cannot be deferred/escalated/open while the affected candidate scope claims closure. Finding classification and protected-surface scanning must themselves pass and bind the exact candidate hash. Each cycle has explicit iteration/work-item bounds and a residual-debt record.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -696,7 +696,19 @@
         "CANDIDATE_HASH_INVALID",
         "AUDITED_SCOPE_HASH_INVALID",
         "SEARCH_COVERAGE_SCOPE_HASH_UNKNOWN",
-        "SEARCH_COVERAGE_SCOPE_MISMATCH"
+        "SEARCH_COVERAGE_SCOPE_MISMATCH",
+        "HARD_GATE_FINDING_UNRESOLVED",
+        "FINDING_CLASSIFICATION_FAILED",
+        "FINDING_CLASSIFICATION_UNKNOWN",
+        "FINDING_CLASSIFICATION_BINDING_UNKNOWN",
+        "FINDING_CLASSIFICATION_BINDING_MISMATCH",
+        "PROTECTED_SURFACE_SCAN_FAILED",
+        "PROTECTED_SURFACE_SCAN_UNKNOWN",
+        "PROTECTED_SURFACE_SCAN_BINDING_UNKNOWN",
+        "PROTECTED_SURFACE_SCAN_BINDING_MISMATCH",
+        "UPGRADE_ITERATION_BOUND_MISSING",
+        "UPGRADE_WORK_ITEM_BOUND_MISSING",
+        "RESIDUAL_DEBT_RECORD_MISSING"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -717,7 +729,12 @@
         "exact candidate SHA-256 bindings for closure evidence",
         "typed finding records with evidence/owner/reopen/escalation bindings",
         "audited-scope SHA-256",
-        "search-coverage scope binding"
+        "search-coverage scope binding",
+        "typed finding class ROUTINE|MATERIAL|HARD_GATE",
+        "candidate-bound finding classification validation",
+        "candidate-bound protected-surface scan",
+        "explicit iteration/work-item bounds",
+        "residual debt record"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
