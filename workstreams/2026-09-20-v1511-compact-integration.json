@@ -29,7 +29,11 @@
       "prototype/tests/test_runtime_constitution.py",
       "prototype/tests/test_transition_governance.py",
       "prototype/tests/test_upgrade_process.py",
-      "gsl/FUNCTION_CONTRACTS.json"
+      "gsl/FUNCTION_CONTRACTS.json",
+      "agent/v15.11/STANDALONE_BASELINE_MANIFEST_v15.10.json",
+      "agent/v15.11/STANDALONE_BASELINE_RETENTION_RECEIPT_v15.10.json",
+      "agent/v15.11/STANDALONE_RELEASE_MANIFEST_v15.11.json",
+      "agent/v15.11/STANDALONE_CLOSURE_RECEIPT_v15.11.json"
     ],
     "target_symbols": [
       "Garden v15.11 compact source",
@@ -40,7 +44,11 @@
       "TransitionReceipt",
       "AuthorityDelta",
       "FindingClass",
-      "evaluate_upgrade_closure"
+      "evaluate_upgrade_closure",
+      "GardenTextReleaseManifest/v15.10-standalone-candidate",
+      "GardenStandaloneRetentionClosureReceipt/v1",
+      "GardenTextReleaseManifest/v15.11-standalone-successor-candidate",
+      "GardenV1511ClosureReceipt/v1"
     ],
     "semantic_domains": [
       "REPRESENTATION_RETENTION",
@@ -56,7 +64,8 @@
       "LEGITIMATE_ENDS_DO_NOT_AUTHORIZE_MEANS",
       "TRANSITION_CANNOT_BOOTSTRAP_SOVEREIGNTY",
       "HUMAN_EFFECT_CLOSURE_PERSISTS",
-      "REQUIRED_INDEPENDENCE_IS_REAL"
+      "REQUIRED_INDEPENDENCE_IS_REAL",
+      "STANDALONE_PACKAGE_HASH_BINDING_MATCHES_FINISHED_ARTIFACTS"
     ],
     "affected_contracts": [
       "prototype.runtime_constitution.evaluate_instruction",
