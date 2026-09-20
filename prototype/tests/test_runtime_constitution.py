@@ -82,6 +82,38 @@ def base_context(**overrides):
         },
     )
     data.update(overrides)
+
+    if (
+        "authority_by_subject" in overrides
+        and "authority_claim_digest_by_subject" not in overrides
+    ):
+        final_authorities = data["authority_by_subject"]
+        final_provenance = data["authority_provenance_by_subject"]
+        final_parents = data["authority_parent_by_subject"]
+        data["authority_claim_digest_by_subject"] = {
+            subject: _authority_claim_digest(
+                subject=subject,
+                envelope=envelope,
+                parent=final_parents.get(subject),
+                provenance=final_provenance.get(subject, ()),
+            )
+            for subject, envelope in final_authorities.items()
+        }
+
+    if (
+        "human_effect_materiality_by_effect" in overrides
+        and "human_effect_materiality_digest_by_effect" not in overrides
+    ):
+        data["human_effect_materiality_digest_by_effect"] = {
+            key: _materiality_claim_digest(
+                action=key[0],
+                target=key[1],
+                material=value,
+                policy_epoch=data["current_policy_epoch"],
+            )
+            for key, value in data["human_effect_materiality_by_effect"].items()
+        }
+
     return RuntimeConstitutionContext(**data)
 
 
@@ -739,7 +771,10 @@ def test_changed_authority_envelope_cannot_reuse_old_validation_digest():
             delegation_chain=("human:alice", "agent:A"),
             policy_epoch="E1",
         ),
-        base_context(authority_by_subject=changed),
+        base_context(
+            authority_by_subject=changed,
+            authority_claim_digest_by_subject=ctx.authority_claim_digest_by_subject,
+        ),
     )
     assert result.decision is RuntimeDecision.REJECT
     assert result.reasons == ("AUTHORITY_CLAIM_DIGEST_MISMATCH:agent:A",)
@@ -760,7 +795,10 @@ def test_changed_materiality_value_cannot_reuse_old_validation_digest():
             delegation_chain=("human:alice", "agent:A"),
             policy_epoch="E1",
         ),
-        base_context(human_effect_materiality_by_effect=changed),
+        base_context(
+            human_effect_materiality_by_effect=changed,
+            human_effect_materiality_digest_by_effect=ctx.human_effect_materiality_digest_by_effect,
+        ),
     )
     assert result.decision is RuntimeDecision.REJECT
     assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH",)
