@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
+import java.util.ArrayList;
+import java.util.List;
 import rikka.shizuku.Shizuku;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,6 +35,7 @@ public final class MainActivity extends Activity {
     private TextView header;
     private TextView note;
     private TextView bridge;
+    private TextView discovery;
     private static final int SHIZUKU_REQ = 41;
 
     @Override
@@ -73,6 +77,18 @@ public final class MainActivity extends Activity {
         bridge.setPadding(0,0,0,dp(10));
         root.addView(bridge);
 
+        discovery = new TextView(this);
+        discovery.setText("Reviewer apps: not probed");
+        discovery.setTextSize(14);
+        discovery.setPadding(0,0,0,dp(10));
+        root.addView(discovery);
+
+        Button probe = new Button(this);
+        probe.setAllCaps(false);
+        probe.setText("Probe installed reviewer apps");
+        probe.setOnClickListener(v -> probeReviewerApps());
+        root.addView(probe);
+
         Button authorize = new Button(this);
         authorize.setAllCaps(false);
         authorize.setText("Authorize Shizuku");
@@ -110,6 +126,25 @@ public final class MainActivity extends Activity {
         } catch (Throwable t) {
             bridge.setText("Shizuku: unavailable — " + t.getClass().getSimpleName());
         }
+    }
+
+    private void probeReviewerApps() {
+        String[][] candidates = new String[][]{
+                {"DeepSeek","com.deepseek.chat"},
+                {"Gemini","com.google.android.apps.bard"},
+                {"Claude","com.anthropic.claude"},
+                {"Grok","ai.x.grok"}
+        };
+        List<String> rows = new ArrayList<>();
+        for (String[] row : candidates) {
+            try {
+                PackageInfo pi = getPackageManager().getPackageInfo(row[1], 0);
+                rows.add("✓ " + row[0] + " — " + row[1] + " — v" + pi.versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                rows.add("? " + row[0] + " — candidate package not found: " + row[1]);
+            }
+        }
+        discovery.setText(String.join("\n", rows));
     }
 
     private void requestShizuku() {
