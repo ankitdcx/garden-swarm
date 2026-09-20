@@ -47,7 +47,8 @@
       "AuthorityDelta",
       "FindingClass",
       "TransitionAssuranceReceipt",
-      "TransitionReceipt"
+      "TransitionReceipt",
+      "AuthorityValidationReceipt"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
