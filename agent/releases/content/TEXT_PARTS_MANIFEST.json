@@ -1,0 +1,64 @@
+{
+  "schema": "GardenReadableTextParts/v1",
+  "technical": {
+    "15.10": {
+      "output_name": "GARDEN_TECHNICAL_v15.10.txt",
+      "output_bytes": 40724,
+      "output_sha256": "e15bd6211c6d2130f5f15522d1b2bf8071c354ab0035c4660615853e6926494f",
+      "parts": [
+        {
+          "name": "GARDEN_TECHNICAL_v15.10.part01.txt",
+          "bytes": 11958,
+          "sha256": "e64f86613474b16f43762450d4621fc4b1484db8d36d7df42b07669439c6a9aa"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.10.part02.txt",
+          "bytes": 11974,
+          "sha256": "c2dcf8adc840ec4e8e10614691b3bc1739739fb828d2bfebb0272d4254bce120"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.10.part03.txt",
+          "bytes": 11996,
+          "sha256": "3cda242b741ae675b8a2a06477c54dde911da72d6f6aa791a0e7468ae1dea16c"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.10.part04.txt",
+          "bytes": 4796,
+          "sha256": "805456e612555280deb9c0708b43a493b310f7c668eaa32ca3e34aad56c07bb7"
+        }
+      ]
+    },
+    "15.11": {
+      "output_name": "GARDEN_TECHNICAL_v15.11.txt",
+      "output_bytes": 54011,
+      "output_sha256": "f16aff43b0788135c57ff6a40fb4df55c9a6ba50c05f3d690db4fd4f02f009e4",
+      "parts": [
+        {
+          "name": "GARDEN_TECHNICAL_v15.11.part01.txt",
+          "bytes": 11968,
+          "sha256": "f13a67e831910c681d8deeb010a7d02070bc67810a6239ebccc4e2627d528278"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.11.part02.txt",
+          "bytes": 11974,
+          "sha256": "c2dcf8adc840ec4e8e10614691b3bc1739739fb828d2bfebb0272d4254bce120"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.11.part03.txt",
+          "bytes": 11996,
+          "sha256": "746543c1ca6e139021fedf0fab3d9027351b2d7ebca4d59f9fa3578e44f4cf6c"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.11.part04.txt",
+          "bytes": 11980,
+          "sha256": "abf1028b603d40ddc5d2c20b158a4b574e497af2a04b78725f0ae28d4587998e"
+        },
+        {
+          "name": "GARDEN_TECHNICAL_v15.11.part05.txt",
+          "bytes": 6093,
+          "sha256": "115c20f6a9b1c48b9a3723af50accea83cc01fa180f02cc87af9c1ce63f491e2"
+        }
+      ]
+    }
+  }
+}
