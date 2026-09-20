@@ -343,7 +343,7 @@ There are four plain text files in this edition.
 2. GARDEN_TECHNICAL_v15.11_CANDIDATE.txt
    Read this for the exact structure, formal rules, processing loops, checking rules, and build rules.
 
-3. GARDEN_CATALOGUE_v15.11_CANDIDATE.txt
+3. GARDEN_CATALOGUE_v15.11_REVIEW_CORE.txt
    Read this for the detailed inventory: named parts, IDs, rights, theories, old-name mappings, profiles, rule families,
    and retained special cases.
 
