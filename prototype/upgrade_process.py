@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Mapping, Optional
+import re
 
 
 class FindingDisposition(str, Enum):
@@ -32,6 +33,8 @@ class UpgradeDecision(str, Enum):
 @dataclass
 class UpgradeContext:
     candidate_sha256: str = ""
+    audited_scope_sha256: str = ""
+    search_coverage_scope_sha256: str = ""
     gate_candidate_bindings: Mapping[str, str] = field(default_factory=dict)
     findings: Mapping[str, FindingRecord] = field(default_factory=dict)
     audited_scope_declared: bool = False
@@ -54,6 +57,11 @@ class UpgradeResult:
     decision: UpgradeDecision
     reasons: tuple[str, ...]
     authority_created: bool = False
+
+
+
+def _is_sha256(value: str) -> bool:
+    return re.fullmatch(r"[0-9a-f]{64}", value.strip().lower()) is not None
 
 
 def _typed_gate(
@@ -106,10 +114,25 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
             ("AUDITED_SCOPE_NOT_DECLARED",),
         )
 
-    if not context.candidate_sha256.strip():
+    if not _is_sha256(context.candidate_sha256):
         return UpgradeResult(
             UpgradeDecision.HOLD,
-            ("CANDIDATE_HASH_MISSING",),
+            ("CANDIDATE_HASH_INVALID",),
+        )
+    if not _is_sha256(context.audited_scope_sha256):
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("AUDITED_SCOPE_HASH_INVALID",),
+        )
+    if not _is_sha256(context.search_coverage_scope_sha256):
+        return UpgradeResult(
+            UpgradeDecision.ESCALATE,
+            ("SEARCH_COVERAGE_SCOPE_HASH_UNKNOWN",),
+        )
+    if context.search_coverage_scope_sha256 != context.audited_scope_sha256:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("SEARCH_COVERAGE_SCOPE_MISMATCH",),
         )
 
     coverage = _typed_gate(
