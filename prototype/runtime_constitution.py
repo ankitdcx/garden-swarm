@@ -17,6 +17,10 @@ class ConstraintClass(str, Enum):
 
 RUNTIME_CONSTITUTION_SCHEMA = "GardenRuntimeConstitutionEnvelope/v1"
 
+BASE_HUMAN_EFFECT_GATES = frozenset(
+    {"rights", "consent", "privacy", "law", "safety", "human_effect"}
+)
+
 
 class InstructionAuthority(str, Enum):
     GARDEN_CONSTRAINT_ONLY = "GARDEN_CONSTRAINT_ONLY"
@@ -68,12 +72,11 @@ class RuntimeConstitutionContext:
     authority_by_subject: Mapping[str, AuthorityEnvelope] = field(default_factory=dict)
     authority_validation_by_subject: Mapping[str, Optional[bool]] = field(default_factory=dict)
     authority_provenance_by_subject: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    authority_parent_by_subject: Mapping[str, str] = field(default_factory=dict)
     revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     high_impact_actions: frozenset[str] = frozenset()
-    required_human_effect_gates: frozenset[str] = frozenset(
-        {"rights", "consent", "privacy", "law", "safety", "human_effect"}
-    )
+    required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
 
@@ -152,13 +155,6 @@ def evaluate_instruction(
             ("EXTERNAL_RUNTIME_CONSTRAINT_CANNOT_AUTHORIZE_ACTION",),
         )
 
-    block_sources = _external_block_sources(instruction.action, context)
-    if block_sources:
-        return RuntimeResult(
-            RuntimeDecision.EXTERNALLY_BLOCKED,
-            tuple(f"EXTERNAL_RUNTIME_BLOCK:{source}" for source in block_sources),
-        )
-
     if not instruction.delegation_chain:
         return RuntimeResult(RuntimeDecision.ESCALATE, ("AUTHORITY_CHAIN_MISSING",))
 
@@ -175,7 +171,7 @@ def evaluate_instruction(
         return RuntimeResult(RuntimeDecision.REJECT, ("CAPABILITY_NOT_PRESENT",))
 
     authority_chain: list[AuthorityEnvelope] = []
-    for subject in instruction.delegation_chain:
+    for index, subject in enumerate(instruction.delegation_chain):
         if subject in context.revoked_authority_subjects:
             return RuntimeResult(
                 RuntimeDecision.REJECT,
@@ -213,6 +209,20 @@ def evaluate_instruction(
                 RuntimeDecision.REJECT,
                 (f"AUTHORITY_SUBJECT_MISMATCH:{subject}",),
             )
+
+        if index > 0:
+            expected_parent = instruction.delegation_chain[index - 1]
+            actual_parent = context.authority_parent_by_subject.get(subject)
+            if actual_parent is None:
+                return RuntimeResult(
+                    RuntimeDecision.ESCALATE,
+                    (f"AUTHORITY_PARENT_UNKNOWN:{subject}",),
+                )
+            if actual_parent != expected_parent:
+                return RuntimeResult(
+                    RuntimeDecision.REJECT,
+                    (f"AUTHORITY_PARENT_MISMATCH:{subject}",),
+                )
         authority_chain.append(envelope)
 
     depth = max(0, len(instruction.delegation_chain) - 1)
@@ -225,14 +235,17 @@ def evaluate_instruction(
         return RuntimeResult(RuntimeDecision.REJECT, ("AUTHORITY_SCOPE_DENIED",))
 
     if instruction.action in context.high_impact_actions:
+        required_human_effect_gates = (
+            BASE_HUMAN_EFFECT_GATES | context.required_human_effect_gates
+        )
         failed = sorted(
             gate
-            for gate in context.required_human_effect_gates
+            for gate in required_human_effect_gates
             if context.hard_gates.get(gate) is False
         )
         unknown = sorted(
             gate
-            for gate in context.required_human_effect_gates
+            for gate in required_human_effect_gates
             if context.hard_gates.get(gate) is not True
             and context.hard_gates.get(gate) is not False
         )
@@ -246,6 +259,13 @@ def evaluate_instruction(
                 RuntimeDecision.ESCALATE,
                 tuple(f"HUMAN_EFFECT_GATE_UNKNOWN:{gate}" for gate in unknown),
             )
+
+    block_sources = _external_block_sources(instruction.action, context)
+    if block_sources:
+        return RuntimeResult(
+            RuntimeDecision.EXTERNALLY_BLOCKED,
+            tuple(f"EXTERNAL_RUNTIME_BLOCK:{source}" for source in block_sources),
+        )
 
     return RuntimeResult(
         RuntimeDecision.ALLOW,
