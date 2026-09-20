@@ -44,7 +44,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         ])
         self.assertEqual(len(set(families)), 5)
 
-    def test_provider_policy_denies_collection_and_keeps_anthropic_excluded(self):
+    def test_provider_policy_denies_collection_and_has_no_current_excluded_endpoint(self):
         provider = self.policy["provider_policy"]
         self.assertEqual(provider["data_collection"], "deny")
         self.assertTrue(provider["allow_fallbacks"])
@@ -59,7 +59,7 @@ class PaidReviewRoutingTests(unittest.TestCase):
         expected = [row["family"] for row in self.policy["routine_reviewers"]]
         self.assertEqual([row["family"] for row in receipt["selected"]], expected)
         self.assertEqual(receipt["approved_families"], expected)
-        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 1.0)
+        self.assertEqual(receipt["daily_openrouter_cost_ceiling_usd"], 2.0)
         self.assertEqual(set(receipt["provider_policy"]["ignore"]), set())
 
     def _selection(self):
@@ -67,8 +67,8 @@ class PaidReviewRoutingTests(unittest.TestCase):
             "approved_families":[self.policy["routine_reviewers"][0]["family"]],
             "max_prompt_characters":60000,
             "max_output_tokens":3000,
-            "routine_model_call_cost_ceiling_usd":0.05,
-            "daily_openrouter_cost_ceiling_usd":1.0,
+            "routine_model_call_cost_ceiling_usd":0.01,
+            "daily_openrouter_cost_ceiling_usd":2.0,
             "provider_policy":self.policy["provider_policy"]
         }
 
