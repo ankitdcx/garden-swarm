@@ -133,7 +133,8 @@ A version may reach upgrade closure only when:
 - every closure-evidence result (coverage, propagation, tests, no-loss, independent verification/review, protected authorization where applicable, and final re-audit) is bound to the exact candidate SHA-256 being closed; an older PASS cannot be replayed after candidate bytes change;
 - the audited scope is explicitly declared and content-addressed; the required systematic search/coverage result binds that exact scope, so a narrow audit or empty finding list cannot masquerade as whole-candidate review;
 - no currently known material defect remains unresolved in the audited scope;
-- all discovered material findings are FIXED, REJECTED_WITH_EVIDENCE, DEFERRED_WITH_OWNER/CONDITION, or ESCALATED under the explicit boundary above;
+- all discovered findings are typed ROUTINE / MATERIAL / HARD_GATE under a candidate-bound classification check; HARD_GATE findings in the affected scope must be FIXED or REJECTED_WITH_EVIDENCE before closure and cannot be hidden by DEFERRED/ESCALATED status;
+- non-hard-gate findings may be FIXED, REJECTED_WITH_EVIDENCE, DEFERRED_WITH_OWNER/CONDITION, or ESCALATED under the explicit boundary above;
 - those dispositions are non-vacuous: FIXED/REJECTED carry evidence refs, DEFERRED carries an owner and reopen condition, and ESCALATED carries an explicit escalation target;
 - affected tests/proofs/checks pass;
 - retention/no-loss requirements pass;
@@ -146,7 +147,7 @@ Closure is not a claim that no future unknown problem can exist.
 
 Finding another solvable material gap restarts the loop; it does not terminate the work with a report to the user.
 
-Each upgrade cycle must also declare a bounded work scope, resource/review budget, checkpoint condition and stop condition. Materiality outranks raw finding count. Repeated low-value restatements, already-covered findings and changes whose expected value is below their verification/integration cost are rejected or deferred with a recorded reason and a concrete re-open trigger rather than causing infinite recursion.
+Each upgrade cycle must also declare a bounded work scope, concrete iteration/work-item limits, resource/review budget, checkpoint condition and stop condition, and emit a residual-debt record for work intentionally left outside the bounded closure claim. Materiality outranks raw finding count. Repeated low-value restatements, already-covered findings and changes whose expected value is below their verification/integration cost are rejected or deferred with a recorded reason and a concrete re-open trigger rather than causing infinite recursion.
 
 If a required independent reviewer, tool, external institution or assurance dependency is temporarily unavailable, the AI may continue **noncanonical routine analysis and repair** that does not depend on that missing authority. It must preserve the blocked assurance state explicitly. Missing independent review cannot be relabeled as PASS, and protected admission/promotion remains blocked until the required independence is actually obtained.
 
@@ -177,3 +178,5 @@ Changes to a verifier, admission gate, protected policy, trust root or independe
 **AUP-011** Recursive upgrade work is bounded by declared scope/resources/checkpoints and cannot loop indefinitely on low-value findings.
 **AUP-012** Missing required independence may block admission without blocking unrelated noncanonical repair work; blocked assurance can never be silently promoted to PASS.
 **AUP-013** Upgrade objectives do not privilege upgrade methods; every consequential method remains independently effect-governed, and modifying a verifier invalidates dependent qualification until independent requalification.
+**AUP-014** HARD_GATE findings cannot be deferred or merely escalated into a positive closure result for the affected scope; protected-surface/finding classification must itself be independently checked and candidate-bound.
+**AUP-015** Bounded closure uses explicit iteration/work-item limits and a residual-debt record; open-ended global search does not justify arbitrary stop conditions.
