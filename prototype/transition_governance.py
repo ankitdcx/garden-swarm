@@ -279,3 +279,119 @@ def evaluate_transition(
             "NO_AUTHORITY_CREATED_BY_STAGE_ADVANCEMENT",
         ),
     )
+
+
+
+@dataclass(frozen=True)
+class RecoveryProposal:
+    transition_id: str
+    current_stage: TransitionStage
+    target_stage: TransitionStage
+    effect_scope: str
+    reversible_effect: bool
+    material_failure_confirmed: Optional[bool]
+
+
+def evaluate_recovery(
+    proposal: RecoveryProposal, context: TransitionContext
+) -> TransitionResult:
+    """Evaluate post-commit rollback or compensation without minting authority."""
+
+    if proposal.material_failure_confirmed is False:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("RECOVERY_TRIGGER_NOT_ESTABLISHED",)
+        )
+    if proposal.material_failure_confirmed is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE, ("RECOVERY_TRIGGER_UNKNOWN",)
+        )
+
+    if context.authority_validated is False:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("RECOVERY_AUTHORITY_INVALID",)
+        )
+    if context.authority_validated is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE, ("RECOVERY_AUTHORITY_UNKNOWN",)
+        )
+
+    required_hard_gates = BASE_TRANSITION_HARD_GATES | context.required_hard_gates
+    failed_gates = sorted(
+        gate for gate in required_hard_gates if context.hard_gates.get(gate) is False
+    )
+    if failed_gates:
+        return TransitionResult(
+            TransitionDecision.REJECT,
+            tuple(f"RECOVERY_HARD_GATE_FAILED:{gate}" for gate in failed_gates),
+        )
+    unknown_gates = sorted(
+        gate
+        for gate in required_hard_gates
+        if context.hard_gates.get(gate) is not True
+        and context.hard_gates.get(gate) is not False
+    )
+    if unknown_gates:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            tuple(f"RECOVERY_HARD_GATE_UNKNOWN:{gate}" for gate in unknown_gates),
+        )
+
+    if context.capture_conflict_clear is False:
+        return TransitionResult(
+            TransitionDecision.HOLD, ("RECOVERY_CAPTURE_OR_CONFLICT_CHECK_FAILED",)
+        )
+    if context.capture_conflict_clear is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            ("RECOVERY_CAPTURE_OR_CONFLICT_CHECK_UNKNOWN",),
+        )
+
+    if proposal.reversible_effect:
+        try:
+            current_index = STANDARD_TRANSITION_PLAN.index(proposal.current_stage)
+            target_index = STANDARD_TRANSITION_PLAN.index(proposal.target_stage)
+        except ValueError:
+            return TransitionResult(
+                TransitionDecision.REJECT, ("RECOVERY_STAGE_UNKNOWN",)
+            )
+        if target_index >= current_index:
+            return TransitionResult(
+                TransitionDecision.REJECT, ("ROLLBACK_TARGET_NOT_EARLIER",)
+            )
+        if context.rollback_ready is False:
+            return TransitionResult(
+                TransitionDecision.HOLD, ("ROLLBACK_NOT_READY",)
+            )
+        if context.rollback_ready is not True:
+            return TransitionResult(
+                TransitionDecision.ESCALATE, ("ROLLBACK_READINESS_UNKNOWN",)
+            )
+        return TransitionResult(
+            TransitionDecision.ROLLBACK,
+            (
+                "MATERIAL_FAILURE_CONFIRMED",
+                "FRESH_RECOVERY_ADMISSION_PASS",
+                "ROLLBACK_TO_EARLIER_STAGE",
+                "NO_AUTHORITY_CREATED_BY_RECOVERY",
+            ),
+        )
+
+    if context.compensation_recovery_ready is False:
+        return TransitionResult(
+            TransitionDecision.HOLD,
+            ("IRREVERSIBLE_EFFECT_RECOVERY_NOT_READY",),
+        )
+    if context.compensation_recovery_ready is not True:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            ("IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN",),
+        )
+    return TransitionResult(
+        TransitionDecision.COMPENSATE,
+        (
+            "MATERIAL_FAILURE_CONFIRMED",
+            "FRESH_RECOVERY_ADMISSION_PASS",
+            "IRREVERSIBLE_EFFECT_USES_COMPENSATION_OR_RECOVERY",
+            "NO_AUTHORITY_CREATED_BY_RECOVERY",
+        ),
+    )
