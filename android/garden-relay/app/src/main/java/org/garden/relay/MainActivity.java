@@ -286,7 +286,7 @@ public final class MainActivity extends Activity {
                 return;
             }
             if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-                refreshShizuku();
+                
                 return;
             }
             Shizuku.requestPermission(SHIZUKU_REQ);
@@ -297,14 +297,14 @@ public final class MainActivity extends Activity {
 
     private final Shizuku.OnRequestPermissionResultListener shizukuPermission =
             (requestCode, grantResult) -> {
-                if (requestCode == SHIZUKU_REQ) runOnUiThread(this::refreshShizuku);
+                
             };
 
     @Override
     protected void onResume() {
         super.onResume();
         Shizuku.addRequestPermissionResultListener(shizukuPermission);
-        refreshShizuku();
+        
     }
 
     @Override
