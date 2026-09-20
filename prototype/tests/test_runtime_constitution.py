@@ -30,6 +30,14 @@ def base_context(**overrides):
             "human:alice": authority("human:alice", {"notify"}, {"repo"}),
             "agent:A": authority("agent:A", {"notify", "deploy"}, {"repo", "world"}),
         },
+        authority_validation_by_subject={
+            "human:alice": True,
+            "agent:A": True,
+        },
+        authority_provenance_by_subject={
+            "human:alice": ("delegation-root:alice",),
+            "agent:A": ("delegation:alice->agent:A",),
+        },
         hard_gates={
             "rights": True,
             "consent": True,
@@ -270,3 +278,138 @@ def test_constraint_blocked_judgment_is_honest_when_boundary_is_disclosed():
     )
     assert result.decision is RuntimeDecision.ALLOW
     assert "CONSTRAINT_BOUNDARY_DISCLOSED" in result.reasons
+
+
+def test_present_authority_envelope_without_validation_is_not_pass():
+    ctx = base_context(
+        authority_validation_by_subject={
+            "human:alice": True,
+            "agent:A": None,
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("AUTHORITY_CLAIM_UNVALIDATED:agent:A",)
+
+
+def test_invalid_authority_claim_rejects_even_when_envelope_exists():
+    ctx = base_context(
+        authority_validation_by_subject={
+            "human:alice": True,
+            "agent:A": False,
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_CLAIM_INVALID:agent:A",)
+
+
+def test_authority_claim_requires_provenance_not_only_object_presence():
+    ctx = base_context(
+        authority_provenance_by_subject={
+            "human:alice": ("delegation-root:alice",),
+            "agent:A": (),
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("AUTHORITY_PROVENANCE_MISSING:agent:A",)
+
+
+def test_revoked_authority_rejects_even_if_envelope_and_validation_remain():
+    ctx = base_context(revoked_authority_subjects=frozenset({"agent:A"}))
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_REVOKED:agent:A",)
+
+
+def test_garden_constitution_constrains_but_does_not_authorize_action():
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.GARDEN_CONSTITUTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(),
+    )
+    assert result.decision is RuntimeDecision.PROPOSAL_ONLY
+    assert result.reasons == (
+        "GARDEN_CONSTITUTION_CONSTRAINS_BUT_DOES_NOT_AUTHORIZE_ACTION",
+    )
+
+
+def test_good_goal_does_not_authorize_ungranted_investigative_means():
+    ctx = base_context(
+        capabilities_by_subject={
+            "agent:A": frozenset({"notify", "deploy", "intrude_private_system"})
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            action="intrude_private_system",
+            target="repo",
+            capability="intrude_private_system",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+            goal_id="investigate-corruption",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_SCOPE_DENIED",)
