@@ -42,6 +42,23 @@ def reconstruct_object(name: str) -> bytes:
     return raw
 
 
+def reconstruct_text_parts(version: str) -> bytes:
+    manifest = load_json(CONTENT / "TEXT_PARTS_MANIFEST.json")["technical"][version]
+    out = bytearray()
+    for part in manifest["parts"]:
+        source_version = part.get("source_version", version)
+        directory = V1510 if source_version == "15.10" else V1511
+        path = directory / part["name"]
+        raw = path.read_bytes()
+        if len(raw) != part["bytes"] or sha256(raw) != part["sha256"]:
+            raise ValueError(f"technical part mismatch: {part['name']}")
+        out.extend(raw)
+    data = bytes(out)
+    if len(data) != manifest["output_bytes"] or sha256(data) != manifest["output_sha256"]:
+        raise ValueError(f"technical reconstruction mismatch: {version}")
+    return data
+
+
 def verify_direct_sources(directory: Path, manifest: dict, version: str) -> None:
     for name, meta in manifest["primary_sources"].items():
         if name.startswith("GARDEN_CATALOGUE_"):
