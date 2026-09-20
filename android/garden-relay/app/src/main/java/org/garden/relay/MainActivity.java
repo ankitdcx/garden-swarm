@@ -106,7 +106,7 @@ public final class MainActivity extends Activity {
     private void startLocalBrowserBridge() {
         new Thread(() -> {
             try (ServerSocket server = new ServerSocket(17351, 8, java.net.InetAddress.getByName("127.0.0.1"))) {
-                main.post(() -> note.setText("Browser bridge: READY on this phone only (127.0.0.1:17351)"));
+                main.post(() -> bridge.setText("Browser bridge: READY — localhost 127.0.0.1:17351"));
                 while (localBridgeRunning) {
                     try (Socket s = server.accept()) {
                         s.setSoTimeout(3000);
@@ -137,7 +137,7 @@ public final class MainActivity extends Activity {
                     } catch(Throwable ignored){}
                 }
             } catch(Throwable t) {
-                main.post(() -> note.setText("Browser bridge failed: "+t.getClass().getSimpleName()));
+                main.post(() -> bridge.setText("Browser bridge: FAILED — "+t.getClass().getSimpleName()));
             }
         },"GardenLocalBrowserBridge").start();
     }
@@ -162,7 +162,7 @@ public final class MainActivity extends Activity {
         root.addView(header);
 
         bridge = new TextView(this);
-        bridge.setText("Shizuku: checking…");
+        bridge.setText("Browser bridge: starting…");
         bridge.setTextSize(16);
         bridge.setPadding(0,0,0,dp(10));
         root.addView(bridge);
