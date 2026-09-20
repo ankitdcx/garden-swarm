@@ -1,7 +1,26 @@
 {
   "schema": "GardenMobileReviewJob/v1",
-  "job_id": "no-active-mobile-review",
-  "title": "Garden Relay is ready; no frozen mobile review is currently published",
-  "status": "NOT_READY",
-  "targets": []
+  "job_id": "garden-relay-connectivity-probe-20260920",
+  "title": "Garden Relay connectivity probe",
+  "status": "READY",
+  "targets": [
+    {
+      "slot": "deepseek",
+      "display_name": "DeepSeek",
+      "prompt": "Garden Relay connectivity test. Reply exactly: DEEPSEEK RELAY OK. Then use this app's Share function to share your answer back to Garden Relay.",
+      "attachments": []
+    },
+    {
+      "slot": "qwen",
+      "display_name": "Qwen",
+      "prompt": "Garden Relay connectivity test. Reply exactly: QWEN RELAY OK. Then use this app's Share function to share your answer back to Garden Relay.",
+      "attachments": []
+    },
+    {
+      "slot": "gemini",
+      "display_name": "Gemini",
+      "prompt": "Garden Relay connectivity test. Reply exactly: GEMINI RELAY OK. Then use this app's Share function to share your answer back to Garden Relay.",
+      "attachments": []
+    }
+  ]
 }
