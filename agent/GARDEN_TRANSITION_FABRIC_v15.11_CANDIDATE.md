@@ -61,7 +61,7 @@ A contract chooses the smallest adequate ordered stage plan. The standard high-a
 4. **EXPANDED_ACTIVE** — scope may expand only after prior exit criteria, fresh authority and independent verification pass.
 5. **STABLE_OPERATION** — transition-specific controls can retire only when declared stability and assurance conditions pass.
 
-A profile may omit a stage only when the TransitionContract explains why it is inapplicable and the omission itself passes the applicable assurance path. A declared required stage cannot be silently skipped.
+A profile may omit a stage only when the TransitionContract records a non-empty stage-specific justification and the omission itself receives an explicit assurance result. Missing or UNKNOWN omission approval blocks advancement. The declared plan must preserve the standard stage ordering. A declared required stage cannot be silently skipped.
 
 ## Advancement rule
 
@@ -77,12 +77,12 @@ Stage advancement requires all applicable conditions to be resolved for the exac
 - material dual-run divergence is resolved or explicitly bounded;
 - capture/conflict-of-interest checks pass;
 - operational/infrastructure readiness passes;
-- declared entry/exit criteria pass;
+- declared entry/exit criteria are non-empty for a material transition and pass;
 - rollback is available for reversible effects;
 - irreversible effects have authorized compensation/recovery before commit;
 - material open disputes have the required appeal/hold treatment.
 
-UNKNOWN at a required hard gate is not PASS.
+UNKNOWN at a required hard gate is not PASS. The base transition gate floor (rights, consent, privacy, law, safety and Human-Effect Closure) cannot be removed by a caller or profile; profiles may add stricter gates only.
 
 ## Authority migration
 
@@ -149,11 +149,13 @@ Before commit:
 - unresolved required evidence -> VERIFY_MORE/HOLD.
 
 After reversible commit:
-- material failure -> ROLLBACK to the last qualified state.
+- a confirmed material failure may trigger a fresh recovery admission;
+- ROLLBACK may target only an earlier qualified transition stage and does not create authority.
 
 For irreversible effects:
 - do not promise rollback;
 - require an authorized compensation/recovery plan before commit;
+- after confirmed material failure, fresh recovery admission may select COMPENSATE/recovery rather than pretending restoration is possible;
 - monitor residual effects and preserve remedy paths.
 
 If rollback itself would create a larger prohibited effect, compare bounded recovery alternatives under fresh admission rather than mechanically reverting.
@@ -203,3 +205,13 @@ A receipt records a decision. It does not make that decision valid merely becaus
 **GTF-T10** Transition and justice/liability remain separate.
 **GTF-T11** A dispute remains typed; majority or model confidence cannot convert fact uncertainty to PASS.
 **GTF-T12** Transition coordinator/installer status cannot bootstrap sovereignty.
+
+
+## Executable reference boundary
+
+`prototype/transition_governance.py` now exercises two separate paths:
+
+1. **stage advancement** — validates ordered stage plans, explicit omission justification/approval, immutable base hard gates, non-vacuous entry/exit criteria, authority, independence, capture, divergence, disputes and recovery readiness;
+2. **post-commit recovery** — requires a confirmed material failure plus fresh recovery admission, allows rollback only to an earlier stage for reversible effects, and routes irreversible effects to compensation/recovery instead of fictional rollback.
+
+The prototype remains a narrow reference, not deployment certification, proof of institutional legitimacy, or authority to perform a real transition.
