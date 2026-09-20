@@ -33,6 +33,7 @@ class TransitionAssuranceBinding:
     effect_scope: str
     current_stage: TransitionStage
     target_stage: TransitionStage
+    design_epoch: str
 
 
 class TransitionDecision(str, Enum):
@@ -51,6 +52,7 @@ class TransitionProposal:
     next_stage: TransitionStage
     declared_stage_plan: tuple[TransitionStage, ...]
     effect_scope: str
+    design_epoch: str = "E1"
     reversible_effect: bool = True
     stage_omission_justifications: Mapping[TransitionStage, str] = field(default_factory=dict)
 
@@ -59,6 +61,7 @@ class TransitionProposal:
 class TransitionContext:
     authority_validated: Optional[bool]
     assurance_binding: Optional[TransitionAssuranceBinding] = None
+    current_design_epoch: str = "E1"
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     required_hard_gates: frozenset[str] = frozenset()
     stage_omission_approval: Mapping[TransitionStage, Optional[bool]] = field(default_factory=dict)
@@ -92,6 +95,7 @@ def _assurance_binding_result(
     effect_scope: str,
     current_stage: TransitionStage,
     target_stage: TransitionStage,
+    design_epoch: str,
     context: TransitionContext,
 ) -> TransitionResult | None:
     binding = context.assurance_binding
@@ -107,6 +111,7 @@ def _assurance_binding_result(
         or binding.effect_scope != effect_scope
         or binding.current_stage is not current_stage
         or binding.target_stage is not target_stage
+        or binding.design_epoch != design_epoch
     ):
         return TransitionResult(
             TransitionDecision.REJECT,
@@ -185,12 +190,18 @@ def evaluate_transition(
             TransitionDecision.REJECT, ("DECLARED_STAGE_SKIP_OR_INVALID_NEXT_STAGE",)
         )
 
+    if proposal.design_epoch != context.current_design_epoch:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("STALE_TRANSITION_DESIGN_EPOCH",)
+        )
+
     assurance_binding = _assurance_binding_result(
         purpose="ADVANCE",
         transition_id=proposal.transition_id,
         effect_scope=proposal.effect_scope,
         current_stage=proposal.current_stage,
         target_stage=proposal.next_stage,
+        design_epoch=proposal.design_epoch,
         context=context,
     )
     if assurance_binding is not None:
@@ -343,6 +354,7 @@ class RecoveryProposal:
     effect_scope: str
     reversible_effect: bool
     material_failure_confirmed: Optional[bool]
+    design_epoch: str = "E1"
 
 
 def evaluate_recovery(
@@ -359,12 +371,18 @@ def evaluate_recovery(
             TransitionDecision.ESCALATE, ("RECOVERY_TRIGGER_UNKNOWN",)
         )
 
+    if proposal.design_epoch != context.current_design_epoch:
+        return TransitionResult(
+            TransitionDecision.REJECT, ("RECOVERY_STALE_DESIGN_EPOCH",)
+        )
+
     assurance_binding = _assurance_binding_result(
         purpose="RECOVERY",
         transition_id=proposal.transition_id,
         effect_scope=proposal.effect_scope,
         current_stage=proposal.current_stage,
         target_stage=proposal.target_stage,
+        design_epoch=proposal.design_epoch,
         context=context,
     )
     if assurance_binding is not None:
