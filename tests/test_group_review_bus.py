@@ -29,6 +29,21 @@ def packet(**overrides):
     return value
 
 
+def isolated_context(**overrides):
+    value = {
+        "status": "VERIFIED",
+        "isolation_mode": "temporary-chat-memory-off",
+        "excluded_context_detected": False,
+        "project_context_present": False,
+        "memory_or_personal_context_present": False,
+        "prior_review_context_present": False,
+        "peer_output_present": False,
+        "evidence_refs": ["attestation:test-fixture"],
+    }
+    value.update(overrides)
+    return value
+
+
 class GroupReviewBusTests(unittest.TestCase):
     def test_valid_packet_round_trips_through_issue_body(self):
         value = packet()
@@ -127,7 +142,7 @@ class GroupReviewBusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "owner-authored"):
             bus.validate_run_issue(bad, "ankitdcx")
 
-    def test_worker_result_binds_exact_packet_and_output(self):
+    def test_worker_result_binds_exact_packet_output_and_context_isolation(self):
         value = packet(openrouter_requested=False, triage="SMALL")
         output = "Independent solution."
         result = {
@@ -137,6 +152,8 @@ class GroupReviewBusTests(unittest.TestCase):
             "role": "A",
             "packet_sha256": value["packet_sha256"],
             "created_at": "2026-09-19T14:35:00+05:30",
+            "status": "FROZEN_RESULT",
+            "context_isolation": isolated_context(),
             "peer_exposure_before_freeze": "NONE",
             "output": output,
             "output_sha256": bus.sha256_text(output),
@@ -146,6 +163,128 @@ class GroupReviewBusTests(unittest.TestCase):
         result["output"] = "silently edited"
         with self.assertRaises(ValueError):
             bus.validate_worker_result(result, value)
+
+    def test_semantic_result_rejects_project_or_memory_context(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        for field in (
+            "project_context_present",
+            "memory_or_personal_context_present",
+            "prior_review_context_present",
+            "peer_output_present",
+            "excluded_context_detected",
+        ):
+            output = "Independent solution."
+            result = {
+                "schema": bus.WORKER_RESULT_SCHEMA,
+                "problem_id": value["problem_id"],
+                "run_issue_number": 42,
+                "role": "A",
+                "packet_sha256": value["packet_sha256"],
+                "created_at": "2026-09-19T14:35:00+05:30",
+                "status": "FROZEN_RESULT",
+                "context_isolation": isolated_context(**{field: True}),
+                "peer_exposure_before_freeze": "NONE",
+                "output": output,
+                "output_sha256": bus.sha256_text(output),
+            }
+            result["result_sha256"] = bus.worker_result_hash(result)
+            with self.assertRaisesRegex(ValueError, "verified context isolation"):
+                bus.validate_worker_result(result, value)
+
+    def test_process_fail_is_valid_and_carries_no_semantic_output(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        result = {
+            "schema": bus.WORKER_RESULT_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "role": "A",
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "2026-09-19T14:35:00+05:30",
+            "status": "PROCESS_FAIL",
+            "context_isolation": isolated_context(
+                status="FAILED",
+                excluded_context_detected=True,
+                memory_or_personal_context_present=True,
+            ),
+            "failure_code": "BLIND_CONTEXT_LEAKAGE",
+            "failure_detail": "Prior review context was present before source retrieval.",
+        }
+        result["result_sha256"] = bus.worker_result_hash(result)
+        self.assertEqual(bus.validate_worker_result(result, value), result)
+
+        bad = copy.deepcopy(result)
+        bad["output"] = "inadmissible semantic findings"
+        bad["output_sha256"] = bus.sha256_text(bad["output"])
+        bad["result_sha256"] = bus.worker_result_hash(bad)
+        with self.assertRaisesRegex(ValueError, "must not publish semantic output"):
+            bus.validate_worker_result(bad, value)
+
+    def test_blocked_context_isolation_is_typed_without_rerun_claim(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        result = {
+            "schema": bus.WORKER_RESULT_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "role": "B",
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "2026-09-19T14:35:00+05:30",
+            "status": "BLOCKED_BY_CONTEXT_ISOLATION",
+            "context_isolation": isolated_context(
+                status="UNAVAILABLE",
+                isolation_mode="product-context-cannot-be-disabled",
+                excluded_context_detected=True,
+                memory_or_personal_context_present=True,
+            ),
+            "failure_code": "CONTEXT_ISOLATION_UNAVAILABLE",
+            "failure_detail": "The product supplied prior Garden context automatically.",
+        }
+        result["result_sha256"] = bus.worker_result_hash(result)
+        self.assertEqual(bus.validate_worker_result(result, value), result)
+
+    def test_worker_status_lifecycle_requires_isolation_before_blind_review(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        status = {
+            "schema": bus.WORKER_STATUS_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "role": "A",
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "2026-09-19T14:34:00+05:30",
+            "state": "BLIND_REVIEW",
+            "context_isolation": isolated_context(),
+        }
+        status["status_sha256"] = bus.worker_status_hash(status)
+        self.assertEqual(bus.validate_worker_status(status, value), status)
+
+        contaminated = copy.deepcopy(status)
+        contaminated["context_isolation"] = isolated_context(
+            status="FAILED",
+            project_context_present=True,
+            excluded_context_detected=True,
+        )
+        contaminated["status_sha256"] = bus.worker_status_hash(contaminated)
+        with self.assertRaisesRegex(ValueError, "verified context isolation"):
+            bus.validate_worker_status(contaminated, value)
+
+    def test_worker_status_can_record_context_isolation_block(self):
+        value = packet(openrouter_requested=False, triage="SMALL")
+        status = {
+            "schema": bus.WORKER_STATUS_SCHEMA,
+            "problem_id": value["problem_id"],
+            "run_issue_number": 42,
+            "role": "B",
+            "packet_sha256": value["packet_sha256"],
+            "created_at": "2026-09-19T14:34:00+05:30",
+            "state": "BLOCKED_BY_CONTEXT_ISOLATION",
+            "context_isolation": isolated_context(
+                status="UNAVAILABLE",
+                isolation_mode="product-context-cannot-be-disabled",
+                excluded_context_detected=True,
+                memory_or_personal_context_present=True,
+            ),
+        }
+        status["status_sha256"] = bus.worker_status_hash(status)
+        self.assertEqual(bus.validate_worker_status(status, value), status)
 
     def test_openrouter_bundle_requires_five_distinct_families(self):
         value = packet()

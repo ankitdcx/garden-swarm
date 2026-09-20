@@ -33,7 +33,11 @@
       "default": 2,
       "maximum": 2,
       "blind_initial_phase": true,
-      "symmetric_initial_prompt": true
+      "symmetric_initial_prompt": true,
+      "context_isolation_required": true,
+      "fresh_chat_alone_is_sufficient": false,
+      "qualifying_context": "No Garden project context, no relevant memory/personal-context/prior-chat exposure, and no peer/reviewer output before semantic freeze.",
+      "on_context_isolation_failure": "PROCESS_FAIL_OR_BLOCKED_BY_CONTEXT_ISOLATION"
     },
     "openrouter_branch": {
       "enabled": true,
@@ -138,12 +142,20 @@
       "source_refs"
     ],
     "repo_bus_ref": "docs/GROUP_REVIEW_REPO_BUS_V1.md",
-    "run_artifacts_are_immutable_issues": true
+    "run_artifacts_are_immutable_issues": true,
+    "worker_lifecycle": [
+      "STARTED",
+      "SOURCE_HASH_VERIFIED",
+      "BLIND_REVIEW",
+      "FROZEN_RESULT",
+      "PROCESS_FAIL",
+      "BLOCKED_BY_CONTEXT_ISOLATION"
+    ]
   },
   "manual_handoff_boundary": {
     "chat_creation_or_message_delivery_may_require_user_ui_action": true,
     "leader_should_minimize_user_work": "Generate exact worker packets/instructions and consume returned durable artifacts; do not ask the user to redesign the process.",
-    "minimum_user_steps": "Open the independent worker/verifier chats and send the one-line role/run command. Connected chats use GitHub as the bus; no manual file hashing or OpenRouter key handling is required.",
+    "minimum_user_steps": "Ask the user to open blind ChatGPT worker/verifier chats only when a qualifying isolated context is actually available. A fresh chat alone is insufficient. If product/project/memory context cannot be disabled or excluded, mark the ChatGPT blind lane BLOCKED_BY_CONTEXT_ISOLATION and continue only noncanonical repair/other permitted assurance work; do not ask the user to repeat identical chat-opening attempts.",
     "external_phone_models_may_require_manual_copy_paste": true
   },
   "openrouter_boundary": {
@@ -161,7 +173,7 @@
     "external_models_do_not_gain_authority": true,
     "sensitive_data_requires_applicable_privacy_approval": true
   },
-  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader. The Leader uses the repo-native issue bus, explicit v2.1 triage, symmetric blind workers, automatic real OpenRouter review for eligible public MATERIAL/HIGH_RISK runs, hard-fail process auditing, frozen candidate/verifier artifacts, and durable resume checkpoints. The user need not restate the protocol.",
+  "closure_rule": "When the user invokes 'group review', the current chat becomes Leader. The Leader uses the repo-native issue bus, explicit v2.1 triage, immutable source hashing, context-isolated blind workers when such isolation is actually available, governed external review lanes where authorized, hard-fail process auditing, frozen candidate/verifier artifacts, and durable resume checkpoints. Product context leakage is recorded as PROCESS_FAIL/BLOCKED_BY_CONTEXT_ISOLATION rather than hidden or retried indefinitely.",
   "protocol_version": "2.1",
   "process_audit": {
     "phase": "BEFORE_CANDIDATE_VERIFICATION",
@@ -175,7 +187,9 @@
       "privacy/data approval satisfied before any third-party model transmission",
       "minority/blocking findings preserved",
       "decision log records every disposition",
-      "every blind source ref is immutable and every retrieved source matches its frozen SHA-256"
+      "every blind source ref is immutable and every retrieved source matches its frozen SHA-256",
+      "blind ChatGPT workers attest absence of project/memory/prior-review context before semantic review",
+      "worker lifecycle reaches SOURCE_HASH_VERIFIED and BLIND_REVIEW only under verified context isolation"
     ],
     "material_failures": [
       "non-identical blind packets without declared reason",
@@ -185,7 +199,9 @@
       "simulated/chat-persona OpenRouter substituted for real API review when OpenRouter was required",
       "unauthorized sensitive-data transmission to an external model",
       "discarded blocking/minority finding without recorded disposition",
-      "mutable blind source reference or frozen source hash drift"
+      "mutable blind source reference or frozen source hash drift",
+      "project, memory, personal-context, prior-review or peer-output exposure before blind semantic freeze",
+      "false peer_exposure/context-isolation attestation"
     ],
     "on_material_failure": {
       "run_status": "PROCESS_FAIL",
@@ -193,7 +209,9 @@
       "block_PASS": true,
       "block_PASS_WITH_CAVEATS": true,
       "discard_affected_blind_round": true,
-      "rerun_requirement": "Create a clean run with a newly frozen packet/run identity; preserve the failed run as audit evidence."
+      "rerun_requirement": "Create a clean run with a newly frozen packet/run identity; preserve the failed run as audit evidence.",
+      "context_isolation_rule": "One contaminated attempt may be rerun only in a materially different execution context that can exclude the prior source of leakage. If isolation is unavailable or a materially equivalent isolated attempt also receives excluded context, record BLOCKED_BY_CONTEXT_ISOLATION and stop automatic/user reruns until isolation capability changes.",
+      "blocked_lane_effect": "BLOCKED_BY_CONTEXT_ISOLATION is non-PASS and cannot satisfy required blind-worker quorum, but it does not prevent unrelated noncanonical analysis/repair from continuing."
     },
     "nonmaterial_failure_rule": "Record as a caveat or repair before completion; never silently erase it."
   },
@@ -223,7 +241,16 @@
       "schema": "GardenGroupReviewWorkerResult/v1",
       "blind_workers_read_exact_run_issue_only": true,
       "peer_search_before_freeze": "FORBIDDEN",
-      "frozen_output_is_immutable": true
+      "frozen_output_is_immutable": true,
+      "status_values": [
+        "FROZEN_RESULT",
+        "PROCESS_FAIL",
+        "BLOCKED_BY_CONTEXT_ISOLATION"
+      ],
+      "context_isolation_required": true,
+      "semantic_output_allowed_only_when": "status=FROZEN_RESULT AND context_isolation.status=VERIFIED AND no excluded-context flags are true",
+      "process_fail_semantic_findings_forbidden": true,
+      "blocked_isolation_is_terminal_until_context_changes": true
     },
     "candidate": {
       "title_format": "[GROUP_REVIEW_CANDIDATE] <problem_id>",
@@ -266,6 +293,20 @@
       "unfinished_chat_text_is_not_state": true,
       "unknown_external_call_blocks_further_inference": true,
       "resume_rule": "Leader retrieves the run issue and all currently frozen artifacts and continues from the last valid checkpoint."
+    },
+    "worker_status": {
+      "title_format": "[GROUP_REVIEW_WORKER_STATUS] <problem_id> <role>",
+      "schema": "GardenGroupReviewWorkerStatus/v1",
+      "marker": "GARDEN_GROUP_REVIEW_WORKER_STATUS",
+      "states": [
+        "STARTED",
+        "SOURCE_HASH_VERIFIED",
+        "BLIND_REVIEW",
+        "FROZEN_RESULT",
+        "PROCESS_FAIL",
+        "BLOCKED_BY_CONTEXT_ISOLATION"
+      ],
+      "blind_states_require_verified_context_isolation": true
     }
   }
 }
