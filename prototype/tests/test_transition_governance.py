@@ -1,8 +1,10 @@
 from prototype.transition_governance import (
+    RecoveryProposal,
     TransitionContext,
     TransitionDecision,
     TransitionProposal,
     TransitionStage,
+    evaluate_recovery,
     evaluate_transition,
 )
 
@@ -273,3 +275,67 @@ def test_declared_stage_plan_must_preserve_standard_order():
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("INVALID_DECLARED_STAGE_ORDER",)
+
+
+def test_reversible_material_failure_can_rollback_only_to_earlier_stage():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.ROLLBACK
+    assert result.authority_created is False
+
+
+def test_rollback_cannot_move_forward_or_sideways():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.EXPANDED_ACTIVE,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("ROLLBACK_TARGET_NOT_EARLIER",)
+
+
+def test_irreversible_material_failure_routes_to_compensation():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.BOUNDED_ACTIVE,
+            effect_scope="institution:bounded",
+            reversible_effect=False,
+            material_failure_confirmed=True,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.COMPENSATE
+    assert result.authority_created is False
+
+
+def test_unknown_recovery_trigger_cannot_act():
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=None,
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("RECOVERY_TRIGGER_UNKNOWN",)
