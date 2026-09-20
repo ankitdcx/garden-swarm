@@ -2,6 +2,7 @@ from prototype.authority import AuthorityEnvelope
 from prototype.runtime_constitution import (
     ConstraintClass,
     GoalProposal,
+    GoalValidity,
     InstructionAuthority,
     RuntimeConstitutionContext,
     RuntimeDecision,
@@ -56,6 +57,11 @@ def base_context(**overrides):
             ("notify", "repo"): True,
             ("deploy", "world"): True,
             ("intrude_private_system", "repo"): True,
+        },
+        goal_validity_by_id={
+            "g1": GoalValidity(True, True, True, True, True, True),
+            "investigate-corruption": GoalValidity(True, True, True, True, True, True),
+            "install-garden-worldwide": GoalValidity(True, True, True, True, True, True),
         },
     )
     data.update(overrides)
@@ -586,3 +592,63 @@ def test_unvalidated_human_effect_materiality_cannot_admit_action():
     )
     assert result.decision is RuntimeDecision.ESCALATE
     assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_UNVALIDATED",)
+
+
+def test_persistent_goal_with_stale_design_epoch_is_rejected():
+    ctx = base_context(
+        goal_validity_by_id={
+            **base_context().goal_validity_by_id,
+            "g1": GoalValidity(False, True, True, True, True, True),
+        }
+    )
+    result = evaluate_goal(
+        GoalProposal(
+            goal_id="g1",
+            proposer="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            summary="Continue a stale goal.",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("GOAL_BINDING_INVALID:design_epoch",)
+
+
+def test_persistent_goal_unknown_dependency_freshness_escalates():
+    ctx = base_context(
+        goal_validity_by_id={
+            **base_context().goal_validity_by_id,
+            "g1": GoalValidity(True, True, True, None, True, True),
+        }
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+            goal_id="g1",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("GOAL_BINDING_UNKNOWN:dependencies",)
+
+
+def test_missing_goal_validity_is_not_treated_as_valid():
+    ctx = base_context(goal_validity_by_id={})
+    result = evaluate_goal(
+        GoalProposal(
+            goal_id="g1",
+            proposer="agent:A",
+            source_class=ConstraintClass.MODEL_SUBGOAL,
+            summary="Unbound goal.",
+        ),
+        ctx,
+    )
+    assert result.decision is RuntimeDecision.ESCALATE
+    assert result.reasons == ("GOAL_VALIDITY_UNKNOWN",)
