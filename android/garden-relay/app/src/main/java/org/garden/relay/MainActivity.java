@@ -49,6 +49,7 @@ public final class MainActivity extends Activity {
     private TextView bridge;
     private TextView discovery;
     private TextView calibration;
+    private TextView sitesView;
     private volatile boolean coordinateProbe = false;
     private volatile int coordinateAttempt = 0;
     private volatile boolean localBridgeRunning = true;
@@ -123,6 +124,17 @@ public final class MainActivity extends Activity {
                                 JSONObject j=new JSONObject(body);
                                 String provider=j.optString("provider","unknown");
                                 browserCalibration.put(provider,body);
+                                StringBuilder sv=new StringBuilder("Reviewers");
+                                String[] ps={"deepseek","gemini","claude","grok"};
+                                String[] names={"DeepSeek","Gemini","Claude","Grok"};
+                                for(int qi=0;qi<ps.length;qi++){
+                                    String raw=browserCalibration.get(ps[qi]);
+                                    boolean ok=false;
+                                    if(raw!=null) try { ok=new JSONObject(raw).optBoolean("composerFound",false); } catch(Throwable ignored2){}
+                                    sv.append("\n").append(ok?"✓ ":"○ ").append(names[qi]).append(ok?" — connected":" — waiting");
+                                }
+                                final String siteStatus=sv.toString();
+                                main.post(() -> sitesView.setText(siteStatus));
                                 main.post(() -> calibration.setText("Browser calibration received: " + provider +
                                         "\ncomposerFound=" + j.optBoolean("composerFound",false) +
                                         "\n" + j.optJSONObject("composer")));
@@ -171,11 +183,11 @@ public final class MainActivity extends Activity {
         calibration.setPadding(0,0,0,dp(18));
         root.addView(calibration);
 
-        TextView sites = new TextView(this);
-        sites.setText("Reviewers\n○ DeepSeek — waiting\n○ Gemini — waiting\n○ Claude — waiting\n○ Grok — waiting");
-        sites.setTextSize(17);
-        sites.setPadding(0,0,0,dp(18));
-        root.addView(sites);
+        sitesView = new TextView(this);
+        sitesView.setText("Reviewers\n○ DeepSeek — waiting\n○ Gemini — waiting\n○ Claude — waiting\n○ Grok — waiting");
+        sitesView.setTextSize(17);
+        sitesView.setPadding(0,0,0,dp(18));
+        root.addView(sitesView);
 
         TextView help = new TextView(this);
         help.setText("Open a supported AI website in Firefox with the Garden userscript enabled. Composer calibration will appear here automatically. No Shizuku or Android app automation is used by this browser workflow.");
