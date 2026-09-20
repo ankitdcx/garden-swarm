@@ -13,6 +13,15 @@ class FindingDisposition(str, Enum):
     OPEN = "OPEN"
 
 
+@dataclass(frozen=True)
+class FindingRecord:
+    disposition: FindingDisposition
+    evidence_refs: tuple[str, ...] = ()
+    owner: str | None = None
+    reopen_condition: str | None = None
+    escalation_target: str | None = None
+
+
 class UpgradeDecision(str, Enum):
     CLOSE_CANDIDATE = "CLOSE_CANDIDATE"
     CONTINUE_WORK = "CONTINUE_WORK"
@@ -24,7 +33,7 @@ class UpgradeDecision(str, Enum):
 class UpgradeContext:
     candidate_sha256: str = ""
     gate_candidate_bindings: Mapping[str, str] = field(default_factory=dict)
-    finding_dispositions: Mapping[str, FindingDisposition] = field(default_factory=dict)
+    findings: Mapping[str, FindingRecord] = field(default_factory=dict)
     audited_scope_declared: bool = False
     search_coverage_complete: Optional[bool] = None
     bounded_cycle_declared: bool = False
@@ -129,10 +138,38 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     if methods is not None:
         return methods
 
+    for finding_id, record in sorted(context.findings.items()):
+        if record.disposition in {
+            FindingDisposition.FIXED,
+            FindingDisposition.REJECTED_WITH_EVIDENCE,
+        } and not record.evidence_refs:
+            return UpgradeResult(
+                UpgradeDecision.HOLD,
+                (f"FINDING_EVIDENCE_MISSING:{finding_id}",),
+            )
+        if record.disposition is FindingDisposition.DEFERRED_WITH_OWNER_CONDITION:
+            if not (record.owner or "").strip():
+                return UpgradeResult(
+                    UpgradeDecision.HOLD,
+                    (f"FINDING_DEFERRED_OWNER_MISSING:{finding_id}",),
+                )
+            if not (record.reopen_condition or "").strip():
+                return UpgradeResult(
+                    UpgradeDecision.HOLD,
+                    (f"FINDING_REOPEN_CONDITION_MISSING:{finding_id}",),
+                )
+        if record.disposition is FindingDisposition.ESCALATED and not (
+            record.escalation_target or ""
+        ).strip():
+            return UpgradeResult(
+                UpgradeDecision.HOLD,
+                (f"FINDING_ESCALATION_TARGET_MISSING:{finding_id}",),
+            )
+
     open_findings = sorted(
         finding_id
-        for finding_id, disposition in context.finding_dispositions.items()
-        if disposition is FindingDisposition.OPEN
+        for finding_id, record in context.findings.items()
+        if record.disposition is FindingDisposition.OPEN
     )
     if open_findings:
         return UpgradeResult(
