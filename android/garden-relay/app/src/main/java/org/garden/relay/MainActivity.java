@@ -46,6 +46,7 @@ public final class MainActivity extends Activity {
     private TextView discovery;
     private TextView calibration;
     private volatile boolean coordinateProbe = false;
+    private volatile int coordinateAttempt = 0;
     private static final int SHIZUKU_REQ = 41;
     private final Shizuku.UserServiceArgs uiProbeArgs =
             new Shizuku.UserServiceArgs(new ComponentName("org.garden.reviewdashboard", UiProbeService.class.getName()))
@@ -58,7 +59,11 @@ public final class MainActivity extends Activity {
                     String result;
                     if (coordinateProbe) {
                         android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
-                        result = service.calibrateDeepSeekTap(dm.widthPixels, dm.heightPixels);
+                        int[][] offsets = new int[][]{{0,145},{0,210},{-180,145},{180,145}};
+                        int i = Math.max(0, Math.min(coordinateAttempt, offsets.length-1));
+                        int x = dm.widthPixels/2 + offsets[i][0];
+                        int y = dm.heightPixels - offsets[i][1];
+                        result = service.calibrateDeepSeekTapAt(x, y, dm.widthPixels, dm.heightPixels);
                         coordinateProbe = false;
                     } else {
                         result = service.probeDeepSeekInput();
@@ -200,6 +205,7 @@ public final class MainActivity extends Activity {
             if (launch == null) { calibration.setText("DeepSeek coordinate calibration: BLOCKED — no launch activity"); return; }
             launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(launch);
+            coordinateAttempt = (coordinateAttempt + 1) % 4;
             coordinateProbe = true;
             calibration.setText("DeepSeek coordinate calibration: opening app; will tap composer region only…");
             main.postDelayed(() -> {
