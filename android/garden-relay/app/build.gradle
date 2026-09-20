@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 10
-        versionName '0.6.0-reviewer-discovery'
+        versionCode 11
+        versionName '0.7.0-deepseek-launch-calibration'
     }
 
     signingConfigs {
