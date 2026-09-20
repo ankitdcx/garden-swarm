@@ -3,10 +3,6 @@ name: Garden GROUP_REVIEW OpenRouter trigger
 on:
   issues:
     types: [opened]
-  push:
-    branches: [main]
-    paths:
-      - 'review-state/group-review-dispatch-request.json'
 
 permissions:
   contents: read
@@ -21,10 +17,7 @@ jobs:
     if: >-
       github.repository == 'ankitdcx/garden-swarm' &&
       github.ref == 'refs/heads/main' &&
-      (
-        github.event_name == 'push' ||
-        startsWith(github.event.issue.title, '[GROUP_REVIEW_RUN] ')
-      )
+      startsWith(github.event.issue.title, '[GROUP_REVIEW_RUN] ')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
