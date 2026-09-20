@@ -1,0 +1,56 @@
+GARDEN VERSION HISTORY THROUGH v15.11
+History-only review projection
+Updated: 2026-09-20
+
+This file records lineage only. It is not a controlling semantic owner.
+
+v15.5
+  Five-file baseline repaired release banners, GCL executable semantics, SchemaID dictionary/aliases and duplicate
+  registrations while retaining GSL v45.1.
+
+v15.6-v15.8
+  Candidate hardening added R0 SanityGate separation, rights/provenance normalization, authority/effect typing,
+  human-effect/justice/reputation hardening, event-driven context work and scattered gap closure.
+
+v15.9
+  Five-file rewrite organized current meaning by semantic owners instead of upgrade chronology, preserved status
+  distinctions and specification/implementation/validation/certification separation, normalized RCI as a composition
+  over existing owners, and completed P001-P037 cross-review/materialization evidence.
+
+v15.10 r6
+  Three-artifact machine package: Book, Technical, compressed Catalogue.
+  Recorded graph: 41,053 nodes.
+  Technical+Catalogue independent reproduction PASS.
+  v15.9 byte-exact reconstruction PASS.
+  semantic admissions recognized false.
+  predecessor elision allowed false.
+
+v15.10 text normalization
+  Current-source direction changed to directly readable UTF-8 Book + Technical + Catalogue, with History non-controlling.
+  Whole predecessor embedding ceased to be a current-source requirement, but semantic loss remained forbidden.
+
+2026-09-20 compact retention repair
+  Direct audit of the first compact text draft found unique reviewed obligations that had become implicit/absent.
+  Compact repair restored HRAP/protected reporting, CSI/SMCD/CAD/OAC/CTSN/PAI, CausalClosureReceipt, typed credential
+  states, justice expiry/retry semantics, HEC/P026 tests, RVH-4 disposition and P001-P037 semantic crosswalk.
+
+2026-09-20 v15.11 candidate
+  Added Runtime Constitutional hardening, governed Transition Fabric and AI-led specification closure while preserving
+  no-new-sovereignty/no-self-validation rules.
+  Runtime reference gained content-addressed authority/materiality claims, typed authority receipts, GoalLease and
+  orthogonal host-enforcement status.
+  Transition reference gained TransitionAssuranceReceipt, TransitionReceipt, content-addressed AuthorityDelta,
+  stage-omission controls and rollback/compensation semantics.
+  Upgrade reference gained exact-candidate/audited-scope closure, HARD_GATE/PROTECTED finding classes, candidate-bound
+  review evidence and bounded recursion.
+  GROUP_REVIEW process separately learned to treat unavailable product context isolation as non-PASS rather than repeat
+  equivalent blind-chat reruns.
+  Cheap governed OpenRouter review is permitted when explicitly authorized; external reviewer consensus creates no
+  semantic or canonical authority.
+
+CURRENT STATUS
+
+Garden v15.11 remains a NONCANONICAL WORKING CANDIDATE. Retention evidence, executable prototypes, CI and external review
+are evidence only. Canonical admission remains separately governed.
+
+END OF GARDEN VERSION HISTORY THROUGH v15.11
