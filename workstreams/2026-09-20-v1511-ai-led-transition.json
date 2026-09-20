@@ -42,7 +42,8 @@
       "GoalValidity",
       "UpgradeContext",
       "evaluate_upgrade_closure",
-      "TransitionAssuranceBinding"
+      "TransitionAssuranceBinding",
+      "FindingRecord"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
