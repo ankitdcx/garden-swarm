@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,13 +40,10 @@ import java.util.concurrent.Executors;
 
 public final class MainActivity extends Activity {
     private static final String PREF_JOB_URL = "job_url";
-    private static final String PREF_AUTO_SEND = "auto_send";
     private static final String PREF_AUTO_ADVANCE = "auto_advance";
     private static final String PREF_AUTO_RETURN = "auto_return";
     private static final String PREF_ACTIVE_JOB = "active_job";
     private static final String PREF_ACTIVE_SLOT = "active_slot";
-    private static final String PREF_PENDING_SEND_PACKAGE = "pending_send_package";
-    private static final String PREF_PENDING_SEND_UNTIL = "pending_send_until";
 
     private final ExecutorService io = Executors.newSingleThreadExecutor();
     private final Handler main = new Handler(Looper.getMainLooper());
@@ -55,7 +51,6 @@ public final class MainActivity extends Activity {
 
     private TextView statusView;
     private ReviewJob currentJob;
-    private CheckBox autoSend;
     private CheckBox autoAdvance;
     private CheckBox autoReturn;
 
@@ -138,18 +133,9 @@ public final class MainActivity extends Activity {
         autoReturn.setOnCheckedChangeListener((b, checked) -> prefs().edit().putBoolean(PREF_AUTO_RETURN, checked).apply());
         root.addView(autoReturn);
 
-        autoSend = new CheckBox(this);
-        autoSend.setText("One-shot Accessibility helper: tap Send automatically when exactly one safe Send/Submit button is found");
-        autoSend.setChecked(prefs().getBoolean(PREF_AUTO_SEND, false));
-        autoSend.setOnCheckedChangeListener((b, checked) -> prefs().edit().putBoolean(PREF_AUTO_SEND, checked).apply());
-        root.addView(autoSend);
-
-        Button accessibility = button("Open Accessibility settings", v ->
-                startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)));
-        root.addView(accessibility);
 
         TextView privacy = new TextView(this);
-        privacy.setText("\nPrivacy: no clipboard monitoring, no screen recording, no password/API-key storage, and no continuous accessibility capture. The helper is armed only for a bound app for a short one-shot Send action.");
+        privacy.setText("\nPrivacy: no Accessibility service, clipboard monitoring, screen recording, notification access, passwords, API keys, contacts, camera, microphone, or location. Garden Relay uses Android Share and Internet only.");
         privacy.setTextSize(12);
         root.addView(privacy);
 
@@ -329,12 +315,6 @@ public final class MainActivity extends Activity {
                     .putString(PREF_ACTIVE_SLOT, target.slot)
                     .apply();
 
-            if (prefs().getBoolean(PREF_AUTO_SEND, false)) {
-                prefs().edit()
-                        .putString(PREF_PENDING_SEND_PACKAGE, pkg)
-                        .putLong(PREF_PENDING_SEND_UNTIL, System.currentTimeMillis() + 120_000L)
-                        .apply();
-            }
 
             startActivity(intent);
         } catch (Exception e) {
@@ -418,8 +398,6 @@ public final class MainActivity extends Activity {
                 ResultStore.save(this, jobId, slot, incoming.bytes, incoming.kind);
                 prefs().edit()
                         .remove(PREF_ACTIVE_SLOT)
-                        .remove(PREF_PENDING_SEND_PACKAGE)
-                        .remove(PREF_PENDING_SEND_UNTIL)
                         .apply();
                 main.post(() -> {
                     toast("Saved exact " + prettySlot(slot) + " result.");
@@ -492,12 +470,6 @@ public final class MainActivity extends Activity {
                     if (!pkg.trim().isEmpty()) {
                         intent.setPackage(pkg);
                         grantUriPermission(pkg, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        if (prefs().getBoolean(PREF_AUTO_SEND, false)) {
-                            prefs().edit()
-                                    .putString(PREF_PENDING_SEND_PACKAGE, pkg)
-                                    .putLong(PREF_PENDING_SEND_UNTIL, System.currentTimeMillis() + 120_000L)
-                                    .apply();
-                        }
                     }
                     try {
                         startActivity(pkg.trim().isEmpty() ? Intent.createChooser(intent, "Send Garden results") : intent);
