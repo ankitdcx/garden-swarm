@@ -23,6 +23,8 @@ class UpgradeDecision(str, Enum):
 @dataclass
 class UpgradeContext:
     finding_dispositions: Mapping[str, FindingDisposition] = field(default_factory=dict)
+    audited_scope_declared: bool = False
+    search_coverage_complete: Optional[bool] = None
     bounded_cycle_declared: bool = False
     upgrade_methods_authorized: Optional[bool] = None
     propagation_complete: Optional[bool] = None
@@ -62,6 +64,20 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     This checker does not merge, canonize, authorize deployment, or create
     constitutional authority. It only evaluates the declared closure conditions.
     """
+
+    if not context.audited_scope_declared:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("AUDITED_SCOPE_NOT_DECLARED",),
+        )
+
+    coverage = _typed_gate(
+        "SEARCH_COVERAGE",
+        context.search_coverage_complete,
+        false_decision=UpgradeDecision.CONTINUE_WORK,
+    )
+    if coverage is not None:
+        return coverage
 
     if not context.bounded_cycle_declared:
         return UpgradeResult(
