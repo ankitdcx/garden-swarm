@@ -1,10 +1,10 @@
 {
   "schema": "GardenGroupReviewDispatchRequest/v1",
   "status": "REQUESTED",
-  "run_issue_number": 257,
-  "packet_sha256": "de3e90d3a5c887e0601f8d6b33212bb27af776d8a91315a83c477a7e4d73e513",
+  "run_issue_number": 259,
+  "packet_sha256": "2a730e5f32c97daabab4143db7bd15027f82d0753696e628ab27566773d86058",
   "created_at": "2026-09-20T12:09:00+05:30",
-  "purpose": "Dispatch the reduced source-complete cheap v15.11 OpenRouter GROUP_REVIEW after the superseded #254 packet exceeded the conservative first-endpoint context/affordability bound.",
-  "supersedes_run_issue_number": 254,
+  "purpose": "Re-dispatch unchanged frozen semantic run #259 after installing bounded pre-reservation diagnostics.",
+  "supersedes_dispatch_for_run_issue_number": 257,
   "semantic_delta_admitted": false
 }
