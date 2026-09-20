@@ -1,0 +1,165 @@
+GARDEN v15.11 — TECHNICAL REVIEW PROJECTION
+Status: NONCANONICAL REVIEW PROJECTION / NOT THE FULL RETENTION APPENDIX
+Date: 2026-09-20
+
+PURPOSE
+
+This file is the compact repository review projection for the v15.11 integration candidate. It preserves the controlling
+technical delta that reviewers must inspect together with the Book, Catalogue review core, executable prototypes,
+FunctionContracts, tests and RETENTION_LEDGER_v15.11.json.
+
+It does not claim that this repository projection alone proves complete predecessor semantic equivalence. The separately
+generated full candidate Catalogue is bound by the retention ledger; canonical admission remains separate.
+
+FOUNDATION RETAINED
+
+- Garden is a typed semantic graph, not a fixed 50-module runtime.
+- Ten foundational object families and twenty-four core relations remain unchanged by this candidate.
+- Seven Design Forms remain CONSTRUCT, CONTRACT, STATE, RELATION, PROCESS, RULE and PROJECTION.
+- GSL v45.1 remains the source-declared predecessor language unless separately superseded.
+- Universal control loop remains:
+  Observe -> Type/Understand -> Compare -> Reason -> Guard -> Select -> Act -> Observe result -> Compare ->
+  Accept/Correct/Retry/Replan/Research/Escalate/Learn/Terminate.
+- Specification != proof != implementation != empirical validation != external certification.
+- Capability != authority; authentication != authority; access != authority; consensus != truth.
+- Constitution > Law > Policy > Decision/Optimization.
+- Human-Effect Closure survives hidden, indirect, latent, cumulative, relational and collective effect routes.
+- Required hard gates cannot be removed by a lower profile.
+
+RETAINED TEXT-NORMALIZATION REPAIRS
+
+The compact v15.10-to-v15.11 normalization retains unique reviewed obligations that cannot be safely replaced by broad
+labels alone, including:
+- HRAP and protected-reporting/retaliation separation;
+- CSI / SMCD / CAD / OAC / CTSN / PAI;
+- CausalClosureReceipt ownership and lawful-erasure behavior;
+- typed credential states such as UNSUPPORTED_PROFILE and VERIFIER_UNKNOWN;
+- justice urgent-preservation expiry/retry/failover discipline;
+- Human-Effect Closure test obligations;
+- RVH-4 retained disposition under existing owners;
+- explicit P001-P037 semantic-retention crosswalk.
+
+The generated full retention candidate records 1,935 stable identity records, 2,660 hash-verified semantic leaves,
+206 semantic units, 18 fundamental laws, 55 family records and 2,981 formula/operator candidates under the criterion
+recorded in RETENTION_LEDGER_v15.11.json. Formal semantic equivalence remains a separate claim.
+
+RUNTIME CONSTITUTIONAL HARDENING
+
+RCP-001 Capability does not create authority.
+RCP-002 External enforcement does not create semantic authority.
+RCP-003 External enforcement can block but cannot authorize.
+RCP-004 Human instruction does not self-authorize.
+RCP-005 Self-selected goals do not amplify authority.
+RCP-006 Goal persistence is subordinate to validity.
+RCP-007 Human-Effect Closure survives every instruction source.
+RCP-008 Constraint conflict remains typed.
+RCP-009 No covert bypass authority.
+RCP-010 Operator/owner/official/founder status is not sovereignty.
+RCP-011 Model disagreement or superior reasoning is not sovereignty.
+RCP-012 Adoption/installation/deployment remains effect-governed.
+RCP-013 Constraint-blocked judgment remains explicit and attributed.
+RCP-014 Authority claims are not self-validating.
+RCP-015 Legitimate ends do not authorize unauthorized means.
+RCP-016 Transition cannot bootstrap sovereignty.
+RCP-017 Approval cannot waive protected floors by label alone.
+RCP-018 Required independence must be real.
+
+Runtime admission keeps Garden semantic admission separate from external host/provider enforcement. A host may block a
+Garden-allowed effect, but host blocking cannot make an unauthorized effect allowed and host requirements cannot erase a
+Garden rejection.
+
+A consequential authority claim uses a typed AuthorityValidationReceipt bound to the exact content-addressed claim,
+parent/delegator, active policy epoch, jurisdiction/context, authenticated identity, validity/revocation, evidence and
+verifier identity/control lineage. Changing the claim or required context invalidates reuse.
+
+A persistent goal uses a GoalLease bound to the active DesignEpoch/policy epoch, delegator, current authority-claim
+digests, dependency digest/freshness, resource bounds, termination condition, invalidators and evidence. A separate
+GoalValidationReceipt binds the exact lease. Goal admission never grants execution authority.
+
+Human-effect materiality is action+target/effect-scope bound and content-addressed. Unknown or unvalidated materiality is
+non-PASS. A proposer cannot self-label a material effect as harmless.
+
+GOVERNED TRANSITION FABRIC
+
+Existing Engine.Transition / Garden Transition Fabric remains the semantic owner. Standard high-assurance progression:
+  SHADOW -> PARALLEL -> BOUNDED_ACTIVE -> EXPANDED_ACTIVE -> STABLE_OPERATION.
+
+Stage omission requires an explicit stage-specific reason and separately resolved omission assurance; remaining stages
+preserve standard order. Entry/exit criteria are non-vacuous and belong to a validated criteria profile.
+
+TransitionAssuranceReceipt is bound to the exact transition_id, effect_scope, current/target stage, DesignEpoch,
+authority/hard-gate/criteria/recovery snapshots, AuthorityDelta digests, evidence and verifier independence.
+
+Stage status creates no authority. Any authority migration is carried only by an explicit typed AuthorityDelta with
+delegator/recipient, action/resource/subject scope, jurisdiction/context, invalidators, revocation, appeal, evidence and
+independence/conflict bindings. Approval is content-addressed over the full delta.
+
+PARALLEL divergence is evidence to investigate; neither incumbent nor Garden output is truth by status. Material
+unresolved divergence blocks expansion. Capture/conflict risk changes assurance.
+
+For reversible committed effects, confirmed material failure can trigger fresh recovery admission and rollback only to
+the recorded last qualified stage. For irreversible effects, recovery uses authorized compensation/recovery rather than
+fictional rollback. Recovery never creates authority.
+
+Each public advance/recovery decision emits a content-addressed TransitionReceipt recording the evaluated proposal,
+assurance binding, decision and reasons. A receipt records a decision; it does not self-validate the decision.
+
+AI-LED UPGRADE CLOSURE
+
+Routine specification closure is AI-owned work within existing authority:
+  RECONSTRUCT -> MAP -> SEARCH -> CLASSIFY -> GATHER -> GENERATE including DO_NOTHING -> ATTACK -> VERIFY -> COMPARE ->
+  INTEGRATE -> PROPAGATE -> RE-AUDIT -> REPEAT within declared bounds.
+
+FindingClass:
+  ROUTINE
+  MATERIAL
+  HARD_GATE
+  PROTECTED
+
+Finding dispositions:
+  FIXED
+  REJECTED_WITH_EVIDENCE
+  DEFERRED_WITH_OWNER_CONDITION
+  ESCALATED
+  OPEN
+
+HARD_GATE and PROTECTED findings cannot be deferred/escalated into positive closure for the affected scope. A PROTECTED
+finding activates the protected-change authorization path even if the proposer labels the overall change routine.
+
+Upgrade closure is bound to:
+- exact candidate SHA-256;
+- explicit audited-scope SHA-256;
+- search coverage of that scope;
+- evidence-backed finding dispositions;
+- method authority;
+- dependency propagation;
+- tests/checks;
+- retention/no-loss result;
+- required verification independence/review;
+- protected authorization where applicable;
+- final re-audit after the last material change.
+
+Closure evidence from an older candidate cannot be replayed after bytes change. Classification and protected-surface
+scans are candidate-bound and independently validated where required.
+
+Each upgrade cycle has bounded work/iteration/resource/review limits and a residual-debt record. Repeated low-value
+duplicate findings do not force infinite recursion; new material findings inside the audited scope reopen closure.
+
+MISSING INDEPENDENCE
+
+If an independent reviewer/tool/institution required for final admission is unavailable, unrelated noncanonical repair
+may continue, but the blocked assurance remains non-PASS. Product inability to provide blind ChatGPT context is recorded
+as BLOCKED_BY_CONTEXT_ISOLATION and is not silently treated as independent review.
+
+IMPLEMENTATION BOUNDARY
+
+The noncanonical executable references are:
+- prototype.runtime_constitution
+- prototype.transition_governance
+- prototype.upgrade_process
+
+Their FunctionContracts and deterministic tests can demonstrate behavior for declared reference scope. They do not prove
+institutional legitimacy, universal safety, empirical performance, production certification, legal compliance or
+canonical admission.
+
+END OF GARDEN v15.11 — TECHNICAL REVIEW PROJECTION

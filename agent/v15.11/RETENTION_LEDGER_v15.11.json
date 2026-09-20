@@ -1,0 +1,66 @@
+{
+  "schema": "GardenStandalonePackageBindingLedger/v1",
+  "candidate": "Garden v15.11 standalone successor working candidate",
+  "date": "2026-09-20",
+  "status": "NONCANONICAL_CANDIDATE_EVIDENCE",
+  "v15_10_standalone": {
+    "manifest_sha256": "804fae69707b0ba810e764476c0e82b38392f00f1c9d62b1a100e575eafa6854",
+    "retention_receipt_sha256": "78de8a0fd59d18ec82a388b9e2a0fa0b2760deab18ae82850068948ad71cfcf5",
+    "package_zip_sha256": "9af4f13415c05c94c693ef9720c1917801cffa0ead86ff1b06895291d089561b",
+    "external_predecessor_required": false
+  },
+  "v15_11_standalone": {
+    "manifest_sha256": "dd4d1069f767bbdfa00c7e37de6d0e1b6d765ac054c7b09d749f4c70c44d6f78",
+    "closure_receipt_sha256": "582d5cc0a12d74817ed6b454b6b573c85dc5772d43a509a6559fd33c8899e41d",
+    "package_zip_sha256": "6689ef9874227aa091f55438f13a3bb1ec41817d293ea2c89365582f385b86e4",
+    "primary_sources": {
+      "GARDEN_BOOK_v15.11.txt": {
+        "bytes": 17629,
+        "sha256": "cb3b3f885fa61dbc3c19385698444047045fbb517866bebaaf8cc103de2d22b6"
+      },
+      "GARDEN_TECHNICAL_v15.11.txt": {
+        "bytes": 54011,
+        "sha256": "f16aff43b0788135c57ff6a40fb4df55c9a6ba50c05f3d690db4fd4f02f009e4"
+      },
+      "GARDEN_CATALOGUE_v15.11.txt": {
+        "bytes": 4899658,
+        "sha256": "d02dad9662bedb9d9253ed9eaabc6ec0462ee67697c29201d85b01323fb97f8c"
+      },
+      "GARDEN_VERSION_HISTORY_v15.11.txt": {
+        "bytes": 12732,
+        "sha256": "339ff65292c455976a504801ff1708eaab4b3fa7ffc18f16b9389143247729ad"
+      }
+    }
+  },
+  "coverage": {
+    "stable_identities": 1935,
+    "semantic_leaves_verified": 2660,
+    "formula_operator_candidates_verified": 2981,
+    "fundamental_laws": 18,
+    "families": 55,
+    "v1511_runtime_tests": 39,
+    "v1511_transition_tests": 40,
+    "v1511_upgrade_tests": 27
+  },
+  "repo_projection_boundary": {
+    "full_standalone_catalogue_committed_in_this_pr": false,
+    "reason": "The repository PR stores compact review projections, executable references, tests, manifests and hash-bound closure evidence. The 4.9 MB standalone Catalogue is bound by exact SHA-256 in the package manifest but is not falsely represented as present in this PR.",
+    "review_projection_paths": [
+      "agent/v15.11/GARDEN_BOOK_v15.11_CANDIDATE.txt",
+      "agent/v15.11/GARDEN_TECHNICAL_v15.11_CANDIDATE.txt",
+      "agent/v15.11/GARDEN_CATALOGUE_v15.11_REVIEW_CORE.txt",
+      "agent/v15.11/GARDEN_VERSION_HISTORY_v15.11_CANDIDATE.txt"
+    ]
+  },
+  "claims": {
+    "literal_retention_inventory_hash_closure": true,
+    "formal_semantic_equivalence_proved": false,
+    "implementation_certified": false,
+    "canonical_admission": false
+  },
+  "independent_review": {
+    "required_for_final_high_risk_admission": true,
+    "current_status": "BLOCKED_REQUIRED_DEEPSEEK_SLOT_NO_ELIGIBLE_ENDPOINT",
+    "silent_substitution_allowed": false
+  }
+}
