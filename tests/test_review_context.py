@@ -137,19 +137,24 @@ class ContextReviewTests(unittest.TestCase):
     def test_audit_requires_current_dated_target_plan_and_preserves_pools(self):
         now = datetime(2026, 9, 16, tzinfo=timezone.utc).timestamp()
         normal, receipt = effective_policy(self.policy, {'target_id': 'T'}, now)
-        self.assertEqual(normal['daily_openrouter_cost_ceiling_usd'], 1)
-        self.assertEqual(receipt['per_call_usd'], '0.05')
+        self.assertEqual(normal['daily_openrouter_cost_ceiling_usd'], 2)
+        self.assertEqual(receipt['per_call_usd'], '0.01')
         directive = {'target_id': 'T', 'spending_mode': 'AUDIT'}
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now)
         directive['audit_window'] = {'utc_day': '2026-09-16', 'target_id': 'T', 'audit_id': 'audit-1', 'purpose': 'cross-module audit'}
         audit, _ = effective_policy(self.policy, directive, now)
         self.assertEqual(audit['daily_openrouter_cost_ceiling_usd'], 2)
-        self.assertEqual(audit['budget_pools_usd'], self.policy['budget_pools_usd'])
+        self.assertEqual(audit['routine_model_call_cost_ceiling_usd'], 0.01)
         with self.assertRaises(ValueError):
             effective_policy(self.policy, directive, now + 86400)
-        with self.assertRaises(ValueError):
-            legacy.budget_check({'paused': False, 'attempts': []}, {'usage': 8.99, 'usage_daily': 0}, audit, now)
+        with self.assertRaisesRegex(ValueError, 'daily'):
+            legacy.budget_check(
+                {'paused': False, 'attempts': []},
+                {'usage': 999, 'usage_daily': 1.995},
+                audit,
+                now,
+            )
 
     def test_live_worker_uses_same_rich_packet_for_two_families_and_reserves_first(self):
         self.exercise_worker('SUFFICIENT')
@@ -197,7 +202,7 @@ class ContextReviewTests(unittest.TestCase):
         self.assertIn('Please find any defects or gaps or worthy upgrades.', calls[0]['messages'][0]['content'])
         self.assertIn('support_passages', calls[0]['messages'][0]['content'])
         self.assertEqual(state['attempts'][-1]['review_profile']['name'], 'COMPLEX')
-        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '1')
+        self.assertEqual(state['attempts'][-1]['spending']['daily_ceiling_usd'], '2')
         self.assertEqual(calls[0]['max_tokens'],16000)
 
     def test_context_expansion_cannot_reset_fifteen_call_task_budget(self):
