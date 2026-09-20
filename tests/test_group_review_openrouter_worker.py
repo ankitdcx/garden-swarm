@@ -20,7 +20,12 @@ def write_event(payload):
 
 class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
     def base_env(self, workflow="provider"):
-        name = "group-review-openrouter.yml" if workflow == "provider" else "group-review-openrouter-trigger.yml"
+        if workflow == "provider":
+            name = "group-review-openrouter.yml"
+        elif workflow == "push":
+            name = "group-review-openrouter-push-trigger.yml"
+        else:
+            name = "group-review-openrouter-trigger.yml"
         return {
             "GITHUB_REPOSITORY": "ankitdcx/garden-swarm",
             "GITHUB_REF": "refs/heads/main",
@@ -65,7 +70,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         }
         request_path = Path(tempfile.mkstemp()[1])
         request_path.write_text(json.dumps(request), encoding="utf-8")
-        env = self.base_env("trigger") | {
+        env = self.base_env("push") | {
             "GITHUB_EVENT_NAME": "push",
             "GITHUB_ACTOR": "ankitdcx",
             "GITHUB_EVENT_PATH": path,
