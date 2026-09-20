@@ -46,6 +46,27 @@ public final class MainActivity extends Activity {
     private TextView discovery;
     private TextView calibration;
     private static final int SHIZUKU_REQ = 41;
+    private final Shizuku.UserServiceArgs uiProbeArgs =
+            new Shizuku.UserServiceArgs(new ComponentName("org.garden.reviewdashboard", UiProbeService.class.getName()))
+                    .daemon(false).processNameSuffix("uiprobe").debuggable(true).version(12);
+    private final ServiceConnection uiProbeConnection = new ServiceConnection() {
+        @Override public void onServiceConnected(ComponentName name, IBinder binder) {
+            io.execute(() -> {
+                try {
+                    IUiProbeService service = IUiProbeService.Stub.asInterface(binder);
+                    String result = service.probeDeepSeekInput();
+                    main.post(() -> calibration.setText("DeepSeek input calibration: " +
+                            (result.contains("editable_nodes=0") ? "NEEDS ADAPTER" : "PASS") +
+                            "\n" + result + "\nNo text inserted; no message sent."));
+                    try { Shizuku.unbindUserService(uiProbeArgs, this, true); } catch(Throwable ignored){}
+                } catch (Throwable t) {
+                    main.post(() -> calibration.setText("DeepSeek input calibration: FAILED — " +
+                            t.getClass().getSimpleName() + ": " + String.valueOf(t.getMessage())));
+                }
+            });
+        }
+        @Override public void onServiceDisconnected(ComponentName name) {}
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +189,15 @@ public final class MainActivity extends Activity {
             }
             launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(launch);
-            calibration.setText("DeepSeek input calibration: app launched. Shell UI probe requires Shizuku UserService; no text inserted and nothing sent.");
+            calibration.setText("DeepSeek input calibration: opening app; waiting for UI…");
+            main.postDelayed(() -> {
+                try {
+                    calibration.setText("DeepSeek input calibration: probing via Shizuku UserService…");
+                    Shizuku.bindUserService(uiProbeArgs, uiProbeConnection);
+                } catch (Throwable t) {
+                    calibration.setText("DeepSeek input calibration: FAILED — " + t.getClass().getSimpleName());
+                }
+            }, 1800);
         } catch (Throwable t) {
             calibration.setText("DeepSeek input calibration: FAILED — " + t.getClass().getSimpleName());
         }
