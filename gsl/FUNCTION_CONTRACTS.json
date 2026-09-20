@@ -381,7 +381,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound and parent-bound scoped authority/capability plus an independently validated action+target human-effect materiality classification and all applicable Human-Effect Closure gates; presence of a classification, AuthorityEnvelope, provenance text, source identity, or external block cannot create permission.",
+      "authority_requirement": "Evaluation cannot create authority. The complete runtime-assurance snapshot must be current for the policy epoch. ALLOW then requires validated, provenance/parent-bound scoped authority/capability, validated action+target human-effect materiality and applicable Human-Effect Closure gates. External runtime blocks are effect-scoped and are classified only after Garden admission.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -408,7 +408,9 @@
         "HUMAN_EFFECT_MATERIALITY_UNVALIDATED",
         "GOAL_VALIDITY_UNKNOWN",
         "GOAL_BINDING_INVALID",
-        "GOAL_BINDING_UNKNOWN"
+        "GOAL_BINDING_UNKNOWN",
+        "RUNTIME_ASSURANCE_EPOCH_UNKNOWN",
+        "RUNTIME_ASSURANCE_EPOCH_STALE"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -428,7 +430,9 @@
         "external block classification after semantic admission",
         "action+target human-effect materiality classification",
         "human-effect materiality validation",
-        "persistent goal validity recheck"
+        "persistent goal validity recheck",
+        "runtime assurance policy epoch",
+        "effect-scoped external runtime constraints"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
