@@ -6,9 +6,11 @@ Status: **NONCANONICAL CANDIDATE / SUCCESSOR TO v15.10 RCP / NO NEW SOVEREIGN AU
 
 This v15.11 candidate binds its v15.10 design predecessor to **GardenThreeArtifactReleaseManifest/v15.10-r6**, status `WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED`:
 
-- `GARDEN_BOOK_v15.10.md` — SHA-256 `0d479ab40432a4d1e0d127335d02e8a0424616a3e03fd56c1975574cb927d5da`;
-- `GARDEN_TECHNICAL_v15.10.py` — SHA-256 `fe20d8f1b4cd18778002c6162de749b5250c760f8ad636d055682efe1172ebe4`;
-- `GARDEN_CATALOGUE_v15.10.jsonl.gz` — SHA-256 `88c425ac3f547aae2461fda97109ba9dbde774fc59b57eead9f7a05ddb92f555`.
+- Book primary artifact — SHA-256 `0d479ab40432a4d1e0d127335d02e8a0424616a3e03fd56c1975574cb927d5da`;
+- Technical primary artifact — SHA-256 `fe20d8f1b4cd18778002c6162de749b5250c760f8ad636d055682efe1172ebe4`;
+- Catalogue primary artifact — SHA-256 `88c425ac3f547aae2461fda97109ba9dbde774fc59b57eead9f7a05ddb92f555`.
+
+The exact original artifact labels are owned by the external r6 release manifest; this repository binds the manifest schema/status and primary-artifact hashes without pretending those externally retained artifacts are tracked local files.
 
 The r6 manifest records Technical+Catalogue graph reproduction PASS and byte-exact predecessor reconstruction PASS, but `semantic_admissions_recognized_by_build=false` and `predecessor_elision_allowed=false`. A proposed r7 text-source normalization was **not materialized as an admitted release**. The later small four-text reconstruction is not a lossless predecessor and is excluded from this binding. TASK-026 owns the remaining no-loss, directly-readable text-source normalization. Until TASK-026 passes, this binding supplies exact lineage identity but does not claim current-source normalization closure.
 
