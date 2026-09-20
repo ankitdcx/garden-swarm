@@ -1,4 +1,5 @@
 from prototype.transition_governance import (
+    AuthorityDelta,
     RecoveryProposal,
     TransitionAssuranceBinding,
     TransitionContext,
@@ -68,6 +69,7 @@ def context(**overrides):
         divergence_resolved=True,
         capture_conflict_clear=True,
         operational_readiness=True,
+        criteria_profile_validated=True,
         entry_criteria={"entry": True},
         exit_criteria={"exit": True},
         rollback_ready=True,
@@ -509,3 +511,89 @@ def test_transition_assurance_from_old_design_epoch_cannot_be_replayed():
     result = evaluate_transition(proposal(), context(assurance_binding=old))
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("TRANSITION_ASSURANCE_BINDING_MISMATCH",)
+
+
+def valid_authority_delta():
+    return AuthorityDelta(
+        delta_id="d1",
+        delegator="institution:old",
+        recipient="service:garden",
+        actions=frozenset({"review"}),
+        resources=frozenset({"permit:bounded"}),
+        affected_subjects=frozenset({"community:1"}),
+        jurisdiction="jurisdiction:1",
+        invalidation_conditions=("revoked", "epoch_changed"),
+        revocation_path="appeal-board",
+        appeal_path="independent-appeal",
+        evidence_refs=("authority-record:1",),
+    )
+
+
+def test_unvalidated_authority_delta_cannot_advance_transition():
+    p = TransitionProposal(
+        transition_id="t1",
+        current_stage=TransitionStage.SHADOW,
+        next_stage=TransitionStage.PARALLEL,
+        declared_stage_plan=PLAN,
+        effect_scope="institution:bounded",
+        authority_deltas=(valid_authority_delta(),),
+    )
+    result = evaluate_transition(p, context())
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("AUTHORITY_DELTA_UNVALIDATED:d1",)
+
+
+def test_authority_delta_requires_evidence_and_revocation_appeal_bindings():
+    delta = AuthorityDelta(
+        delta_id="d1",
+        delegator="institution:old",
+        recipient="service:garden",
+        actions=frozenset({"review"}),
+        resources=frozenset({"permit:bounded"}),
+        affected_subjects=frozenset({"community:1"}),
+        jurisdiction="jurisdiction:1",
+        invalidation_conditions=("revoked",),
+        revocation_path="",
+        appeal_path="",
+        evidence_refs=(),
+    )
+    p = TransitionProposal(
+        transition_id="t1",
+        current_stage=TransitionStage.SHADOW,
+        next_stage=TransitionStage.PARALLEL,
+        declared_stage_plan=PLAN,
+        effect_scope="institution:bounded",
+        authority_deltas=(delta,),
+    )
+    result = evaluate_transition(
+        p,
+        context(authority_delta_validation={"d1": True}),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("AUTHORITY_DELTA_BINDING_INCOMPLETE:d1",)
+
+
+def test_validated_authority_delta_can_transfer_without_minting_authority():
+    p = TransitionProposal(
+        transition_id="t1",
+        current_stage=TransitionStage.SHADOW,
+        next_stage=TransitionStage.PARALLEL,
+        declared_stage_plan=PLAN,
+        effect_scope="institution:bounded",
+        authority_deltas=(valid_authority_delta(),),
+    )
+    result = evaluate_transition(
+        p,
+        context(authority_delta_validation={"d1": True}),
+    )
+    assert result.decision is TransitionDecision.ADVANCE
+    assert result.authority_created is False
+
+
+def test_unvalidated_transition_criteria_profile_cannot_pass():
+    result = evaluate_transition(
+        proposal(),
+        context(criteria_profile_validated=None),
+    )
+    assert result.decision is TransitionDecision.ESCALATE
+    assert result.reasons == ("TRANSITION_CRITERIA_PROFILE_UNVALIDATED",)
