@@ -98,6 +98,8 @@ A model may independently create a useful long-horizon goal. It may research, re
 
 External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint.
 
+Human-effect materiality is itself a required typed input to consequential action admission. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. A legacy or profile-specific high-impact list may positively force stricter treatment but cannot prove that an unlisted action is harmless.
+
 ## Transition binding
 
 RCP-012 and RCP-016 bind to the existing Garden Transition Fabric / Engine.Transition owner. The v15.11 transition profile adds staged shadow/parallel/bounded-active migration, divergence checks, anti-capture review, rollback/compensation and dispute handling without creating a second Transition engine.
