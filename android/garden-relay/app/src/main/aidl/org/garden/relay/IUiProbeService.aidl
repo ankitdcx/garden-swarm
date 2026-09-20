@@ -4,4 +4,5 @@ interface IUiProbeService {
     void destroy() = 16777114;
     String probeDeepSeekInput() = 1;
     String calibrateDeepSeekTap(int width, int height) = 2;
+    String calibrateDeepSeekTapAt(int x, int y, int width, int height) = 3;
 }
