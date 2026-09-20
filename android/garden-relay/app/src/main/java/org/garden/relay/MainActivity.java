@@ -45,6 +45,7 @@ public final class MainActivity extends Activity {
     private TextView bridge;
     private TextView discovery;
     private TextView calibration;
+    private volatile boolean coordinateProbe = false;
     private static final int SHIZUKU_REQ = 41;
     private final Shizuku.UserServiceArgs uiProbeArgs =
             new Shizuku.UserServiceArgs(new ComponentName("org.garden.reviewdashboard", UiProbeService.class.getName()))
@@ -54,7 +55,14 @@ public final class MainActivity extends Activity {
             io.execute(() -> {
                 try {
                     IUiProbeService service = IUiProbeService.Stub.asInterface(binder);
-                    String result = service.probeDeepSeekInput();
+                    String result;
+                    if (coordinateProbe) {
+                        android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+                        result = service.calibrateDeepSeekTap(dm.widthPixels, dm.heightPixels);
+                        coordinateProbe = false;
+                    } else {
+                        result = service.probeDeepSeekInput();
+                    }
                     main.post(() -> calibration.setText("DeepSeek input calibration: " +
                             (result.contains("total_nodes=0") ? "FAILED" : "STRUCTURE CAPTURED") +
                             "\n" + result + "\nNo text inserted; no message sent."));
@@ -119,6 +127,12 @@ public final class MainActivity extends Activity {
         calibration.setPadding(0,0,0,dp(10));
         root.addView(calibration);
 
+        Button coordinate = new Button(this);
+        coordinate.setAllCaps(false);
+        coordinate.setText("Calibrate DeepSeek composer tap (no type/send)");
+        coordinate.setOnClickListener(v -> calibrateDeepSeekCoordinate());
+        root.addView(coordinate);
+
         Button inputProbe = new Button(this);
         inputProbe.setAllCaps(false);
         inputProbe.setText("Calibrate DeepSeek input (no send)");
@@ -174,6 +188,25 @@ public final class MainActivity extends Activity {
         } catch (Throwable t) {
             bridge.setText("Shizuku: unavailable — " + t.getClass().getSimpleName());
         }
+    }
+
+    private void calibrateDeepSeekCoordinate() {
+        if (!Shizuku.pingBinder() || Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
+            calibration.setText("DeepSeek coordinate calibration: BLOCKED — Shizuku not authorized");
+            return;
+        }
+        try {
+            Intent launch = getPackageManager().getLaunchIntentForPackage("com.deepseek.chat");
+            if (launch == null) { calibration.setText("DeepSeek coordinate calibration: BLOCKED — no launch activity"); return; }
+            launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(launch);
+            coordinateProbe = true;
+            calibration.setText("DeepSeek coordinate calibration: opening app; will tap composer region only…");
+            main.postDelayed(() -> {
+                try { Shizuku.bindUserService(uiProbeArgs, uiProbeConnection); }
+                catch(Throwable t){ coordinateProbe=false; calibration.setText("DeepSeek coordinate calibration: FAILED — "+t.getClass().getSimpleName()); }
+            }, 1800);
+        } catch(Throwable t){ coordinateProbe=false; calibration.setText("DeepSeek coordinate calibration: FAILED — "+t.getClass().getSimpleName()); }
     }
 
     private void calibrateDeepSeekInput() {
