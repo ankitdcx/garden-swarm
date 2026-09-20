@@ -15,7 +15,7 @@
     "task_id": "GROUP-REVIEW-PUSH-DISPATCH-20260920",
     "base_sha": "3b75ac13b6de302fb1141a066a614a17e5c40d3c",
     "target_paths": [
-      ".github/workflows/group-review-openrouter-trigger.yml",
+      ".github/workflows/group-review-openrouter-push-trigger.yml",
       "tools/group_review_openrouter_worker.py",
       "tests/test_group_review_openrouter_worker.py",
       "review-state/group-review-dispatch-request.json",
