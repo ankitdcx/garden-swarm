@@ -649,7 +649,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Closure evaluation creates no authority, merge, canonical promotion or deployment permission. Every material finding must carry a typed, non-vacuous disposition: FIXED/REJECTED require evidence refs; DEFERRED requires owner+reopen condition; ESCALATED requires a target. All closure-evidence results remain bound to the exact candidate SHA-256.",
+      "authority_requirement": "Closure evaluation creates no authority. Candidate identity and audited scope are explicit SHA-256 values; search coverage must bind the exact audited scope and all closure evidence the exact candidate hash. A narrow audit cannot close a broader candidate scope.",
       "failure_mode_set": [
         "BOUNDED_UPGRADE_CYCLE_NOT_DECLARED",
         "UPGRADE_METHOD_AUTHORITY_FAILED",
@@ -692,7 +692,11 @@
         "FINDING_EVIDENCE_MISSING",
         "FINDING_DEFERRED_OWNER_MISSING",
         "FINDING_REOPEN_CONDITION_MISSING",
-        "FINDING_ESCALATION_TARGET_MISSING"
+        "FINDING_ESCALATION_TARGET_MISSING",
+        "CANDIDATE_HASH_INVALID",
+        "AUDITED_SCOPE_HASH_INVALID",
+        "SEARCH_COVERAGE_SCOPE_HASH_UNKNOWN",
+        "SEARCH_COVERAGE_SCOPE_MISMATCH"
       ],
       "result_algebra": "UpgradeDecision[CLOSE_CANDIDATE|CONTINUE_WORK|HOLD|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -711,7 +715,9 @@
         "declared audited scope",
         "search/audit coverage closure",
         "exact candidate SHA-256 bindings for closure evidence",
-        "typed finding records with evidence/owner/reopen/escalation bindings"
+        "typed finding records with evidence/owner/reopen/escalation bindings",
+        "audited-scope SHA-256",
+        "search-coverage scope binding"
       ],
       "resource_and_termination_bounds": "Finite over declared material findings and fixed closure gates; no recursive execution inside evaluator.",
       "provenance": [
