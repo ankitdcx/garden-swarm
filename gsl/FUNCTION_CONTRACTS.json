@@ -523,12 +523,12 @@
         "TransitionContext"
       ],
       "outputs": [
-        "TransitionResult"
+        "TransitionResult with TransitionReceipt"
       ],
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation grants no authority. Authority migration is carried only by explicit typed AuthorityDelta records; each validation is bound to the deterministic SHA-256 of the full delta contents, so a changed scope cannot reuse an old delta_id approval. Stage status itself never mints authority.",
+      "authority_requirement": "Stage advancement grants no authority. Caller booleans are insufficient: the exact transition/effect/stage/DesignEpoch, gate snapshot, criteria/recovery state, authority-delta digests and verifier identity/control lineage must be captured by a content-addressed TransitionAssuranceReceipt whose verifier is authenticated and independently qualified. Every public decision emits a content-addressed TransitionReceipt.",
       "failure_mode_set": [
         "INVALID_DECLARED_STAGE_PLAN",
         "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
@@ -575,7 +575,14 @@
         "TRANSITION_CRITERIA_PROFILE_INVALID",
         "TRANSITION_CRITERIA_PROFILE_UNVALIDATED",
         "AUTHORITY_DELTA_DIGEST_UNKNOWN",
-        "AUTHORITY_DELTA_DIGEST_MISMATCH"
+        "AUTHORITY_DELTA_DIGEST_MISMATCH",
+        "TRANSITION_ASSURANCE_RECEIPT_UNKNOWN",
+        "TRANSITION_ASSURANCE_RECEIPT_MISMATCH",
+        "TRANSITION_ASSURANCE_EVIDENCE_INCOMPLETE",
+        "TRANSITION_ASSURANCE_VERIFIER_UNAUTHENTICATED",
+        "TRANSITION_ASSURANCE_VERIFIER_AUTH_UNKNOWN",
+        "TRANSITION_ASSURANCE_NOT_INDEPENDENT",
+        "TRANSITION_ASSURANCE_INDEPENDENCE_UNKNOWN"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -598,7 +605,10 @@
         "DesignEpoch-bound transition assurance",
         "typed AuthorityDelta validation",
         "validated transition criteria profile",
-        "full AuthorityDelta SHA-256 binding"
+        "full AuthorityDelta SHA-256 binding",
+        "content-addressed TransitionAssuranceReceipt",
+        "authenticated independent verifier identity/control-lineage binding",
+        "content-addressed TransitionReceipt"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
@@ -616,12 +626,12 @@
         "TransitionContext"
       ],
       "outputs": [
-        "TransitionResult"
+        "TransitionResult with TransitionReceipt"
       ],
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Recovery grants no authority. ROLLBACK/COMPENSATE requires assurance bound to the exact recovery transition/effect/current->target stage, confirmed material failure, fresh recovery authority, immutable base hard gates, independent verification and capture/conflict review; reversible rollback targets only the recorded last qualified stage.",
+      "authority_requirement": "Recovery grants no authority. ROLLBACK/COMPENSATE uses the same authenticated, independent, content-bound TransitionAssuranceReceipt discipline and emits a TransitionReceipt; reversible rollback still targets only the recorded last qualified stage.",
       "failure_mode_set": [
         "RECOVERY_TRIGGER_NOT_ESTABLISHED",
         "RECOVERY_TRIGGER_UNKNOWN",
@@ -643,7 +653,14 @@
         "ROLLBACK_TARGET_NOT_LAST_QUALIFIED",
         "RECOVERY_ASSURANCE_BINDING_UNKNOWN",
         "RECOVERY_ASSURANCE_BINDING_MISMATCH",
-        "RECOVERY_STALE_DESIGN_EPOCH"
+        "RECOVERY_STALE_DESIGN_EPOCH",
+        "RECOVERY_ASSURANCE_RECEIPT_UNKNOWN",
+        "RECOVERY_ASSURANCE_RECEIPT_MISMATCH",
+        "RECOVERY_ASSURANCE_EVIDENCE_INCOMPLETE",
+        "RECOVERY_ASSURANCE_VERIFIER_UNAUTHENTICATED",
+        "RECOVERY_ASSURANCE_VERIFIER_AUTH_UNKNOWN",
+        "RECOVERY_ASSURANCE_NOT_INDEPENDENT",
+        "RECOVERY_ASSURANCE_INDEPENDENCE_UNKNOWN"
       ],
       "result_algebra": "TransitionDecision[ROLLBACK|COMPENSATE|HOLD|REJECT|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -659,7 +676,10 @@
         "independent recovery verification",
         "last qualified transition stage",
         "exact transition/effect/stage assurance binding",
-        "DesignEpoch-bound transition assurance"
+        "DesignEpoch-bound transition assurance",
+        "content-addressed TransitionAssuranceReceipt",
+        "authenticated independent verifier identity/control-lineage binding",
+        "content-addressed TransitionReceipt"
       ],
       "resource_and_termination_bounds": "Finite checks over fixed stage order and hard-gate set; no unbounded loop.",
       "provenance": [
