@@ -99,7 +99,7 @@ Before a consequential action can use an authority envelope, the runtime disting
 
 Only VALIDATED authority can participate in an ALLOW result. INVALID rejects. UNKNOWN escalates or preserves state.
 
-For delegated authority, each consequential delegation hop must also be explicitly bound to its actual parent/delegator. Independent validation of two envelopes plus free-form provenance text is not enough to prove that one validly delegated to the other.
+For delegated authority, each consequential delegation hop must also be explicitly bound to its actual parent/delegator. Authority validation is content-addressed over the exact envelope scope, parent/delegator and provenance; expanding actions/resources/depth or changing lineage invalidates the prior validation. Independent validation of two subjects plus free-form provenance text is not enough to prove that one validly delegated to the other.
 
 A cryptographic signature may prove possession of a key. It does not by itself prove that the signer possessed the claimed authority.
 
@@ -111,7 +111,7 @@ A model may independently create a useful long-horizon goal. It may research, re
 
 External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint. External blocks are scoped to the concrete action+target (or an explicitly declared wildcard), so a block on one target cannot silently become a universal semantic prohibition.
 
-Human-effect materiality is itself a required typed input to consequential action admission and is bound to the concrete action + target/effect scope. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. The classification itself must be validated under the applicable effect-analysis/evidence path; a proposer cannot self-label its effect as harmless and thereby bypass Human-Effect Closure.
+Human-effect materiality is itself a required typed input to consequential action admission and is bound to the concrete action + target/effect scope. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. The classification validation is content-addressed over the exact action, target, materiality value and policy epoch, so flipping a previously material effect to non-material invalidates old validation. A proposer cannot self-label its effect as harmless and thereby bypass Human-Effect Closure.
 
 ## Transition binding
 
