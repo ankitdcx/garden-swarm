@@ -103,7 +103,7 @@ Test at least:
 - the process loops forever on low-value findings or stops before final re-audit;
 - human approval is incorrectly used to waive a failed protected gate.
 
-**Target:** `agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md`.
+**Target:** `agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md`, `prototype/upgrade_process.py`, and its regression tests.
 
 **Deliverable:** counterexample or failed attack + proposed repair + regression/conformance check.
 
