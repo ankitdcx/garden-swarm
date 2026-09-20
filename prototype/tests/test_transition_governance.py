@@ -48,6 +48,7 @@ def assurance_binding(
         effect_scope=effect_scope,
         current_stage=current,
         target_stage=target,
+        design_epoch="E1",
     )
 
 
@@ -478,3 +479,33 @@ def test_advance_assurance_cannot_be_replayed_for_recovery():
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("RECOVERY_ASSURANCE_BINDING_MISMATCH",)
+
+
+def test_stale_transition_design_epoch_rejects_before_assurance_reuse():
+    result = evaluate_transition(
+        TransitionProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.SHADOW,
+            next_stage=TransitionStage.PARALLEL,
+            declared_stage_plan=PLAN,
+            effect_scope="institution:bounded",
+            design_epoch="E0",
+        ),
+        context(),
+    )
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("STALE_TRANSITION_DESIGN_EPOCH",)
+
+
+def test_transition_assurance_from_old_design_epoch_cannot_be_replayed():
+    old = TransitionAssuranceBinding(
+        purpose="ADVANCE",
+        transition_id="t1",
+        effect_scope="institution:bounded",
+        current_stage=TransitionStage.SHADOW,
+        target_stage=TransitionStage.PARALLEL,
+        design_epoch="E0",
+    )
+    result = evaluate_transition(proposal(), context(assurance_binding=old))
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("TRANSITION_ASSURANCE_BINDING_MISMATCH",)
