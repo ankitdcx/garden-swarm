@@ -1,0 +1,53 @@
+{
+  "schema": "GardenCompactLosslessRetentionLedger/v1",
+  "candidate": "Garden v15.11 compact lossless working candidate",
+  "date": "2026-09-20",
+  "status": "NONCANONICAL_CANDIDATE_EVIDENCE",
+  "source_evidence": {
+    "predecessor_machine_package": "Garden_v15.10_LATEST_THREE_DOCUMENTS_2026-09-19.zip",
+    "predecessor_catalogue_records": 19921,
+    "predecessor_source_blobs": 5
+  },
+  "coverage": {
+    "identity_records_expected": 1935,
+    "identity_records_missing": 0,
+    "semantic_leaves_expected": 2660,
+    "semantic_leaves_hash_verified": 2660,
+    "semantic_leaves_missing_from_current_catalogue": 0,
+    "semantic_units_indexed": 206,
+    "fundamental_laws_expected": 18,
+    "fundamental_laws_missing": 0,
+    "family_indices_expected": 55,
+    "family_indices_missing": 0,
+    "formula_candidates_expected": 2981,
+    "formula_candidates_outside_leaf_coverage": 8,
+    "formula_outside_leaf_lines_preserved": 8
+  },
+  "output_sha256": {
+    "GARDEN_BOOK_v15.11_CANDIDATE.txt": "39c5eaaabefb49e7c792cf1e6c8f62caef8ea6a691362edbc49fb0bc736678bb",
+    "GARDEN_TECHNICAL_v15.11_CANDIDATE.txt": "48cdaf719d32b3266b5b69d5151b32a89cf3e6b691f7d35e35034c3e9a887411",
+    "GARDEN_CATALOGUE_v15.11_CANDIDATE.txt": "afc8ae281f67bd30f5f1648e1b37980c89739baa583e23427a39fc79e631d5ca",
+    "GARDEN_VERSION_HISTORY_v15.11_CANDIDATE.txt": "82463f6481e35ca4900cbae19a201d15d96c7c6a3545b22acc0d57070350d059"
+  },
+  "output_bytes": {
+    "GARDEN_BOOK_v15.11_CANDIDATE.txt": 17670,
+    "GARDEN_TECHNICAL_v15.11_CANDIDATE.txt": 46786,
+    "GARDEN_CATALOGUE_v15.11_CANDIDATE.txt": 3555977,
+    "GARDEN_VERSION_HISTORY_v15.11_CANDIDATE.txt": 11970
+  },
+  "claims": {
+    "byte_identical_to_r6": false,
+    "whole_predecessor_file_embedding_required": false,
+    "current_three_source_self_contained": true,
+    "formal_semantic_equivalence_proved": false,
+    "implementation_certified": false,
+    "canonical_admission": false
+  },
+  "missing": {
+    "identity_ids": [],
+    "semantic_leaf_ids": [],
+    "leaf_hash_failures": [],
+    "fundamental_law_ids": [],
+    "family_ids": []
+  }
+}
