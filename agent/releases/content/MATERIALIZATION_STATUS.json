@@ -1,0 +1,21 @@
+{
+  "schema": "GardenReleaseMaterializationStatus/v1",
+  "status": "BLOCKED_MISSING_BOUND_BYTES",
+  "audited_at": "2026-09-20",
+  "required_objects": [
+    {
+      "name": "GARDEN_CATALOGUE_v15.10.txt",
+      "bytes": 4889844,
+      "sha256": "6d6341e278ea1eab34b7ce188728b79b19bf1f5d6b6e4f576f1bcbc60d231153"
+    },
+    {
+      "name": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
+      "bytes": 1554572,
+      "sha256": "0001889bddb182fbbd12db1da0fd8684f5be9bafcd595c7a0938adab3535ec04"
+    }
+  ],
+  "observed": "CONTENT_OBJECTS_v15x.json declares compressed parts, but no declared content parts or direct raw objects are present on this branch and inbox contains no payload ZIP.",
+  "consequence": "Exact standalone package reconstruction cannot be completed from repository bytes at this head.",
+  "closure_rule": "Do not merge this PR as a completed materialization claim until exact bytes matching the declared hashes are imported and deterministic reconstruction/integrity tests pass.",
+  "authority_effect": "NONE"
+}
