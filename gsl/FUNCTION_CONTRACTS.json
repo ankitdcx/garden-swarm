@@ -372,7 +372,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound scoped authority/capability plus applicable hard gates; the existence of an AuthorityEnvelope or instruction source identity is insufficient.",
+      "authority_requirement": "Evaluation cannot create authority. ALLOW requires separately validated, current, provenance-bound and parent-bound scoped authority/capability plus applicable Human-Effect Closure gates; the existence of an AuthorityEnvelope, free-form provenance text, instruction source identity, or external block is insufficient.",
       "failure_mode_set": [
         "STALE_POLICY_EPOCH",
         "GOAL_REVOKED",
@@ -391,7 +391,9 @@
         "AUTHORITY_SUBJECT_MISMATCH",
         "AUTHORITY_SCOPE_DENIED",
         "HUMAN_EFFECT_GATE_FAILED",
-        "HUMAN_EFFECT_GATE_UNKNOWN"
+        "HUMAN_EFFECT_GATE_UNKNOWN",
+        "AUTHORITY_PARENT_UNKNOWN",
+        "AUTHORITY_PARENT_MISMATCH"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -405,7 +407,10 @@
         "capability set",
         "revoked goals",
         "external runtime constraints",
-        "Human-Effect Closure hard gates"
+        "Human-Effect Closure hard gates",
+        "authority parent/delegator binding",
+        "immutable base Human-Effect Closure gate floor",
+        "external block classification after semantic admission"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
@@ -463,7 +468,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Evaluation grants no authority. ADVANCE requires a separately validated transition authority claim and cannot enlarge authority merely by stage advancement or transition-coordinator status.",
+      "authority_requirement": "Evaluation grants no authority. ADVANCE requires a separately validated transition authority claim, immutable base rights/consent/privacy/law/safety/Human-Effect gates, non-vacuous criteria, and any stage omission to be explicitly justified and approved; advancement cannot enlarge authority.",
       "failure_mode_set": [
         "INVALID_DECLARED_STAGE_PLAN",
         "CURRENT_STAGE_NOT_IN_DECLARED_PLAN",
@@ -491,7 +496,13 @@
         "ROLLBACK_NOT_READY",
         "ROLLBACK_READINESS_UNKNOWN",
         "IRREVERSIBLE_EFFECT_RECOVERY_NOT_READY",
-        "IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN"
+        "IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN",
+        "INVALID_DECLARED_STAGE_ORDER",
+        "STAGE_OMISSION_UNJUSTIFIED",
+        "STAGE_OMISSION_NOT_APPROVED",
+        "STAGE_OMISSION_APPROVAL_UNKNOWN",
+        "ENTRY_CRITERIA_MISSING",
+        "EXIT_CRITERIA_MISSING"
       ],
       "result_algebra": "TransitionDecision[ADVANCE|HOLD|REJECT|ROLLBACK|COMPENSATE|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -505,13 +516,67 @@
         "capture/conflict review",
         "dual-run divergence",
         "rollback/compensation",
-        "dispute path"
+        "dispute path",
+        "standard transition-stage order",
+        "stage omission justification/approval",
+        "immutable base transition hard-gate floor",
+        "non-vacuous entry/exit criteria"
       ],
       "resource_and_termination_bounds": "Finite over the declared stage plan, hard-gate set and criteria maps; no unbounded loop.",
       "provenance": [
         "Garden v15.9 Engine.Transition/GTF retained semantics",
         "TH15.8-13 PEACEFUL TRANSITION / JUSTICE SEPARATION",
         "Garden Transition Fabric v15.11 Upgrade candidate"
+      ]
+    },
+    {
+      "contract_id": "FC-PROTOTYPE-TRANSITION-GOVERNANCE-RECOVERY-v1",
+      "owner_qualified_name": "prototype.transition_governance.evaluate_recovery",
+      "implementation_source": "prototype/transition_governance.py",
+      "inputs": [
+        "RecoveryProposal",
+        "TransitionContext"
+      ],
+      "outputs": [
+        "TransitionResult"
+      ],
+      "closed_effect_vector": [
+        "READ_CONTEXT"
+      ],
+      "authority_requirement": "Recovery evaluation grants no authority. ROLLBACK/COMPENSATE requires a confirmed material failure plus fresh recovery authority and immutable base hard gates; reversible rollback may target only an earlier transition stage.",
+      "failure_mode_set": [
+        "RECOVERY_TRIGGER_NOT_ESTABLISHED",
+        "RECOVERY_TRIGGER_UNKNOWN",
+        "RECOVERY_AUTHORITY_INVALID",
+        "RECOVERY_AUTHORITY_UNKNOWN",
+        "RECOVERY_HARD_GATE_FAILED",
+        "RECOVERY_HARD_GATE_UNKNOWN",
+        "RECOVERY_CAPTURE_OR_CONFLICT_CHECK_FAILED",
+        "RECOVERY_CAPTURE_OR_CONFLICT_CHECK_UNKNOWN",
+        "RECOVERY_STAGE_UNKNOWN",
+        "ROLLBACK_TARGET_NOT_EARLIER",
+        "ROLLBACK_NOT_READY",
+        "ROLLBACK_READINESS_UNKNOWN",
+        "IRREVERSIBLE_EFFECT_RECOVERY_NOT_READY",
+        "IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN"
+      ],
+      "result_algebra": "TransitionDecision[ROLLBACK|COMPENSATE|HOLD|REJECT|ESCALATE] + typed reasons",
+      "bool_restriction": "NOT_APPLICABLE",
+      "dependency_and_invalidator_bindings": [
+        "Garden Transition Fabric",
+        "confirmed material-failure trigger",
+        "fresh recovery authority",
+        "immutable base transition hard-gate floor",
+        "capture/conflict review",
+        "rollback readiness",
+        "compensation/recovery readiness",
+        "standard transition-stage order"
+      ],
+      "resource_and_termination_bounds": "Finite checks over fixed stage order and hard-gate set; no unbounded loop.",
+      "provenance": [
+        "Garden v15.11 Transition Fabric candidate",
+        "GTF-T08",
+        "RCP-014..018"
       ]
     }
   ]
