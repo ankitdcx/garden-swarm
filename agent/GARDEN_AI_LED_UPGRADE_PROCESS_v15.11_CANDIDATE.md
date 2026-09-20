@@ -126,11 +126,15 @@ A version may reach upgrade closure only when:
 
 Closure is not a claim that no future unknown problem can exist.
 
-## Anti-stall rule
+## Anti-stall and bounded-recursion rule
 
-Finding another solvable gap restarts the loop; it does not terminate the work with a report to the user.
+Finding another solvable material gap restarts the loop; it does not terminate the work with a report to the user.
 
-The AI should report progress, but routine unresolved work remains its responsibility until fixed, proven blocked by an external dependency, or legitimately escalated under the escalation boundary.
+Each upgrade cycle must also declare a bounded work scope, resource/review budget, checkpoint condition and stop condition. Materiality outranks raw finding count. Repeated low-value restatements, already-covered findings and changes whose expected value is below their verification/integration cost are rejected or deferred with a recorded reason and a concrete re-open trigger rather than causing infinite recursion.
+
+If a required independent reviewer, tool, external institution or assurance dependency is temporarily unavailable, the AI may continue **noncanonical routine analysis and repair** that does not depend on that missing authority. It must preserve the blocked assurance state explicitly. Missing independent review cannot be relabeled as PASS, and protected admission/promotion remains blocked until the required independence is actually obtained.
+
+The AI should report progress, but routine unresolved work remains its responsibility until fixed, rejected with evidence, deferred with an owner/trigger, proven blocked by an external dependency, or legitimately escalated under the escalation boundary.
 
 ## Core invariants
 
@@ -144,3 +148,5 @@ The AI should report progress, but routine unresolved work remains its responsib
 **AUP-008** Protected constitutional change follows the protected change path.
 **AUP-009** Better architectures may replace current implementation when objectives/rights remain protected.
 **AUP-010** Final re-audit occurs after the last material modification.
+**AUP-011** Recursive upgrade work is bounded by declared scope/resources/checkpoints and cannot loop indefinitely on low-value findings.
+**AUP-012** Missing required independence may block admission without blocking unrelated noncanonical repair work; blocked assurance can never be silently promoted to PASS.
