@@ -1,7 +1,12 @@
+from dataclasses import replace
+
+import prototype.transition_governance as tg
+
 from prototype.transition_governance import (
     AuthorityDelta,
     RecoveryProposal,
     TransitionAssuranceBinding,
+    TransitionAssuranceReceipt,
     TransitionContext,
     TransitionDecision,
     TransitionProposal,
@@ -54,6 +59,7 @@ def assurance_binding(
 
 
 def context(**overrides):
+    authority_delta_digests = tuple(overrides.pop("_authority_delta_digests", ()))
     values = dict(
         authority_validated=True,
         assurance_binding=assurance_binding(),
@@ -76,8 +82,28 @@ def context(**overrides):
         compensation_recovery_ready=True,
         last_qualified_stage=TransitionStage.PARALLEL,
     )
+    explicit_receipt = "assurance_receipt" in overrides
     values.update(overrides)
-    return TransitionContext(**values)
+    ctx = TransitionContext(**values)
+    if not explicit_receipt and ctx.assurance_binding is not None:
+        ctx.assurance_receipt = TransitionAssuranceReceipt(
+            binding_digest=tg._binding_digest(ctx.assurance_binding),
+            authority_validated=ctx.authority_validated,
+            hard_gates_digest=tg._hard_gates_digest(ctx),
+            independent_verification=ctx.independent_verification,
+            divergence_resolved=ctx.divergence_resolved,
+            capture_conflict_clear=ctx.capture_conflict_clear,
+            operational_readiness=ctx.operational_readiness,
+            criteria_profile_digest=tg._criteria_profile_digest(ctx),
+            recovery_state_digest=tg._recovery_state_digest(ctx),
+            authority_delta_digests=authority_delta_digests,
+            verifier_id="verifier:independent",
+            verifier_control_lineage="lineage:verifier",
+            verifier_authenticated=True,
+            verifier_independent=True,
+            evidence_refs=("evidence:transition-assurance",),
+        )
+    return ctx
 
 
 def test_shadow_to_parallel_can_advance_without_minting_authority():
@@ -538,7 +564,10 @@ def test_unvalidated_authority_delta_cannot_advance_transition():
         effect_scope="institution:bounded",
         authority_deltas=(valid_authority_delta(),),
     )
-    result = evaluate_transition(p, context())
+    delta = p.authority_deltas[0]
+    result = evaluate_transition(
+        p, context(_authority_delta_digests=(delta.digest(),))
+    )
     assert result.decision is TransitionDecision.ESCALATE
     assert result.reasons == ("AUTHORITY_DELTA_UNVALIDATED:d1",)
 
@@ -570,6 +599,7 @@ def test_authority_delta_requires_evidence_and_revocation_appeal_bindings():
         context(
             authority_delta_validation={"d1": True},
             authority_delta_digest_by_id={"d1": delta.digest()},
+            _authority_delta_digests=(delta.digest(),),
         ),
     )
     assert result.decision is TransitionDecision.REJECT
@@ -591,6 +621,7 @@ def test_validated_authority_delta_can_transfer_without_minting_authority():
         context(
             authority_delta_validation={"d1": True},
             authority_delta_digest_by_id={"d1": delta.digest()},
+            _authority_delta_digests=(delta.digest(),),
         ),
     )
     assert result.decision is TransitionDecision.ADVANCE
@@ -634,7 +665,62 @@ def test_changed_authority_delta_cannot_reuse_old_validation_digest():
         context(
             authority_delta_validation={"d1": True},
             authority_delta_digest_by_id={"d1": original.digest()},
+            _authority_delta_digests=(changed.digest(),),
         ),
     )
     assert result.decision is TransitionDecision.REJECT
     assert result.reasons == ("AUTHORITY_DELTA_DIGEST_MISMATCH:d1",)
+
+
+def test_transition_result_emits_content_addressed_receipt():
+    result = evaluate_transition(proposal(), context())
+    assert result.decision is TransitionDecision.ADVANCE
+    assert result.receipt is not None
+    assert result.receipt.purpose == "ADVANCE"
+    assert len(result.receipt.digest()) == 64
+    assert result.receipt.verifier_id == "verifier:independent"
+
+
+def test_changed_context_cannot_reuse_old_assurance_receipt():
+    ctx = context()
+    ctx.independent_verification = False
+    result = evaluate_transition(proposal(), ctx)
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("TRANSITION_ASSURANCE_RECEIPT_MISMATCH",)
+
+
+def test_nonindependent_assurance_verifier_rejects():
+    ctx = context()
+    assert ctx.assurance_receipt is not None
+    ctx.assurance_receipt = replace(
+        ctx.assurance_receipt,
+        verifier_independent=False,
+    )
+    result = evaluate_transition(proposal(), ctx)
+    assert result.decision is TransitionDecision.REJECT
+    assert result.reasons == ("TRANSITION_ASSURANCE_NOT_INDEPENDENT",)
+
+
+def test_recovery_result_emits_recovery_receipt():
+    ctx = context(
+        assurance_binding=assurance_binding(
+            purpose="RECOVERY",
+            current=TransitionStage.BOUNDED_ACTIVE,
+            target=TransitionStage.PARALLEL,
+        ),
+    )
+    result = evaluate_recovery(
+        RecoveryProposal(
+            transition_id="t1",
+            current_stage=TransitionStage.BOUNDED_ACTIVE,
+            target_stage=TransitionStage.PARALLEL,
+            effect_scope="institution:bounded",
+            reversible_effect=True,
+            material_failure_confirmed=True,
+        ),
+        ctx,
+    )
+    assert result.decision is TransitionDecision.ROLLBACK
+    assert result.receipt is not None
+    assert result.receipt.purpose == "RECOVERY"
+    assert len(result.receipt.digest()) == 64
