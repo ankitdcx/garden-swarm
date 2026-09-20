@@ -133,7 +133,7 @@ def budget_check(state, key_info, policy, now, campaign=None):
     daily = money(key_info.get('usage_daily'))
     reserve = money(policy['routine_model_call_cost_ceiling_usd'])
     ceiling = money(policy['daily_openrouter_cost_ceiling_usd'])
-    if reserve != Decimal('0.01') or ceiling != Decimal('2'):
+    if reserve != Decimal('0.05') or ceiling != Decimal('2'):
         raise ValueError('active OpenRouter budget rule must be USD 2/day and USD 0.05/call')
 
     if daily + reserve > ceiling:
