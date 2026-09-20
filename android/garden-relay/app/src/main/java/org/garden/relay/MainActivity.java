@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.content.pm.PackageManager;
+import rikka.shizuku.Shizuku;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -29,12 +31,15 @@ public final class MainActivity extends Activity {
     private LinearLayout board;
     private TextView header;
     private TextView note;
+    private TextView bridge;
+    private static final int SHIZUKU_REQ = 41;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildUi();
         refresh();
+        refreshShizuku();
     }
 
     @Override
@@ -62,6 +67,18 @@ public final class MainActivity extends Activity {
         header.setPadding(0,dp(10),0,dp(14));
         root.addView(header);
 
+        bridge = new TextView(this);
+        bridge.setText("Shizuku: checking…");
+        bridge.setTextSize(16);
+        bridge.setPadding(0,0,0,dp(10));
+        root.addView(bridge);
+
+        Button authorize = new Button(this);
+        authorize.setAllCaps(false);
+        authorize.setText("Authorize Shizuku");
+        authorize.setOnClickListener(v -> requestShizuku());
+        root.addView(authorize);
+
         board = new LinearLayout(this);
         board.setOrientation(LinearLayout.VERTICAL);
         root.addView(board);
@@ -78,6 +95,55 @@ public final class MainActivity extends Activity {
         root.addView(note);
 
         setContentView(scroll);
+    }
+
+    private void refreshShizuku() {
+        try {
+            if (!Shizuku.pingBinder()) {
+                bridge.setText("Shizuku: OFFLINE");
+                return;
+            }
+            int uid = Shizuku.getUid();
+            int perm = Shizuku.checkSelfPermission();
+            bridge.setText("Shizuku: RUNNING (uid " + uid + ") — " +
+                    (perm == PackageManager.PERMISSION_GRANTED ? "AUTHORIZED" : "NOT AUTHORIZED"));
+        } catch (Throwable t) {
+            bridge.setText("Shizuku: unavailable — " + t.getClass().getSimpleName());
+        }
+    }
+
+    private void requestShizuku() {
+        try {
+            if (!Shizuku.pingBinder()) {
+                bridge.setText("Shizuku: OFFLINE — start Shizuku first");
+                return;
+            }
+            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                refreshShizuku();
+                return;
+            }
+            Shizuku.requestPermission(SHIZUKU_REQ);
+        } catch (Throwable t) {
+            bridge.setText("Shizuku request failed: " + t.getClass().getSimpleName());
+        }
+    }
+
+    private final Shizuku.OnRequestPermissionResultListener shizukuPermission =
+            (requestCode, grantResult) -> {
+                if (requestCode == SHIZUKU_REQ) runOnUiThread(this::refreshShizuku);
+            };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Shizuku.addRequestPermissionResultListener(shizukuPermission);
+        refreshShizuku();
+    }
+
+    @Override
+    protected void onPause() {
+        Shizuku.removeRequestPermissionResultListener(shizukuPermission);
+        super.onPause();
     }
 
     private void refresh() {
