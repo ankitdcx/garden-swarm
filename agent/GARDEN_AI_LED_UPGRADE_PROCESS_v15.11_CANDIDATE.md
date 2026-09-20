@@ -136,6 +136,9 @@ A version may reach upgrade closure only when:
 - all discovered findings are typed ROUTINE / MATERIAL / HARD_GATE under a candidate-bound classification check; HARD_GATE findings in the affected scope must be FIXED or REJECTED_WITH_EVIDENCE before closure and cannot be hidden by DEFERRED/ESCALATED status;
 - non-hard-gate findings may be FIXED, REJECTED_WITH_EVIDENCE, DEFERRED_WITH_OWNER/CONDITION, or ESCALATED under the explicit boundary above;
 - those dispositions are non-vacuous: FIXED/REJECTED carry evidence refs, DEFERRED carries an owner and reopen condition, and ESCALATED carries an explicit escalation target;
+- finding classification and the protected-surface scan are independently validated and bound to the exact candidate bytes;
+- HARD_GATE and PROTECTED findings cannot be deferred or escalated to obtain closure for the affected scope;
+- any PROTECTED finding activates the protected-change authorization path even if the proposer labels the overall patch routine;
 - affected tests/proofs/checks pass;
 - retention/no-loss requirements pass;
 - independent checks required by materiality pass;
