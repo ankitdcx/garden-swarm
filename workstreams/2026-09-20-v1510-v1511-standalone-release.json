@@ -20,7 +20,10 @@
       "agent/releases/content",
       "tools/reconstruct_standalone_garden_release.py",
       "tests/test_standalone_garden_release.py",
-      "workstreams/2026-09-20-v1510-v1511-standalone-release.json"
+      "workstreams/2026-09-20-v1510-v1511-standalone-release.json",
+      ".github/workflows/standalone-release-import.yml",
+      "tools/import_standalone_release_payload.py",
+      "agent/releases/inbox"
     ],
     "target_symbols": [
       "Garden v15.10 standalone no-loss candidate",
