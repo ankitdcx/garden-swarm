@@ -86,6 +86,56 @@ def _string_list(value: Any, field: str, max_items: int = 64) -> list[str]:
     return out
 
 
+
+def _immutable_source_ref(value: Any, field: str = "source_ref") -> str:
+    ref = _nonempty(value, field, 4000)
+    repo_match = re.fullmatch(
+        r"repo:([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)@([0-9a-f]{40}):(.+)",
+        ref,
+    )
+    if repo_match:
+        path = repo_match.group(4)
+        if path.startswith("/") or any(part in {"", ".", ".."} for part in path.split("/")):
+            raise ValueError(f"{field} has invalid repository path")
+        return ref
+
+    content_match = re.fullmatch(
+        r"content:sha256:([0-9a-f]{64}):(.+)",
+        ref,
+    )
+    if content_match and content_match.group(2).strip():
+        return ref
+
+    raise ValueError(
+        f"{field} must be exact-commit repo:<owner>/<repo>@<40hex>:<path> "
+        "or content:sha256:<64hex>:<label>"
+    )
+
+
+def _source_hash_map(value: Any, refs: list[str]) -> dict[str, str]:
+    if not isinstance(value, dict):
+        raise ValueError("source_hashes must be an object keyed by source_ref")
+    if set(value) != set(refs):
+        raise ValueError("source_hashes keys must exactly match source_refs")
+    out: dict[str, str] = {}
+    for ref in refs:
+        out[ref] = _hex64(value.get(ref), f"source_hashes[{ref}]")
+    return out
+
+
+def validate_source_text(
+    *, packet: dict[str, Any], source_ref: str, source_text: str
+) -> str:
+    validate_packet(packet)
+    ref = _immutable_source_ref(source_ref)
+    if ref not in packet["source_hashes"]:
+        raise ValueError("source_ref is not part of frozen packet")
+    actual = sha256_text(source_text)
+    expected = packet["source_hashes"][ref]
+    if actual != expected:
+        raise ValueError("frozen source SHA-256 mismatch")
+    return actual
+
 def validate_packet(packet: dict[str, Any]) -> dict[str, Any]:
     if packet.get("schema") != PACKET_SCHEMA:
         raise ValueError("unsupported GROUP_REVIEW packet schema")
@@ -97,7 +147,14 @@ def validate_packet(packet: dict[str, Any]) -> dict[str, Any]:
     _nonempty(packet.get("problem"), "problem", 50000)
     _nonempty(packet.get("scope"), "scope", 10000)
     _string_list(packet.get("assumptions"), "assumptions", 64)
-    _string_list(packet.get("source_refs"), "source_refs", 128)
+    source_refs = _string_list(packet.get("source_refs"), "source_refs", 128)
+    if not source_refs or len(source_refs) != len(set(source_refs)):
+        raise ValueError("source_refs must be non-empty and unique")
+    for source_ref in source_refs:
+        _immutable_source_ref(source_ref)
+    packet["source_hashes"] = _source_hash_map(
+        packet.get("source_hashes"), source_refs
+    )
 
     triage = str(packet.get("triage") or "")
     if triage not in TRIAGE:

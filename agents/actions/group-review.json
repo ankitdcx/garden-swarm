@@ -134,7 +134,8 @@
       "candidate_hash",
       "verifier_hash",
       "timestamps",
-      "decision_log"
+      "decision_log",
+      "source_refs"
     ],
     "repo_bus_ref": "docs/GROUP_REVIEW_REPO_BUS_V1.md",
     "run_artifacts_are_immutable_issues": true
@@ -173,7 +174,8 @@
       "OpenRouter execution used the real governed API subprocess and durable receipt",
       "privacy/data approval satisfied before any third-party model transmission",
       "minority/blocking findings preserved",
-      "decision log records every disposition"
+      "decision log records every disposition",
+      "every blind source ref is immutable and every retrieved source matches its frozen SHA-256"
     ],
     "material_failures": [
       "non-identical blind packets without declared reason",
@@ -182,7 +184,8 @@
       "silent mutation of a frozen worker result",
       "simulated/chat-persona OpenRouter substituted for real API review when OpenRouter was required",
       "unauthorized sensitive-data transmission to an external model",
-      "discarded blocking/minority finding without recorded disposition"
+      "discarded blocking/minority finding without recorded disposition",
+      "mutable blind source reference or frozen source hash drift"
     ],
     "on_material_failure": {
       "run_status": "PROCESS_FAIL",
@@ -204,7 +207,9 @@
       "title_format": "[GROUP_REVIEW_RUN] <problem_id>",
       "packet_schema": "GardenGroupReviewPacket/v1",
       "marker": "GARDEN_GROUP_REVIEW_PACKET",
-      "immutable_after_freeze": true
+      "immutable_after_freeze": true,
+      "source_ref_rule": "Blind source_refs MUST be exact-commit repo:<owner>/<repo>@<40hex>:<path> or content:sha256:<64hex>:<label>; mutable PR/branch/default-branch/web refs are forbidden.",
+      "source_hash_rule": "source_hashes is mandatory; keys exactly equal source_refs and each value is lowercase SHA-256 of the frozen source bytes."
     },
     "commands": {
       "leader_start": "group review",
