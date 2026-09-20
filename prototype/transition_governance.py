@@ -61,6 +61,7 @@ class TransitionContext:
     rollback_ready: Optional[bool] = None
     compensation_recovery_ready: Optional[bool] = None
     material_dispute_open: bool = False
+    last_qualified_stage: Optional[TransitionStage] = None
     dispute_path_ready: Optional[bool] = None
     dispute_separable_from_effect_scope: Optional[bool] = None
 
@@ -367,6 +368,14 @@ def evaluate_recovery(
         if target_index >= current_index:
             return TransitionResult(
                 TransitionDecision.REJECT, ("ROLLBACK_TARGET_NOT_EARLIER",)
+            )
+        if context.last_qualified_stage is None:
+            return TransitionResult(
+                TransitionDecision.ESCALATE, ("LAST_QUALIFIED_STAGE_UNKNOWN",)
+            )
+        if proposal.target_stage is not context.last_qualified_stage:
+            return TransitionResult(
+                TransitionDecision.REJECT, ("ROLLBACK_TARGET_NOT_LAST_QUALIFIED",)
             )
         if context.rollback_ready is False:
             return TransitionResult(
