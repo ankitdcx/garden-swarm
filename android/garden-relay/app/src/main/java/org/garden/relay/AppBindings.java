@@ -8,7 +8,7 @@ import java.util.Set;
 
 public final class AppBindings {
     public static final String PREFS = "garden_relay";
-    public static final String[] SLOTS = {"deepseek", "qwen", "gemini", "chatgpt"};
+    public static final String[] SLOTS = {"deepseek", "gemini", "chatgpt"};
 
     private AppBindings() {}
 
