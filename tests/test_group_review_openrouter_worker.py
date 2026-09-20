@@ -117,7 +117,8 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
             "problem": "P",
             "scope": "S",
             "assumptions": [],
-            "source_refs": [],
+            "source_refs": ["repo:ankitdcx/garden-swarm@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:AGENTS.md"],
+            "source_hashes": {"repo:ankitdcx/garden-swarm@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:AGENTS.md": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
             "symmetric_worker_prompt": "Solve independently.",
         }
         packet["packet_sha256"] = bus.packet_hash(packet)
