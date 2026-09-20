@@ -35,7 +35,7 @@ public final class AppBindings {
         Set<String> out = new HashSet<>();
         for (String slot : SLOTS) {
             String value = packageFor(context, slot);
-            if (!value.isBlank()) out.add(value);
+            if (!value.trim().isEmpty()) out.add(value);
         }
         return out;
     }
