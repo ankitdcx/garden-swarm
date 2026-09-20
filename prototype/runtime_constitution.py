@@ -75,8 +75,8 @@ class RuntimeConstitutionContext:
     authority_parent_by_subject: Mapping[str, str] = field(default_factory=dict)
     revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
-    high_impact_actions: frozenset[str] = frozenset()
     human_effect_materiality_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
+    human_effect_materiality_validation_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
     required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
@@ -235,17 +235,27 @@ def evaluate_instruction(
     ):
         return RuntimeResult(RuntimeDecision.REJECT, ("AUTHORITY_SCOPE_DENIED",))
 
-    material_human_effect = context.human_effect_materiality_by_effect.get(
-        (instruction.action, instruction.target)
-    )
+    effect_key = (instruction.action, instruction.target)
+    material_human_effect = context.human_effect_materiality_by_effect.get(effect_key)
     if material_human_effect is None:
-        if instruction.action in context.high_impact_actions:
-            material_human_effect = True
-        else:
-            return RuntimeResult(
-                RuntimeDecision.ESCALATE,
-                ("HUMAN_EFFECT_MATERIALITY_UNKNOWN",),
-            )
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            ("HUMAN_EFFECT_MATERIALITY_UNKNOWN",),
+        )
+
+    materiality_validation = (
+        context.human_effect_materiality_validation_by_effect.get(effect_key)
+    )
+    if materiality_validation is False:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            ("HUMAN_EFFECT_MATERIALITY_INVALID",),
+        )
+    if materiality_validation is not True:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            ("HUMAN_EFFECT_MATERIALITY_UNVALIDATED",),
+        )
 
     if material_human_effect:
         required_human_effect_gates = (
