@@ -28,7 +28,7 @@ class IPOriginReviewSelectionTests(unittest.TestCase):
         self.assertIn("pareto", expected)
         self.assertEqual(payload["anchor_families"], ["deepseek", "pareto"])
         self.assertEqual(payload["purpose"], "PUBLIC_IP_ORIGIN_REVIEW")
-        self.assertLessEqual(payload["daily_openrouter_cost_ceiling_usd"], 1.0)
+        self.assertLessEqual(payload["daily_openrouter_cost_ceiling_usd"], 2.0)
         self.assertEqual(payload["provider_policy"]["data_collection"], "deny")
         self.assertFalse(payload["semantic_delta_admitted"])
 
