@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
+import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import rikka.shizuku.Shizuku;
@@ -36,6 +37,7 @@ public final class MainActivity extends Activity {
     private TextView note;
     private TextView bridge;
     private TextView discovery;
+    private TextView calibration;
     private static final int SHIZUKU_REQ = 41;
 
     @Override
@@ -83,6 +85,18 @@ public final class MainActivity extends Activity {
         discovery.setPadding(0,0,0,dp(10));
         root.addView(discovery);
 
+        calibration = new TextView(this);
+        calibration.setText("DeepSeek calibration: NOT RUN");
+        calibration.setTextSize(14);
+        calibration.setPadding(0,0,0,dp(10));
+        root.addView(calibration);
+
+        Button deepseekProbe = new Button(this);
+        deepseekProbe.setAllCaps(false);
+        deepseekProbe.setText("Calibrate DeepSeek launch");
+        deepseekProbe.setOnClickListener(v -> calibrateDeepSeekLaunch());
+        root.addView(deepseekProbe);
+
         Button probe = new Button(this);
         probe.setAllCaps(false);
         probe.setText("Probe installed reviewer apps");
@@ -125,6 +139,27 @@ public final class MainActivity extends Activity {
                     (perm == PackageManager.PERMISSION_GRANTED ? "AUTHORIZED" : "NOT AUTHORIZED"));
         } catch (Throwable t) {
             bridge.setText("Shizuku: unavailable — " + t.getClass().getSimpleName());
+        }
+    }
+
+    private void calibrateDeepSeekLaunch() {
+        if (!Shizuku.pingBinder() || Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
+            calibration.setText("DeepSeek calibration: BLOCKED — Shizuku not authorized");
+            return;
+        }
+        try {
+            PackageInfo pi = getPackageManager().getPackageInfo("com.deepseek.chat", 0);
+            Intent launch = getPackageManager().getLaunchIntentForPackage("com.deepseek.chat");
+            if (launch == null) {
+                calibration.setText("DeepSeek calibration: BLOCKED — no launch activity");
+                return;
+            }
+            launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(launch);
+            calibration.setText("DeepSeek calibration: LAUNCHED v" + pi.versionName +
+                    " — no prompt inserted, no message sent");
+        } catch (Throwable t) {
+            calibration.setText("DeepSeek calibration: FAILED — " + t.getClass().getSimpleName());
         }
     }
 
