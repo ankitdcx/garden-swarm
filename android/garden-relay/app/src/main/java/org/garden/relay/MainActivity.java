@@ -105,7 +105,6 @@ public final class MainActivity extends Activity {
         root.addView(statusView);
 
         addBinding(root, "deepseek", "DeepSeek");
-        addBinding(root, "qwen", "Qwen");
         addBinding(root, "gemini", "Gemini");
         addBinding(root, "chatgpt", "ChatGPT");
 
@@ -535,7 +534,6 @@ public final class MainActivity extends Activity {
     private String prettySlot(String slot) {
         switch (slot) {
             case "deepseek": return "DeepSeek";
-            case "qwen": return "Qwen";
             case "gemini": return "Gemini";
             case "chatgpt": return "ChatGPT";
             default: return slot;
