@@ -938,6 +938,13 @@ def test_changed_materiality_value_cannot_reuse_old_validation_digest():
 def test_authority_receipt_must_bind_exact_jurisdiction_and_context():
     ctx = base_context()
     receipts = dict(ctx.authority_validation_receipt_by_subject)
+    root = receipts["human:alice"]
+    receipts["human:alice"] = authority_receipt(
+        subject=root.subject,
+        claim_digest=root.claim_digest,
+        parent=root.parent_subject,
+        jurisdiction="jurisdiction:required",
+    )
     old = receipts["agent:A"]
     receipts["agent:A"] = authority_receipt(
         subject=old.subject,
