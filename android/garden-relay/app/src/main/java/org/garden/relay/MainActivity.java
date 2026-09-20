@@ -91,8 +91,6 @@ public final class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildUi();
-        refresh();
-        refreshShizuku();
         startLocalBrowserBridge();
     }
 
@@ -151,95 +149,47 @@ public final class MainActivity extends Activity {
         scroll.addView(root);
 
         TextView title = new TextView(this);
-        title.setText("Garden Review Dashboard");
+        title.setText("Garden Browser Review");
         title.setTextSize(27);
         root.addView(title);
 
-        header = new TextView(this);
-        header.setText("Loading review board…");
-        header.setTextSize(15);
-        header.setPadding(0,dp(10),0,dp(14));
-        root.addView(header);
+        TextView intro = new TextView(this);
+        intro.setText("Free browser review bus — DeepSeek, Gemini, Claude and Grok");
+        intro.setTextSize(15);
+        intro.setPadding(0,dp(10),0,dp(18));
+        root.addView(intro);
 
         bridge = new TextView(this);
         bridge.setText("Browser bridge: starting…");
-        bridge.setTextSize(16);
-        bridge.setPadding(0,0,0,dp(10));
+        bridge.setTextSize(17);
+        bridge.setPadding(0,0,0,dp(18));
         root.addView(bridge);
 
-        discovery = new TextView(this);
-        discovery.setText("Reviewer apps: not probed");
-        discovery.setTextSize(14);
-        discovery.setPadding(0,0,0,dp(10));
-        root.addView(discovery);
-
         calibration = new TextView(this);
-        calibration.setText("DeepSeek calibration: NOT RUN");
-        calibration.setTextSize(14);
-        calibration.setPadding(0,0,0,dp(10));
+        calibration.setText("Waiting for browser calibration…");
+        calibration.setTextSize(15);
+        calibration.setPadding(0,0,0,dp(18));
         root.addView(calibration);
 
-        Button coordinate = new Button(this);
-        coordinate.setAllCaps(false);
-        coordinate.setText("Calibrate DeepSeek composer tap (no type/send)");
-        coordinate.setOnClickListener(v -> calibrateDeepSeekCoordinate());
-        root.addView(coordinate);
+        TextView sites = new TextView(this);
+        sites.setText("Reviewers\n○ DeepSeek — waiting\n○ Gemini — waiting\n○ Claude — waiting\n○ Grok — waiting");
+        sites.setTextSize(17);
+        sites.setPadding(0,0,0,dp(18));
+        root.addView(sites);
 
-        Button inputProbe = new Button(this);
-        inputProbe.setAllCaps(false);
-        inputProbe.setText("Calibrate DeepSeek input (no send)");
-        inputProbe.setOnClickListener(v -> calibrateDeepSeekInput());
-        root.addView(inputProbe);
-
-        Button deepseekProbe = new Button(this);
-        deepseekProbe.setAllCaps(false);
-        deepseekProbe.setText("Calibrate DeepSeek launch");
-        deepseekProbe.setOnClickListener(v -> calibrateDeepSeekLaunch());
-        root.addView(deepseekProbe);
-
-        Button probe = new Button(this);
-        probe.setAllCaps(false);
-        probe.setText("Probe installed reviewer apps");
-        probe.setOnClickListener(v -> probeReviewerApps());
-        root.addView(probe);
-
-        Button authorize = new Button(this);
-        authorize.setAllCaps(false);
-        authorize.setText("Authorize Shizuku");
-        authorize.setOnClickListener(v -> requestShizuku());
-        root.addView(authorize);
-
-        board = new LinearLayout(this);
-        board.setOrientation(LinearLayout.VERTICAL);
-        root.addView(board);
-
-        Button refresh = new Button(this);
-        refresh.setAllCaps(false);
-        refresh.setText("Refresh status");
-        refresh.setOnClickListener(v -> refresh());
-        root.addView(refresh);
+        TextView help = new TextView(this);
+        help.setText("Open a supported AI website in Firefox with the Garden userscript enabled. Composer calibration will appear here automatically. No Shizuku or Android app automation is used by this browser workflow.");
+        help.setTextSize(14);
+        root.addView(help);
 
         note = new TextView(this);
-        note.setTextSize(12);
-        note.setPadding(0,dp(12),0,0);
+        note.setVisibility(android.view.View.GONE);
         root.addView(note);
+        header = new TextView(this); header.setVisibility(android.view.View.GONE); root.addView(header);
+        discovery = new TextView(this); discovery.setVisibility(android.view.View.GONE); root.addView(discovery);
+        board = new LinearLayout(this); board.setVisibility(android.view.View.GONE); root.addView(board);
 
         setContentView(scroll);
-    }
-
-    private void refreshShizuku() {
-        try {
-            if (!Shizuku.pingBinder()) {
-                bridge.setText("Shizuku: OFFLINE");
-                return;
-            }
-            int uid = Shizuku.getUid();
-            int perm = Shizuku.checkSelfPermission();
-            bridge.setText("Shizuku: RUNNING (uid " + uid + ") — " +
-                    (perm == PackageManager.PERMISSION_GRANTED ? "AUTHORIZED" : "NOT AUTHORIZED"));
-        } catch (Throwable t) {
-            bridge.setText("Shizuku: unavailable — " + t.getClass().getSimpleName());
-        }
     }
 
     private void calibrateDeepSeekCoordinate() {
