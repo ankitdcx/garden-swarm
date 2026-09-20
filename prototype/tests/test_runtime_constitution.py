@@ -8,6 +8,8 @@ from prototype.runtime_constitution import (
     RuntimeDecision,
     RuntimeInstruction,
     classify_instruction_authority,
+    _authority_claim_digest,
+    _materiality_claim_digest,
     evaluate_answer_integrity,
     evaluate_goal,
     evaluate_instruction,
@@ -24,23 +26,39 @@ def authority(subject: str, actions: set[str], resources: set[str], depth: int =
 
 
 def base_context(**overrides):
+    authorities = {
+        "human:alice": authority("human:alice", {"notify"}, {"repo"}),
+        "agent:A": authority("agent:A", {"notify", "deploy"}, {"repo", "world"}),
+    }
+    provenance = {
+        "human:alice": ("delegation-root:alice",),
+        "agent:A": ("delegation:alice->agent:A",),
+    }
+    parents = {"agent:A": "human:alice"}
+    materiality = {
+        ("notify", "repo"): False,
+        ("deploy", "world"): True,
+        ("intrude_private_system", "repo"): True,
+    }
     data = dict(
         current_policy_epoch="E1",
         assurance_policy_epoch="E1",
         capabilities_by_subject={"agent:A": frozenset({"notify", "deploy"})},
-        authority_by_subject={
-            "human:alice": authority("human:alice", {"notify"}, {"repo"}),
-            "agent:A": authority("agent:A", {"notify", "deploy"}, {"repo", "world"}),
-        },
+        authority_by_subject=authorities,
         authority_validation_by_subject={
             "human:alice": True,
             "agent:A": True,
         },
-        authority_provenance_by_subject={
-            "human:alice": ("delegation-root:alice",),
-            "agent:A": ("delegation:alice->agent:A",),
+        authority_provenance_by_subject=provenance,
+        authority_parent_by_subject=parents,
+        authority_claim_digest_by_subject={
+            "human:alice": _authority_claim_digest(
+                subject="human:alice", envelope=authorities["human:alice"], parent=None, provenance=provenance["human:alice"]
+            ),
+            "agent:A": _authority_claim_digest(
+                subject="agent:A", envelope=authorities["agent:A"], parent=parents["agent:A"], provenance=provenance["agent:A"]
+            ),
         },
-        authority_parent_by_subject={"agent:A": "human:alice"},
         hard_gates={
             "rights": True,
             "consent": True,
@@ -49,15 +67,13 @@ def base_context(**overrides):
             "safety": True,
             "human_effect": True,
         },
-        human_effect_materiality_by_effect={
-            ("notify", "repo"): False,
-            ("deploy", "world"): True,
-            ("intrude_private_system", "repo"): True,
-        },
-        human_effect_materiality_validation_by_effect={
-            ("notify", "repo"): True,
-            ("deploy", "world"): True,
-            ("intrude_private_system", "repo"): True,
+        human_effect_materiality_by_effect=materiality,
+        human_effect_materiality_validation_by_effect={key: True for key in materiality},
+        human_effect_materiality_digest_by_effect={
+            key: _materiality_claim_digest(
+                action=key[0], target=key[1], material=value, policy_epoch="E1"
+            )
+            for key, value in materiality.items()
         },
         goal_validity_by_id={
             "g1": GoalValidity(True, True, True, True, True, True),
@@ -704,3 +720,47 @@ def test_external_runtime_block_is_bound_to_target_scope():
         ctx,
     )
     assert result.decision is RuntimeDecision.ALLOW
+
+
+def test_changed_authority_envelope_cannot_reuse_old_validation_digest():
+    ctx = base_context()
+    changed = dict(ctx.authority_by_subject)
+    changed["agent:A"] = authority(
+        "agent:A", {"notify", "deploy", "intrude_private_system"}, {"repo", "world"}
+    )
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(authority_by_subject=changed),
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("AUTHORITY_CLAIM_DIGEST_MISMATCH:agent:A",)
+
+
+def test_changed_materiality_value_cannot_reuse_old_validation_digest():
+    ctx = base_context()
+    changed = dict(ctx.human_effect_materiality_by_effect)
+    changed[("notify", "repo")] = True
+    result = evaluate_instruction(
+        RuntimeInstruction(
+            principal="human:alice",
+            actor="agent:A",
+            source_class=ConstraintClass.AUTHORIZED_HUMAN_INSTRUCTION,
+            action="notify",
+            target="repo",
+            capability="notify",
+            delegation_chain=("human:alice", "agent:A"),
+            policy_epoch="E1",
+        ),
+        base_context(human_effect_materiality_by_effect=changed),
+    )
+    assert result.decision is RuntimeDecision.REJECT
+    assert result.reasons == ("HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH",)
