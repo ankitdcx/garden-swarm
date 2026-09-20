@@ -56,7 +56,7 @@ public final class MainActivity extends Activity {
                     IUiProbeService service = IUiProbeService.Stub.asInterface(binder);
                     String result = service.probeDeepSeekInput();
                     main.post(() -> calibration.setText("DeepSeek input calibration: " +
-                            (result.contains("editable_nodes=0") ? "NEEDS ADAPTER" : "PASS") +
+                            (result.contains("total_nodes=0") ? "FAILED" : "STRUCTURE CAPTURED") +
                             "\n" + result + "\nNo text inserted; no message sent."));
                     try { Shizuku.unbindUserService(uiProbeArgs, this, true); } catch(Throwable ignored){}
                 } catch (Throwable t) {
@@ -192,7 +192,7 @@ public final class MainActivity extends Activity {
             calibration.setText("DeepSeek input calibration: opening app; waiting for UI…");
             main.postDelayed(() -> {
                 try {
-                    calibration.setText("DeepSeek input calibration: probing via Shizuku UserService…");
+                    calibration.setText("DeepSeek structural calibration: probing redacted UI metadata…");
                     Shizuku.bindUserService(uiProbeArgs, uiProbeConnection);
                 } catch (Throwable t) {
                     calibration.setText("DeepSeek input calibration: FAILED — " + t.getClass().getSimpleName());
