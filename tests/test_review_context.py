@@ -125,9 +125,9 @@ class ContextReviewTests(unittest.TestCase):
         self.assertEqual(profile['max_output_tokens'], 32000)
         endpoint = {'tag': 'allowed', 'provider_name': 'Allowed', 'status': 0, 'context_length': 200000,
                     'supported_parameters': ['reasoning'], 'max_completion_tokens': 32000,
-                    'pricing': {'prompt': '.00000015', 'completion': '.0000006'}}
+                    'pricing': {'prompt': '.00000005', 'completion': '.0000002'}}
         exclusions = json.loads((self.root / 'agents/provider-exclusion-policy.json').read_text())
-        body, _ = legacy.endpoint_request(endpoint, self.policy['routine_reviewers'][0], 'public', legacy.money('.05'), self.policy, exclusions, profile=profile)
+        body, _ = legacy.endpoint_request(endpoint, self.policy['routine_reviewers'][0], 'public', legacy.money('.01'), self.policy, exclusions, profile=profile)
         self.assertEqual(body['reasoning']['effort'], 'high')
         self.assertEqual(body['max_tokens'], 32000)
         endpoint['max_completion_tokens'] = 8000
@@ -185,10 +185,10 @@ class ContextReviewTests(unittest.TestCase):
             if url.endswith('/key'):
                 return {'data': {'usage': .001, 'usage_daily': .001}}
             if url.endswith('/endpoints'):
-                return {'data': {'endpoints': [{'tag':'allowed','provider_name':'Allowed','status':0,'context_length':200000,'pricing':{'prompt':'.00000015','completion':'.0000006'}}]}}
+                return {'data': {'endpoints': [{'tag':'allowed','provider_name':'Allowed','status':0,'context_length':200000,'pricing':{'prompt':'.00000005','completion':'.0000002'}}]}}
             self.assertEqual(saves[-1]['attempts'][-1]['status'], 'RESERVED')
             calls.append(body)
-            return {'id': 'fixture-' + str(len(calls)), 'model':body['model'],'provider':'Allowed','usage':{'cost':.01},'choices':[{'finish_reason':'stop','message':{'content':json.dumps(finding)}}]}
+            return {'id': 'fixture-' + str(len(calls)), 'model':body['model'],'provider':'Allowed','usage':{'cost':.005},'choices':[{'finish_reason':'stop','message':{'content':json.dumps(finding)}}]}
         env = {'OPENROUTER_API_KEY':'fixture','GH_REVIEW_TOKEN':'fixture','GITHUB_SHA':'fixture','GITHUB_RUN_ID':'fixture'}
         with patch.dict(w.os.environ, env), patch.object(legacy,'host_check'), patch.object(legacy,'GitLedger',Ledger), patch.object(legacy,'http',http), patch.object(w,'load_directive',return_value=directive):
             w.run(self.root)
