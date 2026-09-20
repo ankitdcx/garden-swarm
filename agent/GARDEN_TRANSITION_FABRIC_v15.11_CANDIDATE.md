@@ -90,7 +90,7 @@ All authority/gate/independence/divergence/capture/readiness/criteria/recovery i
 - material dual-run divergence is resolved or explicitly bounded;
 - capture/conflict-of-interest checks pass;
 - operational/infrastructure readiness passes;
-- declared entry/exit criteria are non-empty for a material transition and pass;
+- the transition criteria profile itself is validated; declared entry/exit criteria are non-empty for a material transition and pass;
 - rollback is available for reversible effects;
 - irreversible effects have authorized compensation/recovery before commit;
 - material open disputes have the required appeal/hold treatment.
@@ -101,7 +101,7 @@ UNKNOWN at a required hard gate is not PASS. The base transition gate floor (rig
 
 Authority is never moved merely because the new system is technically superior.
 
-Each authority delta is typed:
+Each authority delta is an explicit runtime artifact; stage advancement alone never transfers it. Each authority delta is typed:
 - source/basis;
 - delegator and recipient;
 - exact actions/resources/subjects;
@@ -111,6 +111,8 @@ Each authority delta is typed:
 - contest/appeal path;
 - evidence proving the transfer;
 - independence/conflict checks where material.
+
+The executable reference rejects structurally incomplete deltas and requires a separate validation result for every `delta_id`; a transition cannot turn a merely present delta into authority.
 
 The transfer is revalidated at point of consequential use. Transition coordinator status cannot self-authorize the transfer.
 
