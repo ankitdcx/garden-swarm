@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 20
-        versionName '0.13.0-browser-prompt-preparation'
+        versionCode 21
+        versionName '0.13.1-browser-job-diagnostics'
     }
 
     signingConfigs {
