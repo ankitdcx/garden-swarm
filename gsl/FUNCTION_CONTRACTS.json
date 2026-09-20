@@ -548,7 +548,7 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Recovery evaluation grants no authority. ROLLBACK/COMPENSATE requires a confirmed material failure plus fresh recovery authority, immutable base hard gates, independent verification and capture/conflict review; reversible rollback may target only an earlier transition stage.",
+      "authority_requirement": "Recovery evaluation grants no authority. ROLLBACK/COMPENSATE requires a confirmed material failure plus fresh recovery authority, immutable base hard gates, independent verification and capture/conflict review; reversible rollback may target only the recorded last qualified transition stage.",
       "failure_mode_set": [
         "RECOVERY_TRIGGER_NOT_ESTABLISHED",
         "RECOVERY_TRIGGER_UNKNOWN",
@@ -565,7 +565,9 @@
         "IRREVERSIBLE_EFFECT_RECOVERY_NOT_READY",
         "IRREVERSIBLE_EFFECT_RECOVERY_UNKNOWN",
         "RECOVERY_INDEPENDENT_VERIFICATION_FAILED",
-        "RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN"
+        "RECOVERY_INDEPENDENT_VERIFICATION_UNKNOWN",
+        "LAST_QUALIFIED_STAGE_UNKNOWN",
+        "ROLLBACK_TARGET_NOT_LAST_QUALIFIED"
       ],
       "result_algebra": "TransitionDecision[ROLLBACK|COMPENSATE|HOLD|REJECT|ESCALATE] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -578,7 +580,8 @@
         "rollback readiness",
         "compensation/recovery readiness",
         "standard transition-stage order",
-        "independent recovery verification"
+        "independent recovery verification",
+        "last qualified transition stage"
       ],
       "resource_and_termination_bounds": "Finite checks over fixed stage order and hard-gate set; no unbounded loop.",
       "provenance": [
