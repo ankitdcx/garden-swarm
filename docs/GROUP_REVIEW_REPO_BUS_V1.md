@@ -24,7 +24,7 @@ The Leader discusses the situation with the user, triages it, freezes one packet
 
 `[GROUP_REVIEW_RUN] <problem_id>`
 
-The issue body contains one `GardenGroupReviewPacket/v1` under the `GARDEN_GROUP_REVIEW_PACKET` marker.
+The issue body contains one `GardenGroupReviewPacket/v1` under the `GARDEN_GROUP_REVIEW_PACKET` marker. Every `source_ref` must be immutable: either `repo:<owner>/<repo>@<40-hex commit>:<path>` or `content:sha256:<64-hex>:<label>`. The packet must contain a `source_hashes` object whose keys exactly equal `source_refs` and whose values are SHA-256 hashes of the frozen source bytes. Mutable PR URLs, branch refs, default-branch paths and unpinned web pages are invalid blind sources.
 
 For MATERIAL/HIGH_RISK public packets, opening that owner-authored issue automatically starts the real governed OpenRouter lane. No phone API key or manual workflow button is required.
 
@@ -42,7 +42,7 @@ Each worker must:
 
 1. read `GIT_OPERATING_CONTEXT.md`, `AGENTS.md`, and `agents/actions/group-review.json`;
 2. fetch the exact run issue by number;
-3. read only the frozen packet for the blind phase;
+3. read only the frozen packet for the blind phase and verify retrieved source bytes against the packet `source_hashes` before using them;
 4. not search for or read peer worker/OpenRouter results before freezing;
 5. solve the symmetric worker task independently;
 6. publish a new immutable issue titled:
@@ -120,7 +120,7 @@ Opening an owner-authored `[GROUP_REVIEW_RUN]` issue triggers only the secret-fr
 
 Admission rules:
 
-- packet must validate as `GardenGroupReviewPacket/v1`;
+- packet must validate as `GardenGroupReviewPacket/v1`, including exact immutable source refs and one-for-one source SHA-256 bindings;
 - `public_only=true`;
 - `data_classification=PUBLIC`;
 - triage must be `MATERIAL` or `HIGH_RISK`;
@@ -156,7 +156,7 @@ On resume, the Leader reads the run issue plus currently available frozen artifa
 
 A partially written chat message that was never frozen is not state.
 
-An incomplete OpenRouter call, unknown billing state, hash mismatch, peer leakage, or silently edited artifact is not treated as completed work.
+An incomplete OpenRouter call, unknown billing state, packet/source hash mismatch, mutable-source drift, peer leakage, or silently edited artifact is not treated as completed work. A source-hash mismatch after freeze is a material process failure; preserve the failed run and start a new run identity rather than silently refreshing the source.
 
 ## Minimum user work
 
