@@ -338,17 +338,26 @@
       "closed_effect_vector": [
         "READ_CONTEXT"
       ],
-      "authority_requirement": "Goal admission is proposal/planning state only. Human- or model-selected goals cannot create execution authority; every consequential effect requires a separate point-of-use authorization.",
+      "authority_requirement": "Goal admission remains proposal/planning state only and requires current DesignEpoch/delegation/expiry/dependency/resource/termination bindings. A human- or model-selected goal cannot create execution authority; every consequential effect separately revalidates the goal and action authority at point of use.",
       "failure_mode_set": [
         "GOAL_REVOKED",
-        "EXTERNAL_CONSTRAINT_IS_NOT_A_GOAL_AUTHORITY_SOURCE"
+        "EXTERNAL_CONSTRAINT_IS_NOT_A_GOAL_AUTHORITY_SOURCE",
+        "GOAL_VALIDITY_UNKNOWN",
+        "GOAL_BINDING_INVALID",
+        "GOAL_BINDING_UNKNOWN"
       ],
       "result_algebra": "RuntimeDecision[REJECT|PROPOSAL_ONLY] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
       "dependency_and_invalidator_bindings": [
         "revoked_goal_ids",
         "DesignEpoch/authority validity at later action point",
-        "Human-Effect Closure"
+        "Human-Effect Closure",
+        "goal DesignEpoch binding",
+        "goal delegation validity",
+        "goal expiry",
+        "goal dependency freshness",
+        "goal resource bounds",
+        "goal termination conditions"
       ],
       "resource_and_termination_bounds": "Constant finite checks; no background execution.",
       "provenance": [
@@ -396,7 +405,10 @@
         "AUTHORITY_PARENT_MISMATCH",
         "HUMAN_EFFECT_MATERIALITY_UNKNOWN",
         "HUMAN_EFFECT_MATERIALITY_INVALID",
-        "HUMAN_EFFECT_MATERIALITY_UNVALIDATED"
+        "HUMAN_EFFECT_MATERIALITY_UNVALIDATED",
+        "GOAL_VALIDITY_UNKNOWN",
+        "GOAL_BINDING_INVALID",
+        "GOAL_BINDING_UNKNOWN"
       ],
       "result_algebra": "RuntimeDecision[ALLOW|REJECT|ESCALATE|PROPOSAL_ONLY|EXTERNALLY_BLOCKED] + typed reasons",
       "bool_restriction": "NOT_APPLICABLE",
@@ -415,7 +427,8 @@
         "immutable base Human-Effect Closure gate floor",
         "external block classification after semantic admission",
         "action+target human-effect materiality classification",
-        "human-effect materiality validation"
+        "human-effect materiality validation",
+        "persistent goal validity recheck"
       ],
       "resource_and_termination_bounds": "Finite over delegation chain, external block map and hard-gate set; no unbounded loop.",
       "provenance": [
