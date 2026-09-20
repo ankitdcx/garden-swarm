@@ -231,10 +231,10 @@ not override current owner semantics or create authority.
 FULL-CATALOGUE BOUNDARY
 
 The full generated Catalogue candidate SHA-256 is:
-  afc8ae281f67bd30f5f1648e1b37980c89739baa583e23427a39fc79e631d5ca
+  d02dad9662bedb9d9253ed9eaabc6ec0462ee67697c29201d85b01323fb97f8c
 
 Its size is:
-  3,555,977 bytes
+  4,899,658 bytes
 
 This review core is intentionally smaller. The full Catalogue is retention/compatibility material and must remain
 available for final source promotion/verification. This review projection does not replace that requirement.
