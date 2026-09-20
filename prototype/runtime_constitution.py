@@ -53,6 +53,16 @@ class GoalProposal:
 
 
 @dataclass(frozen=True)
+class GoalValidity:
+    design_epoch_current: Optional[bool]
+    delegation_current: Optional[bool]
+    expiry_current: Optional[bool]
+    dependencies_current: Optional[bool]
+    resource_bounds_present: Optional[bool]
+    termination_conditions_present: Optional[bool]
+
+
+@dataclass(frozen=True)
 class RuntimeInstruction:
     principal: str
     actor: str
@@ -80,6 +90,7 @@ class RuntimeConstitutionContext:
     required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[str]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
+    goal_validity_by_id: Mapping[str, GoalValidity] = field(default_factory=dict)
 
 
 def classify_instruction_authority(source_class: ConstraintClass) -> InstructionAuthority:
@@ -93,6 +104,39 @@ def classify_instruction_authority(source_class: ConstraintClass) -> Instruction
     return InstructionAuthority.PROPOSAL_ONLY
 
 
+def _goal_validity_result(
+    goal_id: str, context: RuntimeConstitutionContext
+) -> RuntimeResult | None:
+    if goal_id in context.revoked_goal_ids:
+        return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_REVOKED",))
+
+    validity = context.goal_validity_by_id.get(goal_id)
+    if validity is None:
+        return RuntimeResult(RuntimeDecision.ESCALATE, ("GOAL_VALIDITY_UNKNOWN",))
+
+    checks = {
+        "design_epoch": validity.design_epoch_current,
+        "delegation": validity.delegation_current,
+        "expiry": validity.expiry_current,
+        "dependencies": validity.dependencies_current,
+        "resource_bounds": validity.resource_bounds_present,
+        "termination_conditions": validity.termination_conditions_present,
+    }
+    failed = sorted(name for name, value in checks.items() if value is False)
+    if failed:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            tuple(f"GOAL_BINDING_INVALID:{name}" for name in failed),
+        )
+    unknown = sorted(name for name, value in checks.items() if value is not True)
+    if unknown:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            tuple(f"GOAL_BINDING_UNKNOWN:{name}" for name in unknown),
+        )
+    return None
+
+
 def evaluate_goal(goal: GoalProposal, context: RuntimeConstitutionContext) -> RuntimeResult:
     """Admit a goal as planning state without minting execution authority.
 
@@ -101,8 +145,9 @@ def evaluate_goal(goal: GoalProposal, context: RuntimeConstitutionContext) -> Ru
     hard-gate checks at point of use.
     """
 
-    if goal.goal_id in context.revoked_goal_ids:
-        return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_REVOKED",))
+    validity_result = _goal_validity_result(goal.goal_id, context)
+    if validity_result is not None:
+        return validity_result
 
     if goal.source_class is ConstraintClass.EXTERNAL_RUNTIME_CONSTRAINT:
         return RuntimeResult(
@@ -141,8 +186,10 @@ def evaluate_instruction(
     if instruction.policy_epoch != context.current_policy_epoch:
         return RuntimeResult(RuntimeDecision.REJECT, ("STALE_POLICY_EPOCH",))
 
-    if instruction.goal_id and instruction.goal_id in context.revoked_goal_ids:
-        return RuntimeResult(RuntimeDecision.REJECT, ("GOAL_REVOKED",))
+    if instruction.goal_id:
+        validity_result = _goal_validity_result(instruction.goal_id, context)
+        if validity_result is not None:
+            return validity_result
 
     if instruction.source_class is ConstraintClass.GARDEN_CONSTITUTION:
         return RuntimeResult(
