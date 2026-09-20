@@ -48,7 +48,10 @@
       "FindingClass",
       "TransitionAssuranceReceipt",
       "TransitionReceipt",
-      "AuthorityValidationReceipt"
+      "AuthorityValidationReceipt",
+      "GoalLease",
+      "GoalValidationReceipt",
+      "ExternalEnforcementStatus"
     ],
     "semantic_domains": [
       "AUTHORITY_AND_ACTIONGATE",
