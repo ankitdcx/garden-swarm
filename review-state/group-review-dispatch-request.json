@@ -3,10 +3,10 @@
   "status": "REQUESTED",
   "run_issue_number": 259,
   "packet_sha256": "2a730e5f32c97daabab4143db7bd15027f82d0753696e628ab27566773d86058",
-  "created_at": "2026-09-20T12:34:00+05:30",
-  "purpose": "Re-dispatch unchanged frozen semantic run #259 solely to expose normalized key/budget preflight diagnostics after installing commit 206a07538c15eab0295ab6e781c5b692cb3ad21c.",
+  "created_at": "2026-09-20T13:55:00+05:30",
+  "purpose": "Re-dispatch unchanged frozen semantic run #259 under merged bounded cheap-call budget epoch GROUP_REVIEW_CHEAP_REAUTH_2026-09-20.",
   "supersedes_dispatch_for_run_issue_number": 257,
   "semantic_delta_admitted": false,
-  "dispatch_generation": 2,
-  "diagnostic_worker_commit": "206a07538c15eab0295ab6e781c5b692cb3ad21c"
+  "dispatch_generation": 3,
+  "budget_epoch_id": "GROUP_REVIEW_CHEAP_REAUTH_2026-09-20"
 }
