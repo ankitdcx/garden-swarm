@@ -492,6 +492,12 @@ public final class MainActivity extends Activity {
                     if (!pkg.trim().isEmpty()) {
                         intent.setPackage(pkg);
                         grantUriPermission(pkg, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        if (prefs().getBoolean(PREF_AUTO_SEND, false)) {
+                            prefs().edit()
+                                    .putString(PREF_PENDING_SEND_PACKAGE, pkg)
+                                    .putLong(PREF_PENDING_SEND_UNTIL, System.currentTimeMillis() + 120_000L)
+                                    .apply();
+                        }
                     }
                     try {
                         startActivity(pkg.trim().isEmpty() ? Intent.createChooser(intent, "Send Garden results") : intent);
