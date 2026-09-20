@@ -168,7 +168,7 @@ public final class MainActivity extends Activity {
             Button button = bindButtons.get(slot);
             if (button == null) continue;
             String boundLabel = AppBindings.labelFor(this, slot);
-            if (boundLabel.isBlank()) {
+            if (boundLabel.trim().isEmpty()) {
                 button.setText("Bind " + prettySlot(slot));
             } else {
                 button.setText(prettySlot(slot) + " → " + boundLabel);
@@ -278,7 +278,7 @@ public final class MainActivity extends Activity {
 
     private void sendTarget(ReviewJob.Target target) {
         String pkg = AppBindings.packageFor(this, target.slot);
-        if (pkg.isBlank()) {
+        if (pkg.trim().isEmpty()) {
             bindSlot(target.slot, target.displayName);
             toast("Bind " + target.displayName + " once, then tap Run next reviewer again.");
             return;
@@ -396,7 +396,7 @@ public final class MainActivity extends Activity {
 
         String jobId = prefs().getString(PREF_ACTIVE_JOB, "");
         String slot = prefs().getString(PREF_ACTIVE_SLOT, "");
-        if (jobId.isBlank() || slot.isBlank()) {
+        if (jobId.trim().isEmpty() || slot.trim().isEmpty()) {
             toast("Received a share, but no reviewer is currently armed. Result was not assigned.");
             return;
         }
@@ -478,12 +478,12 @@ public final class MainActivity extends Activity {
                             "Garden Relay completed " + currentJob.jobId + ". Exact reviewer results and SHA-256 receipts are attached.");
                     intent.setClipData(ClipData.newRawUri(bundle.getName(), uri));
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    if (!pkg.isBlank()) {
+                    if (!pkg.trim().isEmpty()) {
                         intent.setPackage(pkg);
                         grantUriPermission(pkg, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     }
                     try {
-                        startActivity(pkg.isBlank() ? Intent.createChooser(intent, "Send Garden results") : intent);
+                        startActivity(pkg.trim().isEmpty() ? Intent.createChooser(intent, "Send Garden results") : intent);
                     } catch (ActivityNotFoundException e) {
                         toast("Bound ChatGPT app cannot receive this share; use Android Share chooser instead.");
                         intent.setPackage(null);
