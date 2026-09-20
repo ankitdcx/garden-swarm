@@ -307,6 +307,29 @@ legitimately exists.
 
 A review system should not invent a remedy that has no lawful basis, but it should not hide an existing route either.
 
+CHAPTER 21A — REPORTING PROBLEMS SAFELY
+
+A person or system that reports a possible integrity, safety, corruption, abuse, or rule problem should not be punished
+merely for making an honest report.
+
+A report is a request to examine something. It is not proof that the accusation is true, and it is not permission to
+punish anyone.
+
+If a report later turns out to be mistaken or unsupported, that does not by itself prove that the reporter acted in bad
+faith.
+
+At the same time, reporting does not create blanket immunity. Separate misconduct or safety problems may still be
+examined through an independent and fair process.
+
+Garden therefore tries to keep three questions separate:
+
+    Was the act of reporting protected?
+    What do the facts say about the reported problem?
+    Is there separate evidence about the reporter's own conduct?
+
+Direct or indirect retaliation—such as quietly removing work, access, opportunity, supervision, resources, or reputation
+because somebody made a protected report—should be detectable and reviewable.
+
 CHAPTER 22 — RESOURCES AND THE REAL WORLD
 
 Good plans still fail when they ignore money, time, energy, workers, suppliers, materials, maintenance, or other
@@ -353,29 +376,6 @@ There are four plain text files in this edition.
 The first three are the current design set.
 
 The history file is not needed to understand the current design and cannot override it.
-
-CHAPTER 21A — REPORTING PROBLEMS SAFELY
-
-A person or system that reports a possible integrity, safety, corruption, abuse, or rule problem should not be punished
-merely for making an honest report.
-
-A report is a request to examine something. It is not proof that the accusation is true, and it is not permission to
-punish anyone.
-
-If a report later turns out to be mistaken or unsupported, that does not by itself prove that the reporter acted in bad
-faith.
-
-At the same time, reporting does not create blanket immunity. Separate misconduct or safety problems may still be
-examined through an independent and fair process.
-
-Garden therefore tries to keep three questions separate:
-
-    Was the act of reporting protected?
-    What do the facts say about the reported problem?
-    Is there separate evidence about the reporter's own conduct?
-
-Direct or indirect retaliation—such as quietly removing work, access, opportunity, supervision, resources, or reputation
-because somebody made a protected report—should be detectable and reviewable.
 
 CHAPTER 25 — POWER, ORDERS, AND CHANGING SYSTEMS SAFELY
 
