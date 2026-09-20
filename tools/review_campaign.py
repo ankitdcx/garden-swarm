@@ -168,7 +168,7 @@ def spending_policy(policy, campaign):
     """Campaign metadata cannot create a separate monetary budget.
 
     Campaigns remain source/target/retry/call-count governance objects. The
-    globally authorized paid OpenRouter limits (USD 2/day and USD 0.01/call)
+    globally authorized paid OpenRouter limits (USD 2/day and USD 0.05/call)
     stay controlling regardless of historical campaign monetary fields.
     """
     return copy.deepcopy(policy)
