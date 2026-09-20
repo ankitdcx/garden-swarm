@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 import re
 import time
 from urllib import error
@@ -341,7 +342,7 @@ def group_review_budget_check(
 
     if state.get("paused") is not False:
         raise ValueError("single worker paused")
-    if review.review_campaign.blocking_attempts(state, None):
+    if legacy.review_campaign.blocking_attempts(state, None):
         raise ValueError("outstanding reservation/unknown cost; reconciliation required")
     if key_info.get("is_management_key") is True or key_info.get("is_free_tier") is True:
         raise ValueError("paid inference key required")
@@ -367,9 +368,7 @@ def group_review_budget_check(
         legacy.money("10"),
     )
     task_ceiling = legacy.money(policy["routine_task_cost_ceiling_usd"])
-    day = __import__("datetime").datetime.fromtimestamp(
-        now, __import__("datetime").timezone.utc
-    ).date().isoformat()
+    day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
 
     epoch_attempts = [
         attempt
@@ -377,12 +376,12 @@ def group_review_budget_check(
         if attempt.get("budget_epoch_id") == epoch_id
     ]
     local_total = sum(
-        (review.review_campaign.accounting_charge(a, None) for a in epoch_attempts),
+        (legacy.review_campaign.accounting_charge(a, None) for a in epoch_attempts),
         legacy.money(0),
     )
     local_daily = sum(
         (
-            review.review_campaign.accounting_charge(a, None)
+            legacy.review_campaign.accounting_charge(a, None)
             for a in epoch_attempts
             if a.get("utc_day") == day
         ),
@@ -390,7 +389,7 @@ def group_review_budget_check(
     )
     local_task = sum(
         (
-            review.review_campaign.accounting_charge(a, None)
+            legacy.review_campaign.accounting_charge(a, None)
             for a in epoch_attempts
             if a.get("cycle") == cycle_id
         ),
