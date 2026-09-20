@@ -6,6 +6,12 @@ from typing import Mapping, Optional
 import re
 
 
+class FindingClass(str, Enum):
+    ROUTINE = "ROUTINE"
+    MATERIAL = "MATERIAL"
+    HARD_GATE = "HARD_GATE"
+
+
 class FindingDisposition(str, Enum):
     FIXED = "FIXED"
     REJECTED_WITH_EVIDENCE = "REJECTED_WITH_EVIDENCE"
@@ -16,6 +22,7 @@ class FindingDisposition(str, Enum):
 
 @dataclass(frozen=True)
 class FindingRecord:
+    finding_class: FindingClass
     disposition: FindingDisposition
     evidence_refs: tuple[str, ...] = ()
     owner: str | None = None
@@ -50,6 +57,11 @@ class UpgradeContext:
     protected_change: bool = False
     protected_authorization_pass: Optional[bool] = None
     final_reaudit_complete: Optional[bool] = None
+    finding_classification_validated: Optional[bool] = None
+    protected_surface_scan_pass: Optional[bool] = None
+    max_iterations: int = 0
+    max_work_items: int = 0
+    residual_debt_recorded: bool = False
 
 
 @dataclass(frozen=True)
@@ -161,7 +173,62 @@ def evaluate_upgrade_closure(context: UpgradeContext) -> UpgradeResult:
     if methods is not None:
         return methods
 
+    classification = _typed_gate(
+        "FINDING_CLASSIFICATION",
+        context.finding_classification_validated,
+        false_decision=UpgradeDecision.HOLD,
+    )
+    if classification is not None:
+        return classification
+    classification_binding = _candidate_binding_gate(
+        "FINDING_CLASSIFICATION", context
+    )
+    if classification_binding is not None:
+        return classification_binding
+
+    protected_scan = _typed_gate(
+        "PROTECTED_SURFACE_SCAN",
+        context.protected_surface_scan_pass,
+        false_decision=UpgradeDecision.HOLD,
+    )
+    if protected_scan is not None:
+        return protected_scan
+    protected_scan_binding = _candidate_binding_gate(
+        "PROTECTED_SURFACE_SCAN", context
+    )
+    if protected_scan_binding is not None:
+        return protected_scan_binding
+
+    if context.max_iterations <= 0:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("UPGRADE_ITERATION_BOUND_MISSING",),
+        )
+    if context.max_work_items <= 0:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("UPGRADE_WORK_ITEM_BOUND_MISSING",),
+        )
+    if not context.residual_debt_recorded:
+        return UpgradeResult(
+            UpgradeDecision.HOLD,
+            ("RESIDUAL_DEBT_RECORD_MISSING",),
+        )
+
     for finding_id, record in sorted(context.findings.items()):
+        if (
+            record.finding_class is FindingClass.HARD_GATE
+            and record.disposition
+            in {
+                FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
+                FindingDisposition.ESCALATED,
+                FindingDisposition.OPEN,
+            }
+        ):
+            return UpgradeResult(
+                UpgradeDecision.HOLD,
+                (f"HARD_GATE_FINDING_UNRESOLVED:{finding_id}",),
+            )
         if record.disposition in {
             FindingDisposition.FIXED,
             FindingDisposition.REJECTED_WITH_EVIDENCE,
