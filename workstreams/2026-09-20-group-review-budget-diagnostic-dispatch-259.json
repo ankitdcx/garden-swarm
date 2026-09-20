@@ -1,0 +1,36 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-budget-diagnostic-dispatch-259:20260920",
+  "work_package_id": "GROUP-REVIEW-BUDGET-DIAGNOSTIC-DISPATCH-259-20260920",
+  "branch": "chatgpt/group-review-budget-diagnostic-dispatch-259-20260920",
+  "base_sha": "206a07538c15eab0295ab6e781c5b692cb3ad21c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-budget-diagnostic-dispatch-259:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-BUDGET-DIAGNOSTIC-DISPATCH-259-20260920",
+    "base_sha": "206a07538c15eab0295ab6e781c5b692cb3ad21c",
+    "target_paths": [
+      "review-state/group-review-dispatch-request.json",
+      "workstreams/2026-09-20-group-review-budget-diagnostic-dispatch-259.json"
+    ],
+    "target_symbols": [
+      "GardenGroupReviewDispatchRequest/v1"
+    ],
+    "semantic_domains": [
+      "GROUP_REVIEW_DISPATCH"
+    ],
+    "affected_invariants": [
+      "ONLY_HASH_BOUND_FROZEN_RUN_IS_DISPATCHED"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewPacket/v1"
+    ],
+    "intended_effect": "Re-emit the unchanged frozen run #259 dispatch event after key/budget diagnostics were installed. No packet, semantic, budget or authority change.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
