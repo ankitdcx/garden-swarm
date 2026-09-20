@@ -1,0 +1,31 @@
+{
+  "schema": "GardenAndroidReviewAdapterRegistry/v1",
+  "status": "PROTOTYPE_UNQUALIFIED",
+  "bridge": "SHIZUKU_ADB_IDENTITY",
+  "reviewers": [
+    {
+      "id": "deepseek",
+      "state": "NEEDS_CALIBRATION"
+    },
+    {
+      "id": "gemini",
+      "state": "NEEDS_CALIBRATION"
+    },
+    {
+      "id": "claude",
+      "state": "NEEDS_CALIBRATION"
+    },
+    {
+      "id": "grok",
+      "state": "NEEDS_CALIBRATION"
+    }
+  ],
+  "qwen": {
+    "state": "DISABLED"
+  },
+  "evidence": {
+    "running_requires_dispatch_receipt": true,
+    "complete_requires_response_sha256": true
+  },
+  "semantic_delta_admitted": false
+}
