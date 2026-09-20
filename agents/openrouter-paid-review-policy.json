@@ -219,5 +219,17 @@
     "activation_status": "SINGLE_CALL_TRANSPORT_ACTIVE_ONLY_AFTER_CHATGPT_DIRECTIVE; BROAD_COORDINATOR_PAUSED",
     "no_schedule_required": true
   },
-  "review_context_policy": "agents/review-context-policy.json"
+  "review_context_policy": "agents/review-context-policy.json",
+  "challenger_only_lane": {
+    "enabled": true,
+    "activation": "EXPLICIT_HUMAN_AUTHORIZATION_AND_REQUIRED_SLOT_TRANSPORT_UNAVAILABLE",
+    "purpose": "ADVERSARIAL_PROPOSAL_EVIDENCE_ONLY",
+    "may_satisfy_required_slot": false,
+    "may_satisfy_independent_convergence": false,
+    "same_public_source_binding_required": true,
+    "peer_answers_hidden": true,
+    "budget_rule": "SAME_ACTIVE_USD_2_PER_UTC_DAY_AND_USD_0_01_PER_CALL",
+    "provider_privacy_context_fee_gates_unchanged": true,
+    "candidate_selection": "MUST_BE_EXPLICITLY_IDENTIFIED_AND_RECORDED; QUALITY_QUALIFICATION_NOT_IMPLIED"
+  }
 }
