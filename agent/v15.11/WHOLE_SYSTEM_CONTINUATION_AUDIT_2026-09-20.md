@@ -46,3 +46,16 @@ Disposition: PASS for this audit scope.
 3. Run repository/package closure verification against those bytes.
 4. Resume independent review only after explicit budget authorization and eligible governed reviewer routing; no silent reviewer substitution.
 5. Re-audit after the last material change.
+
+
+## Continuation finding A-05 — standalone materialization branch is structurally incomplete
+Audit of PR #271 at head 4af8f81dc3467526611c4ddfbab27a5b146f93bd found that its readable-text manifest declares v15.11 Technical reconstruction from five parts, intentionally reusing v15.10 part02. That reuse is explicit and therefore not itself a loss defect.
+
+However, the content directory currently contains only manifests; the large content objects promised by the PR description are not materialized at this head. The import inbox also contains only README.md. Public-release integrity CI fails at this head.
+
+Disposition: OPEN / BLOCKS MERGE OF #271 AS A COMPLETED MATERIALIZATION CLAIM. Preserve the branch; finish exact payload import or use another deterministic source that reproduces all recorded hashes before merge.
+
+## OpenRouter authorization update
+The user explicitly reauthorized cheap OpenRouter queries on 2026-09-20 for whole-document verification and confirmation that nothing useful is lost from Garden 15.x. Existing per-call/task/provider/privacy controls remain applicable. External model output is challenger evidence, not semantic or canonical authority.
+
+Do not treat the historical run-259 DeepSeek-slot failure as a reason to weaken its recorded protocol. A new retention-focused review packet may use currently eligible cheap models under the authorized budget, with model identity and source binding recorded.
