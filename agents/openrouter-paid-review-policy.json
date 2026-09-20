@@ -209,7 +209,7 @@
     "authority_and_actiongate",
     "adversarial_falsification"
   ],
-  "budget_pool_scope": "LEGACY_INITIAL_20_USD_ALLOCATION_PLUS_EXPLICIT_SCOPED_REAUTHORIZATION_EPOCHS",
+  "budget_pool_scope": "LEGACY_INITIAL_20_USD_ALLOCATION_NOT_DAILY_PLUS_EXPLICIT_SCOPED_REAUTHORIZATION_EPOCHS",
   "balance_remaining_usd": null,
   "balance_status": "UNKNOWN_REQUIRES_PROVIDER_RECONCILIATION",
   "budget_relationship": "The original $20 pool remains the historical allocation for legacy review lanes. GROUP_REVIEW_CHEAP_REAUTH_2026-09-20 is a separate explicitly authorized $1 incremental GROUP_REVIEW-only epoch. The $1/day, $0.25/task and $0.05/call limits remain controlling; expensive escalation remains automatic-budget zero.",
