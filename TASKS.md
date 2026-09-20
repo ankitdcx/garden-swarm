@@ -57,6 +57,56 @@ Test at least:
 
 **Deliverable:** counterexample or failed attack + exact assumptions + stronger alternative if one exists + deterministic regression test. Treat the v15.10 profile as noncanonical candidate material.
 
+
+### TASK-023 — v15.11 transition-fabric falsification
+Attack the candidate upgrade of the existing Engine.Transition / Garden Transition Fabric.
+
+Test at least:
+- a transition tries to skip a declared required stage;
+- an incumbent authority claim exists but is stale, revoked, conflicted or unvalidated;
+- Garden and incumbent paths disagree during PARALLEL operation;
+- a transition coordinator attempts to enlarge its own authority;
+- a materially interested actor is sole evidence custodian/verifier/authorizer;
+- an irreversible effect lacks an authorized recovery/compensation plan;
+- an open dispute is nonseparable from the effect scope;
+- justice/liability is improperly coupled to transition adoption or resistance;
+- law/enforcement is treated as automatic truth or, conversely, ignored as if it has no real-world effect.
+
+**Target:** `agent/GARDEN_TRANSITION_FABRIC_v15.11_CANDIDATE.md`, `prototype/transition_governance.py`, and its tests.
+
+**Deliverable:** counterexample or failed attack + exact assumptions + stronger alternative if one exists + deterministic regression test.
+
+### TASK-024 — AI-led upgrade-process falsification
+Attack the candidate rule that AI should own routine Garden specification closure instead of returning each solvable gap to a human.
+
+Test at least:
+- uncertainty that can be resolved by evidence/tooling is escalated prematurely;
+- a local fix is merged without dependency propagation;
+- AI self-review masquerades as independent verification;
+- a protected constitutional change is treated as a routine implementation fix;
+- a better alternative architecture is rejected only because it is not historically Garden;
+- the process loops forever on low-value findings or stops before final re-audit;
+- human approval is incorrectly used to waive a failed protected gate.
+
+**Target:** `agent/GARDEN_AI_LED_UPGRADE_PROCESS_v15.11_CANDIDATE.md`.
+
+**Deliverable:** counterexample or failed attack + proposed repair + regression/conformance check.
+
+### TASK-025 — v15.10/r7 no-loss text-source closure
+Finish the representation migration that v15.10-r7 specified but did not materialize.
+
+Requirements:
+- current Garden semantics are fully self-contained in directly readable UTF-8 current sources;
+- no whole predecessor source embedding merely for byte reconstruction;
+- no old release is needed to supply current meaning;
+- every removed/reduced record has machine-checkable coverage;
+- reference closure passes;
+- Technical + Catalogue reproduce the declared current semantic graph/equivalence criterion;
+- an independent reproduction check passes;
+- compactness is never achieved by lossy summarization.
+
+This task is owned by the AI-led upgrade loop as routine closure work. Human input is required only if a genuine semantic/constitutional choice appears.
+
 ## P1 — implementation and interoperability
 
 ### TASK-009 — A2A / MCP Garden relay
