@@ -42,11 +42,14 @@ def reconstruct_object(name: str) -> bytes:
     return raw
 
 
-def verify_direct_sources(directory: Path, manifest: dict) -> None:
+def verify_direct_sources(directory: Path, manifest: dict, version: str) -> None:
     for name, meta in manifest["primary_sources"].items():
         if name.startswith("GARDEN_CATALOGUE_"):
             continue
-        data = (directory / name).read_bytes()
+        if name.startswith("GARDEN_TECHNICAL_"):
+            data = reconstruct_text_parts(version)
+        else:
+            data = (directory / name).read_bytes()
         if len(data) != meta["bytes"] or sha256(data) != meta["sha256"]:
             raise ValueError(f"direct source mismatch: {name}")
 
@@ -80,11 +83,12 @@ def materialize(version: str, out: Path) -> None:
     out.mkdir(parents=True, exist_ok=True)
     if version == "15.10":
         manifest = load_json(V1510 / "RELEASE_MANIFEST_v15.10.json")
-        verify_direct_sources(V1510, manifest)
-        for name in ("GARDEN_BOOK_v15.10.txt", "GARDEN_TECHNICAL_v15.10.txt", "GARDEN_VERSION_HISTORY_v15.10.txt",
+        verify_direct_sources(V1510, manifest, "15.10")
+        for name in ("GARDEN_BOOK_v15.10.txt", "GARDEN_VERSION_HISTORY_v15.10.txt",
                      "CURRENT_READING_MAP_v15.10.json", "RELEASE_MANIFEST_v15.10.json",
                      "RETENTION_CLOSURE_RECEIPT_v15.10.json", "verify_v15.10_retention.py"):
             shutil.copyfile(V1510 / name, out / name)
+        (out / "GARDEN_TECHNICAL_v15.10.txt").write_bytes(reconstruct_text_parts("15.10"))
         (out / "GARDEN_CATALOGUE_v15.10.txt").write_bytes(reconstruct_catalogue_v1510())
         (out / "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl").write_bytes(
             reconstruct_object("retention_disposition")
@@ -92,10 +96,11 @@ def materialize(version: str, out: Path) -> None:
         return
     if version == "15.11":
         manifest = load_json(V1511 / "RELEASE_MANIFEST_v15.11.json")
-        verify_direct_sources(V1511, manifest)
-        for name in ("GARDEN_BOOK_v15.11.txt", "GARDEN_TECHNICAL_v15.11.txt", "GARDEN_VERSION_HISTORY_v15.11.txt",
+        verify_direct_sources(V1511, manifest, "15.11")
+        for name in ("GARDEN_BOOK_v15.11.txt", "GARDEN_VERSION_HISTORY_v15.11.txt",
                      "CLOSURE_RECEIPT_v15.11.json", "RELEASE_MANIFEST_v15.11.json", "verify_v15.11.py"):
             shutil.copyfile(V1511 / name, out / name)
+        (out / "GARDEN_TECHNICAL_v15.11.txt").write_bytes(reconstruct_text_parts("15.11"))
         (out / "GARDEN_CATALOGUE_v15.11.txt").write_bytes(reconstruct_catalogue_v1511())
         return
     raise ValueError("version must be 15.10 or 15.11")
