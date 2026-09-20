@@ -14,7 +14,10 @@
       "state": "ACTIVE",
       "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
-      "hard_failure_count": 0
+      "hard_failure_count": 0,
+      "transport_state": "QUALIFIED_BUT_UNAVAILABLE",
+      "transport_evidence": "GROUP_REVIEW_RUN_277_2026-09-20",
+      "transport_note": "24 endpoints discovered; none eligible under active provider/privacy/price/context/fee gates. Quality qualification unchanged."
     },
     {
       "slot_id": "SLOT-IMPLEMENTATION",
@@ -24,7 +27,8 @@
       "state": "ACTIVE",
       "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
-      "hard_failure_count": 0
+      "hard_failure_count": 0,
+      "transport_state": "UNKNOWN_NOT_PROBED_BY_RUN_277"
     },
     {
       "slot_id": "SLOT-ARCHITECTURE",
@@ -34,7 +38,8 @@
       "state": "ACTIVE",
       "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
-      "hard_failure_count": 0
+      "hard_failure_count": 0,
+      "transport_state": "UNKNOWN_NOT_PROBED_BY_RUN_277"
     },
     {
       "slot_id": "SLOT-ASSURANCE",
@@ -44,7 +49,8 @@
       "state": "ACTIVE",
       "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
-      "hard_failure_count": 0
+      "hard_failure_count": 0,
+      "transport_state": "UNKNOWN_NOT_PROBED_BY_RUN_277"
     },
     {
       "slot_id": "SLOT-EDGE-CASES",
@@ -54,7 +60,8 @@
       "state": "ACTIVE",
       "qualified_by": "V15.10_THREE_ARTIFACT_OPENROUTER_CAMPAIGN_2026-09-19",
       "quality_receipt_count": 0,
-      "hard_failure_count": 0
+      "hard_failure_count": 0,
+      "transport_state": "UNKNOWN_NOT_PROBED_BY_RUN_277"
     }
   ],
   "rules": {
@@ -65,5 +72,12 @@
     "registry_change_is_not_quality_proof_or_authority": true,
     "moving_latest_aliases_forbidden": true,
     "expensive_models_are_never_automatic": true
+  },
+  "transport_availability_semantics": {
+    "qualification_is_distinct_from_transport": true,
+    "qualified_but_unavailable_does_not_complete_required_slot": true,
+    "challenger_only_may_continue_when_explicitly_authorized": true,
+    "challenger_only_never_satisfies_required_slot": true,
+    "final_high_risk_convergence_requires_all_required_slots_or_governed_replacement": true
   }
 }
