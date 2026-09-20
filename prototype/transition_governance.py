@@ -26,6 +26,15 @@ BASE_TRANSITION_HARD_GATES = frozenset(
 )
 
 
+@dataclass(frozen=True)
+class TransitionAssuranceBinding:
+    purpose: str
+    transition_id: str
+    effect_scope: str
+    current_stage: TransitionStage
+    target_stage: TransitionStage
+
+
 class TransitionDecision(str, Enum):
     ADVANCE = "ADVANCE"
     HOLD = "HOLD"
@@ -49,6 +58,7 @@ class TransitionProposal:
 @dataclass
 class TransitionContext:
     authority_validated: Optional[bool]
+    assurance_binding: Optional[TransitionAssuranceBinding] = None
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     required_hard_gates: frozenset[str] = frozenset()
     stage_omission_approval: Mapping[TransitionStage, Optional[bool]] = field(default_factory=dict)
@@ -72,6 +82,37 @@ class TransitionResult:
     reasons: tuple[str, ...]
     authority_created: bool = False
 
+
+
+
+def _assurance_binding_result(
+    *,
+    purpose: str,
+    transition_id: str,
+    effect_scope: str,
+    current_stage: TransitionStage,
+    target_stage: TransitionStage,
+    context: TransitionContext,
+) -> TransitionResult | None:
+    binding = context.assurance_binding
+    prefix = "TRANSITION" if purpose == "ADVANCE" else "RECOVERY"
+    if binding is None:
+        return TransitionResult(
+            TransitionDecision.ESCALATE,
+            (f"{prefix}_ASSURANCE_BINDING_UNKNOWN",),
+        )
+    if (
+        binding.purpose != purpose
+        or binding.transition_id != transition_id
+        or binding.effect_scope != effect_scope
+        or binding.current_stage is not current_stage
+        or binding.target_stage is not target_stage
+    ):
+        return TransitionResult(
+            TransitionDecision.REJECT,
+            (f"{prefix}_ASSURANCE_BINDING_MISMATCH",),
+        )
+    return None
 
 def _criteria_result(prefix: str, values: Mapping[str, Optional[bool]]) -> TransitionResult | None:
     failed = sorted(name for name, value in values.items() if value is False)
@@ -143,6 +184,17 @@ def evaluate_transition(
         return TransitionResult(
             TransitionDecision.REJECT, ("DECLARED_STAGE_SKIP_OR_INVALID_NEXT_STAGE",)
         )
+
+    assurance_binding = _assurance_binding_result(
+        purpose="ADVANCE",
+        transition_id=proposal.transition_id,
+        effect_scope=proposal.effect_scope,
+        current_stage=proposal.current_stage,
+        target_stage=proposal.next_stage,
+        context=context,
+    )
+    if assurance_binding is not None:
+        return assurance_binding
 
     if context.authority_validated is False:
         return TransitionResult(
@@ -306,6 +358,17 @@ def evaluate_recovery(
         return TransitionResult(
             TransitionDecision.ESCALATE, ("RECOVERY_TRIGGER_UNKNOWN",)
         )
+
+    assurance_binding = _assurance_binding_result(
+        purpose="RECOVERY",
+        transition_id=proposal.transition_id,
+        effect_scope=proposal.effect_scope,
+        current_stage=proposal.current_stage,
+        target_stage=proposal.target_stage,
+        context=context,
+    )
+    if assurance_binding is not None:
+        return assurance_binding
 
     if context.authority_validated is False:
         return TransitionResult(
