@@ -18,8 +18,7 @@ It does not make those providers trusted, does not give any model authority, and
    - Qwen -> choose the installed Qwen app.
    - Gemini -> choose the installed Gemini app.
    - ChatGPT -> choose the installed ChatGPT app.
-4. Optional: enable the one-shot Accessibility Send helper in Android Accessibility settings.
-   The helper is not required. It is deliberately narrow and fail-closed.
+4. No Accessibility permission is used in v0.2.
 
 Package names are not hardcoded. Garden Relay queries Android for apps that expose a compatible Share target and stores
 the package chosen by the user.
@@ -31,11 +30,7 @@ the package chosen by the user.
 2. It verifies every declared SHA-256 attachment before sending anything.
 3. Tap "Run next reviewer".
 4. Relay opens the correct bound app with the frozen prompt and packet/source attachment(s).
-5. If the optional one-shot Accessibility helper is enabled, it will tap Send only when:
-   - the current package is exactly the armed bound package;
-   - the arming window has not expired;
-   - exactly one enabled/clickable node has a strict Send/Submit label.
-   Otherwise it does nothing.
+5. Tap Send in the target model app.
 6. When the model finishes, use that app's Share function and select Garden Relay.
    Relay stores the exact shared text/file/link, hashes it, and automatically advances to the next reviewer when enabled.
 7. After all external reviewers return, Relay automatically builds one plain UTF-8 result bundle containing the exact raw text responses (or Base64 for non-text bytes) plus SHA-256 hashes and opens the bound ChatGPT app. Automatic return is enabled by default and can be turned off.
@@ -59,12 +54,10 @@ Garden Relay v0.1:
 - does not request contacts/location/microphone/camera;
 - does not store provider passwords/API keys;
 - does not use QUERY_ALL_PACKAGES;
-- does not continuously scrape Accessibility content;
+- does not request or use Android Accessibility;
 - does not upload result content to a server;
 - stores returned raw review payloads only in app-private storage until the user shares the resulting bundle.
 
-Accessibility is optional. It is armed for one selected package for at most two minutes and clears after one successful
-Send click or timeout. If multiple matching buttons exist it fails closed.
 
 ## Current limitation
 
@@ -73,7 +66,7 @@ interfaces, but it cannot force a provider app to accept multiple files or retur
 
 Therefore v0.1 deliberately uses:
 - automatic target launch/input handoff where the app allows it;
-- one-shot Send assistance where safely identifiable;
+- a normal user tap on the model app's Send button;
 - the provider's normal Share command for result return;
 - one final share to ChatGPT.
 
