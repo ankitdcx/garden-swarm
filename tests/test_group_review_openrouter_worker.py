@@ -136,7 +136,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
 
     def simple_budget_policy(self):
         return {
-            "routine_model_call_cost_ceiling_usd": 0.01,
+            "routine_model_call_cost_ceiling_usd": 0.05,
             "daily_openrouter_cost_ceiling_usd": 2,
         }
 
@@ -160,7 +160,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
             1_758_000_000,
             cycle_id="cycle-1",
         )
-        self.assertEqual(str(reserve), "0.01")
+        self.assertEqual(str(reserve), "0.05")
         self.assertEqual(daily, "1.50")
         self.assertEqual(rule_id, "OPENROUTER_2_USD_DAY_0_01_CALL")
         self.assertRegex(day, r"^\d{4}-\d{2}-\d{2}$")
@@ -179,7 +179,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
     def test_group_review_budget_rejects_policy_drift(self):
         state = {"paused": False, "attempts": []}
         bad = dict(self.simple_budget_policy(), routine_model_call_cost_ceiling_usd=0.02)
-        with self.assertRaisesRegex(ValueError, "USD 2/day and USD 0.01/call"):
+        with self.assertRaisesRegex(ValueError, "USD 2/day and USD 0.05/call"):
             worker.group_review_budget_check(
                 state,
                 self.paid_key_info(),
