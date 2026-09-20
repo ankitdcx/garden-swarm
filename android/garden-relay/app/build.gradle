@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 16
-        versionName '0.10.1-deepseek-coordinate-grid'
+        versionCode 17
+        versionName '0.11.0-firefox-local-bridge'
     }
 
     signingConfigs {
