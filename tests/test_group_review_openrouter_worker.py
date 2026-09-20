@@ -134,6 +134,24 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         self.assertNotEqual(one, two)
         self.assertNotEqual(one, three)
 
+    def test_endpoint_rejection_diagnostics_are_normalized(self):
+        cases = [
+            (ValueError("endpoint above routing price cap"), "PRICE_CAP"),
+            (ValueError("request exceeds reserved cost/context"), "RESERVE_OR_CONTEXT"),
+            (ValueError("endpoint cannot fit the full review prompt"), "PROMPT_LIMIT"),
+            (ValueError("excluded endpoint"), "ENDPOINT_EXCLUDED"),
+            (KeyError("pricing"), "ENDPOINT_METADATA_MISSING"),
+            (RuntimeError("provider problem"), "ENDPOINT_RUNTIME_REJECTED"),
+        ]
+        for exc, expected in cases:
+            self.assertEqual(worker._endpoint_rejection_code(exc), expected)
+
+    def test_unknown_endpoint_rejection_is_generic(self):
+        self.assertEqual(
+            worker._endpoint_rejection_code(ValueError("opaque provider detail 123")),
+            "ENDPOINT_POLICY_REJECTED",
+        )
+
     def test_compact_profile_caps_output(self):
         policy = {
             "review_profiles": {

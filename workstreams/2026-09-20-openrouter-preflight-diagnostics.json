@@ -1,0 +1,41 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:openrouter-preflight-diagnostics:20260920",
+  "work_package_id": "OPENROUTER-PREFLIGHT-DIAGNOSTICS-20260920",
+  "branch": "chatgpt/openrouter-preflight-diagnostics-20260920",
+  "base_sha": "cfc36c31d1f2614624bfe6b178bf92af7c03e874",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:openrouter-preflight-diagnostics:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "OPENROUTER-PREFLIGHT-DIAGNOSTICS-20260920",
+    "base_sha": "cfc36c31d1f2614624bfe6b178bf92af7c03e874",
+    "target_paths": [
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "workstreams/2026-09-20-openrouter-preflight-diagnostics.json"
+    ],
+    "target_symbols": [
+      "group_review_openrouter_worker",
+      "endpoint eligibility diagnostics"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "OPERATIONS_AND_BUDGET"
+    ],
+    "affected_invariants": [
+      "NO_SECRET_LEAK_IN_DIAGNOSTICS",
+      "PRE_RESERVATION_FAILURE_IS_TYPED",
+      "NO_GATE_WEAKENING_FOR_DIAGNOSTICS"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewOpenRouter/v1"
+    ],
+    "intended_effect": "Expose bounded normalized pre-reservation gate progress and endpoint rejection reasons so unavailable/overpriced/context-incompatible reviewer slots can be repaired without weakening budget, provider, privacy, or source-integrity gates.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

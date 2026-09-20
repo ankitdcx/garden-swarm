@@ -278,6 +278,30 @@ def _model_identity_matches(requested: str, actual: str | None, identity: dict |
     )
 
 
+def _endpoint_rejection_code(exc: Exception) -> str:
+    if isinstance(exc, KeyError):
+        return "ENDPOINT_METADATA_MISSING"
+    if isinstance(exc, RuntimeError):
+        return "ENDPOINT_RUNTIME_REJECTED"
+    text = str(exc).lower()
+    rules = (
+        ("unavailable or unidentified", "ENDPOINT_UNAVAILABLE"),
+        ("excluded endpoint", "ENDPOINT_EXCLUDED"),
+        ("excluded", "MODEL_OR_PROVIDER_EXCLUDED"),
+        ("above routing price cap", "PRICE_CAP"),
+        ("additional endpoint fees unsupported", "ADDITIONAL_FEES"),
+        ("cannot satisfy requested review output depth", "OUTPUT_DEPTH"),
+        ("cannot fit the full review prompt", "PROMPT_LIMIT"),
+        ("exceeds reserved cost/context", "RESERVE_OR_CONTEXT"),
+        ("context too large", "PROMPT_POLICY_BOUND"),
+        ("cannot satisfy requested reasoning effort", "REASONING_EFFORT"),
+    )
+    for needle, code in rules:
+        if needle in text:
+            return code
+    return "ENDPOINT_POLICY_REJECTED"
+
+
 def _profile(policy: dict) -> dict:
     routine = dict((policy.get("review_profiles") or {}).get("ROUTINE") or {})
     return {
@@ -396,6 +420,10 @@ def run(root: Path = Path(".")) -> None:
     source_bundle = materialize_frozen_sources(
         packet, gh, max_characters=source_budget
     )
+    print(
+        "GROUP_REVIEW_PREFLIGHT:SOURCE_BUNDLE_OK:"
+        + str(len(source_bundle.encode("utf-8")))
+    )
     prompt = (
         base_prompt
         + "\nThe following source bundle is the exact SHA-256-verified content "
@@ -409,9 +437,13 @@ def run(root: Path = Path(".")) -> None:
 
     key_info = legacy.http(legacy.OR + "/key", key)["data"]
     reserve, day, daily = legacy.budget_check(state, key_info, policy, time.time())
+    print("GROUP_REVIEW_PREFLIGHT:BUDGET_OK")
     identity = legacy.model_identity(key, model)
+    print("GROUP_REVIEW_PREFLIGHT:MODEL_IDENTITY_OK")
     endpoints = legacy.http(legacy.OR + "/models/" + model + "/endpoints", key)["data"]["endpoints"]
+    print("GROUP_REVIEW_PREFLIGHT:ENDPOINTS_DISCOVERED:" + str(len(endpoints)))
     eligible = []
+    endpoint_rejections = []
     profile = _profile(policy)
     for endpoint in endpoints:
         try:
@@ -426,10 +458,14 @@ def run(root: Path = Path(".")) -> None:
                 model_capabilities=identity,
             )
             eligible.append((legacy.money(estimate), endpoint, body))
-        except (ValueError, KeyError, RuntimeError):
+        except (ValueError, KeyError, RuntimeError) as exc:
+            endpoint_rejections.append(_endpoint_rejection_code(exc))
             continue
     if not eligible:
+        codes = ",".join(sorted(set(endpoint_rejections))) or "NO_ENDPOINTS_RETURNED"
+        print("GROUP_REVIEW_PREFLIGHT:NO_ELIGIBLE_ENDPOINT:" + codes)
         raise ValueError("no permitted affordable GROUP_REVIEW OpenRouter endpoint")
+    print("GROUP_REVIEW_PREFLIGHT:ELIGIBLE_ENDPOINTS:" + str(len(eligible)))
     estimate, endpoint, request_body = min(eligible, key=lambda row: row[0])
 
     attempt = {
