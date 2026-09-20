@@ -136,6 +136,16 @@ If a required independent reviewer, tool, external institution or assurance depe
 
 The AI should report progress, but routine unresolved work remains its responsibility until fixed, rejected with evidence, deferred with an owner/trigger, proven blocked by an external dependency, or legitimately escalated under the escalation boundary.
 
+## Upgrade work is not privileged
+
+The goal of improving Garden does not authorize the means used to improve it. Research, data access, tool calls, experiments, code execution, reviewer invocation and any external effect remain subject to the same point-of-use authority, privacy, rights, law, safety and Human-Effect Closure rules as other actions. A useful upgrade objective cannot self-authorize intrusive evidence gathering or bypass external security.
+
+Changes to a verifier, admission gate, protected policy, trust root or independence mechanism invalidate any qualification that depended on the prior version until the changed verifier/gate is independently requalified. The upgrader cannot modify the judge and then use the modified judge as independent proof of its own change.
+
+## Executable closure reference
+
+`prototype/upgrade_process.py` implements a narrow closure evaluator. It can return `CLOSE_CANDIDATE` only when material finding dispositions, bounded-cycle declaration, method authority, propagation, tests, retention/no-loss, verification independence, required independent review, protected authorization where applicable, and final re-audit are all resolved. `CLOSE_CANDIDATE` is not merge authority, canonical promotion, deployment certification or sovereignty.
+
 ## Core invariants
 
 **AUP-001** Unknown != impossible; investigate before escalating.
@@ -150,3 +160,4 @@ The AI should report progress, but routine unresolved work remains its responsib
 **AUP-010** Final re-audit occurs after the last material modification.
 **AUP-011** Recursive upgrade work is bounded by declared scope/resources/checkpoints and cannot loop indefinitely on low-value findings.
 **AUP-012** Missing required independence may block admission without blocking unrelated noncanonical repair work; blocked assurance can never be silently promoted to PASS.
+**AUP-013** Upgrade objectives do not privilege upgrade methods; every consequential method remains independently effect-governed, and modifying a verifier invalidates dependent qualification until independent requalification.
