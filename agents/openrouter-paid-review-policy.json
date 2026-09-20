@@ -1,6 +1,6 @@
 {
   "schema": "GardenOpenRouterPaidReviewPolicy/v1",
-  "revision": 2,
+  "revision": 3,
   "purpose": "EVENT_DRIVEN_LOW_COST_SPECIALIST_REVIEW",
   "design_epoch": "v15.10-working-candidate-process",
   "catalog_reference_date": "2026-09-19",
@@ -172,7 +172,8 @@
     "NO_SUBSTANTIVE_OUTPUT is recorded and not automatically retried against an unchanged packet.",
     "Expensive frontier models require an explicit future human opt-in and are never automatic.",
     "NVIDIA/Nemotron and Mistral were re-authorized for low-cost Garden review by explicit human directive on 2026-09-19; Anthropic remains excluded by operator routing policy.",
-    "This policy is operational only and creates no Garden semantic authority."
+    "This policy is operational only and creates no Garden semantic authority.",
+    "GROUP_REVIEW budget epoch GROUP_REVIEW_CHEAP_REAUTH_2026-09-20 authorizes at most $1 incremental local-ledger spend after explicit 2026-09-20 cheap-call reauthorization; historical account usage is not copied into public state and does not consume the new epoch allocation."
   ],
   "budget_pools_usd": {
     "routine": 9,
@@ -208,10 +209,10 @@
     "authority_and_actiongate",
     "adversarial_falsification"
   ],
-  "budget_pool_scope": "LIFETIME_ALLOCATION_OF_INITIAL_20_USD_NOT_DAILY",
+  "budget_pool_scope": "LEGACY_INITIAL_20_USD_ALLOCATION_NOT_DAILY_PLUS_EXPLICIT_SCOPED_REAUTHORIZATION_EPOCHS",
   "balance_remaining_usd": null,
   "balance_status": "UNKNOWN_REQUIRES_PROVIDER_RECONCILIATION",
-  "budget_relationship": "The original $20 pool allocation remains an accounting ceiling. Routine OpenRouter inference is additionally bounded by the v2 $1/day, $0.25/task and $0.05/call limits. Expensive escalation has zero automatic budget.",
+  "budget_relationship": "The original $20 pool remains the historical allocation for legacy review lanes. GROUP_REVIEW_CHEAP_REAUTH_2026-09-20 is a separate explicitly authorized $1 incremental GROUP_REVIEW-only epoch. The $1/day, $0.25/task and $0.05/call limits remain controlling; expensive escalation remains automatic-budget zero.",
   "event_driven_context": {
     "policy": "agents/event-driven-context-policy.json",
     "quality_policy": "agents/event-driven-model-quality-policy.json",
@@ -224,5 +225,16 @@
     "activation_status": "SINGLE_CALL_TRANSPORT_ACTIVE_ONLY_AFTER_CHATGPT_DIRECTIVE; BROAD_COORDINATOR_PAUSED",
     "no_schedule_required": true
   },
-  "review_context_policy": "agents/review-context-policy.json"
+  "review_context_policy": "agents/review-context-policy.json",
+  "group_review_budget_epoch": {
+    "schema": "GardenGroupReviewBudgetEpoch/v1",
+    "epoch_id": "GROUP_REVIEW_CHEAP_REAUTH_2026-09-20",
+    "status": "AUTHORIZED",
+    "authorization_date": "2026-09-20",
+    "scope": "GROUP_REVIEW_OPENROUTER_ONLY",
+    "incremental_allocation_usd": 1,
+    "basis": "EXPLICIT_HUMAN_REAUTHORIZATION_FOR_CHEAP_CALLS",
+    "historical_key_usage_is_epoch_baseline": true,
+    "semantic_delta_admitted": false
+  }
 }

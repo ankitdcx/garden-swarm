@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 import re
 import time
 from urllib import error
@@ -30,7 +31,10 @@ STATE_PATH = "review-state/group-review-ledger.json"
 LEDGER_SCHEMA = "GardenGroupReviewOpenRouterLedger/v1"
 PROVIDER_WORKFLOW = "group-review-openrouter.yml"
 TRIGGER_WORKFLOW = "group-review-openrouter-trigger.yml"
+PUSH_TRIGGER_WORKFLOW = "group-review-openrouter-push-trigger.yml"
 MAX_FINDING_CHARS = 10000
+PUSH_REQUEST_SCHEMA = "GardenGroupReviewDispatchRequest/v1"
+PUSH_REQUEST_PATH = Path("review-state/group-review-dispatch-request.json")
 
 
 class GroupReviewLedger:
@@ -77,6 +81,32 @@ def _event_payload() -> dict:
     return value
 
 
+def _push_dispatch_request() -> dict:
+    if not PUSH_REQUEST_PATH.exists():
+        raise ValueError("GROUP_REVIEW push dispatch request missing")
+    value = json.loads(PUSH_REQUEST_PATH.read_text(encoding="utf-8"))
+    if not isinstance(value, dict) or value.get("schema") != PUSH_REQUEST_SCHEMA:
+        raise ValueError("invalid GROUP_REVIEW push dispatch request")
+    if value.get("status") != "REQUESTED":
+        raise ValueError("GROUP_REVIEW push dispatch request is not active")
+    issue_number = int(value.get("run_issue_number", 0))
+    if issue_number <= 0:
+        raise ValueError("GROUP_REVIEW push dispatch issue number required")
+    packet_sha = str(value.get("packet_sha256") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}", packet_sha):
+        raise ValueError("GROUP_REVIEW push dispatch packet SHA-256 invalid")
+    return value
+
+
+def validate_push_dispatch_binding(
+    request: dict, issue_number: int, packet: dict
+) -> None:
+    if int(request.get("run_issue_number", 0)) != issue_number:
+        raise ValueError("GROUP_REVIEW push dispatch issue binding mismatch")
+    if request.get("packet_sha256") != packet.get("packet_sha256"):
+        raise ValueError("GROUP_REVIEW push dispatch packet binding mismatch")
+
+
 def trigger_issue_number() -> int:
     if os.environ.get("GITHUB_REPOSITORY") != REPO or os.environ.get("GITHUB_REF") != "refs/heads/main":
         raise ValueError("GROUP_REVIEW OpenRouter worker requires installed main")
@@ -86,6 +116,7 @@ def trigger_issue_number() -> int:
     actor = os.environ.get("GITHUB_ACTOR")
     expected_provider = REPO + "/.github/workflows/" + PROVIDER_WORKFLOW + "@refs/heads/main"
     expected_trigger = REPO + "/.github/workflows/" + TRIGGER_WORKFLOW + "@refs/heads/main"
+    expected_push_trigger = REPO + "/.github/workflows/" + PUSH_TRIGGER_WORKFLOW + "@refs/heads/main"
 
     if event_name == "issues":
         if os.environ.get("GITHUB_WORKFLOW_REF") != expected_trigger:
@@ -99,6 +130,13 @@ def trigger_issue_number() -> int:
         if not title.startswith(bus.RUN_TITLE_PREFIX + " "):
             raise ValueError("issue is not a GROUP_REVIEW run")
         number = int(issue.get("number", 0))
+    elif event_name == "push":
+        if os.environ.get("GITHUB_WORKFLOW_REF") != expected_push_trigger:
+            raise ValueError("unregistered GROUP_REVIEW push trigger workflow")
+        if actor not in {owner, "github-actions[bot]"}:
+            raise ValueError("GROUP_REVIEW push trigger actor not admitted")
+        request = _push_dispatch_request()
+        number = int(request["run_issue_number"])
     elif event_name == "workflow_dispatch":
         if os.environ.get("GITHUB_WORKFLOW_REF") != expected_provider:
             raise ValueError("unregistered GROUP_REVIEW provider workflow")
@@ -241,6 +279,136 @@ def _model_identity_matches(requested: str, actual: str | None, identity: dict |
     )
 
 
+def _endpoint_rejection_code(exc: Exception) -> str:
+    if isinstance(exc, KeyError):
+        return "ENDPOINT_METADATA_MISSING"
+    if isinstance(exc, RuntimeError):
+        return "ENDPOINT_RUNTIME_REJECTED"
+    text = str(exc).lower()
+    rules = (
+        ("unavailable or unidentified", "ENDPOINT_UNAVAILABLE"),
+        ("excluded endpoint", "ENDPOINT_EXCLUDED"),
+        ("excluded", "MODEL_OR_PROVIDER_EXCLUDED"),
+        ("above routing price cap", "PRICE_CAP"),
+        ("additional endpoint fees unsupported", "ADDITIONAL_FEES"),
+        ("cannot satisfy requested review output depth", "OUTPUT_DEPTH"),
+        ("cannot fit the full review prompt", "PROMPT_LIMIT"),
+        ("exceeds reserved cost/context", "RESERVE_OR_CONTEXT"),
+        ("context too large", "PROMPT_POLICY_BOUND"),
+        ("cannot satisfy requested reasoning effort", "REASONING_EFFORT"),
+    )
+    for needle, code in rules:
+        if needle in text:
+            return code
+    return "ENDPOINT_POLICY_REJECTED"
+
+
+def _budget_rejection_code(exc: Exception) -> str:
+    text = str(exc).lower()
+    rules = (
+        ("paid inference key required", "KEY_TYPE_NOT_PAID"),
+        ("daily reservation exhausted", "DAILY_BUDGET_EXHAUSTED"),
+        ("routine lifetime allocation exhausted", "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+        ("group_review epoch total reservation exhausted", "GROUP_REVIEW_EPOCH_EXHAUSTED"),
+        ("task reservation exhausted", "TASK_BUDGET_EXHAUSTED"),
+        ("group_review budget epoch unavailable", "GROUP_REVIEW_BUDGET_EPOCH_UNAVAILABLE"),
+        ("key credit limit too low", "KEY_CREDIT_LIMIT_TOO_LOW"),
+        ("unknown monetary value", "KEY_USAGE_UNKNOWN"),
+        ("invalid monetary value", "KEY_USAGE_INVALID"),
+        ("outstanding reservation/unknown cost", "OUTSTANDING_RESERVATION"),
+        ("single worker paused", "WORKER_PAUSED"),
+    )
+    for needle, code in rules:
+        if needle in text:
+            return code
+    return "BUDGET_POLICY_REJECTED"
+
+
+def group_review_budget_check(
+    state: dict,
+    key_info: dict,
+    policy: dict,
+    now: float,
+    *,
+    cycle_id: str,
+):
+    """Bound new GROUP_REVIEW spend to the explicit local budget epoch.
+
+    Historical provider-account spend is deliberately not persisted or charged
+    against a newly authorized epoch. The hash-bound GROUP_REVIEW ledger is the
+    spend source for this epoch; unresolved reservations still block before this
+    function is reached.
+    """
+
+    if state.get("paused") is not False:
+        raise ValueError("single worker paused")
+    if legacy.review_campaign.blocking_attempts(state, None):
+        raise ValueError("outstanding reservation/unknown cost; reconciliation required")
+    if key_info.get("is_management_key") is True or key_info.get("is_free_tier") is True:
+        raise ValueError("paid inference key required")
+
+    epoch = policy.get("group_review_budget_epoch") or {}
+    if (
+        epoch.get("schema") != "GardenGroupReviewBudgetEpoch/v1"
+        or epoch.get("status") != "AUTHORIZED"
+        or epoch.get("scope") != "GROUP_REVIEW_OPENROUTER_ONLY"
+    ):
+        raise ValueError("GROUP_REVIEW budget epoch unavailable")
+    epoch_id = str(epoch.get("epoch_id") or "")
+    if not epoch_id:
+        raise ValueError("GROUP_REVIEW budget epoch unavailable")
+
+    reserve = min(
+        legacy.money(policy["routine_model_call_cost_ceiling_usd"]),
+        legacy.money("0.10"),
+    )
+    allocation = legacy.money(epoch.get("incremental_allocation_usd"))
+    daily_ceiling = min(
+        legacy.money(policy["daily_openrouter_cost_ceiling_usd"]),
+        legacy.money("10"),
+    )
+    task_ceiling = legacy.money(policy["routine_task_cost_ceiling_usd"])
+    day = datetime.fromtimestamp(now, timezone.utc).date().isoformat()
+
+    epoch_attempts = [
+        attempt
+        for attempt in state.get("attempts", [])
+        if attempt.get("budget_epoch_id") == epoch_id
+    ]
+    local_total = sum(
+        (legacy.review_campaign.accounting_charge(a, None) for a in epoch_attempts),
+        legacy.money(0),
+    )
+    local_daily = sum(
+        (
+            legacy.review_campaign.accounting_charge(a, None)
+            for a in epoch_attempts
+            if a.get("utc_day") == day
+        ),
+        legacy.money(0),
+    )
+    local_task = sum(
+        (
+            legacy.review_campaign.accounting_charge(a, None)
+            for a in epoch_attempts
+            if a.get("cycle") == cycle_id
+        ),
+        legacy.money(0),
+    )
+
+    if local_total + reserve > allocation:
+        raise ValueError("GROUP_REVIEW epoch total reservation exhausted")
+    if local_daily + reserve > daily_ceiling:
+        raise legacy.DailyBudget("daily reservation exhausted")
+    if local_task + reserve > task_ceiling:
+        raise ValueError("task reservation exhausted")
+
+    remaining = key_info.get("limit_remaining")
+    if remaining is not None and legacy.money(remaining) < reserve:
+        raise ValueError("key credit limit too low")
+    return reserve, day, str(local_daily), epoch_id
+
+
 def _profile(policy: dict) -> dict:
     routine = dict((policy.get("review_profiles") or {}).get("ROUTINE") or {})
     return {
@@ -256,6 +424,9 @@ def preflight(root: Path = Path(".")) -> tuple[int, dict]:
     if not gh:
         raise ValueError("GitHub review token unavailable")
     _, packet = fetch_run_issue(gh, issue_number)
+    if os.environ.get("GITHUB_EVENT_NAME") == "push":
+        request = _push_dispatch_request()
+        validate_push_dispatch_binding(request, issue_number, packet)
     ledger = GroupReviewLedger(gh)
     if ledger.value.get("paused") is not False:
         raise ValueError("GROUP_REVIEW OpenRouter ledger paused")
@@ -356,6 +527,10 @@ def run(root: Path = Path(".")) -> None:
     source_bundle = materialize_frozen_sources(
         packet, gh, max_characters=source_budget
     )
+    print(
+        "GROUP_REVIEW_PREFLIGHT:SOURCE_BUNDLE_OK:"
+        + str(len(source_bundle.encode("utf-8")))
+    )
     prompt = (
         base_prompt
         + "\nThe following source bundle is the exact SHA-256-verified content "
@@ -367,11 +542,33 @@ def run(root: Path = Path(".")) -> None:
     prompt_sha = bus.sha256_text(prompt)
     source_bundle_sha = bus.sha256_text(source_bundle)
 
-    key_info = legacy.http(legacy.OR + "/key", key)["data"]
-    reserve, day, daily = legacy.budget_check(state, key_info, policy, time.time())
+    try:
+        key_response = legacy.http(legacy.OR + "/key", key)
+        key_info = key_response["data"]
+    except error.HTTPError as exc:
+        print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_HTTP:" + str(exc.code))
+        raise
+    except (KeyError, ValueError, TypeError):
+        print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_INVALID")
+        raise
+    print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_OK")
+    try:
+        reserve, day, daily, budget_epoch_id = group_review_budget_check(
+            state, key_info, policy, time.time(), cycle_id=cid
+        )
+    except ValueError as exc:
+        print(
+            "GROUP_REVIEW_PREFLIGHT:BUDGET_REJECT:"
+            + _budget_rejection_code(exc)
+        )
+        raise
+    print("GROUP_REVIEW_PREFLIGHT:BUDGET_OK")
     identity = legacy.model_identity(key, model)
+    print("GROUP_REVIEW_PREFLIGHT:MODEL_IDENTITY_OK")
     endpoints = legacy.http(legacy.OR + "/models/" + model + "/endpoints", key)["data"]["endpoints"]
+    print("GROUP_REVIEW_PREFLIGHT:ENDPOINTS_DISCOVERED:" + str(len(endpoints)))
     eligible = []
+    endpoint_rejections = []
     profile = _profile(policy)
     for endpoint in endpoints:
         try:
@@ -386,10 +583,14 @@ def run(root: Path = Path(".")) -> None:
                 model_capabilities=identity,
             )
             eligible.append((legacy.money(estimate), endpoint, body))
-        except (ValueError, KeyError, RuntimeError):
+        except (ValueError, KeyError, RuntimeError) as exc:
+            endpoint_rejections.append(_endpoint_rejection_code(exc))
             continue
     if not eligible:
+        codes = ",".join(sorted(set(endpoint_rejections))) or "NO_ENDPOINTS_RETURNED"
+        print("GROUP_REVIEW_PREFLIGHT:NO_ELIGIBLE_ENDPOINT:" + codes)
         raise ValueError("no permitted affordable GROUP_REVIEW OpenRouter endpoint")
+    print("GROUP_REVIEW_PREFLIGHT:ELIGIBLE_ENDPOINTS:" + str(len(eligible)))
     estimate, endpoint, request_body = min(eligible, key=lambda row: row[0])
 
     attempt = {
@@ -412,6 +613,7 @@ def run(root: Path = Path(".")) -> None:
         "utc_day": day,
         "started": time.time(),
         "usage_daily_before": daily,
+        "budget_epoch_id": budget_epoch_id,
         "reserved": str(reserve),
         "estimated_upper_cost": str(estimate),
         "cost": None,

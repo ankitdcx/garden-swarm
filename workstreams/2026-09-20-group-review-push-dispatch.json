@@ -1,0 +1,43 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-push-dispatch:20260920",
+  "work_package_id": "GROUP-REVIEW-PUSH-DISPATCH-20260920",
+  "branch": "chatgpt/group-review-push-dispatch-20260920",
+  "base_sha": "3b75ac13b6de302fb1141a066a614a17e5c40d3c",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-push-dispatch:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-PUSH-DISPATCH-20260920",
+    "base_sha": "3b75ac13b6de302fb1141a066a614a17e5c40d3c",
+    "target_paths": [
+      ".github/workflows/group-review-openrouter-push-trigger.yml",
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "review-state/group-review-dispatch-request.json",
+      "workstreams/2026-09-20-group-review-push-dispatch.json"
+    ],
+    "target_symbols": [
+      "trigger_issue_number",
+      "GardenGroupReviewDispatchRequest/v1"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "GROUP_REVIEW_DISPATCH"
+    ],
+    "affected_invariants": [
+      "ONLY_HASH_BOUND_FROZEN_RUN_IS_DISPATCHED",
+      "PUSH_TRIGGER_CREATES_NO_REVIEW_AUTHORITY"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewPacket/v1",
+      "GardenGroupReviewOpenRouter/v1"
+    ],
+    "intended_effect": "Allow the installed main-branch GROUP_REVIEW trigger to start a previously frozen owner-authored public run from a hash-bound push request when GitHub App issue creation cannot emit an issues workflow event. The provider workflow, packet validation, budget, source hashing and one-call-per-dispatch controls remain unchanged.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

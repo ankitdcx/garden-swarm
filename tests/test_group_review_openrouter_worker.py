@@ -20,7 +20,12 @@ def write_event(payload):
 
 class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
     def base_env(self, workflow="provider"):
-        name = "group-review-openrouter.yml" if workflow == "provider" else "group-review-openrouter-trigger.yml"
+        if workflow == "provider":
+            name = "group-review-openrouter.yml"
+        elif workflow == "push":
+            name = "group-review-openrouter-push-trigger.yml"
+        else:
+            name = "group-review-openrouter-trigger.yml"
         return {
             "GITHUB_REPOSITORY": "ankitdcx/garden-swarm",
             "GITHUB_REF": "refs/heads/main",
@@ -54,6 +59,44 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
                     worker.trigger_issue_number()
         finally:
             Path(path).unlink(missing_ok=True)
+
+    def test_push_trigger_uses_hash_bound_request_file(self):
+        path = write_event({})
+        request = {
+            "schema": worker.PUSH_REQUEST_SCHEMA,
+            "status": "REQUESTED",
+            "run_issue_number": 254,
+            "packet_sha256": "a" * 64,
+        }
+        request_path = Path(tempfile.mkstemp()[1])
+        request_path.write_text(json.dumps(request), encoding="utf-8")
+        env = self.base_env("push") | {
+            "GITHUB_EVENT_NAME": "push",
+            "GITHUB_ACTOR": "ankitdcx",
+            "GITHUB_EVENT_PATH": path,
+        }
+        try:
+            with patch.object(worker, "PUSH_REQUEST_PATH", request_path):
+                with patch.dict(os.environ, env, clear=True):
+                    self.assertEqual(worker.trigger_issue_number(), 254)
+        finally:
+            Path(path).unlink(missing_ok=True)
+            request_path.unlink(missing_ok=True)
+
+    def test_push_dispatch_binding_rejects_packet_drift(self):
+        request = {
+            "schema": worker.PUSH_REQUEST_SCHEMA,
+            "status": "REQUESTED",
+            "run_issue_number": 254,
+            "packet_sha256": "a" * 64,
+        }
+        worker.validate_push_dispatch_binding(
+            request, 254, {"packet_sha256": "a" * 64}
+        )
+        with self.assertRaisesRegex(ValueError, "packet binding mismatch"):
+            worker.validate_push_dispatch_binding(
+                request, 254, {"packet_sha256": "b" * 64}
+            )
 
     def test_workflow_dispatch_continuation_accepts_owner_or_actions_bot(self):
         path = write_event({"inputs": {"trigger_issue_number": "101"}})
@@ -90,6 +133,162 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         three = worker.cycle_id(packet, selected, {"x": 2})
         self.assertNotEqual(one, two)
         self.assertNotEqual(one, three)
+
+    def epoch_policy(self):
+        return {
+            "routine_model_call_cost_ceiling_usd": 0.05,
+            "routine_task_cost_ceiling_usd": 0.25,
+            "daily_openrouter_cost_ceiling_usd": 1,
+            "group_review_budget_epoch": {
+                "schema": "GardenGroupReviewBudgetEpoch/v1",
+                "epoch_id": "EPOCH-1",
+                "status": "AUTHORIZED",
+                "scope": "GROUP_REVIEW_OPENROUTER_ONLY",
+                "incremental_allocation_usd": 1,
+            },
+        }
+
+    def paid_key_info(self, **overrides):
+        value = {
+            "is_management_key": False,
+            "is_free_tier": False,
+            "usage": 999,
+            "usage_daily": 999,
+            "limit_remaining": 10,
+        }
+        value.update(overrides)
+        return value
+
+    def test_group_review_budget_epoch_ignores_historical_account_usage(self):
+        state = {"paused": False, "attempts": []}
+        reserve, day, local_daily, epoch_id = worker.group_review_budget_check(
+            state,
+            self.paid_key_info(),
+            self.epoch_policy(),
+            1_758_000_000,
+            cycle_id="cycle-1",
+        )
+        self.assertEqual(str(reserve), "0.05")
+        self.assertEqual(local_daily, "0")
+        self.assertEqual(epoch_id, "EPOCH-1")
+        self.assertRegex(day, r"^\d{4}-\d{2}-\d{2}$")
+
+    def test_group_review_budget_epoch_enforces_task_cap(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "cycle-1",
+                    "utc_day": "2025-09-15",
+                    "status": "REVIEW_RECORDED",
+                    "cost": "0.24",
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "task reservation exhausted"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_enforces_incremental_total(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "older-cycle",
+                    "utc_day": "2025-09-14",
+                    "status": "REVIEW_RECORDED",
+                    "cost": "0.98",
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "epoch total reservation exhausted"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_preserves_credit_limit_gate(self):
+        state = {"paused": False, "attempts": []}
+        with self.assertRaisesRegex(ValueError, "key credit limit too low"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(limit_remaining=0.01),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_group_review_budget_epoch_blocks_unresolved_reservation(self):
+        state = {
+            "paused": False,
+            "attempts": [
+                {
+                    "budget_epoch_id": "EPOCH-1",
+                    "cycle": "cycle-1",
+                    "utc_day": "2025-09-15",
+                    "status": "RESERVED",
+                    "cost": None,
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "outstanding reservation"):
+            worker.group_review_budget_check(
+                state,
+                self.paid_key_info(),
+                self.epoch_policy(),
+                1_758_000_000,
+                cycle_id="cycle-1",
+            )
+
+    def test_budget_rejection_diagnostics_are_normalized(self):
+        cases = [
+            (ValueError("paid inference key required"), "KEY_TYPE_NOT_PAID"),
+            (ValueError("daily reservation exhausted"), "DAILY_BUDGET_EXHAUSTED"),
+            (ValueError("routine lifetime allocation exhausted"), "ROUTINE_LIFETIME_BUDGET_EXHAUSTED"),
+            (ValueError("GROUP_REVIEW epoch total reservation exhausted"), "GROUP_REVIEW_EPOCH_EXHAUSTED"),
+            (ValueError("task reservation exhausted"), "TASK_BUDGET_EXHAUSTED"),
+            (ValueError("GROUP_REVIEW budget epoch unavailable"), "GROUP_REVIEW_BUDGET_EPOCH_UNAVAILABLE"),
+            (ValueError("key credit limit too low"), "KEY_CREDIT_LIMIT_TOO_LOW"),
+            (ValueError("unknown monetary value"), "KEY_USAGE_UNKNOWN"),
+            (ValueError("invalid monetary value"), "KEY_USAGE_INVALID"),
+            (ValueError("outstanding reservation/unknown cost; reconciliation required"), "OUTSTANDING_RESERVATION"),
+        ]
+        for exc, expected in cases:
+            self.assertEqual(worker._budget_rejection_code(exc), expected)
+
+    def test_unknown_budget_rejection_is_generic(self):
+        self.assertEqual(
+            worker._budget_rejection_code(ValueError("opaque account detail 123")),
+            "BUDGET_POLICY_REJECTED",
+        )
+
+    def test_endpoint_rejection_diagnostics_are_normalized(self):
+        cases = [
+            (ValueError("endpoint above routing price cap"), "PRICE_CAP"),
+            (ValueError("request exceeds reserved cost/context"), "RESERVE_OR_CONTEXT"),
+            (ValueError("endpoint cannot fit the full review prompt"), "PROMPT_LIMIT"),
+            (ValueError("excluded endpoint"), "ENDPOINT_EXCLUDED"),
+            (KeyError("pricing"), "ENDPOINT_METADATA_MISSING"),
+            (RuntimeError("provider problem"), "ENDPOINT_RUNTIME_REJECTED"),
+        ]
+        for exc, expected in cases:
+            self.assertEqual(worker._endpoint_rejection_code(exc), expected)
+
+    def test_unknown_endpoint_rejection_is_generic(self):
+        self.assertEqual(
+            worker._endpoint_rejection_code(ValueError("opaque provider detail 123")),
+            "ENDPOINT_POLICY_REJECTED",
+        )
 
     def test_compact_profile_caps_output(self):
         policy = {
