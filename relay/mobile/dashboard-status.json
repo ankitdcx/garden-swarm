@@ -1,16 +1,44 @@
 {
   "schema": "GardenReviewDashboardStatus/v1",
-  "project": "Garden v15.10 review",
-  "updated_at": "2026-09-20T05:40:00Z",
-  "overall": "SETUP",
+  "project": "MOCK REVIEW — Dashboard end-to-end test",
+  "updated_at": "2026-09-20T11:24:00+05:30",
+  "overall": "RUNNING",
   "reviewers": [
-    {"id":"gpt_worker","label":"GPT Worker","status":"WAITING"},
-    {"id":"deepseek","label":"DeepSeek","status":"WAITING"},
-    {"id":"gemini","label":"Gemini","status":"WAITING"},
-    {"id":"claude","label":"Claude","status":"WAITING"},
-    {"id":"grok","label":"Grok","status":"WAITING"},
-    {"id":"lead","label":"Lead integration","status":"WAITING"},
-    {"id":"gpt_verifier","label":"GPT Verifier","status":"LOCKED"}
+    {
+      "id": "gpt_worker",
+      "label": "GPT Worker",
+      "status": "RUNNING"
+    },
+    {
+      "id": "deepseek",
+      "label": "DeepSeek",
+      "status": "RUNNING"
+    },
+    {
+      "id": "gemini",
+      "label": "Gemini",
+      "status": "RUNNING"
+    },
+    {
+      "id": "claude",
+      "label": "Claude",
+      "status": "RUNNING"
+    },
+    {
+      "id": "grok",
+      "label": "Grok",
+      "status": "RUNNING"
+    },
+    {
+      "id": "lead",
+      "label": "Lead integration",
+      "status": "WAITING"
+    },
+    {
+      "id": "gpt_verifier",
+      "label": "GPT Verifier",
+      "status": "LOCKED"
+    }
   ],
-  "note": "Dashboard transport is active. Parallel backend execution is being qualified separately; WAITING does not imply a provider call has started."
+  "note": "MOCK TEST ONLY. These RUNNING states test dashboard transport/state transitions; they do not claim real provider calls have started. Refresh after the next mock transition."
 }
