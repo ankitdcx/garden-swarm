@@ -1,0 +1,34 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v1510-rcp-traceability:20260920",
+  "work_package_id": "V1510-RCP-TRACEABILITY",
+  "branch": "chatgpt/v1510-rcp-traceability-20260920",
+  "base_sha": "30222a33ac6fb90b3e7eb2da999c50b0ad9ed8db",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:v1510-rcp-traceability:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "V1510-RCP-TRACEABILITY",
+    "base_sha": "30222a33ac6fb90b3e7eb2da999c50b0ad9ed8db",
+    "target_paths": [
+      "workstreams/2026-09-20-v1510-rcp-traceability.json",
+      "agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md"
+    ],
+    "target_symbols": [
+      "RCP-001..013 traceability",
+      "GardenRuntimeConstitutionEnvelope composition boundary"
+    ],
+    "semantic_domains": [
+      "DOCUMENTATION_TRACEABILITY",
+      "RUNTIME_PROFILE_LINEAGE"
+    ],
+    "affected_invariants": [],
+    "affected_contracts": [],
+    "intended_effect": "Add non-normative current-repository traceability and envelope-composition notes to the existing v15.10 Runtime Constitutional Profile without changing RCP-001..013, executable semantics, canonical status, or authority.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
