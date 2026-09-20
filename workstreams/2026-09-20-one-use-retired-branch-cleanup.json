@@ -1,0 +1,42 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:one-use-retired-branch-cleanup:20260920",
+  "work_package_id": "ONE-USE-RETIRED-BRANCH-CLEANUP-20260920",
+  "branch": "chatgpt/one-use-retired-branch-cleanup-20260920",
+  "base_sha": "0d89b2c18ecf88fdaa020116f7d7d2257e0fa927",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:one-use-retired-branch-cleanup:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "ONE-USE-RETIRED-BRANCH-CLEANUP-20260920",
+    "base_sha": "0d89b2c18ecf88fdaa020116f7d7d2257e0fa927",
+    "target_paths": [
+      "workstreams/2026-09-20-one-use-retired-branch-cleanup.json",
+      ".github/workflows/one-use-merged-branch-cleanup-20260920.yml"
+    ],
+    "target_symbols": [
+      "explicit retired branch allowlist",
+      "closed-unmerged retirement recheck",
+      "one-use exact-base branch cleanup"
+    ],
+    "semantic_domains": [
+      "REPOSITORY_HYGIENE",
+      "BRANCH_LIFECYCLE"
+    ],
+    "affected_invariants": [
+      "EXPLICIT_USER_RETIREMENT_REQUIRED_FOR_CLOSED_UNMERGED_BRANCH",
+      "PRESERVE_OPEN_PR_BRANCHES",
+      "PRESERVE_GARDEN_REVIEW_STATE",
+      "EXACT_HEAD_RECHECK_BEFORE_DELETE"
+    ],
+    "affected_contracts": [
+      "RULE-BRANCH-LIFECYCLE-001"
+    ],
+    "intended_effect": "Retire only an explicit allowlist of temporary/superseded closed-unmerged or scratch branches after live SHA and open-PR rechecks. Preserve all active and ambiguous unclassified work.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
