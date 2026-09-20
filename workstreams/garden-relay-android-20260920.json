@@ -17,7 +17,8 @@
     "gsl/REPO_PROFILE.json",
     "agents/provider-exclusion-policy.json",
     "agents/openrouter-paid-review-policy.json",
-    "docs/PARALLEL_ZERO_TOUCH_REVIEW.md"
+    "docs/PARALLEL_ZERO_TOUCH_REVIEW.md",
+    "agents/parallel-review-controller.json"
   ],
-  "intended_effect": "Add the no-Qwen Android review relay, Claude/Grok reviewer bindings, and noncanonical parallel zero-touch review policy; no Garden semantic changes."
+  "intended_effect": "Add no-Qwen Android relay with DeepSeek, Gemini, Claude and Grok bindings plus parallel zero-touch review documentation; no Garden semantic mutation."
 }
