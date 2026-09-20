@@ -24,7 +24,9 @@ def complete_context(**overrides):
             "PROTECTED_AUTHORIZATION": candidate_hash,
             "FINAL_REAUDIT": candidate_hash,
             "FINDING_CLASSIFICATION": candidate_hash,
+            "FINDING_CLASSIFICATION_INDEPENDENCE": candidate_hash,
             "PROTECTED_SURFACE_SCAN": candidate_hash,
+            "PROTECTED_SURFACE_SCAN_INDEPENDENCE": candidate_hash,
         },
         audited_scope_declared=True,
         search_coverage_complete=True,
@@ -44,7 +46,9 @@ def complete_context(**overrides):
         protected_authorization_pass=None,
         final_reaudit_complete=True,
         finding_classification_validated=True,
+        finding_classification_independent=True,
         protected_surface_scan_pass=True,
+        protected_surface_scan_independent=True,
         max_iterations=8,
         max_work_items=256,
         residual_debt_recorded=True,
@@ -238,7 +242,7 @@ def test_hard_gate_finding_cannot_be_deferred_and_still_close():
         )
     )
     assert result.decision is UpgradeDecision.HOLD
-    assert result.reasons == ("HARD_GATE_FINDING_UNRESOLVED:F-HARD",)
+    assert result.reasons == ("BLOCKING_FINDING_UNRESOLVED:F-HARD",)
 
 
 def test_hard_gate_finding_cannot_be_escalated_and_still_close():
@@ -254,7 +258,7 @@ def test_hard_gate_finding_cannot_be_escalated_and_still_close():
         )
     )
     assert result.decision is UpgradeDecision.HOLD
-    assert result.reasons == ("HARD_GATE_FINDING_UNRESOLVED:F-HARD",)
+    assert result.reasons == ("BLOCKING_FINDING_UNRESOLVED:F-HARD",)
 
 
 def test_unvalidated_finding_classification_blocks_closure():
@@ -282,3 +286,54 @@ def test_upgrade_cycle_requires_real_resource_bounds_and_residual_debt_record():
     )
     assert result.decision is UpgradeDecision.HOLD
     assert result.reasons == ("UPGRADE_ITERATION_BOUND_MISSING",)
+
+
+def test_finding_classification_independence_is_required():
+    result = evaluate_upgrade_closure(
+        complete_context(finding_classification_independent=False)
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("FINDING_CLASSIFICATION_INDEPENDENCE_FAILED",)
+
+
+def test_protected_surface_scan_independence_is_required():
+    result = evaluate_upgrade_closure(
+        complete_context(protected_surface_scan_independent=None)
+    )
+    assert result.decision is UpgradeDecision.ESCALATE
+    assert result.reasons == ("PROTECTED_SURFACE_SCAN_INDEPENDENCE_UNKNOWN",)
+
+
+def test_protected_finding_cannot_be_deferred_and_auto_triggers_protected_path():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            findings={
+                "F-PROT": FindingRecord(
+                    FindingClass.PROTECTED,
+                    FindingDisposition.DEFERRED_WITH_OWNER_CONDITION,
+                    owner="Constitution",
+                    reopen_condition="independent protected-path resolution",
+                )
+            }
+        )
+    )
+    assert result.decision is UpgradeDecision.HOLD
+    assert result.reasons == ("BLOCKING_FINDING_UNRESOLVED:F-PROT",)
+
+
+def test_fixed_protected_finding_requires_protected_authorization_even_if_flag_false():
+    result = evaluate_upgrade_closure(
+        complete_context(
+            protected_change=False,
+            protected_authorization_pass=None,
+            findings={
+                "F-PROT": FindingRecord(
+                    FindingClass.PROTECTED,
+                    FindingDisposition.FIXED,
+                    evidence_refs=("fix:F-PROT",),
+                )
+            },
+        )
+    )
+    assert result.decision is UpgradeDecision.ESCALATE
+    assert result.reasons == ("PROTECTED_AUTHORIZATION_UNKNOWN",)
