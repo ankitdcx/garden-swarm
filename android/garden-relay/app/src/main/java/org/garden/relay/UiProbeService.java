@@ -28,13 +28,27 @@ public final class UiProbeService extends IUiProbeService.Stub {
             }
             int rc = p.waitFor();
             String xml = sb.toString();
-            Pattern edit = Pattern.compile("<node[^>]*(?:class=\\\"android\\.widget\\.EditText\\\"|editable=\\\"true\\\")[^>]*>");
-            Matcher m = edit.matcher(xml);
-            int count=0; String first="";
-            while(m.find()){ count++; if(first.isEmpty()) first=m.group(); }
-            first=first.replaceAll("text=\\\"[^\\\"]*\\\"","text=\\\"[redacted]\\\"")
-                    .replaceAll("content-desc=\\\"[^\\\"]*\\\"","content-desc=\\\"[redacted]\\\"");
-            return "uid="+Os.getuid()+"; rc="+rc+"; editable_nodes="+count+(first.isEmpty()?"":"; first="+first);
+            Pattern node = Pattern.compile("<node[^>]*/?>");
+            Matcher m = node.matcher(xml);
+            int total=0, clickable=0, focusable=0, enabled=0;
+            StringBuilder candidates = new StringBuilder();
+            while(m.find()){
+                total++;
+                String n=m.group();
+                boolean click=n.contains("clickable=\\\"true\\\"");
+                boolean focus=n.contains("focusable=\\\"true\\\"");
+                boolean en=n.contains("enabled=\\\"true\\\"");
+                if(click) clickable++; if(focus) focusable++; if(en) enabled++;
+                if ((click || focus) && candidates.length() < 5000) {
+                    String safe=n.replaceAll("text=\\\"[^\\\"]*\\\"","text=\\\"[redacted]\\\"")
+                            .replaceAll("content-desc=\\\"[^\\\"]*\\\"","content-desc=\\\"[redacted]\\\"")
+                            .replaceAll("hint=\\\"[^\\\"]*\\\"","hint=\\\"[redacted]\\\"");
+                    candidates.append("\\n").append(safe);
+                }
+            }
+            return "uid="+Os.getuid()+"; rc="+rc+"; total_nodes="+total+
+                    "; clickable="+clickable+"; focusable="+focusable+"; enabled="+enabled+
+                    "; structural_candidates="+candidates.toString();
         } catch (Throwable t) {
             throw new RemoteException(t.getClass().getSimpleName()+": "+String.valueOf(t.getMessage()));
         } finally {
