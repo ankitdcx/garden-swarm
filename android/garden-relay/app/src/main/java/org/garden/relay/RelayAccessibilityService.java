@@ -23,7 +23,7 @@ public final class RelayAccessibilityService extends AccessibilityService {
         long until = prefs.getLong(PREF_PENDING_SEND_UNTIL, 0L);
         String eventPackage = String.valueOf(event.getPackageName());
 
-        if (pendingPackage.isBlank()) return;
+        if (pendingPackage.trim().isEmpty()) return;
         if (System.currentTimeMillis() > until) {
             clearPending(prefs);
             return;
