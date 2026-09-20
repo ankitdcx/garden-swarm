@@ -106,6 +106,8 @@ public final class MainActivity extends Activity {
 
         addBinding(root, "deepseek", "DeepSeek");
         addBinding(root, "gemini", "Gemini");
+        addBinding(root, "claude", "Claude");
+        addBinding(root, "grok", "Grok");
         addBinding(root, "chatgpt", "ChatGPT");
 
         Button refresh = button("Refresh review job", v -> refreshJob(false));
@@ -535,6 +537,8 @@ public final class MainActivity extends Activity {
         switch (slot) {
             case "deepseek": return "DeepSeek";
             case "gemini": return "Gemini";
+            case "claude": return "Claude";
+            case "grok": return "Grok";
             case "chatgpt": return "ChatGPT";
             default: return slot;
         }
