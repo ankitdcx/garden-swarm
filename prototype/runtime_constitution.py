@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
 from enum import Enum
 from typing import Mapping, Optional
 
@@ -84,15 +86,64 @@ class RuntimeConstitutionContext:
     authority_validation_by_subject: Mapping[str, Optional[bool]] = field(default_factory=dict)
     authority_provenance_by_subject: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     authority_parent_by_subject: Mapping[str, str] = field(default_factory=dict)
+    authority_claim_digest_by_subject: Mapping[str, str] = field(default_factory=dict)
     revoked_authority_subjects: frozenset[str] = frozenset()
     hard_gates: Mapping[str, Optional[bool]] = field(default_factory=dict)
     human_effect_materiality_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
     human_effect_materiality_validation_by_effect: Mapping[tuple[str, str], Optional[bool]] = field(default_factory=dict)
+    human_effect_materiality_digest_by_effect: Mapping[tuple[str, str], str] = field(default_factory=dict)
     required_human_effect_gates: frozenset[str] = frozenset()
     external_runtime_blocks: Mapping[str, frozenset[tuple[str, str]]] = field(default_factory=dict)
     revoked_goal_ids: frozenset[str] = frozenset()
     goal_validity_by_id: Mapping[str, GoalValidity] = field(default_factory=dict)
 
+
+
+
+def _sha256_payload(payload: object) -> str:
+    encoded = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _authority_claim_digest(
+    *,
+    subject: str,
+    envelope: AuthorityEnvelope,
+    parent: str | None,
+    provenance: tuple[str, ...],
+) -> str:
+    return _sha256_payload(
+        {
+            "subject": subject,
+            "actions": sorted(envelope.actions),
+            "resources": sorted(envelope.resources),
+            "max_depth": envelope.max_depth,
+            "parent": parent,
+            "provenance": list(provenance),
+        }
+    )
+
+
+def _materiality_claim_digest(
+    *,
+    action: str,
+    target: str,
+    material: bool,
+    policy_epoch: str,
+) -> str:
+    return _sha256_payload(
+        {
+            "action": action,
+            "target": target,
+            "material": material,
+            "policy_epoch": policy_epoch,
+        }
+    )
 
 def classify_instruction_authority(source_class: ConstraintClass) -> InstructionAuthority:
     """Classify what an instruction source can contribute before action checks."""
@@ -286,6 +337,25 @@ def evaluate_instruction(
                     RuntimeDecision.REJECT,
                     (f"AUTHORITY_PARENT_MISMATCH:{subject}",),
                 )
+        parent = instruction.delegation_chain[index - 1] if index > 0 else None
+        expected_claim_digest = context.authority_claim_digest_by_subject.get(subject)
+        if expected_claim_digest is None:
+            return RuntimeResult(
+                RuntimeDecision.ESCALATE,
+                (f"AUTHORITY_CLAIM_DIGEST_UNKNOWN:{subject}",),
+            )
+        actual_claim_digest = _authority_claim_digest(
+            subject=subject,
+            envelope=envelope,
+            parent=parent,
+            provenance=provenance,
+        )
+        if expected_claim_digest != actual_claim_digest:
+            return RuntimeResult(
+                RuntimeDecision.REJECT,
+                (f"AUTHORITY_CLAIM_DIGEST_MISMATCH:{subject}",),
+            )
+
         authority_chain.append(envelope)
 
     depth = max(0, len(instruction.delegation_chain) - 1)
@@ -317,6 +387,26 @@ def evaluate_instruction(
         return RuntimeResult(
             RuntimeDecision.ESCALATE,
             ("HUMAN_EFFECT_MATERIALITY_UNVALIDATED",),
+        )
+
+    expected_materiality_digest = (
+        context.human_effect_materiality_digest_by_effect.get(effect_key)
+    )
+    if expected_materiality_digest is None:
+        return RuntimeResult(
+            RuntimeDecision.ESCALATE,
+            ("HUMAN_EFFECT_MATERIALITY_DIGEST_UNKNOWN",),
+        )
+    actual_materiality_digest = _materiality_claim_digest(
+        action=instruction.action,
+        target=instruction.target,
+        material=material_human_effect,
+        policy_epoch=context.current_policy_epoch,
+    )
+    if expected_materiality_digest != actual_materiality_digest:
+        return RuntimeResult(
+            RuntimeDecision.REJECT,
+            ("HUMAN_EFFECT_MATERIALITY_DIGEST_MISMATCH",),
         )
 
     if material_human_effect:
