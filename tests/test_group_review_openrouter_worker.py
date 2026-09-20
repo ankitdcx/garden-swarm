@@ -162,7 +162,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         )
         self.assertEqual(str(reserve), "0.05")
         self.assertEqual(daily, "1.50")
-        self.assertEqual(rule_id, "OPENROUTER_2_USD_DAY_0_01_CALL")
+        self.assertEqual(rule_id, "OPENROUTER_2_USD_DAY_0_05_CALL")
         self.assertRegex(day, r"^\d{4}-\d{2}-\d{2}$")
 
     def test_group_review_budget_blocks_daily_reservation_over_two_dollars(self):
