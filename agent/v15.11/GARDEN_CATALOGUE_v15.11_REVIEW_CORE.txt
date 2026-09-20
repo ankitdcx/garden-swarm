@@ -240,3 +240,7 @@ This review core is intentionally smaller. The full Catalogue is retention/compa
 available for final source promotion/verification. This review projection does not replace that requirement.
 
 END OF GARDEN v15.11 — CATALOGUE REVIEW CORE
+
+
+RETENTION RECOVERY BINDING
+The current v15.11 candidate also includes agent/v15.11/V15X_RETENTION_RECOVERY_ADDENDUM_2026-09-20.md as a noncanonical source-recovery companion. It restores identified v15.x families that were over-compressed or omitted from this review projection. This binding does not claim exhaustive byte-level retention or canonical admission.
