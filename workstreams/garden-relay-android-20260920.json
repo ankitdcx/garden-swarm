@@ -1,0 +1,20 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:garden-relay-android-20260920",
+  "work_package_id": "garden-relay-android-phone-bus",
+  "branch": "chatgpt/garden-relay-android-20260920",
+  "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "target_paths": [
+    "android/garden-relay/**",
+    "docs/GARDEN_RELAY_ANDROID.md",
+    "server/relay_api.py",
+    "server/app.py",
+    "server/tests/**",
+    ".github/workflows/garden-relay-android.yml"
+  ],
+  "intended_effect": "Add a noncanonical Android review relay prototype plus optional narrow server handoff; no Garden semantic changes."
+}
