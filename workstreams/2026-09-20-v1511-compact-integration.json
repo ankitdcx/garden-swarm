@@ -45,10 +45,9 @@
       "AuthorityDelta",
       "FindingClass",
       "evaluate_upgrade_closure",
-      "GardenTextReleaseManifest/v15.10-standalone-candidate",
-      "GardenStandaloneRetentionClosureReceipt/v1",
-      "GardenTextReleaseManifest/v15.11-standalone-successor-candidate",
-      "GardenV1511ClosureReceipt/v1"
+      "GardenPackageBindingManifest/v1",
+      "GardenPackageBindingReceipt/v1",
+      "GardenStandalonePackageBindingLedger/v1"
     ],
     "semantic_domains": [
       "REPRESENTATION_RETENTION",
@@ -74,7 +73,7 @@
       "prototype.transition_governance.evaluate_recovery",
       "prototype.upgrade_process.evaluate_upgrade_closure"
     ],
-    "intended_effect": "Compose the compact v15.10 text normalization with the repaired v15.11 runtime/transition/AI-led-upgrade delta on current main, preserve exact retention evidence separately, and create one source-complete candidate for deterministic and low-cost independent review. Noncanonical until separately admitted.",
+    "intended_effect": "Compose the standalone no-loss v15.10 source with the repaired v15.11 runtime/transition/AI-led-upgrade delta on current main, preserve exact package hashes and executable references, and keep repo review projections distinct from package-only full artifacts. Noncanonical until separately admitted.",
     "parallel_mode": "INDEPENDENT_COMPARISON"
   }
 }
