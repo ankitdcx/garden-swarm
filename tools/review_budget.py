@@ -14,7 +14,7 @@ from decimal import Decimal
 
 
 DAILY_CEILING = Decimal("2")
-PER_CALL_CEILING = Decimal("0.01")
+PER_CALL_CEILING = Decimal("0.05")
 
 
 def effective_policy(policy, directive, now):
@@ -24,7 +24,7 @@ def effective_policy(policy, directive, now):
         raise ValueError("unknown review spending mode")
 
     if Decimal(str(policy["routine_model_call_cost_ceiling_usd"])) != PER_CALL_CEILING:
-        raise ValueError("review call ceiling must be $0.01")
+        raise ValueError("review call ceiling must be $0.05")
     if Decimal(str(policy["daily_openrouter_cost_ceiling_usd"])) != DAILY_CEILING:
         raise ValueError("review daily ceiling must be $2")
 
