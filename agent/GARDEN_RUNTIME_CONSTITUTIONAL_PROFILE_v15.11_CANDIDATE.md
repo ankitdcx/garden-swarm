@@ -86,6 +86,8 @@ Before a consequential action can use an authority envelope, the runtime disting
 
 Only VALIDATED authority can participate in an ALLOW result. INVALID rejects. UNKNOWN escalates or preserves state.
 
+For delegated authority, each consequential delegation hop must also be explicitly bound to its actual parent/delegator. Independent validation of two envelopes plus free-form provenance text is not enough to prove that one validly delegated to the other.
+
 A cryptographic signature may prove possession of a key. It does not by itself prove that the signer possessed the claimed authority.
 
 ## Goal and means rule
@@ -93,6 +95,8 @@ A cryptographic signature may prove possession of a key. It does not by itself p
 Goal admission and action admission remain separate.
 
 A model may independently create a useful long-horizon goal. It may research, reason, simulate, test and prepare within existing authority. Every real-world effect is admitted separately. A goal never carries an implicit wildcard over the means needed to pursue it.
+
+External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint.
 
 ## Transition binding
 
