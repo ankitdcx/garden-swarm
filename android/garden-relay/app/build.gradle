@@ -10,8 +10,8 @@ android {
         applicationId 'org.garden.reviewdashboard'
         minSdk 26
         targetSdk 34
-        versionCode 18
-        versionName '0.11.1-firefox-bridge-status'
+        versionCode 19
+        versionName '0.12.0-browser-only-dashboard'
     }
 
     signingConfigs {
