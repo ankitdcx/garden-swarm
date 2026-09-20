@@ -1,26 +1,11 @@
 {
   "schema": "GardenProviderExclusionPolicy/v1",
   "status": "ACTIVE_HUMAN_OPERATOR_ROUTING_CONSTRAINT",
-  "effective_date": "2026-09-19",
+  "effective_date": "2026-09-20",
   "scope": "ALL_GARDEN_MODEL_REVIEW_AND_CHALLENGE_ROUTING",
   "source_policy": "https://github.com/ankitdcx/garden-main/blob/main/governance/PROVIDER_EXCLUSION_POLICY_v1.json",
-  "basis": "Explicit human operator routing preference. On 2026-09-19 the human explicitly re-authorized NVIDIA/Nemotron and Mistral/Mistral AI for future low-cost Garden review. No allegation of misconduct or poisoning is asserted by this policy.",
-  "excluded": [
-    {
-      "organization": "Anthropic",
-      "family_aliases": [
-        "anthropic",
-        "claude"
-      ],
-      "model_markers": [
-        "anthropic/",
-        "claude"
-      ],
-      "provider_slugs": [
-        "anthropic"
-      ]
-    }
-  ],
+  "basis": "Explicit human operator routing preference. Anthropic/Claude, NVIDIA/Nemotron and Mistral are currently authorized for Garden review by later explicit human directives; no allegation about any provider is asserted.",
+  "excluded": [],
   "superseded_exclusions": [
     {
       "organization": "NVIDIA",
@@ -31,6 +16,11 @@
       "organization": "Mistral AI",
       "effective_end": "2026-09-19",
       "basis": "Explicit future human directive re-authorized Mistral for low-cost OpenRouter review."
+    },
+    {
+      "organization": "Anthropic",
+      "effective_end": "2026-09-20",
+      "basis": "Explicit future human directive re-authorized Claude for Garden review."
     }
   ],
   "enforcement": {
