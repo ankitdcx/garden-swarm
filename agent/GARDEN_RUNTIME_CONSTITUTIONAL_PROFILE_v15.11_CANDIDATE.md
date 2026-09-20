@@ -89,6 +89,8 @@ Where consequential self-change, authority validation, evidence review or transi
 
 ## Runtime authority validation
 
+Before a consequential action can use an authority envelope, the runtime first requires the complete assurance snapshot supplying authority/materiality/gate state to be current for the active policy epoch; stale or unknown assurance freshness is non-PASS.
+
 Before a consequential action can use an authority envelope, the runtime distinguishes:
 - PRESENT: an authority claim/envelope exists;
 - VALIDATED: provenance, identity, scope, delegation and current validity checks pass;
@@ -107,7 +109,7 @@ Goal admission and action admission remain separate.
 
 A model may independently create a useful long-horizon goal. It may research, reason, simulate, test and prepare within existing authority. Goal persistence itself requires current DesignEpoch, delegation, expiry, dependency-freshness, resource-bound and termination-condition status; missing/failed bindings are non-PASS and are rechecked at later action points. Every real-world effect is admitted separately. A goal never carries an implicit wildcard over the means needed to pursue it.
 
-External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint.
+External runtime blocking is classified only after Garden semantic admission for the proposed effect has been evaluated. An unauthorized action remains REJECT even if the host would also block it; EXTERNALLY_BLOCKED means the action was otherwise semantically admissible but unreachable because of an external constraint. External blocks are scoped to the concrete action+target (or an explicitly declared wildcard), so a block on one target cannot silently become a universal semantic prohibition.
 
 Human-effect materiality is itself a required typed input to consequential action admission and is bound to the concrete action + target/effect scope. Absence of a materiality classification is UNKNOWN/ESCALATE, not implicit permission to treat the action as low impact. The classification itself must be validated under the applicable effect-analysis/evidence path; a proposer cannot self-label its effect as harmless and thereby bypass Human-Effect Closure.
 
