@@ -88,3 +88,10 @@ No family above creates new authority by being recovered.
 ## Remaining closure
 
 This addendum repairs identified semantic omission at the source-design level. It does not prove exhaustive byte-level retention. Exact standalone materialization remains separately blocked until the bound large source bytes are durably available or a governed replacement package supersedes those unavailable byte identities.
+
+
+## Exact recovered v15.10 corpus audit
+
+The original 2026-09-19 three-document source package has now been recovered and independently SHA-256 checked. Its Catalogue contains 55 named 15.x family-index records, 2,239 definition-index records, 2,981 formula/operator candidates, 18 fundamental-law records, 1,935 identity-index records, 7,747 semantic edges, 2,660 semantic leaves, 206 semantic units, 733 SchemaIDs and 788 TestIDs. The exact package identities and full named-family list are bound in RECOVERED_V1510_SOURCE_PACKAGE_2026-09-20.json.
+
+This strengthens the recovery basis: the addendum is not inferred only from the compact text edition. It is checked against the recovered large Catalogue. The large Catalogue itself marks many named families as INDEX_ONLY with semantic owner REFERENCED_PREDECESSOR_SOURCE; therefore family-name presence alone is not proof that every predecessor semantic detail is self-contained in that Catalogue. The current recovery rule remains fail-closed: where detailed predecessor semantics are required and the current projection does not contain them, retain/migrate the detailed predecessor meaning rather than treating an index record as sufficient.
