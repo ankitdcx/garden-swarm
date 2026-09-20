@@ -150,7 +150,7 @@ Before commit:
 
 After reversible commit:
 - a confirmed material failure may trigger a fresh recovery admission;
-- ROLLBACK may target only an earlier qualified transition stage and does not create authority.
+- ROLLBACK may target only the recorded last qualified transition stage and does not create authority.
 
 For irreversible effects:
 - do not promise rollback;
@@ -212,6 +212,6 @@ A receipt records a decision. It does not make that decision valid merely becaus
 `prototype/transition_governance.py` now exercises two separate paths:
 
 1. **stage advancement** — validates ordered stage plans, explicit omission justification/approval, immutable base hard gates, non-vacuous entry/exit criteria, authority, independence, capture, divergence, disputes and recovery readiness;
-2. **post-commit recovery** — requires a confirmed material failure plus fresh recovery admission, allows rollback only to an earlier stage for reversible effects, and routes irreversible effects to compensation/recovery instead of fictional rollback.
+2. **post-commit recovery** — requires a confirmed material failure plus fresh recovery admission and independent verification, allows rollback only to the recorded last qualified stage for reversible effects, and routes irreversible effects to compensation/recovery instead of fictional rollback.
 
 The prototype remains a narrow reference, not deployment certification, proof of institutional legitimacy, or authority to perform a real transition.
