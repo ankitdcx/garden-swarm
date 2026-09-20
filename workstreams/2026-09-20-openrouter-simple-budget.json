@@ -21,6 +21,7 @@
       "tests/test_group_review_openrouter_worker.py",
       "tests/test_ip_origin_review_selection.py",
       "tests/test_paid_review_routing.py",
+      "tests/test_rate_limit_recovery.py",
       "tests/test_review_campaign.py",
       "tests/test_review_context.py",
       "tests/test_single_review_worker.py",
