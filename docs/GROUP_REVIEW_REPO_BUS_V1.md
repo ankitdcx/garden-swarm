@@ -140,6 +140,9 @@ Opening an owner-authored `[GROUP_REVIEW_RUN]` issue triggers only the secret-fr
 Admission rules:
 
 - packet must validate as `GardenGroupReviewPacket/v1`, including exact immutable source refs and one-for-one source SHA-256 bindings;
+- automatic OpenRouter review currently requires every source_ref to be an exact-commit file in `ankitdcx/garden-swarm`; content-only/cross-repository refs are rejected because the installed worker cannot independently retrieve and re-hash them;
+- before any OpenRouter inference, the worker fetches every referenced file at the frozen commit, verifies its raw-byte SHA-256, decodes strict UTF-8, and includes the complete verified source text in the reviewer prompt;
+- source bundles are never silently truncated; if the full frozen packet cannot fit the configured prompt/context/cost boundary, the review fails closed before inference;
 - `public_only=true`;
 - `data_classification=PUBLIC`;
 - triage must be `MATERIAL` or `HIGH_RISK`;

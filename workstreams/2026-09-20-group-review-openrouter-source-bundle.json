@@ -1,0 +1,44 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:group-review-openrouter-source-bundle:20260920",
+  "work_package_id": "GROUP-REVIEW-OPENROUTER-SOURCE-BUNDLE-20260920",
+  "branch": "chatgpt/group-review-openrouter-source-bundle-20260920",
+  "base_sha": "fa45d2bcc982599e5d98546f3aa72b9e452cbbeb",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:group-review-openrouter-source-bundle:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "GROUP-REVIEW-OPENROUTER-SOURCE-BUNDLE-20260920",
+    "base_sha": "fa45d2bcc982599e5d98546f3aa72b9e452cbbeb",
+    "target_paths": [
+      "workstreams/2026-09-20-group-review-openrouter-source-bundle.json",
+      "tools/group_review_openrouter_worker.py",
+      "tests/test_group_review_openrouter_worker.py",
+      "docs/GROUP_REVIEW_REPO_BUS_V1.md"
+    ],
+    "target_symbols": [
+      "materialize_frozen_sources",
+      "group_review_openrouter_worker",
+      "openrouter_prompt"
+    ],
+    "semantic_domains": [
+      "OPENROUTER_REVIEW_TRANSPORT",
+      "FROZEN_SOURCE_INTEGRITY"
+    ],
+    "affected_invariants": [
+      "OPENROUTER_REVIEWER_SEES_EXACT_FROZEN_SOURCE_BYTES",
+      "SOURCE_HASH_MISMATCH_FAILS_CLOSED",
+      "NO_SILENT_SOURCE_TRUNCATION"
+    ],
+    "affected_contracts": [
+      "GardenGroupReviewPacket/v1",
+      "GardenGroupReviewOpenRouter/v1"
+    ],
+    "intended_effect": "Ensure governed OpenRouter reviewers receive the exact frozen UTF-8 source bytes referenced by a GROUP_REVIEW packet after one-for-one SHA-256 validation; reject unsupported/non-materializable sources and oversized packets rather than reviewing metadata only.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}

@@ -12,8 +12,10 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import time
 from urllib import error
+from urllib.parse import quote
 
 from tools import group_review_bus as bus
 from tools import matrix_design_review as review
@@ -130,6 +132,88 @@ def _config(root: Path) -> tuple[dict, list[dict], dict]:
     if int(policy["execution_limits"]["max_concurrent_model_calls"]) != 1:
         raise ValueError("GROUP_REVIEW OpenRouter calls must remain sequential")
     return policy, selected, exclusions
+
+
+
+_REPO_SOURCE_RE = re.compile(
+    r"^repo:([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)@([0-9a-f]{40}):(.+)$"
+)
+
+
+def _repo_source_parts(source_ref: str) -> tuple[str, str, str]:
+    match = _REPO_SOURCE_RE.fullmatch(source_ref)
+    if not match:
+        raise ValueError(
+            "automatic OpenRouter GROUP_REVIEW requires exact-commit repo source_refs"
+        )
+    source_repo = match.group(1) + "/" + match.group(2)
+    if source_repo != REPO:
+        raise ValueError("automatic OpenRouter cross-repository source is not supported")
+    return match.group(3), match.group(4), source_repo
+
+
+def _github_source_bytes(token: str, *, commit: str, path: str) -> bytes:
+    encoded_path = quote(path, safe="/")
+    result = legacy.http(API + "/contents/" + encoded_path + "?ref=" + commit, token)
+    if not isinstance(result, dict) or result.get("type") not in {None, "file"}:
+        raise ValueError("frozen source_ref did not resolve to a file")
+    content = result.get("content")
+    if not content:
+        blob_sha = result.get("sha")
+        if not blob_sha:
+            raise ValueError("frozen source file has no content or blob SHA")
+        result = legacy.http(API + "/git/blobs/" + str(blob_sha), token)
+        content = result.get("content")
+    if not content:
+        raise ValueError("frozen source file content unavailable")
+    try:
+        return base64.b64decode(content, validate=False)
+    except Exception as exc:
+        raise ValueError("frozen source file is not valid base64 content") from exc
+
+
+def materialize_frozen_sources(
+    packet: dict, token: str, *, max_characters: int
+) -> str:
+    """Fetch every frozen repo source, verify exact SHA-256 bytes, and render text.
+
+    Automatic OpenRouter review deliberately refuses inline/content-only or
+    cross-repository refs because the installed GitHub execution host cannot
+    independently retrieve and re-hash those bytes under this contract.
+    """
+
+    bus.validate_packet(packet)
+    if max_characters <= 0:
+        raise ValueError("positive source-bundle bound required")
+    parts: list[str] = []
+    total = 0
+    for source_ref in packet["source_refs"]:
+        commit, path, _ = _repo_source_parts(source_ref)
+        raw = _github_source_bytes(token, commit=commit, path=path)
+        actual = hashlib.sha256(raw).hexdigest()
+        expected = packet["source_hashes"][source_ref]
+        if actual != expected:
+            raise ValueError("frozen source SHA-256 mismatch")
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError("automatic OpenRouter source must be strict UTF-8 text") from exc
+        rendered = (
+            "\n===== FROZEN SOURCE =====\n"
+            + source_ref
+            + "\nsha256:"
+            + actual
+            + "\n"
+            + text
+            + "\n===== END FROZEN SOURCE =====\n"
+        )
+        total += len(rendered)
+        if total > max_characters:
+            raise ValueError("frozen source bundle exceeds full-prompt bound; no truncation")
+        parts.append(rendered)
+    if not parts:
+        raise ValueError("OpenRouter review requires at least one frozen source")
+    return "".join(parts)
 
 
 def cycle_id(packet: dict, selected: list[dict], policy: dict) -> str:
@@ -264,8 +348,24 @@ def run(root: Path = Path(".")) -> None:
 
     model = reviewer["model"]
     family = reviewer["family"]
-    prompt = bus.openrouter_prompt(packet, family=family, role=reviewer["role"], model=model)
+    base_prompt = bus.openrouter_prompt(
+        packet, family=family, role=reviewer["role"], model=model
+    )
+    prompt_cap = min(int(policy["max_prompt_characters"]), 200000)
+    source_budget = prompt_cap - len(base_prompt) - 512
+    source_bundle = materialize_frozen_sources(
+        packet, gh, max_characters=source_budget
+    )
+    prompt = (
+        base_prompt
+        + "\nThe following source bundle is the exact SHA-256-verified content "
+        + "you must review. Do not infer missing source text from filenames.\n"
+        + source_bundle
+    )
+    if len(prompt) > prompt_cap:
+        raise ValueError("full GROUP_REVIEW prompt exceeds configured bound")
     prompt_sha = bus.sha256_text(prompt)
+    source_bundle_sha = bus.sha256_text(source_bundle)
 
     key_info = legacy.http(legacy.OR + "/key", key)["data"]
     reserve, day, daily = legacy.budget_check(state, key_info, policy, time.time())
@@ -307,6 +407,8 @@ def run(root: Path = Path(".")) -> None:
         "run_issue_number": issue_number,
         "packet_sha256": packet["packet_sha256"],
         "prompt_sha256": prompt_sha,
+        "source_bundle_sha256": source_bundle_sha,
+        "source_ref_count": len(packet["source_refs"]),
         "utc_day": day,
         "started": time.time(),
         "usage_daily_before": daily,
@@ -365,6 +467,8 @@ def run(root: Path = Path(".")) -> None:
             "provider": response.get("provider"),
             "response_id": response["id"],
             "prompt_sha256": prompt_sha,
+            "source_bundle_sha256": source_bundle_sha,
+            "source_ref_count": len(packet["source_refs"]),
             "finding": finding,
             "finding_sha256": finding_hash,
             "cost_usd": str(cost),

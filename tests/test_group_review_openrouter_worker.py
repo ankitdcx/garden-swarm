@@ -1,3 +1,5 @@
+import base64
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -126,6 +128,109 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         self.assertIn(packet["packet_sha256"], prompt)
         self.assertNotIn("peer findings", prompt.lower())
         self.assertIn("have not seen any other reviewer output", prompt)
+
+
+    def test_materialize_frozen_sources_fetches_exact_bytes_and_verifies_sha256(self):
+        text = "alpha\nbeta\n"
+        raw = text.encode("utf-8")
+        digest = hashlib.sha256(raw).hexdigest()
+        ref = "repo:ankitdcx/garden-swarm@" + ("a" * 40) + ":candidate.txt"
+        packet = {
+            "schema": bus.PACKET_SCHEMA,
+            "problem_id": "GR-SRC",
+            "protocol_version": "2.1",
+            "prompt_version": "v",
+            "created_at": "now",
+            "public_only": True,
+            "data_classification": "PUBLIC",
+            "triage": "MATERIAL",
+            "openrouter_requested": True,
+            "problem": "P",
+            "scope": "S",
+            "assumptions": [],
+            "source_refs": [ref],
+            "source_hashes": {ref: digest},
+            "symmetric_worker_prompt": "Solve independently.",
+        }
+        packet["packet_sha256"] = bus.packet_hash(packet)
+
+        response = {
+            "type": "file",
+            "sha": "b" * 40,
+            "content": base64.b64encode(raw).decode("ascii"),
+        }
+        with patch.object(worker.legacy, "http", return_value=response):
+            bundle = worker.materialize_frozen_sources(
+                packet, "gh-token", max_characters=1000
+            )
+        self.assertIn(text, bundle)
+        self.assertIn(digest, bundle)
+        self.assertIn(ref, bundle)
+
+    def test_materialize_frozen_sources_rejects_hash_drift(self):
+        text = "actual"
+        ref = "repo:ankitdcx/garden-swarm@" + ("a" * 40) + ":candidate.txt"
+        packet = {
+            "schema": bus.PACKET_SCHEMA,
+            "problem_id": "GR-SRC",
+            "protocol_version": "2.1",
+            "prompt_version": "v",
+            "created_at": "now",
+            "public_only": True,
+            "data_classification": "PUBLIC",
+            "triage": "MATERIAL",
+            "openrouter_requested": True,
+            "problem": "P",
+            "scope": "S",
+            "assumptions": [],
+            "source_refs": [ref],
+            "source_hashes": {ref: "c" * 64},
+            "symmetric_worker_prompt": "Solve independently.",
+        }
+        packet["packet_sha256"] = bus.packet_hash(packet)
+        response = {
+            "type": "file",
+            "sha": "b" * 40,
+            "content": base64.b64encode(text.encode()).decode("ascii"),
+        }
+        with patch.object(worker.legacy, "http", return_value=response):
+            with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
+                worker.materialize_frozen_sources(
+                    packet, "gh-token", max_characters=1000
+                )
+
+    def test_materialize_frozen_sources_never_silently_truncates(self):
+        raw = ("x" * 100).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        ref = "repo:ankitdcx/garden-swarm@" + ("a" * 40) + ":large.txt"
+        packet = {
+            "schema": bus.PACKET_SCHEMA,
+            "problem_id": "GR-SRC",
+            "protocol_version": "2.1",
+            "prompt_version": "v",
+            "created_at": "now",
+            "public_only": True,
+            "data_classification": "PUBLIC",
+            "triage": "MATERIAL",
+            "openrouter_requested": True,
+            "problem": "P",
+            "scope": "S",
+            "assumptions": [],
+            "source_refs": [ref],
+            "source_hashes": {ref: digest},
+            "symmetric_worker_prompt": "Solve independently.",
+        }
+        packet["packet_sha256"] = bus.packet_hash(packet)
+        response = {
+            "type": "file",
+            "sha": "b" * 40,
+            "content": base64.b64encode(raw).decode("ascii"),
+        }
+        with patch.object(worker.legacy, "http", return_value=response):
+            with self.assertRaisesRegex(ValueError, "no truncation"):
+                worker.materialize_frozen_sources(
+                    packet, "gh-token", max_characters=40
+                )
 
 
 if __name__ == "__main__":
