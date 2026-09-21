@@ -5,34 +5,627 @@
   "semantic_compliance_proved": false,
   "coverage_boundary": "Artifact classification declares which Garden/GSL modules govern changes. It does not by itself prove semantic conformance, proof validity, authorization, empirical validation or certification.",
   "rules": [
-    {"rule_id":"CANONICAL-SOURCE","pattern":"Garden_*_v15.5_FULL_*.txt","artifact_class":"CANONICAL_SOURCE","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","COMPARE","REASON","PROOF","AAP","AUTHORITY","ACTION_GATE","PROCESS_ALGEBRA","POLICY_ALGEBRA","DECISION_ALGEBRA","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","BRIDGE_ALGEBRA","AUDIT","COMPLIANCE","HUMAN_SOVEREIGNTY"],"conditional_change_modules":["SECURITY","PRIVACY","SAFETY","THEORY_PROFILE"],"note":"Published v15.5 is immutable; requirements apply to successor materialization/promotion."},
-    {"rule_id":"GITHUB-WORKFLOWS","pattern":".github/workflows/*","artifact_class":"WORKFLOW","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","AAP","AUTHORITY","ACTION_GATE","PROCESS_ALGEBRA","POLICY_ALGEBRA","DECISION_ALGEBRA","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT","COMPLIANCE","HUMAN_SOVEREIGNTY","SECURITY"],"conditional_change_modules":["COMPARE","REASON","PROOF","PRIVACY","SAFETY"]},
-    {"rule_id":"PROTOTYPE-TEST","pattern":"prototype/tests/*","artifact_class":"TEST","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT"],"conditional_change_modules":["COMPARE","REASON","PROOF","SECURITY","SAFETY"]},
-    {"rule_id":"PROTOTYPE","pattern":"prototype/*","artifact_class":"IMPLEMENTATION","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","CONFORMANCE_ALGEBRA","AUDIT"],"conditional_change_modules":["COMPARE","REASON","PROOF","AAP","AUTHORITY","ACTION_GATE","PROCESS_ALGEBRA","POLICY_ALGEBRA","DECISION_ALGEBRA","EVIDENCE_ALGEBRA","SECURITY","PRIVACY","SAFETY"]},
-    {"rule_id":"SERVER-TEST","pattern":"server/tests/*","artifact_class":"TEST","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT"],"conditional_change_modules":["AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"SERVER","pattern":"server/*","artifact_class":"IMPLEMENTATION","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","AAP","AUTHORITY","ACTION_GATE","CONFORMANCE_ALGEBRA","AUDIT","COMPLIANCE","SECURITY"],"conditional_change_modules":["POLICY_ALGEBRA","DECISION_ALGEBRA","EVIDENCE_ALGEBRA","PRIVACY","SAFETY"]},
-    {"rule_id":"SWARM-TEST","pattern":"swarm/tests/*","artifact_class":"TEST","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT"],"conditional_change_modules":["AUTHORITY","ACTION_GATE","SECURITY"]},
-    {"rule_id":"SWARM","pattern":"swarm/*","artifact_class":"IMPLEMENTATION","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","COMPARE","REASON","AAP","AUTHORITY","ACTION_GATE","PROCESS_ALGEBRA","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT","COMPLIANCE"],"conditional_change_modules":["PROOF","POLICY_ALGEBRA","DECISION_ALGEBRA","SECURITY","PRIVACY","SAFETY"]},
-    {"rule_id":"MODEL-REVIEW-TOOLS","pattern":"tools/*","artifact_class":"TOOLING","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","COMPARE","REASON","EVIDENCE_ALGEBRA","AUDIT","COMPLIANCE"],"conditional_change_modules":["PROOF","AAP","AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"SCRIPTS","pattern":"scripts/*","artifact_class":"TOOLING","required_change_modules":["SOURCE_IDENTITY","GSL_TYPING","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","CONFORMANCE_ALGEBRA","AUDIT","COMPLIANCE"],"conditional_change_modules":["COMPARE","REASON","PROOF","AUTHORITY","ACTION_GATE","SECURITY"]},
-    {"rule_id":"ADVERSARIAL-TESTS","pattern":"tests/*","artifact_class":"TEST","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","AUDIT"],"conditional_change_modules":["COMPARE","REASON","PROOF","SECURITY","PRIVACY","SAFETY"]},
-    {"rule_id":"GSL-GOVERNANCE","pattern":"gsl/*","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","COMPARE","REASON","AUTHORITY","ACTION_GATE","CONFORMANCE_ALGEBRA","AUDIT","COMPLIANCE","HUMAN_SOVEREIGNTY"],"conditional_change_modules":["PROOF","SECURITY","PRIVACY","SAFETY"]},
-    {"rule_id":"AGENT-METADATA","pattern":"agent/*","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","AUTHORITY","ACTION_GATE","AUDIT","COMPLIANCE"],"conditional_change_modules":["SECURITY","PRIVACY"]},
-    {"rule_id":"AGENTS-BUS","pattern":"agents/*","artifact_class":"RECEIPT_OR_CONFIG","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","EVIDENCE_ALGEBRA","AUDIT"],"conditional_change_modules":["SOURCE_OBLIGATION","AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"RELAY","pattern":"relay/*","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","BRIDGE_ALGEBRA","AUDIT","COMPLIANCE"],"conditional_change_modules":["AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"EVIDENCE","pattern":"evidence/*","artifact_class":"RECEIPT","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","EVIDENCE_ALGEBRA","AUDIT","PROVENANCE"],"conditional_change_modules":["PROOF","CONFORMANCE_ALGEBRA","SECURITY","PRIVACY"]},
-    {"rule_id":"DOCS","pattern":"docs/*","artifact_class":"DOCUMENTATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","AUDIT"],"conditional_change_modules":["SOURCE_OBLIGATION","COMPARE","REASON","BRIDGE_ALGEBRA","COMPLIANCE"]},
-    {"rule_id":"GITHUB-METADATA","pattern":".github/*","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","AUDIT","COMPLIANCE"],"conditional_change_modules":["SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"ROOT-JSON","pattern":"*.json","artifact_class":"DATA_OR_CONFIG","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","AUDIT"],"conditional_change_modules":["SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","EVIDENCE_ALGEBRA","CONFORMANCE_ALGEBRA","AUTHORITY","ACTION_GATE","SECURITY","PRIVACY"]},
-    {"rule_id":"ROOT-MARKDOWN","pattern":"*.md","artifact_class":"DOCUMENTATION","required_change_modules":["SOURCE_IDENTITY","AUDIT"],"conditional_change_modules":["DESIGN_EPOCH","SOURCE_OBLIGATION","COMPARE","REASON","BRIDGE_ALGEBRA","COMPLIANCE"]},
-    {"rule_id":"ROOT-TEXT","pattern":"*.txt","artifact_class":"DOCUMENTATION","required_change_modules":["SOURCE_IDENTITY","AUDIT"],"conditional_change_modules":["DESIGN_EPOCH","SOURCE_OBLIGATION","COMPARE","REASON","BRIDGE_ALGEBRA","COMPLIANCE"]},
-    {"rule_id":"ROOT-YAML","pattern":"*.yaml","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","AUDIT","COMPLIANCE"],"conditional_change_modules":["SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","AUTHORITY","ACTION_GATE","SECURITY"]},
-    {"rule_id":"ROOT-YML","pattern":"*.yml","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","AUDIT","COMPLIANCE"],"conditional_change_modules":["SOURCE_OBLIGATION","PIPELINE_CONFIG_DELTA","AUTHORITY","ACTION_GATE","SECURITY"]},
-    {"rule_id":"ROOT-CFF","pattern":"*.cff","artifact_class":"DOCUMENTATION","required_change_modules":["SOURCE_IDENTITY","AUDIT"],"conditional_change_modules":["PROVENANCE","COMPLIANCE"]},
-    {"rule_id":"ROOT-VERSION","pattern":"VERSION","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","PIPELINE_CONFIG_DELTA","AUDIT","COMPLIANCE"],"conditional_change_modules":["SOURCE_OBLIGATION","COMPARE","REASON"]},
-    {"rule_id":"ROOT-MAKEFILE","pattern":"Makefile","artifact_class":"TOOLING","required_change_modules":["SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","FUNCTION_CONTRACT","AUDIT","COMPLIANCE"],"conditional_change_modules":["AUTHORITY","ACTION_GATE","SECURITY"]},
-    {"rule_id":"ROOT-GITIGNORE","pattern":".gitignore","artifact_class":"CONFIGURATION","required_change_modules":["SOURCE_IDENTITY","AUDIT"],"conditional_change_modules":["SECURITY","PRIVACY"]},
-    {"rule_id":"ROOT-LICENSE","pattern":"LICENSE*","artifact_class":"DOCUMENTATION","required_change_modules":["SOURCE_IDENTITY","AUDIT","COMPLIANCE"],"conditional_change_modules":["HUMAN_SOVEREIGNTY"]},
-    {"rule_id":"UNCLASSIFIED-FRONTIER","pattern":"*","artifact_class":"FRONTIER","coverage_state":"FRONTIER","required_change_modules":[],"conditional_change_modules":["GSL_TYPING","SOURCE_IDENTITY","DESIGN_EPOCH","SOURCE_OBLIGATION","DEPENDENCY","FUNCTION_CONTRACT","COMPARE","REASON","PROOF","AAP","AUTHORITY","ACTION_GATE","PROCESS_ALGEBRA","POLICY_ALGEBRA","DECISION_ALGEBRA","CONFORMANCE_ALGEBRA","EVIDENCE_ALGEBRA","BRIDGE_ALGEBRA","AUDIT","COMPLIANCE","HUMAN_SOVEREIGNTY","SECURITY","PRIVACY","SAFETY","PIPELINE_CONFIG_DELTA","THEORY_PROFILE","PROVENANCE"]}
+    {
+      "rule_id": "RETIRED-WORK-ARCHIVE",
+      "pattern": "archive/retired-work/*",
+      "artifact_class": "ARCHIVAL_EVIDENCE",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT",
+        "PROVENANCE"
+      ],
+      "conditional_change_modules": [],
+      "note": "Exact historical branch-work preservation only. Content under this path is non-executable, noncanonical, non-authorizing, and must not be interpreted as an active Garden owner or implementation surface."
+    },
+    {
+      "rule_id": "CANONICAL-SOURCE",
+      "pattern": "Garden_*_v15.5_FULL_*.txt",
+      "artifact_class": "CANONICAL_SOURCE",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "PROCESS_ALGEBRA",
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "BRIDGE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "HUMAN_SOVEREIGNTY"
+      ],
+      "conditional_change_modules": [
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY",
+        "THEORY_PROFILE"
+      ],
+      "note": "Published v15.5 is immutable; requirements apply to successor materialization/promotion."
+    },
+    {
+      "rule_id": "GITHUB-WORKFLOWS",
+      "pattern": ".github/workflows/*",
+      "artifact_class": "WORKFLOW",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "PROCESS_ALGEBRA",
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "HUMAN_SOVEREIGNTY",
+        "SECURITY"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "PROTOTYPE-TEST",
+      "pattern": "prototype/tests/*",
+      "artifact_class": "TEST",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "SECURITY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "PROTOTYPE",
+      "pattern": "prototype/*",
+      "artifact_class": "IMPLEMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "CONFORMANCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "PROCESS_ALGEBRA",
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "SERVER-TEST",
+      "pattern": "server/tests/*",
+      "artifact_class": "TEST",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "SERVER",
+      "pattern": "server/*",
+      "artifact_class": "IMPLEMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "CONFORMANCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "SECURITY"
+      ],
+      "conditional_change_modules": [
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "SWARM-TEST",
+      "pattern": "swarm/tests/*",
+      "artifact_class": "TEST",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY"
+      ]
+    },
+    {
+      "rule_id": "SWARM",
+      "pattern": "swarm/*",
+      "artifact_class": "IMPLEMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "COMPARE",
+        "REASON",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "PROCESS_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "PROOF",
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "MODEL-REVIEW-TOOLS",
+      "pattern": "tools/*",
+      "artifact_class": "TOOLING",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "COMPARE",
+        "REASON",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "PROOF",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "SCRIPTS",
+      "pattern": "scripts/*",
+      "artifact_class": "TOOLING",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "GSL_TYPING",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "CONFORMANCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY"
+      ]
+    },
+    {
+      "rule_id": "ADVERSARIAL-TESTS",
+      "pattern": "tests/*",
+      "artifact_class": "TEST",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "GSL-GOVERNANCE",
+      "pattern": "gsl/*",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "COMPARE",
+        "REASON",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "CONFORMANCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "HUMAN_SOVEREIGNTY"
+      ],
+      "conditional_change_modules": [
+        "PROOF",
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY"
+      ]
+    },
+    {
+      "rule_id": "AGENT-METADATA",
+      "pattern": "agent/*",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "AGENTS-BUS",
+      "pattern": "agents/*",
+      "artifact_class": "RECEIPT_OR_CONFIG",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "RELAY",
+      "pattern": "relay/*",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "BRIDGE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "EVIDENCE",
+      "pattern": "evidence/*",
+      "artifact_class": "RECEIPT",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "EVIDENCE_ALGEBRA",
+        "AUDIT",
+        "PROVENANCE"
+      ],
+      "conditional_change_modules": [
+        "PROOF",
+        "CONFORMANCE_ALGEBRA",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "DOCS",
+      "pattern": "docs/*",
+      "artifact_class": "DOCUMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "COMPARE",
+        "REASON",
+        "BRIDGE_ALGEBRA",
+        "COMPLIANCE"
+      ]
+    },
+    {
+      "rule_id": "GITHUB-METADATA",
+      "pattern": ".github/*",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-JSON",
+      "pattern": "*.json",
+      "artifact_class": "DATA_OR_CONFIG",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "EVIDENCE_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-MARKDOWN",
+      "pattern": "*.md",
+      "artifact_class": "DOCUMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "COMPARE",
+        "REASON",
+        "BRIDGE_ALGEBRA",
+        "COMPLIANCE"
+      ]
+    },
+    {
+      "rule_id": "ROOT-TEXT",
+      "pattern": "*.txt",
+      "artifact_class": "DOCUMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "COMPARE",
+        "REASON",
+        "BRIDGE_ALGEBRA",
+        "COMPLIANCE"
+      ]
+    },
+    {
+      "rule_id": "ROOT-YAML",
+      "pattern": "*.yaml",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-YML",
+      "pattern": "*.yml",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "PIPELINE_CONFIG_DELTA",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-CFF",
+      "pattern": "*.cff",
+      "artifact_class": "DOCUMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "PROVENANCE",
+        "COMPLIANCE"
+      ]
+    },
+    {
+      "rule_id": "ROOT-VERSION",
+      "pattern": "VERSION",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "PIPELINE_CONFIG_DELTA",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "SOURCE_OBLIGATION",
+        "COMPARE",
+        "REASON"
+      ]
+    },
+    {
+      "rule_id": "ROOT-MAKEFILE",
+      "pattern": "Makefile",
+      "artifact_class": "TOOLING",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SECURITY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-GITIGNORE",
+      "pattern": ".gitignore",
+      "artifact_class": "CONFIGURATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT"
+      ],
+      "conditional_change_modules": [
+        "SECURITY",
+        "PRIVACY"
+      ]
+    },
+    {
+      "rule_id": "ROOT-LICENSE",
+      "pattern": "LICENSE*",
+      "artifact_class": "DOCUMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "AUDIT",
+        "COMPLIANCE"
+      ],
+      "conditional_change_modules": [
+        "HUMAN_SOVEREIGNTY"
+      ]
+    },
+    {
+      "rule_id": "UNCLASSIFIED-FRONTIER",
+      "pattern": "*",
+      "artifact_class": "FRONTIER",
+      "coverage_state": "FRONTIER",
+      "required_change_modules": [],
+      "conditional_change_modules": [
+        "GSL_TYPING",
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "DEPENDENCY",
+        "FUNCTION_CONTRACT",
+        "COMPARE",
+        "REASON",
+        "PROOF",
+        "AAP",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "PROCESS_ALGEBRA",
+        "POLICY_ALGEBRA",
+        "DECISION_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "EVIDENCE_ALGEBRA",
+        "BRIDGE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "HUMAN_SOVEREIGNTY",
+        "SECURITY",
+        "PRIVACY",
+        "SAFETY",
+        "PIPELINE_CONFIG_DELTA",
+        "THEORY_PROFILE",
+        "PROVENANCE"
+      ]
+    }
   ]
 }
