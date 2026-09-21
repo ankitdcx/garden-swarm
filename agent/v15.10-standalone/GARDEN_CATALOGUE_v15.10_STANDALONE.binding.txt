@@ -1,0 +1,4 @@
+STANDALONE FINAL CATALOGUE BINDING
+SHA-256: 1142e6300da4334c4bc919585ab823598abcc0cbebd6aa7ea14f79bc0b1f212c
+Bytes: 19955654
+The Catalogue contains the abstract v15.10 semantic corpus plus ten exact RETAINED_SOURCE_BLOB_FULL records: all five attached v15.8 files and all five attached v15.9 files. Each retained blob carries original byte count and SHA-256. External predecessor files are not required for current reading or reverse retention audit. Historical filenames/version labels are lineage metadata only. Review/hash evidence creates no authority, truth, safety or certification.
