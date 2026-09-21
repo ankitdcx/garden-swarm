@@ -629,6 +629,7 @@ def run(root: Path = Path(".")) -> None:
         cycle["findings"][family] = record
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
+        print("GROUP_REVIEW_EXCEPTION_DETAIL:" + type(exc).__name__ + ":" + str(exc)[:500])
         if isinstance(exc, legacy.error.HTTPError):
             legacy.record_http_failure(attempt, exc)
         attempt.update(
