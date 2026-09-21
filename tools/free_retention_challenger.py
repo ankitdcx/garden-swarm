@@ -6,7 +6,7 @@ from tools import group_review_bus as bus
 from tools import group_review_openrouter_worker as group
 from tools import single_review_worker as legacy
 
-MAX_REVIEWERS=8
+MAX_REVIEWERS=8  # bounded diverse zero-cost challenger families
 
 def main():
     key=os.environ["OPENROUTER_API_KEY"]; gh=os.environ["GH_REVIEW_TOKEN"]
