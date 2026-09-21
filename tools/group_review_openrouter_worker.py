@@ -580,7 +580,6 @@ def run(root: Path = Path(".")) -> None:
             legacy.OR + "/chat/completions",
             key,
             request_body,
-            timeout=profile["request_timeout_seconds"],
         )
         attempt.update(
             response_id=response.get("id"),
