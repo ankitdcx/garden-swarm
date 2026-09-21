@@ -1,0 +1,23 @@
+{
+ "schema":"GardenGCSCCrossDomainBlindComparison/v0.1",
+ "status":"POST_DISCOVERY_COMPARISON",
+ "items":[
+  ["REQUIRE_POINT_OF_USE_AUTHORITY","REDISCOVERED_EXISTING","permission/revocation recovery checks permission and target fence at commit boundary; GTF authority/consent gate"],
+  ["REQUIRE_AUTHORITY_INTERSECTION","REDISCOVERED_EXISTING","MAC collective authority remains inside principal/swarm/member intersection"],
+  ["REQUIRE_AFFECTED_HUMAN_AUTHORITY_BOUNDARY","REDISCOVERED_EXISTING","Human Sovereignty + consent/rights gates for consequential effects"],
+  ["REQUIRE_EVIDENCE_APPLICABILITY_MATCH","REDISCOVERED_EXISTING","theory/evidence validity scope and applicability are explicit"],
+  ["PROHIBIT_EVIDENCE_AS_LEGAL_AUTHORITY","REDISCOVERED_EXISTING","legal substrate separates evidence/formal consistency from legal authority/admissibility"],
+  ["REQUIRE_DEPENDENT_CLOSURE_REVALIDATION","REDISCOVERED_EXISTING","PCCD/ObligationGraph and invariant-delta proof invalidation reopen affected closure"],
+  ["REQUIRE_INTERMEDIATE_STATE_SAFETY","REDISCOVERED_EXISTING","GTF PREPARE/VALIDATE/COMMIT plus physical hard gates and post-commit monitoring"],
+  ["REQUIRE_DEADLOCK_LIVELOCK_HANDLING","PARTIAL_OR_GENERAL_SUPPORT","resource/termination/liveness semantics exist; exact generic deadlock+livelock invariant not established in bounded source search"],
+  ["REQUIRE_PRIVATE_CHANNEL_NONINTERFERENCE","REDISCOVERED_EXISTING","SecurityRefinementContract + noninterference/leakage tests"],
+  ["REQUIRE_EFFECT_TIME_REVALIDATION","REDISCOVERED_EXISTING","revocation-before-commit blocks commit; stale/expiry invalidates reusable context"],
+  ["REQUIRE_SEMANTIC_MACHINE_SECURITY_REFINEMENT","REDISCOVERED_EXISTING","semantic policy to machine-trace refinement explicitly specified"],
+  ["REQUIRE_GENERATED_ARTIFACT_INVALIDATION","REDISCOVERED_EXISTING","compiler/runtime/firmware/hardware/config changes invalidate receipts; generated != trusted"],
+  ["REQUIRE_JURISDICTION_TIME_SCOPE","REDISCOVERED_EXISTING","RRCTX exact jurisdiction/time/purpose/recipient scope and drift invalidation"],
+  ["REQUIRE_COLLECTIVE_CHANNEL_INTEGRITY","PARTIAL_OR_GENERAL_SUPPORT","MAC message traces integrity-bound plus Security channel controls; exact combined invariant not established"]
+ ],
+ "summary":{"candidates":14,"rediscovered_existing":12,"partial_or_general_support":2,"confirmed_novel":0},
+ "candidate_strengthening":["generic deadlock/livelock terminal semantics","explicit combined collective-message-channel integrity invariant"],
+ "warning":"Candidate strengthening is not confirmed semantic absence; exact full-corpus normalization may reveal equivalent invariant text."
+}
