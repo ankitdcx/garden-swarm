@@ -409,3 +409,12 @@ class GroupReviewTransportRegressionTests(unittest.TestCase):
         source = inspect.getsource(w.run)
         self.assertNotIn('timeout=profile["request_timeout_seconds"]', source)
         self.assertIn('legacy.OR + "/chat/completions"', source)
+
+
+class GroupReviewErrorNamespaceRegressionTests(unittest.TestCase):
+    def test_http_error_namespace_comes_from_legacy_transport(self):
+        import inspect
+        from tools import group_review_openrouter_worker as w
+        source=inspect.getsource(w.run)
+        self.assertIn("legacy.error.HTTPError", source)
+        self.assertNotIn("isinstance(exc, error.HTTPError)", source)
