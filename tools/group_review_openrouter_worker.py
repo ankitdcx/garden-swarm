@@ -394,12 +394,36 @@ def preflight(root: Path = Path(".")) -> tuple[int, dict]:
     return issue_number, packet
 
 
+def operational_completion(cycle: dict, selected: list[dict], registry: dict) -> tuple[bool, str]:
+    findings = cycle.get("findings") or {}
+    failures = cycle.get("reviewer_failures") or {}
+    distinct = {row["family"] for row in selected if row["family"] in findings}
+    minimum = int((registry.get("transport_availability_semantics") or {}).get("operational_completion_minimum_distinct_successful_families", 3))
+    if len(distinct) >= minimum:
+        return True, "OPERATIONAL_MULTI_MODEL_COMPLETE"
+    if len(findings) + len(failures) >= len(selected):
+        return False, "INSUFFICIENT_DISTINCT_SUCCESSFUL_FAMILIES"
+    return False, "IN_PROGRESS"
+
+
 def _publish_result_issue(gh: str, packet: dict, issue_number: int, cycle: dict, selected: list[dict]) -> int:
     existing = cycle.get("result_issue_number")
     if existing:
         return int(existing)
-    records = [cycle["findings"][row["family"]] for row in selected]
-    bundle = bus.make_openrouter_bundle(packet=packet, run_issue_number=issue_number, records=records)
+    records = [cycle["findings"][row["family"]] for row in selected if row["family"] in cycle.get("findings", {})]
+    bundle = {
+        "schema": "GardenGroupReviewOperationalBundle/v1",
+        "problem_id": packet["problem_id"],
+        "run_issue_number": issue_number,
+        "packet_sha256": packet["packet_sha256"],
+        "records": records,
+        "reviewer_failures": cycle.get("reviewer_failures", {}),
+        "successful_distinct_families": len({row["family"] for row in records}),
+        "operational_transport_qualified": len({row["family"] for row in records}) >= 3,
+        "high_risk_assurance_satisfied": len(records) == len(selected),
+        "semantic_delta_admitted": False,
+    }
+    bundle["bundle_sha256"] = bus.sha256_value(bundle)
     body = bus.render_issue(bus.OPENROUTER_MARKER, bundle)
     if len(body) > 64000:
         raise ValueError("OpenRouter result issue exceeds GitHub issue bound")
@@ -435,6 +459,7 @@ def run(root: Path = Path(".")) -> None:
         raise ValueError("required OpenRouter/GitHub credentials unavailable")
 
     policy, selected, exclusions = _config(root)
+    registry = json.loads((root / "agents/reviewer-slot-registry.json").read_text(encoding="utf-8"))
     ledger = GroupReviewLedger(gh)
     state = ledger.value
     cid = cycle_id(packet, selected, policy)
@@ -468,10 +493,15 @@ def run(root: Path = Path(".")) -> None:
 
     reviewer = next_reviewer(cycle, selected)
     if reviewer is None:
-        _publish_result_issue(gh, packet, issue_number, cycle, selected)
-        cycle["status"] = "BLIND_COMPLETE"
+        complete, reason = operational_completion(cycle, selected, registry)
+        if complete:
+            _publish_result_issue(gh, packet, issue_number, cycle, selected)
+            cycle["status"] = "OPERATIONAL_COMPLETE"
+        else:
+            cycle["status"] = "PARTIAL_COMPLETE"
+            cycle["completion_reason"] = reason
         ledger.save(state)
-        print("GROUP_REVIEW_OPENROUTER_COMPLETE")
+        print("GROUP_REVIEW_OPENROUTER_" + cycle["status"])
         return
 
     model = reviewer["model"]
@@ -688,10 +718,15 @@ def run(root: Path = Path(".")) -> None:
         raise SystemExit(2)
 
     if next_reviewer(cycle, selected) is None:
-        _publish_result_issue(gh, packet, issue_number, cycle, selected)
-        cycle["status"] = "BLIND_COMPLETE"
+        complete, reason = operational_completion(cycle, selected, registry)
+        if complete:
+            _publish_result_issue(gh, packet, issue_number, cycle, selected)
+            cycle["status"] = "OPERATIONAL_COMPLETE"
+        else:
+            cycle["status"] = "PARTIAL_COMPLETE"
+            cycle["completion_reason"] = reason
         ledger.save(state)
-        print("GROUP_REVIEW_OPENROUTER_COMPLETE")
+        print("GROUP_REVIEW_OPENROUTER_" + cycle["status"])
         return
 
     cycle["status"] = "BLIND_IN_PROGRESS"
