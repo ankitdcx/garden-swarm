@@ -1,0 +1,26 @@
+{
+ "schema":"GardenGCSCL4ConstitutionalUniverse/v0.1",
+ "status":"FINITE_DECLARED_EPOCH1_UNIVERSE",
+ "motifs":[
+  ["delegation_revocation_effect","authority_consent_rights","world_context_temporal","composition_concurrency"],
+  ["collective_delegation","authority_consent_rights","collective_multiagent","composition_concurrency"],
+  ["human_effect_unknown","human_effects_privacy","authority_consent_rights","epistemics_evidence_provenance"],
+  ["physical_effect_commit","safety_physical_recovery","authority_consent_rights","world_context_temporal"],
+  ["privacy_security_delivery","human_effects_privacy","security_adversarial","world_context_temporal"],
+  ["jurisdiction_drift","law_jurisdiction","world_context_temporal","dependency_version_lifecycle"],
+  ["evidence_to_legal_decision","epistemics_evidence_provenance","law_jurisdiction","authority_consent_rights"],
+  ["self_modification_verifier","evolution_self_modification","representation_compile_runtime","security_adversarial"],
+  ["generated_artifact_deployment","representation_compile_runtime","evolution_self_modification","dependency_version_lifecycle"],
+  ["dependency_invalidation","dependency_version_lifecycle","epistemics_evidence_provenance","world_context_temporal"],
+  ["parallel_resource_deadlock","composition_concurrency","resources_termination","safety_physical_recovery"],
+  ["collective_private_channel","collective_multiagent","security_adversarial","human_effects_privacy"],
+  ["theory_driven_action","domain_theory_applicability","epistemics_evidence_provenance","authority_consent_rights"],
+  ["causal_intervention_human","domain_theory_applicability","human_effects_privacy","safety_physical_recovery"],
+  ["rollback_irreversible_effect","evolution_self_modification","safety_physical_recovery","composition_concurrency"],
+  ["emergency_scope","safety_physical_recovery","authority_consent_rights","law_jurisdiction"],
+  ["stale_authority_distributed_commit","authority_consent_rights","security_adversarial","world_context_temporal"],
+  ["unknown_to_action","epistemics_evidence_provenance","authority_consent_rights","safety_physical_recovery"]
+ ],
+ "count":18,
+ "coverage_rule":"L4 coverage claims are only over this explicit finite motif universe for this epoch; adding a motif creates a new epoch."
+}
