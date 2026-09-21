@@ -121,7 +121,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
             {"family": "mistral", "role": "r5", "model": "m5"},
         ]
         cycle = {"findings": {}}
-        self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "deepseek")
+        self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "xiaomi")
         cycle["findings"]["deepseek"] = {"finding": {"summary": "peer content"}}
         self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "xiaomi")
 
@@ -427,3 +427,12 @@ class GroupReviewNullContentRegressionTests(unittest.TestCase):
         source=inspect.getsource(w.run)
         self.assertIn("provider returned no textual review content", source)
         self.assertIn("not isinstance(raw_text, str)", source)
+
+
+class GroupReviewCheapSweepOrderingTests(unittest.TestCase):
+    def test_deepseek_is_attempted_after_other_cheap_reviewers(self):
+        from tools import group_review_openrouter_worker as w
+        selected=[{"family":"deepseek"},{"family":"xiaomi"},{"family":"nvidia"},{"family":"pareto"},{"family":"mistral"}]
+        self.assertEqual(w.next_reviewer({"findings":{}},selected)["family"],"xiaomi")
+        findings={x:{} for x in ("xiaomi","nvidia","pareto","mistral")}
+        self.assertEqual(w.next_reviewer({"findings":findings},selected)["family"],"deepseek")
