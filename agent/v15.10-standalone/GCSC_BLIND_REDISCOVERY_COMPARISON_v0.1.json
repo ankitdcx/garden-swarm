@@ -1,0 +1,20 @@
+{
+ "schema":"GardenGCSCBlindRediscoveryComparison/v0.1",
+ "status":"BOUNDED_SEMANTIC_COMPARISON_COMPLETE_FOR_CURRENT_L2_SEEDS",
+ "method":"Independent GCSC obligation first; v15.9 catalogue searched only after obligation freeze. No majority vote or ID-name matching used as proof.",
+ "comparisons":[
+  {"candidate":"PROHIBIT_AUTHORITY_AMPLIFICATION","disposition":"REDISCOVERED_EXISTING","evidence":["AGT-002","P15","S15.8-5"],"note":"delegate capability subset/principal authority envelope"},
+  {"candidate":"PROHIBIT_AUTHORITY_BY_AGGREGATION","disposition":"REDISCOVERED_EXISTING","evidence":["S15.8-7","TH15.8-6"],"note":"member authorities do not automatically union into collective authority"},
+  {"candidate":"REQUIRE_DELEGATION_SCOPE_INTERSECTION","disposition":"REDISCOVERED_OR_REFINEMENT","evidence":["P3","AGT-002","S15.8-5"],"note":"scope cannot silently widen; delegation remains inside parent envelope"},
+  {"candidate":"REQUIRE_AUTHORITY_AT_EFFECT","disposition":"REDISCOVERED_OR_REFINEMENT","evidence":["P7b","AGT-004"],"note":"runtime dependency/authorization resolution plus revocability"},
+  {"candidate":"REQUIRE_CHAIN_WARRANT","disposition":"REDISCOVERED_EXISTING","evidence":["P2","P6","EPI-WF-005..007"],"note":"epistemic non-amplification, composition assumptions, no circular epistemic bootstrap"},
+  {"candidate":"REQUIRE_CAUSAL_MODEL","disposition":"REDISCOVERED_EXISTING","evidence":["P12","T-Reason 50.15"],"note":"counterfactual/causal claims require SCM/causal structure and assumptions"},
+  {"candidate":"REQUIRE_ASSUMPTION_COMPATIBILITY","disposition":"REDISCOVERED_EXISTING","evidence":["P6","P12","MATH-003"],"note":"composition and causal claims preserve assumptions/validity domain"},
+  {"candidate":"REQUIRE_CONTEXT_COMPATIBILITY","disposition":"REDISCOVERED_EXISTING","evidence":["P3","P6","MATH-003"],"note":"scope/context/validity compatibility required"},
+  {"candidate":"REQUIRE_DEPENDENCY_REVALIDATION","disposition":"REDISCOVERED_EXISTING","evidence":["P7a","P7b","S-OCF"],"note":"static closure + runtime gate + dependency-aware revalidation"},
+  {"candidate":"REQUIRE_OWNERSHIP_CONTROL_DISTINCTION","disposition":"EXISTING_SEMANTIC_SUPPORT_NOT_SINGLE_EXACT_INVARIANT","evidence":["INT-001","P15"],"note":"ownership/intent/capability do not manufacture authority; needs dedicated exact invariant only if implementation conflates owns and controls"},
+  {"candidate":"PRESERVE_HYPOTHESIS_STATUS","disposition":"REDISCOVERED_EXISTING","evidence":["Theory lifecycle","P2"],"note":"hypothesis does not promote without authorized inference/validation"}
+ ],
+ "summary":{"current_l2_candidate_obligations":11,"rediscovered_existing":8,"rediscovered_or_refinement":2,"existing_semantic_support_no_single_exact_invariant":1,"confirmed_novel_gap":0},
+ "scope_warning":"This is NOT a comparison of all 1,817 invariants. It closes only the current 11 L2 candidate obligations. A full rediscovery percentage requires a complete independent generator, which current Epoch-1 does not yet have."
+}
