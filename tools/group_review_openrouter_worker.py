@@ -496,7 +496,7 @@ def run(root: Path = Path(".")) -> None:
     try:
         key_response = legacy.http(legacy.OR + "/key", key)
         key_info = key_response["data"]
-    except error.HTTPError as exc:
+    except legacy.error.HTTPError as exc:
         print("GROUP_REVIEW_PREFLIGHT:KEY_INFO_HTTP:" + str(exc.code))
         raise
     except (KeyError, ValueError, TypeError):
@@ -629,7 +629,7 @@ def run(root: Path = Path(".")) -> None:
         cycle["findings"][family] = record
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
-        if isinstance(exc, error.HTTPError):
+        if isinstance(exc, legacy.error.HTTPError):
             legacy.record_http_failure(attempt, exc)
         attempt.update(
             status="INCOMPLETE" if billing_verified else "UNKNOWN",
