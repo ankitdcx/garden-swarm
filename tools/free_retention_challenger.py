@@ -27,7 +27,7 @@ def main():
     records=[]
     for row in selected:
         prompt=bus.openrouter_prompt(packet,family=row["family"],role=row["role"],model=row["model"])+            "\nExact frozen public source bundle follows. Review independently; peer answers are hidden.\n"+source
-        body={"model":row["model"],"messages":[{"role":"user","content":prompt}],"max_tokens":1800,
+        body={"model":row["model"],"messages":[{"role":"user","content":prompt}],"max_tokens":6000,"reasoning":{"effort":"low"},
               "temperature":0.1,"stream":False,
               "provider":{"allow_fallbacks":True,"data_collection":"deny"}}
         rec={"family":row["family"],"model":row["model"],"role":row["role"],"peer_content_seen":False}
