@@ -1,0 +1,38 @@
+{
+  "schema":"GardenGSLRelationSignatureCandidate/v1",
+  "status":"CANDIDATE_FOR_ADVERSARIAL_REVIEW",
+  "boundary":"These signatures classify semantic plausibility for coverage generation; they do not change the 24-relation registry or create authority.",
+  "objects":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],
+  "signatures":{
+    "identifies":{"source":["CLAIM","THING","AGENCY","RULE","CONTEXT"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"broad_identity_assertion"},
+    "causes":{"source":["EVENT","ACTION","AGENCY","THING"],"target":["EVENT","ACTION","VALUE","CLAIM"],"mode":"causal"},
+    "governs":{"source":["RULE"],"target":["ACTION","AGENCY","EVENT","THING","CLAIM","CONTEXT"],"mode":"normative"},
+    "values":{"source":["AGENCY","RULE","CONTEXT"],"target":["VALUE","ACTION","EVENT","THING","CLAIM"],"mode":"valuation"},
+    "frames":{"source":["CONTEXT","RULE","CLAIM"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"interpretive"},
+    "acts":{"source":["AGENCY"],"target":["ACTION"],"mode":"agency_action"},
+    "obeys":{"source":["AGENCY","ACTION","THING"],"target":["RULE"],"mode":"conformance"},
+    "assesses":{"source":["AGENCY","RULE","CLAIM","CONTEXT"],"target":["THING","EVENT","ACTION","AGENCY","RULE","VALUE","CLAIM"],"mode":"assessment"},
+    "contextualizes":{"source":["CONTEXT"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CLAIM"],"mode":"scope"},
+    "controls":{"source":["AGENCY","RULE","THING"],"target":["THING","ACTION","PROCESS_PLACEHOLDER","AGENCY"],"mode":"control"},
+    "partOf":{"source":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"mereological"},
+    "dependsOn":{"source":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"dependency"},
+    "owns":{"source":["AGENCY","THING"],"target":["THING","CLAIM","ACTION","VALUE"],"mode":"ownership_not_authority"},
+    "delegates":{"source":["AGENCY"],"target":["AGENCY"],"mode":"delegation_requires_scope_object_outside_binary_edge"},
+    "references":{"source":["THING","RULE","CONTEXT","CLAIM"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"reference"},
+    "derivedFrom":{"source":["THING","VALUE","RULE","CLAIM","CONTEXT"],"target":["THING","VALUE","RULE","CLAIM","CONTEXT","EVENT","ACTION"],"mode":"derivation"},
+    "equivalentTo":{"source":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"target":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],"mode":"typed_equivalence_requires_compatibility"},
+    "contradicts":{"source":["CLAIM","RULE"],"target":["CLAIM","RULE"],"mode":"logical_normative_conflict"},
+    "supports":{"source":["CLAIM","EVENT","THING","ACTION"],"target":["CLAIM","RULE"],"mode":"evidential_support"},
+    "blocks":{"source":["RULE","ACTION","EVENT","CONTEXT"],"target":["ACTION","EVENT","RULE","CLAIM"],"mode":"blocking"},
+    "hasHypothesis":{"source":["CLAIM","THING","AGENCY"],"target":["CLAIM"],"mode":"hypothesis_binding"},
+    "supersedes":{"source":["RULE","CLAIM","THING","CONTEXT"],"target":["RULE","CLAIM","THING","CONTEXT"],"mode":"version_precedence"},
+    "conflictsWith":{"source":["RULE","CLAIM","ACTION","VALUE","CONTEXT"],"target":["RULE","CLAIM","ACTION","VALUE","CONTEXT"],"mode":"symmetric_conflict"},
+    "originatesFrom":{"source":["THING","EVENT","ACTION","CLAIM","RULE","VALUE"],"target":["AGENCY","THING","EVENT","ACTION","CONTEXT","CLAIM"],"mode":"origin_provenance"}
+  },
+  "notes":[
+    "PROCESS_PLACEHOLDER is not a Core Object and must be removed before admission; it flags that binary Core Object typing may be insufficient for controls.",
+    "Broad signatures are intentionally permissive at L0. Facet/Form/context constraints narrow them later.",
+    "Same-type restrictions for equivalentTo/conflictsWith/supersedes are deferred to compatibility predicates rather than encoded as Cartesian source/target sets.",
+    "delegates cannot fully express delegated scope/authority in one binary edge; L2/L4 motifs must add RULE/CONTEXT/ACTION and authority checks."
+  ]
+}
