@@ -41,3 +41,9 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GH_REVIEW_TOKEN: ${{ github.token }}
         run: python -m tools.group_review_openrouter_worker run
+      - name: Run diverse zero-cost retention challengers once per packet
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GH_REVIEW_TOKEN: ${{ github.token }}
+          GARDEN_TRIGGER_ISSUE: ${{ inputs.trigger_issue_number }}
+        run: python -m tools.free_retention_challenger
