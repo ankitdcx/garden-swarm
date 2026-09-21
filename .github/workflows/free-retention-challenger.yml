@@ -1,0 +1,30 @@
+name: Garden free retention challenger sweep
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: garden-free-retention-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    if: startsWith(github.event.issue.title, '[GROUP_REVIEW_RUN] V15X-RETENTION-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run blind diverse free-model retention challengers
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GH_REVIEW_TOKEN: ${{ github.token }}
+          GARDEN_TRIGGER_ISSUE: ${{ github.event.issue.number }}
+        run: python -m tools.free_retention_challenger
