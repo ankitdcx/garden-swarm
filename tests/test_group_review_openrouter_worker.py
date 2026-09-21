@@ -436,3 +436,17 @@ class GroupReviewCheapSweepOrderingTests(unittest.TestCase):
         self.assertEqual(w.next_reviewer({"findings":{}},selected)["family"],"xiaomi")
         findings={x:{} for x in ("xiaomi","nvidia","pareto","mistral")}
         self.assertEqual(w.next_reviewer({"findings":findings},selected)["family"],"deepseek")
+
+
+class GroupReviewResilientSweepTests(unittest.TestCase):
+    def test_failed_family_is_skipped_without_becoming_a_finding(self):
+        from tools import group_review_openrouter_worker as w
+        selected=[{"family":"deepseek"},{"family":"xiaomi"},{"family":"nvidia"},{"family":"pareto"},{"family":"mistral"}]
+        cycle={"findings":{},"reviewer_failures":{"xiaomi":{"reason":"HTTP_404"}}}
+        self.assertEqual(w.next_reviewer(cycle,selected)["family"],"nvidia")
+
+    def test_deepseek_null_failure_does_not_hide_other_findings(self):
+        from tools import group_review_openrouter_worker as w
+        selected=[{"family":"deepseek"},{"family":"xiaomi"},{"family":"nvidia"},{"family":"pareto"},{"family":"mistral"}]
+        cycle={"findings":{x:{} for x in ("xiaomi","nvidia","pareto","mistral")},"reviewer_failures":{"deepseek":{"reason":"NULL_TEXT_CONTENT"}}}
+        self.assertIsNone(w.next_reviewer(cycle,selected))
