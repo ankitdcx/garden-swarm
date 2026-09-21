@@ -12,6 +12,10 @@ def main():
     key=os.environ["OPENROUTER_API_KEY"]; gh=os.environ["GH_REVIEW_TOKEN"]
     issue_number=int(os.environ["GARDEN_TRIGGER_ISSUE"])
     _,packet=group.fetch_run_issue(gh,issue_number)
+    result_title="[FREE_RETENTION_RESULT] "+packet["problem_id"]
+    existing=legacy.http(legacy.API+"/issues?state=all&per_page=100",gh)
+    if any(row.get("title")==result_title for row in existing):
+        print("FREE_RETENTION_SWEEP_ALREADY_RECORDED"); return
     source=group.materialize_frozen_sources(packet,gh,max_characters=160000)
     models=free.catalog(key)
     selected=[]
@@ -46,6 +50,6 @@ def main():
              "records":records,"semantic_delta_admitted":False,"authority_effect":"NONE_CHALLENGER_EVIDENCE_ONLY"}
     payload["bundle_sha256"]=bus.sha256_value(payload)
     body="<!-- GARDEN_FREE_RETENTION_CHALLENGER -->\n\n```json\n"+json.dumps(payload,indent=2,ensure_ascii=False)+"\n```"
-    legacy.http(legacy.API+"/issues",gh,{"title":"[FREE_RETENTION_RESULT] "+packet["problem_id"],"body":body})
+    legacy.http(legacy.API+"/issues",gh,{"title":result_title,"body":body})
     print(json.dumps({"selected":len(selected),"recorded":payload["recorded_review_count"],"bundle_sha256":payload["bundle_sha256"]}))
 if __name__=="__main__": main()
