@@ -65,13 +65,15 @@
     }
   ],
   "rules": {
-    "exactly_one_active_model_per_slot": true,
+    "exactly_one_active_model_per_slot": false,
     "families_must_be_distinct": true,
     "non_active_slot_blocks_new_five_branch_review": true,
     "model_change_requires_shadow_benchmark_and_registry_PR": true,
     "registry_change_is_not_quality_proof_or_authority": true,
     "moving_latest_aliases_forbidden": true,
-    "expensive_models_are_never_automatic": true
+    "expensive_models_are_never_automatic": true,
+    "transport_unavailable_slot_does_not_block_operational_multi_model_review": true,
+    "high_risk_assurance_may_still_require_all_qualified_slots": true
   },
   "transport_availability_semantics": {
     "qualification_is_distinct_from_transport": true,
@@ -80,6 +82,16 @@
     "challenger_only_never_satisfies_required_slot": true,
     "final_high_risk_convergence_requires_all_required_slots_or_governed_replacement": true,
     "availability_must_be_reprobed_after_budget_or_provider_policy_change": true,
-    "unavailable_evidence_is_policy_snapshot_not_permanent_model_state": true
-  }
+    "unavailable_evidence_is_policy_snapshot_not_permanent_model_state": true,
+    "operational_completion_requires_all_required_slots": false,
+    "operational_completion_minimum_distinct_successful_families": 3,
+    "operational_completion_is_not_high_risk_assurance": true,
+    "unavailable_slot_is_recorded_not_silently_substituted": true,
+    "qualified_replacement_still_requires_governed_quality_process": true
+  },
+  "notes": [
+    "Operational GROUP_REVIEW transport qualification may complete with at least three distinct successful qualified families while unavailable qualified slots remain explicit failures.",
+    "This does not weaken any HIGH_RISK design/admission rule that separately requires all qualified slots or a governed replacement.",
+    "No unavailable model is silently substituted and no model-change qualification rule is bypassed."
+  ]
 }
