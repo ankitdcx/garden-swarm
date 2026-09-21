@@ -267,12 +267,13 @@ def cycle_id(packet: dict, selected: list[dict], policy: dict) -> str:
 
 def next_reviewer(cycle: dict, selected: list[dict]) -> dict | None:
     findings = cycle.get("findings") or {}
+    failures = cycle.get("reviewer_failures") or {}
     # A provider that returned a billed but unusable response must not starve
     # the other independent cheap reviewers. DeepSeek is attempted last while
     # its current endpoint returns null textual content.
     ordered = sorted(selected, key=lambda row: (row.get("family") == "deepseek", selected.index(row)))
     for row in ordered:
-        if row["family"] not in findings:
+        if row["family"] not in findings and row["family"] not in failures:
             return row
     return None
 
@@ -447,6 +448,7 @@ def run(root: Path = Path(".")) -> None:
             "packet_sha256": packet["packet_sha256"],
             "reviewer_families": [row["family"] for row in selected],
             "findings": {},
+            "reviewer_failures": {},
             "attempts": [],
             "semantic_delta_admitted": False,
             "status": "BLIND_IN_PROGRESS",
@@ -544,7 +546,21 @@ def run(root: Path = Path(".")) -> None:
     if not eligible:
         codes = ",".join(sorted(set(endpoint_rejections))) or "NO_ENDPOINTS_RETURNED"
         print("GROUP_REVIEW_PREFLIGHT:NO_ELIGIBLE_ENDPOINT:" + codes)
-        raise ValueError("no permitted affordable GROUP_REVIEW OpenRouter endpoint")
+        cycle.setdefault("reviewer_failures", {})[family] = {
+            "stage": "ENDPOINT_SELECTION",
+            "codes": sorted(set(endpoint_rejections)),
+            "model": model,
+            "cost_usd": "0",
+        }
+        ledger.save(state)
+        if next_reviewer(cycle, selected) is not None:
+            _dispatch_next(gh, issue_number)
+            print("GROUP_REVIEW_OPENROUTER_NEXT_AFTER_UNAVAILABLE:" + family)
+            return
+        cycle["status"] = "PARTIAL_COMPLETE"
+        ledger.save(state)
+        print("GROUP_REVIEW_OPENROUTER_PARTIAL_COMPLETE")
+        return
     print("GROUP_REVIEW_PREFLIGHT:ELIGIBLE_ENDPOINTS:" + str(len(eligible)))
     estimate, endpoint, request_body = min(eligible, key=lambda row: row[0])
 
@@ -636,8 +652,32 @@ def run(root: Path = Path(".")) -> None:
         attempt.update(status="REVIEW_RECORDED", finding_sha256=finding_hash)
     except Exception as exc:
         print("GROUP_REVIEW_EXCEPTION_DETAIL:" + type(exc).__name__ + ":" + str(exc)[:500])
+        http_404 = isinstance(exc, legacy.error.HTTPError) and getattr(exc, "code", None) == 404
+        null_content = isinstance(exc, ValueError) and "no textual review content" in str(exc)
         if isinstance(exc, legacy.error.HTTPError):
             legacy.record_http_failure(attempt, exc)
+        if http_404 or (null_content and billing_verified):
+            attempt.update(
+                status="TRANSPORT_FAILED" if http_404 else "REVIEW_UNUSABLE",
+                error_type=type(exc).__name__,
+            )
+            cycle.setdefault("reviewer_failures", {})[family] = {
+                "stage": "INFERENCE_RESPONSE",
+                "error_type": type(exc).__name__,
+                "http_status": 404 if http_404 else None,
+                "model": model,
+                "cost_usd": attempt.get("cost") or "0",
+                "reason": "HTTP_404" if http_404 else "NULL_TEXT_CONTENT",
+            }
+            ledger.save(state)
+            if next_reviewer(cycle, selected) is not None:
+                _dispatch_next(gh, issue_number)
+                print("GROUP_REVIEW_OPENROUTER_NEXT_AFTER_FAILURE:" + family)
+                return
+            cycle["status"] = "PARTIAL_COMPLETE"
+            ledger.save(state)
+            print("GROUP_REVIEW_OPENROUTER_PARTIAL_COMPLETE")
+            return
         attempt.update(
             status="INCOMPLETE" if billing_verified else "UNKNOWN",
             error_type=type(exc).__name__,
