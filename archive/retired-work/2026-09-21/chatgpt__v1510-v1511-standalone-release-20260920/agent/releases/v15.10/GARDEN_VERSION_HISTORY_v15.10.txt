@@ -1,0 +1,295 @@
+GARDEN
+VERSION HISTORY THROUGH v15.10
+Plain UTF-8 text
+History-only artifact
+Updated: 2026-09-19
+
+ROLE
+
+This file records major design lineage.
+
+It is NOT one of the three current controlling design sources.
+An older release cannot override the current Book, Technical Design or Catalogue.
+Historical labels are retained to explain where present structures came from.
+
+EARLY / PRE-v10 LINEAGE
+
+Garden began as a broad multi-part architecture for human-centered AI, knowledge, safety, governance, infrastructure,
+real-world systems and long-run evolution. Early versions used a more fixed module/component framing.
+
+The early lineage established several ideas that remained important:
+    typed meaning rather than loose prompts;
+    explicit safety/authority boundaries;
+    human rights;
+    proof/checking before consequential execution;
+    traceable state change;
+    knowledge/research/evolution loops;
+    real-world physical and infrastructure integration.
+
+v10.x — CONSOLIDATION OF THE LARGE DESIGN
+
+2026-08-11 — v10.25 lineage
+    A complete-design baseline existed with a simplified core-object framing and the large module architecture.
+    Subsequent work expanded/reconciled the semantic object model.
+
+2026-08-12 — v10.28 lineage
+    Seven-theory and broad architecture work was consolidated.
+    The Evolution process included proposal, anti-nonsense triage, applicability discovery, impact analysis, formal
+    verification, implementation/rollback, validation, commit and recursive coverage checks.
+
+v10.3x / vFINAL lineage
+    Human sovereignty, personal transformation/consent, physical safety, rights and long-run design consolidation were
+    expanded.
+    Historical module numbering remained important for compatibility.
+
+2026-08-20 to 2026-08-21 — self-explaining / human-centered rebuilds
+    The design was reorganized for readability and more explicit ownership.
+    Rights definitions, registry ownership, proof obligations, capability/domain owners, explanation, privacy,
+    infrastructure and research structures were progressively normalized.
+    Human Flourishing and the Absolute Human-Centric Principle were restored as active rights; later numbering settled
+    them at RIGHT-024 and RIGHT-025, with RIGHT-026 RESERVED and RIGHT-027 ON_HOLD.
+
+v11 / v12 / v13 LINEAGE
+
+The design moved away from treating the old 50 modules as a permanently fixed ontology.
+
+Key direction:
+    preserve historical module meaning;
+    move to typed architecture-object ownership;
+    keep old numeric labels as compatibility aliases;
+    centralize registries and stable IDs;
+    reduce duplicate definitions.
+
+v13.5 retained a verified old-50-module coverage map with all 50 historical names mapped to current owners.
+
+v14 LINEAGE — FOUR/FIVE-FILE CANONICAL ORGANIZATION AND HARDENING
+
+2026-08-23 — v14 baseline
+    A four-file canonical baseline was established:
+        Human
+        System Flow
+        Technical
+        Annexures
+
+2026-08-24 — v14.1 / v14.2 / v14.3 / v14.4 lineage
+    Readability, references, assurance, standards and engineering-design integration progressed.
+    GSL grammar/typing, rights ordering, registry centralization and cross-document ownership were tightened.
+
+2026-08-25 — v14.5
+    Canonical successor with retention checks, header normalization, assurance hardening and engineering-design
+    integration.
+
+2026-08-25 — v14.6
+    Critical continuity phase and receipt structures strengthened.
+
+2026-08-25 — v14.7
+    AGI/cognitive hardening normalized.
+
+2026-08-26 — v14.8 / v14.8.1 / v14.8.3
+    Repaired and then split into five source files:
+        Human
+        System
+        Technical
+        Annexure
+        Theories
+
+    Documentation cleanup and theory ownership improved.
+
+2026-08-27 — v14.8.4 / v14.8.5
+    CASI and adapter hardening integrated.
+    Engine.Reason replaced older orchestration wording in relevant cognitive paths.
+    World-model and physical-cognitive boundary work was expanded.
+
+Major theory versions in this lineage:
+    SRT 1.0
+    VSM 2.0
+    RPM 2.0
+    PPM 2.0
+    TFT 1.1
+    FET 1.0
+    SCT 1.0
+
+v15 LINEAGE — RECURSIVE QUALIFICATION, CAUSAL LEVERAGE AND CLEANER OWNERSHIP
+
+2026-09-11 — v15.0 / v15.1 / v15.2 lineage
+    Successor work integrated recursive qualification and cognitive implementation ideas.
+
+2026-09-11 — CPI v1.0 then CPI v1.1 candidate
+    Cognitive Implementation & Recursive Qualification was refined.
+
+2026-09-12 — v15.3
+    Five-file successor preserving earlier v15.2 material while adding cross-layer hardening and CPI reconciliation.
+
+2026-09-12 — v15.4
+    Generalized Causal Leverage (GCL) and formal algebra work were admitted into the design line.
+    Whole-corpus audit found stale release banners, GCL underspecification, missing IDs and duplicate foundational
+    registrations.
+
+2026-09-12 — v15.5
+    The then-current five-file baseline repaired:
+        stale release banners;
+        GCL executable ratio/authority-reduction semantics;
+        SchemaID dictionary updates;
+        duplicate registrations through explicit alias/equivalence treatment.
+    GSL v45.1 and the overall topology were retained.
+
+2026-09-13 to 2026-09-16 — v15.6 / v15.7 candidate work
+    Multiple gap-closure and hardening changes were developed:
+        R0 SanityGate separated from recursive Reason modes;
+        rights-view normalization;
+        provenance-class/redaction-vs-absence distinction;
+        authority/effect typing;
+        human-effect and justice/reputation hardening;
+        event-driven routing/context work;
+        cognitive qualification and closure amendments.
+
+    Some repo candidates remained noncanonical even when their design content was later carried forward.
+
+2026-09-17 — v15.8
+    Consolidation target for scattered v15.6/v15.7 work.
+    The source was frozen for the v15.9 documentation rewrite after review.
+
+2026-09-18 — v15.9
+    Five-file documentation rewrite:
+        Human
+        System
+        Technical
+        Theories
+        Annexure
+
+    Main goals:
+        one owner per semantic fact;
+        reduce duplicated normative text;
+        reorganize around concepts/owners instead of upgrade chronology;
+        distinguish normative material from explanation;
+        preserve CURRENT/CANDIDATE/DEFERRED/RESEARCH states;
+        preserve specification != implementation != validation != certification;
+        repair references and duplicated wording;
+        keep traceability without making history the current source.
+
+    RCI was normalized as a current-reading composition over existing owners, not a new Engine or authority root.
+    Protected consequential self-change retained independence and verification requirements.
+
+    Release status remained a working candidate unless separately admitted.
+
+v15.10 — THREE-ARTIFACT SEMANTIC REPACKAGING
+
+2026-09-18 to 2026-09-19
+
+Goal:
+    make the design substantially easier for both humans and machines to understand while preserving the complete
+    v15.9/v15.x meaning.
+
+The source model was reduced from five document roles to three semantic artifacts:
+
+    Book
+        ordinary-language explanation.
+
+    Technical Core
+        deterministic structure, typed mappings, Design Forms, validation/expansion and build rules.
+
+    Catalogue
+        exhaustive specific material: rules, IDs, rights, theories, equations, algorithms, profiles, exceptions,
+        mappings and historical crosswalks.
+
+Key v15.10 abstraction:
+    seven Design Forms:
+        CONSTRUCT
+        CONTRACT
+        STATE
+        RELATION
+        PROCESS
+        RULE
+        PROJECTION
+
+Theory and Algebra became specializations/compositions rather than extra Design Forms.
+Receipt was normalized as a Construct.
+Schema was interpreted as structural Projection plus applicable admissibility/type rules/contracts.
+
+The v15.10 design also normalized named deployment architectures as parameterized profiles/presets rather than new
+authority roots.
+
+Deterministic expansion:
+    G0 -> F(G0) -> F^2(G0) -> ... -> G*
+
+Unique equations, algorithms, timings, assumptions, fallbacks and profile meaning remained source seeds rather than being
+left for a model to invent.
+
+Final r6 build results recorded:
+    semantic graph: 41,053 nodes;
+    Technical + Catalogue independent graph reproduction: PASS;
+    v15.9 five-source byte-exact reconstruction: PASS;
+    self-admitted semantic changes: zero;
+    semantic admissions recognized by build: false;
+    predecessor elision allowed: false.
+
+r6 primary artifact identities:
+    GARDEN_BOOK_v15.10.md
+        22,698 bytes
+        SHA-256 0d479ab40432a4d1e0d127335d02e8a0424616a3e03fd56c1975574cb927d5da
+
+    GARDEN_TECHNICAL_v15.10.py
+        47,914 bytes
+        SHA-256 fe20d8f1b4cd18778002c6162de749b5250c760f8ad636d055682efe1172ebe4
+
+    GARDEN_CATALOGUE_v15.10.jsonl.gz
+        3,043,495 compressed bytes
+        SHA-256 88c425ac3f547aae2461fda97109ba9dbde774fc59b57eead9f7a05ddb92f555
+
+The compressed catalogue expanded to roughly 13-14 MB of text because it retained exhaustive details, predecessor
+material, compatibility mappings and repeated machine record structure.
+
+v15.10 TEXT-ONLY REPRESENTATION CORRECTION
+
+2026-09-19
+
+The source-packaging rule was changed without intending a semantic redesign:
+
+    all canonical Garden sources must be ordinary directly readable UTF-8 text;
+    no gzip/zip/database/binary object is required;
+    no external or historical file may supply missing current semantics;
+    current semantic facts should have one controlling occurrence;
+    predecessor whole-file embedding is not required merely for byte reconstruction;
+    required old-ID/current-ID and migration mappings remain;
+    history is separate from current design;
+    generated graphs/indexes/caches are derivative.
+
+The requested final user-facing layout is now:
+
+    GARDEN_BOOK_v15.10.txt
+    GARDEN_TECHNICAL_v15.10.txt
+    GARDEN_CATALOGUE_v15.10.txt
+    GARDEN_VERSION_HISTORY_v15.10.txt
+
+Only the first three are current design sources.
+The fourth is lineage/history and cannot override them.
+
+CURRENT STATUS
+
+Garden v15.10 remains a WORKING CANDIDATE unless admitted through the applicable Garden governance/admission path.
+
+This history file records lineage; it does not certify implementation, safety, empirical performance or external
+deployment.
+
+
+2026-09-20 — v15.10 text-retention closure candidate
+    A direct semantic-retention audit compared the compact Book + Technical + Catalogue against the frozen v15.9
+    CurrentReadingMap, UpgradeTraceabilityTable and reviewed current anchors.
+    Broad architecture/rights/theory retention was already present.
+    Compact-source repair restored reviewed unique obligations that had become implicit or absent in the first text-only
+    draft, including HRAP/protected reporting, CSI/SMCD/CAD/OAC/CTSN/PAI, CausalClosureReceipt, typed credential status,
+    justice expiry/retry handling and their retained conformance obligations.
+    The repair keeps review packet IDs/history non-controlling and does not re-embed predecessor bulk text.
+    No new canonical authority, production certification, executable certification or independent semantic admission is
+    created by this representation repair.
+
+
+2026-09-20 — standalone no-loss current-source closure candidate
+    The compact text design was upgraded from broad-marker retention to literal standalone retention. The current
+    Catalogue embeds the exact retained five-source 15.x semantic corpus, stable identities, formula/operator index and
+    machine-lineage law/build/migration records. External predecessor files are no longer required for current meaning.
+    Structured v15.10 owners remain the new abstract design; retained payload supplies compatibility meaning only where
+    no explicit current supersession exists. Derivative graph edges/index slices are regenerated and do not become
+    parallel semantic owners.
+
+END OF GARDEN VERSION HISTORY THROUGH v15.10

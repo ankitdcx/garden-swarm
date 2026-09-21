@@ -1,0 +1,45 @@
+{
+  "schema": "GardenCurrentReadingMap/v15.10-standalone",
+  "release": "Garden v15.10",
+  "status": "WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED",
+  "current_sources": {
+    "book": {
+      "path": "GARDEN_BOOK_v15.10.txt",
+      "role": "EXPLANATORY_PROJECTION"
+    },
+    "technical": {
+      "path": "GARDEN_TECHNICAL_v15.10.txt",
+      "role": "STRUCTURAL_NORMATIVE_OWNER"
+    },
+    "catalogue": {
+      "path": "GARDEN_CATALOGUE_v15.10.txt",
+      "role": "DETAILED_NORMATIVE_OWNER_PLUS_INTERNAL_RETENTION_SEEDS"
+    },
+    "history": {
+      "path": "GARDEN_VERSION_HISTORY_v15.10.txt",
+      "role": "LINEAGE_ONLY_NONCONTROLLING"
+    }
+  },
+  "external_predecessor_required": false,
+  "reading_rule": [
+    "Use explicit current Technical/Catalogue owner for its stated stable ID/family/scope.",
+    "For retained 15.x semantic payload without explicit current structured supersession, use the embedded current-Catalogue compatibility seed.",
+    "Preserve original candidate/deferred/research/non-PASS status; retention never promotes status or authority.",
+    "History and external predecessor files cannot override current sources."
+  ],
+  "coverage": {
+    "stable_identities_total": 1935,
+    "stable_identities_structured": 71,
+    "stable_identities_retention_seed": 1864,
+    "semantic_leaves_total": 2660,
+    "semantic_leaves_structured_backstop": 69,
+    "semantic_leaves_retention_seed": 2591
+  },
+  "disposition_ledger": {
+    "path": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
+    "sha256": "0001889bddb182fbbd12db1da0fd8684f5be9bafcd595c7a0938adab3535ec04"
+  },
+  "known_limits": [
+    "Substring presence is a conservative deterministic signal for explicit structured ownership; final human/GSL semantic admission remains separate."
+  ]
+}

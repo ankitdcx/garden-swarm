@@ -1,0 +1,298 @@
+    affected-owner discovery;
+    dependency/reference closure;
+    rights/authority/safety/privacy review as applicable;
+    schema/contract/invariant/test impact;
+    independent review where required;
+    transition/migration plan;
+    rollback/compensation plan where applicable;
+    new immutable release identity;
+    admission under the proper authority.
+
+A documentation rewrite cannot self-declare a semantic upgrade.
+
+A material post-review edit re-enters the applicable review path.
+
+40. CHANGE CANDIDATE DISCIPLINE
+
+Garden retains anti-nonsense and bounded-completeness disciplines:
+
+    PBC: Problem, Benefit, Cost/Risk
+    Problem Test
+    Counterfactual Test
+    Capability-Delta Test
+    Complexity-Ratio Test
+    Anti-Self-Amplification Test
+
+Applicability discovery must not rely on a single classifier when independent discovery dimensions are required.
+
+Completeness claims are relative to a declared universe and search/resource boundary.
+
+41. RESOURCE / TERMINATION DISCIPLINE
+
+Processes declare applicable budgets for:
+
+    compute;
+    time;
+    depth;
+    retries;
+    resources;
+    recursion;
+    proof search;
+    external calls.
+
+Reaching a bound yields the declared incomplete/timeout/unknown result with continuation information where applicable;
+it does not silently yield a complete proof.
+
+Safety-critical lanes may reserve resources independently of noncritical work.
+
+42. DISTRIBUTED / MULTI-AGENT DISCIPLINE
+
+Multiple agents retain independent authority, privacy, lineage and validity boundaries.
+
+Collective state or consensus does not automatically create:
+
+    personhood;
+    authority;
+    truth;
+    survival rights;
+    resource priority.
+
+State sharing and transport require authorization.
+
+Where independence matters, shared model/data/control lineage is considered when deciding whether reviewers are actually
+independent.
+
+43. EXPLANATION AND CONTESTABILITY
+
+Affected humans receive an understandable explanation and contest/review route where the applicable owner requires it.
+
+Redaction is allowed only to the degree needed for privacy, safety, security or law and should itself be accountable.
+
+Explanation cannot reveal protected material merely to appear transparent.
+
+A generated explanation is a projection and cannot rewrite the controlling technical rule.
+
+44. LAW / POLICY / CONFLICT
+
+Law cannot override Constitution.
+
+Policy cannot override Law or Constitution.
+
+Conflicts of equal rank remain explicit under the declared conflict-resolution rule; they are not silently resolved by
+the optimizer.
+
+Unknown legitimate authority is non-PASS for consequential acts that require resolved authority.
+
+45. FORMAL ALGEBRA BOUNDARY
+
+Garden retains Process, Policy, Decision, Conformance and Evidence algebra families plus declared bridges.
+
+Each algebra declares:
+
+    operands;
+    operators;
+    laws;
+    non-laws;
+    result semantics;
+    composition boundary.
+
+Operators from different algebras cannot be combined merely because notation looks similar.
+
+46. PHYSICAL / COGNITIVE BOUNDARY
+
+Cognitive models and physical models meet through typed adapters.
+
+A representation mapping records loss/approximation and validity.
+
+A tensor/vector/hidden state does not become identical to its human interpretation merely because an encoder produces it.
+
+Physical claims remain bound to established domain science and qualified physical profiles.
+
+47. ASSURANCE / STATUS DISCIPLINE
+
+Canonical status words are not interchangeable.
+
+Relevant status classes include:
+
+    CURRENT
+    CANDIDATE
+    DEFERRED
+    RESEARCH
+    MACHINE_BINDING_INCOMPLETE
+    UNKNOWN
+    STALE
+    CONFLICT
+    BLOCKED
+    INCOMPLETE
+    NEEDS_REVALIDATION
+
+A hard gate requiring PASS cannot accept UNKNOWN or a strong-sounding narrative substitute.
+
+48. TEXT-ONLY SOURCE RULE
+
+Every canonical source in this edition is directly readable strict UTF-8 text.
+
+No .gz, .zip, database or binary object is required to understand, inspect, reconstruct or modify current Garden.
+
+Compression may be used only for a noncanonical transport/cache copy.
+
+The controlling catalogue is:
+
+    GARDEN_CATALOGUE_v15.11.txt
+
+not JSON Lines, not gzip.
+
+If a generated semantic graph is persisted, it is derivative. It cannot override Technical + Catalogue.
+
+49. NO HISTORICAL BULK EMBEDDING
+
+The current Catalogue does not need to carry complete verbatim copies of v15.9 merely to reproduce v15.9 bytes.
+
+History remains in the Version History file and immutable historical releases.
+
+Current source retains only what current interpretation needs:
+
+    current semantics;
+    stable identifiers;
+    aliases;
+    old->new mappings;
+    migration rules;
+    ambiguity/quarantine behavior;
+    necessary traceability.
+
+This is source normalization, not permission for semantic deletion.
+
+50. RELEASE EQUIVALENCE DISCIPLINE
+
+The original v15.10 three-artifact build recorded:
+
+    Technical + Catalogue graph reproduction: PASS locally and independently.
+    v15.9 predecessor source reconstruction: PASS byte exact.
+    semantic admissions recognized by build: false.
+    predecessor elision allowed: false.
+
+The text-only representation changes the storage rule so predecessor whole-source embedding is no longer a current-source
+requirement.
+
+Any claim that a newly compacted catalogue is semantically identical to the original r6 catalogue requires a new
+current-graph equivalence check against the exact pinned r6 source bytes. Where those bytes are unavailable, the package
+must not invent a false byte-equivalence receipt.
+
+51. GARDEN REVIEW CHECK
+
+COMPARE
+    Current text packaging is compared against v15.10 source roles, v15.9 owner structure and retained v15.x rules.
+
+REASON
+    Reorganization is allowed only when it reduces duplication without changing controlling meaning.
+
+PROOF
+    Claims of formal or byte equivalence require an actual proof/receipt; documentation similarity is insufficient.
+
+DESIGNEPOCH
+    This packaging is representation normalization unless material semantics change.
+
+AUDIT
+    Dangling references, duplicate controlling owners, unresolved old mappings and untyped UNKNOWN items are defects.
+
+COMPLIANCE
+    Source storage rules do not weaken Constitution, law, privacy, authority, safety or required assurance.
+
+
+52. REVIEWED v15.9 RETENTION CLOSURE
+
+This section restores reviewed current obligations whose unique meaning must remain directly present in the compact
+v15.10 source. It is a source-normalization repair, not a new authority source or a new top-level architecture.
+
+52.1 HUMAN RELATIONAL AGENCY / PROTECTED REPORTING
+
+Human Relational Agency Preservation (HRAP):
+    assistance is permitted;
+    deliberate emotional, cognitive or operational dependency engineering for engagement, usage time, retention,
+    revenue, influence or authority transfer is non-PASS where the human-effect boundary is material;
+    legitimate informed delegation remains permitted;
+    where continued competence materially affects resilience/autonomy and assistance is likely to reduce it, the
+    tradeoff should be surfaced;
+    where the person wants to learn, retain or regain capability, assistance should support explanation, practice,
+    reversible delegation and independent verification.
+
+RelationalInfluenceMaterialityPolicy/v1 remains the typed materiality owner for exceptional relational influence.
+It binds at least:
+    materiality threshold;
+    persistence duration;
+    affected domain classes;
+    justified influence baseline;
+    owner/currentness.
+Short decisive manipulation may be material even when a persistence threshold is not crossed. Missing, stale,
+conflicting or insufficient materiality evidence is non-PASS for a NON_MATERIAL claim.
+
+Protected reporting:
+    good-faith integrity reporting must not itself reduce rights, legitimate authority, reputation, task access or
+    resources;
+    a report is evidence submission, not adjudication or punishment authority;
+    protected-reporting status and allegation merits are separate;
+    non-corroboration, error, withdrawal or unsupported merits do not by themselves prove bad faith;
+    direct and indirect retaliation must be detectable and reviewable;
+    reporting does not create blanket immunity: independently evidenced misconduct/safety issues may be examined through
+    a conflict-free path that is not retaliatory.
+
+52.2 COGNITION-SHAPING / MONITORING / CAPABILITY / ORGANIZATIONAL CLOSURE
+
+Cognition-Shaping Integrity (CSI):
+    training signals, reward, repeated exposure, prompts, retrieval, memory and evaluator feedback are shaping channels,
+    not truth or authority;
+    an agent may not unilaterally modify authoritative mechanisms used to shape/evaluate its own future disposition;
+    material runtime shaping/poisoning remains provenance- and conflict-governed.
+
+Safety Monitoring Coverage & Discovery Debt (SMCD):
+    no detected anomaly != no anomaly;
+    monitoring claims bind observable surface, sampling, coverage estimate/confidence, known blind spots and discovery
+    debt;
+    a material incident outside prior coverage revises coverage/debt and revalidates materially dependent safety claims;
+    external researchers/users/auditors may supply first-class anomaly evidence.
+
+Capability-Assurance Delta (CAD):
+    every material capability expansion requires fresh assurance for the affected deployment boundary;
+    stronger capability does not silently inherit the complete assurance envelope of a weaker predecessor;
+    unplanned emergent capability that materially expands reachable effects triggers requalification.
+
+Organizational Alignment Closure (OAC):
+    aligned members do not prove an aligned organization;
+    organizational assurance considers topology, collective reward/objective, authority, information asymmetry,
+    correlated models, incentives, delegation, dissent/escalation/exit, reviewer independence, collective resources,
+    external effects and recovery;
+    material changes in topology, collective reward, authority, resources or membership trigger requalification under
+    the applicable policy.
+
+Capability-Transfer Safety Non-Transitivity (CTSN):
+    capability inheritance does not imply safeguard inheritance;
+    material derivatives from fine-tuning, distillation, adapters, merges, quantization, compression, checkpoint
+    conversion, wrappers, prompts, tools, memory or orchestration receive their own lineage/assurance status;
+    parent safety evidence is separately classified TRANSFERABLE, PARTIALLY_TRANSFERABLE, STALE, NOT_TRANSFERABLE or
+    UNKNOWN.
+
+Physical Agency Interlock (PAI):
+    consequential physical action envelopes bind the applicable device/workspace/action/energy/proximity/timing/
+    simultaneous-action/sensor/emergency/recovery dimensions;
+    irreversible physical effects on protected subjects require independent external enforcement outside the agent's
+    mutable reasoning path, unless an explicit reviewed compensating control provides equal-or-stronger assurance;
+    Safe(A) and Safe(B) do not imply Safe(A PARALLEL B) or Safe(A THEN B).
+
+52.3 CROSS-SUBSYSTEM CAUSAL CLOSURE / CREDENTIAL STATES / JUSTICE EXPIRY
+
+CausalClosureReceipt:
+    semantic owner: existing P024 Causal Safety / applicable Engine.Compare + CLIC/ActionGate/AAP composition;
+    binds consequential cross-subsystem causal path, responsible owners, unresolved links, evidence/provenance refs and
+    final effect classification;
+    does not create a second evidence truth system or authority source;
+    lawful erasure must not preserve erased protected payload merely to keep a pointer alive; retain only the strongest
+    lawful minimum tombstone/surrogate and revalidate dependent current conclusions;
+    loss of required evidence makes dependents STALE / NEEDS_REVALIDATION / other owner-qualified non-PASS, not refuted
+    and not silently valid.
+
+Credential verification status must distinguish at least:
+    INVALID;
+    REVOKED;
+    EXPIRED;
+    STALE;
+    UNSUPPORTED_PROFILE;

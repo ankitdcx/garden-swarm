@@ -1,0 +1,77 @@
+    VERIFIER_UNKNOWN / UNKNOWN.
+A verifier's inability to execute a proof profile is not proof that the credential is invalid. Unsupported or
+verifier-unknown status remains typed non-PASS with reason and re-verification/appeal route where applicable.
+
+Justice / urgent preservation:
+    justice is a guarded proceeding-profile transition graph, not an unconditional linear chain;
+    urgent preservation must be preauthorized, bounded, expiry/review/release governed and non-self-renewing;
+    expiry invalidates retry, failover, delayed continuation, queue replay and continuity use of the old authority;
+    action after expiry requires fresh current competent authority and fresh required evaluation;
+    uncertain prior external effect preserves PARTIAL_EFFECT / OUTCOME_UNKNOWN and requires reconciliation before unsafe
+    replay;
+    a mandatory appeal/contestability route cannot be deleted by profile configuration.
+
+52.4 HUMAN-EFFECT / REVIEW STATUS BINDING
+
+Human-Effect Closure is CURRENT as a semantic rule over existing owners. This text edition does not invent a standalone
+SchemaID merely because the rule has a name. Where executable owner/schema/profile/test binding remains unresolved, the
+machine-binding status is MACHINE_BINDING_INCOMPLETE rather than PASS.
+
+The existence of a reviewed rule, receipt name, test obligation, or documentation clause does not imply executable
+certification, empirical validation, production safety or canonical admission.
+
+53. STANDALONE 15.x SEMANTIC CLOSURE
+
+v15.10 is a standalone current source. Its meaning does not depend on an older release being present.
+
+Current-source roles:
+    BOOK       explanatory human projection;
+    TECHNICAL  controlling abstract structure, rules, algorithms and build/reading contract;
+    CATALOGUE  controlling detailed inventory plus the embedded 15.x retention corpus;
+    HISTORY    lineage only, non-controlling.
+
+The Catalogue's embedded retention corpus is part of the current v15.10 source, not an external predecessor dependency.
+It exists so that compaction cannot silently delete a unique earlier 15.x rule, exception, equation, test meaning,
+nonclaim, scope condition, ordering condition or status distinction before that meaning is fully normalized into the new
+abstract owners.
+
+Current reading is deterministic:
+    1. read the structured current Technical + Catalogue definitions;
+    2. read stable current identifiers and explicit status/disposition records;
+    3. read the embedded RetentionSeed corpus;
+    4. where an explicit current definition names the same stable identifier/family and states a supersession, the
+       current structured owner controls that scope;
+    5. otherwise the retained seed remains a current compatibility semantic inside this release;
+    6. History and external predecessor files never override the current source.
+
+No retained seed gains new authority merely by retention. Retention preserves prior meaning; it cannot widen authority,
+convert CANDIDATE/DEFERRED/RESEARCH into CURRENT, turn UNKNOWN into PASS, or convert specification into proof,
+implementation, empirical validation or certification.
+
+A future release may remove a RetentionSeed only when it records an exact replacement owner and demonstrates that the
+replacement preserves the seed's applicable permissions, obligations, prohibitions, exceptions, nonclaims, scope,
+ordering/timing conditions and status. Mere similarity or model confidence is insufficient.
+
+RetentionClosureReceipt/v1 records at minimum:
+    candidate source hashes;
+    embedded retained-source hashes;
+    stable-identity counts and missing-ID list;
+    semantic-leaf span verification;
+    formula/operator source-line verification;
+    current structured-owner collision/reference checks;
+    explicit supersession/disposition map;
+    unresolved retention debt;
+    verifier/tool identity and evidence refs.
+
+Required standalone checks:
+    STANDALONE-T01 deleting every external v15.x file does not remove current meaning;
+    STANDALONE-T02 every retained stable ID remains discoverable in current Technical/Catalogue or the current retention
+                    registry;
+    STANDALONE-T03 every semantic-leaf source span validates against the embedded current retention corpus;
+    STANDALONE-T04 every retained formula/operator candidate resolves to exact current embedded text;
+    STANDALONE-T05 no retained historical status is silently promoted;
+    STANDALONE-T06 explicit current supersession cannot widen rights/authority/scope without the applicable change path;
+    STANDALONE-T07 History is not needed to interpret current Garden;
+    STANDALONE-T08 external predecessor hashes may support audit but are never required for current interpretation.
+
+END OF GARDEN v15.10 — TECHNICAL DESIGN

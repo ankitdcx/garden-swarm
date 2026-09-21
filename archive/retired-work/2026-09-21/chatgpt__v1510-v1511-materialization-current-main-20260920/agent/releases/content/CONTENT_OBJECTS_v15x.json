@@ -1,0 +1,67 @@
+{
+  "schema": "GardenReleaseContentObjects/v1",
+  "objects": {
+    "catalogue": {
+      "raw_name": "GARDEN_CATALOGUE_v15.10.txt",
+      "raw_bytes": 4889844,
+      "raw_sha256": "6d6341e278ea1eab34b7ce188728b79b19bf1f5d6b6e4f576f1bcbc60d231153",
+      "encoding": "base64(xz -9e)",
+      "compressed_bytes": 959504,
+      "compressed_sha256": "68d3c65abac4a8b90f5054c7f6edc00a9e5ba3fd4a3603fffaa07819f41ff4c9",
+      "parts": [
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part01",
+          "bytes": 240001,
+          "sha256": "6a556a3236e0e1afb52bff7051c7cd4d1d79d2f218407051ca58aec343046456"
+        },
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part02",
+          "bytes": 240001,
+          "sha256": "3ae2f9242d6d9e6f0c9cfc65a7c0a7b36aae1a5110c790f2d82010c888384f6d"
+        },
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part03",
+          "bytes": 240001,
+          "sha256": "e41a2c016adc5e9077c1aa312874ef03dc156e7d6c55bf156882efaa8f6f486e"
+        },
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part04",
+          "bytes": 240001,
+          "sha256": "ba08b15de69ac0746282410927f01bda626aa896e2627bd20ffb227a60b4fc0d"
+        },
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part05",
+          "bytes": 240001,
+          "sha256": "98264c58074df7261c6707e69ce106d8cd2bd43fb16faf1dcfb0ba1957e122db"
+        },
+        {
+          "name": "GARDEN_CATALOGUE_v15.10.txt.xz.b64.part06",
+          "bytes": 79341,
+          "sha256": "0c970d4dbfde4183d17a339f3abc4b2817f1a27c4e0caa75c6b5864d935c27f3"
+        }
+      ],
+      "direct_path": "GARDEN_CATALOGUE_v15.10.txt"
+    },
+    "retention_disposition": {
+      "raw_name": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl",
+      "raw_bytes": 1554572,
+      "raw_sha256": "0001889bddb182fbbd12db1da0fd8684f5be9bafcd595c7a0938adab3535ec04",
+      "encoding": "base64(xz -9e)",
+      "compressed_bytes": 230092,
+      "compressed_sha256": "ab561eea06339ca697f2ae8adfa29263a41b934871459d3feb7370ceb1555de1",
+      "parts": [
+        {
+          "name": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl.xz.b64.part01",
+          "bytes": 240001,
+          "sha256": "d36a70d0fd886accc25d7703264408075226b91fd8fbdde0897cbcdfbdf7b9db"
+        },
+        {
+          "name": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl.xz.b64.part02",
+          "bytes": 66793,
+          "sha256": "ef835d3a7577f5a4f0a2158a49aca6c020f4fe5c0f1f1a590a17849c4a7bff2d"
+        }
+      ],
+      "direct_path": "SEMANTIC_RETENTION_DISPOSITION_v15.10.jsonl"
+    }
+  }
+}

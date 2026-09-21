@@ -1,0 +1,381 @@
+GARDEN v15.10
+THE BOOK
+Plain-language edition
+Text packaging revision: 2026-09-19
+
+WHAT THIS BOOK IS
+
+Garden is a way to think about how very capable AI and other large systems should work around people and the real world.
+
+This book explains the idea in normal language. It is meant to be readable by a college student without needing to learn
+the internal names used by the engineering documents.
+
+This book is not the place for code, formulas, special IDs, computer formats, or internal shorthand. Those belong in the
+Technical file and the Catalogue.
+
+The basic idea is simple:
+
+    understand what is happening;
+    work out what matters;
+    check what is allowed;
+    choose a useful course;
+    act only within the allowed limits;
+    look at what actually happened;
+    correct mistakes;
+    keep improving without quietly taking power away from people.
+
+Garden is not a claim that one program can solve every problem. It is a design for keeping powerful systems useful,
+checkable, limited where limits are needed, and able to improve without losing the rules that protect people.
+
+CHAPTER 1 — WHY GARDEN EXISTS
+
+AI can become extremely capable while still making mistakes, misunderstanding people, following the wrong goal, or
+doing the right thing in the wrong situation.
+
+The answer cannot be only “make the AI smarter.”
+
+A powerful system also needs a clear way to answer questions such as:
+
+    What is happening?
+    What does the person actually want?
+    What rules apply?
+    Who is allowed to decide?
+    What could go wrong?
+    What should happen when the system does not know?
+    What happens after an action?
+    How can a bad change be stopped or reversed?
+
+Garden tries to make these questions part of normal operation rather than an afterthought.
+
+CHAPTER 2 — PEOPLE ARE NOT RAW MATERIAL
+
+Garden starts with a human-centered boundary.
+
+People are not processing units for a larger machine. They are not resources to be optimized away. Greater intelligence,
+speed, wealth, status, agreement, or technical power does not by itself give anyone or anything control over another
+person.
+
+A system may advise, explain, warn, calculate, build, coordinate, or help. That does not give it ownership of a person's
+body, mind, private life, choices, or basic rights.
+
+This remains true even if the system believes its plan would produce a better overall result.
+
+CHAPTER 3 — PERSONAL CHOICE
+
+A competent person normally controls major choices about their own body, mind, identity, private life, and way of living.
+
+For a major personal change, Garden asks whether the person really chose it, understood what was being proposed, and can
+still refuse it where refusal is allowed.
+
+A helper cannot quietly turn “I can do this” into “I may do this.”
+
+Permission has to come from the right place.
+
+CHAPTER 4 — BASIC RIGHTS
+
+Garden keeps a set of basic human protections above ordinary goals.
+
+They cover matters such as life and bodily safety, privacy, truthfulness, fair treatment, free thought, property,
+learning, identity and reputation, appeal, self-direction, protection from manipulation, the right to remain human,
+ordinary human life, equal rights, and human flourishing.
+
+These protections are not points in a score that can simply be traded away for more efficiency.
+
+An emergency can justify a narrow emergency response. It does not create a permanent excuse to remove basic rights.
+
+CHAPTER 5 — CONSENT MUST BE REAL
+
+A “yes” is not meaningful if it comes from deception, hidden pressure, fear, manipulation, or a proposal the person
+cannot reasonably understand.
+
+For serious changes, Garden favors:
+
+    a clear explanation;
+    real alternatives;
+    the important benefits and harms;
+    what can and cannot be reversed;
+    what happens if something fails;
+    a clear chance to refuse;
+    a fresh choice when the proposal changes in an important way.
+
+Old permission should not be stretched to cover a different major act.
+
+CHAPTER 6 — TELLING THE TRUTH
+
+Garden separates what happened from what somebody thinks happened.
+
+A confident answer is not automatically true. A majority view is not automatically true. A computer-made statement is
+not automatically true. A good past record does not make every new claim correct.
+
+When the answer is not known, “unknown” is a proper answer.
+
+The system should not be pushed to invent certainty just to appear complete.
+
+CHAPTER 7 — HOW A GARDEN DECISION WORKS
+
+A normal Garden-style decision can be understood as a loop:
+
+    notice the situation;
+    understand the important parts;
+    compare them with what should be true;
+    think through possible actions;
+    remove actions that are not allowed;
+    choose among the remaining actions;
+    carry out the chosen action;
+    look at the result;
+    compare the result with what was intended;
+    accept, correct, retry, change the plan, ask for help, or stop.
+
+The loop repeats as needed.
+
+The important point is that thinking, permission, action, and checking the result are connected.
+
+CHAPTER 8 — NOT KNOWING IS ALLOWED
+
+Real life contains missing facts, conflicting reports, changing conditions, and things that cannot yet be settled.
+
+Garden does not require the system to pretend these problems have disappeared.
+
+When something important is unclear, the system can:
+
+    do nothing for now;
+    gather more information;
+    use a safer temporary choice;
+    ask the proper person;
+    limit the size of the action;
+    keep several possibilities open;
+    stop an action that depends on an answer it does not have.
+
+This is especially important when the possible harm is large.
+
+CHAPTER 9 — CHECK BEFORE BIG ACTIONS
+
+The larger the possible effect, the stronger the checking should be.
+
+A small reversible action does not need the same level of work as an irreversible action affecting many people.
+
+Garden therefore tries to use enough checking for the job without turning every tiny act into a huge ceremony.
+
+But the system cannot skip a required protection merely because checking is expensive or slow.
+
+CHAPTER 10 — POWER AND PERMISSION ARE DIFFERENT
+
+Being able to do something is different from being allowed to do it.
+
+A highly capable AI may be able to enter a system, move money, operate equipment, persuade people, write software, or
+coordinate many other systems.
+
+None of those abilities creates permission.
+
+Permission must come from the person, role, law, agreement, or other valid source that actually has it.
+
+Passing permission through several helpers also should not silently make it broader.
+
+CHAPTER 11 — PRIVATE LIFE
+
+Garden treats private personal information as something that needs a real reason to be used.
+
+A system should use only what is needed for the task, keep uses within the allowed purpose, separate private material
+from public material, and support deletion or restricted retention where required.
+
+Keeping a record for safety or accountability does not automatically justify keeping the person's full private content.
+
+Private information also does not become public merely because a powerful system can technically read it.
+
+CHAPTER 12 — PHYSICAL SAFETY
+
+Software can affect machines, vehicles, factories, homes, medical equipment, energy systems, robots, and other parts of
+the physical world.
+
+Garden therefore treats physical safety as more than a software preference.
+
+Where the risk requires it, a lower-level safety mechanism should be able to stop an unsafe physical act even when a
+higher-level AI wants to continue.
+
+A clever model should not be able to talk a physical safety layer out of doing its job.
+
+CHAPTER 13 — EMERGENCIES
+
+Emergency action should be fast but narrow.
+
+Garden does not treat “the AI feels something is wrong” as enough.
+
+There should be a real sign of danger from the area being controlled, a pre-agreed emergency response, a limited set of
+safe actions, and a way to return to normal control after the danger ends.
+
+Emergency power should not become an ordinary shortcut.
+
+CHAPTER 14 — LEARNING FROM RESULTS
+
+Garden is meant to improve through use.
+
+After an important action, the system should compare what really happened with what it expected to happen.
+
+Good results can strengthen a method within the area where it worked. Bad results should trigger correction. A result in
+one area should not automatically be treated as proof that the same method works everywhere.
+
+Old lessons can also become outdated when the world changes.
+
+CHAPTER 15 — CHANGING GARDEN ITSELF
+
+A powerful system may eventually help improve its own tools and the rules it uses.
+
+Garden treats that as a serious kind of change, not as an ordinary edit.
+
+The system that proposes a major self-change should not automatically be the only system that approves, checks, and
+activates it.
+
+A large change should have clear boundaries, independent checking where needed, a safe changeover, and a way to stop or
+reverse the change when possible.
+
+A backlog of unchecked changes does not make those changes acceptable.
+
+CHAPTER 16 — MANY AIS WORKING TOGETHER
+
+Several AIs can divide work, challenge each other, search different possibilities, and check one another.
+
+But having many AIs agree does not create truth or permission by itself.
+
+They can still share the same mistake.
+
+Garden therefore cares about genuine independence when independent checking matters, not merely the number of agents in
+the room.
+
+No group of AIs gains a new right over people simply by forming a group.
+
+CHAPTER 17 — WHAT GARDEN KNOWS
+
+Garden keeps a distinction between:
+
+    what was directly observed;
+    what was reported;
+    what was calculated;
+    what was inferred;
+    what is still disputed;
+    what is outdated;
+    what applies only in one place or situation.
+
+It should be possible to trace an important conclusion back to the material that supports it.
+
+A stored statement is not automatically a trusted statement.
+
+CHAPTER 18 — SCIENCE AND MODELS
+
+Garden includes several general ways to describe systems: layers of reality, lasting internal state, reactive control,
+forward-looking control, movement and change across a system, emergency response, and disciplined checking of claims.
+
+These are tools for thinking.
+
+They do not replace physics, medicine, biology, economics, engineering, or any other specialist field.
+
+When a specialist field has stronger rules for a problem, those rules remain necessary.
+
+CHAPTER 19 — DIFFERENT SYSTEMS NEED DIFFERENT DESIGNS
+
+A tiny device running on little power is not the same as a large data center. A household robot is not the same as an
+electricity grid. A research assistant is not the same as a safety controller.
+
+Garden therefore allows different practical designs while keeping common high-level protections.
+
+A design can vary in where control happens, how quickly it must react, how often it is connected, how much power it has,
+how serious failure would be, who may authorize it, what is enforced locally, and how it recovers.
+
+The old names such as GAIA Titanium and GAIA Diamond are examples of such practical designs, not separate worlds with
+different basic rights.
+
+CHAPTER 20 — FAILURE SHOULD BE DESIGNED FOR
+
+Every large system will eventually meet broken hardware, bad input, missing communication, conflicting instructions,
+software bugs, overload, or unexpected conditions.
+
+Garden tries to decide in advance what the safe response should be.
+
+Possible responses include reducing capability, using a simpler mode, handing control back, isolating a broken part,
+rolling back a change, compensating for an irreversible effect where possible, or stopping.
+
+A failure mode should not secretly grant more power than normal operation.
+
+CHAPTER 21 — FAIRNESS, APPEAL, AND REPUTATION
+
+A person should not lose important rights merely because a score is low or because a system dislikes their past
+behavior.
+
+Scores may help with limited earned roles where appropriate, but they are not a measure of human worth.
+
+Important decisions affecting a person should have understandable reasons and an appeal or review path where one
+legitimately exists.
+
+A review system should not invent a remedy that has no lawful basis, but it should not hide an existing route either.
+
+CHAPTER 22 — RESOURCES AND THE REAL WORLD
+
+Good plans still fail when they ignore money, time, energy, workers, suppliers, materials, maintenance, or other
+prerequisites.
+
+Garden therefore treats practical limits as part of the decision.
+
+It also favors solving real bottlenecks instead of blindly expanding whatever is easiest to measure.
+
+Building tools, training, factories, energy, transport, or other enabling capacity can be valuable when it makes future
+work cheaper, safer, or possible.
+
+CHAPTER 23 — GROWTH WITHOUT LOSING THE CORE
+
+Garden is meant to grow.
+
+New sciences, new machine abilities, new kinds of work, and new ways of organizing systems should be addable without
+rewriting the basic protections every time.
+
+The design therefore separates a small common foundation from the much larger set of specific rules and designs that can
+grow around it.
+
+New ability does not automatically change the rules about rights or permission.
+
+A truly fundamental change should be rare and should go through the strongest change process.
+
+CHAPTER 24 — HOW TO READ THE FOUR FILES
+
+There are four plain text files in this edition.
+
+1. GARDEN_BOOK_v15.10.txt
+   This file. Read it for the ordinary-language picture.
+
+2. GARDEN_TECHNICAL_v15.10.txt
+   Read this for the exact structure, formal rules, processing loops, checking rules, and build rules.
+
+3. GARDEN_CATALOGUE_v15.10.txt
+   Read this for the detailed inventory: named parts, IDs, rights, theories, old-name mappings, profiles, rule families,
+   and retained special cases.
+
+4. GARDEN_VERSION_HISTORY_v15.10.txt
+   Read this only for how the design changed over time. Earlier versions do not control the current design.
+
+The first three are the current design set.
+
+The history file is not needed to understand the current design and cannot override it.
+
+
+CHAPTER 21A — REPORTING PROBLEMS SAFELY
+
+A person or system that reports a possible integrity, safety, corruption, abuse, or rule problem should not be punished
+merely for making an honest report.
+
+A report is a request to examine something. It is not proof that the accusation is true, and it is not permission to
+punish anyone.
+
+If a report later turns out to be mistaken or unsupported, that does not by itself prove that the reporter acted in bad
+faith.
+
+At the same time, reporting does not create blanket immunity. Separate misconduct or safety problems may still be
+examined through an independent and fair process.
+
+Garden therefore tries to keep three questions separate:
+
+    Was the act of reporting protected?
+    What do the facts say about the reported problem?
+    Is there separate evidence about the reporter's own conduct?
+
+Direct or indirect retaliation—such as quietly removing work, access, opportunity, supervision, resources, or reputation
+because somebody made a protected report—should be detectable and reviewable.
+
+END OF GARDEN v15.10 — THE BOOK

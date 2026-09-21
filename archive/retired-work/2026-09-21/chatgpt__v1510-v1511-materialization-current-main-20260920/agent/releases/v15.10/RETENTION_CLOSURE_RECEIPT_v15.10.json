@@ -1,0 +1,90 @@
+{
+  "schema": "GardenStandaloneRetentionClosureReceipt/v1",
+  "release": "Garden v15.10",
+  "status": "CANDIDATE_RETENTION_CLOSURE_NOT_CANONICALLY_ADMITTED",
+  "current_source_set": [
+    "GARDEN_BOOK_v15.10.txt",
+    "GARDEN_TECHNICAL_v15.10.txt",
+    "GARDEN_CATALOGUE_v15.10.txt"
+  ],
+  "history_noncontrolling": "GARDEN_VERSION_HISTORY_v15.10.txt",
+  "external_predecessor_required": false,
+  "structured_core_plus_embedded_retention_seed": true,
+  "source_payloads": {
+    "Annexure": {
+      "bytes": 691676,
+      "sha256": "fb10089b4f426ed51156127ed4475854aa21b0e9adeb7a135eed8e328a9778c8",
+      "source_version": "v15.9"
+    },
+    "Human": {
+      "bytes": 113789,
+      "sha256": "d20846d680c2a0a167a97785fe97e0ffce07239f4b666503c9db00295469409f",
+      "source_version": "v15.9"
+    },
+    "System": {
+      "bytes": 232805,
+      "sha256": "4005a9277d80eb249b2aa4b65572577a29022209bfa3ae19b4cb460aa479fb7e",
+      "source_version": "v15.9"
+    },
+    "Technical": {
+      "bytes": 829833,
+      "sha256": "1e6319b7d68e7d7ec93035d3b8cbd4947b6ee9568c9208ee2ffe627f527b1c4b",
+      "source_version": "v15.9"
+    },
+    "Theories": {
+      "bytes": 161896,
+      "sha256": "abb04d5602c3f022bd9dbf38cf5e171b6a30bac51c0a2fcf21fb48003cf4dd6a",
+      "source_version": "v15.9"
+    }
+  },
+  "counts": {
+    "stable_identities": 1935,
+    "identity_kind_counts": {
+      "ANCHOR_ID": 325,
+      "REGISTRY_ID": 62,
+      "RIGHT_ID": 27,
+      "SCHEMA_ID": 733,
+      "TEST_ID": 788
+    },
+    "semantic_leaves_verified": 2660,
+    "formula_operator_candidates_verified": 2981,
+    "fundamental_laws": 18,
+    "families": 55,
+    "legacy_machine_records_total": 19921,
+    "derivative_semantic_edges": 7747,
+    "derivative_section_units": 2061,
+    "derivative_definition_indexes": 2239
+  },
+  "checks": {
+    "embedded_payload_hashes_match": true,
+    "semantic_leaf_spans_match": true,
+    "formula_line_hashes_match": true,
+    "missing_stable_ids": [],
+    "missing_formula_ids": [],
+    "strict_utf8": true,
+    "history_required_for_current_meaning": false
+  },
+  "current_file_hashes": {
+    "GARDEN_BOOK_v15.10.txt": {
+      "bytes": 15172,
+      "sha256": "df52ecf0e9d34384b30d34acdbd48b6df0ef2f83554880f3ca22dcc29b20c598"
+    },
+    "GARDEN_TECHNICAL_v15.10.txt": {
+      "bytes": 40724,
+      "sha256": "e15bd6211c6d2130f5f15522d1b2bf8071c354ab0035c4660615853e6926494f"
+    },
+    "GARDEN_CATALOGUE_v15.10.txt": {
+      "bytes": 4889844,
+      "sha256": "6d6341e278ea1eab34b7ce188728b79b19bf1f5d6b6e4f576f1bcbc60d231153"
+    },
+    "GARDEN_VERSION_HISTORY_v15.10.txt": {
+      "bytes": 11984,
+      "sha256": "c4bffaad33f187e552de891504a86767a2e148bea35a67270d0fef3485f5a183"
+    }
+  },
+  "limitations": [
+    "This receipt proves literal retention/inventory/hash closure, not formal equivalence of every abstraction rewrite.",
+    "Derivative graph/index records are intentionally regenerated rather than treated as semantic owners.",
+    "Canonical admission remains a separate governed act."
+  ]
+}

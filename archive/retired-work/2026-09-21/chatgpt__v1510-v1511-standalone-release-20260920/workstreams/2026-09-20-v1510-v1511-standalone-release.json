@@ -1,0 +1,55 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v1510-v1511-standalone-release:20260920",
+  "work_package_id": "V1510-V1511-STANDALONE-RELEASE-20260920",
+  "branch": "chatgpt/v1510-v1511-standalone-release-20260920",
+  "base_sha": "d79168d5088a0cdf76ad668753ca48c419635fef",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "planned_intent": {
+    "schema": "AgentWorkIntent/v1",
+    "intent_id": "chatgpt:v1510-v1511-standalone-release:20260920",
+    "agent_id": "ChatGPT-GPT-5.6-Sol",
+    "task_id": "V1510-V1511-STANDALONE-RELEASE-20260920",
+    "base_sha": "d79168d5088a0cdf76ad668753ca48c419635fef",
+    "target_paths": [
+      "agent/releases/v15.10",
+      "agent/releases/v15.11",
+      "agent/releases/content",
+      "tools/reconstruct_standalone_garden_release.py",
+      "tests/test_standalone_garden_release.py",
+      "workstreams/2026-09-20-v1510-v1511-standalone-release.json",
+      ".github/workflows/standalone-release-import.yml",
+      "tools/import_standalone_release_payload.py",
+      "agent/releases/inbox"
+    ],
+    "target_symbols": [
+      "Garden v15.10 standalone no-loss candidate",
+      "Garden v15.11 standalone successor candidate",
+      "GardenReleaseContentObjects/v1",
+      "reconstruct_catalogue_v1510",
+      "reconstruct_catalogue_v1511"
+    ],
+    "semantic_domains": [
+      "REPRESENTATION_RETENTION",
+      "RELEASE_MATERIALIZATION",
+      "CURRENT_SOURCE_CLOSURE"
+    ],
+    "affected_invariants": [
+      "NO_OLD_VERSION_REQUIRED_FOR_CURRENT_MEANING",
+      "EXACT_RETAINED_15X_CORPUS_PRESERVED",
+      "V1511_STRICTLY_INHERITS_V1510_RETENTION_CORPUS",
+      "HISTORY_IS_NONCONTROLLING",
+      "SPECIFICATION_IMPLEMENTATION_VALIDATION_CERTIFICATION_REMAIN_DISTINCT"
+    ],
+    "affected_contracts": [
+      "GardenTextReleaseManifest/v15.10-standalone-candidate",
+      "GardenTextReleaseManifest/v15.11-standalone-successor-candidate",
+      "GardenReleaseContentObjects/v1"
+    ],
+    "intended_effect": "Materialize the completed standalone v15.10 no-loss candidate and v15.11 standalone successor into current Git without duplicating the multi-megabyte retained corpus. Readable current sources stay direct; the exact large Catalogue and retention ledger are content-addressed compressed objects with deterministic reconstruction and hash verification. Candidate only; no canonical admission.",
+    "parallel_mode": "INDEPENDENT_COMPARISON"
+  }
+}
