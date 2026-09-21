@@ -601,7 +601,9 @@ def run(root: Path = Path(".")) -> None:
 
         choice = (response.get("choices") or [])[0]
         finish = choice.get("finish_reason")
-        raw_text = choice.get("message", {}).get("content", "")
+        raw_text = choice.get("message", {}).get("content")
+        if not isinstance(raw_text, str) or not raw_text.strip():
+            raise ValueError("GROUP_REVIEW provider returned no textual review content")
         attempt["finish_reason"] = finish
         attempt["response_text_sha256"] = bus.sha256_text(raw_text)
         if finish != "stop":
