@@ -1,0 +1,2 @@
+STANDALONE FINAL PACKAGE BINDING
+The full Technical document is frozen in release artifact GARDEN_v15.10_STANDALONE_FINAL_2026-09-21.zip. SHA-256 15ab51fc07cc54f839f2c36eee85882914427f106c1c010c3698d403d68d6090; bytes 53437. Current definitions resolve inside the three-document package. The Catalogue physically embeds the complete attached v15.8 and v15.9 five-file sources for reverse anti-loss audit. This binding creates no authority.
