@@ -1,0 +1,270 @@
+GARDEN v15.9 ZERO-BASE FRESH REVIEW — CANDIDATE CHALLENGE PACKET
+Date: 2026-09-18
+Campaign: GARDEN-V159-ZERO-BASE-ATOMIC-REVIEW-20260918
+Status: FRESH FIRST-PASS CANDIDATE SET / NOT ADMITTED
+Canonical effect: NONE
+Executable certification effect: NONE
+
+REVIEW BASIS — HARD BOUNDARY
+
+Treat the current Garden v15.9 final five-file corpus as a brand-new document.
+DO NOT use chat history, prior P001-P042 reviewer conclusions, saved memories, or historical intent as semantic evidence.
+The only semantic basis for this packet is the current v15.9 text itself.
+
+Source roots:
+- User SHA-256: e0f5e7f31077cb60b5f5fcf0f7ce5f039c448005ad950d65fb578a3b6058053d
+- System SHA-256: 227ec5116f8e0a8fc454d4c3d5aec01c5fc4b74b0d8bdda99cd5a6d2d37c7300
+- Technical SHA-256: ab6d93bee3a8b08315852f1a9a35f123cf831adaccbbd13b3a1633567dc72367
+- Annexure SHA-256: 3bbfe6e4c48ae8d9d5ab4016fe66ad244706f4ac2f9197b37fb60f0ec2c6c003
+- Theories SHA-256: 599c0e1dba16c65f13f830f94422f29e23836d5fbd512b4dec63f278531df766
+
+Fresh atomic inventory:
+- 288 declared/source-architecture units.
+- 238 actual SemanticAnchor declarations.
+- 35 explicit V159 current-addendum units.
+- 5 P038-P042 current cross-layer overlay units.
+- 5 top-status units.
+- 5 source-architecture units.
+- Backlinks/references were excluded from unit counting.
+- Fresh first-pass dispositions: 224 KEEP_NO_FRESH_SEMANTIC_DELTA; 64 units affected by 12 cross-cutting upgrade candidates.
+- Full local atomic-audit SHA-256: 428142f8ba31717dbdc119c28ecc9a895e5db198f9034ed067efe9bb81ee3bed.
+
+FRESH REVIEW RULES
+1. Existing owner beats duplicate subsystem.
+2. A candidate must improve the current source itself, not merely restate a rule already present.
+3. Prefer a schema/profile/registry refinement over a new Engine or authority source.
+4. UNKNOWN/STALE/CONFLICT/INCOMPLETE/BLOCKED are not PASS where hard resolution is required.
+5. Rights, privacy, consent, legitimate authority, safety, law, contestability and human agency cannot be weakened.
+6. Specification != machine binding != executed test != empirical validation != external certification.
+7. Numeric defaults in a reference architecture are not universal invariants unless explicitly admitted as such.
+8. Review evidence never becomes normative semantics merely by being cited.
+9. NO_CHANGE/REJECT is valid; do not manufacture upgrades.
+10. For every candidate compare DO_NOTHING against the proposed repair.
+
+===============================================================================
+ZR-001 — NORMALIZE EMERGENCY SOURCE-INDEPENDENCE SEMANTICS
+Severity entering challenge: HIGH
+
+Current-source conflict:
+- Annexure current invariant EMG-003 literally states:
+  "Triggers require independence analysis (≥2 independent sensors)."
+- Technical emergency detector states that required source diversity/independence is profile- and hazard-specific and that a universal sensor count is not assumed.
+- The current retained source also contains a not-ratified successor candidate describing the same conflict, but the effective v15.9 current-reading layer does not explicitly replace EMG-003.
+
+Proposed minimal repair:
+- Emergency trigger evidence SHALL satisfy source-diversity/independence requirements defined by the applicable hazard/profile/evidence contract.
+- No universal sensor-count constant is assumed.
+- Nominally different sensors/observations sharing a material source, controller, calibration chain, data path, model, or common-mode failure are not independent merely by multiplicity.
+- Internal urgency/model state cannot alone satisfy external hazard evidence if doing so would expand acting authority.
+- Profile may require one, two, or more sources depending on the qualified evidence contract.
+
+Required regression tests:
+common upstream feed; shared calibration failure; stale/forged attestations; unresolved common-mode dependence; profile-specific source cardinality.
+
+===============================================================================
+ZR-002 — TYPED CONSENT-VALIDITY ASSESSMENT
+Severity: HIGH
+
+Current-source basis:
+- Technical [T-HUMAN] names ConsentContract and UnderstandingRecord as separate core GSL artifacts.
+- HS-001: major body/mind/identity/existence change requires the person's authority and consent.
+- HS-002: missing, stale, ambiguous, coerced or poorly understood consent defaults to DO_NOTHING/preserve state.
+- Human path explicitly records UnderstandingRecord before human choice/consent where required.
+- No admitted composite machine-readable assessment in the effective source clearly binds all relevant consent-validity dimensions.
+- Retained candidate prose contains a provisional ConsentValidityAssessment, but it is explicitly candidate/not-ratified; this fresh review does not treat that candidate status as evidence.
+
+Proposed minimal repair:
+Admit a composite ConsentValidityAssessment profile/artifact only if current ConsentContract + UnderstandingRecord + existing gates cannot already supply a machine-resolvable equivalent.
+It binds:
+subject/principal; requested action/effect/scope; identity/authentication evidence; freshness/expiry/revocation; disclosure/explanation; comprehension/UnderstandingRecord; voluntariness/coercion evidence; jurisdiction/profile requirements; applicable independent review; material invalidators; DesignEpoch/KnowledgeSnapshot/environment; provenance; status VALID_FOR_SCOPE | INVALID | UNKNOWN | INCONCLUSIVE | STALE | BLOCKED.
+Hard rule: signature/authentication proves only its declared authentication properties; it never by itself proves comprehension, voluntariness or legal validity.
+Consent validity never replaces legality, rights, safety, policy, evidence or capability gates.
+
+Challenge question:
+Is a composite artifact actually needed, or should this be a FunctionContract/profile over existing ConsentContract and UnderstandingRecord to avoid ontology growth?
+
+===============================================================================
+ZR-003 — CONSTITUTIONALEVENT CROSS-FIELD COHERENCE
+Severity: HIGH
+
+Current schema [T-CONSTITUTIONAL-EVENTS]:
+ConstitutionalEvent includes independently typed:
+- kind: CHECK | VIOLATION
+- check_result: PASS | VETO | INCONCLUSIVE | UNKNOWN
+Current prose says VETO blocks affected transition and event generation does not establish guilt/intent.
+The type can nevertheless represent kind=VIOLATION + check_result=PASS unless an unstated convention rejects it.
+
+Proposed minimum rules:
+- check_result=PASS => kind=CHECK.
+- kind=VIOLATION MUST NOT coexist with check_result=PASS.
+- recorded/observable event is not itself a blocking predicate; PASS/CHECK may continue if all other gates pass.
+- VETO/INCONCLUSIVE/UNKNOWN behavior comes from the existing constitutional/policy owners and must not be guessed from enum ordering.
+Tests:
+reject VIOLATION+PASS; PASS/CHECK remains eligible for ordinary flow; UNKNOWN/INCONCLUSIVE consumer cannot promote to PASS.
+
+===============================================================================
+ZR-004 — CONSTITUTIONALEVENT NON-AUTHORIZING CONTAINMENT LINK + PRIVACY-PRESERVING OBSERVABILITY
+Severity: HIGH
+
+Current [T-CONSTITUTIONAL-EVENTS] includes containment_criteria_result?, evidence_refs[], notification/audit routes, and resolution_ref?, while prose says containment/restriction follows separate authority/privacy/evidence/applicability rules.
+
+Proposed repair:
+- ConstitutionalEvent, VETO, VIOLATION, severity, containment criteria, evidence refs, routing or event existence MUST NOT itself authorize containment/restriction.
+- Any executed containment/restriction in response to an event must carry a machine-verifiable reference to a separately valid current authorization/action/admission artifact under existing authority, scope, expiry, evidence, privacy and safety rules.
+- Keep original ConstitutionalEvent immutable; later action/authorization may backlink.
+- Event observability/query/subscription is an authority-preserving projection, not permission to dereference protected evidence/context/identity.
+- Referenced data retains source access, consent, taint, minimization, redaction, retention and jurisdiction constraints.
+Tests: VETO without containment authority blocks original action but does not auto-freeze/restrict; stale containment authority blocks restriction; subscriber can see allowed projection without evidence-read capability.
+
+===============================================================================
+ZR-005 — EFFECTIVE SEMANTIC SNAPSHOT / INACTIVE-LINEAGE ISOLATION
+Severity: HIGH
+
+Current-source problem:
+The final files have correct high-level "COMPLETE CROSS-REVIEWED WORKING CANDIDATE / SEMANTIC REVIEW COMPLETE" front matter, but immediately retain staged/historical review prose that says branches are unresolved or promotion is blocked.
+Append-only precedence can theoretically resolve this, but a new human or parser can encounter contradictory release states before reaching later addenda.
+
+Proposed repair:
+Generate a hash-bound EffectiveSemanticSnapshot / ActiveDefinitionIndex at the top of each release:
+- active semantic owner for each anchor/current package;
+- effective status/version/source range;
+- superseded/inactive lineage refs;
+- active unresolved/deferred items;
+- release-level assurance states.
+Retained staged candidate/review material is explicitly HISTORICAL/INACTIVE and cannot override the snapshot.
+Do not delete lineage.
+
+===============================================================================
+ZR-006 — NORMATIVE/EVIDENCE SEPARATION FOR REVIEW-PACKET BINDINGS
+Severity: HIGH
+
+Current V159 reviewed-packet binding blocks state that cited packet synthesis/evidence is "part of the semantic reading" of a layer.
+Annexure release closure also expects CurrentReadingMap and UpgradeTraceabilityTable/manifest bindings.
+
+Problem:
+A final semantic source should not require external reviewer packet content to know its normative meaning. Review packet hashes are evidence lineage, not semantic authority. User-facing final release can also become non-self-contained if required support artifacts are absent.
+
+Proposed repair:
+- Review packets, model outputs, hashes and review IDs are TRACEABILITY_EVIDENCE_ONLY.
+- Every admitted semantic delta MUST be materialized in normative final source bytes under an explicit active owner/anchor.
+- CurrentReadingMap / UpgradeTraceability / ReleaseManifest required to interpret a release must be embedded or bundled as first-class release artifacts and hash-bound.
+- Missing review evidence may affect assurance/release validation, but cannot silently supply normative semantics absent from source.
+
+===============================================================================
+ZR-007 — SINGLE-OWNER CROSS-LAYER OVERLAY PROJECTION
+Severity: MEDIUM
+
+Current final files contain a byte-identical P038-P042 cross-layer overlay tail in all five layers.
+
+Problem:
+Repeated normative copies increase size and create future divergence risk; all copies must remain byte-identical forever.
+
+Proposed repair:
+- One normative cross-layer current-reading overlay owner (prefer Annexure/release registry or an explicit sixth release artifact).
+- Each layer gets only its applicable projection plus hash/reference to the normative overlay.
+- Layer-specific material semantics remain in their proper owner.
+- Existing retained copies may remain lineage/inactive; future active releases stop multiplying the same normative block.
+
+===============================================================================
+ZR-008 — SEPARATE SOURCE-DECLARED GSL VERSION FROM COMPATIBILITY ASSURANCE
+Severity: MEDIUM
+
+Current release-facing material uses predecessor_gsl_compatibility_status = NOT_STATED while the source elsewhere declares GSL v45.1 unchanged/current unless later admitted source changes it.
+
+Proposed repair:
+Represent two distinct claims:
+- source_declared_gsl_version = v45.1 (or exact current source-declared value)
+- gsl_compatibility_assurance = SOURCE_DECLARED_NOT_INDEPENDENTLY_PROVEN / PROVED / UNKNOWN as applicable
+Do not claim a formal compatibility proof without an exact proof artifact.
+Goal: distinguish "the source says what version it uses" from "compatibility was independently proved."
+
+===============================================================================
+ZR-009 — MACHINE-BINDING CLOSURE LEDGER / RELEASE-STATUS SPLIT
+Severity: HIGH
+
+Current Technical T-EH-01..T-EH-20 each explicitly say machine binding UNRESOLVED, with machine_contract_id/version null and status UNRESOLVED_REQUIRED_BEFORE_EXECUTABLE_ADMISSION.
+The release also correctly says NOT EXECUTABLY CERTIFIED.
+
+Problem:
+"SEMANTIC REVIEW COMPLETE" can still be misread as broader closure, and unresolved machine bindings are scattered rather than summarized as a release-level closure dimension.
+
+Proposed repair:
+- Preserve the EH semantic profiles; do NOT invent machine IDs.
+- Release assurance surface explicitly carries:
+  DESIGN_SEMANTIC_REVIEW = COMPLETE_WITHIN_DECLARED_SCOPE
+  MACHINE_BINDING_CLOSURE = INCOMPLETE
+  EXECUTED_CONFORMANCE = NOT_CLAIMED/INCOMPLETE
+  EMPIRICAL_VALIDATION = owner-qualified
+  EXTERNAL_CERTIFICATION = NOT_CLAIMED
+- Add a MachineBindingClosureLedger for T-EH-01..20 binding expected owner, function/result algebra/resource/termination semantics, current binding state, required tests and blockers.
+- Executable admission cannot occur while required binding entries remain unresolved.
+
+===============================================================================
+ZR-010 — TYPED THEORY RELEASE REGISTRY
+Severity: MEDIUM
+
+Current source already has TheoryArtifact, TheoryApplicabilityResult, theory registries and individual prose classifications.
+But the Theories layer presents heterogeneous items under a broad "theory" umbrella:
+SRT modeling/ontology framework; VSM persistent-state theory; RPM/PPM control/regulation frameworks; TFT transport framework; FET safety-reflex architecture; SCT epistemic governance architecture; plus Reference Architectures and research profiles.
+The release also refines some theories without making current effective version/status obvious near the top.
+
+Proposed repair:
+Extend the existing TheoryArtifact/current theory registry metadata (do not create a new Engine) with fields equivalent to:
+- artifact_kind / semantic_role
+- current_effective_semantic_version
+- release_effective_status
+- validation_mode/evidence class
+- supersedes/refines lineage
+- current owner/source anchor
+- applicability/falsifiers
+Add a Theory Release Registry near the top of Theories that distinguishes modeling ontology/state/control/effective-domain/safety architecture/epistemic governance/reference architecture/research profile (exact enum names challengeable).
+Goal: the expected proof/validation burden is type-visible and release versioning is unambiguous.
+
+===============================================================================
+ZR-011 — PROFILE-BIND REFERENCE-ARCHITECTURE OPERATIONAL CONSTANTS
+Severity: MEDIUM
+
+Current [RA-RELIABILITY-OS] "Full Specification" contains fixed operational values such as:
+- evaluation coverage alert <0.8; cold-start 0.60
+- availability/error/latency incident thresholds
+- 2-minute degrade / 10-minute recover windows
+- max 3 retries
+Other reference profiles contain consensus cardinalities and timing thresholds.
+The current source already labels performance percentages as illustrative/unvalidated, but operational control constants are not uniformly marked as reference defaults/profile parameters.
+
+Proposed repair:
+Every reference-architecture operational numeric constant must be one of:
+A) bound to a versioned qualified parameter/profile with scope/evidence; or
+B) explicitly tagged ILLUSTRATIVE_REFERENCE_DEFAULT / NON-NORMATIVE.
+No reference-architecture default silently becomes a universal Garden invariant.
+Domain-qualified safety limits that are already bound to an admitted safety case/profile remain valid.
+
+===============================================================================
+ZR-012 — ANCHOR DECLARATION COHERENCE / ATOMIC CHILD-UNIT INDEX
+Severity: MEDIUM
+
+Current source uses mixed declaration styles:
+- SemanticAnchor: [X]
+- inline [X] headings
+- V159 package headings
+- backlinks that repeat anchor tokens
+Some anchors are contentless adjacent declarations (for example T-V155; RA-GSL-KR/RA-GSL-AR/RA-TRAIN appear as adjacent/grouped reference declarations before content).
+Some anchor blocks are very large and contain many independent subtopics.
+
+Proposed repair:
+- Every active semantic definition has exactly one machine-readable DefinitionRecord: anchor ID, layer, owner, effective source range/hash, status, parent/child relation and aliases.
+- A contentless anchor must be explicit ALIAS_OF/GROUP_REF; parser cannot infer ownership from adjacency.
+- Backlinks are typed references, never competing definitions.
+- Very large active units receive child-unit IDs/source ranges so atomic review/change-impact analysis is deterministic.
+- Do not change semantic meaning merely to satisfy formatting.
+
+===============================================================================
+CANDIDATE-SET CLOSURE QUESTION
+
+For ZR-001..ZR-012:
+- classify KEEP_AS_PROPOSED | PATCH | ALIAS_EXISTING | REJECT | NEEDS_CONTEXT.
+- identify exact current-owner overlap and smallest repair.
+- identify any candidate that accidentally weakens current semantics or creates unjustified ontology.
+- identify any fresh material defect in the supplied candidates that was missed by the first pass.
+- Do NOT rely on prior Garden review history.
+- If the current-source evidence quoted is insufficient for a claim, mark NEEDS_CONTEXT rather than guessing.

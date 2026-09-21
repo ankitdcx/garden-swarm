@@ -1,0 +1,17 @@
+{
+  "schema": "GardenV159FinalConfirmationTrigger/v1",
+  "candidate_path": "review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R3.txt",
+  "source_challenge_run_id": 35306873808,
+  "families": [
+    "deepseek",
+    "glm",
+    "gemini"
+  ],
+  "sequential_only": true,
+  "single_confirmation_round": true,
+  "daily_ceiling_usd": 10,
+  "per_call_ceiling_usd": 0.1,
+  "no_xiaomi_third_attempt": true,
+  "canonical_effect": false,
+  "semantic_delta_admitted": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "GardenMobileReviewJob/v1",
+  "job_id": "garden-relay-connectivity-probe-four-reviewers-20260920",
+  "title": "Garden Relay connectivity probe — DeepSeek + Gemini + Claude + Grok",
+  "status": "READY",
+  "targets": [
+    {
+      "slot": "deepseek",
+      "display_name": "DeepSeek",
+      "prompt": "Garden Relay connectivity test. Reply exactly: DEEPSEEK RELAY OK. Then Share your answer to Garden Relay.",
+      "attachments": []
+    },
+    {
+      "slot": "gemini",
+      "display_name": "Gemini",
+      "prompt": "Garden Relay connectivity test. Reply exactly: GEMINI RELAY OK. Then Share your answer to Garden Relay.",
+      "attachments": []
+    },
+    {
+      "slot": "claude",
+      "display_name": "Claude",
+      "prompt": "Garden Relay connectivity test. Reply exactly: CLAUDE RELAY OK. Then Share your answer to Garden Relay.",
+      "attachments": []
+    },
+    {
+      "slot": "grok",
+      "display_name": "Grok",
+      "prompt": "Garden Relay connectivity test. Reply exactly: GROK RELAY OK. Then Share your answer to Garden Relay.",
+      "attachments": []
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+GARDEN v15.9 FINAL POST-FREEZE SYNTHESIS CANDIDATE
+Date: 2026-09-18
+Status: REVIEW CANDIDATE — NOT YET INTEGRATED
+Base: Garden v15.9 COMPLETE CROSS-REVIEWED WORKING CANDIDATE (P001-P037)
+Canonical effect: NONE
+Executable certification: NONE
+
+PURPOSE
+Close all recoverable post-freeze/scattered Garden upgrades and the full-history residual audit without duplicating current v15.9 owners.
+
+A. P038 ORH/CIAH SYNTHESIS
+Existing coverage dominates. Candidate additions are limited to:
+A1. Saturation/overload MUST end in typed bounded dispositions; required hard rights/safety/authority/privacy/law gates cannot be silently dropped because a queue is full. Load/volume/urgency creates no new authority or priority token; AAP/current owner still selects admissible work.
+A2. Downstream saturation/backpressure that affects correctness/completion MUST be explicit upstream state rather than silent work loss or unlimited queue growth.
+A3. Recovery/failover revalidation explicitly includes recovered cache and in-memory state, authority/evidence/dependencies and uncertain effects before ordinary restoration.
+A4. Handoff/failover is not complete merely because control switched: applicable state/effect identity, ownership/authority and acknowledgement/closure must be typed; missing acknowledgement is INCOMPLETE/UNKNOWN, not success.
+A5. Uncertain/false alarm handling remains typed and effect-bounded. A monitor alarm alone creates no authority. Rights-affecting or irreversible protective action still requires the current applicable authority/safety profile.
+A6. Hazard analysis includes action, suppression/no-action, fallback and shutdown consequences where materially applicable.
+A7. Near-miss/precursor evidence may trigger NEEDS_REVALIDATION/research without being promoted to incident-grade truth or authority.
+Duplicates: cumulative-change closure; generic end-to-end human-effect closure; generic failure-domain independence where already covered.
+
+B. P039 UAAC/DSDIH SYNTHESIS
+B1. UAAC is not a new subsystem. Current Causal Safety/Human-Effect/CTSN/CAD/OAC/security/authority owners already cover capability != ceiling, self-report != independent evidence, hidden channels/open-world uncertainty, copies/forks, authority non-accretion and cumulative effects. Add no second agency-closure owner.
+B2. Where material adversarial channel/strategy coverage is unresolved, status remains scoped UNKNOWN/INCOMPLETE/non-PASS at the required assurance level; this is bounded open-world semantics, not a claim that exhaustive proof is possible.
+B3. DSDIH state/effect/acknowledgement ideas are mostly already present in Process/Execution/CPI: dispatch, commit, acknowledgement, uncertain completion and reconciliation remain distinct; crash after effect before acknowledgement is OUTCOME_UNKNOWN and blind replay is forbidden.
+B4. Cache/intermediary/recovery claims reuse existing Dependency/Runtime/Security/adapters/authority owners. Intermediaries cannot weaken hard gates merely because they relay/queue/cache.
+No new DSDIH engine/schema family unless a later exact owner-gap is demonstrated.
+
+C. P040 SOURCE-RIGHTS / DELTA MANAGEMENT
+C1. NO NEW SEMANTIC OWNER. Current v15.9 already states public access != public domain; protected expression/code/data/figures/proprietary implementation cannot be copied without applicable permission/license; lawful public ideas/facts can inform independently drafted Garden semantics subject to applicable rights.
+C2. Delta-management rules are already P036/P037 ReleaseManifest/UpgradeTraceability/CurrentReadingMap/DesignEpoch materialization practice. Keep as process lineage; do not duplicate normative design.
+
+D. P041 MACHINE INSPECTION / PRIVACY / JUSTICE
+D1. REJECT universal everyone/all-the-time private-device/message inspection authority.
+D2. Machine-only processing of private content can itself be a privacy/human-effect event even when no human views the content; absence of human viewing does not erase collection/access/computation risks.
+D3. Distinguish computation/access, retention, human inspection, disclosure, evidentiary use, investigative threshold, adjudicative finding and guilt/liability. None automatically implies the next.
+D4. Any scoped privacy-preserving/on-device analysis requires independently valid current purpose, authority/consent/law/rights/privacy/minimization and applicable contestability/audit constraints. Technical capability/model confidence cannot create observation rights.
+D5. Correlated suspicion remains epistemically distinct from probable cause or other jurisdiction-specific thresholds, admissible evidence, finding of fact and guilt; do not invent universal legal thresholds.
+D6. Missing/stale/conflicting authority/purpose/jurisdiction/minimization/model-validity evidence yields non-PASS for the protected operation.
+
+E. P042 HISTORY RECOVERY
+E1. UCAS: add a bounded Contract/Agreement governance profile using existing Contract/Policy/Compliance/Authority/Law/Knowledge/Evidence/Transition owners. Preserve technical contract != actor agreement != legal enforceability; formation/context/jurisdiction; immutable term/amendment lineage; obligation→implementation→evidence trace; nonperformance != breach/liability; distinct delegation/assignment/novation; competent-authority boundary. No Contract Algebra now.
+E2. Kindergarten: add child-development branch/profile semantics through existing branch/federation/human-rights/privacy/education owners. Stronger child safeguards, developmentally appropriate explanation, minimization, bounded autonomy, no manipulative engagement, child assent/contestability, guardian/authority where applicable. Competence evidence never overrides age/jurisdiction/child-rights law.
+E3. FDE/CFBR: add bounded voluntary federation/branch reconciliation profile through existing federation/MAC/branch/authority/security/DesignEpoch owners. Reachability != permission, signed/verifiable releases, opt-in/revocable mirroring, no security bypass, no popularity sovereignty, no creator override, pull-and-verify upgrades, explicit partition/divergence/rejoin reconciliation, semantic convergence != implementation monoculture.
+E4. HumanSystemsMap: add a purpose-limited GSL-KR/WorldEvidence profile if current owners lack an equivalent: formal rules vs observed practice remain distinct, claims bind provenance/jurisdiction/time/uncertainty, contradictions stay explicit, private systems require authority/privacy, knowledge creates no action authority.
+E5. TopicCompletenessProfile: add a Research/KR/Audit coverage profile if not duplicate: declared dimensions, scoped coverage, NO_KNOWN_GAP_WITHIN_DECLARED_SCOPE rather than omniscience, explicit missing/unknown/stale coverage, gap→research candidate only.
+E6. Manufacturing qualification-transfer: specialize existing transfer/Dependency/DesignEpoch qualification owners. Per-claim applicability, source/target roots, invalidators, partial evidence reuse, required retest/reinspection plan; similarity/certification never automatically transfers external certification.
+E7. GAC/GTAH/KR-CEA/DerivedView/Legal-SMT historical ideas are SUBSUMED or already present; do not add duplicate owners.
+E8. CASI adapter activation remains DEFERRED because exact operational qualification interface is still insufficiently recovered.
+
+HARD INVARIANTS FOR FINAL REVIEW
+1. No review consensus creates authority, truth, canon, certification or deployment permission.
+2. No new SchemaID is minted merely from a convenient candidate name.
+3. Existing owner beats duplicate subsystem.
+4. UNKNOWN/STALE/CONFLICT/INCOMPLETE/BLOCKED are non-PASS where hard resolution is required.
+5. Rights, privacy, consent/assent, legitimate authority, safety, law, appeal/contestability and human agency survive federation, recovery, optimization and profile specialization.
+6. Child-development specialization can strengthen safeguards but cannot waive protected rights.
+7. Federation connectivity/adoption/popularity cannot create constitutional supremacy.
+8. Contract text/signature cannot manufacture authority or legal enforceability.
+9. Coverage profiles never claim closed-world omniscience.
+10. Qualification transfer never claims certification merely from similarity.
+11. Post-review material semantic edits reopen review/materialization closure.
+
+FINAL REVIEW REQUEST
+Try to falsify this synthesis. For every E1-E6 and A1-A7/D1-D6:
+- identify duplicate/current-owner coverage;
+- identify missing hard constraint/counterexample;
+- recommend KEEP / PATCH / REMOVE / DEFER;
+- require the smallest surviving delta.

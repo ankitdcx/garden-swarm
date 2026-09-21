@@ -1,0 +1,226 @@
+{
+  "schema": "GardenEventDrivenModelQualityPolicy/v1",
+  "status": "ACTIVE_NONCANONICAL_OPERATIONAL_POLICY",
+  "effective_date": "2026-09-16",
+  "design_epoch": "v15.5",
+  "public_only": true,
+  "provider_exclusion_policy": "agents/provider-exclusion-policy.json",
+  "event_context_policy": "agents/event-driven-context-policy.json",
+  "independent_branch_convergence_policy": "agents/independent-branch-convergence-policy.json",
+  "purpose": "USE_THE_CHEAPEST_CURRENT_HIGH_QUALITY_MODELS_THAT_SATISFY_GARDEN_REVIEW_REQUIREMENTS_AND_ESCALATE_ONLY_WHEN_MATERIALITY_JUSTIFIES_IT",
+  "activation": {
+    "clock_passage_never_authorizes_model_spend": true,
+    "identical_fingerprint_replay_never_authorizes_model_spend": true,
+    "no_change_default": "NO_MODEL_CALL",
+    "paid_review_requires": [
+      "GardenMaterialContextPacket/v1 material == true",
+      "or an explicit HIGH/CRITICAL review obligation that cannot be discharged deterministically"
+    ],
+    "private_chatgpt_baseline_commitment_required_before_openrouter_inference": true,
+    "provider_failure_does_not_authorize_weaker_assurance": true,
+    "moving_latest_aliases_are_not_used_for_evidence_lineage": true,
+    "model_ids_are_pinned_until_a_new_catalog_review_event": true
+  },
+  "budget": {
+    "daily_openrouter_cost_ceiling_usd": 10,
+    "routine_material_event_reserved_ceiling_usd": 0.4,
+    "routine_model_call_reserved_ceiling_usd": 0.1,
+    "absolute_openrouter_inference_calls_per_convergence_task": 20,
+    "max_prompt_characters": 200000,
+    "max_output_tokens": 32000,
+    "budget_exhaustion_result": "BLOCK_OR_DEFER_WITH_EXPLICIT_RECEIPT; NEVER_SHARE_BRANCHES_OR_DROP_REQUIRED_REVIEW_TO_SAVE_COST",
+    "full_context_fallback_does_not_bypass_budget_or_assurance": true,
+    "audit_daily_openrouter_cost_ceiling_usd": 10,
+    "review_profiles_source": "agents/openrouter-paid-review-policy.json:review_profiles"
+  },
+  "tiers": {
+    "DETERMINISTIC_NO_MODEL": {
+      "default": true,
+      "use_when": "dedupe, schema, hash, dependency, known-rule and materiality checks can resolve the event without a model"
+    },
+    "MATERIAL_VALUE_BOARD": {
+      "execution_status": "ACTIVE_ONLY_INSIDE_INDEPENDENT_BRANCH_CONVERGENCE_PROTOCOL",
+      "use_when": "bounded public material event requires independent model review",
+      "blind_round_required": true,
+      "same_neutral_query_for_all_four_initial_reviewers": true,
+      "peer_answer_sharing": "FORBIDDEN",
+      "openrouter_models": [
+        {
+          "family": "deepseek",
+          "model": "deepseek/deepseek-v4.1-flash",
+          "role": "primary_agentic_reasoning"
+        },
+        {
+          "family": "qwen",
+          "model": "qwen/qwen3.8-flash",
+          "role": "independent_architecture_and_code"
+        },
+        {
+          "family": "glm",
+          "model": "z-ai/glm-5.3-flash",
+          "role": "formal_semantics_and_long_context"
+        },
+        {
+          "family": "xiaomi",
+          "model": "xiaomi/mimo-v2.5",
+          "role": "independent_agentic_execution"
+        }
+      ],
+      "branch_reconciliation": "EXTERNAL_CHATGPT_PLUS_ONE_MODEL_BRANCH_ONLY",
+      "default_followups_per_branch": 1,
+      "maximum_followups_per_branch": 2,
+      "final_review": "BIT_IDENTICAL_CHATGPT_MERGED_CANDIDATE_SENT_SEPARATELY_TO_ALL_FOUR",
+      "maximum_confirmation_rounds": 1,
+      "model_agreement_is_not_proof": true
+    },
+    "HIGH_CRITICAL_ESCALATION": {
+      "execution_status": "DECLARED_NOT_AUTOMATICALLY_DISPATCHED",
+      "use_when": "HIGH/CRITICAL semantic change, unresolved branch disagreement, or value-board evidence is insufficient",
+      "models": [
+        {
+          "family": "deepseek",
+          "model": "deepseek/deepseek-v4.1-flash",
+          "role": "latest_deepseek_agentic_primary"
+        },
+        {
+          "family": "qwen",
+          "model": "qwen/qwen3.8-max-0902",
+          "role": "flagship_architecture_agentic_challenger"
+        },
+        {
+          "family": "glm",
+          "model": "z-ai/glm-5.3",
+          "role": "full_formal_reasoning_challenger"
+        },
+        {
+          "family": "xiaomi",
+          "model": "xiaomi/mimo-v2.5-pro",
+          "role": "flagship_agentic_execution_challenger"
+        }
+      ],
+      "must_still_preserve_four_isolated_branches": true,
+      "must_use_separate_escalation_budget_and_receipt": true,
+      "cannot_silently_reuse_routine_price_ceiling": true
+    },
+    "SEPARATE_GOOGLE_LANE": {
+      "provider": "google-gemini-developer-api",
+      "model": "gemini-3.8-flash",
+      "billing_policy": "FREE_TIER_ONLY_NO_PAID_FALLBACK",
+      "role": "independent_google_family_reviewer",
+      "does_not_replace_four_openrouter_branches": true
+    },
+    "CHATGPT_FRONTIER": {
+      "provider_boundary": "EXTERNAL_CHATGPT_NOT_OPENROUTER",
+      "model_identity": "USER_SELECTED_CHATGPT_MODEL_NOT_HARDCODED_BY_REPOSITORY",
+      "roles": [
+        "private baseline before OpenRouter inference",
+        "one-to-one branch reconciliation",
+        "cross-branch synthesis after four reconciled branches",
+        "reintegration after material final-review objections",
+        "final Garden/GSL integration"
+      ],
+      "private_baseline_not_sent_to_initial_reviewers": true,
+      "cannot_replace_independent_family_quorum": true,
+      "cannot_grant_authority": true,
+      "cannot_promote_canon": true
+    }
+  },
+  "latest_catalog_snapshot": {
+    "as_of": "2026-09-16",
+    "status": "INFORMATIONAL_REVALIDATE_ON_MODEL_CATALOG_CHANGE_EVENT",
+    "selected_value_models": {
+      "deepseek/deepseek-v4.1-flash": {
+        "reference_input_output_usd_per_million": [
+          0.15,
+          0.6
+        ],
+        "context_tokens": 1048576,
+        "selection_reason": "DeepSeek positions V4.1 Flash as its current cost-efficient V4.1 tier and reports it exceeds V4 Pro on performance, speed, and task-completion time."
+      },
+      "qwen/qwen3.8-flash": {
+        "reference_input_output_usd_per_million": [
+          0.15,
+          0.47
+        ],
+        "context_tokens": 1000000,
+        "selection_reason": "Current Qwen Flash generation with tool calling, structured outputs, coding and agentic support."
+      },
+      "z-ai/glm-5.3-flash": {
+        "reference_input_output_usd_per_million": [
+          0.075,
+          0.25
+        ],
+        "context_tokens": 1048576,
+        "selection_reason": "Current GLM Flash generation; efficient coding and long-horizon agent work with structured outputs."
+      },
+      "xiaomi/mimo-v2.5": {
+        "observed_input_output_usd_per_million": [
+          0.119,
+          0.238
+        ],
+        "context_tokens": 1050000,
+        "selection_reason": "Pro-level agentic performance at low cost with tool calling and approximately 1M context; supplies a fourth independent family."
+      }
+    },
+    "escalation_models": {
+      "qwen/qwen3.8-max-0902": {
+        "reference_input_output_usd_per_million": [
+          2,
+          6
+        ],
+        "context_tokens": 1000000
+      },
+      "z-ai/glm-5.3": {
+        "observed_discounted_input_output_usd_per_million": [
+          0.7,
+          2.2
+        ],
+        "context_tokens": 1310720
+      },
+      "xiaomi/mimo-v2.5-pro": {
+        "observed_input_output_usd_per_million": [
+          0.3045,
+          0.609
+        ],
+        "context_tokens": 1050000
+      },
+      "gemini-3.8-flash": {
+        "paid_reference_input_output_usd_per_million": [
+          0.75,
+          3.75
+        ],
+        "context_tokens": 1048576,
+        "garden_route": "DIRECT_GOOGLE_FREE_TIER_ONLY"
+      }
+    },
+    "benchmark_candidates_not_active": {
+      "inclusionai/ling-3.0-flash": {
+        "observed_input_output_usd_per_million": [
+          0.021,
+          0.063
+        ],
+        "context_tokens": 262144,
+        "reason_not_active": "Extremely cheap agentic candidate, but no provider-enforced response_format and shorter context require Garden-specific qualification."
+      },
+      "stepfun/step-3.7-flash": {
+        "observed_input_output_usd_per_million": [
+          0.16,
+          0.92
+        ],
+        "context_tokens": 262144,
+        "reason_not_active": "Useful tool-capable challenger, but current selected value board has larger context and comparable or lower cost."
+      },
+      "moonshotai/kimi-k3": {
+        "observed_input_output_usd_per_million": [
+          2.4,
+          12
+        ],
+        "context_tokens": 1048576,
+        "reason_not_active": "Strong large-repository model but materially worse price/value for routine Garden review."
+      }
+    },
+    "pricing_does_not_create_model_authority_or_quality_proof": true
+  },
+  "excluded_families_must_never_be_used_even_if_cheaper_or_higher_scoring": true,
+  "boundary": "This policy selects review quality/cost posture only. Model output remains proposal evidence and cannot create truth, Proof, authority, merge permission, canonical status, or human admission."
+}

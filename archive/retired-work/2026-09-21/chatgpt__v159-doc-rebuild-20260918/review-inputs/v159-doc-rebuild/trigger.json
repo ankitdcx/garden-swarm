@@ -1,0 +1,13 @@
+{
+  "schema": "GardenV159DocumentationStructuralReviewTrigger/v1",
+  "source": "v15.9 CLEAN CURRENT DESIGN",
+  "purpose": "semantic-preserving documentation rebuild",
+  "gaia_expansion": "Garden Artificial Intelligence Architecture",
+  "families": [
+    "deepseek",
+    "glm",
+    "xiaomi",
+    "gemini"
+  ],
+  "semantic_authority": false
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "GardenV159FinalHistoryRetryTrigger/v1",
+  "source_run_id": 35305548597,
+  "retry_slots": [
+    "glm"
+  ],
+  "preserved_slots": [
+    "gemini",
+    "deepseek"
+  ],
+  "reason": "First GLM call emitted reasoning only; second recovery disabled reasoning but GLM endpoint requires reasoning. Retry GLM only with low mandatory reasoning and larger output allowance.",
+  "same_candidate_path": "review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE.txt",
+  "no_completed_slot_rerun": true,
+  "daily_ceiling_usd": 10,
+  "per_call_ceiling_usd": 0.1,
+  "canonical_effect": false
+}

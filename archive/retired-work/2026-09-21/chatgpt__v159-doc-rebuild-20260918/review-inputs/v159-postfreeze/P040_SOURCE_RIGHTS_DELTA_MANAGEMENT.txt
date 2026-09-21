@@ -1,0 +1,49 @@
+GARDEN v15.9 POST-FREEZE REVIEW PACKET P040
+Topic: SOURCE-RIGHTS-001..004 + V159-DM-001..005 bounded delta management
+Provenance: recovered from recent Garden v15.9 consolidation discussions.
+Status entering review: candidate process/design hardening; not canonical or executably certified.
+
+SOURCE-RIGHTS candidate family
+SOURCE-RIGHTS-001 — Lawful public-idea boundary:
+Garden may learn from and independently reason about ideas that are lawfully available for the task, but source access does not itself create permission to copy protected expression or bypass source restrictions.
+
+SOURCE-RIGHTS-002 — Public != copyable:
+A publicly viewable page, screenshot, paper, repository or discussion is not automatically unrestricted source material for verbatim reuse. Preserve source/provenance and distinguish learning/independent formulation from copying.
+
+SOURCE-RIGHTS-003 — Open-source label insufficient:
+"Open source" or "public" shorthand is not enough for provenance-sensitive import. Where expression/code/schema is materially incorporated, bind the actual source identity and applicable permission/license/authorization status rather than assuming reuse rights from a label.
+
+SOURCE-RIGHTS-004 — Independent Garden formulation:
+When a public idea motivates a Garden upgrade, formulate Garden semantics independently in Garden's own typed architecture, compare against existing owners/DO_NOTHING, and import no protected expression, code, diagram or schema unless separately authorized and provenance-bound.
+
+These are design/source-governance rules, not a legal opinion and not a claim that every public idea is protectable.
+
+BOUNDED DELTA MANAGEMENT
+V159-DM-001 — authoritative frozen baseline + bounded delta ledger:
+successor work binds one exact source root and records each proposed delta/disposition rather than mentally accumulating scattered edits.
+
+V159-DM-002 — freeze -> bounded deltas -> materialize -> re-audit:
+review a bounded set against the frozen base; materialize accepted deltas into exact successor bytes; then re-audit the materialized result rather than endlessly reviewing an abstract moving target.
+
+V159-DM-003 — every accepted candidate dispositioned:
+each candidate receives explicit ACCEPT / REJECT / ALIAS / DUPLICATE / DEFER / UNRESOLVED (or owner-qualified equivalent) and traceability; nothing is silently lost or assumed integrated.
+
+V159-DM-004 — exact-source-bound review:
+every review packet binds source root/version/scope and relevant dependency context so findings cannot silently migrate across different baselines.
+
+V159-DM-005 — ledger is process, not canon:
+a delta ledger, review queue, manifest or workflow receipt is work-management/evidence state only; it does not create normative Garden semantics, authority or admission by itself.
+
+Known overlap:
+The completed v15.9 P036/P037 release closure already has UpgradeTraceabilityTable, exact hashes, CurrentReadingMap, ReleaseManifest, post-freeze invalidation and no-authority-from-manifest semantics. Therefore several V159-DM rules may already be DUPLICATE/REFINES rather than new design.
+
+CURRENT v15.9 HARD BOUNDARY
+Rights, consent, privacy, legitimate authority, safety, law, appeal/contestability and human agency remain hard applicable constraints. Tool/channel/technical access creates no disclosure authority. Unknown/stale/conflicting authority or materiality is non-PASS when resolution is required. A post-freeze semantic edit reopens review closure.
+
+
+REVIEW TASK
+- Determine which SOURCE-RIGHTS rules add a useful general provenance/source-governance boundary without overclaiming copyright/licensing law.
+- Determine which V159-DM rules are already fully closed by P036/P037 and should be ALIAS/DUPLICATE rather than added again.
+- Reject any rule that turns provenance metadata into legal authority or makes unavailable license data a universal prohibition when the task does not copy protected expression.
+- Produce smallest owner mapping, invariants/tests, and explicit DO_NOTHING comparison.
+Return structured JSON with verdict KEEP/CHANGE/MIXED/REJECT and at most 8 material findings.

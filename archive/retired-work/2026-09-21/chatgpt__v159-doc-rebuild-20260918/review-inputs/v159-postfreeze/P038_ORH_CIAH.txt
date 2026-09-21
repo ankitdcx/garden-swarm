@@ -1,0 +1,47 @@
+GARDEN v15.9 POST-FREEZE REVIEW PACKET P038
+Topic: ORH v1.1.1 + CIAH v1.0.1
+Provenance: recovered from recent Garden conversation decisions; not present as named P001-P037 packets.
+Status entering review: ADMITTED_FOR_SUCCESSOR(v15.9) in conversation, design/specification only; not canonical, not executably certified.
+No new Engine, GSL primitive, authority source or SchemaID was intended.
+
+ORH v1.1.1 — Operational Resilience Harmonization
+Patch: GARDEN-ORH-2026-09-17
+Conversation disposition: ORH-001 NEW; ORH-002/003/005/009/010 REFINES; ORH-004/006/007/008/011 aliases removed.
+Retained semantics:
+1. operational-property separation — do not collapse availability, durability, safety, correctness, consistency, latency or authority into one generic health/reliability notion;
+2. bounded overload — overload produces typed bounded degradation/disposition rather than silent loss or unlimited queue growth;
+3. backpressure propagation — downstream saturation/degradation becomes explicit upstream state/pressure rather than hidden work loss;
+4. failure-domain isolation — independent failure domains stay explicit; one domain's failure does not silently contaminate unrelated assurance;
+5. protected work under saturation — safety/rights/authority/recovery-critical work retains declared protection under load without volume creating authority;
+6. recovery revalidation — after outage/failover/recovery, stale assumptions/authority/evidence/cache/state are revalidated before ordinary restoration.
+
+CIAH v1.0.1 — Cross-Industry Assurance Hardening
+Patch: GARDEN-CIAH-2026-09-17
+Conversation disposition: CIAH-005 NEW; CIAH-004 EXTENDS; CIAH-001/002/003/006 REFINES; no aliases retained.
+Retained semantics:
+1. cumulative-change closure — many individually small changes cannot evade requalification when their combined effect becomes material;
+2. false-alarm-safe protection — safety/assurance monitors should not create disproportionate harmful responses to noisy/false alarms; uncertain alarm handling remains typed and bounded;
+3. closed-loop handoff — fallback/handoff includes state transfer, acknowledgement, ownership and recovery closure rather than one-way "switch";
+4. end-to-end impact tolerance — assurance follows the full consequential effect chain, not merely a local component tolerance;
+5. bidirectional hazard analysis — evaluate both action hazard and hazard caused by suppression/shutdown/fallback/non-action;
+6. near-miss/precursor learning — precursor and near-miss evidence can trigger learning/revalidation without being silently discarded because no final incident occurred.
+
+Source-rights note inherited from the same discussion:
+Only public/open/authorized-source ideas may inform the Garden formulation; do not copy protected expression, code, diagrams or proprietary schemas.
+
+CURRENT v15.9 COMPARATOR
+- hard rights/consent/privacy/authority/safety/law gates survive every projection/fallback/composition;
+- UNKNOWN/STALE/CONFLICT/BLOCKED/INCOMPLETE/NEEDS_REVALIDATION are non-PASS where resolution is required;
+- no authority from capability/evidence/reputation/consensus/access/success;
+- DesignEpoch invalidates stale dependent assurance after material or cumulative change;
+- Process Algebra/Runtime/Transition/AAP already own composition, live effect behavior, activation and assurance;
+- post-freeze semantic edits reopen review closure.
+
+
+REVIEW TASK
+For each retained semantic:
+- identify exact overlap with existing v15.9 owners and whether it is NEW / EXTENDS / REFINES / ALIAS / DUPLICATE / REJECT;
+- prefer existing Runtime/Transition/AAP/Continuity/FET/SMCD/CAD/PAI/Process owners;
+- give the smallest useful amendment and falsifiable invariant/test;
+- explicitly challenge whether "protected work", "false-alarm-safe", "impact tolerance", or "closed-loop handoff" could accidentally create new priority, authority, unsafe automatic release, or unverifiable guarantees.
+Return concise structured JSON with verdict KEEP/CHANGE/MIXED/REJECT and at most 8 material findings.

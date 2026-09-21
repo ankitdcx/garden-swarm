@@ -1,0 +1,44 @@
+{
+  "schema": "GardenReviewDashboardStatus/v1",
+  "project": "MOCK REVIEW — Dashboard end-to-end test",
+  "updated_at": "2026-09-20T11:31:00+05:30",
+  "overall": "INTEGRATING",
+  "reviewers": [
+    {
+      "id": "gpt_worker",
+      "label": "GPT Worker",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "deepseek",
+      "label": "DeepSeek",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "gemini",
+      "label": "Gemini",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "claude",
+      "label": "Claude",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "grok",
+      "label": "Grok",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "lead",
+      "label": "Lead integration",
+      "status": "RUNNING"
+    },
+    {
+      "id": "gpt_verifier",
+      "label": "GPT Verifier",
+      "status": "LOCKED"
+    }
+  ],
+  "note": "MOCK TEST ONLY. Mock first-round stages are complete and mock Lead integration is running. No real provider execution is claimed."
+}

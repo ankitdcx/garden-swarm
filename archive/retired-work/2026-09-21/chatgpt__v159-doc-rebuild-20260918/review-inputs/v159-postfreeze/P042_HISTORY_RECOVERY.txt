@@ -1,0 +1,210 @@
+GARDEN v15.9 POST-FREEZE HISTORY-RECOVERY PACKET — P042
+Date: 2026-09-18
+Status: SANITIZED DESIGN CANDIDATE / PRIVATE SOURCE TEXT NOT DISCLOSED
+Canonical effect: NONE
+Executable certification: NONE
+
+PRIVATE HISTORY AUDIT BASIS
+The user supplied ChatGPT, DeepSeek and Gemini exports. They were normalized locally oldest→newest with user/assistant role, provider and conversation context preserved.
+Raw/private chat text is NOT included in this packet and SHALL NOT be sent to OpenRouter.
+
+Local integrity roots:
+- ChatGPT export SHA-256: adbaaf40be5f01b9c4aed937ed1ab8883e7077a4c893ddc1907ef20d105d3875
+- DeepSeek export SHA-256: 850ced810cab06b83091d517725eabe32528c1a1797d3a34b14ff6481ca89383
+- Gemini Takeout SHA-256: 4f0d71efe62e3b1b17d145b24707d2ab79b6e6a7aff8fafdd7bb163aa8fc85df
+- normalized messages SHA-256: 9f09e8c258e791581bb7a1615535440d2077c92b2d68869e0dd68ee507354aed
+- normalized conversation index SHA-256: 7c25480222b2ffe4234468b8b961c5d49941f5446d3ea4dc93ad837862ee8a5a
+- 28,801 dated messages across 933 conversation/activity groups, covering 2026-02-09 through 2026-09-16.
+
+METHOD
+1. Chronologically scan both user and AI turns.
+2. Identify Garden/GSL/architecture/theory/upgrade/gap/candidate-bearing conversations.
+3. Recover exact intent only when the conversational context is sufficient.
+4. Compare every recovered idea against the current complete cross-reviewed v15.9 working candidate.
+5. Existing coverage → ALIAS/DUPLICATE/SUBSUMED, not another module.
+6. Missing exact definition → remain DEFERRED, never reconstructed from acronym.
+7. Only distinct surviving semantics enter this packet.
+8. Model-generated historical claims remain proposals, not facts or authority.
+
+CURRENT v15.9 RESIDUALS THAT THE HISTORY AUDIT CAN NOW RESOLVE
+The current v15.9 itself marks UCAS, Kindergarten, FDE/CFBR and manufacturing qualification-transfer as deferred because exact historical definitions/profile conditions were missing. Exact design intent for those items was recovered from the private history. Other older candidates are either already integrated or remain insufficiently specified.
+
+HISTORY DISPOSITIONS
+
+P042-A — UCAS / UNIVERSAL CONTRACT & AGREEMENT SUBSTRATE
+Disposition entering review: DISTINCT CANDIDATE, existing-owner composition, no new top-level Engine.
+Recovered semantic gap:
+Garden has technical FunctionContracts and law/policy/authority/evidence machinery, but the historical proposal distinguishes technical contracts from actor agreements and traces agreement meaning through implementation, performance evidence and competent legal/human resolution.
+
+Minimal proposed current-reading profile:
+1. TechnicalContract != ActorAgreement != LegallyEnforceableAgreement.
+2. Agreement/signature existence never manufactures authority, consent, truth or enforceability.
+3. Formation validity is jurisdiction/type/context/profile dependent; no universal contract-law test is invented.
+4. Terms are immutable/versioned; amendments create explicit lineage.
+5. Each material obligation can bind human-readable meaning → implementation binding → observed performance evidence.
+6. Observed nonperformance != established breach != liability/remedy determination.
+7. Technical conformance != contractual conformance; material implementation drift revalidates affected agreement bindings.
+8. Delegation of performance, delegation of authority, assignment, agency, subcontract and novation remain distinct.
+9. External-system agreements bind institutional authority, data-use, security, continuity and exit/portability semantics in addition to protocol correctness.
+10. Interpretation/diff/explanation preserve ambiguity, jurisdiction, provenance, evidence and competent-authority boundaries.
+
+Preferred owners:
+existing Contract / Policy / Compliance / Transition / Authority / Law-Governance / Knowledge / Event / Evidence owners.
+No Contract Algebra unless later evidence proves reusable operators/closure/error semantics beyond existing algebras.
+
+Candidate profile/artifact names require collision/equivalence review before any SchemaID:
+AgreementContract; ContractFormationProfile; ContractFormationAssessment; ContractImplementationBinding; ContractPerformanceAssessment.
+Reuse existing ObligationGraph where applicable.
+
+Required tests:
+- digitally signed agreement lacking required legal capacity/authority does not become valid/enforceable by signature alone;
+- implementation passes FunctionContract while an agreement-specific obligation is unsatisfied → technical PASS does not become contractual PASS;
+- contract amendment preserves prior terms/lineage and revalidates dependent implementation/performance bindings;
+- assignment/novation cannot silently transfer authority outside existing authority rules;
+- machine evidence of nonperformance cannot itself issue a legal liability/remedy finding.
+
+P042-B — KINDERGARTEN / CHILD-DEVELOPMENT BRANCH PROFILE
+Disposition entering review: DISTINCT DOMAIN/BRANCH PROFILE; no weaker Garden, no new constitutional root.
+Recovered intent:
+A child-safe Garden branch with simpler interfaces and stronger protections, with bidirectional learning through ordinary Garden comparison/admission.
+
+Minimal proposed profile:
+1. Friendly branch name may be Kindergarten; technical owner is an existing federation/profile mechanism with a ChildDevelopmentProfile-like configuration.
+2. Simpler language/interfaces and developmentally appropriate explanation.
+3. Stronger privacy/data minimization; educational memory separated from unnecessary profiling.
+4. No commercial manipulation, targeted persuasion or addictive optimization.
+5. Bounded autonomy/tool/action scope; consequential actions route to valid guardian/trusted-adult/competent authority where applicable.
+6. Curiosity, creativity, simulation, accessibility and education are supported without political/ideological obedience engineering.
+7. Capability can narrow or expand only inside applicable child-rights, law, age, consent/assent, guardian/competent-authority and safety ceilings.
+8. Demonstrated competence/maturity MAY inform a profile only where law/rights permit; it can never override statutory age, child protection or jurisdictional rules.
+9. Child-specific explanation, consent/assent, contestability and appeal remain explicit.
+10. Main↔Kindergarten improvements travel through normal Compare/Proof/Evidence/Evolve/DesignEpoch gates; no automatic merge.
+
+Required tests:
+- high model estimate of maturity cannot unlock a capability prohibited by age/law/profile;
+- guardian permission cannot waive a protected child right where law/constitution forbids waiver;
+- targeted commercial persuasion remains blocked even if engagement improves;
+- child educational memory cannot silently become unrelated reputation/advertising profile;
+- Kindergarten-derived improvement enters Main only through ordinary admission.
+
+P042-C — FDE + CFBR FEDERATION / BRANCH RECONCILIATION PROFILE
+Disposition entering review: RECOVERED PROFILE CANDIDATE; compare with existing federation/MAC/branch owners.
+Recovered FDE semantics:
+- reachability != permission;
+- voluntary enrollment/mirroring only;
+- do not bypass firewall/security/local control;
+- signed/verifiable release and truthful lineage;
+- reproducibility where claimed;
+- revocable participation;
+- no popularity sovereignty, creator override or mass-surveillance incentive;
+- preserve local legitimate authority/jurisdiction;
+- uncertain deployment authority is non-PASS;
+- propagation optimization cannot manufacture permission/authority;
+- dissemination success cannot invoke enforcement authority.
+
+Recovered CFBR semantics:
+1. One constitutional lineage may coexist with independent implementations, sovereign operators and jurisdiction/profile branches.
+2. Pull-and-verify upgrades, not forced synchronization.
+3. Node verifies release identity/signature, applicable evidence/proof and local compatibility, then separately decides whether/when adoption is authorized.
+4. Branches may be canonical, experimental or jurisdiction/profile-specific.
+5. A branch cannot weaken protected constitutional rights and still claim canonical equivalence.
+6. Competing improvements are not selected by popularity; evidence/proof/safety/performance/compatibility/rights/simplicity inform evaluation, while ratification/authority remain separate.
+7. Semantic convergence does not require implementation monoculture.
+8. Reconciliation is explicit: fork → difference evidence → candidate improvement → canonical evaluation → ratification → new DesignEpoch → compatible rejoin.
+9. Offline/partitioned operation preserves local safety/authority and records divergence; reconnection does not auto-merge conflicting state.
+10. No federation mechanism creates central control merely by connectivity or replication.
+
+Required tests:
+- reachable public node without opt-in → no deployment;
+- firewall/local policy blocks federation → do not bypass;
+- unsigned/mutated release → quarantine/non-PASS;
+- operator revokes federation authority → synchronization stops without erasing already lawful committed history;
+- largest branch claims constitutional supremacy by popularity → reject;
+- offline branch rejoins with conflicting material state → explicit reconciliation, no silent merge.
+
+P042-D — HUMAN SYSTEMS MAP PROFILE
+Disposition entering review: likely GSL-KR / WorldEvidence profile, NOT new top-level Capability unless current owners are insufficient.
+Recovered intent:
+Represent how human institutions actually operate without conflating formal rules, observed practice and authority.
+
+Minimal delta:
+- model relationships such as actor→authority→rule→process→evidence→decision→action→appeal/audit;
+- every material claim has provenance/evidence status;
+- formal law/rule and observed practice are distinct claim classes/views;
+- jurisdiction/effective dates/currentness mandatory where applicable;
+- contradictions remain explicit rather than silently merged;
+- private systems require applicable authorization/privacy;
+- knowing how a system works creates no access/action authority;
+- continuous updates bind receipts/DesignEpoch/dependency revalidation.
+Prefer existing Knowledge/WorldEvidence/Context/Authority/Legal owners and a purpose-limited profile.
+
+Tests:
+- observed corrupt practice cannot overwrite formal legal rule; both remain distinguishable;
+- public description of a private system cannot grant access;
+- jurisdiction/time change stales affected mappings;
+- contradictory sources remain represented with provenance.
+
+P042-E — TOPIC COMPLETENESS / COVERAGE PROFILE
+Disposition entering review: likely Research/KR/Audit profile, not truth/completeness proof.
+Recovered intent:
+For a declared subject type, define required coverage dimensions and expose known gaps.
+
+Minimal delta:
+- TopicCompletenessProfile declares scope and required dimensions;
+- structural, evidence, operational, quantitative, regional, temporal, contradiction and rights/source-usage coverage may be assessed where applicable;
+- result can be NO_KNOWN_GAP_WITHIN_DECLARED_SCOPE, INCOMPLETE, UNKNOWN, STALE or owner-qualified equivalent; never absolute omniscience;
+- missing/weak coverage can produce research/work candidates but does not create authority or truth;
+- generated views/charts remain provenance-bound and cannot fabricate data;
+- accepted contributions update the knowledge/dependency graph and revalidate affected derived views.
+
+Tests:
+- all registered dimensions covered → NO_KNOWN_GAP_WITHIN_DECLARED_SCOPE, not COMPLETE_TRUTH;
+- missing quantitative evidence prevents quantitative-coverage PASS but need not invalidate unrelated structural coverage;
+- unknown external facts cannot be inferred false from absence;
+- source-rights failure blocks reuse without erasing the factual gap record.
+
+P042-F — MANUFACTURING QUALIFICATION-TRANSFER PROFILE
+Disposition entering review: recovered domain example; should specialize existing CapabilityTransferAssessment / qualification / Dependency / DesignEpoch owners.
+Recovered intent:
+When supplier/factory/material/process/equipment/fixture changes, reuse only qualification evidence whose applicability survives, identify invalidated evidence/tests, and generate a requalification/inspection plan.
+
+Minimal delta:
+1. bind source and target process/product/context/standard roots;
+2. declare equivalence/applicability conditions by requirement/claim, not whole-product similarity;
+3. preserve exact qualification evidence lineage and independence;
+4. invalidators include material/process/equipment/tooling/fixture/environment/jurisdiction/standard/model/measurement changes as applicable;
+5. partial transfer allowed only for unaffected qualified claims;
+6. similarity or common supplier does not transfer certification;
+7. output is a qualification-transfer assessment plus required retest/reinspection plan; it is not external certification.
+
+Tests:
+- changed fixture with evidence proving unaffected dimensions transfers only those qualified claims;
+- planted non-transferable evidence is rejected and corresponding test is reopened;
+- standard/jurisdiction revision stales affected transfer;
+- source certification alone does not certify target process.
+
+HISTORY ITEMS CLOSED AS NO-NEW-SEMANTIC / ALREADY PRESENT
+- KR-CEA: already carried extensively in current v15.9.
+- Derived-View Divergence Ledger: already present with schema/invariants/tests.
+- legal SMT encoding-vs-reality distinction: already present via LegalFormalizationInterpretationReceipt/invariants/tests.
+- cumulative-change anti-fragmentation: already DesignEpoch.
+- GAC / Grounded Adaptive Competence: useful synthesis but current Context/Dependency/Compare/Reason/DesignEpoch/control-loop owners already implement the operative requirements; retain as explanatory lineage, no new theory owner.
+- GTAH: typed-architecture/navigation idea is subsumed by current owner/type/registry/current-reading structure; no second architecture hierarchy.
+- old TRAIN/APAO/GAIA/REAL/GSL-AR generations: historical lineage; current v15.9 owners supersede their active semantics unless separately preserved.
+- KR-CEA/source-rights/public-access boundaries: already explicit in v15.9.
+- generic justice/federation authority tests already present where current owners cover them.
+
+REMAINING DEFERRED / NOT RECOVERED ENOUGH FOR ADMISSION
+- full CASI adapter activation package: exact current adapter interface/qualification plan still insufficiently recovered;
+- any historical acronym/profile whose exact operational semantics cannot be source-recovered;
+- old claims of empirical/model performance without current evidence.
+
+REVIEW TASK
+For P042-A..F:
+- compare to DO_NOTHING and current v15.9 owner coverage;
+- classify NEW / EXTENDS / REFINES / ALIAS / DUPLICATE / REJECT / DEFER;
+- prefer bounded profiles and existing owners;
+- no new authority source, constitutional root, top-level engine, or automatic SchemaID;
+- identify any rights/privacy/child-safety/federation/legal/jurisdiction failure;
+- identify minimum invariants/tests worth adding to final v15.9;
+- do not infer that a recovered historical proposal was previously ratified merely because it existed in chat.
