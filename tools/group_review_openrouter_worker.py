@@ -267,7 +267,11 @@ def cycle_id(packet: dict, selected: list[dict], policy: dict) -> str:
 
 def next_reviewer(cycle: dict, selected: list[dict]) -> dict | None:
     findings = cycle.get("findings") or {}
-    for row in selected:
+    # A provider that returned a billed but unusable response must not starve
+    # the other independent cheap reviewers. DeepSeek is attempted last while
+    # its current endpoint returns null textual content.
+    ordered = sorted(selected, key=lambda row: (row.get("family") == "deepseek", selected.index(row)))
+    for row in ordered:
         if row["family"] not in findings:
             return row
     return None
