@@ -1,0 +1,37 @@
+{
+  "schema": "GardenRetiredWorkRecoveryBatch/v1",
+  "batch": "public-4",
+  "base_recovery_sha": "7c38ec120836f8006a3a16a072c2e56ca4768d38",
+  "sources": [
+    {
+      "branch": "chatgpt/v1511-whole-system-audit-20260920",
+      "head_sha": "c45d7b4be50d699cf957db0153ad519f75258a45",
+      "comparison_base_sha": "80c252618de523bd85df91a9d0b4fc279d815432",
+      "pr_number": 273,
+      "archived_files": [
+        {
+          "source_path": "agent/v15.11/GARDEN_CATALOGUE_v15.11_REVIEW_CORE.txt",
+          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1511-whole-system-audit-20260920/agent/v15.11/GARDEN_CATALOGUE_v15.11_REVIEW_CORE.txt",
+          "blob_sha": "e63fb15d5b183fb617359da3c3091d4c6a4428ec",
+          "status": "modified",
+          "size": 8435
+        },
+        {
+          "source_path": "agent/v15.11/OPENROUTER_RETENTION_BASELINE_2026-09-20.md",
+          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1511-whole-system-audit-20260920/agent/v15.11/OPENROUTER_RETENTION_BASELINE_2026-09-20.md",
+          "blob_sha": "cd61b8b4c2fa1f447be86476a13451774b66af2a",
+          "status": "added",
+          "size": 2030
+        },
+        {
+          "source_path": "agent/v15.11/WHOLE_SYSTEM_CONTINUATION_AUDIT_2026-09-20.md",
+          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1511-whole-system-audit-20260920/agent/v15.11/WHOLE_SYSTEM_CONTINUATION_AUDIT_2026-09-20.md",
+          "blob_sha": "7e76fb3bafe1ca493078c6114d05b6cf1b38fa81",
+          "status": "added",
+          "size": 4579
+        }
+      ],
+      "deleted_paths": []
+    }
+  ]
+}
