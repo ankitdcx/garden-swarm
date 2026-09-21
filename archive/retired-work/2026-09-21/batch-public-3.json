@@ -10,207 +10,207 @@
       "pr_number": 282,
       "archived_files": [
         {
-          "source_path": ".github/workflows/standalone-release-import.yml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/.github/workflows/standalone-release-import.yml",
           "blob_sha": "3e6f299765ab9bfc44fddb3a79d0b446b39fc093",
           "status": "added",
-          "size": 1705
+          "size": 1705,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/.github/workflows/standalone-release-import.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/.github/workflows/standalone-release-import.yml.blob"
         },
         {
-          "source_path": "agent/releases/content/CONTENT_OBJECTS_v15x.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json",
           "blob_sha": "56a49b7964bcbbc067e921d2071684ba9b364de7",
           "status": "added",
-          "size": 2590
+          "size": 2590,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json.blob"
         },
         {
-          "source_path": "agent/releases/content/MATERIALIZATION_STATUS.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/MATERIALIZATION_STATUS.json",
           "blob_sha": "5252bc8e52077cc9bcafa215f934ec6be9fbad34",
           "status": "added",
-          "size": 1988
+          "size": 1988,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/content/MATERIALIZATION_STATUS.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/MATERIALIZATION_STATUS.json.blob"
         },
         {
-          "source_path": "agent/releases/content/TEXT_PARTS_MANIFEST.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json",
           "blob_sha": "0f05e0447b11435be254b2e5fcfa08ce89a5c21a",
           "status": "added",
-          "size": 2247
+          "size": 2247,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json.blob"
         },
         {
-          "source_path": "agent/releases/inbox/README.md",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/inbox/README.md",
           "blob_sha": "6683dadd36dfba0c6be567f2aee2f9e63f620968",
           "status": "added",
-          "size": 980
+          "size": 980,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/inbox/README.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/inbox/README.md.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
           "blob_sha": "842585252ffcab33394f6bd79d33bf14b06fce32",
           "status": "added",
-          "size": 1768
+          "size": 1768,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
           "blob_sha": "17cd3d1b1fafa7dfdae9be6af0c489641e978738",
           "status": "added",
-          "size": 15172
+          "size": 15172,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
           "blob_sha": "cc73f160ee144390a3993ccd6b18233d09d16ee1",
           "status": "added",
-          "size": 11958
+          "size": 11958,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
           "blob_sha": "0de1bc85c809082452290975c4add642f7b40470",
           "status": "added",
-          "size": 11974
+          "size": 11974,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
           "blob_sha": "594c0d6ee320ed7612608eefa9666eca69f75217",
           "status": "added",
-          "size": 11996
+          "size": 11996,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
           "blob_sha": "a517c3a4878c4df37a7ac98e4a9215d6d0aa1bff",
           "status": "added",
-          "size": 4796
+          "size": 4796,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
           "blob_sha": "d26d990c3fcdcac1dd4ea848f8e87befd8ff510e",
           "status": "added",
-          "size": 11984
+          "size": 11984,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
           "blob_sha": "8e9037e8b672ebb9b17399d7598abef39a7fe195",
           "status": "added",
-          "size": 1633
+          "size": 1633,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
           "blob_sha": "9eeb68b49ce27cc27def954c539ea5398266a6f1",
           "status": "added",
-          "size": 3015
+          "size": 3015,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/verify_v15.10_retention.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/verify_v15.10_retention.py",
           "blob_sha": "677c1035699d0cd70fca219ead6e178c1800bec8",
           "status": "added",
-          "size": 1147
+          "size": 1147,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/verify_v15.10_retention.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.10/verify_v15.10_retention.py.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
           "blob_sha": "7f7ede590081395d760258d0814e4725cd5c788e",
           "status": "added",
-          "size": 2862
+          "size": 2862,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
           "blob_sha": "e29dcaa503db50ac95a098d0fbc6529f4300f188",
           "status": "added",
-          "size": 17629
+          "size": 17629,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
           "blob_sha": "284ee2293efe0713ba52d10c5821f451cf3ff442",
           "status": "added",
-          "size": 9839
+          "size": 9839,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
           "blob_sha": "ebcfb5ef273fcbeef962b0dc4a5a279b4848d997",
           "status": "added",
-          "size": 11968
+          "size": 11968,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
           "blob_sha": "dcbc7a581fcb9ea009f2da90f929377fc56fdf1b",
           "status": "added",
-          "size": 11996
+          "size": 11996,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
           "blob_sha": "231a97bb28713ffa8eea11ca33e0998110c66b4c",
           "status": "added",
-          "size": 11980
+          "size": 11980,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
           "blob_sha": "6d29c3b588e7e8ea577ddba2fb4d359538138a51",
           "status": "added",
-          "size": 6093
+          "size": 6093,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
           "blob_sha": "792b47a2f5e8136c99738481a078aec46381b1c4",
           "status": "added",
-          "size": 12732
+          "size": 12732,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
           "blob_sha": "8dd5eb6321cca1293c024536a79a3c8185ed372b",
           "status": "added",
-          "size": 1199
+          "size": 1199,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/verify_v15.11.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/verify_v15.11.py",
           "blob_sha": "6ca118f16b99fa1b75865d57a2cb40e1c9127d25",
           "status": "added",
-          "size": 770
+          "size": 770,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/verify_v15.11.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/agent/releases/v15.11/verify_v15.11.py.blob"
         },
         {
-          "source_path": "tests/test_standalone_garden_release.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tests/test_standalone_garden_release.py",
           "blob_sha": "9137821ccb07dafe6a5c5723fabc565b7de51b05",
           "status": "added",
-          "size": 4103
+          "size": 4103,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/tests/test_standalone_garden_release.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tests/test_standalone_garden_release.py.blob"
         },
         {
-          "source_path": "tools/import_standalone_release_payload.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tools/import_standalone_release_payload.py",
           "blob_sha": "b082515897fe400228be3e73e328b269ca5b68ca",
           "status": "added",
-          "size": 3841
+          "size": 3841,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/tools/import_standalone_release_payload.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tools/import_standalone_release_payload.py.blob"
         },
         {
-          "source_path": "tools/reconstruct_standalone_garden_release.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tools/reconstruct_standalone_garden_release.py",
           "blob_sha": "cce6e51e8222745497710107f51d9f53bccb3cd9",
           "status": "added",
-          "size": 6169
+          "size": 6169,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/tools/reconstruct_standalone_garden_release.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/tools/reconstruct_standalone_garden_release.py.blob"
         },
         {
-          "source_path": "workstreams/2026-09-20-v1510-v1511-standalone-release.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json",
           "blob_sha": "f2e175e9e0f56fd61ac33534082a5829b04a7a63",
           "status": "added",
-          "size": 2541
+          "size": 2541,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-materialization-current-main-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-materialization-current-main-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json.blob"
         }
       ],
       "deleted_paths": []
@@ -222,207 +222,207 @@
       "pr_number": 271,
       "archived_files": [
         {
-          "source_path": ".github/workflows/standalone-release-import.yml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/.github/workflows/standalone-release-import.yml",
           "blob_sha": "3e6f299765ab9bfc44fddb3a79d0b446b39fc093",
           "status": "added",
-          "size": 1705
+          "size": 1705,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/.github/workflows/standalone-release-import.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/.github/workflows/standalone-release-import.yml.blob"
         },
         {
-          "source_path": "agent/releases/content/CONTENT_OBJECTS_v15x.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json",
           "blob_sha": "56a49b7964bcbbc067e921d2071684ba9b364de7",
           "status": "added",
-          "size": 2590
+          "size": 2590,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/CONTENT_OBJECTS_v15x.json.blob"
         },
         {
-          "source_path": "agent/releases/content/MATERIALIZATION_STATUS.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/MATERIALIZATION_STATUS.json",
           "blob_sha": "aa52088019b097aad0d4531c76de0b3ed9b13843",
           "status": "added",
-          "size": 1027
+          "size": 1027,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/content/MATERIALIZATION_STATUS.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/MATERIALIZATION_STATUS.json.blob"
         },
         {
-          "source_path": "agent/releases/content/TEXT_PARTS_MANIFEST.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json",
           "blob_sha": "0f05e0447b11435be254b2e5fcfa08ce89a5c21a",
           "status": "added",
-          "size": 2247
+          "size": 2247,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/content/TEXT_PARTS_MANIFEST.json.blob"
         },
         {
-          "source_path": "agent/releases/inbox/README.md",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/inbox/README.md",
           "blob_sha": "6683dadd36dfba0c6be567f2aee2f9e63f620968",
           "status": "added",
-          "size": 980
+          "size": 980,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/inbox/README.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/inbox/README.md.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
           "blob_sha": "842585252ffcab33394f6bd79d33bf14b06fce32",
           "status": "added",
-          "size": 1768
+          "size": 1768,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/CURRENT_READING_MAP_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
           "blob_sha": "17cd3d1b1fafa7dfdae9be6af0c489641e978738",
           "status": "added",
-          "size": 15172
+          "size": 15172,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_BOOK_v15.10.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
           "blob_sha": "cc73f160ee144390a3993ccd6b18233d09d16ee1",
           "status": "added",
-          "size": 11958
+          "size": 11958,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part01.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
           "blob_sha": "0de1bc85c809082452290975c4add642f7b40470",
           "status": "added",
-          "size": 11974
+          "size": 11974,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part02.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
           "blob_sha": "594c0d6ee320ed7612608eefa9666eca69f75217",
           "status": "added",
-          "size": 11996
+          "size": 11996,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part03.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
           "blob_sha": "a517c3a4878c4df37a7ac98e4a9215d6d0aa1bff",
           "status": "added",
-          "size": 4796
+          "size": 4796,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_TECHNICAL_v15.10.part04.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
           "blob_sha": "d26d990c3fcdcac1dd4ea848f8e87befd8ff510e",
           "status": "added",
-          "size": 11984
+          "size": 11984,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/GARDEN_VERSION_HISTORY_v15.10.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
           "blob_sha": "8e9037e8b672ebb9b17399d7598abef39a7fe195",
           "status": "added",
-          "size": 1633
+          "size": 1633,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RELEASE_MANIFEST_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
           "blob_sha": "9eeb68b49ce27cc27def954c539ea5398266a6f1",
           "status": "added",
-          "size": 3015
+          "size": 3015,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/RETENTION_CLOSURE_RECEIPT_v15.10.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.10/verify_v15.10_retention.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/verify_v15.10_retention.py",
           "blob_sha": "677c1035699d0cd70fca219ead6e178c1800bec8",
           "status": "added",
-          "size": 1147
+          "size": 1147,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.10/verify_v15.10_retention.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.10/verify_v15.10_retention.py.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
           "blob_sha": "7f7ede590081395d760258d0814e4725cd5c788e",
           "status": "added",
-          "size": 2862
+          "size": 2862,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/CLOSURE_RECEIPT_v15.11.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
           "blob_sha": "e29dcaa503db50ac95a098d0fbc6529f4300f188",
           "status": "added",
-          "size": 17629
+          "size": 17629,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_BOOK_v15.11.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
           "blob_sha": "284ee2293efe0713ba52d10c5821f451cf3ff442",
           "status": "added",
-          "size": 9839
+          "size": 9839,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_CATALOGUE_v15.11_DELTA.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
           "blob_sha": "ebcfb5ef273fcbeef962b0dc4a5a279b4848d997",
           "status": "added",
-          "size": 11968
+          "size": 11968,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part01.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
           "blob_sha": "dcbc7a581fcb9ea009f2da90f929377fc56fdf1b",
           "status": "added",
-          "size": 11996
+          "size": 11996,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part03.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
           "blob_sha": "231a97bb28713ffa8eea11ca33e0998110c66b4c",
           "status": "added",
-          "size": 11980
+          "size": 11980,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part04.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
           "blob_sha": "6d29c3b588e7e8ea577ddba2fb4d359538138a51",
           "status": "added",
-          "size": 6093
+          "size": 6093,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_TECHNICAL_v15.11.part05.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
           "blob_sha": "792b47a2f5e8136c99738481a078aec46381b1c4",
           "status": "added",
-          "size": 12732
+          "size": 12732,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/GARDEN_VERSION_HISTORY_v15.11.txt.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
           "blob_sha": "8dd5eb6321cca1293c024536a79a3c8185ed372b",
           "status": "added",
-          "size": 1199
+          "size": 1199,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/RELEASE_MANIFEST_v15.11.json.blob"
         },
         {
-          "source_path": "agent/releases/v15.11/verify_v15.11.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/verify_v15.11.py",
           "blob_sha": "6ca118f16b99fa1b75865d57a2cb40e1c9127d25",
           "status": "added",
-          "size": 770
+          "size": 770,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/agent/releases/v15.11/verify_v15.11.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/agent/releases/v15.11/verify_v15.11.py.blob"
         },
         {
-          "source_path": "tests/test_standalone_garden_release.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tests/test_standalone_garden_release.py",
           "blob_sha": "5b0ff0183330bb10907a5eef75e9e67b770bbd4c",
           "status": "added",
-          "size": 3589
+          "size": 3589,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/tests/test_standalone_garden_release.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tests/test_standalone_garden_release.py.blob"
         },
         {
-          "source_path": "tools/import_standalone_release_payload.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tools/import_standalone_release_payload.py",
           "blob_sha": "b082515897fe400228be3e73e328b269ca5b68ca",
           "status": "added",
-          "size": 3841
+          "size": 3841,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/tools/import_standalone_release_payload.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tools/import_standalone_release_payload.py.blob"
         },
         {
-          "source_path": "tools/reconstruct_standalone_garden_release.py",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tools/reconstruct_standalone_garden_release.py",
           "blob_sha": "cce6e51e8222745497710107f51d9f53bccb3cd9",
           "status": "added",
-          "size": 6169
+          "size": 6169,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/tools/reconstruct_standalone_garden_release.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/tools/reconstruct_standalone_garden_release.py.blob"
         },
         {
-          "source_path": "workstreams/2026-09-20-v1510-v1511-standalone-release.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json",
           "blob_sha": "f2e175e9e0f56fd61ac33534082a5829b04a7a63",
           "status": "added",
-          "size": 2541
+          "size": 2541,
+          "source_path_uri": "garden://retired-source/chatgpt/v1510-v1511-standalone-release-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1510-v1511-standalone-release-20260920/workstreams/2026-09-20-v1510-v1511-standalone-release.json.blob"
         }
       ],
       "deleted_paths": []
@@ -434,11 +434,11 @@
       "pr_number": 285,
       "archived_files": [
         {
-          "source_path": "agent/v15.11/V15X_RETENTION_CLOSURE_STATUS_2026-09-20.md",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__v1511-final-retention-status-20260920/agent/v15.11/V15X_RETENTION_CLOSURE_STATUS_2026-09-20.md",
           "blob_sha": "4266553bb416292e0ca7d4c8d3b758dbcfaab80d",
           "status": "added",
-          "size": 3107
+          "size": 3107,
+          "source_path_uri": "garden://retired-source/chatgpt/v1511-final-retention-status-20260920/agent/v15.11/V15X_RETENTION_CLOSURE_STATUS_2026-09-20.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v1511-final-retention-status-20260920/agent/v15.11/V15X_RETENTION_CLOSURE_STATUS_2026-09-20.md.blob"
         }
       ],
       "deleted_paths": []

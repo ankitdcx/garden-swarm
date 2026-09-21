@@ -10,102 +10,102 @@
       "pr_number": 252,
       "archived_files": [
         {
-          "source_path": ".github/workflows/garden-relay-android.yml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/.github/workflows/garden-relay-android.yml",
           "blob_sha": "c635a4a1d3b7990448ed0c73d13fb194add45f7b",
           "status": "added",
-          "size": 1488
+          "size": 1488,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/.github/workflows/garden-relay-android.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/.github/workflows/garden-relay-android.yml.blob"
         },
         {
-          "source_path": "agents/android-review-adapter-registry.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/agents/android-review-adapter-registry.json",
           "blob_sha": "429ece88decd6b2081c5830122d87198534a4eaa",
           "status": "added",
-          "size": 1341
+          "size": 1341,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/agents/android-review-adapter-registry.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/agents/android-review-adapter-registry.json.blob"
         },
         {
-          "source_path": "android/garden-relay/.gitignore",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/.gitignore",
           "blob_sha": "2b7860c489dc37cbab9bc9ba26ed2117b83f1855",
           "status": "added",
-          "size": 57
+          "size": 57,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/.gitignore",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/.gitignore.blob"
         },
         {
-          "source_path": "android/garden-relay/app/build.gradle",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/build.gradle",
           "blob_sha": "c78e1e56b8f601ac0ac28367c541664ac2142b46",
           "status": "added",
-          "size": 939
+          "size": 939,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/build.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/build.gradle.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/AndroidManifest.xml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/AndroidManifest.xml",
           "blob_sha": "8c4b35cb1461519aa70a2e9f72d816103c2234d0",
           "status": "added",
-          "size": 3054
+          "size": 3054,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/AndroidManifest.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/AndroidManifest.xml.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/aidl/org/garden/relay/IUiProbeService.aidl",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/aidl/org/garden/relay/IUiProbeService.aidl",
           "blob_sha": "90a55bbd8ee8a3af84f432f02333930c19d89831",
           "status": "added",
-          "size": 261
+          "size": 261,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/aidl/org/garden/relay/IUiProbeService.aidl",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/aidl/org/garden/relay/IUiProbeService.aidl.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java",
           "blob_sha": "7c5447bdeb192d3f5d76ab52d1061004a4288f5b",
           "status": "added",
-          "size": 21191
+          "size": 21191,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/java/org/garden/relay/UiProbeService.java",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/UiProbeService.java",
           "blob_sha": "a9ec7a9455224c4c1dbd6bd52db12d8b4d8a8f5f",
           "status": "added",
-          "size": 4430
+          "size": 4430,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/UiProbeService.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/java/org/garden/relay/UiProbeService.java.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/res/values/strings.xml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/values/strings.xml",
           "blob_sha": "12777a74bc1e0f231a3840be0baa3413bfe332e6",
           "status": "added",
-          "size": 218
+          "size": 218,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/values/strings.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/values/strings.xml.blob"
         },
         {
-          "source_path": "android/garden-relay/app/src/main/res/xml/file_paths.xml",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/xml/file_paths.xml",
           "blob_sha": "63f1a879a55bc5faf9d713ed34b13e9c24751dd8",
           "status": "added",
-          "size": 209
+          "size": 209,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/xml/file_paths.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/app/src/main/res/xml/file_paths.xml.blob"
         },
         {
-          "source_path": "android/garden-relay/build.gradle",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/build.gradle",
           "blob_sha": "5b7ccba7c566afb5057eaea1b10b99b083851fe4",
           "status": "added",
-          "size": 73
+          "size": 73,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/build.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/build.gradle.blob"
         },
         {
-          "source_path": "android/garden-relay/gradle.properties",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/gradle.properties",
           "blob_sha": "923baa11768911d66a53a5903f42e40dd3e0a952",
           "status": "added",
-          "size": 106
+          "size": 106,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/gradle.properties",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/gradle.properties.blob"
         },
         {
-          "source_path": "android/garden-relay/settings.gradle",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/settings.gradle",
           "blob_sha": "364ea8a90bacc19376e203048ccc7753c0d8335f",
           "status": "added",
-          "size": 272
+          "size": 272,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/android/garden-relay/settings.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/android/garden-relay/settings.gradle.blob"
         },
         {
-          "source_path": "docs/ANDROID_CONSUMER_APP_AUTOMATION_BRIDGE.md",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/docs/ANDROID_CONSUMER_APP_AUTOMATION_BRIDGE.md",
           "blob_sha": "2f66e465443c8d4f320dfb0162ad7d026aaefe00",
           "status": "added",
-          "size": 3447
+          "size": 3447,
+          "source_path_uri": "garden://retired-source/chatgpt/android-app-automation-bridge-20260920/docs/ANDROID_CONSUMER_APP_AUTOMATION_BRIDGE.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__android-app-automation-bridge-20260920/docs/ANDROID_CONSUMER_APP_AUTOMATION_BRIDGE.md.blob"
         }
       ],
       "deleted_paths": []
@@ -117,11 +117,11 @@
       "pr_number": 310,
       "archived_files": [
         {
-          "source_path": "reviews/external/COUNCIL_OF_HIGH_INTELLIGENCE_PRIOR_ART_REVIEW_2026-09-21.md",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__council-prior-art-review-20260921/reviews/external/COUNCIL_OF_HIGH_INTELLIGENCE_PRIOR_ART_REVIEW_2026-09-21.md",
           "blob_sha": "2d1b63e6d94c6b5a8a1c9b179e4790b5ca31ee87",
           "status": "added",
-          "size": 7597
+          "size": 7597,
+          "source_path_uri": "garden://retired-source/chatgpt/council-prior-art-review-20260921/reviews/external/COUNCIL_OF_HIGH_INTELLIGENCE_PRIOR_ART_REVIEW_2026-09-21.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__council-prior-art-review-20260921/reviews/external/COUNCIL_OF_HIGH_INTELLIGENCE_PRIOR_ART_REVIEW_2026-09-21.md.blob"
         }
       ],
       "deleted_paths": []
@@ -133,39 +133,39 @@
       "pr_number": 281,
       "archived_files": [
         {
-          "source_path": "browser/firefox-garden-review/README.txt",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/README.txt",
           "blob_sha": "5ef206e8f52ea9363e483cf7da24e774330d2133",
           "status": "added",
-          "size": 298
+          "size": 298,
+          "source_path_uri": "garden://retired-source/chatgpt/firefox-review-controller-20260920/browser/firefox-garden-review/README.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/README.txt.blob"
         },
         {
-          "source_path": "browser/firefox-garden-review/background.js",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/background.js",
           "blob_sha": "ce1d2ef81e7130bd3b97b03bedc5933837ee822f",
           "status": "added",
-          "size": 400
+          "size": 400,
+          "source_path_uri": "garden://retired-source/chatgpt/firefox-review-controller-20260920/browser/firefox-garden-review/background.js",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/background.js.blob"
         },
         {
-          "source_path": "browser/firefox-garden-review/content.js",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/content.js",
           "blob_sha": "1efa7dad5ca274643ea0112ecb2317c7e1046ec2",
           "status": "added",
-          "size": 1092
+          "size": 1092,
+          "source_path_uri": "garden://retired-source/chatgpt/firefox-review-controller-20260920/browser/firefox-garden-review/content.js",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/content.js.blob"
         },
         {
-          "source_path": "browser/firefox-garden-review/garden-review-bridge.user.js",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/garden-review-bridge.user.js",
           "blob_sha": "3a00fa9e7da8e355079dcfee16e99f0c203f4246",
           "status": "added",
-          "size": 3588
+          "size": 3588,
+          "source_path_uri": "garden://retired-source/chatgpt/firefox-review-controller-20260920/browser/firefox-garden-review/garden-review-bridge.user.js",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/garden-review-bridge.user.js.blob"
         },
         {
-          "source_path": "browser/firefox-garden-review/manifest.json",
-          "archive_path": "archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/manifest.json",
           "blob_sha": "d9e1c98fd3bd96d11343db87c1db1334c367c10f",
           "status": "added",
-          "size": 540
+          "size": 540,
+          "source_path_uri": "garden://retired-source/chatgpt/firefox-review-controller-20260920/browser/firefox-garden-review/manifest.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__firefox-review-controller-20260920/browser/firefox-garden-review/manifest.json.blob"
         }
       ],
       "deleted_paths": []
