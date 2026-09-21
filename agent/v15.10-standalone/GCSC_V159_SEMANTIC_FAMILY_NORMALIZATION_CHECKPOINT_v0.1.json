@@ -1,0 +1,10 @@
+{
+ "schema":"GardenV159SemanticFamilyNormalizationCheckpoint/v0.1",
+ "status":"CONSERVATIVE_MACHINE_CLUSTERING_COMPLETE",
+ "source_unique_semantic_units":14542,
+ "conservative_machine_families":11537,
+ "distinct_id_nodes":2142,
+ "id_cooccurrence_edges":720,
+ "warning":"11537 is NOT the final count of semantically independent rules. It is a conservative pre-equivalence partition. Canonical collapse requires source-preserving equivalence/refinement receipts.",
+ "next_pass":["controlling-owner resolution","artifact-role classification","closure binding Schema/Invariant/Test/Proof/Function/Registry/Dependency","semantic-delta comparison","equivalence/refinement receipts","orphan/redundancy audit"]
+}
