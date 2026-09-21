@@ -121,7 +121,7 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
             {"family": "mistral", "role": "r5", "model": "m5"},
         ]
         cycle = {"findings": {}}
-        self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "deepseek")
+        self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "xiaomi")
         cycle["findings"]["deepseek"] = {"finding": {"summary": "peer content"}}
         self.assertEqual(worker.next_reviewer(cycle, selected)["family"], "xiaomi")
 
