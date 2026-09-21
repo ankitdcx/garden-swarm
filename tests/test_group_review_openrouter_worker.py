@@ -418,3 +418,12 @@ class GroupReviewErrorNamespaceRegressionTests(unittest.TestCase):
         source=inspect.getsource(w.run)
         self.assertIn("legacy.error.HTTPError", source)
         self.assertNotIn("isinstance(exc, error.HTTPError)", source)
+
+
+class GroupReviewNullContentRegressionTests(unittest.TestCase):
+    def test_null_provider_content_is_rejected_before_hashing(self):
+        import inspect
+        from tools import group_review_openrouter_worker as w
+        source=inspect.getsource(w.run)
+        self.assertIn("provider returned no textual review content", source)
+        self.assertIn("not isinstance(raw_text, str)", source)
