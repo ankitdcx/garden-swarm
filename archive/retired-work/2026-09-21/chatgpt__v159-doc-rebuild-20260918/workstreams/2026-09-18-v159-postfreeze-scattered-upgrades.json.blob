@@ -1,0 +1,51 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:v159-postfreeze-scattered-upgrades:20260918",
+  "work_package_id": "GARDEN-V159-POSTFREEZE-SCATTERED-UPGRADES-20260918",
+  "branch": "chatgpt/v159-postfreeze-scattered-upgrades-20260918",
+  "base_sha": "9e4bbce09b98353b45a5f7f72ffeef56da6f1831",
+  "dependency_intent_ids": [
+    "chatgpt:git-process-v2-swarm:20260916"
+  ],
+  "integration_strategy": "REVALIDATE_AGAINST_CURRENT_MAIN_AND_OPEN_REVIEW_PROCESS_BEFORE_MERGE",
+  "draft_pr_created_before_substantial_edit": true,
+  "substantial_edit_started": true,
+  "status": "COMPLETE",
+  "bounded_scope": {
+    "purpose": "Recover recent chat-scattered v15.9 candidates outside the frozen P001-P037 campaign, deduplicate against final v15.9, obtain blind OpenRouter review evidence, synthesize/final-challenge accepted deltas, and materialize a successor v15.9 working candidate without changing canonical authority.",
+    "candidate_groups": [
+      "P038_ORH_CIAH",
+      "P039_UAAC_DSDIH",
+      "P040_SOURCE_RIGHTS_DELTA_MANAGEMENT",
+      "P041_MACHINE_INSPECTION_PRIVACY_JUSTICE"
+    ],
+    "excluded_as_already_reviewed": [
+      "RCI/P035",
+      "effect polymorphism",
+      "provenance privacy leakage",
+      "epoch hash vs admission receipt",
+      "FEEDBACK_SCC structural semantics",
+      "pure derivation fast paths",
+      "assurance-token attenuation",
+      "stable FunctionContract vs tunable operational profiles"
+    ]
+  },
+  "overlap_preflight": {
+    "open_pr_214": "semantic overlap exists in OpenRouter review-process domain; this work does not modify reviewer registry/quality policy and must be revalidated before merge.",
+    "open_pr_187": "no material semantic/path overlap expected."
+  },
+  "expected_paths": [
+    "workstreams/2026-09-18-v159-postfreeze-scattered-upgrades.json",
+    "review-inputs/v159-postfreeze/**",
+    "tools/v159_postfreeze_single.py",
+    ".github/workflows/v159-postfreeze-review.yml"
+  ],
+  "authority_effect": "NONE",
+  "canonical_effect": false,
+  "draft_pr_number": 218,
+  "last_activity_at": "2026-09-18",
+  "last_completed_step": "FINAL_HISTORY_REVIEW_CONFIRMATION_AND_MATERIALIZATION",
+  "next_incomplete_step": null,
+  "final_disposition_path": "review-inputs/v159-postfreeze/final-disposition.json",
+  "final_commit": "f91c75abd04a8e1408e595136b0239bcd5a5f7d3"
+}

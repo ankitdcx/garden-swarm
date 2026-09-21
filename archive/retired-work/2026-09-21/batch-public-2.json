@@ -1,0 +1,685 @@
+{
+  "schema": "GardenRetiredWorkRecoveryBatch/v1",
+  "batch": "public-2",
+  "base_recovery_sha": "536ce35096712cd4fefe8db22b2359a26e7e0a1d",
+  "sources": [
+    {
+      "branch": "chatgpt/garden-relay-android-20260920",
+      "head_sha": "1bd50d886cfef9920a1a244df02c5ab84b34d943",
+      "comparison_base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+      "pr_number": 239,
+      "archived_files": [
+        {
+          "blob_sha": "c635a4a1d3b7990448ed0c73d13fb194add45f7b",
+          "status": "added",
+          "size": 1488,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/.github/workflows/garden-relay-android.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/.github/workflows/garden-relay-android.yml.blob"
+        },
+        {
+          "blob_sha": "af8015093408a49dd7dcb3ecbacbd419282536bc",
+          "status": "added",
+          "size": 1876,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/agents/parallel-review-controller.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/agents/parallel-review-controller.json.blob"
+        },
+        {
+          "blob_sha": "2b7860c489dc37cbab9bc9ba26ed2117b83f1855",
+          "status": "added",
+          "size": 57,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/.gitignore",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/.gitignore.blob"
+        },
+        {
+          "blob_sha": "aa5cbf8d0e2e5369ac4276569a10e04600ce24f6",
+          "status": "added",
+          "size": 782,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/build.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/build.gradle.blob"
+        },
+        {
+          "blob_sha": "d2e0578ebe7df9ecfc986e327f97b12ed4f8471f",
+          "status": "added",
+          "size": 2428,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/AndroidManifest.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/AndroidManifest.xml.blob"
+        },
+        {
+          "blob_sha": "a93ef7357cfbf6d0a467026e7801cd68b982e0bf",
+          "status": "added",
+          "size": 1338,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/AppBindings.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/AppBindings.java.blob"
+        },
+        {
+          "blob_sha": "cc792c0eef3a04f7599de02dd543bf1fc8acee20",
+          "status": "added",
+          "size": 979,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/Hashing.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/Hashing.java.blob"
+        },
+        {
+          "blob_sha": "da39440be306eb18b9fdd6cddb2ab35db51da395",
+          "status": "added",
+          "size": 2739,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/JobClient.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/JobClient.java.blob"
+        },
+        {
+          "blob_sha": "764a94f51189337e5a8b1c866e7746ca8868d1e8",
+          "status": "added",
+          "size": 5350,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/MainActivity.java.blob"
+        },
+        {
+          "blob_sha": "d1685a4aff0065a34f07dc2f5fd2ecc11cf83d22",
+          "status": "added",
+          "size": 4703,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/ResultStore.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/ResultStore.java.blob"
+        },
+        {
+          "blob_sha": "64b3b3d5aaa9dfa9fb823c909aa1c25a7b73decf",
+          "status": "added",
+          "size": 2478,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/ReviewJob.java",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/java/org/garden/relay/ReviewJob.java.blob"
+        },
+        {
+          "blob_sha": "12777a74bc1e0f231a3840be0baa3413bfe332e6",
+          "status": "added",
+          "size": 218,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/res/values/strings.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/res/values/strings.xml.blob"
+        },
+        {
+          "blob_sha": "e467c7de0fc9080b9e3f4b9ce1dc1324bde9e0ae",
+          "status": "added",
+          "size": 467,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/res/xml/accessibility_service_config.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/res/xml/accessibility_service_config.xml.blob"
+        },
+        {
+          "blob_sha": "63f1a879a55bc5faf9d713ed34b13e9c24751dd8",
+          "status": "added",
+          "size": 209,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/app/src/main/res/xml/file_paths.xml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/app/src/main/res/xml/file_paths.xml.blob"
+        },
+        {
+          "blob_sha": "5b7ccba7c566afb5057eaea1b10b99b083851fe4",
+          "status": "added",
+          "size": 73,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/build.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/build.gradle.blob"
+        },
+        {
+          "blob_sha": "923baa11768911d66a53a5903f42e40dd3e0a952",
+          "status": "added",
+          "size": 106,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/gradle.properties",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/gradle.properties.blob"
+        },
+        {
+          "blob_sha": "364ea8a90bacc19376e203048ccc7753c0d8335f",
+          "status": "added",
+          "size": 272,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/android/garden-relay/settings.gradle",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/android/garden-relay/settings.gradle.blob"
+        },
+        {
+          "blob_sha": "37f8b52ef2713e71ed5a022360192e435d8914e6",
+          "status": "added",
+          "size": 4300,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/docs/GARDEN_RELAY_ANDROID.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/docs/GARDEN_RELAY_ANDROID.md.blob"
+        },
+        {
+          "blob_sha": "fbd0f50280e06c4fa85f94984bd82d532436115f",
+          "status": "added",
+          "size": 1962,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/docs/PARALLEL_ZERO_TOUCH_REVIEW.md",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/docs/PARALLEL_ZERO_TOUCH_REVIEW.md.blob"
+        },
+        {
+          "blob_sha": "231be482d9c5288187488e594cf8df8098163ce2",
+          "status": "modified",
+          "size": 15229,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/gsl/REPO_PROFILE.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/gsl/REPO_PROFILE.json.blob"
+        },
+        {
+          "blob_sha": "962db8d929882a35420c9dfccb2150a252f583cd",
+          "status": "added",
+          "size": 1102,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/relay/mobile/current-job.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/relay/mobile/current-job.json.blob"
+        },
+        {
+          "blob_sha": "6a9a0c49478e097411ee06921c2115db5b59717e",
+          "status": "added",
+          "size": 978,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/relay/mobile/dashboard-status.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/relay/mobile/dashboard-status.json.blob"
+        },
+        {
+          "blob_sha": "0e4051a974278789c488690b72fb9f1d4c9353d8",
+          "status": "added",
+          "size": 574,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/relay/mobile/job-schema-example.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/relay/mobile/job-schema-example.json.blob"
+        },
+        {
+          "blob_sha": "2f7c8d62c8eb9b1f3c1cc35d149ba73058317f83",
+          "status": "added",
+          "size": 1031,
+          "source_path_uri": "garden://retired-source/chatgpt/garden-relay-android-20260920/workstreams/garden-relay-android-20260920.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__garden-relay-android-20260920/workstreams/garden-relay-android-20260920.json.blob"
+        }
+      ],
+      "deleted_paths": []
+    },
+    {
+      "branch": "chatgpt/group-review-operational-closure-20260921",
+      "head_sha": "8e254fa3ab9a049a83cffcef15badaf61b345e06",
+      "comparison_base_sha": "1b6a58b3ee91515655ab61a52d9c1445f816e80c",
+      "pr_number": 311,
+      "archived_files": [
+        {
+          "blob_sha": "3d52d8da8431f21830529c9f7f5402fde2ae608f",
+          "status": "modified",
+          "size": 4465,
+          "source_path_uri": "garden://retired-source/chatgpt/group-review-operational-closure-20260921/agents/reviewer-slot-registry.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__group-review-operational-closure-20260921/agents/reviewer-slot-registry.json.blob"
+        },
+        {
+          "blob_sha": "4d829aa3414e65eb314d9b6e0277a35a060f270f",
+          "status": "modified",
+          "size": 32275,
+          "source_path_uri": "garden://retired-source/chatgpt/group-review-operational-closure-20260921/tools/group_review_openrouter_worker.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__group-review-operational-closure-20260921/tools/group_review_openrouter_worker.py.blob"
+        }
+      ],
+      "deleted_paths": []
+    },
+    {
+      "branch": "chatgpt/v159-doc-rebuild-20260918",
+      "head_sha": "b8cfcaf2afa543b74cc25e294f22b9b71b05c049",
+      "comparison_base_sha": "9e4bbce09b98353b45a5f7f72ffeef56da6f1831",
+      "pr_number": null,
+      "archived_files": [
+        {
+          "blob_sha": "fa7a94ab63b44570dcbdb3ca8b86d128d3b726af",
+          "status": "added",
+          "size": 1141,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-doc-structural-review.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-doc-structural-review.yml.blob"
+        },
+        {
+          "blob_sha": "bc7372b376200ebb0c0317c44bfec52f43868a04",
+          "status": "added",
+          "size": 1247,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-challenge.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-challenge.yml.blob"
+        },
+        {
+          "blob_sha": "ae89af41e3b575076c3554a494cb6988d6723294",
+          "status": "added",
+          "size": 1251,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-confirmation.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-confirmation.yml.blob"
+        },
+        {
+          "blob_sha": "cbef1339bdb58c80548e12a52404ef9996da6e15",
+          "status": "added",
+          "size": 1253,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-history-board.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-history-board.yml.blob"
+        },
+        {
+          "blob_sha": "24f7439df22b9d3c7ca97bf9985af95ce3a4b00d",
+          "status": "added",
+          "size": 1087,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-history-glm-retry.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-history-glm-retry.yml.blob"
+        },
+        {
+          "blob_sha": "176a7e17188459e0ac12f95d20a37bdc304d0b0a",
+          "status": "added",
+          "size": 1257,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-history-retry.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-history-retry.yml.blob"
+        },
+        {
+          "blob_sha": "840157e6e451ba56bf9ddb039588a74cd2704302",
+          "status": "added",
+          "size": 1104,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-final-history-xiaomi-retry.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-final-history-xiaomi-retry.yml.blob"
+        },
+        {
+          "blob_sha": "d644f41a2e14ac8dcbd9301aac2402b8ce15623a",
+          "status": "added",
+          "size": 727,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-openrouter-status.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-openrouter-status.yml.blob"
+        },
+        {
+          "blob_sha": "3f164f498747b8ac50a8dd83ed574eb41db5facd",
+          "status": "added",
+          "size": 1270,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-challenge.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-challenge.yml.blob"
+        },
+        {
+          "blob_sha": "afb8d52e73171da3ea0a050d400c0562e7724d15",
+          "status": "added",
+          "size": 1948,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-retry1.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-retry1.yml.blob"
+        },
+        {
+          "blob_sha": "6faeb2e5d6106201ba642d6299ebf70c5f9ce85e",
+          "status": "added",
+          "size": 1511,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-review.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-postfreeze-review.yml.blob"
+        },
+        {
+          "blob_sha": "ec0f81f4bae872296dfd8a6e5a293dc60d075ea0",
+          "status": "added",
+          "size": 1247,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-confirmation.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-confirmation.yml.blob"
+        },
+        {
+          "blob_sha": "db26a56fb2db8980374699f12135ceef0ca3c92c",
+          "status": "added",
+          "size": 1250,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-final-challenge.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-final-challenge.yml.blob"
+        },
+        {
+          "blob_sha": "b09f0ae690daf55ea6a6607685ce98105dc09c37",
+          "status": "added",
+          "size": 1193,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-review.yml",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/.github/workflows/v159-zero-base-review.yml.blob"
+        },
+        {
+          "blob_sha": "d4bac6116f6d227ec0a69ca6e2870e25dbc2a51c",
+          "status": "modified",
+          "size": 8957,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/agents/event-driven-model-quality-policy.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/agents/event-driven-model-quality-policy.json.blob"
+        },
+        {
+          "blob_sha": "40d80a7634712e544dfccc44430b552e10fd1cd3",
+          "status": "modified",
+          "size": 7855,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/agents/independent-branch-convergence-policy.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/agents/independent-branch-convergence-policy.json.blob"
+        },
+        {
+          "blob_sha": "41651b6c609d293ac7801f1bb1601ec9814e2b32",
+          "status": "modified",
+          "size": 7649,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/agents/openrouter-paid-review-policy.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/agents/openrouter-paid-review-policy.json.blob"
+        },
+        {
+          "blob_sha": "eec85a61f1639e19c389b16e56d23d6d8ad77ab6",
+          "status": "added",
+          "size": 6809,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-doc-rebuild/STRUCTURAL_REVIEW_PACKET.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-doc-rebuild/STRUCTURAL_REVIEW_PACKET.txt.blob"
+        },
+        {
+          "blob_sha": "d7849a743dc527cd4dba845b6803be0f43670ec8",
+          "status": "added",
+          "size": 341,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-doc-rebuild/trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-doc-rebuild/trigger.json.blob"
+        },
+        {
+          "blob_sha": "024a72c9eb038ac924ce6910ebef2d9ef22e02aa",
+          "status": "added",
+          "size": 4025,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/CHATGPT_BASELINE.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/CHATGPT_BASELINE.txt.blob"
+        },
+        {
+          "blob_sha": "3c072f852d52a0dbd82fd8d275bf57616d943d08",
+          "status": "added",
+          "size": 1256,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/FINAL_BOARD_EVIDENCE_INDEX.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/FINAL_BOARD_EVIDENCE_INDEX.json.blob"
+        },
+        {
+          "blob_sha": "a930528e606c56c9f00578dd7bf21d55c98ed411",
+          "status": "added",
+          "size": 4048,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P038_ORH_CIAH.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P038_ORH_CIAH.txt.blob"
+        },
+        {
+          "blob_sha": "07522e131ca24babaa22a4b593562f9892ae6346",
+          "status": "added",
+          "size": 5001,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P039_UAAC_DSDIH.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P039_UAAC_DSDIH.txt.blob"
+        },
+        {
+          "blob_sha": "d1d43e2bb5320177d93ae8dbfa218e4bbac1f7c2",
+          "status": "added",
+          "size": 4129,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P040_SOURCE_RIGHTS_DELTA_MANAGEMENT.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P040_SOURCE_RIGHTS_DELTA_MANAGEMENT.txt.blob"
+        },
+        {
+          "blob_sha": "34a3f057645e2013096827064e310d91e796ed78",
+          "status": "added",
+          "size": 3973,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P041_MACHINE_INSPECTION_PRIVACY_JUSTICE.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P041_MACHINE_INSPECTION_PRIVACY_JUSTICE.txt.blob"
+        },
+        {
+          "blob_sha": "fa63e09395e06eb5e23e3b0428351f49b436b0d4",
+          "status": "added",
+          "size": 15237,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P042_HISTORY_RECOVERY.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/P042_HISTORY_RECOVERY.txt.blob"
+        },
+        {
+          "blob_sha": "5828a7d3229cb8dd45968a3b5b904b7144b8d43e",
+          "status": "added",
+          "size": 8575,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE.txt.blob"
+        },
+        {
+          "blob_sha": "178ad412039546d647a351e097c0ead5d68ca17e",
+          "status": "added",
+          "size": 19236,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R2.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R2.txt.blob"
+        },
+        {
+          "blob_sha": "271ecc92bebb6a376767fc1274f769fdf3984cd1",
+          "status": "added",
+          "size": 19515,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R3.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R3.txt.blob"
+        },
+        {
+          "blob_sha": "066e618bb0b9d97a3576edcece3e67c02014cc46",
+          "status": "added",
+          "size": 595,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-glm-retry-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-glm-retry-trigger.json.blob"
+        },
+        {
+          "blob_sha": "486a610161d7b0ed73a820c52c30a5061d2d1bf7",
+          "status": "added",
+          "size": 601,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-retry-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-retry-trigger.json.blob"
+        },
+        {
+          "blob_sha": "4b4e421ac4a1b9baf419dd625c052f5702ae33bb",
+          "status": "added",
+          "size": 442,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-trigger.json.blob"
+        },
+        {
+          "blob_sha": "5a6a8360d39126374fef4d9d4f673508208c88ac",
+          "status": "added",
+          "size": 565,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-xiaomi-retry-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-board-xiaomi-retry-trigger.json.blob"
+        },
+        {
+          "blob_sha": "3e062e4c69923a4baac1044ca03bb24d4d78123c",
+          "status": "added",
+          "size": 447,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-challenge-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-challenge-trigger.json.blob"
+        },
+        {
+          "blob_sha": "0ae6a15f48a151d8619edb428e23e4d1ad1385b8",
+          "status": "added",
+          "size": 474,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-confirmation-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-confirmation-trigger.json.blob"
+        },
+        {
+          "blob_sha": "a05916f218beed888c304541912300d3f900c2f3",
+          "status": "added",
+          "size": 2469,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-disposition.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/final-disposition.json.blob"
+        },
+        {
+          "blob_sha": "e8089ae898a955d502ab59fb7f0372553feb6597",
+          "status": "added",
+          "size": 130,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/key-status-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/key-status-trigger.json.blob"
+        },
+        {
+          "blob_sha": "bfc247f2cc2dd7870e28569e0438f09365a565ca",
+          "status": "added",
+          "size": 546,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/retry1-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/retry1-trigger.json.blob"
+        },
+        {
+          "blob_sha": "199a471c14923ea7762d15080b9308a6336a8d4d",
+          "status": "added",
+          "size": 707,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-postfreeze/trigger.json.blob"
+        },
+        {
+          "blob_sha": "5f0eb27fb55d2345a4ebd3e75aeb19b3c9e3bd5e",
+          "status": "added",
+          "size": 17695,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_CANDIDATE_PACKET.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_CANDIDATE_PACKET.txt.blob"
+        },
+        {
+          "blob_sha": "f0d60abd542f5fdbea19513b9d420cf86ccec095",
+          "status": "added",
+          "size": 13402,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R1.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R1.txt.blob"
+        },
+        {
+          "blob_sha": "4b98f0788b8e4fc1c012cb5e390fa059d1d4f78f",
+          "status": "added",
+          "size": 15219,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R2.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R2.txt.blob"
+        },
+        {
+          "blob_sha": "e8578dca9d642996e5635456a23b9cc2c8fe1c12",
+          "status": "added",
+          "size": 17865,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R3_FINAL.txt",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R3_FINAL.txt.blob"
+        },
+        {
+          "blob_sha": "3a96da80f0054b5cda6203167a6a538330bfd3b9",
+          "status": "added",
+          "size": 549,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/confirmation-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/confirmation-trigger.json.blob"
+        },
+        {
+          "blob_sha": "a99b5a10776836c1c6ae30ea97562502f84e91a7",
+          "status": "added",
+          "size": 564,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/final-challenge-trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/final-challenge-trigger.json.blob"
+        },
+        {
+          "blob_sha": "698e10724b31f883e317ac17d1a922d5e9d8e72e",
+          "status": "added",
+          "size": 2476,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/final-disposition.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/final-disposition.json.blob"
+        },
+        {
+          "blob_sha": "067bc8ab30f30569c9cf00dd60b23db691382735",
+          "status": "added",
+          "size": 665,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/review-inputs/v159-zero-review/trigger.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/review-inputs/v159-zero-review/trigger.json.blob"
+        },
+        {
+          "blob_sha": "e53b1422fce253f2e3fc3f0401a591832bf3858d",
+          "status": "modified",
+          "size": 2250,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tests/test_ip_origin_review_selection.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tests/test_ip_origin_review_selection.py.blob"
+        },
+        {
+          "blob_sha": "7c8a0dbde6c9a14707ab2545424d2347376feb88",
+          "status": "modified",
+          "size": 5251,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tests/test_multi_track_review_policy.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tests/test_multi_track_review_policy.py.blob"
+        },
+        {
+          "blob_sha": "6474a4f54b9fff936dcec9bcb47056d5fce5b349",
+          "status": "modified",
+          "size": 7817,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tests/test_paid_review_routing.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tests/test_paid_review_routing.py.blob"
+        },
+        {
+          "blob_sha": "f9ee61f4cb77c300eee222b5edae9d5882e3ffd0",
+          "status": "modified",
+          "size": 15239,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tests/test_review_context.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tests/test_review_context.py.blob"
+        },
+        {
+          "blob_sha": "4f924e490e4383d3156d5d0fa298fa05d271e514",
+          "status": "modified",
+          "size": 20482,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/independent_branch_protocol.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/independent_branch_protocol.py.blob"
+        },
+        {
+          "blob_sha": "f67326ce6e91e6cd41abd90c56e0c67139aef3f9",
+          "status": "modified",
+          "size": 1651,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/review_budget.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/review_budget.py.blob"
+        },
+        {
+          "blob_sha": "278be42061c3b6fe013802e375dfa91a3d78a2e2",
+          "status": "modified",
+          "size": 3277,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/select_ip_origin_reviewers.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/select_ip_origin_reviewers.py.blob"
+        },
+        {
+          "blob_sha": "1b0617e73dad2fb3a8a642b5fcffec8755d69ce7",
+          "status": "modified",
+          "size": 4146,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/select_paid_matrix_reviewers.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/select_paid_matrix_reviewers.py.blob"
+        },
+        {
+          "blob_sha": "a28f651fe160aed52f74b6e028063e97eb8e5c8a",
+          "status": "added",
+          "size": 2946,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_doc_structural_review.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_doc_structural_review.py.blob"
+        },
+        {
+          "blob_sha": "ead07a3fc5cdd7da44b5d7ca0fef3a2e3d8642ef",
+          "status": "added",
+          "size": 6058,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_final_challenge.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_final_challenge.py.blob"
+        },
+        {
+          "blob_sha": "c689ebe795ff2d333ce043553ae67bee9f3f20a2",
+          "status": "added",
+          "size": 6255,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_final_confirmation.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_final_confirmation.py.blob"
+        },
+        {
+          "blob_sha": "c233bb8da0d2433c42cdb7950611d4cbcc0ed54f",
+          "status": "added",
+          "size": 6618,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_final_history_board.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_final_history_board.py.blob"
+        },
+        {
+          "blob_sha": "820c60dc23bfa3a42056cfa69c22fb1d2dad3351",
+          "status": "added",
+          "size": 932,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_openrouter_status.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_openrouter_status.py.blob"
+        },
+        {
+          "blob_sha": "78e7c5adde77ef04bd92185770fbce6b150e94ea",
+          "status": "added",
+          "size": 3182,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_postfreeze_challenge.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_postfreeze_challenge.py.blob"
+        },
+        {
+          "blob_sha": "cfe472728d8706525255f9040ba4f31cced4af14",
+          "status": "added",
+          "size": 8782,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_postfreeze_single.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_postfreeze_single.py.blob"
+        },
+        {
+          "blob_sha": "69760d4e6a263697f78616fe893380c78f1159fe",
+          "status": "added",
+          "size": 5763,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_zero_base_confirmation.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_zero_base_confirmation.py.blob"
+        },
+        {
+          "blob_sha": "324f6139ce4d6a58eb192087a30bca4973324cae",
+          "status": "added",
+          "size": 5575,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_zero_base_final_challenge.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_zero_base_final_challenge.py.blob"
+        },
+        {
+          "blob_sha": "caed2021fd4078e43dd23d24c614f6071afd0905",
+          "status": "added",
+          "size": 6032,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/tools/v159_zero_base_review.py",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/tools/v159_zero_base_review.py.blob"
+        },
+        {
+          "blob_sha": "dd6af3d36b4f623f36766a01f17313227179bf8a",
+          "status": "added",
+          "size": 2356,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/workstreams/2026-09-18-v159-postfreeze-scattered-upgrades.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/workstreams/2026-09-18-v159-postfreeze-scattered-upgrades.json.blob"
+        },
+        {
+          "blob_sha": "0c57070f6f7e6af5006da250db2f4088924a26f4",
+          "status": "added",
+          "size": 2273,
+          "source_path_uri": "garden://retired-source/chatgpt/v159-doc-rebuild-20260918/workstreams/2026-09-18-v159-zero-review.json",
+          "archive_path_uri": "garden://retired-archive/archive/retired-work/2026-09-21/chatgpt__v159-doc-rebuild-20260918/workstreams/2026-09-18-v159-zero-review.json.blob"
+        }
+      ],
+      "deleted_paths": []
+    }
+  ]
+}

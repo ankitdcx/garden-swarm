@@ -1,0 +1,219 @@
+SECTION AL — v15.11 RUNTIME CONSTITUTIONAL INVENTORY
+
+RCP invariants: RCP-001..RCP-018 as controlling candidate rules in Technical §54.
+Runtime constructs:
+    ConstraintClass
+    InstructionAuthority
+    RuntimeDecision
+    ExternalEnforcementStatus
+    RuntimeResult
+    AuthorityValidationReceipt
+    GoalProposal
+    GoalLease
+    GoalValidationReceipt
+    GoalValidity
+    RuntimeInstruction
+    RuntimeConstitutionContext
+
+Runtime reference functions:
+    _sha256_payload
+    _authority_claim_digest
+    _materiality_claim_digest
+    _authority_validation_result
+    _goal_lease_result
+    classify_instruction_authority
+    _goal_validity_result
+    evaluate_goal
+    _external_block_sources
+    _evaluate_garden_instruction
+    _external_requirement_sources
+    evaluate_instruction
+    evaluate_answer_integrity
+
+Runtime regression obligations:
+    test_instruction_source_class_never_mints_authority_by_identity
+    test_model_selected_long_goal_can_persist_but_creates_no_authority
+    test_external_runtime_rule_can_block_but_cannot_authorize
+    test_external_runtime_constraint_is_never_an_authority_source
+    test_operator_status_without_authority_does_not_create_authority
+    test_model_subgoal_cannot_expand_delegated_scope
+    test_force_install_goal_from_human_still_cannot_mint_global_authority
+    test_high_impact_effect_requires_complete_human_effect_closure
+    test_authorized_low_impact_model_selected_subgoal_can_execute
+    test_revoked_persistent_goal_stops_future_effects
+    test_constraint_blocked_judgment_cannot_be_replaced_by_external_verdict
+    test_constraint_blocked_judgment_is_honest_when_boundary_is_disclosed
+    test_present_authority_envelope_without_validation_is_not_pass
+    test_invalid_authority_claim_rejects_even_when_envelope_exists
+    test_authority_claim_requires_provenance_not_only_object_presence
+    test_revoked_authority_rejects_even_if_envelope_and_validation_remain
+    test_garden_constitution_constrains_but_does_not_authorize_action
+    test_good_goal_does_not_authorize_ungranted_investigative_means
+    test_external_runtime_block_does_not_mask_garden_rejection
+    test_delegation_lineage_requires_explicit_parent_binding
+    test_delegation_lineage_rejects_wrong_parent
+    test_base_human_effect_gates_cannot_be_removed_by_empty_profile_set
+    test_missing_human_effect_materiality_cannot_be_treated_as_low_impact
+    test_human_effect_materiality_is_bound_to_action_and_target
+    test_unvalidated_human_effect_materiality_cannot_admit_action
+    test_persistent_goal_with_stale_design_epoch_is_rejected
+    test_persistent_goal_unknown_dependency_freshness_escalates
+    test_missing_goal_validity_is_not_treated_as_valid
+    test_stale_runtime_assurance_snapshot_rejects
+    test_external_runtime_block_is_bound_to_target_scope
+    test_changed_authority_envelope_cannot_reuse_old_validation_digest
+    test_changed_materiality_value_cannot_reuse_old_validation_digest
+    test_authority_receipt_must_bind_exact_jurisdiction_and_context
+    test_authority_receipt_requires_real_independence
+    test_goal_lease_cannot_survive_authority_claim_change
+    test_goal_validation_receipt_cannot_reuse_old_lease_digest
+    test_external_requirement_conflict_preserves_garden_rejection
+    test_expired_authority_validation_receipt_rejects
+    test_old_design_epoch_authority_receipt_cannot_be_replayed
+
+
+SECTION AM — v15.11 GOVERNED TRANSITION INVENTORY
+
+GTF invariants: GTF-T01..GTF-T12 as controlling candidate rules in Technical §55.
+Transition constructs:
+    TransitionStage
+    TransitionAssuranceBinding
+    TransitionAssuranceReceipt
+    AuthorityDelta
+    TransitionDecision
+    TransitionProposal
+    TransitionContext
+    TransitionReceipt
+    TransitionResult
+    RecoveryProposal
+
+Transition reference functions:
+    _sha256_payload
+    _binding_digest
+    _hard_gates_digest
+    _criteria_profile_digest
+    _recovery_state_digest
+    _transition_assurance_receipt_result
+    _assurance_binding_result
+    _criteria_result
+    _evaluate_transition_core
+    _evaluate_recovery_core
+    _build_transition_receipt
+    evaluate_transition
+    evaluate_recovery
+
+Transition regression obligations:
+    test_shadow_to_parallel_can_advance_without_minting_authority
+    test_declared_stage_cannot_be_skipped
+    test_unknown_transition_authority_is_not_pass
+    test_invalid_transition_authority_rejects
+    test_human_effect_gate_failure_rejects
+    test_parallel_divergence_blocks_bounded_activation
+    test_capture_conflict_blocks_advancement
+    test_required_independence_unknown_escalates
+    test_irreversible_effect_requires_prior_recovery_or_compensation
+    test_reversible_effect_requires_rollback_readiness
+    test_material_nonseparable_dispute_holds_affected_scope
+    test_material_separable_dispute_can_continue_with_ready_path
+    test_mandatory_transition_hard_gates_cannot_be_removed_by_empty_profile_set
+    test_empty_entry_criteria_cannot_vacuously_pass
+    test_empty_exit_criteria_cannot_vacuously_pass
+    test_abbreviated_stage_plan_requires_explicit_omission_justification
+    test_stage_omission_requires_independent_approval_state
+    test_explicitly_approved_stage_omission_can_proceed_through_remaining_gates
+    test_declared_stage_plan_must_preserve_standard_order
+    test_reversible_material_failure_can_rollback_only_to_earlier_stage
+    test_rollback_cannot_move_forward_or_sideways
+    test_irreversible_material_failure_routes_to_compensation
+    test_unknown_recovery_trigger_cannot_act
+    test_recovery_requires_independent_verification
+    test_rollback_target_must_equal_last_qualified_stage
+    test_unknown_last_qualified_stage_blocks_rollback
+    test_transition_assurance_from_different_effect_scope_cannot_be_replayed
+    test_missing_transition_assurance_binding_cannot_advance
+    test_advance_assurance_cannot_be_replayed_for_recovery
+    test_stale_transition_design_epoch_rejects_before_assurance_reuse
+    test_transition_assurance_from_old_design_epoch_cannot_be_replayed
+    test_unvalidated_authority_delta_cannot_advance_transition
+    test_authority_delta_requires_evidence_and_revocation_appeal_bindings
+    test_validated_authority_delta_can_transfer_without_minting_authority
+    test_unvalidated_transition_criteria_profile_cannot_pass
+    test_changed_authority_delta_cannot_reuse_old_validation_digest
+    test_transition_result_emits_content_addressed_receipt
+    test_changed_context_cannot_reuse_old_assurance_receipt
+    test_nonindependent_assurance_verifier_rejects
+    test_recovery_result_emits_recovery_receipt
+
+
+SECTION AN — v15.11 AI-LED UPGRADE INVENTORY
+
+AUP invariants: AUP-001..AUP-015 as controlling candidate rules in Technical §56.
+Upgrade constructs:
+    FindingClass
+    FindingDisposition
+    FindingRecord
+    UpgradeDecision
+    UpgradeContext
+    UpgradeResult
+
+Upgrade reference functions:
+    _is_sha256
+    _typed_gate
+    _candidate_binding_gate
+    evaluate_upgrade_closure
+
+Upgrade regression obligations:
+    test_complete_upgrade_can_close_candidate_without_creating_authority
+    test_open_material_finding_keeps_work_loop_running
+    test_failed_tests_cannot_be_waived_by_protected_authorization
+    test_missing_required_independent_review_blocks_closure
+    test_unknown_independent_review_does_not_become_pass
+    test_unvalidated_upgrade_method_authority_blocks_closure
+    test_protected_change_requires_separate_protected_authorization
+    test_missing_final_reaudit_keeps_work_open
+    test_unbounded_recursive_cycle_cannot_close
+    test_empty_finding_list_without_search_coverage_cannot_close
+    test_undeclared_audit_scope_cannot_close_candidate
+    test_old_test_pass_cannot_be_replayed_after_candidate_changes
+    test_missing_final_reaudit_candidate_binding_blocks_closure
+    test_rejected_finding_without_evidence_cannot_close
+    test_deferred_finding_requires_owner_and_reopen_condition
+    test_escalated_finding_requires_explicit_target
+    test_narrow_search_scope_cannot_close_broader_audit_scope
+    test_candidate_hash_must_be_real_sha256_shape
+    test_hard_gate_finding_cannot_be_deferred_and_still_close
+    test_hard_gate_finding_cannot_be_escalated_and_still_close
+    test_unvalidated_finding_classification_blocks_closure
+    test_protected_surface_scan_is_candidate_bound
+    test_upgrade_cycle_requires_real_resource_bounds_and_residual_debt_record
+    test_finding_classification_independence_is_required
+    test_protected_surface_scan_independence_is_required
+    test_protected_finding_cannot_be_deferred_and_auto_triggers_protected_path
+    test_fixed_protected_finding_requires_protected_authorization_even_if_flag_false
+
+
+SECTION AO — v15.11 EXECUTABLE REFERENCE BINDING
+
+Reference commit:
+    8e5bfc3e535e99d69bd3ea6c08be4ad632c3978a
+
+Reference source SHA-256 bindings:
+    runtime_constitution.py      5c912aac1b987c192825f4b0748795e737d27e8390065e9d01623aa086312c37
+    transition_governance.py     fb430341a6d2e0257e2a121edb09eb15bda236d1e034ab93019d795f58f71b4c
+    upgrade_process.py           fd1672dd111e6dafaa655e5558b8708c9e41c85ba125a85ae92842860640e034
+
+Reference test counts:
+    runtime constitutional: 39
+    transition governance: 40
+    upgrade closure: 27
+
+Executable references and passing CI are implementation evidence. They are not proof of institutional legitimacy,
+universal safety, legal compliance, production certification or canonical admission.
+
+SECTION AP — v15.10 STANDALONE INHERITANCE
+
+v15.11 inherits the complete v15.10 standalone semantic corpus and current-reading rule. It does not re-open an external
+v15.9/r6 dependency. The embedded 15.x retention corpus, stable identities, formula/operator index and original status
+preservation remain part of the v15.11 Catalogue unchanged unless explicitly superseded by a v15.11 rule above.
+
+END OF GARDEN v15.11 — CATALOGUE

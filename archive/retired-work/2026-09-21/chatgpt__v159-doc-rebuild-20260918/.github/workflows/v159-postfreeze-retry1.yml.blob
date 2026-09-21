@@ -1,0 +1,54 @@
+name: Garden v15.9 post-freeze failed-slot recovery 1
+
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-postfreeze-scattered-upgrades-20260918'
+    paths:
+      - 'review-inputs/v159-postfreeze/retry1-trigger.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v159-postfreeze-retry1
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - {packet: P038_ORH_CIAH, family: deepseek}
+          - {packet: P038_ORH_CIAH, family: qwen}
+          - {packet: P038_ORH_CIAH, family: glm}
+          - {packet: P038_ORH_CIAH, family: xiaomi}
+          - {packet: P039_UAAC_DSDIH, family: deepseek}
+          - {packet: P039_UAAC_DSDIH, family: qwen}
+          - {packet: P039_UAAC_DSDIH, family: glm}
+          - {packet: P040_SOURCE_RIGHTS_DELTA_MANAGEMENT, family: qwen}
+          - {packet: P040_SOURCE_RIGHTS_DELTA_MANAGEMENT, family: glm}
+          - {packet: P041_MACHINE_INSPECTION_PRIVACY_JUSTICE, family: qwen}
+          - {packet: P041_MACHINE_INSPECTION_PRIVACY_JUSTICE, family: glm}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recover one failed blind reviewer slot
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_postfreeze_single.py --packet "${{ matrix.packet }}" --family "${{ matrix.family }}"
+      - name: Upload recovered reviewer evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-postfreeze-retry1-${{ matrix.packet }}-${{ matrix.family }}-${{ github.run_id }}
+          path: review-results/v159-postfreeze/${{ matrix.packet }}/${{ matrix.family }}.json
+          if-no-files-found: error
+          retention-days: 30

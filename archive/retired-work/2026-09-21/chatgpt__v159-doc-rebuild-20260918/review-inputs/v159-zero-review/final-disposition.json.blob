@@ -1,0 +1,66 @@
+{
+  "schema": "GardenV159ZeroBaseFinalDisposition/v1",
+  "campaign": "GARDEN-V159-ZERO-BASE-ATOMIC-REVIEW-20260918",
+  "status": "COMPLETE",
+  "semantic_basis": "CURRENT_V15_9_ONLY",
+  "chat_history_used": false,
+  "prior_review_verdicts_used_as_semantic_evidence": false,
+  "atomic_review": {
+    "units_total": 288,
+    "keep_no_fresh_delta": 224,
+    "units_affected_by_repairs": 64,
+    "repair_count": 12,
+    "atomic_audit_sha256": "428142f8ba31717dbdc119c28ecc9a895e5db198f9034ed067efe9bb81ee3bed"
+  },
+  "openrouter_runs": {
+    "initial_blind": 35315784029,
+    "final_challenge": 35318636957,
+    "confirmation": 35319243302,
+    "families": [
+      "deepseek",
+      "glm",
+      "xiaomi",
+      "gemini"
+    ]
+  },
+  "repairs": [
+    "ZR-001",
+    "ZR-002",
+    "ZR-003",
+    "ZR-004",
+    "ZR-005",
+    "ZR-006",
+    "ZR-007",
+    "ZR-008",
+    "ZR-009",
+    "ZR-010",
+    "ZR-011",
+    "ZR-012"
+  ],
+  "final_assurance": {
+    "DESIGN_SEMANTIC_REVIEW": "COMPLETE_WITHIN_DECLARED_SCOPE",
+    "MACHINE_BINDING_CLOSURE": "INCOMPLETE",
+    "EXECUTED_CONFORMANCE": "NOT_CLAIMED",
+    "EMPIRICAL_VALIDATION": "OWNER_QUALIFIED_NOT_GLOBALLY_CLAIMED",
+    "EXTERNAL_CERTIFICATION": "NOT_CLAIMED",
+    "CANONICAL_STATUS": "NOT_CANONICAL_UNLESS_SEPARATELY_ADMITTED"
+  },
+  "materialized_artifact_hashes": {
+    "normative_zero_base_overlay_sha256": "25cb1e13a62534ae03526de93a6d2cf7323585be1bc6bd812259cf1cdaf033d4",
+    "active_definition_index_sha256": "1e78ecb8fa803b7d2234906988277d99f7c159e99a7247475fb192486d78b0f3",
+    "theory_release_index_sha256": "b2cea147f82364833e6c72c0e7073216b90289d0747893a4693b88af6a9be085",
+    "machine_binding_closure_ledger_sha256": "8138b987c441cefa30a328b096a385e4b87b7d64ac311c0c6a7b78be8e31d7eb",
+    "User": "c60173996875b7931920a2daf602f4a26131a877d9bc1621b7dfabeec170cb0f",
+    "System": "4423a13063126d9a4ed842c3bde32afe0fb51d079a55cfa211d13d13ce3b9d75",
+    "Technical": "32592699932b1017868ae12d065907a6c42fa7252f1347205b97ef1f5834d27b",
+    "Annexure": "f8aa28e71da238c20e012e8e3f81e2e83c3637b1f0a047c3baebf586bb017c03",
+    "Theories": "23ac1c0affe1775ba47e142dac2c36f3e2be8233877fed7584e521068922b468",
+    "Consolidated": "ec1a0a6ca4f2ca3aba1c594e831372aa8fcb46b14827e6b46f60fbc34f12e881"
+  },
+  "retention": {
+    "prior_v15_9_source_body_preserved_byte_exact_in_all_five": true,
+    "five_file_corpus_preserved": true,
+    "annexure_single_normative_zero_base_overlay_owner": true
+  },
+  "next_incomplete_step": null
+}

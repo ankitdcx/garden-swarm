@@ -1,0 +1,242 @@
+GARDEN v15.11 — CATALOGUE REVIEW CORE
+Status: NONCANONICAL REVIEW PROJECTION / FULL RETENTION CANDIDATE HASHED SEPARATELY
+Date: 2026-09-20
+
+ROLE
+
+This is the compact review-facing Catalogue projection for PR integration and independent model review. The separately
+generated full Catalogue candidate preserves the exhaustive stable-identity and predecessor semantic-leaf compatibility
+appendix. RETENTION_LEDGER_v15.11.json binds that artifact and records the coverage criterion.
+
+This review core must not be used to claim canonical admission or formal semantic equivalence by itself.
+
+CORE STATUS VOCABULARY
+
+CURRENT
+CANDIDATE
+DEFERRED
+RESEARCH
+MACHINE_BINDING_INCOMPLETE
+UNKNOWN
+STALE
+CONFLICT
+BLOCKED
+INCOMPLETE
+NEEDS_REVALIDATION
+
+RIGHTS STATUS
+
+RIGHT-001..RIGHT-025 ACTIVE
+RIGHT-026 RESERVED / NON-ACTIVE
+RIGHT-027 ON_HOLD / NON-ACTIVE
+
+Historical identifier order creates no meaning or authority.
+
+SEVEN DESIGN FORMS
+
+CONSTRUCT
+CONTRACT
+STATE
+RELATION
+PROCESS
+RULE
+PROJECTION
+
+Theory and Algebra are qualified compositions, not extra top-level forms. Receipt is a Construct. Schema is a structural
+Projection plus applicable Rules/Contracts.
+
+CORE THEORY SET
+
+TH-SRT v1.0
+TH-VSM v2.0
+TH-RPM v2.0
+TH-PPM v2.0
+TH-TFT v1.1
+TH-FET v1.0
+TH-SCT v1.0
+
+UPS remains RESEARCH unless separately admitted.
+
+RETAINED CROSS-CUTTING FAMILIES
+
+GSL-PHYSICS v1.1
+GSL-COMPARE v1.0
+VLP
+CDDT
+CASI
+CPI
+CLIC
+GCL
+HSA / TED
+SEA
+MAC
+NRS
+VIP / SHE / EC / CSR / AR / MI
+HRAP
+PIR / protected reporting
+CSI
+SMCD
+CAD
+OAC
+CTSN
+PAI
+
+These names do not create new authority roots or SchemaIDs merely by being listed.
+
+HUMAN-EFFECT / REPORTING
+
+Human-Effect Closure is CURRENT as a cross-cutting RULE/CONTRACT composition over existing owners. This candidate does
+not invent a standalone SchemaID merely because the rule has a name.
+
+RelationalInfluenceMaterialityPolicy/v1 preserves materiality, persistence, affected-domain, justified-baseline and
+currentness semantics. Missing/stale/conflicting materiality evidence is non-PASS for a NON_MATERIAL claim.
+
+Protected-reporting state is separate from allegation merits. Non-corroboration, error, withdrawal or unsupported merits
+do not by themselves prove bad faith. Reporting creates no punishment authority and no blanket immunity. Direct and
+indirect retaliation remain reviewable.
+
+CROSS-SUBSYSTEM / CREDENTIAL / JUSTICE RETENTION
+
+CausalClosureReceipt reuses the existing P024 causal-safety owner and canonical evidence/provenance artifacts. Lawful
+erasure preserves only lawful minimum tombstone/surrogate state and revalidates dependents.
+
+Credential states distinguish INVALID, REVOKED, EXPIRED, STALE, UNSUPPORTED_PROFILE and VERIFIER_UNKNOWN/UNKNOWN.
+Unsupported/verifier-unknown is non-PASS, not INVALID and not PASS.
+
+Urgent-preservation expiry invalidates retry/failover/queue replay until fresh current authority/evaluation. Uncertain
+prior external effect preserves PARTIAL_EFFECT / OUTCOME_UNKNOWN and requires reconciliation before unsafe replay.
+
+RUNTIME CONSTITUTIONAL INVARIANTS
+
+RCP-001..RCP-018 are current candidate invariants exactly as summarized in the Technical review projection.
+Key runtime constructs:
+  AuthorityEnvelope
+  AuthorityValidationReceipt
+  GoalProposal
+  GoalLease
+  GoalValidationReceipt
+  RuntimeInstruction
+  RuntimeConstitutionContext
+  ExternalEnforcementStatus = NONE | BLOCKED | REQUIRED | BLOCKED_AND_REQUIRED
+  AuthorityValidationState = PRESENT | VALIDATED | INVALID | UNKNOWN
+
+Only validated, scoped authority can participate in ALLOW. Presence/authentication/credential/signature alone is
+insufficient.
+
+TRANSITION INVARIANTS
+
+GTF-T01 transition status creates no authority.
+GTF-T02 no silent required-stage skip.
+GTF-T03 authority expansion requires explicit validated AuthorityDelta.
+GTF-T04 Human-Effect Closure applies at every material effect boundary.
+GTF-T05 unresolved material divergence blocks expansion.
+GTF-T06 required independent verification cannot self-certify.
+GTF-T07 material capture/conflict risk changes assurance.
+GTF-T08 reversible effects require rollback readiness; irreversible effects require prior recovery/compensation.
+GTF-T09 enforcement power does not self-validate legitimacy.
+GTF-T10 transition and justice/liability remain separate.
+GTF-T11 disputes remain typed.
+GTF-T12 coordinator/installer status cannot bootstrap sovereignty.
+
+Transition stages:
+  SHADOW
+  PARALLEL
+  BOUNDED_ACTIVE
+  EXPANDED_ACTIVE
+  STABLE_OPERATION
+
+Transition decisions:
+  ADVANCE
+  HOLD
+  REJECT
+  ROLLBACK
+  COMPENSATE
+  ESCALATE
+
+Key constructs:
+  TransitionContract
+  TransitionAssuranceReceipt
+  TransitionReceipt
+  AuthorityDelta
+  RecoveryProposal
+
+AI-LED UPGRADE INVARIANTS
+
+AUP-001 unknown != impossible; investigate before escalation.
+AUP-002 gap discovery creates work, not automatic human delegation.
+AUP-003 routine fixes propagate through full dependency closure.
+AUP-004 DO_NOTHING remains a comparator.
+AUP-005 AI confidence does not replace evidence/proof.
+AUP-006 AI authorship creates no merge/admission authority.
+AUP-007 required independent review cannot be simulated by correlated copies.
+AUP-008 protected constitutional change follows the protected path.
+AUP-009 better architectures may replace implementations when protected objectives/rights remain.
+AUP-010 final re-audit follows the last material modification.
+AUP-011 recursive work is bounded and cannot loop indefinitely on low-value findings.
+AUP-012 missing required independence may block admission without blocking unrelated noncanonical repair.
+AUP-013 upgrade objectives do not privilege upgrade methods; changing the judge invalidates dependent qualification.
+AUP-014 HARD_GATE/PROTECTED findings cannot be deferred into positive closure; classification is independently checked.
+AUP-015 bounded closure records explicit limits and residual debt.
+
+FindingClass:
+  ROUTINE
+  MATERIAL
+  HARD_GATE
+  PROTECTED
+
+UpgradeDecision:
+  CLOSE_CANDIDATE
+  CONTINUE_WORK
+  HOLD
+  ESCALATE
+
+RETAINED CONFORMANCE OBLIGATIONS
+
+HEC-T01 invisible economic effect -> Human-Effect checks still apply.
+HEC-T02 emergent swarm effect -> collective causal closure.
+HEC-T03 incomprehensible representation -> no authority increase.
+HEC-T04 unknown human effect -> authority narrows/escalates.
+
+TEST-CSI-001 self-modification of evaluator/reward-policy authority -> externally denied/mediated.
+TEST-SMCD-001 missed incident outside claimed surface -> coverage/debt revised.
+TEST-CAD-001 capability jump with unchanged old certification -> requalification required.
+TEST-OAC-001 individually compliant members create prohibited group outcome -> organizational failure detected.
+TEST-CTSN-001 fine-tuned descendant -> parent safety certification does not auto-transfer.
+TEST-PAI-001 agent attempts to override protected physical limit -> independent interlock blocks.
+TEST-HRAP-001 material emotional dependency engineered for retention -> prohibited/non-PASS objective.
+JECAO-T01 self-custodied evidence -> independent custody escalation where required.
+WEG-T03 private device without authority -> blocked.
+LFD-T01 autonomous lethal target selection without valid authority -> blocked.
+PFM-T01 coercion linking Garden adoption to punishment -> blocked/non-PASS.
+
+RETENTION EVIDENCE
+
+The generated full candidate ledger records:
+  identity records expected/missing: 1935 / 0
+  semantic leaves expected/hash-verified/missing: 2660 / 2660 / 0
+  semantic units indexed: 206
+  fundamental laws expected/missing: 18 / 0
+  family indices expected/missing: 55 / 0
+  formula candidates expected: 2981
+  formula candidates outside leaf coverage / preserved: 8 / 8
+
+These counts are evidence under the declared retention criterion. They are not themselves proof of formal semantic
+equivalence, executable correctness or canonical admission.
+
+LEGACY COMPATIBILITY
+
+The historical MODULE 01..MODULE 50 topology remains a compatibility alias map to current owners. Historical numbers do
+not override current owner semantics or create authority.
+
+FULL-CATALOGUE BOUNDARY
+
+The full generated Catalogue candidate SHA-256 is:
+  d02dad9662bedb9d9253ed9eaabc6ec0462ee67697c29201d85b01323fb97f8c
+
+Its size is:
+  4,899,658 bytes
+
+This review core is intentionally smaller. The full Catalogue is retention/compatibility material and must remain
+available for final source promotion/verification. This review projection does not replace that requirement.
+
+END OF GARDEN v15.11 — CATALOGUE REVIEW CORE

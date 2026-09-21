@@ -1,0 +1,15 @@
+{
+  "schema": "GardenV159FinalChallengeTrigger/v1",
+  "candidate_path": "review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE_R2.txt",
+  "evidence_index_path": "review-inputs/v159-postfreeze/FINAL_BOARD_EVIDENCE_INDEX.json",
+  "families": [
+    "deepseek",
+    "glm",
+    "gemini"
+  ],
+  "sequential_only": true,
+  "daily_ceiling_usd": 10,
+  "per_call_ceiling_usd": 0.1,
+  "canonical_effect": false,
+  "semantic_delta_admitted": false
+}

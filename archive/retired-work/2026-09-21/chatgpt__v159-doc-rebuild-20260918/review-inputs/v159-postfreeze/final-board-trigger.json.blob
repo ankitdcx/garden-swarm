@@ -1,0 +1,16 @@
+{
+  "schema": "GardenV159FinalHistoryBoardTrigger/v1",
+  "task_id": "GARDEN-V159-FINAL-HISTORY-CLOSURE-20260918",
+  "candidate_path": "review-inputs/v159-postfreeze/SYNTHESIZED_POSTFREEZE_CANDIDATE.txt",
+  "families": [
+    "deepseek",
+    "glm",
+    "xiaomi",
+    "gemini"
+  ],
+  "private_history_sent_to_openrouter": false,
+  "daily_ceiling_usd": 10,
+  "per_call_ceiling_usd": 0.1,
+  "max_calls_this_task": 8,
+  "canonical_effect": false
+}

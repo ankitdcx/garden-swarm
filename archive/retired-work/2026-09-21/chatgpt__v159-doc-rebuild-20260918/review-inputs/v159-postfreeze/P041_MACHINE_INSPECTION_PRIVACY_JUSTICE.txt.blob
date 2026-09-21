@@ -1,0 +1,55 @@
+GARDEN v15.9 POST-FREEZE REVIEW PACKET P041
+Topic: machine inspection / privacy / justice candidate
+Provenance: future Garden candidate discussed after the P001-P037 campaign.
+Status entering review: UNADMITTED CANDIDATE; not present as an accepted v15.9 semantic owner.
+
+ORIGINAL INTENT
+A future design idea considered:
+  everyone -> all the time -> machine-only inspection of phone/message content;
+  harmless content discarded immediately;
+  possible serious wrongdoing correlated/preserved as relevant evidence;
+  relevant cases routed into Garden justice.
+
+The proposed privacy distinction was:
+  machine inspection
+  != retention
+  != human inspection
+  != disclosure
+  != proof of guilt.
+
+Goal stated for the candidate:
+maximize detection of serious wrongdoing while minimizing disclosure/retention of innocent private information.
+
+CURRENT v15.9 CONSTRAINTS THAT ALREADY APPLY
+- Rights, consent, privacy, legitimate authority, law, contestability and human agency are hard gates.
+- Private-device/private-record ingestion/access requires valid purpose plus applicable consent/law/authority/privacy and minimum-necessary controls; technical access capability creates no permission.
+- Tool/channel possession grants no disclosure authority.
+- Allegation alone creates no preservation, coercive, guilt or enforcement authority.
+- Missing evidence alone does not establish guilt or obstruction.
+- Justice is a guarded proceeding-profile graph; preservation requires current competent authority, bounded scope, review/expiry/release conditions and due process.
+- Human-Effect Closure covers indirect/institutional/infrastructure-mediated effects.
+- TSI/TIA separate historical evidence integrity from information-use authority.
+- P037 introduces no new observation right or authority source.
+
+MATERIAL QUESTIONS
+1. Is a universal "everyone/all the time" inspection authority compatible with existing Garden rights/privacy/authority semantics at all, or must it be rejected?
+2. Is the only useful delta the typed separation among machine computation, retention, human access, disclosure, evidentiary use and adjudicative proof?
+3. Can privacy-preserving local/on-device computation ever be allowed under separately valid authority without creating a general surveillance right?
+4. What minimization, purpose limitation, jurisdiction, warrant/authorization, independence, false-positive, appeal, deletion, audit and abuse-prevention semantics would be mandatory before any scoped use?
+5. How should correlated suspicion remain epistemically distinct from probable cause, admissible evidence, finding of fact and guilt?
+6. How should false positives, model error, selective enforcement, protected activity, intimate information and chilling effects be handled?
+7. Does machine-only access still constitute a privacy intrusion/human effect even without human viewing?
+8. What must fail closed if authority, purpose, jurisdiction, model validity or minimization evidence is missing/stale/conflicting?
+
+CURRENT v15.9 HARD BOUNDARY
+Rights, consent, privacy, legitimate authority, safety, law, appeal/contestability and human agency remain hard applicable constraints. Tool/channel/technical access creates no disclosure authority. Unknown/stale/conflicting authority or materiality is non-PASS when resolution is required. A post-freeze semantic edit reopens review closure.
+
+
+REVIEW TASK
+Do not assume the universal surveillance premise should be accepted.
+Compare:
+A. REJECT universal inspection authority and retain only a typed information-processing boundary;
+B. permit narrowly scoped/privacy-preserving computation only under separately valid current authority/purpose and hard rights/law constraints;
+C. any other smaller repair.
+No new observation right, police power, guilt inference or human-inspection permission may arise from technical capability or model confidence.
+Return structured JSON with verdict KEEP/CHANGE/MIXED/REJECT and at most 10 material findings.

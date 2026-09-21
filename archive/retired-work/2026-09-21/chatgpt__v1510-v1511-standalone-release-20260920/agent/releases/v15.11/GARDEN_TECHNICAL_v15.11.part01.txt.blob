@@ -1,0 +1,381 @@
+GARDEN v15.11
+TECHNICAL DESIGN
+Plain UTF-8 text edition
+Text packaging revision: 2026-09-19
+
+STATUS
+
+Semantic release: Garden v15.11 candidate.
+Representation: text-only four-file edition.
+Design-source set: BOOK + TECHNICAL + CATALOGUE.
+History file: lineage only; non-controlling.
+Release authority status: WORKING CANDIDATE; not canonically admitted merely by this file.
+Implementation, empirical validation, formal proof, and external certification are not implied by a release label.
+
+This text edition preserves the v15.10 design direction and the accepted v15.x meaning recovered from the final
+three-artifact build and its predecessor sources. It replaces compressed/machine-only source packaging with directly
+readable text. It does not grant itself authority to change Garden semantics.
+
+1. SOURCE AND OWNERSHIP RULE
+
+Current primary sources are exactly:
+
+    GARDEN_BOOK_v15.11.txt
+    GARDEN_TECHNICAL_v15.11.txt
+    GARDEN_CATALOGUE_v15.11.txt
+
+GARDEN_VERSION_HISTORY_v15.11.txt is historical lineage only.
+
+A generated graph, index, cache, executable package, search index, compressed copy, database, repository commit,
+external website, model answer, or prior release is not required to supply a missing current Garden definition.
+
+External references may support verification, research, law, provenance, historical traceability, or implementation.
+They cannot silently contain the only copy of current Garden semantics.
+
+Current semantic ownership rule:
+
+    one current semantic fact -> one controlling owner.
+
+Other occurrences are explanation, projection, index, compatibility mapping, or history and cannot override the owner.
+
+2. ARCHITECTURE MODEL
+
+Garden is a typed semantic graph rather than a fixed list of executable modules.
+
+Historical module numbers remain compatibility labels. Current architecture objects are named by stable qualified
+owners. The old 0-9 grouping is navigation only and does not impose a fixed architecture-object count.
+
+The current foundational object vocabulary is:
+
+    TIME
+    SPACE
+    THING
+    EVENT
+    ACTION
+    AGENCY
+    RULE
+    VALUE
+    CONTEXT
+    CLAIM
+
+Core relation set:
+
+    identifies
+    causes
+    governs
+    values
+    frames
+    acts
+    obeys
+    assesses
+    contextualizes
+    controls
+    partOf
+    dependsOn
+    owns
+    delegates
+    references
+    derivedFrom
+    equivalentTo
+    contradicts
+    supports
+    blocks
+    hasHypothesis
+    supersedes
+    conflictsWith
+    originatesFrom
+
+A relation name does not itself grant causal, legal, epistemic, or execution authority. The relation's typed contract and
+applicable owner rules control those effects.
+
+3. GSL SEMANTIC FOUNDATION
+
+GSL remains Garden's typed semantic language. The v15.x line retains GSL v45.1 unless a separately admitted successor
+changes it.
+
+The sole normative grammar owner remains the Technical grammar contract corresponding to historical §12.4.
+
+Typing judgment:
+
+    Γ ; Δ ; A ; C ⊢ e : T ! ε
+
+where the environments and effect set bind the expression to its declared types, dependencies, authority and operating
+conditions.
+
+Closed effect families include:
+
+    Computational
+    Safety
+    Authority
+    Privacy
+    Temporal
+    Resource
+    Uncertainty
+    Continuity
+    Optimization
+
+Bool is reserved for total deterministic predicates. Epistemic, proof, safety, policy, migration, compliance and
+distributed outcomes use explicit multi-status results.
+
+General outcome family:
+
+    Success
+    Rejected
+    Infeasible
+    Timeout
+    Unknown
+    Conflict
+    Failure
+    Quarantined
+    Escalated
+
+UNKNOWN is a first-class result. It cannot be silently coerced to PASS or FALSE where that changes meaning.
+
+4. GARDEN-LEVEL PRIMITIVES
+
+The retained GSL semantic primitive families remain distinct from the Garden control operators.
+
+Garden-level control adds:
+
+    COMPARE
+    REASON
+
+These do not change the ten Core Objects or twenty-four Core Relations.
+
+COMPARE establishes a typed difference between two declared objects/states/claims/results under an applicable comparison
+contract.
+
+REASON selects and executes an appropriate reasoning strategy under resource, epistemic, authority, safety and
+termination constraints.
+
+5. SEVEN DESIGN FORMS
+
+v15.10 normalizes reusable design structure into seven Design Forms:
+
+    CONSTRUCT
+        A defined Garden thing: artifact, receipt, profile, theory instance, object, capability record, etc.
+
+    CONTRACT
+        A typed promise, requirement, permission boundary, interface, precondition/postcondition or obligation.
+
+    STATE
+        A condition, lifecycle state, validity state, operating state or status transition.
+
+    RELATION
+        A typed connection between constructs or states.
+
+    PROCESS
+        A controlled sequence, transition, workflow, loop, composition or change mechanism.
+
+    RULE
+        A must, may, must-not, admission rule, ordering rule, law, guard, constraint or decision predicate.
+
+    PROJECTION
+        A representation of controlling semantics for a reader, machine, document, interface or other view.
+
+Theory and Algebra are specializations/compositions over these forms rather than extra top-level forms.
+A Receipt is a semantic Construct.
+A Schema is represented by structural Projection plus applicable admissibility Rules and type contracts.
+
+Design Forms are abstraction devices. They cannot erase domain-specific obligations.
+
+6. DESIGN-FORM BOUNDARY RULES
+
+Every consequential construct must preserve the applicable human/authority boundary.
+
+Authority, consent and delegation are non-transitive by default. Composition cannot silently widen them.
+
+A form that contains or produces a right, authority, consent, safety, privacy, epistemic, physical, financial,
+constitutional, legal or human-effect consequence inherits the applicable owner rules.
+
+No generated form may start with more authority than its declared source.
+
+No projection becomes controlling merely because it is easier to read.
+
+7. DETERMINISTIC EXPANSION
+
+v15.10 permits compact source plus deterministic expansion.
+
+Conceptually:
+
+    G0 -> F(G0) -> F^2(G0) -> ... -> G*
+
+Expansion must terminate under a declared fixed-point/termination condition and may only derive material authorized by
+the source contracts.
+
+Unique equations, algorithms, time bounds, assumptions, fallbacks, profiles, exceptions and special-case semantics are
+seed material when they cannot be deterministically reconstructed from a more general controlling definition.
+
+A model is not trusted to invent missing semantics during expansion.
+
+Generated material records its source root and generation rule.
+
+If two independent expansions of the same pinned sources produce different controlling graphs, equivalence is not
+established.
+
+8. COMPACT-SOURCE DISCIPLINE
+
+The earlier GCCR-1 principle is retained in substance:
+
+    a controlling definition occurs once;
+    repeated copies become references/projections;
+    full stable identifiers remain literal;
+    no hidden prefix state changes meaning;
+    deterministic pretty views are derivative;
+    compaction removes duplication, not semantic content.
+
+The present text edition does not require GCCR punctuation or JSON Lines. Human-readable text blocks are valid source
+when the parser/build profile binds them deterministically.
+
+9. UNIVERSAL PER-STEP CONTROL LOOP
+
+The universal operational loop is:
+
+    Observe
+    -> Type / Understand
+    -> Compare
+    -> Reason
+    -> Guard
+    -> Select
+    -> Act
+    -> Observe result
+    -> Compare expected vs actual
+    -> Accept / Correct / Retry / Replan / Research / Escalate / Learn / Terminate
+
+The loop is universal at the control level. Domain profiles may specialize internal work without bypassing applicable
+hard gates.
+
+10. PROCESS ALGEBRA
+
+Core process operators include:
+
+    SEQUENCE
+    BRANCH
+    PARALLEL
+    COMPOSE
+    RETRY
+    ROLLBACK
+    COMPENSATE
+    RECONSTRUCT
+    ITERATE
+    RECURSE
+    TERMINATE
+    DO_NOTHING
+
+Composition must preserve interface, shared invariants, resource compatibility, temporal compatibility, failure
+composition and assumptions where those are applicable.
+
+A retry requires a declared retry condition/budget and cannot become an unbounded loop.
+
+ROLLBACK applies only to effects that are actually reversible. Irreversible physical/external effects require explicit
+residual-effect and compensation handling.
+
+11. P0-P11 LIFECYCLE
+
+Garden retains a twelve-stage lifecycle view:
+
+    P0   RECEIVE / PROPOSE
+    P1   UNDERSTAND
+    P2   DISCOVER / APPLICABILITY
+    P3   IMPACT / DEPENDENCIES
+    P4   EPISTEMICS / EVIDENCE
+    P5   PREDICT CONSEQUENCES
+    P6   RESOURCE PLAN / ADMISSION
+    P7   ASSURE / VERIFY / TEST
+    P8   AUTHORITY / GOVERNANCE / CONSENT
+    P9   PREPARE / EXECUTE / COMMIT
+    P10  OBSERVE / VALIDATE / RECONSTRUCT
+    P11  LEARN / RECURSE / TERMINATE
+
+These are lifecycle stages, not a claim that every implementation must be serialized into twelve blocking functions.
+
+12. GARDEN TRANSITION FLOW
+
+The retained governed-transition profile is:
+
+    proposed change
+    -> TransitionContract
+    -> exact semantic delta
+    -> impact/dependency closure
+    -> epistemic/evidence assessment
+    -> consequence prediction
+    -> resource admission
+    -> ObligationGraph / assurance
+    -> authority/governance/consent
+    -> PREPARE
+    -> VALIDATE
+    -> ATOMIC COMMIT where applicable
+    -> Proof-Carrying State
+    -> post-commit monitoring
+    -> accept / rollback / compensate / correct / learn
+
+Canonical logical-state lineage:
+
+    S[n+1] = T[n](S[n])
+
+The equation does not assert that every physical effect is transactionally reversible.
+
+13. ACTIVATION AND ASSURANCE
+
+AAP v1.0 remains the activation/assurance policy.
+
+Engine.Orchestrate selects the minimum sufficient architecture and assurance depth for the work while preserving every
+hard requirement that applies.
+
+Lower cost, lower latency or queue pressure cannot waive Constitution, rights, K0P, required authority/consent, privacy,
+security, mandatory proof or mandatory domain-safety obligations.
+
+Assurance depth and reasoning depth are distinct dimensions.
+
+14. SANITY BASE CASE AND REASON MODES
+
+The v15.6/v15.9 correction is retained:
+
+    R0 = SanityGate, not an ordinary recursive Reason mode.
+    R1..R4 = Reason modes / assurance-depth-compatible reasoning strategies.
+
+SanityGate is a terminating deterministic/total predicate over available transition type, scope, abstraction and obvious
+contradiction inputs with PASS | FAIL | UNKNOWN as applicable.
+
+It must not recursively invoke Engine.Reason to decide whether Engine.Reason may begin.
+
+15. KNOWLEDGE DISCIPLINE
+
+Capability.Knowledge stores typed claims/artifacts and their status. Storage does not validate a claim by itself.
+
+Key retained rules:
+
+    ModelGenerated material cannot self-promote to validated fact.
+    Prediction != Evidence.
+    Future != Knowledge.
+    Freshness triggers review; age alone does not rewrite historical truth.
+    Orphaned artifacts are classified rather than automatically declared false.
+    Audit material is subject to the same epistemic discipline as other material.
+    Bounded traversals that hit a resource/depth limit return INCOMPLETE_DEPTH_BOUND with a continuation frontier.
+    Every reusable concept declares applicability conditions.
+
+Garden distinguishes at least:
+
+    WORLD_CHANGED
+    DEFINITION_CHANGED
+    RULE_CHANGED
+    EVIDENCE_CONTRADICTED / REFUTED
+    SCOPE_CHANGED
+
+A taxonomy change is not silently represented as empirical falsification.
+
+16. PROOF AND VERIFICATION BOUNDARY
+
+Engine.Proof verifies declared obligations. It does not create authority by proving a proposition.
+
+Retained proof-obligation families include:
+
+    invariant preservation;
+    epistemic non-amplification;
+    future-non-fact;
+    no silent scope widening;
+    hard-safety preservation;
+    termination;
+    liveness/fairness;
+    composition compatibility;
+    static and dynamic dependency closure;

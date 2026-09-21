@@ -1,0 +1,15 @@
+{
+  "schema": "GardenV159PostFreezeRetryTrigger/v1",
+  "pass": 1,
+  "source_run_id": 35294221466,
+  "preserved_success_slots": [
+    "P039_UAAC_DSDIH:xiaomi",
+    "P040_SOURCE_RIGHTS_DELTA_MANAGEMENT:deepseek",
+    "P040_SOURCE_RIGHTS_DELTA_MANAGEMENT:xiaomi",
+    "P041_MACHINE_INSPECTION_PRIVACY_JUSTICE:deepseek",
+    "P041_MACHINE_INSPECTION_PRIVACY_JUSTICE:xiaomi"
+  ],
+  "retry_failed_slots_only": true,
+  "transport_fix": "provider fallback enabled for same exact governed model; Garden budget checks added",
+  "canonical_effect": false
+}

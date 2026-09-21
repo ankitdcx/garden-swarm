@@ -1,0 +1,149 @@
+GARDEN v15.9 DOCUMENTATION REBUILD — STRUCTURAL REVIEW PACKET
+Date: 2026-09-18
+Purpose: improve documentation only; preserve semantics exactly.
+Source authority: current clean v15.9 five-file design.
+Models are editorial reviewers, not semantic authorities.
+
+USER GOALS
+1. Retain all design data.
+2. Remove duplicate data and explanations with no extra value.
+3. Rewrite for human readability.
+4. Improve structure/navigation.
+5. Keep theory versioning/status consistent.
+6. Restore canonical naming definition: GAIA = Garden Artificial Intelligence Architecture.
+7. Produce a full Garden design, not a release-history or review-history archive.
+
+NON-NEGOTIABLES
+- Do not weaken or reinterpret any normative rule.
+- Do not invent new Garden semantics.
+- One semantic fact should have one canonical owner; other files cross-reference it.
+- Historical/review/process commentary should not remain in publication unless it is itself normative.
+- Preserve explicit CURRENT / QUALIFIED / EXPERIMENTAL / RESEARCH / DEFERRED / RETIRED state.
+- Preserve all active anchors, rights, invariants, schemas, tests, proof obligations, theory definitions, profile boundaries and deferred items.
+- Specification != implementation != executed conformance != empirical validation != certification.
+- No top-level Engine/Core Object/Core Relation/authority source may be created by documentation cleanup.
+- Annexure is the normative owner for registries/global cross-layer rules; other files should avoid duplicate normative copies.
+- GAIA naming definition must be explicit once; later uses should use GAIA.
+
+CURRENT FILE INVENTORY
+User: 114 KB; human design; major sections H-00..H-15 plus CPI/CDDT/OCF/MSC/TML/CMUR/CLIC/GCL and current rules.
+System: 248 KB; architecture, GSL/process/AAP, engines, knowledge, domains, theory, profiles, lifecycle.
+Technical: 805 KB; ontology, grammar, Process Algebra, Knowledge/Proof/Capabilities/Domains, reasoning, numerous technical profiles, T-EH engineering units.
+Theories: 164 KB; theory registry + SRT/VSM/RPM/PPM/TFT/FET/SCT + research/reference architectures.
+Annexure: 660 KB; dictionary, registries, rights, catalogue, invariants/proofs/tests, CPI/CDDT/OCF/CMUR/CLIC/GCL, current cross-layer rules.
+
+OBSERVED DOCUMENTATION ISSUES
+A. Ownership blur
+- Same hard-gate, authority-non-accretion, UNKNOWN/non-PASS, rights/privacy/safety principles recur in multiple files.
+- Need one normative owner + concise references.
+
+B. Chronological residue
+- Current clean source still contains headings such as OWNER-BOUND CANDIDATE / ENGINEERING EXTENSIONS, COMPARATIVE / COGNITIVE / DESIGN-CLOSURE EXTENSIONS, CAUSAL / HUMAN-EFFECT / INSTITUTIONAL HARDENING.
+- These group by upgrade wave rather than conceptual ownership.
+
+C. Mixed abstraction levels
+- User file sometimes carries technical/algebra details.
+- Technical file sometimes carries explanatory prose better suited to User/System.
+- Annexure contains normative tables mixed with prose explanations.
+- Theories mixes theory definitions, reference architectures and research candidates without uniform template.
+
+D. Repeated boilerplate
+Technical exact/repeated patterns include:
+- machine-binding unresolved status repeated about 20 times;
+- identical FunctionContract boilerplate repeated across many engineering units;
+- repeated multi-status non-PASS clauses;
+- repeated AnnexRefs.
+These should be factored into shared normative conventions + per-unit deltas without losing information.
+
+E. Navigation
+- Stable anchors exist, but hierarchy is inconsistent.
+- Some headings use numbers, some brackets, some prose.
+- Need predictable section templates and canonical cross-reference format.
+
+F. Theory consistency
+Current core theory versions in source:
+- SRT: no explicit numeric version
+- VSM: v2.0
+- RPM: v2.0
+- PPM: v2.0
+- TFT: v1.1
+- FET: no explicit numeric version in some places
+- SCT: no explicit numeric version in some places
+Desired documentation rule:
+- Give every core theory an explicit release-visible version/status.
+- Do not fake-bump versions due only to Garden integration changes.
+- If owned semantics changed, bump version; otherwise preserve semantic version and record binding/composition change separately.
+
+G. GAIA naming gap
+Current clean source uses GAIA Titanium / GAIA Diamond but does not contain the full expansion.
+Restore:
+GAIA = Garden Artificial Intelligence Architecture
+Definition should occur once in canonical naming/theory/reference-architecture metadata.
+
+PROPOSED DOCUMENT OWNERSHIP
+1. USER / HUMAN DESIGN
+   Purpose, principles, rights, sovereignty, conceptual architecture, human-facing explanation, boundaries.
+2. SYSTEM / FLOW DESIGN
+   Components, control loops, flows, state transitions, interaction of owners, runtime/system behavior.
+3. TECHNICAL SPECIFICATION
+   Types, schemas, algebras, FunctionContracts, grammar, algorithms, implementation/conformance requirements.
+4. THEORIES & REFERENCE ARCHITECTURES
+   Theory definitions, equations, assumptions, applicability, falsifiers, validation, reference architectures, research status.
+5. ANNEXURE
+   Canonical registries, identifiers, rights, invariants, proof obligations, tests, glossary/dictionary, release/current-reading metadata, cross-layer global rules.
+
+PROPOSED STANDARD SECTION TEMPLATES
+Normative component:
+Purpose
+Owner
+Status
+Inputs / Preconditions
+Outputs / Result algebra
+Rules
+Failure / UNKNOWN behavior
+Dependencies / Interfaces
+Invariants
+Tests / proof obligations
+Notes/examples only when they add information
+
+Theory:
+Name / Version / Status / Type
+Purpose
+Formal model
+State/variables/operators
+Assumptions
+Applicability
+Falsifiers
+Dependencies/composition
+Validation evidence/status
+Known limits
+Garden interfaces
+
+Profile/reference architecture:
+Purpose
+Status
+Owner
+Scope
+Parameters
+Flow
+Safety/authority constraints
+Operational defaults (qualified vs illustrative)
+Failure modes
+Tests
+Dependencies
+
+REVIEW TASK
+Independently challenge this documentation plan.
+Return JSON only:
+{
+ "verdict":"ACCEPT|ACCEPT_WITH_PATCHES|REJECT",
+ "top_structural_changes":[{"id":"D1","priority":"HIGH|MEDIUM|LOW","change":"...","reason":"..."}],
+ "duplication_rules":[{"pattern":"...","recommendation":"...","semantic_risk":"..."}],
+ "file_ownership_changes":[{"topic":"...","canonical_file":"User|System|Technical|Theories|Annexure","other_files_should":"..."}],
+ "theory_versioning_recommendation":{"rule":"...","core_versions":{"SRT":"...","VSM":"...","RPM":"...","PPM":"...","TFT":"...","FET":"...","SCT":"..."}},
+ "gaia_recommendation":"...",
+ "rewrite_risks":["..."],
+ "loss_prevention_checks":["..."],
+ "anything_missing":"..."
+}
+Do not propose new Garden policy or architecture. Focus only on documentation quality, semantic-preserving deduplication, navigation, terminology consistency, and loss prevention.

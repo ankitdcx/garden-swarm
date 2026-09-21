@@ -1,0 +1,39 @@
+name: Garden v15.9 zero-base R2 confirmation
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-zero-review-20260918'
+    paths:
+      - 'review-inputs/v159-zero-review/confirmation-trigger.json'
+permissions:
+  contents: read
+concurrency:
+  group: v159-zero-base-confirmation
+  cancel-in-progress: false
+jobs:
+  confirm:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        family: [deepseek, glm, xiaomi, gemini]
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run one isolated zero-base R2 confirmation
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_zero_base_confirmation.py --family "${{ matrix.family }}"
+      - name: Upload confirmation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-zero-confirm-${{ matrix.family }}-${{ github.run_id }}
+          path: review-results/v159-zero-review/final-confirmation/${{ matrix.family }}.json
+          if-no-files-found: error
+          retention-days: 30

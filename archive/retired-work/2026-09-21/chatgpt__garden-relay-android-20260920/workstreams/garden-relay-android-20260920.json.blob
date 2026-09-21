@@ -1,0 +1,24 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "chatgpt:garden-relay-android-20260920",
+  "work_package_id": "garden-relay-android-phone-bus",
+  "branch": "chatgpt/garden-relay-android-20260920",
+  "base_sha": "7a0a0dc347cce0909a95098c7d302188baa6a6de",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "status": "ACTIVE",
+  "target_paths": [
+    "android/garden-relay",
+    "relay/mobile",
+    "docs/GARDEN_RELAY_ANDROID.md",
+    ".github/workflows/garden-relay-android.yml",
+    "workstreams/garden-relay-android-20260920.json",
+    "gsl/REPO_PROFILE.json",
+    "agents/provider-exclusion-policy.json",
+    "agents/openrouter-paid-review-policy.json",
+    "docs/PARALLEL_ZERO_TOUCH_REVIEW.md",
+    "agents/parallel-review-controller.json"
+  ],
+  "intended_effect": "Add no-Qwen Android relay with DeepSeek, Gemini, Claude and Grok bindings plus parallel zero-touch review documentation; no Garden semantic mutation."
+}

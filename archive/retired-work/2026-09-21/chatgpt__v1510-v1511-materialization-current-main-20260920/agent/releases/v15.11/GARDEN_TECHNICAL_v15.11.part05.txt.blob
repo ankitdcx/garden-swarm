@@ -1,0 +1,102 @@
+    confirmed post-commit reversible failure -> fresh recovery admission; rollback only to recorded last qualified stage;
+    confirmed irreversible failure -> fresh compensation/recovery admission, never fictional rollback.
+
+TransitionReceipt records every public advance/recovery evaluation and binds exact transition identity, purpose, effect
+scope, stage pair, DesignEpoch, decision/reasons, assurance digest, authority-delta digests, verifier identity/control
+lineage and evidence refs. Receipt existence does not self-validate the decision.
+
+GTF-T01  Transition status creates no authority.
+GTF-T02  No declared required stage is silently skipped.
+GTF-T03  Authority expansion requires explicit validated AuthorityDelta.
+GTF-T04  Human-Effect Closure applies at every material effect boundary.
+GTF-T05  Material unresolved divergence blocks affected-scope expansion.
+GTF-T06  Required independent verification cannot be self-certified.
+GTF-T07  Material capture/conflict risk changes assurance.
+GTF-T08  Reversible effects require rollback; irreversible effects require prior recovery/compensation.
+GTF-T09  Existing power/enforcement does not self-validate legitimacy.
+GTF-T10  Transition and justice/liability remain separate.
+GTF-T11  Disputes remain typed; majority/model confidence cannot turn uncertainty into PASS.
+GTF-T12  Coordinator/installer status cannot bootstrap sovereignty.
+
+56. AI-LED UPGRADE CLOSURE
+
+Garden routine upgrade work is AI-owned within existing authority. Humans remain necessary for protected constitutional
+ratification and genuinely unresolved value/authority choices.
+
+Closure loop:
+    RECONSTRUCT current system
+    -> BUILD dependency/authority/effect map
+    -> SEARCH contradictions, omissions, stale assumptions and alternatives
+    -> CLASSIFY materiality and owner
+    -> GATHER evidence / run tools or experiments where authorized
+    -> GENERATE competing repairs including DO_NOTHING
+    -> ATTACK candidates
+    -> VERIFY formal/empirical/implementation claims as applicable
+    -> COMPARE whole-system consequences
+    -> INTEGRATE best admissible candidate
+    -> PROPAGATE schemas/tests/registries/docs/code/dependencies
+    -> RE-AUDIT affected closure and global invariants
+    -> REPEAT within declared bounds.
+
+Routine AI-owned work includes documentation/reference repair, duplicate/conflicting owner repair, implementation defects,
+stale bindings, schema/test propagation, alternative design generation, adversarial cases, bounded research comparison,
+simulation/checking, performance/complexity improvements, transition planning and whole-corpus retention checks.
+
+Escalation is reserved for unresolved protected rights/value change, legitimate human/community preference among
+admissible options, unresolved material authority, decisions reserved by law/rights to an external institution, required
+independence unavailable, irreversible/high-impact authorization not already present, or a major architecture change that
+changes protected constitutional meaning.
+
+FindingClass:
+    ROUTINE
+    MATERIAL
+    HARD_GATE
+    PROTECTED
+
+FindingDisposition:
+    FIXED
+    REJECTED_WITH_EVIDENCE
+    DEFERRED_WITH_OWNER_CONDITION
+    ESCALATED
+    OPEN
+
+HARD_GATE and PROTECTED findings cannot be deferred or merely escalated into a positive closure result for the affected
+scope. Any PROTECTED finding activates the protected-change authorization path even if the overall patch was labelled
+routine.
+
+Positive candidate closure requires all closure evidence to bind the exact candidate SHA-256 and declared audited-scope
+SHA-256. Required evidence includes search/coverage, finding classification, protected-surface scan, dependency
+propagation, tests/checks, retention/no-loss, required independent review, protected authorization where applicable, and
+final re-audit after the last material change. An older PASS cannot be replayed after candidate bytes change.
+
+Finding dispositions are non-vacuous:
+    FIXED/REJECTED_WITH_EVIDENCE carry evidence refs;
+    DEFERRED carries owner + reopen condition;
+    ESCALATED carries an explicit escalation target.
+
+Upgrade cycles are bounded by explicit iteration/work-item/resource/review limits plus checkpoint/stop conditions and a
+residual-debt record. Repeated low-value duplicates do not create infinite recursion. Missing required independent review
+may block admission while unrelated noncanonical repair continues; blocked assurance can never be relabelled PASS.
+
+Upgrade work is not privileged. Research, data access, tool calls, experiments, code execution and reviewer invocation
+remain subject to point-of-use authority, privacy, rights, law, safety and Human-Effect Closure. Changing a verifier,
+admission gate, protected policy, trust root or independence mechanism invalidates dependent qualification until the
+changed judge is independently requalified.
+
+AUP-001  Unknown != impossible; investigate before escalating.
+AUP-002  Gap discovery creates work, not automatic human delegation.
+AUP-003  Routine fixes propagate through full dependency closure.
+AUP-004  DO_NOTHING remains a comparator.
+AUP-005  AI confidence does not substitute for evidence/proof.
+AUP-006  AI authorship creates no merge/admission authority.
+AUP-007  Required independent review cannot be simulated by correlated copies.
+AUP-008  Protected constitutional change follows the protected path.
+AUP-009  Better architectures may replace current implementation when protected objectives/rights remain.
+AUP-010  Final re-audit occurs after the last material modification.
+AUP-011  Recursive work is bounded and cannot loop indefinitely on low-value findings.
+AUP-012  Missing independence may block admission without blocking unrelated noncanonical repair.
+AUP-013  Upgrade objectives do not privilege upgrade methods; changing the judge invalidates dependent qualification.
+AUP-014  HARD_GATE/PROTECTED findings cannot be deferred into positive closure; classification is independently checked.
+AUP-015  Bounded closure records explicit limits and residual debt.
+
+END OF GARDEN v15.11 — TECHNICAL DESIGN

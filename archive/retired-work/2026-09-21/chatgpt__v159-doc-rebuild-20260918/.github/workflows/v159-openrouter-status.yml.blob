@@ -1,0 +1,24 @@
+name: Garden v15.9 OpenRouter key status
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-postfreeze-scattered-upgrades-20260918'
+    paths:
+      - 'review-inputs/v159-postfreeze/key-status-trigger.json'
+permissions:
+  contents: read
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read non-secret OpenRouter key usage status
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_openrouter_status.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v159-openrouter-key-status-${{ github.run_id }}
+          path: /tmp/openrouter-key-status.json
+          retention-days: 3

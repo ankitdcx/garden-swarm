@@ -6,18 +6,6 @@
   "coverage_boundary": "Artifact classification declares which Garden/GSL modules govern changes. It does not by itself prove semantic conformance, proof validity, authorization, empirical validation or certification.",
   "rules": [
     {
-      "rule_id": "RETIRED-WORK-ARCHIVE",
-      "pattern": "archive/retired-work/*",
-      "artifact_class": "ARCHIVAL_EVIDENCE",
-      "required_change_modules": [
-        "SOURCE_IDENTITY",
-        "AUDIT",
-        "PROVENANCE"
-      ],
-      "conditional_change_modules": [],
-      "note": "Exact historical branch-work preservation only. Content under this path is non-executable, noncanonical, non-authorizing, and must not be interpreted as an active Garden owner or implementation surface."
-    },
-    {
       "rule_id": "CANONICAL-SOURCE",
       "pattern": "Garden_*_v15.5_FULL_*.txt",
       "artifact_class": "CANONICAL_SOURCE",
@@ -590,6 +578,31 @@
       "conditional_change_modules": [
         "HUMAN_SOVEREIGNTY"
       ]
+    },
+    {
+      "rule_id": "ANDROID-RELAY",
+      "pattern": "android/*",
+      "artifact_class": "IMPLEMENTATION",
+      "required_change_modules": [
+        "SOURCE_IDENTITY",
+        "DESIGN_EPOCH",
+        "SOURCE_OBLIGATION",
+        "FUNCTION_CONTRACT",
+        "BRIDGE_ALGEBRA",
+        "CONFORMANCE_ALGEBRA",
+        "AUDIT",
+        "COMPLIANCE",
+        "SECURITY",
+        "PRIVACY"
+      ],
+      "conditional_change_modules": [
+        "COMPARE",
+        "REASON",
+        "AUTHORITY",
+        "ACTION_GATE",
+        "SAFETY"
+      ],
+      "note": "Android phone-side Garden review relay implementation. Transport/tooling only; it does not create Garden semantic authority."
     },
     {
       "rule_id": "UNCLASSIFIED-FRONTIER",

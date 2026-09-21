@@ -1,0 +1,39 @@
+name: Garden v15.9 final history blind board
+on:
+  push:
+    branches:
+      - 'chatgpt/v159-postfreeze-scattered-upgrades-20260918'
+    paths:
+      - 'review-inputs/v159-postfreeze/final-board-trigger.json'
+permissions:
+  contents: read
+concurrency:
+  group: v159-final-history-board
+  cancel-in-progress: false
+jobs:
+  review:
+    if: github.repository == 'ankitdcx/garden-swarm'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        family: [deepseek, glm, xiaomi, gemini]
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run one isolated final-history blind review
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python tools/v159_final_history_board.py --family "${{ matrix.family }}"
+      - name: Upload isolated review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v159-final-history-${{ matrix.family }}-${{ github.run_id }}
+          path: review-results/v159-postfreeze-final-blind/${{ matrix.family }}.json
+          if-no-files-found: error
+          retention-days: 30

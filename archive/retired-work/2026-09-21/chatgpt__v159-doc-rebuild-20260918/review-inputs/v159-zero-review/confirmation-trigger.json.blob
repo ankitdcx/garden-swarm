@@ -1,0 +1,20 @@
+{
+  "schema": "GardenV159ZeroBaseConfirmationTrigger/v1",
+  "source_basis": "CURRENT_V15_9_ONLY",
+  "synthesis_path": "review-inputs/v159-zero-review/ZERO_BASE_SYNTHESIS_R2.txt",
+  "initial_blind_run": 35315784029,
+  "final_challenge_run": 35318636957,
+  "families": [
+    "deepseek",
+    "glm",
+    "xiaomi",
+    "gemini"
+  ],
+  "sequential_only": true,
+  "single_confirmation_round": true,
+  "daily_ceiling_usd": 10,
+  "per_call_ceiling_usd": 0.1,
+  "chat_history_used": false,
+  "prior_review_verdicts_used": false,
+  "canonical_effect": false
+}

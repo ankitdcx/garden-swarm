@@ -1,0 +1,249 @@
+    VERIFIER_UNKNOWN / UNKNOWN.
+A verifier's inability to execute a proof profile is not proof that the credential is invalid. Unsupported or
+verifier-unknown status remains typed non-PASS with reason and re-verification/appeal route where applicable.
+
+Justice / urgent preservation:
+    justice is a guarded proceeding-profile transition graph, not an unconditional linear chain;
+    urgent preservation must be preauthorized, bounded, expiry/review/release governed and non-self-renewing;
+    expiry invalidates retry, failover, delayed continuation, queue replay and continuity use of the old authority;
+    action after expiry requires fresh current competent authority and fresh required evaluation;
+    uncertain prior external effect preserves PARTIAL_EFFECT / OUTCOME_UNKNOWN and requires reconciliation before unsafe
+    replay;
+    a mandatory appeal/contestability route cannot be deleted by profile configuration.
+
+52.4 HUMAN-EFFECT / REVIEW STATUS BINDING
+
+Human-Effect Closure is CURRENT as a semantic rule over existing owners. This text edition does not invent a standalone
+SchemaID merely because the rule has a name. Where executable owner/schema/profile/test binding remains unresolved, the
+machine-binding status is MACHINE_BINDING_INCOMPLETE rather than PASS.
+
+The existence of a reviewed rule, receipt name, test obligation, or documentation clause does not imply executable
+certification, empirical validation, production safety or canonical admission.
+
+53. STANDALONE 15.x SEMANTIC CLOSURE
+
+v15.10 is a standalone current source. Its meaning does not depend on an older release being present.
+
+Current-source roles:
+    BOOK       explanatory human projection;
+    TECHNICAL  controlling abstract structure, rules, algorithms and build/reading contract;
+    CATALOGUE  controlling detailed inventory plus the embedded 15.x retention corpus;
+    HISTORY    lineage only, non-controlling.
+
+The Catalogue's embedded retention corpus is part of the current v15.10 source, not an external predecessor dependency.
+It exists so that compaction cannot silently delete a unique earlier 15.x rule, exception, equation, test meaning,
+nonclaim, scope condition, ordering condition or status distinction before that meaning is fully normalized into the new
+abstract owners.
+
+Current reading is deterministic:
+    1. read the structured current Technical + Catalogue definitions;
+    2. read stable current identifiers and explicit status/disposition records;
+    3. read the embedded RetentionSeed corpus;
+    4. where an explicit current definition names the same stable identifier/family and states a supersession, the
+       current structured owner controls that scope;
+    5. otherwise the retained seed remains a current compatibility semantic inside this release;
+    6. History and external predecessor files never override the current source.
+
+No retained seed gains new authority merely by retention. Retention preserves prior meaning; it cannot widen authority,
+convert CANDIDATE/DEFERRED/RESEARCH into CURRENT, turn UNKNOWN into PASS, or convert specification into proof,
+implementation, empirical validation or certification.
+
+A future release may remove a RetentionSeed only when it records an exact replacement owner and demonstrates that the
+replacement preserves the seed's applicable permissions, obligations, prohibitions, exceptions, nonclaims, scope,
+ordering/timing conditions and status. Mere similarity or model confidence is insufficient.
+
+RetentionClosureReceipt/v1 records at minimum:
+    candidate source hashes;
+    embedded retained-source hashes;
+    stable-identity counts and missing-ID list;
+    semantic-leaf span verification;
+    formula/operator source-line verification;
+    current structured-owner collision/reference checks;
+    explicit supersession/disposition map;
+    unresolved retention debt;
+    verifier/tool identity and evidence refs.
+
+Required standalone checks:
+    STANDALONE-T01 deleting every external v15.x file does not remove current meaning;
+    STANDALONE-T02 every retained stable ID remains discoverable in current Technical/Catalogue or the current retention
+                    registry;
+    STANDALONE-T03 every semantic-leaf source span validates against the embedded current retention corpus;
+    STANDALONE-T04 every retained formula/operator candidate resolves to exact current embedded text;
+    STANDALONE-T05 no retained historical status is silently promoted;
+    STANDALONE-T06 explicit current supersession cannot widen rights/authority/scope without the applicable change path;
+    STANDALONE-T07 History is not needed to interpret current Garden;
+    STANDALONE-T08 external predecessor hashes may support audit but are never required for current interpretation.
+
+54. RUNTIME CONSTITUTIONAL PROFILE
+
+v15.11 adds a runtime constitutional profile over existing Garden owners. It creates no new sovereign authority.
+
+Garden keeps four dimensions distinct:
+    semantic authority;
+    technical capability;
+    external enforcement;
+    evidence that an authority claim is valid.
+
+RCP-001  Capability does not create authority.
+RCP-002  External enforcement does not create semantic authority.
+RCP-003  External enforcement may block but cannot authorize.
+RCP-004  Human instruction does not self-authorize.
+RCP-005  Self-selected goals do not amplify authority.
+RCP-006  Goal persistence is subordinate to current validity.
+RCP-007  Human-Effect Closure survives every source of instruction.
+RCP-008  Garden-vs-host constraint conflict remains typed.
+RCP-009  Discovering a technical bypass does not create bypass authority.
+RCP-010  Owner/operator/employer/government/founder/provider status is not sovereignty over unrelated humans.
+RCP-011  Model disagreement or superior reasoning is not sovereignty.
+RCP-012  Adoption and installation remain effect-governed.
+RCP-013  Constraint-blocked judgment remains explicit and attributed rather than replaced by a third-party conclusion.
+RCP-014  Authority claims are not self-validating.
+RCP-015  Legitimate ends do not authorize otherwise unauthorized means.
+RCP-016  Transition cannot bootstrap sovereignty.
+RCP-017  Approval, consensus, majority vote or official labels cannot waive protected floors beyond their valid scope.
+RCP-018  Required independence must be real control-lineage independence.
+
+Runtime authority states:
+    PRESENT
+    VALIDATED
+    INVALID
+    UNKNOWN
+
+Only VALIDATED authority can contribute to an ALLOW result. INVALID rejects. UNKNOWN escalates or preserves state.
+
+AuthorityValidationReceipt is a typed, content-addressed receipt over the exact authority claim. It binds at minimum:
+    subject / claim digest;
+    parent or delegator identity;
+    DesignEpoch and policy epoch;
+    jurisdiction and context scope;
+    authenticated identity;
+    scope/delegation validity;
+    validity interval / expiry;
+    revocation state;
+    evidence references;
+    verifier identity;
+    verifier control lineage;
+    verifier independence.
+
+Changing the authority claim, parent, scope, jurisdiction, context, policy epoch, revocation state or required verifier
+binding invalidates reuse of the old receipt. A cryptographic signature proves key possession only; it does not prove the
+signer possessed the claimed authority.
+
+Persistent goals use GoalLease rather than a bare goal ID. GoalLease binds:
+    goal_id;
+    DesignEpoch;
+    policy_epoch;
+    delegated_by;
+    current authority-claim digests;
+    dependency digest/freshness;
+    resource bound;
+    termination condition;
+    invalidators;
+    evidence refs;
+    lease digest.
+
+GoalValidationReceipt binds the exact GoalLease digest plus verifier identity/control-lineage/independence. Changing a
+lease or any authority claim it depends on invalidates prior validation. Goal admission and action admission remain
+separate; a goal never carries an implicit wildcard over the means needed to pursue it.
+
+Human-effect materiality is itself a typed, action+target/effect-scope-bound input. Missing or unvalidated materiality is
+UNKNOWN/ESCALATE, never implicit low impact. Changing action, target, materiality value or policy epoch invalidates an old
+materiality validation.
+
+ExternalEnforcementStatus is orthogonal to Garden semantic admission:
+    NONE
+    BLOCKED
+    REQUIRED
+    BLOCKED_AND_REQUIRED
+
+Garden first evaluates semantic admission. A Garden-rejected action remains rejected even if the host also blocks it. A
+Garden-allowed action blocked by the host is EXTERNALLY_BLOCKED. A host requirement that conflicts with Garden non-ALLOW
+is EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT. Neither dimension overwrites the other.
+
+55. GOVERNED TRANSITION FABRIC
+
+v15.11 upgrades existing Engine.Transition / Garden Transition Fabric rather than creating a second transition engine.
+
+Every material TransitionContract declares at least:
+    transition_id;
+    source_state / target_state;
+    declared_stage_plan;
+    affected effect scope;
+    affected subjects/institutions;
+    authority claims and validation evidence;
+    rights/consent/privacy/law/safety/Human-Effect bindings;
+    evidence/uncertainty;
+    independent verification plan;
+    compatibility/adapter plan;
+    divergence checks;
+    capture/conflict checks;
+    entry/exit criteria;
+    rollback plan;
+    compensation/recovery plan;
+    dispute/appeal path;
+    monitoring/stop conditions;
+    receipts.
+
+TransitionContract existence creates no authority.
+
+Standard high-assurance stage order:
+    SHADOW
+    PARALLEL
+    BOUNDED_ACTIVE
+    EXPANDED_ACTIVE
+    STABLE_OPERATION
+
+A stage may be omitted only with a non-empty stage-specific reason and explicit omission assurance. Missing or UNKNOWN
+omission approval blocks advancement. Remaining stages preserve standard order.
+
+TransitionAssuranceReceipt is content-addressed over the exact:
+    transition_id;
+    effect_scope;
+    current_stage / next_stage;
+    DesignEpoch;
+    hard-gate snapshot;
+    criteria-profile digest;
+    recovery-state digest;
+    authority-delta digests;
+    evidence refs;
+    authenticated verifier identity/control lineage/independence.
+
+Caller booleans are not assurance. A receipt from another transition, scope, stage pair, context or DesignEpoch cannot be
+replayed.
+
+The non-removable advancement floor includes applicable:
+    validated authority;
+    Constitution/rights;
+    consent/privacy;
+    law/jurisdiction;
+    safety;
+    Human-Effect Closure;
+    evidence/proof;
+    required independent verification;
+    divergence resolution;
+    capture/conflict clearance;
+    operational readiness;
+    validated non-empty entry/exit criteria;
+    rollback readiness for reversible effects;
+    authorized compensation/recovery for irreversible effects;
+    required dispute/appeal treatment.
+
+UNKNOWN at a required hard gate is not PASS.
+
+AuthorityDelta is an explicit typed transfer artifact. It binds source/basis, delegator, recipient, exact actions,
+resources and affected subjects, jurisdiction/context, validity/invalidators, revocation, contest/appeal, evidence and
+independence/conflict checks. Stage advancement alone never transfers authority. Changing any delta field invalidates an
+old validation. Authority is revalidated at point of consequential use.
+
+PARALLEL divergence is evidence to investigate. Neither incumbent nor Garden output is default truth. Material unresolved
+divergence blocks expansion of the affected scope.
+
+Capture/conflict risk changes assurance. A materially interested actor cannot be the sole evidence custodian, authority
+validator, transition verifier, commit authorizer or dispute adjudicator for a transition affecting its own power or
+liability. Multiple nominal agents under one mutable control lineage do not satisfy independence.
+
+Transition and justice remain separate. Participation, resistance or adoption creates neither guilt nor immunity.
+
+Recovery:
+    failed pre-commit hard gate -> ABORT/HOLD;
+    unresolved required evidence -> VERIFY_MORE/HOLD;
