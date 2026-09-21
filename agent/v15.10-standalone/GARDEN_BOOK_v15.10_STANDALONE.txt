@@ -1,0 +1,2 @@
+STANDALONE FINAL PACKAGE BINDING
+The full user-facing Book is frozen in release artifact GARDEN_v15.10_STANDALONE_FINAL_2026-09-21.zip. SHA-256 0243bba7711db6f0ca26c6fea17397d10d4294ec457434e5301567c6f8b42050; bytes 26665. The release package is standalone and requires no predecessor file for current reading. This repository binding is integrity metadata, not a substitute for the release bytes and creates no authority.
