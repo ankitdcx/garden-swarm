@@ -400,3 +400,12 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GroupReviewTransportRegressionTests(unittest.TestCase):
+    def test_group_review_does_not_pass_unsupported_timeout_to_legacy_http(self):
+        import inspect
+        from tools import group_review_openrouter_worker as w
+        source = inspect.getsource(w.run)
+        self.assertNotIn('timeout=profile["request_timeout_seconds"]', source)
+        self.assertIn('legacy.OR + "/chat/completions"', source)
