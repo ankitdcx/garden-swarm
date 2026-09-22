@@ -270,6 +270,19 @@ class GroupReviewOpenRouterWorkerTests(unittest.TestCase):
         self.assertEqual(profile["max_output_tokens"], 4000)
         self.assertEqual(profile["request_timeout_seconds"], 180)
 
+    def test_selected_endpoint_identity_is_guarded_before_reservation(self):
+        import inspect
+        source = inspect.getsource(worker.run)
+        self.assertIn('expected_provider = endpoint.get("provider_name")', source)
+        self.assertIn('expected_endpoint = endpoint.get("tag")', source)
+        self.assertIn('selected endpoint identity missing', source)
+
+    def test_reasoning_effort_can_adapt_to_live_supported_efforts(self):
+        import inspect
+        source = inspect.getsource(worker.run)
+        self.assertIn('supported_efforts', source)
+        self.assertIn('endpoint_profile["reasoning_effort"] = supported[0]', source)
+
     def test_openrouter_prompt_contains_frozen_packet_but_no_peer_findings(self):
         packet = {
             "schema": bus.PACKET_SCHEMA,
