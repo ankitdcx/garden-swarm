@@ -32,3 +32,5 @@ A preliminary hypothesis is:
 - Therefore RSI does not automatically overthrow existing systems. The decisive variables are concentration/diffusion of capability, enforceability of external controls, recursive verification, and governance/authority architecture.
 
 Reviewers should attack this baseline rather than agree by default.
+
+Review rerun note: clean transport rerun after fixing OpenRouter endpoint handling; substantive question unchanged.
