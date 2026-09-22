@@ -1,12 +1,12 @@
 {
   "schema": "GardenGroupReviewDispatchRequest/v1",
   "status": "REQUESTED",
-  "run_issue_number": 330,
-  "packet_sha256": "aff4653d81e650e533f3bf91642ded4c2c1f95de1aa980031c4754b037b7e1cf",
-  "created_at": "2026-09-22T09:15:00+05:30",
-  "purpose": "Dispatch frozen public RSI and existing power-structures review through the governed OpenRouter lane.",
-  "supersedes_dispatch_for_run_issue_number": 259,
+  "run_issue_number": 335,
+  "packet_sha256": "0b3fe66172cabac2b1942735faa120de3d2110431b83962ff205379f774f06bd",
+  "created_at": "2026-09-22T09:30:00+05:30",
+  "purpose": "Clean full OpenRouter rerun of RSI and existing power-structures review after transport hardening.",
+  "supersedes_dispatch_for_run_issue_number": 330,
   "semantic_delta_admitted": false,
-  "dispatch_generation": 4,
+  "dispatch_generation": 5,
   "budget_epoch_id": "GROUP_REVIEW_CHEAP_REAUTH_2026-09-20"
 }
