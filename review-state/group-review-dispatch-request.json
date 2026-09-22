@@ -1,12 +1,12 @@
 {
   "schema": "GardenGroupReviewDispatchRequest/v1",
   "status": "REQUESTED",
-  "run_issue_number": 259,
-  "packet_sha256": "2a730e5f32c97daabab4143db7bd15027f82d0753696e628ab27566773d86058",
-  "created_at": "2026-09-20T13:55:00+05:30",
-  "purpose": "Re-dispatch unchanged frozen semantic run #259 under merged bounded cheap-call budget epoch GROUP_REVIEW_CHEAP_REAUTH_2026-09-20.",
-  "supersedes_dispatch_for_run_issue_number": 257,
+  "run_issue_number": 330,
+  "packet_sha256": "aff4653d81e650e533f3bf91642ded4c2c1f95de1aa980031c4754b037b7e1cf",
+  "created_at": "2026-09-22T09:15:00+05:30",
+  "purpose": "Dispatch frozen public RSI and existing power-structures review through the governed OpenRouter lane.",
+  "supersedes_dispatch_for_run_issue_number": 259,
   "semantic_delta_admitted": false,
-  "dispatch_generation": 3,
+  "dispatch_generation": 4,
   "budget_epoch_id": "GROUP_REVIEW_CHEAP_REAUTH_2026-09-20"
 }
