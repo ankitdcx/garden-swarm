@@ -1,0 +1,14 @@
+{
+  "schema": "GardenGCSCV159AttachedCorpusCensus/v0.1",
+  "status": "ATTACHED_FIVE_FILE_CORPUS_PARSED",
+  "files": {
+    "Garden 15.9 - Theories-1.txt": {"bytes":195792,"sha256":"f893125f2fb8c0f63e618f5fae8223ed4a1ae97121fdf1ab337517c15a5d0176"},
+    "Garden 15.9 - User-1.txt": {"bytes":119214,"sha256":"c43d1b356a1fe14d473db62181be1d8dc74741e7ac2ae597f2acf21939bcd8e2"},
+    "Garden 15.9 - Technical-1.txt": {"bytes":1054212,"sha256":"ea1a6cb26fe60893f381930e0d7a5d929e95af07e5087d5e3893707871cd563b"},
+    "Garden 15.9 - System-1.txt": {"bytes":268464,"sha256":"38e3cfcde22668fde9c2245960b91ad815c33bfe3f0f64e9a4f127a93443522e"},
+    "Garden 15.9 - Annexure-1.txt": {"bytes":1287615,"sha256":"ab4495e9681f8b2c0c6590e5c257dd9e71c827490e1865dc76d50e120cdf8add"}
+  },
+  "counts":{"unique_schema_ids":735,"unique_test_like_ids":902,"unique_registry_like_ids":82,"unique_right_ids":27,"annexure_A_canonical_definitions":1844,"annexure_A_invariant_definitions_excluding_rights":1817,"annexure_A_invariant_prefix_families_excluding_rights":212},
+  "method":"Exact attached five-file v15.9 text corpus parsed locally. Canonical invariant count uses @D records in Annexure [A-INVARIANTS] before [A-HISTORY]. Counts are syntactic inventory, not semantic coverage.",
+  "gcsc":{"raw_l0":2400,"raw_l1":21168000,"coverage_percent":null,"reason":"A semantic percentage requires the frozen v0.7 materiality, compatibility and binding artifacts plus completed blind discovery."}
+}

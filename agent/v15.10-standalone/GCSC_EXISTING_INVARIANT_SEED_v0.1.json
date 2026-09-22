@@ -1,0 +1,14 @@
+{
+  "schema":"GardenGCSCExplicitInvariantFamilySeed/v0.1",
+  "status":"SEED_FROM_COMPACT_CURRENT_REVIEW_PROJECTIONS_NOT_FULL_NORMALIZATION",
+  "source":"agent/v15.11/GARDEN_CATALOGUE_v15.11_REVIEW_CORE.txt",
+  "families":[
+    {"prefix":"RCP","count":18,"range":"RCP-001..RCP-018","domain":"runtime constitutional"},
+    {"prefix":"GTF-T","count":12,"range":"GTF-T01..GTF-T12","domain":"transition"},
+    {"prefix":"AUP","count":15,"range":"AUP-001..AUP-015","domain":"AI-led upgrade"},
+    {"prefix":"HEC-T","count":4,"range":"HEC-T01..HEC-T04","domain":"human-effect conformance"}
+  ],
+  "explicit_seed_total":49,
+  "excluded_from_total":["standalone TEST-* examples","18 fundamental laws (not yet normalized against invariant families)","unnumbered retained cross-cutting rules","full predecessor broad invariant/qualified-ID census"],
+  "anti_circularity":"This seed is comparison-side data only. It must not be exposed to blind GCSC discovery/materiality derivation."
+}

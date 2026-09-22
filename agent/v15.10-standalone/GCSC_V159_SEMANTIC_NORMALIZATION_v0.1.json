@@ -1,0 +1,20 @@
+{
+ "schema":"GardenV159SemanticNormalization/v0.1",
+ "status":"NORMALIZATION_FRAMEWORK_APPLIED_TO_FULL_HIGH_RECALL_KB",
+ "source_units":14542,
+ "normalization_classes":["CANONICAL_OWNER","EXPLANATORY_PROJECTION","COMPATIBILITY_TRACE","SPECIALIZATION","REFINEMENT","IMPLEMENTATION_BINDING","TEST_OR_FALSIFIER","PROOF_OR_ASSURANCE","EXAMPLE_OR_COUNTEREXAMPLE","STATUS_OR_BOUNDARY","ALIAS_OR_MIGRATION","UNRESOLVED"],
+ "precedence":["REVIEWED_v15.9_CLOSURE","P037","hard_rights_consent_privacy_authority_safety_law_contestability_human_agency","controlling_document_owner","ordinary_source_order"],
+ "noncollapse_rules":[
+   "specification != proof != implementation != empirical validation != certification",
+   "representation != semantic identity",
+   "evidence != truth != authority",
+   "capability != authority",
+   "ownership != governance authority",
+   "UNKNOWN/STALE/CONFLICT/BLOCKED/INCOMPLETE/NEEDS_REVALIDATION are non-PASS where hard resolution is required",
+   "non-owner repetition cannot override controlling owner",
+   "alias/display-name equality cannot create semantic identity"
+ ],
+ "equivalence_receipt_required":true,
+ "semantic_delta_dimensions":["scope","quantification","modality","exceptions","authority","precedence","UNKNOWN semantics","failure semantics","time","jurisdiction","context","validity domain"],
+ "current_result":"The high-recall KB can now be normalized without unsafe textual deduplication. Exact semantic-family count remains intentionally unset until equivalence receipts are computed for paraphrase clusters."
+}

@@ -1,0 +1,42 @@
+{
+ "schema":"GardenGCSCV159ToV1510FamilyMappingRules/v0.1",
+ "status":"SOURCE_GROUNDED_MAPPING_RULES",
+ "source_model":{"v15_9":"five-source predecessor semantic baseline","v15_10":["BOOK","TECHNICAL","CATALOGUE"],"history":"non-controlling"},
+ "mapping_precedence":[
+   "exact stable identifier/current owner",
+   "explicit old->current crosswalk",
+   "explicit retained family/current owner",
+   "Design Form representation with preserved domain obligations",
+   "semantic equivalence/refinement receipt",
+   "otherwise UNRESOLVED"
+ ],
+ "design_form_mapping":{
+   "artifact_object_profile_theory_instance_receipt":"CONSTRUCT",
+   "promise_requirement_permission_interface_obligation":"CONTRACT",
+   "lifecycle_validity_operating_status":"STATE",
+   "typed_connection":"RELATION",
+   "workflow_loop_transition_composition_change":"PROCESS",
+   "must_may_must_not_guard_constraint":"RULE",
+   "reader_machine_document_interface_view":"PROJECTION",
+   "Theory":"specialized composition, not eighth form",
+   "Algebra":"specialized composition, not eighth form",
+   "Receipt":"CONSTRUCT",
+   "Schema":"structural PROJECTION + admissibility/type RULES and CONTRACTS"
+ },
+ "nonloss_conditions":[
+   "scope preserved",
+   "quantification preserved",
+   "modality preserved",
+   "exceptions preserved",
+   "authority preserved",
+   "precedence preserved",
+   "UNKNOWN/failure semantics preserved",
+   "time preserved",
+   "jurisdiction preserved",
+   "context preserved",
+   "validity domain preserved",
+   "domain-specific obligations preserved"
+ ],
+ "classifications":["EQUIVALENT","REFINED","GENERALIZED","SPECIALIZED","REPRESENTED_BY_FORM","COMPATIBILITY_MAPPED","LOST_CANDIDATE","UNRESOLVED"],
+ "anti_false_pass":"Source declaration of retention is evidence but does not replace per-family equivalence where material semantic delta is possible."
+}

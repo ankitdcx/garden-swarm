@@ -1,0 +1,18 @@
+{
+ "schema":"GardenGCSCEpoch1CrossDomainRun/v0.1",
+ "status":"BOUNDED_INDEPENDENT_DISCOVERY",
+ "domains":14,
+ "base_obligation_atoms":66,
+ "domain_pair_topologies":91,
+ "domain_pairs_with_explicit_interaction_seed":14,
+ "cross_domain_emergent_atoms":14,
+ "bounded_l3_candidate_triples_with_two_or_more_interactions":17,
+ "candidate_cross_domain_atoms":[
+ "REQUIRE_POINT_OF_USE_AUTHORITY","REQUIRE_AUTHORITY_INTERSECTION","REQUIRE_AFFECTED_HUMAN_AUTHORITY_BOUNDARY",
+ "REQUIRE_EVIDENCE_APPLICABILITY_MATCH","PROHIBIT_EVIDENCE_AS_LEGAL_AUTHORITY","REQUIRE_DEPENDENT_CLOSURE_REVALIDATION",
+ "REQUIRE_INTERMEDIATE_STATE_SAFETY","REQUIRE_DEADLOCK_LIVELOCK_HANDLING","REQUIRE_PRIVATE_CHANNEL_NONINTERFERENCE",
+ "REQUIRE_EFFECT_TIME_REVALIDATION","REQUIRE_SEMANTIC_MACHINE_SECURITY_REFINEMENT","REQUIRE_GENERATED_ARTIFACT_INVALIDATION",
+ "REQUIRE_JURISDICTION_TIME_SCOPE","REQUIRE_COLLECTIVE_CHANNEL_INTEGRITY"],
+ "coverage_percent":null,
+ "warning":"Unseeded pairs/triples are UNEXPLORED, not negative findings. This run broadens independent discovery scope but is not exhaustive over all Garden domain semantics."
+}

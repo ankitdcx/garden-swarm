@@ -1,0 +1,24 @@
+{
+  "schema":"GardenGCSCEpoch1PopulationPlan/v0.1",
+  "status":"POPULATION_IN_PROGRESS",
+  "design_target":"GCSC v0.7",
+  "source_baseline":"exact attached Garden v15.9 five-file corpus",
+  "frozen_constants":{"core_objects":10,"core_relations":24,"raw_l0":2400,"raw_l1":21168000},
+  "known_comparison_side":{"explicit_invariant_definitions_excluding_rights":1817,"syntactic_prefix_families":212},
+  "blindness_rule":"Known v15.9 invariant text and IDs are withheld from candidate discovery. They are used only after discovery for semantic comparison.",
+  "required_artifacts":[
+    {"id":"E1-A","name":"RelationSignatureTable","status":"POPULATE_FROM_SOURCE","gate":"all 24 relations must have explicit domain/range/cardinality/algebraic/context qualifiers or UNKNOWN"},
+    {"id":"E1-B","name":"MaterialityProgram","status":"DESIGN_REQUIRED","gate":"stratified, finite, deterministic; dynamic world deltas revalidated"},
+    {"id":"E1-C","name":"ExecutionUniverse","status":"DESIGN_REQUIRED","gate":"finite typed object/event/world bounds and deterministic allocation"},
+    {"id":"E1-D","name":"EventTypeTable","status":"DESIGN_REQUIRED","gate":"READ/WRITE/MUTATING_READ/resource/order-observer sets explicit"},
+    {"id":"E1-E","name":"CompositionAndUnificationTables","status":"DESIGN_REQUIRED","gate":"overlap precedence/conflict, UNKNOWN refinement and cycle behavior total"},
+    {"id":"E1-F","name":"WorldSet","status":"DESIGN_REQUIRED","gate":"snapshot inheritance and rule-delta validity explicit"},
+    {"id":"E1-G","name":"SemanticClassCanonicalizer","status":"DESIGN_REQUIRED","gate":"concrete execution first; lifting only after terminal/trace semantics needed for classing"},
+    {"id":"E1-H","name":"EmergenceOperator","status":"DESIGN_REQUIRED","gate":"structural interaction sensitivity and expected-closure semantics fixed"},
+    {"id":"E1-I","name":"BlindInvariantDeriver","status":"DESIGN_REQUIRED","gate":"derive candidate obligations without v15.9 invariant corpus"},
+    {"id":"E1-J","name":"SemanticComparator","status":"DESIGN_REQUIRED","gate":"EXACT/EQUIVALENT/REFINEMENT/OVERLAP/NOVEL/UNRESOLVED"},
+    {"id":"E1-K","name":"CoverageReport","status":"BLOCKED_BY_A_TO_J","gate":"percentage only after denominator/search/comparison completeness receipts"}
+  ],
+  "coverage_percent":null,
+  "next_executable_step":"Populate E1-A from v15.9 source, retaining UNKNOWN instead of inferring relation signatures from English names."
+}
