@@ -369,7 +369,7 @@ def _profile(policy: dict) -> dict:
     routine = dict((policy.get("review_profiles") or {}).get("ROUTINE") or {})
     return {
         "max_output_tokens": min(int(routine.get("max_output_tokens", 8000)), 4000),
-        "reasoning_effort": routine.get("reasoning_effort", "medium"),
+        "reasoning_effort": routine.get("reasoning_effort", "none"),
         "request_timeout_seconds": min(int(routine.get("request_timeout_seconds", 180)), 180),
     }
 
@@ -529,6 +529,14 @@ def run(root: Path = Path(".")) -> None:
     profile = _profile(policy)
     for endpoint in endpoints:
         try:
+            endpoint_profile = dict(profile)
+            if "reasoning" in endpoint.get("supported_parameters", []):
+                supported = ((identity or {}).get("reasoning") or {}).get("supported_efforts")
+                if supported and endpoint_profile.get("reasoning_effort") not in supported:
+                    # Reasoning effort is a transport optimization, not review semantics.
+                    # Prefer the least supported effort rather than rejecting an otherwise
+                    # valid endpoint solely because the configured hint is unsupported.
+                    endpoint_profile["reasoning_effort"] = supported[0]
             body, estimate = legacy.endpoint_request(
                 endpoint,
                 reviewer,
@@ -536,7 +544,7 @@ def run(root: Path = Path(".")) -> None:
                 reserve,
                 policy,
                 exclusions,
-                profile=profile,
+                profile=endpoint_profile,
                 model_capabilities=identity,
             )
             eligible.append((legacy.money(estimate), endpoint, body))
@@ -563,6 +571,10 @@ def run(root: Path = Path(".")) -> None:
         return
     print("GROUP_REVIEW_PREFLIGHT:ELIGIBLE_ENDPOINTS:" + str(len(eligible)))
     estimate, endpoint, request_body = min(eligible, key=lambda row: row[0])
+    expected_provider = endpoint.get("provider_name")
+    expected_endpoint = endpoint.get("tag")
+    if not expected_provider or not expected_endpoint:
+        raise ValueError("selected endpoint identity missing")
 
     attempt = {
         "protocol": "GardenGroupReviewOpenRouter/v1",
@@ -573,8 +585,8 @@ def run(root: Path = Path(".")) -> None:
         "family": family,
         "model": model,
         "model_identity": identity,
-        "expected_provider": endpoint["provider_name"],
-        "endpoint": endpoint["tag"],
+        "expected_provider": expected_provider,
+        "endpoint": expected_endpoint,
         "problem_id": packet["problem_id"],
         "run_issue_number": issue_number,
         "packet_sha256": packet["packet_sha256"],
@@ -613,7 +625,7 @@ def run(root: Path = Path(".")) -> None:
             raise ValueError("GROUP_REVIEW cost exceeds reservation")
         if not _model_identity_matches(model, response.get("model"), identity):
             raise ValueError("GROUP_REVIEW returned model identity mismatch")
-        if response.get("provider") != endpoint["provider_name"]:
+        if response.get("provider") != expected_provider:
             raise ValueError("GROUP_REVIEW provider identity mismatch")
         if not response.get("id"):
             raise ValueError("GROUP_REVIEW provider response identity missing")
