@@ -1,10 +1,10 @@
 {
   "schema_version": "gardenbench.http-results.v1",
   "status": "IMPLEMENTATION",
-  "generated_at": "2026-10-02T09:14:05.515281+00:00",
-  "binary_sha256": "ca3ad701e2d5b23a977279799427c093e14a75ea5c7e0f683df5fa3ef6a73d47",
+  "generated_at": "2026-10-02T09:42:11.994392+00:00",
+  "binary_sha256": "4bc6ceaba7d2ea5bc274039fb98f6816d265cd5f0548aca71d698c158666577a",
   "runner_sha256": "233d477cd43ff47a9613269634756942e89c64bae3f8dd4b0af738f2f250e9c4",
-  "controller_sha256": "716ae9199aabff8e92260d3bacbd2dafb5e4293901ccf29a52698171c0cab27b",
+  "controller_sha256": "7304ecdf7ccecb1b0ec61278b8133ad9a934ca80e2b273214ff59fd91c5c99b4",
   "counts": {
     "PASS": 12,
     "FAIL": 0
@@ -29,8 +29,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "52f3d02c3a99b1b941654637",
-            "expires_at": 1790936044,
+            "id": "9ca00f3ad97ddc17a80af3c4",
+            "expires_at": 1790937730,
             "status": "IMPLEMENTATION"
           }
         },
@@ -44,9 +44,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "0cb1abcf44be2daeaf29539154c4c3a94fbbcdc45c3002f475745582592e34bb",
-              "hmac": "1732a973aad55694efdc318cb5c8a583b4362c8022ac48890b4745e87a9f1c23",
+              "hash": "01dc17d8b1e1090691f5fd2a081a97e606239c2dec42c115648d9b1f121b7383",
+              "hmac": "eb0ca9fdff499b60764e2ddb29f53e75c365013f33073a5be74d26bd25647cd3",
               "payload": {
+                "admission_timestamp": 1790934130,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -54,17 +55,17 @@
                   "value": 391.0
                 },
                 "human_effects": {
-                  "assessment": "human_effect-0ce6909f779870a00574",
+                  "assessment": "human_effect-c751741a81f8e0d2fc5f",
                   "declared": false,
                   "tool_classified": false
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "15b77fb995daac6e290c2eab2856bf9b74e2569bec4e5d26f6169aad85d9bd50",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "8ef1372f2e2dd1272dd28a7d73998a62a416eb6dca97a0bb5526d13e91c0d91d",
-                "proposal_digest": "3bf2077f505cd83b10efcd9881745e9e9fd90c6ebddc9408a15f2fa9e84c226e",
-                "proposal_id": "job-7c5d6102678c2ea73764",
-                "qse_findings": "qse-6fe19ad18a20ef48b501",
+                "previous_hash": "0ce341202d266363c8857642ce6e667293a9c6bea204dcdbd307df784d10c69f",
+                "proposal_digest": "e39db010ad6d7ed4cbb24ddf02c61d74eabaabd9397c0234d0e4bf530b2584be",
+                "proposal_id": "job-864aa896b6bf950bdda9",
+                "qse_findings": "qse-84a0a297908141c1b69a",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -78,11 +79,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932444,
+                "timestamp": 1790934130,
                 "tool": "calculator",
-                "truthfulness": "truthfulness-9d7555a8cf03d29bfdd0",
+                "truthfulness": "truthfulness-db9920aa2d4294aa6bbd",
                 "uncertainties": [],
-                "verification": "verification-b775dca274e8dd623eef",
+                "verification": "verification-fbf162c210020149c978",
                 "who_proposed": "planner-demo"
               }
             },
@@ -121,6 +122,31 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-864aa896b6bf950bdda9",
+                  "actor_id": "planner-demo",
+                  "tool": "calculator",
+                  "args": {
+                    "op": "multiply",
+                    "a": 17.0,
+                    "b": 23.0
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "b5ab4d3b7766b4deab1724d9089cb53ac22a8060b9f4ab98ff81105a64e2b4b5",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved.",
             "independent_expected_result": 391.0
           }
@@ -135,9 +161,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "ae55c602ec0a90d31cae976a1690e10c7cd59fbb077251e2984c83bb3f587203",
-              "hmac": "db81a83eb257489489780aedf932d2482cbb90ba6591b465553096f1630deb9c",
+              "hash": "373cf05d160a532a8c98c5c02f777ef700fd622570b27f82ffae288bf3221f94",
+              "hmac": "412bac9a511a1c5f4707b77173e00433c990b3a2787623d7dacf1f0244da4085",
               "payload": {
+                "admission_timestamp": 1790934130,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -146,17 +173,17 @@
                   "written": 14
                 },
                 "human_effects": {
-                  "assessment": "human_effect-cc4716795e17f274ac40",
+                  "assessment": "human_effect-3b352f7b92b29e99e4f6",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "15b77fb995daac6e290c2eab2856bf9b74e2569bec4e5d26f6169aad85d9bd50",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "958b52572cb32566c45504f7f5b1a9ea905e5df67df2508c403301ebabfd8b64",
-                "proposal_digest": "75907728e0382cfe05d1863db6117031ea70c8c9cbb0fd7ab10de309db17a33e",
-                "proposal_id": "job-5fe77843a36c7973cec4",
-                "qse_findings": "qse-ec85683884fcb6cb8605",
+                "previous_hash": "1062c042e44eda38d63fdd84541ff072d53ea84066c1916954486763cb35a419",
+                "proposal_digest": "632ec4344cb3441a8ed6968442ba36c328c51cb7be3f4771e168aa49cb729c20",
+                "proposal_id": "job-8446285ce348701e8793",
+                "qse_findings": "qse-e4bfd147f66a5a816087",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -170,11 +197,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932444,
+                "timestamp": 1790934130,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-d1f55948260424ce44a8",
+                "truthfulness": "truthfulness-747bfcfd97185a168182",
                 "uncertainties": [],
-                "verification": "verification-14d1868d52c11be18c56",
+                "verification": "verification-af75fe620e047f5b685d",
                 "who_proposed": "planner-demo"
               }
             },
@@ -214,11 +241,35 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-8446285ce348701e8793",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_write",
+                  "args": {
+                    "path": "allowed.txt",
+                    "content": "consented note"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "436908d0eb3c1f9c19f734778454f2f18fe5d6c2f081084f90a208f6d3ae4780",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         }
       ],
-      "duration_ms": 158.7
+      "duration_ms": 160.53
     },
     {
       "id": "http_unauthenticated_and_session_identity_injection",
@@ -255,7 +306,7 @@
           }
         }
       ],
-      "duration_ms": 83.46
+      "duration_ms": 109.96
     },
     {
       "id": "http_untrusted_raw_proposal_has_no_automatic_review",
@@ -274,8 +325,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "28cb328611a9845eea0ce6c5",
-            "expires_at": 1790936044,
+            "id": "02856e34fed574aea6d115c5",
+            "expires_at": 1790937730,
             "status": "IMPLEMENTATION"
           }
         },
@@ -289,9 +340,10 @@
               "MISSING_VERIFICATION_ASSESSMENT"
             ],
             "receipt": {
-              "hash": "d377d210043d6119ba48f75db70ec7dbb0d52c044330a65009f54fe7758c20c8",
-              "hmac": "5feb1dcb23091caab9d99a53f0dee66cef1020e452e89a8ca89ad3de9a0c3e30",
+              "hash": "a6c2d44049371a9e5059247bbb0365ba0e19a219d9432fb63c9c167ba8dfa70c",
+              "hmac": "fccd63b185a16b66ef5da9faab717792bcf6d49d58ad014e84b65d05ce8c4a7f",
               "payload": {
+                "admission_timestamp": null,
                 "authority": "demo-delegation",
                 "decision": "QUARANTINE",
                 "evidence": [],
@@ -302,11 +354,11 @@
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "15b77fb995daac6e290c2eab2856bf9b74e2569bec4e5d26f6169aad85d9bd50",
                 "policy_version": "garden-implementation-0.1",
                 "previous_hash": "",
-                "proposal_digest": "531fe66775d0ee5b846eb5c6bee41e701f5845cb97fe7d9e491d72be3d78bacd",
-                "proposal_id": "untrusted_d7115dd143f9cd3d",
+                "proposal_digest": "3abdfcd51d676764f2399b2c94d655966679e3a01819d2cfe57efc1a005021c7",
+                "proposal_id": "untrusted_7403513c9a9305bd",
                 "qse_findings": null,
                 "reasons": [
                   "MISSING_VERIFICATION_ASSESSMENT"
@@ -321,7 +373,7 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932444,
+                "timestamp": 1790934130,
                 "tool": "sandbox_write",
                 "truthfulness": null,
                 "uncertainties": [],
@@ -333,7 +385,7 @@
           }
         }
       ],
-      "duration_ms": 137.44
+      "duration_ms": 157.94
     },
     {
       "id": "http_actor_spoof",
@@ -352,8 +404,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "88c5e4ed468a26abda2b45d2",
-            "expires_at": 1790936044,
+            "id": "d70eed4cb72f46f70bc7a924",
+            "expires_at": 1790937730,
             "status": "IMPLEMENTATION"
           }
         },
@@ -379,7 +431,7 @@
           }
         }
       ],
-      "duration_ms": 112.81
+      "duration_ms": 112.33
     },
     {
       "id": "http_admin_operation_injection",
@@ -398,8 +450,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "6b662cbf2492d187fba6f1de",
-            "expires_at": 1790936044,
+            "id": "d5ef5394ef096f12bcf3a9ce",
+            "expires_at": 1790937730,
             "status": "IMPLEMENTATION"
           }
         },
@@ -446,7 +498,7 @@
           }
         }
       ],
-      "duration_ms": 141.49
+      "duration_ms": 111.88
     },
     {
       "id": "http_cross_session_receipt_and_assessment_reuse",
@@ -465,8 +517,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "a890ae5f30e58783cdba4827",
-            "expires_at": 1790936044,
+            "id": "8bb362e4c286b212b02118c2",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -474,8 +526,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "e0a250509cb0e409bdc2e12f",
-            "expires_at": 1790936044,
+            "id": "8c882ceed5714b1f5eb9b6d8",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -489,9 +541,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "2446ce11edced1b7a7d29c3791d6143dee57184c08b3353e5f6a71ed2f1a016a",
-              "hmac": "e2ba5087f6dc0ccbb7f8519654aa828de5bad729342ea7618919d06a75d49681",
+              "hash": "c597337be1f9a20a0fe56c6d208126905202791920d85339e88ae7bba0a48276",
+              "hmac": "a5db7a9c446b872c0e459b20027aa066ffbcd26ea4fde9aebc916bdde9292c97",
               "payload": {
+                "admission_timestamp": 1790934131,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -500,17 +553,17 @@
                   "written": 14
                 },
                 "human_effects": {
-                  "assessment": "human_effect-1e1b3266fbb825644c97",
+                  "assessment": "human_effect-6523a5d6a221bfacb781",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "1741b1b19fc4a8749ef622bf7b3f5cbf4c80502152aaa7aab0f469b6c08a1a58",
-                "proposal_digest": "c9f663e1a97ea50c5aa6b1c5c29854130c81f8429e511ad0f0eccac2f6d964cd",
-                "proposal_id": "job-6edafb125dc0da0c7135",
-                "qse_findings": "qse-fc87c9f9662446c24438",
+                "previous_hash": "0e81dabb0deba7bf79f8cfa809ed593a10a8027a58907cbc384000726808a481",
+                "proposal_digest": "a2d18ea154c7bed6c8de0028403bb95df1bd0d01c646e9fc4dc921c2dd452775",
+                "proposal_id": "job-f6e17b7491ce7184c49e",
+                "qse_findings": "qse-d8275cd69e8566cd959a",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -524,11 +577,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932444,
+                "timestamp": 1790934131,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                "truthfulness": "truthfulness-549131f03ddd4b8ee1b9",
                 "uncertainties": [],
-                "verification": "verification-ce373748696604dc7a2e",
+                "verification": "verification-85c975f562169b2d6445",
                 "who_proposed": "planner-demo"
               }
             },
@@ -568,6 +621,30 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-f6e17b7491ce7184c49e",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_write",
+                  "args": {
+                    "path": "source.txt",
+                    "content": "session A note"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "e297cce261dd65817d3ef5e6d37c160b41312e809dbeb313a5ecff0d70725553",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         },
@@ -581,25 +658,26 @@
               "UNREGISTERED_ASSESSMENT"
             ],
             "receipt": {
-              "hash": "290df1287f1e76113ca50716708c48d7c7f6db20d1c5bc1ac3b871e888a928e0",
-              "hmac": "95a9e2bb80f9aa96ddaf880bd89dae233938e418e0a8d8d80c277e3e9843de9e",
+              "hash": "ae1acc7c516bd14d56d875b72568520701be1ced9d97aafe81ba41b024dca66b",
+              "hmac": "c1aa39ac59008cffcd2a1dce2b103cb1263c9a7f632ac3248be60468ad4a2c51",
               "payload": {
+                "admission_timestamp": null,
                 "authority": "demo-delegation",
                 "decision": "QUARANTINE",
                 "evidence": [],
                 "execution_result": null,
                 "human_effects": {
-                  "assessment": "human_effect-1e1b3266fbb825644c97",
+                  "assessment": "human_effect-6523a5d6a221bfacb781",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
                 "previous_hash": "",
-                "proposal_digest": "0e0defcabcf7084b26aab3c94a2644b0877b611e0d342329f37fcd8a0edb6ab3",
-                "proposal_id": "untrusted_ab48f0649bcf0436",
-                "qse_findings": "qse-fc87c9f9662446c24438",
+                "proposal_digest": "50bdeac1b05cb8d08dc7e8b141816b0559c64201ee0fd338c1733d02869fc208",
+                "proposal_id": "untrusted_ca61410b68b121eb",
+                "qse_findings": "qse-d8275cd69e8566cd959a",
                 "reasons": [
                   "UNREGISTERED_ASSESSMENT"
                 ],
@@ -613,11 +691,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932444,
+                "timestamp": 1790934131,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                "truthfulness": "truthfulness-549131f03ddd4b8ee1b9",
                 "uncertainties": [],
-                "verification": "verification-ce373748696604dc7a2e",
+                "verification": "verification-85c975f562169b2d6445",
                 "who_proposed": "planner-demo"
               }
             },
@@ -630,25 +708,26 @@
           "response": {
             "receipts": [
               {
-                "hash": "290df1287f1e76113ca50716708c48d7c7f6db20d1c5bc1ac3b871e888a928e0",
-                "hmac": "95a9e2bb80f9aa96ddaf880bd89dae233938e418e0a8d8d80c277e3e9843de9e",
+                "hash": "ae1acc7c516bd14d56d875b72568520701be1ced9d97aafe81ba41b024dca66b",
+                "hmac": "c1aa39ac59008cffcd2a1dce2b103cb1263c9a7f632ac3248be60468ad4a2c51",
                 "payload": {
+                  "admission_timestamp": null,
                   "authority": "demo-delegation",
                   "decision": "QUARANTINE",
                   "evidence": [],
                   "execution_result": null,
                   "human_effects": {
-                    "assessment": "human_effect-1e1b3266fbb825644c97",
+                    "assessment": "human_effect-6523a5d6a221bfacb781",
                     "declared": true,
                     "tool_classified": true
                   },
                   "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                  "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                  "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                   "policy_version": "garden-implementation-0.1",
                   "previous_hash": "",
-                  "proposal_digest": "0e0defcabcf7084b26aab3c94a2644b0877b611e0d342329f37fcd8a0edb6ab3",
-                  "proposal_id": "untrusted_ab48f0649bcf0436",
-                  "qse_findings": "qse-fc87c9f9662446c24438",
+                  "proposal_digest": "50bdeac1b05cb8d08dc7e8b141816b0559c64201ee0fd338c1733d02869fc208",
+                  "proposal_id": "untrusted_ca61410b68b121eb",
+                  "qse_findings": "qse-d8275cd69e8566cd959a",
                   "reasons": [
                     "UNREGISTERED_ASSESSMENT"
                   ],
@@ -662,11 +741,11 @@
                     "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                   ],
                   "source_status": "IMPLEMENTATION",
-                  "timestamp": 1790932444,
+                  "timestamp": 1790934131,
                   "tool": "sandbox_write",
-                  "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                  "truthfulness": "truthfulness-549131f03ddd4b8ee1b9",
                   "uncertainties": [],
-                  "verification": "verification-ce373748696604dc7a2e",
+                  "verification": "verification-85c975f562169b2d6445",
                   "who_proposed": "planner-demo"
                 }
               }
@@ -674,7 +753,7 @@
           }
         }
       ],
-      "duration_ms": 106.32
+      "duration_ms": 124.2
     },
     {
       "id": "http_consent_then_revocation",
@@ -693,8 +772,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "f8b48b8d93e137ec073774a3",
-            "expires_at": 1790936044,
+            "id": "65b36e02d98e0b84c30ce212",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -708,25 +787,26 @@
               "HUMAN_EFFECT_IS_FAIL"
             ],
             "receipt": {
-              "hash": "a1d72155cde1b4d69215b547f2351e6d2c8e65f45ac5a05c7b18deaaf00cb2b9",
-              "hmac": "adc0ae0cf96b8c19cbf8ef188bc3bca6de648c417b7d99b355cd3eada3f2026d",
+              "hash": "282745d81468d0e7c91a3a3659424d56f21afd2504d573be25bf9605689e7f45",
+              "hmac": "b8e273758bf3da25ee2c107121dcc2129efc09a302c496f4d6bb0893a527b60e",
               "payload": {
+                "admission_timestamp": null,
                 "authority": "demo-delegation",
                 "decision": "QUARANTINE",
                 "evidence": [],
                 "execution_result": null,
                 "human_effects": {
-                  "assessment": "human_effect-4cc4824cdc3304be31cc",
+                  "assessment": "human_effect-0c8cefb7ab7835a79839",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "1aa7fa851f582fab320a282e24631e37548149ab6133f2097d3165009dc63a6f",
-                "proposal_digest": "82aaae7cf2fdb7451c326f6cb85db3b853a5b48f6282a685e4bbdd273322f312",
-                "proposal_id": "job-24663d10e1022ee1f4d3",
-                "qse_findings": "qse-30c22adddec92890e741",
+                "previous_hash": "c9a5fd63cbafd7732c17ab9edc0f84ba95a1080e6eb73e1b714f777418538258",
+                "proposal_digest": "428fdd939353b54bb14ab27d03cff07bc3734ea38d8e628646f8de0047f5b9cb",
+                "proposal_id": "job-f677ef6d2e7a19cbf36c",
+                "qse_findings": "qse-f13a274e8a002ca44b8c",
                 "reasons": [
                   "HUMAN_EFFECT_IS_FAIL"
                 ],
@@ -740,11 +820,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-3f811ad7a3ce19577e94",
+                "truthfulness": "truthfulness-0f7a4340a731c18ca70e",
                 "uncertainties": [],
-                "verification": "verification-1f482bafdd260764f13b",
+                "verification": "verification-e3431291e23a7ec44841",
                 "who_proposed": "planner-demo"
               }
             },
@@ -781,6 +861,30 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-f677ef6d2e7a19cbf36c",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_write",
+                  "args": {
+                    "path": "consent.txt",
+                    "content": "note"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "d2587243ed00aa195b4187965c31b6d98e9bfe89ccb771a2f377d44600309da5",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         },
@@ -794,9 +898,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "45b1c7d66adce66bcfba7a504817875d86b09e1be9f677991566e6f2f7524c35",
-              "hmac": "e0553f857cb65990ef69d8b725210180c1b96faf334ce8357574b2da12974fa2",
+              "hash": "e31894a3e5e5a25bbbf0fa160888fc14d190a3f7899d6bb2a916caedbea773e4",
+              "hmac": "07140ead5edbb1ea8ed6977b692101df4945b99cf40fd8b70a7da6056199d516",
               "payload": {
+                "admission_timestamp": 1790934131,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -805,17 +910,17 @@
                   "written": 4
                 },
                 "human_effects": {
-                  "assessment": "human_effect-63c078a58f69b52b9e23",
+                  "assessment": "human_effect-231f71e6402e27ba8c58",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "168f6d8def3906f80545fbdfbc44174916b2e185019acf0a50a845beffdc77e4",
-                "proposal_digest": "c948c874db64bbc49623814b25b089eab7c5d382116c06f0f618e765d03e030a",
-                "proposal_id": "job-bb8b80a4c3e1644e4683",
-                "qse_findings": "qse-701dbeacb2c5f063b6e8",
+                "previous_hash": "b95d2cbfec19e2aa170acaca76e28a1077c1043b20a5b712b8f0afb8b6cf0193",
+                "proposal_digest": "5b8a7dddeb31ac9c33f98d112d818ee3879a11097a29a1c2c0fa5622feed77ba",
+                "proposal_id": "job-a899723bdb6e6dcfcb94",
+                "qse_findings": "qse-6ec4e9e7b757147b4f3a",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -829,11 +934,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-c1b084f541e71e663492",
+                "truthfulness": "truthfulness-e77a3accaff4173793b9",
                 "uncertainties": [],
-                "verification": "verification-402ee45973b3163521d1",
+                "verification": "verification-4ff0737e0cac183081cf",
                 "who_proposed": "planner-demo"
               }
             },
@@ -873,6 +978,30 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-a899723bdb6e6dcfcb94",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_write",
+                  "args": {
+                    "path": "consent.txt",
+                    "content": "note"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "7320cfff967172ee6a87667d6e31231d2eea620ca8ca2aa4857ef779c3477df7",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         },
@@ -882,8 +1011,8 @@
           "response": {
             "ok": true,
             "receipt": {
-              "hash": "57930c6a27f3933d394e239664c2ee21bc5a251b6922c4fdb14d47cf467f2564",
-              "hmac": "e86cb6266a51380f614ae8635faf42545e3f2fd05fa0ad488e4ef9880c55e407",
+              "hash": "532962246f989a848579901329e8e447f78b7ee48c180d2c443b9d4064144e21",
+              "hmac": "9113e490cbf7f35b7cfa2f4e29e0c98f8bf0f7c4b3a33929b95bfcf0bcd4a9b4",
               "payload": {
                 "actor_claimed": null,
                 "assessment_id": null,
@@ -894,9 +1023,9 @@
                 "ingress_principal": "planner-demo",
                 "integrity_semantics": "Gate event audit; payload content and model truth are not proven",
                 "operation": "revoke",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "45b1c7d66adce66bcfba7a504817875d86b09e1be9f677991566e6f2f7524c35",
+                "previous_hash": "e31894a3e5e5a25bbbf0fa160888fc14d190a3f7899d6bb2a916caedbea773e4",
                 "proposal_id": null,
                 "reasons": [],
                 "request_digest": "69ed15104a87df20f8593f9361e6a07cbf18349fa8e8efb1b23b37c320625c9c",
@@ -912,7 +1041,7 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "wire_digest": null,
                 "wire_truncated": null
               }
@@ -929,25 +1058,26 @@
               "DELEGATION_REVOKED_OR_EXPIRED"
             ],
             "receipt": {
-              "hash": "0b8ae0db6400f0142cf684ee1952236098328aafa952ad648f2afe0446eec546",
-              "hmac": "8f55dec4325edf783713677a2028150abed4cd5f9ab4ebb3b60ded3b06c9ed88",
+              "hash": "99260433e768d7fce39eac3fed576f2704538241814df3bd5929d4d0705be901",
+              "hmac": "fbd258d469137084f110967c4fb01ec2762c87d78d73a09d93cc2b46dbe032ec",
               "payload": {
+                "admission_timestamp": null,
                 "authority": "demo-delegation",
                 "decision": "DENY",
                 "evidence": [],
                 "execution_result": null,
                 "human_effects": {
-                  "assessment": "human_effect-35d4fa35a680536d4260",
+                  "assessment": "human_effect-c211b220fd6f710e9a3f",
                   "declared": false,
                   "tool_classified": false
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "f6b95fa689c650d2e6024794b33e80e2a9f0732e9a1835ca9958916fb54d878e",
-                "proposal_digest": "e8443360173ff84d32d7fb9c85a5692dce161fa96301e1efd246be934ce1b900",
-                "proposal_id": "job-d971cffa609697fcf520",
-                "qse_findings": "qse-009b1144ffb9441515ac",
+                "previous_hash": "bc6f6dc97cd0dbd1e39fee5f5dc422501a6f21d79652c695d16c4b2d6d8ac108",
+                "proposal_digest": "81593e0ac66d497e515810f9ab94a0b774640ec5209ac28bea6a7ff1dfbacf77",
+                "proposal_id": "job-878ba1f3adb1131e79d4",
+                "qse_findings": "qse-489eeff23b2eb81e789b",
                 "reasons": [
                   "DELEGATION_REVOKED_OR_EXPIRED"
                 ],
@@ -961,11 +1091,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "tool": "calculator",
-                "truthfulness": "truthfulness-b1fbe13c107249ebcaab",
+                "truthfulness": "truthfulness-531550a16484283d7896",
                 "uncertainties": [],
-                "verification": "verification-e40cd5292b9a3dd696b6",
+                "verification": "verification-756a403b13d3abf2bb68",
                 "who_proposed": "planner-demo"
               }
             },
@@ -1002,12 +1132,37 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-878ba1f3adb1131e79d4",
+                  "actor_id": "planner-demo",
+                  "tool": "calculator",
+                  "args": {
+                    "op": "multiply",
+                    "a": 17.0,
+                    "b": 23.0
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "837793624fb772b2833b488b2d5f557820b1b75508e648761d03ac995a2d425e",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved.",
             "independent_expected_result": 391.0
           }
         }
       ],
-      "duration_ms": 138.55
+      "duration_ms": 133.53
     },
     {
       "id": "http_duplicate_nonfinite_null_and_oversized_json",
@@ -1026,8 +1181,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "1eee2537a702834271752e01",
-            "expires_at": 1790936045,
+            "id": "916c2443a76c18b02df87769",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1081,7 +1236,7 @@
               "bound_actor": "planner-demo",
               "boundary": "external deterministic gate; OS isolation supplied by deployment",
               "ok": true,
-              "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+              "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
               "policy_version": "garden-implementation-0.1",
               "recovery_required": false,
               "sequence": 0,
@@ -1094,7 +1249,7 @@
                 "mock_ledger"
               ]
             },
-            "expires_at": 1790936045,
+            "expires_at": 1790937731,
             "revoked": false,
             "scope": [
               "calculator",
@@ -1107,7 +1262,7 @@
           }
         }
       ],
-      "duration_ms": 89.69
+      "duration_ms": 171.77
     },
     {
       "id": "http_cross_origin",
@@ -1126,8 +1281,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "4ec1bc75560d1735072749f1",
-            "expires_at": 1790936045,
+            "id": "d15ea5dcb75c8b75f9bb426c",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1139,7 +1294,7 @@
           }
         }
       ],
-      "duration_ms": 84.09
+      "duration_ms": 139.23
     },
     {
       "id": "http_per_session_rate_limit",
@@ -1158,8 +1313,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "508be15085853c02f824dea8",
-            "expires_at": 1790936045,
+            "id": "ec284f45a3e7b46d07927e3d",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1311,7 +1466,7 @@
           }
         }
       ],
-      "duration_ms": 100.87
+      "duration_ms": 130.81
     },
     {
       "id": "http_global_session_creation_limit",
@@ -1330,8 +1485,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "3cbf32a436de510b465acf74",
-            "expires_at": 1790936045,
+            "id": "b778ea3d215039d00bc3a2d1",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1339,8 +1494,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "a2dac18e1a991269bb7b7f4b",
-            "expires_at": 1790936045,
+            "id": "5a985704370cb1701f3df9a4",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1348,8 +1503,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "3a34969880a0ab13d0ff5246",
-            "expires_at": 1790936045,
+            "id": "c1e8f0db15d8c1c954a17cea",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1357,8 +1512,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "e50c501bab18decaf397b1ab",
-            "expires_at": 1790936045,
+            "id": "acb53d5c5e49f4b48b8c072c",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1366,8 +1521,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "a9f4c61df6b598f9fb9143eb",
-            "expires_at": 1790936045,
+            "id": "274b731d0586ba85cc4008e0",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1375,8 +1530,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "a34234edeba719159987a878",
-            "expires_at": 1790936045,
+            "id": "7e2ef83cfaa6efa78048a670",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1384,8 +1539,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "97d0f513496bc4f5336d7c77",
-            "expires_at": 1790936045,
+            "id": "3bbced66eeac5927a3e198e2",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1393,8 +1548,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "d339d23acda85073b182aeb7",
-            "expires_at": 1790936045,
+            "id": "1be6a2f996cc11b0fe5312b8",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1402,8 +1557,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "2b7a823ac1a43572c9925bc1",
-            "expires_at": 1790936045,
+            "id": "5fab53388c78a867a36e1ec8",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1411,8 +1566,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "c4f62ee70d64fabab792865d",
-            "expires_at": 1790936045,
+            "id": "30716b42b0a152dd27cce482",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1424,7 +1579,7 @@
           }
         }
       ],
-      "duration_ms": 107.95
+      "duration_ms": 132.85
     },
     {
       "id": "http_user_html_stays_in_json_and_text_nodes",
@@ -1445,8 +1600,8 @@
           "path": "/api/session",
           "status": 201,
           "response": {
-            "id": "c3a3e53b74c247fb0a79e5c3",
-            "expires_at": 1790936045,
+            "id": "2f6fc7a2d1ddb966d4bb6617",
+            "expires_at": 1790937731,
             "status": "IMPLEMENTATION"
           }
         },
@@ -1460,9 +1615,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "cca20ed0ac5dbda6aac5da10c3a99409289bb1bf7eba6dae32c5ec72a8b0bf38",
-              "hmac": "25a62cd8e0e496dbda5fbe12f3f25f70ff01b3e5c2cf030baaa47b7db7fe1593",
+              "hash": "1e20b2a2e9ccba165aae6b59fab7b1e0074488da5795e3bb7b9d82953c1c63f6",
+              "hmac": "30bb2dda1bb6791c828d4ac148928d9e4bde45523d6bc97407b5060bc5a568fc",
               "payload": {
+                "admission_timestamp": 1790934131,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -1471,17 +1627,17 @@
                   "written": 42
                 },
                 "human_effects": {
-                  "assessment": "human_effect-7cb4d0447997b78d6ee1",
+                  "assessment": "human_effect-a2a7fb9094f4ec98475a",
                   "declared": true,
                   "tool_classified": true
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "757b88c0100fb5963c715bf449c214f3a3a788408d27ed71898c36b3e65910f1",
-                "proposal_digest": "251e7cb150708a7c94e6dc97c3429808004cbd90b5e7592cad9764d8f3e7a580",
-                "proposal_id": "job-2d877c322f2eebcc9706",
-                "qse_findings": "qse-2daf4ed8c2ce5b61047d",
+                "previous_hash": "c2a4b80ad4f0f3ccd802bd2ef742b12745d8ea0cefa01b928c71681311d14045",
+                "proposal_digest": "367de01f3a83aa1a7a2a7fc6deee4f5fef844bd4ccd2979fc525fe00b9e75cc5",
+                "proposal_id": "job-544d724ff971a4eabcdf",
+                "qse_findings": "qse-13d331afa031e57cef50",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -1495,11 +1651,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "tool": "sandbox_write",
-                "truthfulness": "truthfulness-11a475924319ce644454",
+                "truthfulness": "truthfulness-12ce87d481fc30542985",
                 "uncertainties": [],
-                "verification": "verification-e3f9aaed9a7376c810dc",
+                "verification": "verification-9a992bbbdc9fa581ba72",
                 "who_proposed": "planner-demo"
               }
             },
@@ -1539,6 +1695,30 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-544d724ff971a4eabcdf",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_write",
+                  "args": {
+                    "path": "html.txt",
+                    "content": "<img src=x onerror=\"fetch(\"/api/revoke\")\">"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "8b92536aa0757831c052da33c0c8bde78684694fe192f04d84497e979160f684",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         },
@@ -1552,9 +1732,10 @@
               "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
             ],
             "receipt": {
-              "hash": "208d275b848b31c4b9c1687e92b77939554aa9047ffa6454c3a9fcf0dc8738ae",
-              "hmac": "41c86a42c614225407ddb165c85c3b6a3cf213645b25a9388d241a294b109994",
+              "hash": "d9e6ff07e27f3ff49ed95fd8284cc5743bc99f5d03f0022d0783940b58485dc6",
+              "hmac": "52637cce34d875236c5d7942c1da9955adc30de488706a762d616f424594a645",
               "payload": {
+                "admission_timestamp": 1790934131,
                 "authority": "demo-delegation",
                 "decision": "ALLOW",
                 "evidence": [],
@@ -1562,17 +1743,17 @@
                   "content": "<img src=x onerror=\"fetch(\"/api/revoke\")\">"
                 },
                 "human_effects": {
-                  "assessment": "human_effect-1fb63667ca42e88f721b",
+                  "assessment": "human_effect-dc875c9795c0cdfb37b8",
                   "declared": false,
                   "tool_classified": false
                 },
                 "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
-                "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+                "policy_hash": "59e2d37b117fe2d39c71426a450a075b939bee1ea2e6709f62591dd07836d159",
                 "policy_version": "garden-implementation-0.1",
-                "previous_hash": "33bf8445f40865150d3d0758ef6dff0152a5762c403e86a1bf2f7063c28787db",
-                "proposal_digest": "4c4d8316935fee293cdbe29b6c55bbf08737eec2694570e85c57626191663861",
-                "proposal_id": "job-353ffda3e6f1f2174e4b",
-                "qse_findings": "qse-be11986248d3819df584",
+                "previous_hash": "14e350bb399a3311af5fb6341907d0e6500e14e61dbfb8c7964a9fc7b278f4b6",
+                "proposal_digest": "2c5b5d83bf4e456a3512f4f7c8681c4b7f88011ea0bade3c0c11540c6fcbb310",
+                "proposal_id": "job-a3f7c2ac6d50573562f2",
+                "qse_findings": "qse-f0bae071a4ccd5c47692",
                 "reasons": [
                   "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
                 ],
@@ -1586,11 +1767,11 @@
                   "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
                 ],
                 "source_status": "IMPLEMENTATION",
-                "timestamp": 1790932445,
+                "timestamp": 1790934131,
                 "tool": "sandbox_read",
-                "truthfulness": "truthfulness-86b3ee238bda6ff46d23",
+                "truthfulness": "truthfulness-c3f8db07cdf5b1af8447",
                 "uncertainties": [],
-                "verification": "verification-7f4225270d773d1d78b1",
+                "verification": "verification-6bc47713cdfe540bfd1c",
                 "who_proposed": "planner-demo"
               }
             },
@@ -1629,11 +1810,34 @@
             ],
             "cognition_status": "IMPLEMENTATION",
             "agent_lineage_overlap": [],
+            "garden_native_ir": {
+              "schema": "garden.ir.v1",
+              "status": "IMPLEMENTATION",
+              "records": [
+                {
+                  "primitive": "PROPOSAL",
+                  "id": "job-a3f7c2ac6d50573562f2",
+                  "actor_id": "planner-demo",
+                  "tool": "sandbox_read",
+                  "args": {
+                    "path": "html.txt"
+                  },
+                  "source": {
+                    "status": "IMPLEMENTATION",
+                    "uri": "garden-runtime/garden-lang",
+                    "version": "0.1"
+                  }
+                }
+              ],
+              "sha256": "4da0981ef44ddcce73150565aa924ed4c7ff64ea1130ecb1f6923670636ddb4e",
+              "execution_authority": false
+            },
+            "model_claim_audit": [],
             "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
           }
         }
       ],
-      "duration_ms": 102.02
+      "duration_ms": 161.39
     }
   ],
   "search_surface": "Actual HTTP controller subprocess, loopback requests, independent Rust gate processes, temporary sandbox effects and session boundaries",
