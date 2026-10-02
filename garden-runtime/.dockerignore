@@ -1,0 +1,10 @@
+.git
+.garden-state
+target
+garden-kernel/target
+deploy/worker-site
+__pycache__
+*.pyc
+*.gguf
+*.bin
+*.tar.gz
