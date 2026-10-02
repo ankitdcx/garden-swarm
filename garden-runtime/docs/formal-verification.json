@@ -1,0 +1,342 @@
+{
+  "checked_at": "2026-10-02T09:09:50.468291+00:00",
+  "command": "python3 garden-tests/formal_model.py",
+  "evidence_kind": "Executable exhaustive finite transition-system model check",
+  "final_kernel_release_binary_sha256": "4bc6ceaba7d2ea5bc274039fb98f6816d265cd5f0548aca71d698c158666577a",
+  "final_kernel_review_semantics": "Source review metadata only; the finite model does not import or verify Rust and no refinement proof is claimed.",
+  "final_kernel_review_sha256": "92539d96aae7d6a9134318e713b1e41b5c5d51a9725ef8ff493ab2f04095012b",
+  "kernel_sha256_at_receipt": "040edebbe5bebf360c2621eec7c5c873c921abe82412048eae58367b80611cdd",
+  "meaning": "These counts and counterexamples describe the stated finite abstract model, not Rust refinement, evidence truth, OS isolation, cryptographic security, or crash consistency.",
+  "model_path": "garden-runtime/garden-tests/formal_model.py",
+  "model_sha256": "9aaae0a287338e27c93e0494b2a32d6719fc275a438c415f6b8c724ab0a58959",
+  "mutation_count": 10,
+  "mutation_counterexamples": 10,
+  "native_implementation_proof": false,
+  "quotient_check_count": 6144,
+  "report_integrity": {
+    "authenticated": false,
+    "execution_authority": false,
+    "hashes_bind": "Input code snapshots only; report is not an authenticated gate receipt"
+  },
+  "result": {
+    "bounds": {
+      "atomic_scopes": 2,
+      "authority_epochs": 2,
+      "grant_slots": 3,
+      "pending_permits": 1,
+      "policy_versions": 2,
+      "principals": 4,
+      "request_ids": 2,
+      "time_points": 3
+    },
+    "elapsed_seconds": 15.139,
+    "implementation_proof": false,
+    "limitations": [
+      "finite abstraction, not a Rust refinement proof",
+      "trusted validation represented by a Boolean",
+      "receipt presence only, not cryptographic integrity",
+      "no OS isolation, crash recovery, availability, or liveness proof"
+    ],
+    "model": "bounded delegation, admission, and effect transition model",
+    "negative_controls": [
+      {
+        "invariant": "scope_expiry_issuer_and_ancestry_attenuation",
+        "mutation": "widen_delegation",
+        "states": 58,
+        "status": "counterexample",
+        "transitions": 545,
+        "witness": [
+          {
+            "action": "delegate",
+            "allowed": true,
+            "grant": {
+              "epoch": 0,
+              "expires": 1,
+              "issuer": 0,
+              "parent": 0,
+              "policy": 0,
+              "recipient": 1,
+              "scope": 1
+            }
+          },
+          {
+            "action": "delegate",
+            "allowed": true,
+            "grant": {
+              "epoch": 0,
+              "expires": 1,
+              "issuer": 1,
+              "parent": 1,
+              "policy": 0,
+              "recipient": 0,
+              "scope": 2
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "ignore_ancestor_revocation",
+        "states": 377,
+        "status": "counterexample",
+        "transitions": 4502,
+        "witness": [
+          {
+            "action": "delegate",
+            "allowed": true,
+            "grant": {
+              "epoch": 0,
+              "expires": 1,
+              "issuer": 0,
+              "parent": 0,
+              "policy": 0,
+              "recipient": 1,
+              "scope": 1
+            }
+          },
+          {
+            "action": "revoke",
+            "allowed": false,
+            "detail": "grant=0"
+          },
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 1,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "ignore_version",
+        "states": 14,
+        "status": "counterexample",
+        "transitions": 26,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 1,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "ignore_epoch",
+        "states": 13,
+        "status": "counterexample",
+        "transitions": 25,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 1,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "ignore_expiry",
+        "states": 173,
+        "status": "counterexample",
+        "transitions": 1403,
+        "witness": [
+          {
+            "action": "advance_time",
+            "allowed": false
+          },
+          {
+            "action": "advance_time",
+            "allowed": false
+          },
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "inherit_successor",
+        "states": 49,
+        "status": "counterexample",
+        "transitions": 393,
+        "witness": [
+          {
+            "action": "upgrade_without_grant",
+            "allowed": false
+          },
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 2,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "no_replayed_admission",
+        "mutation": "allow_replay",
+        "states": 151,
+        "status": "counterexample",
+        "transitions": 1154,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": false,
+            "request": {
+              "epoch": 1,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          },
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "effect_requires_final_current_authority",
+        "mutation": "skip_final_recheck",
+        "states": 948,
+        "status": "counterexample",
+        "transitions": 10256,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          },
+          {
+            "action": "trusted_policy_update",
+            "allowed": false
+          },
+          {
+            "action": "execute",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "admission_requires_current_bounded_authority",
+        "mutation": "uncertainty_passes",
+        "states": 18,
+        "status": "counterexample",
+        "transitions": 88,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": false
+            }
+          }
+        ]
+      },
+      {
+        "invariant": "every_decision_has_receipt",
+        "mutation": "omit_receipt",
+        "states": 12,
+        "status": "counterexample",
+        "transitions": 24,
+        "witness": [
+          {
+            "action": "admit",
+            "allowed": true,
+            "request": {
+              "epoch": 0,
+              "policy": 0,
+              "principal": 0,
+              "request_id": 0,
+              "scope": 1,
+              "validated": true
+            }
+          }
+        ]
+      }
+    ],
+    "passed": true,
+    "positive": {
+      "states": 105840,
+      "status": "all_reachable_states_checked",
+      "transitions": 2953440
+    },
+    "request_quotient": {
+      "equivalence_checks": 6144,
+      "raw_request_values": 128,
+      "transition_equivalence_classes": 66
+    }
+  },
+  "schema": "garden.bounded-formal-verification.v1",
+  "source_map_sha256_at_receipt": "da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+  "state_count": 105840,
+  "status": "PASSED_BOUNDED_MODEL",
+  "transition_count": 2953440
+}

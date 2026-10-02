@@ -1,0 +1,15 @@
+{
+  "schema": "garden.model_resource_failure.v1",
+  "date": "2026-10-02",
+  "model": "Qwen/Qwen3-0.6B",
+  "family": "Qwen3",
+  "provider": "onnxruntime-web WASM",
+  "attempt": "Four advisory roles, at most 32 generated tokens each, one CPU thread",
+  "budget_seconds": 40,
+  "result": "FAILED_CLOSED",
+  "observed_error": "inference deadline exceeded",
+  "authority_granted": false,
+  "execution": null,
+  "repair": "One genuine model planner; three explicitly RULE_BASED critics; maintain all authority checks and UNKNOWN assessment status.",
+  "limitation": "Failure timing depends on hardware; no universal throughput guarantee."
+}

@@ -1,0 +1,1 @@
+{"schema":"garden.wasm_permission_probe.v1","checks":[{"name":"outside_model_read","blocked":true,"code":"ERR_ACCESS_DENIED"},{"name":"filesystem_write","blocked":true,"code":"ERR_ACCESS_DENIED"},{"name":"child_process","blocked":true,"code":"ERR_ACCESS_DENIED"}],"all_observed_blocked":true,"limitation":"Node permissions do not guarantee malicious-host-JS containment."}

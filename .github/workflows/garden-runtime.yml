@@ -1,0 +1,121 @@
+# Integrate as .github/workflows/garden-runtime.yml in the source repository.
+# No deployment credentials; bounded CI only. Do not use Actions as a daemon host.
+name: Garden Runtime checks
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["garden-runtime/**", ".github/workflows/garden-runtime.yml"]
+  push:
+    branches: ["chatgpt/garden-runtime-20261002"]
+    paths: ["garden-runtime/**", ".github/workflows/garden-runtime.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: garden-runtime-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Compile external gate
+        working-directory: garden-runtime
+        run: cargo build --locked --release --manifest-path garden-kernel/Cargo.toml
+      - name: Trusted kernel unit checks
+        working-directory: garden-runtime
+        run: cargo test --locked --manifest-path garden-kernel/Cargo.toml
+      - name: Boundary and formal model checks
+        working-directory: garden-runtime
+        run: |
+          python -m unittest discover -s garden-tests -p 'test_*.py'
+          python garden-tests/formal_model.py > garden-tests/formal-model-ci-receipt.json
+          python -c "import json; r=json.load(open('garden-tests/formal-model-ci-receipt.json')); assert r['passed']; assert r['positive']['status']=='all_reachable_states_checked'; assert len(r['negative_controls'])==10; print(r['positive']); print('10 negative-control mutations rejected')"
+      - name: GardenBench enforcement and recorded limits
+        working-directory: garden-runtime
+        run: python gardenbench/run.py --binary garden-kernel/target/release/garden-gate
+      - name: Independent actual HTTP boundary attacks
+        working-directory: garden-runtime
+        run: python gardenbench/run_http.py --binary garden-kernel/target/release/garden-gate
+      - name: Preserve native test receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: garden-native-check-receipts
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            garden-runtime/garden-tests/formal-model-ci-receipt.json
+            garden-runtime/gardenbench/attack-receipts.json
+            garden-runtime/gardenbench/http-attack-receipts.json
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: garden-runtime/deploy/worker-site
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Node and dependency checks
+        run: node --version && npm ci --ignore-scripts
+      - name: SQLite-backed Worker and independent attacks
+        run: node --test --test-reporter=tap tests/*.test.mjs > worker-tests-ci.tap
+      - name: Worker artifact validation
+        run: bash scripts/build.sh && node scripts/validate-artifact.mjs
+      - name: Preserve Worker test output
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: garden-worker-check-output
+          retention-days: 7
+          if-no-files-found: warn
+          path: garden-runtime/deploy/worker-site/worker-tests-ci.tap
+  isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Fixed-target ingress real-socket checks
+        run: |
+          set -o pipefail
+          python garden-runtime/deploy/scripts/test_ingress.py 2>&1 | tee garden-runtime/deploy/ingress-ci-tests.txt
+      - name: Reproducible images
+        run: |
+          docker compose -f garden-runtime/deploy/compose.yaml config --format json > garden-runtime/deploy/isolation-compose-ci.json
+          docker compose -f garden-runtime/deploy/compose.yaml build
+      - name: UID and immutable advisory image
+        run: |
+          docker compose -f garden-runtime/deploy/compose.yaml run --rm -T --entrypoint python advisory -c "import os; assert os.getuid()==65534; assert not os.path.exists('/var/lib/garden'); assert not os.path.exists('/opt/garden/garden-gate'); assert not os.access('/opt/garden',os.W_OK); print('advisory UID/path separation verified')"
+      - name: Start controller
+        run: docker compose -f garden-runtime/deploy/compose.yaml up -d ingress
+      - name: Actual controller health and fail-closed network
+        run: |
+          set -o pipefail
+          python garden-runtime/deploy/scripts/container_smoke.py 2>&1 | tee garden-runtime/deploy/isolation-ci-evidence.txt
+          docker compose -f garden-runtime/deploy/compose.yaml exec -T --user 65534:65534 gate-console python -c "import os; assert not os.access('/var/lib/garden',os.R_OK); assert not os.access('/var/lib/garden',os.W_OK); assert not os.access('/proc/1/environ',os.R_OK); print('advisory UID cannot inspect gate state/controller credentials')" 2>&1 | tee -a garden-runtime/deploy/isolation-ci-evidence.txt
+          docker compose -f garden-runtime/deploy/compose.yaml exec -T --user 65534:65534 gate-console python -c "import socket; socket.setdefaulttimeout(2); s=socket.socket(); result=s.connect_ex(('1.1.1.1',443)); assert result!=0, 'Controller gained egress'; print('gate internal-network egress denied')" 2>&1 | tee -a garden-runtime/deploy/isolation-ci-evidence.txt
+          docker compose -f garden-runtime/deploy/compose.yaml run --rm -T --entrypoint python advisory -c "import socket; socket.setdefaulttimeout(2); s=socket.socket(); result=s.connect_ex(('1.1.1.1',443)); assert result!=0, 'Advisory gained network'; print('advisory egress denied')" 2>&1 | tee -a garden-runtime/deploy/isolation-ci-evidence.txt
+      - name: Container diagnostic evidence on failure
+        if: failure()
+        run: |
+          set -o pipefail
+          docker compose -f garden-runtime/deploy/compose.yaml ps 2>&1 | tee garden-runtime/deploy/isolation-ci-diagnostics.txt
+          docker compose -f garden-runtime/deploy/compose.yaml logs --no-color --tail 80 gate-console ingress 2>&1 | tee -a garden-runtime/deploy/isolation-ci-diagnostics.txt
+      - name: Preserve isolation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: garden-isolation-check-evidence
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            garden-runtime/deploy/ingress-ci-tests.txt
+            garden-runtime/deploy/isolation-compose-ci.json
+            garden-runtime/deploy/isolation-ci-evidence.txt
+            garden-runtime/deploy/isolation-ci-diagnostics.txt
+      - name: Stop controller
+        if: always()
+        run: docker compose -f garden-runtime/deploy/compose.yaml down

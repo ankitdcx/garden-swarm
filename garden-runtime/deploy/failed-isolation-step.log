@@ -1,0 +1,56 @@
+2026-10-02T09:49:18.3850122Z ##[group]Run python garden-runtime/deploy/scripts/container_smoke.py
+2026-10-02T09:49:18.3850799Z [36;1mpython garden-runtime/deploy/scripts/container_smoke.py[0m
+2026-10-02T09:49:18.3852509Z [36;1mdocker compose -f garden-runtime/deploy/compose.yaml exec -T --user 65534:65534 gate-console python -c "import os; assert not os.access('/var/lib/garden',os.R_OK); assert not os.access('/var/lib/garden',os.W_OK); assert not os.access('/proc/1/environ',os.R_OK); print('advisory UID cannot inspect gate state/controller credentials')"[0m
+2026-10-02T09:49:18.3855288Z [36;1mdocker compose -f garden-runtime/deploy/compose.yaml run --rm -T --entrypoint python advisory -c "import socket; socket.setdefaulttimeout(2); s=socket.socket(); result=s.connect_ex(('1.1.1.1',443)); assert result!=0, 'Advisory gained network'; print('advisory egress denied')"[0m
+2026-10-02T09:49:18.3933830Z shell: /usr/bin/bash -e {0}
+2026-10-02T09:49:18.3934152Z ##[endgroup]
+2026-10-02T09:50:18.5486422Z Traceback (most recent call last):
+2026-10-02T09:50:18.5486811Z   File "/usr/lib/python3.12/urllib/request.py", line 1344, in do_open
+2026-10-02T09:50:18.6057524Z     h.request(req.get_method(), req.selector, req.data, headers,
+2026-10-02T09:50:18.6057916Z   File "/usr/lib/python3.12/http/client.py", line 1365, in request
+2026-10-02T09:50:18.6105620Z     self._send_request(method, url, body, headers, encode_chunked)
+2026-10-02T09:50:18.6106014Z   File "/usr/lib/python3.12/http/client.py", line 1411, in _send_request
+2026-10-02T09:50:18.6107714Z     self.endheaders(body, encode_chunked=encode_chunked)
+2026-10-02T09:50:18.6108059Z   File "/usr/lib/python3.12/http/client.py", line 1360, in endheaders
+2026-10-02T09:50:18.6109796Z     self._send_output(message_body, encode_chunked=encode_chunked)
+2026-10-02T09:50:18.6110128Z   File "/usr/lib/python3.12/http/client.py", line 1120, in _send_output
+2026-10-02T09:50:18.6111468Z     self.send(msg)
+2026-10-02T09:50:18.6111757Z   File "/usr/lib/python3.12/http/client.py", line 1064, in send
+2026-10-02T09:50:18.6113170Z     self.connect()
+2026-10-02T09:50:18.6113444Z   File "/usr/lib/python3.12/http/client.py", line 1030, in connect
+2026-10-02T09:50:18.6114855Z     self.sock = self._create_connection(
+2026-10-02T09:50:18.6115268Z                 ^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6115536Z   File "/usr/lib/python3.12/socket.py", line 852, in create_connection
+2026-10-02T09:50:18.6153716Z     raise exceptions[0]
+2026-10-02T09:50:18.6154309Z   File "/usr/lib/python3.12/socket.py", line 837, in create_connection
+2026-10-02T09:50:18.6170583Z     sock.connect(sa)
+2026-10-02T09:50:18.6170828Z ConnectionRefusedError: [Errno 111] Connection refused
+2026-10-02T09:50:18.6171020Z 
+2026-10-02T09:50:18.6171173Z During handling of the above exception, another exception occurred:
+2026-10-02T09:50:18.6171378Z 
+2026-10-02T09:50:18.6171471Z Traceback (most recent call last):
+2026-10-02T09:50:18.6171919Z   File "/home/runner/work/garden-swarm/garden-swarm/garden-runtime/deploy/scripts/container_smoke.py", line 17, in <module>
+2026-10-02T09:50:18.6172601Z     call('/api/health');break
+2026-10-02T09:50:18.6172790Z     ^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6173176Z   File "/home/runner/work/garden-swarm/garden-swarm/garden-runtime/deploy/scripts/container_smoke.py", line 12, in call
+2026-10-02T09:50:18.6175401Z     with urllib.request.urlopen(urllib.request.Request(BASE+path,data=data,headers=headers),timeout=5) as response:
+2026-10-02T09:50:18.6176066Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6176507Z   File "/usr/lib/python3.12/urllib/request.py", line 215, in urlopen
+2026-10-02T09:50:18.6176910Z     return opener.open(url, data, timeout)
+2026-10-02T09:50:18.6177218Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6177598Z   File "/usr/lib/python3.12/urllib/request.py", line 515, in open
+2026-10-02T09:50:18.6178004Z     response = self._open(req, data)
+2026-10-02T09:50:18.6178543Z                ^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6178927Z   File "/usr/lib/python3.12/urllib/request.py", line 532, in _open
+2026-10-02T09:50:18.6179408Z     result = self._call_chain(self.handle_open, protocol, protocol +
+2026-10-02T09:50:18.6179826Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6180274Z   File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+2026-10-02T09:50:18.6180698Z     result = func(*args)
+2026-10-02T09:50:18.6180939Z              ^^^^^^^^^^^
+2026-10-02T09:50:18.6181290Z   File "/usr/lib/python3.12/urllib/request.py", line 1373, in http_open
+2026-10-02T09:50:18.6181793Z     return self.do_open(http.client.HTTPConnection, req)
+2026-10-02T09:50:18.6182140Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-02T09:50:18.6182517Z   File "/usr/lib/python3.12/urllib/request.py", line 1347, in do_open
+2026-10-02T09:50:18.6182908Z     raise URLError(err)
+2026-10-02T09:50:18.6183288Z urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+2026-10-02T09:50:18.6341308Z ##[error]Process completed with exit code 1.

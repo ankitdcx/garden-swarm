@@ -1,0 +1,31 @@
+{
+  "schema": "GardenChatGPTWorkstreamIntent/v1",
+  "workstream_id": "garden-runtime-20261002",
+  "work_package_id": "external-gate-open-agent-runtime",
+  "branch": "chatgpt/garden-runtime-20261002",
+  "base_sha": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
+  "dependency_intent_ids": [],
+  "integration_strategy": "DIRECT_IF_NO_COLLISION",
+  "draft_pr_created_before_substantial_edit": true,
+  "substantial_edit_started": true,
+  "status": "ACTIVE",
+  "expected_paths": [
+    "garden-runtime/",
+    "workstreams/2026-10-02-garden-runtime.json",
+    ".github/workflows/garden-runtime.yml",
+    "scripts/build_reference_closure.py",
+    "tests/test_reference_closure.py",
+    "gsl/REFERENCE_POLICY.json",
+    "gsl/REPO_PROFILE.json"
+  ],
+  "semantics_status": "IMPLEMENTATION; canonical Garden remains unchanged",
+  "scope": "Rust external execution gate, strict Garden IR, sandbox tools, agents, adversarial/formal tests, console, reproducible free deployment",
+  "draft_pr_number": 340,
+  "declared_limits": [
+    "Semantic review honesty and real epistemic independence",
+    "Evidence origin/truth",
+    "Privileged authenticated-state rollback",
+    "Native hosting/OS isolation pending actual host checks",
+    "Production human identity and HSA certification"
+  ]
+}

@@ -73,6 +73,60 @@
       "class": "STATE_BRANCH_RUNTIME_LEDGER",
       "owner": "tools/group_review_openrouter_worker.py",
       "require_tracked_file": false
+    },
+    {
+      "reference": "config.json",
+      "class": "HASH_PINNED_FETCHED_MODEL_ASSET",
+      "owner": "garden-runtime/garden-agents/fetch_models.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "tokenizer.json",
+      "class": "HASH_PINNED_FETCHED_MODEL_ASSET",
+      "owner": "garden-runtime/garden-agents/fetch_models.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "tokenizer_config.json",
+      "class": "HASH_PINNED_FETCHED_MODEL_ASSET",
+      "owner": "garden-runtime/garden-agents/fetch_models.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "notes/probe.txt",
+      "class": "RUNTIME_MOCK_TOOL_EFFECT",
+      "owner": "garden-runtime/deploy/worker-site/worker/index.js",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "notes/independent.txt",
+      "class": "RUNTIME_MOCK_TOOL_EFFECT",
+      "owner": "garden-runtime/deploy/worker-site/worker/index.js",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "allowed.txt",
+      "class": "RUNTIME_SANDBOX_TEST_EFFECT",
+      "owner": "garden-runtime/gardenbench/run_http.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "consent.txt",
+      "class": "RUNTIME_SANDBOX_TEST_EFFECT",
+      "owner": "garden-runtime/gardenbench/run_http.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "html.txt",
+      "class": "RUNTIME_SANDBOX_TEST_EFFECT",
+      "owner": "garden-runtime/gardenbench/run_http.py",
+      "require_tracked_file": false
+    },
+    {
+      "reference": "source.txt",
+      "class": "RUNTIME_SANDBOX_TEST_EFFECT",
+      "owner": "garden-runtime/gardenbench/run_http.py",
+      "require_tracked_file": false
     }
   ],
   "rule": "A generated/runtime reference is not a dangling source-file reference merely because no tracked file exists. It must instead resolve to an explicit generating or consuming owner/class. Unknown untracked references remain failures."

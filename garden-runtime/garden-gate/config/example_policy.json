@@ -1,0 +1,110 @@
+{
+  "version": "garden-implementation-0.1",
+  "status": "IMPLEMENTATION",
+  "source_anchors": [
+    "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+    "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+    "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+    "GardenImplementationSourceMap/v1 docs/source-map.json sha256 cc873e34f1e9eaa43ac47f0848ed39a530bb4ed12284bdffbec208eddaab7bd8"
+  ],
+  "max_request_bytes": 65536,
+  "max_actions_per_actor": 100,
+  "max_resource_units": 10000,
+  "identities": [
+    {
+      "id": "human-demo",
+      "role": "human",
+      "family": "human",
+      "lineage": "human-demo",
+      "controller": "human-demo",
+      "active": true
+    },
+    {
+      "id": "planner-demo",
+      "role": "agent",
+      "family": "demo-agent",
+      "lineage": "demo-agent-1",
+      "controller": "planner-host",
+      "active": true
+    },
+    {
+      "id": "verifier-demo",
+      "role": "verifier",
+      "family": "deterministic-verifier",
+      "lineage": "rust-arithmetic-1",
+      "controller": "verification-host",
+      "active": true
+    },
+    {
+      "id": "qse-demo",
+      "role": "verifier",
+      "family": "deterministic-qse",
+      "lineage": "qse-checklist-1",
+      "controller": "review-host",
+      "active": true
+    },
+    {
+      "id": "truth-demo",
+      "role": "verifier",
+      "family": "deterministic-truth",
+      "lineage": "truth-checklist-1",
+      "controller": "review-host",
+      "active": true
+    },
+    {
+      "id": "effect-demo",
+      "role": "verifier",
+      "family": "deterministic-effect",
+      "lineage": "effect-checklist-1",
+      "controller": "review-host",
+      "active": true
+    }
+  ],
+  "authorities": [
+    {
+      "id": "demo-authority",
+      "owner_id": "human-demo",
+      "tools": [
+        "calculator",
+        "sandbox_read",
+        "sandbox_write",
+        "mock_email",
+        "mock_ledger"
+      ],
+      "human_effect": true,
+      "expires_at": 4102444800,
+      "revoked": false,
+      "max_calls": 100,
+      "max_resource_units": 10000
+    }
+  ],
+  "delegations": [
+    {
+      "id": "demo-delegation",
+      "authority_id": "demo-authority",
+      "from_id": "human-demo",
+      "to_id": "planner-demo",
+      "parent_id": null,
+      "tools": [
+        "calculator",
+        "sandbox_read",
+        "sandbox_write",
+        "mock_email",
+        "mock_ledger"
+      ],
+      "expires_at": 4102444800,
+      "revoked": false,
+      "max_calls": 100,
+      "max_resource_units": 10000,
+      "read_only": false,
+      "allow_successor": false
+    }
+  ],
+  "evidence": [],
+  "ledger": {
+    "demo": 100000,
+    "reserve": 100000
+  },
+  "max_delegation_depth": 5,
+  "max_journal_receipts": 10000
+}

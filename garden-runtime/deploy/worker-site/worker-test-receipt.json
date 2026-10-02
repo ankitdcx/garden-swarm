@@ -1,0 +1,21 @@
+{
+  "status": "IMPLEMENTATION_TEST_RECEIPT",
+  "surface": "Experimental Worker server boundary with actual SQLite persistence and atomic final authorization",
+  "tests": 56,
+  "pass": 56,
+  "fail": 0,
+  "timestamp": "2026-10-02T09:31:18.425Z",
+  "worker_sha256": "5d5e305545f5fd0a707b74b225ae67cf98b7d51d215e7fac587aac47a4270eae",
+  "independent_review": "7 adversarial tests added by separate agent; repaired Unicode whitespace and signed-history trust failures",
+  "repairs": [
+    "Stored receipt corruption could be laundered into fresh signed note content; all history now verifies HMAC and chain before use",
+    "JavaScript whitespace admitted non-JSON NBSP/FEFF; parser now only accepts JSON whitespace",
+    "Production migration runner rejected multi-statement trigger; schema first-attempt repair idempotent; final authorization is one atomic guarded INSERT"
+  ],
+  "limits": [
+    "Local SQLite D1-compatible adapter, not proof of production provider behavior",
+    "General model independence and semantic truthfulness not established",
+    "Native Rust GardenBench separate"
+  ],
+  "presentation_correction": "Live UI explicitly says experimental fixed checks; no hosted open model or general reasoning verification claim"
+}

@@ -1,0 +1,122 @@
+{
+  "schema": "garden.deployment-repair.v1",
+  "status": "IMPLEMENTATION",
+  "timestamp": "2026-10-02T10:05:59.397458+00:00",
+  "canonical_change": false,
+  "failed_observation": {
+    "repository": "ankitdcx/garden-swarm",
+    "branch": "chatgpt/garden-runtime-20261002",
+    "head_sha": "9cf8d1c95d1b3969fed91c16fce3ae592d11aef6",
+    "checkout_merge_sha": "e43f3a985c21fe6d1f92cef15305ad5fcd8a1113",
+    "run_id": 36991938170,
+    "job_id": 110789918136,
+    "step": "Actual controller health and fail-closed network",
+    "observed_result": "FAILURE",
+    "error": "urllib.error.URLError: <urlopen error [Errno 111] Connection refused>",
+    "failure_at": "2026-10-02T09:50:18.6341308Z",
+    "observed_successes": [
+      "Docker native/advisory image builds",
+      "Rust1.90 locked release compilation",
+      "advisory UID65534/path separation"
+    ],
+    "root_cause": "INFERENCE: host published port belongs to an internal-only network, which provides no host interface for access. Controller process stayed alive; original workflow omitted server diagnostics, so additional startup faults remain unruled out.",
+    "excerpt_path": "deploy/failed-isolation-step.log",
+    "excerpt_sha256": "38fffb326c5891a8e12572197bd6647bec8f636611182ba1eeac65c93349cc06"
+  },
+  "primary_references": [
+    "https://docs.docker.com/compose/how-tos/networking/",
+    "https://docs.docker.com/engine/network/port-publishing/"
+  ],
+  "repair": {
+    "gate_network": "internal-only, no published ports",
+    "advisory_network": "none",
+    "ingress": "fixed gate-console:8080 byte transport, UID65534, cap_dropALL, read-only, no mounts/secrets, localhost publish",
+    "bounds": {
+      "active_connections": 16,
+      "bytes_per_direction": 2097152,
+      "connection_seconds": 30,
+      "close_seconds": 1
+    },
+    "credential_scope": "Ingress sees credentials in transit and is part of the transport trust boundary; it has no persisted credentials and no credential or payload logging.",
+    "ci_probes": [
+      "actual localhost HTTP health",
+      "calculator exact result391",
+      "HMAC receipt emission",
+      "invented authority DENY",
+      "UID65534 denies gate state and controller process environment",
+      "internal-only controller egress denied",
+      "network:none advisory egress denied"
+    ],
+    "ci_retained_artifacts": [
+      "real-socket ingress tests",
+      "resolved Compose topology",
+      "isolation probe output",
+      "failure diagnostics"
+    ],
+    "source_sha256": {
+      "deploy/Dockerfile": "4792bcf4a06abc832d75bbf5591e61d9e22e251b87d6eda59da9c2cbacfd06d5",
+      "deploy/compose.yaml": "31414ddc2f38db11b0602d3a5a1cd1c1e2a242b01ae189cd97012e8776944d2c",
+      "deploy/README.md": "6b00f2f38a7901b178e7bd08d5a5ef69ef85a7e1d137364e90c2a03c43c9a7ec",
+      "deploy/ci/garden-runtime.yml": "2e8e5508598fab930421805b289b4287af33033abbc3234d347a8628f4b4a7ab",
+      "deploy/scripts/ingress.py": "9ef452d88edc7fc44c22b07439abd87d49388ceb706cddda061f5f875a34c9fd",
+      "deploy/scripts/test_ingress.py": "eb659f870dd06db95d92d9ab07fa895fe9b90b054eb499d368ea34430bf8b085",
+      "deploy/scripts/container_smoke.py": "4642f3aeff35eb67ca3da823c7c5c41bd2d120379ddb8f02f54f576ac376947c"
+    }
+  },
+  "local_checks": {
+    "real_socket_ingress_tests": {
+      "PASS": 5,
+      "FAIL": 0
+    },
+    "yaml_topology_and_workflow": "PASS",
+    "Docker_daemon": "UNAVAILABLE"
+  },
+  "remote_retest": {
+    "status": "PASS",
+    "run_id": 37019493342,
+    "job_id": 110878597422,
+    "tested_head": "8684b161e64389a04d874ddc4bdb6bd6c6cac27e",
+    "observed_at": "2026-10-02T14:32:49.627725+00:00"
+  },
+  "successful_native_and_worker_lanes_repeated": false,
+  "authorization": "Root explicit bounded deployment repair within user mission; no GitHub mutation, paid resource, policy change, or user data deletion by this agent",
+  "residual_unknowns": [
+    "Ingress transport or host compromise is outside agent boundary",
+    "Production identity and hosted native backend remain unresolved",
+    "Every new hosting environment requires its own isolation receipt; CI is not host-compromise proof"
+  ],
+  "classification_review": {
+    "reviewer": "garden_sources",
+    "selected_rules": {
+      "deploy/scripts/ingress.py": "trusted IMPLEMENTATION, mandatory authority/action-gate/security/privacy/process/function-contract obligations",
+      "deploy/scripts/test_ingress.py": "TEST",
+      "deploy/container-repair-receipt.json": "RECEIPT",
+      "deploy/failed-isolation-step.log": "EXPERIMENTAL ARCHIVAL_EVIDENCE"
+    },
+    "selection_assertions": "4 PASS",
+    "strict_audit_after_new_files_staged": {
+      "status": "PASS",
+      "frontier": 0,
+      "profile_errors": 0,
+      "exit_code": 0
+    }
+  },
+  "independent_ingress_review": {
+    "status": "NOT_RUN",
+    "reason": "Adversarial follow-up agent turn flagged for possible cybersecurity content; no review result inferred",
+    "retry_attempted": false
+  },
+  "root_static_review": {
+    "status": "REVIEWED_WITHIN_FIXED_TRANSPORT_SURFACE",
+    "timestamp": "2026-10-02T14:20:39.230592+00:00",
+    "observations": [
+      "Production target is immutable gate-console:8080; request bytes cannot select a target",
+      "16 connections,2MiB per direction,30second total timeout; source buffers65536bytes",
+      "Streams and transfer tasks close/cancel on EOF,timeout,transport error; half-close preserves final response",
+      "No policy/secret/state mounts, payload/credential logging or generated code loader",
+      "Ingress sees bearer credentials in transit and remains part of transport TCB"
+    ],
+    "independent_model_family_review": false,
+    "real_socket_tests_pass": 5
+  }
+}
