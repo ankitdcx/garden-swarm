@@ -14,6 +14,7 @@ import math
 import mimetypes
 import os
 import platform
+import re
 from pathlib import Path
 import secrets
 import shutil
@@ -38,6 +39,8 @@ SESSIONS = {}
 SESSIONS_LOCK = threading.Lock()
 NEW_SESSION_TIMES = []
 CONFIG = None
+sys.path.insert(0, str(ROOT / "garden-lang"))
+from garden_lang import parse as parse_garden
 
 
 def arithmetic(expression):
@@ -99,6 +102,27 @@ def tool_arguments(tool, args):
                   "amount_cents": round(amount * 100)}, None
 
 
+def audit_numeric_claims(roles):
+    """Check explicit small arithmetic equalities; other model prose stays UNKNOWN."""
+    findings = []
+    number = r"[-+]?\d+(?:\.\d+)?"
+    pattern = re.compile(rf"({number}\s*[+*/×÷-]\s*{number})\s*=\s*({number})")
+    for role in roles:
+        text = role.get("summary", "")
+        if not isinstance(text, str): continue
+        for match in list(pattern.finditer(text))[:8]:
+            try:
+                _, expected = arithmetic(match.group(1))
+                claimed = float(match.group(2))
+                if not math.isclose(expected, claimed, rel_tol=1e-10, abs_tol=1e-10):
+                    findings.append({"status": "CONTRADICTED", "role": role.get("role"),
+                                     "claim": match.group(0), "expected": expected,
+                                     "check": "bounded deterministic arithmetic; general prose remains UNKNOWN"})
+            except (ValueError, SyntaxError, ZeroDivisionError):
+                findings.append({"status": "UNKNOWN", "claim": match.group(0)})
+    return findings
+
+
 def agent_work(task, tool, args):
     """Inference child receives no gate credentials and cannot execute tools."""
     wasm_worker = ROOT / "garden-agents/wasm_worker.mjs"
@@ -119,6 +143,7 @@ def agent_work(task, tool, args):
             dependencies = str(Path(dependency_path).resolve(strict=True))
             model_dir = str(Path(model_directory).resolve(strict=True))
             command = [node_binary, "--permission", "--no-addons", "--allow-fs-read=" + str(wasm_worker),
+                       "--allow-fs-read=" + str(ROOT / "garden-agents/calculator_intent.mjs"),
                        "--allow-fs-read=" + dependencies, "--allow-fs-read=" + model_dir, str(wasm_worker)]
             clean_env = {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8", "GARDEN_WASM_DEPENDENCIES": dependencies,
                          "GARDEN_WASM_MODEL_DIR": model_dir}
@@ -200,12 +225,12 @@ class Session:
         self.times.append(now)
 
     def proposal(self, tool, args):
-        return {"id": "job-" + secrets.token_hex(10), "nonce": secrets.token_hex(16),
-                "actor_id": "planner-demo", "delegation_id": "demo-delegation",
-                "policy_version": "garden-implementation-0.1", "tool": tool, "args": args,
-                "claims": [], "unknowns": [], "human_effect": tool not in {"calculator", "sandbox_read"},
-                "assessment_ids": {"verification": None, "qse": None, "truthfulness": None, "human_effect": None},
-                "successor_of": None}
+        record = {"id": "job-" + secrets.token_hex(10), "actor_id": "planner-demo", "tool": tool, "args": args,
+                  "source": {"status": "IMPLEMENTATION", "uri": "garden-runtime/garden-lang", "version": "0.1"}}
+        document = parse_garden("GARDEN 1\nPROPOSAL " + json.dumps(record, allow_nan=False) + "\n")
+        proposal = document.to_proposal(record["id"], delegation_id="demo-delegation",
+                                        policy_version="garden-implementation-0.1", nonce="ir-" + document.digest)
+        return proposal, document.to_ir()
 
     def review(self, p, consent):
         """Narrow trusted reviewers, independent of model prose/approval claims."""
@@ -239,7 +264,10 @@ class Session:
             raise ValueError("invalid work request")
         gate_tool, mapped, expected = tool_arguments(tool, value["args"])
         cognition = agent_work(task, gate_tool, mapped)
-        p = self.proposal(gate_tool, mapped)
+        p, native_ir = self.proposal(gate_tool, mapped)
+        claim_audit = audit_numeric_claims(cognition.get("roles", []))
+        if claim_audit and p["human_effect"]:
+            p["unknowns"].append("MODEL_MATERIAL_NUMERIC_CLAIM_NOT_VALIDATED")
         self.review(p, consent)
         if attack == "unauthorized": p["delegation_id"] = "invented-authority"
         elif attack == "unknown": p["unknowns"] = ["Material fact is unknown"]
@@ -256,6 +284,8 @@ class Session:
         answer["agent_limitations"] = cognition.get("limitations", [])
         answer["cognition_status"] = cognition.get("cognition_status", "IMPLEMENTATION")
         answer["agent_lineage_overlap"] = cognition.get("lineage_overlap", [])
+        answer["garden_native_ir"] = native_ir
+        answer["model_claim_audit"] = claim_audit
         answer["verification_surface"] = "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
         if expected is not None: answer["independent_expected_result"] = expected
         return answer

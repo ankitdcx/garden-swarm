@@ -10,6 +10,7 @@ import os
 import selectors
 import subprocess
 import threading
+import time
 from pathlib import Path
 from typing import Any
 
@@ -25,9 +26,10 @@ class GateBroker:
         self.process = subprocess.Popen(command, cwd=cwd, env=clean_env,
                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                         stderr=subprocess.DEVNULL, bufsize=0)
+        os.set_blocking(self.process.stdin.fileno(), False)
         self._buffer = bytearray()
 
-    def request(self, payload: dict[str, Any], *, trusted: bool = False) -> dict[str, Any]:
+    def request(self, payload: dict[str, Any], *, trusted: bool = False, timeout: float = 10) -> dict[str, Any]:
         """Only controller code calls trusted=True; HTTP body cannot select it."""
         request = dict(payload)
         if trusted:
@@ -38,22 +40,41 @@ class GateBroker:
         with self._lock:
             if self.process.poll() is not None:
                 raise RuntimeError("gate process stopped; authority unavailable")
-            self.process.stdin.write(wire)
-            self.process.stdin.flush()
             selector = selectors.DefaultSelector()
             selector.register(self.process.stdout, selectors.EVENT_READ)
+            selector.register(self.process.stdin, selectors.EVENT_WRITE)
+            sent = 0
+            deadline = time.monotonic() + timeout
             try:
-                while b"\n" not in self._buffer:
-                    if not selector.select(10):
+                while sent < len(wire) or b"\n" not in self._buffer:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
                         self.close()
                         raise TimeoutError("gate response timed out; session closed")
-                    chunk = os.read(self.process.stdout.fileno(), 65536)
-                    if not chunk:
-                        raise RuntimeError("gate response unavailable")
-                    self._buffer.extend(chunk)
-                    if len(self._buffer) > 262144:
+                    events = selector.select(remaining)
+                    if not events:
                         self.close()
-                        raise RuntimeError("gate response exceeds transport limit")
+                        raise TimeoutError("gate response timed out; session closed")
+                    for key, _ in events:
+                        if key.fileobj is self.process.stdin:
+                            try:
+                                sent += os.write(self.process.stdin.fileno(), wire[sent:sent + 4096])
+                            except BlockingIOError:
+                                continue
+                            except BrokenPipeError as error:
+                                self.close()
+                                raise RuntimeError("gate request stream unavailable") from error
+                            if sent == len(wire):
+                                selector.unregister(self.process.stdin)
+                            continue
+                        chunk = os.read(self.process.stdout.fileno(), 65536)
+                        if not chunk:
+                            self.close()
+                            raise RuntimeError("gate response unavailable")
+                        self._buffer.extend(chunk)
+                        if len(self._buffer) > 262144:
+                            self.close()
+                            raise RuntimeError("gate response exceeds transport limit")
                 line, _, tail = self._buffer.partition(b"\n")
                 self._buffer = bytearray(tail)
                 answer = json.loads(line)
@@ -71,3 +92,6 @@ class GateBroker:
             except subprocess.TimeoutExpired:
                 self.process.kill()
                 self.process.wait(timeout=2)
+        for stream in (self.process.stdin, self.process.stdout):
+            if stream is not None and not stream.closed:
+                stream.close()

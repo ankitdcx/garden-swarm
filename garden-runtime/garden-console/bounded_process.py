@@ -14,15 +14,30 @@ def bounded_run(command, input_bytes, *, cwd, env, preexec_fn=None, timeout=60,
     selector = selectors.DefaultSelector()
     selector.register(process.stdout, selectors.EVENT_READ, "stdout")
     selector.register(process.stderr, selectors.EVENT_READ, "stderr")
+    os.set_blocking(process.stdin.fileno(), False)
+    selector.register(process.stdin, selectors.EVENT_WRITE, "stdin")
     deadline = time.monotonic() + timeout
+    sent = 0
     try:
-        process.stdin.write(input_bytes)
-        process.stdin.close()
         while selector.get_map():
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 raise TimeoutError("worker time limit exceeded")
             for key, _ in selector.select(min(remaining, .5)):
+                if key.data == "stdin":
+                    if sent < len(input_bytes):
+                        try:
+                            sent += os.write(process.stdin.fileno(), input_bytes[sent:sent + 4096])
+                        except BlockingIOError:
+                            continue
+                        except BrokenPipeError:
+                            selector.unregister(process.stdin)
+                            process.stdin.close()
+                            continue
+                    if sent == len(input_bytes):
+                        selector.unregister(process.stdin)
+                        process.stdin.close()
+                    continue
                 chunk = os.read(key.fileobj.fileno(), 8192)
                 if not chunk:
                     selector.unregister(key.fileobj)
