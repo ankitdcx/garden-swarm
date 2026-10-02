@@ -13,7 +13,7 @@ import urllib.request
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", required=True)
-    parser.add_argument("--family", choices=["SmolLM2", "Qwen3.5", "all"], default="SmolLM2")
+    parser.add_argument("--family", choices=["SmolLM2", "Qwen3", "Qwen3.5", "all"], default="SmolLM2")
     parser.add_argument("--format", choices=["gguf", "onnx"], default="gguf")
     args = parser.parse_args()
     manifest = json.loads(Path(__file__).with_name("models.lock.json").read_text())
@@ -21,7 +21,9 @@ def main():
     destination.mkdir(parents=True, exist_ok=True)
     inventory = manifest["models"]
     if args.format == "onnx":
-        wasm = manifest["wasm_model"]
+        if args.family not in {"SmolLM2","Qwen3"}:
+            raise ValueError("ONNX bootstrap requires one supported family and separate destination directory")
+        wasm = manifest["wasm_qwen_model"] if args.family == "Qwen3" else manifest["wasm_model"]
         inventory = [{**asset, "family":wasm["family"], "model_id":wasm["model_id"], "url":wasm["base_url"]+asset["remote"]} for asset in wasm["assets"]]
     for model in inventory:
         if args.family not in {"all", model["family"]}:

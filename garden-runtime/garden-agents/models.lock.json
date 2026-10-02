@@ -16,6 +16,19 @@
       {"remote":"onnx/model_quantized.onnx","filename":"model_quantized.onnx","sha256":"ecc1a19eece6494e2963cf74f78ace35916e8d0b803168ddd41db00979f18e39"}
     ]
   },
+  "wasm_qwen_model": {
+    "model_id": "Qwen/Qwen3-0.6B",
+    "family": "Qwen3",
+    "license": "Apache-2.0",
+    "revision": "da1453100cf3ff33ef56d17983fc7a8648706db6",
+    "base_url": "https://huggingface.co/onnx-community/Qwen3-0.6B-ONNX/resolve/da1453100cf3ff33ef56d17983fc7a8648706db6/",
+    "assets": [
+      {"remote":"config.json","filename":"config.json","sha256":"8a04114ba59cc42b47d804d35d1d5c61d746ae4634f41f796768c6e302d39b9e"},
+      {"remote":"tokenizer.json","filename":"tokenizer.json","sha256":"e7a95fce95bf5b0946d0ddb3f9d7caa030b7e850bbe92b0edb26bcf563e9f3d5"},
+      {"remote":"tokenizer_config.json","filename":"tokenizer_config.json","sha256":"b0a8115cf05a7002cbe2575058c0139c1dee3f06f221c05717c3444947d78b9f"},
+      {"remote":"onnx/model_quantized.onnx","filename":"model_quantized.onnx","sha256":"ccf8734e59fdf7475b2dc0c117005e267a3a08342c1d951e0a79f0bce57bf62a"}
+    ]
+  },
   "runtime": {
     "name": "llama.cpp",
     "url": "https://github.com/ggml-org/llama.cpp",
