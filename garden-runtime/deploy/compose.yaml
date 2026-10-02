@@ -1,0 +1,44 @@
+services:
+  gate-console:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: controller
+    user: "0:0"
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [SETUID, SETGID]
+    security_opt: [no-new-privileges:true]
+    ports: ["127.0.0.1:8080:8080"]
+    networks: [isolated]
+    volumes:
+      - gate-state:/var/lib/garden
+    tmpfs:
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    pids_limit: 96
+    mem_limit: 512m
+    cpus: 1.0
+    restart: "no"
+  advisory:
+    profiles: [advisory]
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: advisory
+    user: "65534:65534"
+    read_only: true
+    network_mode: none
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    pids_limit: 32
+    mem_limit: 512m
+    cpus: 1.0
+    stdin_open: true
+    command: ["--backend", "rule-based"]
+volumes:
+  gate-state: {}
+networks:
+  isolated:
+    internal: true

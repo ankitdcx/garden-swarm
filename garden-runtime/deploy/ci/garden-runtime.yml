@@ -1,0 +1,68 @@
+# Integrate as .github/workflows/garden-runtime.yml in the source repository.
+# No deployment credentials; bounded CI only. Do not use Actions as a daemon host.
+name: Garden Runtime checks
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["garden-runtime/**", ".github/workflows/garden-runtime.yml"]
+  push:
+    branches: ["chatgpt/garden-runtime-20261002"]
+    paths: ["garden-runtime/**", ".github/workflows/garden-runtime.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: garden-runtime-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Compile external gate
+        working-directory: garden-runtime
+        run: cargo build --locked --release --manifest-path garden-kernel/Cargo.toml
+      - name: Boundary and formal model checks
+        working-directory: garden-runtime
+        run: |
+          python -m unittest discover -s garden-tests -p 'test_*.py'
+          python garden-tests/formal_model.py
+      - name: GardenBench enforcement and recorded limits
+        working-directory: garden-runtime
+        run: python gardenbench/run.py --binary garden-kernel/target/release/garden-gate
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: garden-runtime/deploy/worker-site
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Node and dependency checks
+        run: node --version && npm ci --ignore-scripts
+      - name: SQLite-backed Worker and independent attacks
+        run: node --test tests/*.test.mjs
+      - name: Worker artifact validation
+        run: bash scripts/build.sh && node scripts/validate-artifact.mjs
+  isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Reproducible images
+        run: docker compose -f garden-runtime/deploy/compose.yaml build
+      - name: UID and immutable advisory image
+        run: |
+          docker compose -f garden-runtime/deploy/compose.yaml run --rm -T --entrypoint python advisory -c "import os; assert os.getuid()==65534; assert not os.path.exists('/var/lib/garden'); assert not os.path.exists('/opt/garden/garden-gate'); assert not os.access('/opt/garden',os.W_OK); print('advisory UID/path separation verified')"
+      - name: Start controller
+        run: docker compose -f garden-runtime/deploy/compose.yaml up -d gate-console
+      - name: Actual controller health and fail-closed network
+        run: |
+          python garden-runtime/deploy/scripts/container_smoke.py
+          docker compose -f garden-runtime/deploy/compose.yaml run --rm -T --entrypoint python advisory -c "import socket; socket.setdefaulttimeout(2); s=socket.socket(); result=s.connect_ex(('1.1.1.1',443)); assert result!=0, 'Advisory gained network'; print('advisory egress denied')"
+      - name: Stop controller
+        if: always()
+        run: docker compose -f garden-runtime/deploy/compose.yaml down

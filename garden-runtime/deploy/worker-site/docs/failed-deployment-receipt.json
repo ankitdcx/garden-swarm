@@ -1,0 +1,11 @@
+{
+  "failed_deployment": "appgdep_6abf72cba7cc81918aa030206174d644",
+  "failed_version": "appgprj_6abf6e83da1881919652736b5fcba73c~appgver_d71f144b49ec819183d38dab560824dc",
+  "failure": "incomplete input: SQLITE_ERROR",
+  "migration_sha256": "a8a037f719add482a1cdab3d6a7eec717e6bf603a62a8213ff942c9c31f90eb1",
+  "database_state": "First unpublished new-project migration; no successful deployment or user records. Partial application cannot be inspected by available overview tool.",
+  "repair_authorization": "User autonomous repair/deploy mission; parent bounded authorization",
+  "repair": "Idempotent creation of exact new-project tables/indexes only; no destructive schema action. Trigger removed; final atomic guarded INSERT rechecks authority expiry/revocation/call budget in same statement that commits signed mock effect.",
+  "canonical_change": false,
+  "timestamp": "2026-10-02T09:05:25.405907+00:00"
+}

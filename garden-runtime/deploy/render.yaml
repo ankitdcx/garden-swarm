@@ -1,0 +1,19 @@
+# Prepared deployment option only. Render workspace confirmation is required.
+# Root repo path garden-runtime; do not confuse this with the deployed Worker subset.
+services:
+  - type: web
+    name: garden-native-demo
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: garden-runtime
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    dockerCommand: python garden-console/server.py --host 0.0.0.0 --port 10000 --gate /opt/garden/bin/garden-gate --state /tmp/garden-state
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"

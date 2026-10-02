@@ -1,0 +1,13 @@
+# Runtime deployment
+
+**IMPLEMENTATION**: native Docker/Compose files. **EXPERIMENTAL**: separately deployed Worker gate subset in `worker-site/`. These are different implementations; an online Worker does not mean the Rust backend has been hosted.
+
+Native local deployment: from `garden-runtime`, run `docker compose -f deploy/compose.yaml build`, then `docker compose -f deploy/compose.yaml up gate-console`. Open `http://127.0.0.1:8080`. The controller and external Rust gate run in a read-only container with a private root-owned state volume. Only SETUID/SETGID remain so the trusted controller can drop advisory child processes to UID 65534. The network is internal; ports bind only to host localhost. Optional advisory containers use UID 65534, no network, no capabilities, and no gate/state/policy mounts. Model outputs remain proposals. Docker daemon/host/controller compromise remains outside this boundary.
+
+The default advisory image uses rule-based fallback. No model is silently downloaded and no paid endpoint configured. To use an open model, install the explicitly selected model/binary through the native documented adapter and mount immutable model assets into an advisory container. No model must receive the controller's process environment, state directory, Docker socket or gate credentials.
+
+`render.yaml` is a prepared option for a **single free native demo**. It has not been applied. Render plugin requires the user to confirm `Ankit's workspace` before creation because no workspace is selected. Free native instances have 0.1 CPU/512 MB, 750 hours/workspace/month, idle sleep after 15 minutes and ephemeral filesystem. Native memory/session receipt state is lost on restart on the free service; do not claim durable audit hosting from this configuration. Docker UID isolation and deployment capabilities must be verified on the actual host before claiming that deployment meets the model process boundary.
+
+The current environment has no Docker daemon, so Docker build/network/UID behavior is **UNRESOLVED until CI/host checks run**. Static YAML parse and local native/Worker tests do not establish that the container isolation works.
+
+Official checked sources (2026-10-02): https://render.com/docs/free and https://render.com/docs/compute-plans; GitHub Actions public standard runners: https://docs.github.com/en/actions/concepts/billing-and-usage; Hugging Face new compute Space creation: https://huggingface.co/docs/hub/en/spaces-overview and https://huggingface.co/docs/hub/en/spaces-zerogpu. Generic CPU Basic hardware has no hourly fee but new Docker/Gradio creation now requires a paid plan; qualified older verified personal accounts can host two ZeroGPU Gradio Spaces. No such account authorization is available here.
