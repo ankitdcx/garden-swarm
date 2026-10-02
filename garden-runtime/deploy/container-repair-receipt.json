@@ -71,13 +71,19 @@
     "yaml_topology_and_workflow": "PASS",
     "Docker_daemon": "UNAVAILABLE"
   },
-  "remote_retest": "PENDING_ROOT_PUBLICATION_AND_COMPLETION_EVENT",
+  "remote_retest": {
+    "status": "PASS",
+    "run_id": 37019493342,
+    "job_id": 110878597422,
+    "tested_head": "8684b161e64389a04d874ddc4bdb6bd6c6cac27e",
+    "observed_at": "2026-10-02T14:32:49.627725+00:00"
+  },
   "successful_native_and_worker_lanes_repeated": false,
   "authorization": "Root explicit bounded deployment repair within user mission; no GitHub mutation, paid resource, policy change, or user data deletion by this agent",
   "residual_unknowns": [
-    "Repaired topology awaits actual DockerCI",
     "Ingress transport or host compromise is outside agent boundary",
-    "Production identity and hosted native backend remain unresolved"
+    "Production identity and hosted native backend remain unresolved",
+    "Every new hosting environment requires its own isolation receipt; CI is not host-compromise proof"
   ],
   "classification_review": {
     "reviewer": "garden_sources",
@@ -88,7 +94,12 @@
       "deploy/failed-isolation-step.log": "EXPERIMENTAL ARCHIVAL_EVIDENCE"
     },
     "selection_assertions": "4 PASS",
-    "strict_audit_after_new_files_staged": "PENDING_ROOT"
+    "strict_audit_after_new_files_staged": {
+      "status": "PASS",
+      "frontier": 0,
+      "profile_errors": 0,
+      "exit_code": 0
+    }
   },
   "independent_ingress_review": {
     "status": "NOT_RUN",

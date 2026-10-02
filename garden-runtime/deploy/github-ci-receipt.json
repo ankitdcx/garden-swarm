@@ -41,7 +41,42 @@
       "fail": 0
     }
   },
-  "repaired_remote_retest": "PENDING_PUBLICATION",
+  "repaired_remote_retest": {
+    "tested_head": "8684b161e64389a04d874ddc4bdb6bd6c6cac27e",
+    "status": "ALL_COMPLETED_SUCCESS",
+    "observed_at": "2026-10-02T14:32:49.627725+00:00",
+    "pull_request_run": "https://github.com/ankitdcx/garden-swarm/actions/runs/37019493342",
+    "push_run": "https://github.com/ankitdcx/garden-swarm/actions/runs/37019484824",
+    "jobs": {
+      "native": {
+        "id": 110878597415,
+        "conclusion": "success"
+      },
+      "worker": {
+        "id": 110878597119,
+        "conclusion": "success"
+      },
+      "isolation": {
+        "id": 110878597422,
+        "conclusion": "success"
+      }
+    },
+    "process_runs": {
+      "constitutional_guard": 37019493689,
+      "integration_provenance": 37019493548,
+      "public_integrity": 37019493242
+    },
+    "container_probes_verified": [
+      "Image compilation/build",
+      "Advisory UID65534 and immutable paths",
+      "Real ingress and health",
+      "External calculator391 and signed receipt",
+      "Invented authority denied",
+      "Private state and controller process credentials inaccessible to advisory UID",
+      "Controller external egress denied",
+      "Advisory egress denied"
+    ]
+  },
   "browser_visual_qa": "Browser operation timed out; no visual verification claim",
   "no_new_paid_resources": true
 }

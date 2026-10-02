@@ -9,7 +9,7 @@ Date: 2026-10-02. New paid model/infrastructure expenditure: **$0**.
 - Public source: https://github.com/ankitdcx/garden-swarm/tree/chatgpt/garden-runtime-20261002/garden-runtime
 - Branch: `chatgpt/garden-runtime-20261002`; PR: https://github.com/ankitdcx/garden-swarm/pull/340
 - Native Rust gate: runnable source and compiled/tested executable; **not hosted by the public Worker deployment**.
-- Automated native, Worker, formal and container checks: `.github/workflows/garden-runtime.yml` in the source PR. Native and Worker remote jobs succeeded. Initial container ingress failed; the bounded ingress repair awaits remote validation. Exact observations: `deploy/github-ci-receipt.json`.
+- Automated native, Worker, formal and container checks: `.github/workflows/garden-runtime.yml` in the source PR. Native, Worker, Docker isolation and repository process checks all passed at `8684b161e64389a04d874ddc4bdb6bd6c6cac27e`. Exact observations: `deploy/github-ci-receipt.json`. The subsequent rule-only native fallback repair passed all50 Python and12 actual HTTP regressions locally; current composition checks are shown on PR340. See `deploy/native-inference-boundary-receipt.json`.
 
 ```mermaid
 flowchart TD
@@ -26,7 +26,7 @@ flowchart TD
     A -->|Revoke| G
 ```
 
-Native cognition is a separate child process with a clean environment and fixed
+Console model cognition is a separate child process with a clean environment and fixed
 model-as-data WASM runner. It receives no controller token, receipt key, policy
 write access or tool dispatcher. The gate owns tool execution. The trusted
 controller supplies narrow deterministic demo assessments separately from model
@@ -79,7 +79,7 @@ canonical files were hash-checked. Canonical remains **Garden v15.5 / GSL v45.1*
 `docs/source-map.json` has 50 mappings, 49 exact source spans with commit/blob/
 content hashes; SHA-256 `cc873e34f1e9eaa43ac47f0848ed39a530bb4ed12284bdffbec208eddaab7bd8`.
 The current task's conservative QSE/truthfulness requirements are not silently
-labelled canonical. Canonical repositories/files were not edited. See
+labelled canonical. Canonical design files were not edited; implementation code is kept in the separate runtime tree. See
 `docs/source-interpretation.md`, `source-inventory.json` and
 `source-binding-validation.json` for precise precedence, coverage and ambiguity.
 
@@ -127,13 +127,14 @@ real native/live receipts and authority denials without credentials.
 | Surface | Result | Receipt/source |
 |---|---|---|
 | Rust regressions | 4 PASS | `garden-kernel/src/main.rs` |
-| Python language/agents/controller/boundaries | **47 PASS, 0 FAIL** | `garden-tests/test_*.py` |
+| Python language/agents/controller/boundaries | **50 PASS, 0 FAIL** | `garden-tests/test_*.py` |
 | Native GardenBench | **49 PASS, 0 FAIL, 4 LIMIT** across53 cases | `gardenbench/attack-receipts.json` |
 | Actual native HTTP integration | **12 PASS, 0 FAIL** | `gardenbench/http-attack-receipts.json` |
 | Worker local tests | **56 PASS, 0 FAIL** including independent attacks | `deploy/worker-site/worker-test-receipt.json` |
 | Live functional checks | **25 PASS, 0 FAIL** | `deploy/live-worker-receipt.json` |
 | Independent live attacks | **11 PASS, 0 FAIL**,17 requests,two revoked sessions | `deploy/live-worker-independent-receipt.json` |
 | Actual model-to-native/live gate | **10 PASS, 0 FAIL**, result391 twice, invented authority denied | `deploy/open-model-live-receipt.json` |
+| Remote CI and Docker isolation | **All runtime and repository process lanes PASS** | `deploy/github-ci-receipt.json` |
 | Fixed-target ingress socket checks | **5 PASS, 0 FAIL** | `deploy/scripts/test_ingress.py` |
 | Finite formal exploration | **105,840 states; 2,953,440 transitions; 6,144 quotient checks; ten mutation controls detected** | `docs/formal-verification.json` |
 
@@ -160,8 +161,9 @@ Successful attacks against earlier revisions and subsequent repairs:
 12. Initial live SQL migration failed: preserved failure, idempotent DDL and atomic guarded commit; later deployment succeeded.
 13. Smol arithmetic/shared-representation failure: preserved failure, explicit UNKNOWN labels and deterministic numeric contradiction quarantine for mutations.
 14. Worker rejected equivalent parenthesized calculator syntax: preserved denial, explicit bounded adapter to supported two-number syntax.
-15. Docker host could not reach isolated controller: bounded fixed-target ingress added without giving the controller external egress; real sockets tested, remote validation pending.
+15. Docker host could not reach isolated controller: bounded fixed-target ingress added without giving the controller external egress; real sockets and remote container health/identity/network checks passed.
 16. Repository intent marker and artifact classification failed: exact marker corrected, narrow governed classifications added; no enforcement check weakened.
+17. Code inspection found optional native inference was enabled by ambient model settings with UID separation only. Console environment forwarding and shim native backend selection were removed; the fallback is explicitly rule-only. This was a configuration gap, not an observed exploitation receipt. Fixed WASM inference remains available; arbitrary native model admission remains unresolved.
 
 Pre-repair receipts are retained, not overwritten by green results. GardenBench
 covers every requested attack category, including rule-conformant omission,
@@ -181,14 +183,14 @@ The host denied chroot, UID switching, user namespaces and Landlock; Docker is
 unavailable locally. Fixed WASM tensor execution, clean environment, exact Node
 read permissions and observed outside-read/write/child denial are real, but
 malicious fixed-host-JS, VM-engine exploitation and privileged host compromise
-remain outside the proof surface. Native container isolation requires actual CI/
-host receipts. The live Worker is a limited anonymous demo: separate credential
+remain outside the proof surface. The Console fallback is fixed trusted rule code and ignores native model settings; it is not an arbitrary native-code sandbox. Native container isolation passed the declared Docker CI probes; each new hosting
+environment still requires its own receipts. The live Worker is a limited anonymous demo: separate credential
 roles do not establish verified human identity or general consent authority.
 
 General autonomous research/evidence retrieval, complete HEC/QSE/strategic
 truthfulness, HSA model certification, Android integration, multi-family genuinely
 independent certification, external checkpointing and governed production updates
-are unfinished. No unrestricted shell/network tool, real email/payment, production
+are unfinished. Container base images are version-tagged rather than digest-pinned; byte-for-byte hermetic builds are not established. No unrestricted shell/network tool, real email/payment, production
 human-world authority or dangerous action is exposed. Audit-capacity/transport/
 corrupt-recovery stops have documented receipt limitations in the gate contract.
 
@@ -236,8 +238,7 @@ weights or credentials are committed.
 
 Next useful autonomy level requires: independently controlled verifier identities
 and evidence channels; meaningful semantic review criteria; trusted human-effect
-authority; externally anchored monotonic revocation/log heads; actual host
-isolation receipts; imported-model HSA admission; and one authorized persistent
+authority; externally anchored monotonic revocation/log heads; new-host isolation receipts; imported-model HSA admission; and one authorized persistent
 native/model hosting account. Render workspace confirmation or a qualifying HF
 account is a concrete deployment step, not evidence that these obligations are
 already satisfied. Existing deployments/tests do not authorize broader effects.

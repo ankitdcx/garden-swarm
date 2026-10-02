@@ -1,13 +1,13 @@
 {
   "schema": "garden.local_validation.v1",
-  "timestamp": "2026-10-02T09:42:52.766737+00:00",
+  "timestamp": "2026-10-02T14:51:03.265255+00:00",
   "status": "PASS_WITH_DECLARED_LIMITS",
   "rust_unit": {
     "pass": 4,
     "fail": 0
   },
   "python_unit_integration": {
-    "pass": 47,
+    "pass": 50,
     "fail": 0
   },
   "gardenbench": {
@@ -27,5 +27,31 @@
   "reference_resolver_regressions": {
     "pass": 2,
     "fail": 0
+  },
+  "reference_closure_repaired": {
+    "references": 626,
+    "unresolved": 0,
+    "exit_code": 0
+  },
+  "artifact_profile_repaired": {
+    "artifact_count": 645,
+    "frontier": 0,
+    "profile_errors": 0,
+    "exit_code": 0
+  },
+  "render_blueprint": {
+    "status": "PREPARED_NOT_DEPLOYED",
+    "plan": "free",
+    "uses_tested_image_entrypoint": true,
+    "port": 8080,
+    "auto_deploy": "off",
+    "official_schema_server_validation": "NOT_RUN_ACCOUNT_CONTEXT_REQUIRED"
+  },
+  "native_fallback_repair": {
+    "pass": 3,
+    "fail": 0,
+    "actual_http_pass": 12,
+    "actual_http_fail": 0,
+    "receipt": "garden-runtime/deploy/native-inference-boundary-receipt.json"
   }
 }

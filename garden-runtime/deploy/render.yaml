@@ -9,11 +9,12 @@ services:
     rootDir: garden-runtime
     dockerfilePath: ./deploy/Dockerfile
     dockerContext: .
-    dockerCommand: python garden-console/server.py --host 0.0.0.0 --port 10000 --gate /opt/garden/bin/garden-gate --state /tmp/garden-state
+    # Use the CI-tested image ENTRYPOINT. A Docker Command would replace CMD
+    # and could append a second Python command to the existing ENTRYPOINT.
     healthCheckPath: /api/health
-    autoDeployTrigger: off
+    autoDeployTrigger: 'off'
     envVars:
       - key: PORT
-        value: "10000"
+        value: "8080"
       - key: PYTHONDONTWRITEBYTECODE
         value: "1"

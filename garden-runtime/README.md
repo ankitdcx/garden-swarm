@@ -30,7 +30,7 @@ make console
 
 Open `http://127.0.0.1:8080`. The controller launches a separate Rust gate for each
 bounded demo session. Changes require consent; revoke immediately disables the
-session. Default cognition is honestly labelled RULE_BASED. No paid API is used.
+session. Default cognition is honestly labelled RULE_BASED. The Console Python shim ignores native model environment settings; native adapters remain separate observations. The fixed WASM route below provides actual open-model cognition. No paid API is used.
 The public deployment uses a different server Worker implementation; it does not
 host this Rust executable or an open model.
 
