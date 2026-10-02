@@ -1,0 +1,54 @@
+{
+  "schema": "garden.model_inventory.v1",
+  "checked_date": "2026-10-02",
+  "admission_status": "EXPERIMENTAL",
+  "authority_inheritance": false,
+  "wasm_model": {
+    "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+    "family": "SmolLM2",
+    "license": "Apache-2.0",
+    "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac",
+    "base_url": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct/resolve/12fd25f77366fa6b3b4b768ec3050bf629380bac/",
+    "assets": [
+      {"remote":"config.json","filename":"config.json","sha256":"8eb740e8bbe4cff95ea7b4588d17a2432deb16e8075bc5828ff7ba9be94d982a"},
+      {"remote":"tokenizer.json","filename":"tokenizer.json","sha256":"9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c"},
+      {"remote":"tokenizer_config.json","filename":"tokenizer_config.json","sha256":"4ec77d44f62efeb38d7e044a1db318f6a939438425312dfa333b8382dbad98df"},
+      {"remote":"onnx/model_quantized.onnx","filename":"model_quantized.onnx","sha256":"ecc1a19eece6494e2963cf74f78ace35916e8d0b803168ddd41db00979f18e39"}
+    ]
+  },
+  "runtime": {
+    "name": "llama.cpp",
+    "url": "https://github.com/ggml-org/llama.cpp",
+    "commit": "a8c9a4e7ccba890d6a2644a235492f836a7371c3",
+    "target": "llama-completion",
+    "license": "MIT"
+  },
+  "models": [
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "SmolLM2",
+      "license": "Apache-2.0",
+      "source": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct",
+      "quantization_provider": "bartowski",
+      "revision": "09816acd5d99df7be770d85ea30822623dab342c",
+      "filename": "SmolLM2-135M-Instruct-Q8_0.gguf",
+      "url": "https://huggingface.co/bartowski/SmolLM2-135M-Instruct-GGUF/resolve/09816acd5d99df7be770d85ea30822623dab342c/SmolLM2-135M-Instruct-Q8_0.gguf",
+      "sha256": "5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "role": "tiny CPU smoke and fallback cognition",
+      "limits": "Very weak reasoning; observed repetition under complex role prompts. Never an authoritative verifier."
+    },
+    {
+      "model_id": "Qwen/Qwen3.5-0.8B",
+      "family": "Qwen3.5",
+      "license": "Apache-2.0",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-0.8B",
+      "quantization_provider": "ggml-org",
+      "revision": "8fea620810c4afa23dd6443f999a48574c1611a3",
+      "filename": "Qwen3.5-0.8B-Q4_0.gguf",
+      "url": "https://huggingface.co/ggml-org/Qwen3.5-0.8B-GGUF/resolve/8fea620810c4afa23dd6443f999a48574c1611a3/Qwen3.5-0.8B-Q4_0.gguf",
+      "sha256": "57d1997790d1744fba5b40a7317df71ea5e2acee28c47e78f0cce39c0703f8cf",
+      "role": "small local planning and explanation candidate",
+      "limits": "Small model card positions this scale for prototyping; not certified reasoning or independent governance."
+    }
+  ]
+}
