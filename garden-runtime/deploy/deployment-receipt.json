@@ -1,0 +1,75 @@
+{
+  "status": "DEPLOYED_EXPERIMENTAL_WORKER_SUBSET",
+  "url": "https://garden-governed-agents.ankit-dcx.chatgpt.site",
+  "project_id": "appgprj_6abf6e83da1881919652736b5fcba73c",
+  "deployment_id": "appgdep_6abf7ac895a08191bda5e54a485c5af3",
+  "version_id": "appgprj_6abf6e83da1881919652736b5fcba73c~appgver_2d0ad94751248191b387989e40a52803",
+  "source_commit": "b978d9f228d2b81953899c691fa9fda568389c04",
+  "source_sha256": "5d5e305545f5fd0a707b74b225ae67cf98b7d51d215e7fac587aac47a4270eae",
+  "deployment_status": "succeeded",
+  "access": "public as explicitly requested",
+  "secret_environment_revision": 1,
+  "database": {
+    "binding": "DB",
+    "tables": [
+      "decisions",
+      "sessions"
+    ],
+    "verified_by": "Native database overview after successful deployment plus real persisted mock note write/read"
+  },
+  "tests": {
+    "local_worker": {
+      "pass": 56,
+      "fail": 0,
+      "independent_attack_tests": 7
+    },
+    "live_worker": {
+      "pass": 25,
+      "fail": 0
+    },
+    "native_rust": "Separate GardenBench/source/test receipts; not hosted by this Worker"
+  },
+  "providers": {
+    "Sites": {
+      "created": "one server Worker + logical D1 store",
+      "memory_per_isolate_MB": 128,
+      "quota": "Account-specific runtime/day quotas not exposed by connected tools"
+    },
+    "Render": {
+      "created": 0,
+      "status": "Prepared; no workspace selected/confirmed",
+      "plan": "free only, never applied"
+    },
+    "GitHub_Actions": {
+      "scope": "Bounded CI candidate; no daemon compute abuse",
+      "new_paid_resources": 0
+    }
+  },
+  "cost": "No paid model call or paid infrastructure resource was created. Target $0 additional spend; Sites account billing statement is not exposed.",
+  "models": "Worker has deterministic bounded planner only. Native local adapters/open-model remote run are separate receipts.",
+  "repairs": [
+    "Signed receipt history verification before deriving effects",
+    "Strict JSON whitespace excludes NBSP/FEFF",
+    "First unpublished trigger migration rejected; preserved failed SQL/receipt and repaired new-project schema idempotently; atomic guarded INSERT enforces final authority"
+  ],
+  "residual_gaps": [
+    "Separate experimental JavaScript implementation, not deployed native Rust kernel",
+    "Anonymous demo identity; no production human identity binding",
+    "General QSE/strategic truthfulness/epistemic independence are not established",
+    "Hosting owner can replace server code; compromised host/key remains trusted-boundary risk",
+    "Native Docker/UID/network isolation not executed here because no Docker daemon",
+    "1,000-session lifetime budget can exhaust demo availability; no unauthorized automatic maintenance route"
+  ],
+  "completion": "NO_ADDITIONAL_MATERIAL_GAPS_DISCOVERED_WITHIN_DECLARED_SEARCH_SURFACE_AND_BUDGET applies only to implemented bounded enforcement tests, not general AGI safety",
+  "timestamp": "2026-10-02T09:35:52.380955+00:00",
+  "deployment_history": [
+    {
+      "version_id": "appgprj_6abf6e83da1881919652736b5fcba73c~appgver_10d6d8987fd88191a11fd4c74cb95b42",
+      "deployment_id": "appgdep_6abf742382288191a572ea5df1786c33",
+      "source_commit": "df3bfe74bf34737b7acc472de48eb63f82077c4c",
+      "status": "succeeded",
+      "scope": "Initial externally probed enforcement deployment:25 live checks passed"
+    }
+  ],
+  "latest_change": "Presentation only: explicit EXPERIMENTAL/fixed planner/no hosted open model/no general semantics verification; authority policy, D1 schema, secret key and live receipts preserved"
+}

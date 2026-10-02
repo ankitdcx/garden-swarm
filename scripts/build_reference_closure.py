@@ -5,6 +5,7 @@ import argparse
 import ast
 import hashlib
 import json
+import posixpath
 import re
 import subprocess
 from pathlib import Path
@@ -113,7 +114,9 @@ def resolve_reference(
     if ref in tracked:
         return ref, "TRACKED_EXACT", None
 
-    source_relative = (Path(source).parent / ref).as_posix()
+    # Resolve ordinary relative links without accessing untracked filesystem
+    # content. Traversal outside the repository still cannot match tracked files.
+    source_relative = posixpath.normpath((Path(source).parent / ref).as_posix())
     if source_relative in tracked:
         return source_relative, "TRACKED_SOURCE_RELATIVE", None
 
