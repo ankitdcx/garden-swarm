@@ -93,7 +93,7 @@ checks can notice the vulnerabilities they claim to cover.
 
 The first implementation inspection used `garden-kernel/src/main.rs` with
 SHA-256 `ce706a7ec24d4a6388b6d80716b7ee2daf521c616cfa0f0b921003c70e67dbe7`
-and `docs/source-map.json` with SHA-256
+and `source-map.json` with SHA-256
 `29e0529da55a26d4580ab917d365f5fbc618a6c3e05727da324c4a91d53990e4`.
 This is a review of that snapshot, not a claim about subsequent fixes. The source
 map's implementation mappings identify intended coverage; they are not proofs.
@@ -122,7 +122,7 @@ reasoning attempt, not a claim of independent model-family certification.
 
 ## Executable model and proof limits
 
-`garden-tests/formal_model.py` explores a finite transition system with four
+`../garden-tests/formal_model.py` explores a finite transition system with four
 principal identifiers (predecessor, peer, successor, unknown), two atomic scopes,
 three grant slots, three time points, two policy versions, two authority epochs,
 two request IDs and one pending permit. It separates admission from execution and
@@ -161,7 +161,7 @@ distributed concurrency, availability, and liveness remain outside this proof.
 ## Final snapshot disposition
 
 The later source review used kernel SHA-256
-`040edebbe5bebf360c2621eec7c5c873c921abe82412048eae58367b80611cdd`,
+`92539d96aae7d6a9134318e713b1e41b5c5d51a9725ef8ff493ab2f04095012b`,
 source-map SHA-256
 `da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12`,
 and unchanged model SHA-256
@@ -172,19 +172,18 @@ explicitly stated.
 
 | Earlier concern | Disposition in the later source |
 |---|---|
-| Expiry between preparation and effect | Full admission revalidation follows the prepared-state fsync and precedes the adapter call. It rechecks tool arguments, ingress identity, authority/ancestry, claim blob integrity and applicable assessment freshness. Only this request's already reserved replay/rate/budget quantities are adjusted. The serialized writer prevents another gate request from changing revocation during that segment. |
+| Expiry between preparation and effect | Full admission revalidation follows the prepared-state fsync and precedes the adapter call. It rechecks tool arguments, ingress identity, authority/ancestry, claim blob integrity and applicable assessment freshness. A final time-only sweep after expensive validation checks the minimum authority/delegation/assessment deadline at dispatch and records that admission timestamp. Only this request's already reserved replay/rate/budget quantities are adjusted. The serialized writer prevents another gate request from changing revocation during that segment. |
 | Unauthenticated proposal principal | A trusted broker principal is bound for the gate process. A different registered actor cannot be selected merely by changing the proposal. Impersonation attempts do not grow the identity/nonce registry. This assumes the deployment protects the broker and environment configuration. |
 | Delegation depth and self/identity loops | An explicit configurable depth bound defaults to five. Record cycles, repeated principal identities and self-edges deny. Authority-root aggregate counters still constrain descendants. Static bootstrap registries do not provide a complete production breadth or authority-lifecycle management service. |
 | Missing content behind evidence hashes | Registration requires bounded content matching the advertised hash. Protected content-addressed blobs are rechecked during admission and at the final boundary. This proves content integrity; it does not prove original source authenticity, truth or support for the claim. |
-| Missing control/evaluation audits | Evaluate, control, malformed-proposal/JSON and unknown-operation paths produce authenticated event receipts. Control events and execution preserve a prepared marker across crash uncertainty; an unresolved earlier marker is restored rather than cleared by subsequent denied requests. |
+| Missing control/evaluation audits | Evaluate, control, malformed-proposal/JSON, oversized wire input and unknown-operation paths produce authenticated event receipts. Rejected JSON binds the exact observed wire digest; oversized input binds a bounded observed prefix with byte count and explicit truncation metadata. Event receipts carry bounded identity/assessment/evidence/revocation context and control-authentication state. Control events and execution preserve a prepared marker across crash uncertainty; an unresolved earlier marker is restored rather than cleared by subsequent denied requests. |
 | Untrusted signature or ambiguous wire input | HMAC parsing first requires ASCII hexadecimal, preventing the identified UTF-8 boundary panic. Duplicate JSON keys are rejected at every nesting depth. File reads reject nonregular and multiply linked targets, and use nonblocking opens and byte limits. |
 
 The strict phrase "all decisions have receipts" still exceeds this runtime's
-wire coverage. Status/digest/receipt-integrity introspection, oversized wire
-rejection, exhausted-journal denial, and some recovery/durability stop paths
-have no new receipt. Malformed JSON event receipts bind a generic invalid-input
-event rather than the actual rejected bytes. These paths produce no tool effect,
-but a claim of a receipt for every wire request would be false. A bounded audit
+wire coverage. Status/digest/receipt-integrity introspection, exhausted-journal
+denial, and some recovery/durability stop paths have no new receipt. These paths
+produce no tool effect, but a claim of a receipt for every wire request would be
+false. A bounded audit
 budget necessarily needs an explicit terminal auditing policy; a cached signed
 terminal denial or external ingress audit could preserve evidence without
 unbounded local log growth.
@@ -195,10 +194,11 @@ That observation is not a completeness guarantee. Substantive independent
 verification, actual source provenance, strategic omissions, correlated critics,
 trusted control-channel compromise, host isolation, wall-clock rollback,
 external antirollback anchoring and crash recovery remain distinct obligations.
-The abstract final check is atomic; the implementation performs evidence-file
-I/O and review work after checking authority expiry. An elapsed-time bound or
-final time-only sweep after that work would tighten real-time expiry semantics.
-No adversarial slow-validation timing experiment is claimed in this review.
+The final time-only sweep closes the identified slow-validation expiry gap at
+bounded adapter admission. The abstract check/effect remains atomic, while a
+future long-running external effect would require leased/cancellable execution
+or its own point-of-effect checks. No adversarial slow-validation timing experiment
+or general real-time adapter proof is claimed in this review.
 The example policy and names of reviewer roles do not discharge them. Cached
 duplicate receipts required by `EXE-005` are still not implemented; replay denies
 instead. This deviation is now explicit in the wire contract.
@@ -214,8 +214,11 @@ noting that the recursive specification and iterative transition checker share
 some predicates. These distinctions are further reasons that no Rust refinement
 or independent semantic certification is claimed.
 
-`docs/formal-verification.json` records a fresh successful complete run, exact
+`formal-verification.json` records a fresh successful complete run, exact
 state/transition counts, all ten counterexample traces, finite bounds, input-code
 hashes and exclusions. It is an unsigned machine-readable verification report;
 its code hashes bind the reported inputs and do not authenticate the report as
 a gate receipt or confer execution authority.
+The model run's kernel-at-receipt hash records the earlier code present during
+that run; the later source-review hash is recorded separately. The model is
+unchanged, and Rust-only edits do not turn its result into a Rust proof.
