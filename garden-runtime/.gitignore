@@ -1,0 +1,13 @@
+target/
+__pycache__/
+*.pyc
+.env
+.venv/
+.garden-state/
+.model-cache/
+*.gguf
+*.safetensors
+deploy/private/
+node_modules/
+dist/
+*.log
