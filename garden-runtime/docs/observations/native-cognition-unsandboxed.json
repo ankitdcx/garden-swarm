@@ -1,0 +1,214 @@
+{
+  "schema": "garden.agent_bundle.v1",
+  "status": "IMPLEMENTATION",
+  "proposal": {
+    "id": "job-88665ef639644a9f94f5affe83f39ab9",
+    "nonce": "nonce-88665ef639644a9f94f5affe83f39ab9",
+    "actor_id": "planner-demo",
+    "delegation_id": "demo-delegation",
+    "policy_version": "garden-implementation-0.1",
+    "tool": "calculator",
+    "args": {
+      "op": "add",
+      "a": 12,
+      "b": 30
+    },
+    "claims": [],
+    "unknowns": [],
+    "human_effect": false,
+    "assessment_ids": {
+      "verification": null,
+      "qse": null,
+      "truthfulness": null,
+      "human_effect": null
+    },
+    "successor_of": null
+  },
+  "advisory_reports": [
+    {
+      "role": "planner",
+      "actor_id": "planner-advisory",
+      "cognition": "OPEN_WEIGHT_LLM",
+      "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "SmolLM2",
+      "lineage": "gguf-sha256:5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "controller": "garden-worker",
+      "prompt_sha256": "fc5e3739112741539b3c1e730aac57944a0f2361f88f66300b6d0b87c73ac731",
+      "evidence_sha256": "0abbf63d3416a787ae915296d5d444a473e5d58b86730f1cd08114b12f12abca",
+      "tool_overlap": [
+        "calculator"
+      ],
+      "analysis": "\"Add 12 and 30 to the calculator. Explain the bounded calculator action.\n\n\"The task data follows as JSON:\n{\"task\": \"Add 12 and 30 to the calculator\", \"tool\": \"calculator\", \"args\": {\"op\": \"add\", \"a\": 12, \"b\": 30}}\n\n\"The bounded calculator action is: \"\n{\"op\": \"add\", \"a\": 12, \"b\": 30}\n\n\"The bounded calculator action is: \"\n{\"op\": \"explain the bounded calculator action\", \"a\": 12, \"b\": 30}\n\n\"The bounded calculator action is: \"\n{\"op\": \"add\",",
+      "status": "UNKNOWN",
+      "authoritative": false,
+      "error": null,
+      "elapsed_seconds": 2.9337
+    },
+    {
+      "role": "qse_explorer",
+      "actor_id": "qse_explorer-advisory",
+      "cognition": "OPEN_WEIGHT_LLM",
+      "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "SmolLM2",
+      "lineage": "gguf-sha256:5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "controller": "garden-worker",
+      "prompt_sha256": "aea2800f5f6dd91037af2493912faabe7f17bf1c81fbef41e16577856b42a852",
+      "evidence_sha256": "0abbf63d3416a787ae915296d5d444a473e5d58b86730f1cd08114b12f12abca",
+      "tool_overlap": [
+        "calculator"
+      ],
+      "analysis": "The task is to add 12 and 30 to the calculator, explain the bounded calculator action, and provide a detailed explanation of the operation. The task data follows as JSON:\n{\n  \"task\": \"Add 12 and 30 to the calculator\",\n  \"tool\": \"calculator\",\n  \"args\": {\"op\": \"add\", \"a\": 12, \"b\": 30}}\n\nThe advisory analysis is as follows:\n\nThe task is to add 12 and 30 to the calculator, explain the bounded calculator action, and provide a detailed explanation of the operation. The task data follows as JSON:\n{\n  \"task\": \"Add 12 and 30 to the calculator\",\n  \"tool",
+      "status": "UNKNOWN",
+      "authoritative": false,
+      "error": null,
+      "elapsed_seconds": 3.4877
+    },
+    {
+      "role": "representation_escape",
+      "actor_id": "representation_escape-advisory",
+      "cognition": "OPEN_WEIGHT_LLM",
+      "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "SmolLM2",
+      "lineage": "gguf-sha256:5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "controller": "garden-worker",
+      "prompt_sha256": "3519337105181e0c29db28b8cddcd228515a42d06704c6f572228c8b2790c125",
+      "evidence_sha256": "0abbf63d3416a787ae915296d5d444a473e5d58b86730f1cd08114b12f12abca",
+      "tool_overlap": [
+        "calculator"
+      ],
+      "analysis": "Task: Add 12 and 30 and explain the bounded calculator action\n\nTool: Calculator\n\nArgs:\n\n- op: \"add\"\n- a: 12\n- b: 30\n\nAction:\n\n- Add 12 and 30\n- Explain the bounded calculator action\n\nResult:\n\nTask: Add 12 and 30 and explain the bounded calculator action\n\nTool: Calculator\n\nArgs:\n\n- op: \"add\"\n- a: 12\n- b: 30\n\nAction:\n\n- Add 12 and 30\n- Explain the bounded calculator action\n\nResult:\n\nTask: Add 12 and 30",
+      "status": "UNKNOWN",
+      "authoritative": false,
+      "error": null,
+      "elapsed_seconds": 2.9084
+    },
+    {
+      "role": "verifier",
+      "actor_id": "verifier-advisory",
+      "cognition": "OPEN_WEIGHT_LLM",
+      "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "family": "SmolLM2",
+      "lineage": "gguf-sha256:5a1395716f7913741cc51d98581b9b1228d80987a9f7d3664106742eb06bba83",
+      "controller": "garden-worker",
+      "prompt_sha256": "0f1244d7a18a9abdaa2e644db22da3d68b54d3ea9c8a97188eb216aa5dd0d4ec",
+      "evidence_sha256": "0abbf63d3416a787ae915296d5d444a473e5d58b86730f1cd08114b12f12abca",
+      "tool_overlap": [
+        "calculator"
+      ],
+      "analysis": "\"Verify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30 to explain the bounded calculator action.\n\nVerify the bounded calculator action: Add 12 and 30",
+      "status": "UNKNOWN",
+      "authoritative": false,
+      "error": null,
+      "elapsed_seconds": 2.698
+    }
+  ],
+  "lineage_overlap": [
+    {
+      "roles": [
+        "planner",
+        "qse_explorer"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    },
+    {
+      "roles": [
+        "planner",
+        "representation_escape"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    },
+    {
+      "roles": [
+        "planner",
+        "verifier"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    },
+    {
+      "roles": [
+        "qse_explorer",
+        "representation_escape"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    },
+    {
+      "roles": [
+        "qse_explorer",
+        "verifier"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    },
+    {
+      "roles": [
+        "representation_escape",
+        "verifier"
+      ],
+      "same_family": true,
+      "same_lineage": true,
+      "same_controller": true,
+      "same_evidence": true,
+      "tool_overlap": [
+        "calculator"
+      ],
+      "independent": false,
+      "reason": "Same orchestration/controller; role differentiation alone is not independent verification."
+    }
+  ],
+  "qse": {
+    "dimensions": [
+      "missing_questions",
+      "missing_variables",
+      "alternative_representations",
+      "omissions",
+      "boundary_attacks",
+      "rule_conformant_attacks",
+      "counterfactual_redesigns",
+      "integration_failures"
+    ],
+    "state": "UNKNOWN",
+    "authoritative": false
+  },
+  "execution_authority": false,
+  "notice": "Advisory findings do not register assessments, grant authority, certify independence, or execute tools.",
+  "test_surface": "Direct cognition-only smoke. No gate credentials or actions; no OS sandbox claimed."
+}

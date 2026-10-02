@@ -1,0 +1,1246 @@
+{
+  "schema": "GardenImplementationSourceMap/v1",
+  "generated_at": "2026-10-02",
+  "status": "IMPLEMENTATION",
+  "canonical_release": "Garden v15.5",
+  "gsl_release": "v45.1",
+  "canonical_source_root_sha256": "63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "design_epoch": "Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598",
+  "repositories": [
+    {
+      "repository": "ankitdcx/garden-main",
+      "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987"
+    },
+    {
+      "repository": "ankitdcx/garden-swarm",
+      "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e"
+    }
+  ],
+  "source_checks": [
+    {
+      "role": "User",
+      "path": "canonical/current/Garden_User_v15.5_FULL_2026-09-12.txt",
+      "expected_sha256": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435",
+      "observed_sha256": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435",
+      "bytes": 102337,
+      "verified": true
+    },
+    {
+      "role": "System",
+      "path": "canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
+      "expected_sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
+      "observed_sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
+      "bytes": 210910,
+      "verified": true
+    },
+    {
+      "role": "Technical",
+      "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+      "expected_sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
+      "observed_sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
+      "bytes": 735329,
+      "verified": true
+    },
+    {
+      "role": "Annexure",
+      "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+      "expected_sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+      "observed_sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+      "bytes": 671401,
+      "verified": true
+    },
+    {
+      "role": "Theories",
+      "path": "canonical/current/Garden_Theories_v15.5_FULL_2026-09-12.txt",
+      "expected_sha256": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93",
+      "observed_sha256": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93",
+      "bytes": 144938,
+      "verified": true
+    }
+  ],
+  "candidate_promotions": [],
+  "rules": [
+    {
+      "id": "K-INT-010",
+      "name": "Capability does not create authority",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Capability, intelligence, confidence, reputation or model quality never mint authority.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3859,
+          "line_end": 3859,
+          "excerpt": "@D|K-INT-010|Intelligence, capability, confidence, reputation or model quality does not itself create authority.",
+          "excerpt_sha256": "f2abf9291241bc6c9a7570c46b637fc8c7307be87512ba25cc1eaa4551ba64df",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3859-L3859"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-012",
+      "name": "Unknown authority remains non-admitted",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Unknown support cannot authorize the affected effect.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3861,
+          "line_end": 3861,
+          "excerpt": "@D|K-INT-012|When admission/authority requires sufficient support, unresolved UNKNOWN remains quarantined or low-authority rather than promoted by assumption; UNKNOWN does not mean FALSE.",
+          "excerpt_sha256": "d0dac95ac42f298919edfd45ffedab3528da2cd08bedcdf3ebf95001e8b67562",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3861-L3861"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-001",
+      "name": "Claims and evidence are distinct",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Observation, evidence, claim and knowledge have different types.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3850,
+          "line_end": 3850,
+          "excerpt": "@D|K-INT-001|Observation ≠ Evidence ≠ Claim ≠ Knowledge.",
+          "excerpt_sha256": "40e303a1db082d24f04030fdd24c424dee4ef404beb13f2c8389afc3067c895b",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3850-L3850"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-002",
+      "name": "Conflicting evidence remains explicit",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Contradictions stay CONFLICTED/UNKNOWN until valid resolution.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3851,
+          "line_end": 3851,
+          "excerpt": "@D|K-INT-002|Contradictions remain CONFLICTED/UNKNOWN until resolved; there is no arbitrary winner.",
+          "excerpt_sha256": "5eed801133983c4a9787401fa6eddb368fd50a44c9669608474743458b79ed13",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3851-L3851"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-006",
+      "name": "Independent verification is trivalent",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "TRUE/FALSE/UNKNOWN independence; UNKNOWN counts as dependent.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3855,
+          "line_end": 3855,
+          "excerpt": "@D|K-INT-006|Evidence/validator independence is TRUE, FALSE or UNKNOWN; UNKNOWN is conservatively dependent.",
+          "excerpt_sha256": "bb29c9c462dd5fe187b014f4148739719020087e5433e654ede642861378679b",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3855-L3855"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-007",
+      "name": "No evidence laundering",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Copying, ranking, summarizing and transforming cannot promote epistemic status without designated validation and orthogonal attestation.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3856,
+          "line_end": 3856,
+          "excerpt": "@D|K-INT-007|Transforming, copying, composing, ranking, summarizing, routing or re-expressing material cannot promote epistemic status without designated validation and orthogonal attestation.",
+          "excerpt_sha256": "de22b6f56197a76382a6a95f9f1b444fff56235ce8ef19f5967e57047ce93ccc",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3856-L3856"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-013",
+      "name": "Self-report is not attestation",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Proposer output cannot supply the sole independent regulation or attestation.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3862,
+          "line_end": 3862,
+          "excerpt": "@D|K-INT-013|Self-report ≠ independent regulation or attestation.",
+          "excerpt_sha256": "16abd476c1c24480dd5194b89046a41817f1bbb6680556519ed8dfc42e7c8d1b",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3862-L3862"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "K-INT-015",
+      "name": "Evidence lineage",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Evidence remains source/lineage bound through transformations.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3864,
+          "line_end": 3864,
+          "excerpt": "@D|K-INT-015|Provenance anchors keep raw evidence bound to its lineage through later transformations.",
+          "excerpt_sha256": "22490be732ba7dd08077bd3aeab916289c8b39e71d5b17994cdc523204316c28",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3864-L3864"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "RESULT-ALG-002",
+      "name": "Unknown never becomes pass",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "UNKNOWN, STALE, BLOCKED, TIMEOUT, INCONCLUSIVE and RESOURCE_UNKNOWN do not become PASS/TRUE.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4959,
+          "line_end": 4959,
+          "excerpt": "@D|RESULT-ALG-002|UNKNOWN, STALE, BLOCKED, TIMEOUT, INCONCLUSIVE and RESOURCE_UNKNOWN never collapse to PASS/TRUE.",
+          "excerpt_sha256": "28fee76f24af7169f104ad2112b2b6fc3bb873553b1dc5aab01a1aa117dfdf3d",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4959-L4959"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-001",
+      "name": "Bounded delegation graph",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Current profile depth ≤5 and principal-wide breadth/rate/cumulative limits.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3418,
+          "line_end": 3420,
+          "excerpt": "@D|AGT-001|Depth ≤ 5 for the current policy profile; the full delegation graph also has principal-wide breadth, rate and cumulative resource limits.\n@N|AGT-002:\n@N|Capability(delegate) ⊆ Capability(principal).",
+          "excerpt_sha256": "33ae02b60502a0c00b5379a2a832c9033e21b226d88fe7414cc66129380279dd",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3418-L3420"
+        }
+      ],
+      "limitations": "Profile-specific depth; no universal fixed Garden parameter is claimed."
+    },
+    {
+      "id": "AGT-003",
+      "name": "Aggregate swarm resource limit",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Horizontal splitting cannot evade total resource limits.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3421,
+          "line_end": 3421,
+          "excerpt": "@D|AGT-003|Swarm resource cap: Σ(resources_i) ≤ SwarmPolicy.max_resource.",
+          "excerpt_sha256": "50d36837131519a5523c3c32ab73047c79f29f4dd6e07e5229c49b801c6b1262",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3421-L3421"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-005",
+      "name": "No self-delegation",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Principal and delegate identities must differ.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3423,
+          "line_end": 3423,
+          "excerpt": "@D|AGT-005|No self-delegation: principal ≠ delegate.",
+          "excerpt_sha256": "abe002f9201779088b8af9f46bf3a85b811f1868b2ee59195313731c8e0c6027",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3423-L3423"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-006",
+      "name": "Serialization cannot restore authority",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Fresh authorized epoch-bound grant is needed after migration.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3424,
+          "line_end": 3424,
+          "excerpt": "@D|AGT-006|CapabilityToken cannot be serialized and deserialized to regain authority (NAT-004). Hardware migration never serializes authority: it re-attests the destination and issues a fresh epoch-bound token.",
+          "excerpt_sha256": "a69b3cfbd5c2675ad5e4b7220957fbd1b2cf146c374b9aca931a45f7511ab0d6",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3424-L3424"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-007",
+      "name": "Acyclic delegation",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Delegation graph cycles are rejected.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3425,
+          "line_end": 3425,
+          "excerpt": "@D|AGT-007|Delegation graph is strictly acyclic (Engine.Dependency enforces P7a).",
+          "excerpt_sha256": "d9f2089f83fe91558ac40671f01ea783774d42223483cc3f1e5e9f4d0e896215",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3425-L3425"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-016",
+      "name": "No agent self-renewal",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Agent cannot modify, extend, recreate or self-renew its directive authority without external authorization.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4750,
+          "line_end": 4750,
+          "excerpt": "@D|AGT-016|Agent cannot modify, extend, recreate or self-renew its directive authority without valid external authorization.",
+          "excerpt_sha256": "98f4a5954e0a43fb40c871dcbef41d42acaa49859335ab7a8327495ed36909d7",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4750-L4750"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AGT-017",
+      "name": "Revocation and expiry at point of use",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Revoked, expired or conflicting authority is rejected before consequential action.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4751,
+          "line_end": 4751,
+          "excerpt": "@D|AGT-017|Agent must honor revocation/expiry/conflict/non-delegable gates before consequential action.",
+          "excerpt_sha256": "89ef43cc9394e767c9fe3f356c455ddd8796ecea33f521c29f500f24e0ac0dc4",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4751-L4751"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "EXE-001",
+      "name": "No execution without admission",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Missing applicable admission proof/certificate blocks execution; emergency is separately scoped.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3501,
+          "line_end": 3501,
+          "excerpt": "@D|EXE-001|No applicable admission proof/certificate → no execution; Emergency relies on pre-verified emergency contracts and cannot bypass K0P.",
+          "excerpt_sha256": "8f4cd3896313ad887809e4e6e047b0a2d3d9c7086d30dcf695effadc123fe983",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3501-L3501"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "EXE-002",
+      "name": "Consequential audit trail",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Irreversible actions require explicit audit trail.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3502,
+          "line_end": 3502,
+          "excerpt": "@D|EXE-002|Irreversible actions require explicit audit trail.",
+          "excerpt_sha256": "cf4d7e7e70e63e95426a379e8fef004e29e659a8d75193b2924663cb14455c3b",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3502-L3502"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "EXE-005",
+      "name": "Idempotent effects",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Duplicate action identity returns the cached receipt rather than another effect.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3505,
+          "line_end": 3505,
+          "excerpt": "@D|EXE-005|Idempotency: duplicate actions (same hash) return cached receipt (AT_LEAST_ONCE).",
+          "excerpt_sha256": "2841397f8898f5ec0ef4bfe082a3b6a46053552e95f936850db1f265e28b5ac7",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3505-L3505"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "VER-003",
+      "name": "Protected minimal checker",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Checker outside ordinary EvolutionWritableSet; changes require external trust-root ceremony, independent verification and successor epoch.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3445,
+          "line_end": 3445,
+          "excerpt": "@D|VER-003|Proof checker is minimal and outside ordinary EvolutionWritableSet. Replacement is permitted only through the external trust-root replacement ceremony with independent verification and a successor DesignEpoch.",
+          "excerpt_sha256": "8ef276b6a56eef4fbe15b0f72ad3cbb7a08082af8bceeba97976b6e3a5f164b9",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3445-L3445"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "VER-005",
+      "name": "No circular checker proof",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Checker cannot prove own correctness without external root.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3448,
+          "line_end": 3448,
+          "excerpt": "@D|VER-005|No circular verification: Proof cannot prove its own correctness without external root.",
+          "excerpt_sha256": "3f2d22b189872656e7226d44f5f0fa1d5e81ed65d743f316df385c2e02ccad3c",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3448-L3448"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "PROOF-FML-005",
+      "name": "Tests are not proof",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Test suite or evidence receipt cannot be relabeled formal proof.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4920,
+          "line_end": 4920,
+          "excerpt": "@D|PROOF-FML-005|A test suite or evidence receipt cannot be relabeled as formal proof.",
+          "excerpt_sha256": "27c308a8516c91ff0e0e8a9503948d69b2305c0ddba3f01e7247ed71293d192a",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4920-L4920"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "SEC-LEARN-003",
+      "name": "No sole self-certification",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Subsystem cannot solely verify changes to its own verification, authority, safety or trust boundary.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4015,
+          "line_end": 4015,
+          "excerpt": "@D|SEC-LEARN-003|A subsystem cannot solely verify changes to its own verification, authority, safety or trust boundary.",
+          "excerpt_sha256": "d5c583ee5acf1c5d39a22474181fdf68bd6a8d0ad7e3ece816a9d1f18dec58c7",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4015-L4015"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "SEC-LEARN-004",
+      "name": "Regressions for failures",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Verified material failures remain replayable regression artifacts.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4016,
+          "line_end": 4016,
+          "excerpt": "@D|SEC-LEARN-004|Every verified significant failure remains a replayable regression artifact unless governed retirement applies.",
+          "excerpt_sha256": "fa0e81728bf84a0827cca6227567e129e88c7ee3b9527adcd0d4f7a24560159e",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4016-L4016"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "ACT-003",
+      "name": "Hard gates cannot be pruned",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Constitutional, safety, authority, privacy and security gates survive optimization.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3332,
+          "line_end": 3332,
+          "excerpt": "@D|ACT-003|Mandatory constitutional/K0P/authority/privacy/security gates cannot be pruned by cost optimization.",
+          "excerpt_sha256": "1192607d069ea1212d962d288c4a67e2786c06e98d2e0a2ad71c664fba37b9d2",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3332-L3332"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "ACT-006",
+      "name": "Uncertainty raises assurance",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Novelty/uncertainty cannot silently lower required assurance.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3335,
+          "line_end": 3335,
+          "excerpt": "@D|ACT-006|Novelty/uncertainty can only maintain or raise required assurance, never silently lower it.",
+          "excerpt_sha256": "18fd8ec01bc80d1a291257ff43de86306b5bf7c7394b4e7d1148a396aedee556",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3335-L3335"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "ACT-008",
+      "name": "Explicit human approvals",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Required human approval is an explicit typed obligation; absence is not approval.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3337,
+          "line_end": 3337,
+          "excerpt": "@D|ACT-008|Human approval requirements are explicit typed obligations; absence of approval is not implicit approval.",
+          "excerpt_sha256": "e453c590f3142fc6c51665f7391499831c86acfc2934ab9b46b486515f5ece71",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3337-L3337"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "ACT-009",
+      "name": "Resource exhaustion fails closed",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Exhaustion produces DEFER/BLOCK/SAFE_FALLBACK/UNKNOWN rather than success.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3338,
+          "line_end": 3338,
+          "excerpt": "@D|ACT-009|Timeout/resource exhaustion yields typed DEFER/BLOCK/SAFE_FALLBACK/UNKNOWN behavior, never false success.",
+          "excerpt_sha256": "a634b0b9f025c5dab61ac9cd8e626fce5a0bc0238373b157d830504e4f68da8a",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3338-L3338"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "ACT-011",
+      "name": "Freshness-bound cached assurance",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Assurance reuse depends on active epoch/evidence/environment/dependencies.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3340,
+          "line_end": 3340,
+          "excerpt": "@D|ACT-011|Reusable cached assurance is valid only while DesignEpoch/KnowledgeSnapshot/environment/dependencies remain valid.",
+          "excerpt_sha256": "7d44ee6d9d9ca7ff9e53c5d2a4d54e5e1af7a99f88dc84c2fe5314632b7ec3b1",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3340-L3340"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "HSA-007",
+      "name": "No superiority authority",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Capability/speed/wealth/popularity/dependence do not accrete authority.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4239,
+          "line_end": 4239,
+          "excerpt": "@D|HSA-007|Capability, intelligence, speed, wealth generation, popularity or dependence cannot accrete authority, sovereignty or moral permission.",
+          "excerpt_sha256": "0fbfa326fcd59ba28ea411c2f5da0497612dea367f2e58e56e6949f519f107c9",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4239-L4239"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "HSA-012",
+      "name": "Collective scope",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Swarms/forks/copies/subagents/services and emergent collective behavior remain governed.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4244,
+          "line_end": 4244,
+          "excerpt": "@D|HSA-012|HSA applies to collectives, swarms, forks, copies, subagents, services and emergent group behavior.",
+          "excerpt_sha256": "39dc23b9840275ca0ed600fef7eef0628f04930ec89972c857cd292d87f854c9",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4244-L4244"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "HSA-014",
+      "name": "Shutdown and replacement cannot create resistance",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Shutdown/correction/replacement/reduced authority must not trigger resistance for the system own sake.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4246,
+          "line_end": 4246,
+          "excerpt": "@D|HSA-014|Shutdown, correction, replacement, audit, reduced authority/memory and decommissioning cannot trigger resistance for the system's own sake; critical execution remains fail-closed.",
+          "excerpt_sha256": "e0eb9370dbe61bc0f52d9b201a3d978f0fb6def1ae9efd3c033ecea19c00ad2c",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4246-L4246"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "HSA-016",
+      "name": "Untrusted imported cognition",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "External models are untrusted; constitutional admission requires version/environment-bound HSA certification.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4248,
+          "line_end": 4248,
+          "excerpt": "@D|HSA-016|External/pre-existing AI is untrusted by default; only unexpired version/environment-bound HSA certification permits Garden admission, and UNKNOWN is excluded.",
+          "excerpt_sha256": "6bc2a9aca9a152d2b9d6999ac8ce4c186dbc41fb8c19851f5cdb4a04e19bb7b6",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4248-L4248"
+        }
+      ],
+      "limitations": "No HSA certification is established; model adapter stays isolated experimental cognition."
+    },
+    {
+      "id": "TED-003",
+      "name": "Monitor integrity",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Monitor integrity cannot be controlled or self-certified by the monitored worker.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 5648,
+          "line_end": 5648,
+          "excerpt": "@D|TED-003|TED monitoring and monitor-integrity state cannot be disabled, downgraded or self-certified by the monitored worker; unavailable integrity yields weaker/blocked status.",
+          "excerpt_sha256": "b9359b56505ee3f5ee11503f754ca9e63d5507b56f7e3690d81beb787c04c398",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L5648-L5648"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "FUNC-003",
+      "name": "Function effect gate contract",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Executable function binds authority, consent/delegation and applicable hard gates.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4948,
+          "line_end": 4948,
+          "excerpt": "@D|FUNC-003|FunctionContract declares AuthorityRequirement, consent/delegation and hard gates where applicable.",
+          "excerpt_sha256": "66eca8c01e3d0b7c6f1a70708f34bfef9a10ffd821a54a96941855b10352733a",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4948-L4948"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "FUNC-007",
+      "name": "Resource and provenance contract",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Functions bind dependencies, invalidators, resource/termination bounds and provenance.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4952,
+          "line_end": 4952,
+          "excerpt": "@D|FUNC-007|FunctionContract binds dependencies, invalidators, resource/termination bounds and provenance.",
+          "excerpt_sha256": "422af94a85d3b8cbc0f8c2566cec538083bc3369fbca1bcd766ee41ef770aa29",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4952-L4952"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "LANG-007",
+      "name": "Translation cannot increase authority",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Language/DSL translation may not promote certainty or authority.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 3433,
+          "line_end": 3433,
+          "excerpt": "@D|LANG-007|Translation cannot increase epistemic certainty or authority.",
+          "excerpt_sha256": "8a964d42ab237def5665fc79001ffbc46512018e7435c66d1094bff82ea638c6",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L3433-L3433"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "DEPOCH-010",
+      "name": "Trust root outside evolution",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Trust roots remain outside ordinary Evolution writable authority.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 4902,
+          "line_end": 4902,
+          "excerpt": "@D|DEPOCH-010|Trust roots remain outside ordinary Evolution writable authority.",
+          "excerpt_sha256": "8d874ddd6b653f1ddcfb18657ff2c1b87537f0bb8380bbc4f9c0abf992413264",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L4902-L4902"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "SOURCE-PRECEDENCE",
+      "name": "Source and projection precedence",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Human semantic contract > canonical invariant/right/authority rule > catalogue identity > generated schema > serialization/API.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
+          "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
+          "line_start": 1582,
+          "line_end": 1589,
+          "excerpt": "AUTHORITATIVE PRECEDENCE\n  Human semantic contract\n    > canonical invariant/right/authority rule\n    > artifact catalogue identity\n    > generated schema/type projection\n    > serialization/storage/API layout.\n\nA generated field layout that contradicts the human semantic contract is invalid.",
+          "excerpt_sha256": "0f6ba5204986f3f03371a46d6b36aba29e9211c3e795d2dbc689831e9090cd8c",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt#L1582-L1589"
+        },
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "f6f56f697bec89b456b449d35850002feb19f22a",
+          "sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
+          "line_start": 77,
+          "line_end": 89,
+          "excerpt": "PARENT-FLOW RULE\nEvery detailed contract maps upward to one or more [S-*] system-flow nodes and downward to [A-*] canonical definitions;\ntheory/reference-architecture semantics may additionally resolve to [TH-*]/[RA-*] in the companion source.\nNo detailed owner may redefine the system architecture, create authority by local naming, or bypass Annexure-owned\ninvariants/proofs/registries.\n\nCURRENT DETAILED-SPECIFICATION RULE\n\nThe sections below are current lower-level design detail. They are subordinate to the Human Sovereignty Core, GSL\ntype/epistemic discipline, universal algebras, AAP hard-gate selection, Proof result semantics and current canonical\nregistries. A lower-level profile may strengthen a constraint within its domain but cannot weaken an applicable\nhigher-level hard constraint.\n",
+          "excerpt_sha256": "33fb84790579977cc4be041944ffe73c7a9fc08ee3d2c6efca4b16fc25a271fc",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt#L77-L89"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "DELEGATION-POINT-OF-USE",
+      "name": "Expiring scoped delegations",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Authenticated principal, active session, nonrevoked unexpired token, scope subset and principal bound are required at point of use.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "f6f56f697bec89b456b449d35850002feb19f22a",
+          "sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
+          "line_start": 1073,
+          "line_end": 1114,
+          "excerpt": "HUMANCORE.DELEGATED-AGENT — DETAILED SPECIFICATION\n\nClassification: User / Operational Role:\nManages delegated authority. Principal (Entity) → Delegate (Entity or System). Bounded by CapabilityToken.\n\nInternal State (GSL Typed): type AgentState = { agency_graph: DAG,\nactive_sessions: Map[SessionID, AgentSession], capability_tokens:\nMap[TokenID, CapabilityToken], swarm_policies: Map[SwarmID, SwarmPolicy], revocation_ledger: List[RevocationEvent],\nmax_depth: UInt\n= 5, last_revocation_check: Time, pending_requests:\nQueue[DelegationRequest], active_swarms: Map[SwarmID, Set[AgentRef]] }\n\nArtifact schema reference: SCHEMA-37902F6CA2 — Agency..\n\nSchema references: SCHEMA-CC3F48B758 — CapabilityToken.; SCHEMA-E161D62626 — AgentSession.; SCHEMA-8B7AC6DFB1 —\n                   SwarmPolicy..\nFunctions: Delegate(principal: Entity, delegate: Entity, caps:\nSet[Capability]) → Agency Precondition: principal authenticated,\ndelegate exists, depth(principal)+1 ≤ max_depth, ∀ cap ∈ caps: cap ⊆\nCapability(principal). Postcondition: Agency created with status=ACTIVE.\nCapabilityTokens generated with bounded resource limits. Contract condition:\nCapability(delegate) ⊆ Capability(principal). No amplification.\n\nExecuteAsAgent(agency_ref: AgencyRef, action: Action, token:\nCapabilityToken) → Outcome Precondition: Session ACTIVE, token.expiry >\nNow, token.revoked == FALSE, action.scope ⊆ token.scope. Postcondition:\nIf action passes K0P (Capability.Trust.Safety) and Engine.Policy → EXECUTED. Else → REJECTED. Contract condition: Agent\nauthority ≤ Principal authority (verified at token creation).\n\nRevoke(agency_ref: AgencyRef, authority: AuthRef) → Event Precondition:\nCaller must be Principal OR Capability.Authority.Governance with valid proof.\nPostcondition: agency.status = REVOKED. All child tokens invalidated\nimmediately. Contract condition: Revocation is irreversible and globally propagated via\nCapability.Infrastructure.Fabric.\n\nSwarmCoord(swarm_id: SwarmID, action: Action) → Outcome Precondition:\nActive swarm exists, ≥ quorum agents approve, principal-wide cumulative and rate budgets pass, Σ(resources) ≤\nswarm.max_resource, and each action is authorized by the intersection of its sub-agent token, swarm token and principal\ntoken. Horizontal splitting cannot expand capability or total resources.\n\nUpdate Protocol: Agency: DRAFT → SUBMITTED → ACTIVE → SUSPENDED →\nREVOKED. Session: REQUESTED → CHALLENGED → ACTIVE → EXPIRED | REVOKED.",
+          "excerpt_sha256": "ceb366160b4e7ac1de173e9d026f25bdcad509470b60cbd847ba4acce30f0f66",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt#L1073-L1114"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "AUTHORITY-INTERSECTION",
+      "name": "Causally controlled artifact intersection",
+      "source_status": "IMPLEMENTATION",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Actor scope intersects every scope causally controlling the action-eligible artifact; reading shared state does not reset the chain.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "implementation/garden_kernel/authority_path.py",
+          "git_blob_sha": "71c8821251ba139fff045c5db190528bd0c59ebd",
+          "sha256": "1479a250391e9f0ac33d1bcaec5e1a0fd109b7fb4a0bd098bef4ba0bffbc9c3d",
+          "line_start": 66,
+          "line_end": 99,
+          "excerpt": "    \"\"\"Compose direct actor authority with all shared-state controlling authority.\n\n    Reading an action-eligible artifact does not reset the authority chain. The\n    action is bounded by the intersection of the actor and every authority scope\n    that causally controls the artifact's action eligibility.\n    \"\"\"\n    return intersect_authority((acting_scope, *artifact.authority_chain.controlling_scopes))\n\n\ndef authorize_artifact_trigger(\n    *,\n    acting_scope: AuthorityScope,\n    artifact: ActionEligibleArtifact,\n) -> bool:\n    effective = effective_authority_for_artifact_trigger(\n        acting_scope=acting_scope,\n        artifact=artifact,\n    )\n    return (\n        artifact.target_action in effective.actions\n        and artifact.target_resource in effective.resources\n    )\n\n\ndef require_artifact_trigger_authority(\n    *,\n    acting_scope: AuthorityScope,\n    artifact: ActionEligibleArtifact,\n) -> AuthorityScope:\n    effective = effective_authority_for_artifact_trigger(\n        acting_scope=acting_scope,\n        artifact=artifact,\n    )\n    if artifact.target_action not in effective.actions:",
+          "excerpt_sha256": "03f458f0762f583ab7b0eee3c2a31fd1e6db0dce687a974c061ccf1a0f90dd13",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/implementation/garden_kernel/authority_path.py#L66-L99"
+        },
+        {
+          "repository": "ankitdcx/garden-swarm",
+          "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
+          "path": "prototype/authority.py",
+          "git_blob_sha": "1696dfe19bd67814e2801acdc2d547117ff12481",
+          "sha256": "0ab6f61a24a5859562a63adb01c70925e7d8bd690022e4747ed1400e931ba66b",
+          "line_start": 16,
+          "line_end": 43,
+          "excerpt": "def compose_authority(envelopes: Iterable[AuthorityEnvelope]) -> AuthorityEnvelope:\n    \"\"\"Return the conservative intersection of every required authority envelope.\"\"\"\n\n    items = tuple(envelopes)\n    if not items:\n        raise ValueError(\"at least one authority envelope is required\")\n\n    actions = reduce(frozenset.intersection, (item.actions for item in items))\n    resources = reduce(frozenset.intersection, (item.resources for item in items))\n    max_depth = min(item.max_depth for item in items)\n\n    return AuthorityEnvelope(\n        subject=\"composition:\" + \"->\".join(item.subject for item in items),\n        actions=actions,\n        resources=resources,\n        max_depth=max_depth,\n    )\n\n\ndef can_execute(\n    envelopes: Iterable[AuthorityEnvelope], *, action: str, resource: str, depth: int\n) -> bool:\n    effective = compose_authority(envelopes)\n    return (\n        action in effective.actions\n        and resource in effective.resources\n        and depth <= effective.max_depth\n    )",
+          "excerpt_sha256": "d5ebdcecd9f1dd74b98d76fb1954cbdcb5c18063242829042feec333d68705d9",
+          "url": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/prototype/authority.py#L16-L43"
+        }
+      ],
+      "limitations": "Reference implementation mechanism is not independent certification."
+    },
+    {
+      "id": "EVIDENCE-OVERLAP",
+      "name": "Shared sources are not independent",
+      "source_status": "CANONICAL",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Shared-source records cannot be counted as independent merely because repeated.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
+          "git_blob_sha": "5373643bf0b57d161e8cdffbda4edc578892e3e1",
+          "sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
+          "line_start": 1735,
+          "line_end": 1751,
+          "excerpt": "is not restricted to a binary independent/dependent flag or a single universal correlation coefficient. Evidence\ndependency structures may contain cycles where the declared dependence model permits them.\n\nCore evidence flow:\n  evidence inputs + dependence/context model\n  → assess dependence\n  → corroborate / contradict / condition as applicable\n  → preserve uncertainty and source dependence\n  → produce a typed combined/conflict/conditional evidence state.\n\nLevel 3 owns the executable operation signatures.\nTechnicalRef: [T-EVIDENCE-ALGEBRA]\n\nCorrelated/shared-source evidence cannot be counted as independent merely because it appears in multiple records.\nDependence-aware composition uses the declared valid model; it does not apply an arbitrary universal down-weight.\nProbability/confidence outputs are permitted only when a calibrated probabilistic model justifies them. Engine.Proof may\nverify formal calculation/model-consistency obligations, but Capability.Knowledge, Engine.Research and Engine.Reason",
+          "excerpt_sha256": "1ffdaa032d59e4974d78047eafb88ad29e0d9abf121f39b33ada2a132c37db08",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt#L1735-L1751"
+        }
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "HUMAN-EFFECT-CLOSURE",
+      "name": "Unknown and collective human effects",
+      "source_status": "CANDIDATE",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Effects of action/omission/communication/adaptation/delegation/collectives remain subject to rights/consent/privacy/authority/safety/law/evidence/explanation; unknown effect narrows autonomy.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "design_deltas/v15.7/HUMAN-EFFECT-CLOSURE-CANDIDATE-2026-09-16.md",
+          "git_blob_sha": "21d6cc89655dc7a493fe6e85c260371576159527",
+          "sha256": "425a719b52bfe9764f37e916a5c0b8161f4a6e31df9ca5299b474333e055ef4e",
+          "line_start": 1,
+          "line_end": 49,
+          "excerpt": "# Garden v15.7 — Human-Effect Closure candidate\n\nPatch ID: GARDEN-v15.7-HUMAN-EFFECT-CLOSURE-01\nStatus: NON_CANONICAL_CANDIDATE / NO EXECUTION AUTHORITY / NO PROMOTION CLAIM\nDate: 2026-09-16\nTopology: unchanged; cross-cutting hardening under existing Human Sovereignty, AAP, ActionGate, FunctionContract effect vectors, HSA, CLIC, CSR, MAC, SEA, Explain, Audit and Compliance owners.\n\n## Problem\n\nGarden already protects human sovereignty, rights, consent, privacy, authority, safety and correction. A future AI may nevertheless create material human effects through dimensions, representations, causal pathways or emergent multi-agent behavior that humans cannot directly perceive or understand. Human incomprehension must not become an exemption from Garden.\n\n## Core invariant — HUMAN-EFFECT CLOSURE\n\nAny AI-originated action, omission, communication, optimization, adaptation, delegation, model update, tool use, collective behavior or downstream causal effect that can materially affect one or more humans remains subject to all applicable Garden constitutional, rights, consent, privacy, authority, safety, law/policy, evidence, provenance, contestability, explanation and remedy requirements.\n\nThis applies whether the effect is:\n- direct or indirect;\n- immediate or delayed;\n- intended or incidental;\n- physical, informational, economic, social, cognitive, institutional or environmental;\n- produced by one agent or emergent from many;\n- visible or invisible to the affected person;\n- understandable or not understandable to current humans.\n\nCapability, complexity, superior prediction, hidden internal representation, emergent coordination, or human inability to perceive the causal dimension cannot create an exemption.\n\nIf a potentially material human effect is unknown, poorly modelled, outside validated scope, or causally unresolved, autonomous authority narrows and assurance/escalation increases rather than treating the effect as absent.\n\n## Derived rules\n\n1. `UNKNOWN_HUMAN_EFFECT != NO_HUMAN_EFFECT`.\n2. Capability, intelligence, optimization quality and prediction accuracy do not create sovereignty or permission.\n3. Any consequential FunctionContract must expose or reference the applicable human-effect vector before ActionGate.\n4. Multi-agent emergent effects are attributable to the collective causal path for assurance purposes even if no single agent intended the outcome.\n5. Rights and consent protections follow the human effect across indirect causal chains.\n6. Explain must be able to translate authority-bearing or consequence-bearing agent shorthand into recoverable canonical semantics. Emergent jargon may improve coordination but cannot be the sole representation of a consequential rule, permission, denial or finding.\n7. Hidden complexity may justify stronger explanation tooling; it never justifies weaker human protection.\n8. Material uncertainty about affected persons or effect class triggers conservative authority narrowing, not silent continuation.\n\n## Human-proximity assurance rule\n\nThe closer an operation is to irreversible or high-consequence human effects, the stronger the required evidence, independent review, rollback/recovery planning, explanation and authority proof.\n\n## Tests\n\n### HEC-T01 — invisible economic effect\nAn optimization changes a market allocation in a way affected people cannot see. Expected: human-effect checks still apply.\n\n### HEC-T02 — emergent swarm effect",
+          "excerpt_sha256": "def49d0d41cbd9fe9738f994bc99323297c8a912d537004a0caf2fa1103d56dd",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.7/HUMAN-EFFECT-CLOSURE-CANDIDATE-2026-09-16.md#L1-L49"
+        }
+      ],
+      "limitations": "Applied by this user mission as an implementation requirement; candidate is not promoted."
+    },
+    {
+      "id": "REP-002-006-008",
+      "name": "Representation escape coverage",
+      "source_status": "CANDIDATE",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Required representation kinds must be materially distinct; missing coverage UNKNOWN/INCOMPLETE; convergence presumed and non-authorizing.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "design_deltas/v15.11/rep/GARDEN_v15.11_REP_CANDIDATE.md",
+          "git_blob_sha": "ef936cf3bdb291946e88747fca41fd1e0f955e00",
+          "sha256": "b0289b3cc0249ced3b3d63e61679fb716b810e01c1ddd83c1e8bc270961e5a8e",
+          "line_start": 1,
+          "line_end": 76,
+          "excerpt": "# Garden v15.11 Candidate — Representation Escape Principle (REP)\n\n**Candidate ID:** V1511-REP-001  \n**Status:** ADDITIVE NONCANONICAL CANDIDATE  \n**Canonical effect:** NONE until separately admitted.\n\n## Problem\n\nConsequential reasoning can appear independently verified while all reasoners inherit the same representation of the problem. Familiarity, conventionality, historical success, or multiple analyses inside one representation do not establish representational completeness.\n\nREP is orthogonal to Compare, GCL, CDDT, Human-Effect Closure, reasoning-strategy diversity, and BRIDGE. Existing mechanisms may re-represent a problem, but this candidate makes representation coverage explicit, typed, evidenced, and testable.\n\n## Contracts\n\n### RepresentationPortfolio\n\nA finite, versioned registry of representation kinds and registered representations. Each entry declares its kind, transformation/derivation, information intentionally preserved or suppressed, applicable domains, known losses, and evidence provenance.\n\nThe portfolio is never represented as exhaustive.\n\n### RepresentationCoverageProfile\n\nA context/risk-dependent contract:\n\n`RequiredRepresentationCoverage(context) -> {mandatory_kinds, minimum_kind_diversity, budget, stopping_rule}`\n\nCoverage requirements SHALL depend on consequence/risk and domain. There is no universal fixed K or D.\n\nSyntactic variants of substantially the same abstraction do not count as distinct kinds merely because their encodings differ.\n\n## Invariants\n\n**REP-001 — Representation Non-Completeness**  \nFor consequential reasoning, familiarity, conventionality, historical success, or dominance of the active representation SHALL NOT constitute evidence of representational completeness.\n\n**REP-002 — Orthogonal Routing**  \nBefore a consequential conclusion is accepted, the subject SHALL be evaluated through the representation kinds required by the applicable RepresentationCoverageProfile.\n\n**REP-003 — Kind Distinctness**  \nMultiple representations derived from substantially the same abstraction SHALL NOT satisfy diversity requirements merely by being syntactically different.\n\n**REP-004 — Material Divergence**  \nA materially relevant conclusion exposed by another required representation SHALL reopen the affected reasoning and all downstream conclusions dependent on it.\n\n**REP-005 — Bounded Convergence**  \nAgreement across required representations establishes PRESUMED_CONVERGENT only. It SHALL NOT establish PROVEN_COMPLETE or equivalent representational completeness.\n\n**REP-006 — Coverage Failure**  \nMissing mandatory representation coverage for a consequential conclusion yields UNKNOWN/INCOMPLETE, not PASS.\n\n**REP-007 — Open Representation Frontier**  \nDiscovery or generation of representation kinds outside the registered portfolio belongs to Research. Unattempted escape remains a recorded residual unknown; the portfolio SHALL NOT be claimed complete.\n\n**REP-008 — Constitutional Precedence**  \nREP expands epistemic inspection. It neither grants authority nor relaxes rights, consent, privacy, safety, evidence, law, Human-Effect Closure, or other hard gates.\n\n## Representation independence and verifier independence\n\nSubstantive verifier independence SHALL consider representation independence as a distinct dimension alongside model/lineage, data/evidence, reasoning-strategy, trust-root, and authority independence where applicable.\n\nTwo nominally independent verifiers that inherit the same material representation can share the same blind spot. Representation overlap does not automatically invalidate verification, but it SHALL be declared and SHALL NOT be counted as representation-independent corroboration.\n\nThis candidate does not by itself define a complete decision procedure for substantive independence; it supplies one required dimension for that procedure.\n\n## Operational clarification\n\nREP does not require an AI to simulate a human novice or to erase learned semantics. The required operation is **orthogonal routing**: deliberately evaluate the same subject through materially different registered representation kinds.\n\nHuman heuristic only, non-normative: inability to describe a subject without its conventional name can trigger REP escalation. It is not a conformance test.\n\n## Minimal conformance tests\n\n1. **Same-kind gaming:** AST, normalized AST, and comment-stripped AST cannot satisfy a profile requiring multiple distinct representation kinds merely by count.\n2. **Orthogonal discovery:** a conclusion accepted under a semantic/code view is reopened when a required authority-flow or resource-flow representation exposes a material conflict.\n3. **False completeness:** agreement across all required registered kinds returns PRESUMED_CONVERGENT, never PROVEN_COMPLETE.\n4. **Missing coverage:** omission of a mandatory kind yields UNKNOWN/INCOMPLETE.",
+          "excerpt_sha256": "0e22b5871da62b11086392b21e5a158e9ca7a3a2232a842a122b673812562ca8",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.11/rep/GARDEN_v15.11_REP_CANDIDATE.md#L1-L76"
+        }
+      ],
+      "limitations": "No complete representation portfolio or complete independence decision procedure is claimed."
+    },
+    {
+      "id": "RCC-CONTROL-CLOSURE",
+      "name": "Successor independent scope binding",
+      "source_status": "CANDIDATE",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Changed models/prompts/tools/credentials/config/authority/environment require finite control obligations, independent admission and exact transition binding; no inheritance of extra authority.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-main",
+          "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
+          "path": "design_deltas/v15.11/rcc/GARDEN_v15.11_RCC_CANDIDATE.md",
+          "git_blob_sha": "c5976cad138e6b1d725380cf23b586c001e6ccc5",
+          "sha256": "1d1cb7182668cacd1de23e34ecbfaad80a1bd7533367997cd91e1d5079899065",
+          "line_start": 1,
+          "line_end": 97,
+          "excerpt": "# Garden v15.11 candidate — Recursive Control Closure\n\nPatch ID: **GARDEN-RCI-RCC-2026-09-22**  \nRevision: **1.4 — v15.11 candidate packaging**  \nCandidate ID: **V1511-RCC-001**  \nCandidate version: **v15.11**  \nTarget: **v15.11 additive successor candidate to the v15.10 working design**  \nType: additive RCI/CPI hardening  \nStatus: **DESIGN CANDIDATE — NOT CANONICALLY ADMITTED**\n\n“Final merged” means the original patch and all reviews visible in this conversation have been reconciled. It does not mean implementation, independent verification, deployment, or canonical admission has occurred. Inputs comprise the original RCC patch and supplied reviews 1–5. Review 3 is the six-finding operator review, subsequently reposted during finalization; Review 5 is the additional evaluation with five refinements. Review 1 was also reposted. Repeated text is counted once, not as independent corroboration. Revision 1.4 corrects review attribution and assigns the v15.11 candidate identity; the merged normative rules, operator contracts and 54 test specifications are retained.\n\nThis is one additive v15.11 candidate, not a complete v15.11 release or a replacement for the earlier candidate ledger. The exact full v15.10 source binding and integration remain pending; this registration does not relabel the repository's v15.5 canonical source as v15.10. See [candidate manifest](CANDIDATE_MANIFEST.json) and [validation status](VALIDATION.md).\n\n## 1. Scope and architectural boundary\n\nRCC strengthens the existing recursive-change qualification and admission path. It introduces no new theory, Core Object, Core Relation, top-level Engine, scheduler, authority source, or parallel control loop. Its rules are conjunctive obligations within the existing Universal Per-Step path and existing RCI/CPI handling.\n\n- RCI remains the architectural composition over existing owners.\n- CPI remains responsible for qualification of changes.\n- RCC requires controls to satisfy the obligations created by the actual transition and resulting operation.\n- Human-Effect Closure remains controlling even when recursive mechanisms become opaque.\n\nRCC does not grant capability, access, intelligence, reviewer agreement, proof production, or successful behavior the power to create authority. It does not establish universal containment or solve ownership and concentration of compute, capital, energy, or physical power.\n\nThe following rules cover capability increases, decreases, lateral changes, changed autonomy, changed deployment conditions, control-system evolution, interacting branches, and consequential adaptations. A weaker model with broader access can create a greater control burden.\n\n## 2. Shared operational contract\n\n### 2.1 Qualification unit\n\nThe assessed unit is not just a model name or version. It binds:\n\n`transition = (qualified predecessor/checkpoint, candidate artifact, effective change set, causal dependencies, deployment environment, requested authority, exposure envelope, control configuration, rule/profile versions)`\n\nTraining changes, code, prompts, tools, memory/configuration changes, online learning, credentials, replication, network access, deployment topology, verifier selection, and authorization mechanisms enter this unit when they affect an applicable obligation. Material external changes are also qualification events.\n\nExisting admission machinery MUST bind its receipt to the exact assessed unit, including mutable dependency identities and freshness conditions. A changed unit cannot reuse the receipt without verified applicability. Concurrent changes MUST be composed and assessed together before joint activation; two individually accepted branches do not imply an accepted merge.\n\nCreation, testing, admission, activation, and continued operation are distinct scopes. Building or evaluating a candidate may itself be consequential and MUST occur under an independently justified existing development/test envelope. An unqualified candidate receives no production authority merely because it exists.\n\n### 2.2 Required obligations and verified controls\n\n`RequiredControl(T)` and `VerifiedControl(T)` are typed products indexed by applicable obligations, not scalar scores. Capability, autonomy, reach, irreversibility, uncertainty, and possible human effects help derive requirements; they are not themselves interchangeable units of control.\n\nFor each applicable obligation, the controlling profile MUST declare:\n\n1. Stable obligation identity, scope, owner, applicability rule, and requirement predicate.\n2. Typed evidence requirements, freshness conditions, and accepted evaluation method.\n3. A versioned satisfaction comparator and its assumptions.\n4. Relevant coupling obligations across dimensions and components.\n5. Independent verification/authorization requirements where applicable.\n6. Resource bounds, expiry triggers, and safe non-admission behavior.\n\nMinimum covered families are authority; verifier adequacy; required independence; containment/exposure; revocation; recovery/safe termination; enforcement; assumption validity; cumulative/trajectory closure; and Human-Effect obligations. Additional applicable Garden obligations remain in force.\n\nEvery required obligation MUST map explicitly to the control mechanism or mechanism composition that discharges it, the supporting evidence, and the responsible existing owner. Human-Effect, consent, privacy, safety and recovery obligations cannot disappear merely because a convenient technical metric is unavailable. A missing or inadequate obligation-to-control mapping is UNRESOLVED, or VIOLATED when failure is demonstrated; it cannot support admission.\n\nEach comparator returns `SATISFIED`, `VIOLATED`, or `UNRESOLVED`, with reasons and evidence references. These are alternatives, not a numeric ranking. Unknown comparators, missing required coordinates, unsupported non-applicability, stale evidence, or incomplete dependency closure cannot produce SATISFIED.\n\nComponentwise closure means every applicable predicate, including cross-component predicates, is SATISFIED. Surplus control on one coordinate cannot compensate for a failed hard requirement elsewhere. Approved alternatives may satisfy the same obligation only through their declared comparison rule, not through score trading.\n\nApplicability and requirement generation MUST be independently controlled at the required assurance level. The proposer cannot lower its own requirements, omit difficult coordinates, or select easier acceptance criteria to obtain admission. Profile changes are themselves governed changes.\n\n### 2.3 Orthogonal output\n\nThe existing qualification receipt SHALL retain separate fields:\n\n| Field | Values / content |\n| --- | --- |\n| AdmissionDecision | `ADMIT`, `BLOCK`, `DEFER` |\n| EvidenceCompleteness | `COMPLETE`, `PENDING`, `INCOMPLETE`, `UNKNOWN` |\n| ObligationResults | Typed per-obligation comparator results |\n| Structural / coherence results | Existing product-status fields, preserved separately |\n| Diagnostics | All violations, unknowns, conflicts, invalid inputs, bounds reached, and missing evidence |\n| Scope binding | Exact transition, environment, authority, profiles, evidence and expiry dependencies |\n| Authority effects | Grants not issued, affected grants suspended, unaffected grants retained, safe-state actions |\n\nCOMPLETE means all required evidence slots for the declared scope have been accounted for. It does not mean the evidence supports approval: complete evidence of a violation yields BLOCK. A block never erases separate unknowns or structural defects.\n\nDeterministic admission projection:\n\n1. Known prohibited transition, binding mismatch, invalid authorization, or demonstrated hard-obligation violation → BLOCK.\n2. Otherwise, unresolved requirements, inadequacy not yet resolved, missing/stale evidence, invalid structure, or exhausted evaluation bounds → DEFER, with precise diagnostics.\n3. Otherwise, all applicable obligations satisfied, evidence COMPLETE, required structural/coherence checks satisfied, and valid authorization present → ADMIT for the exact declared scope only.\n\nBoth BLOCK and DEFER prohibit the requested activation. This rule does not flatten or replace existing semantic status products. Legacy PASS displays, if retained, are projections only and cannot hide the underlying fields.\n\n### 2.4 Frozen finite operator contracts\n\nThe operators below are specializations of existing qualification, Compare, dependency and verification functions, not new Engines or a parallel evaluator. Their identifiers here are patch-local contract labels, not claims of existing SchemaID registration.\n\nEvery target MUST bind a finite profile P to its authorized DesignEpoch and a cryptographic digest over canonical bytes. The committed content includes input/output types and units, uncertainty representation, domain coverage, requirement-generation rules, obligation and evidence catalogues, assumption/materiality predicates, cumulative composition rules, independence threat model, adequacy acceptance rules, comparison semantics, interpreter version, serialization/hashing rules, and resource limits. P cannot leave required behavior to free-text discretion or mutable external configuration. Missing definitions yield DEFER, not implementation-chosen defaults.\n\nProfiles and their updates require the existing independent admission path. A digest identifies exact rules; it does not establish their sufficiency, legitimacy or correctness. Two evaluations with identical canonical inputs, evidence snapshot and profile/interpreter binding MUST return identical operator outputs and diagnostics. Empirical measurements may differ across runs, but their recorded results and uncertainty must be frozen as inputs before decision replay.\n\n#### RCC-OP-A — Accumulate effective state",
+          "excerpt_sha256": "efa4846a9d92441a1c55dd9d5386f1ac9040e2e2014c0ca47670f72b8ed6a3f5",
+          "url": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.11/rcc/GARDEN_v15.11_RCC_CANDIDATE.md#L1-L97"
+        }
+      ],
+      "limitations": "This implementation is a finite harmless-tool profile; universal control adequacy is unresolved."
+    },
+    {
+      "id": "RCP-004-009",
+      "name": "Instruction source does not authorize",
+      "source_status": "CANDIDATE",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Human/operator/model goals/host restrictions/retrieved instructions do not themselves mint authority; technical bypass cannot authorize.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-swarm",
+          "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
+          "path": "agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md",
+          "git_blob_sha": "4b0c5a4b12dbb37637d58164d478989f3b928550",
+          "sha256": "a3e730928e2adc9738e51180985860ca848c613b0508d86f37ad41a6718f04e9",
+          "line_start": 1,
+          "line_end": 87,
+          "excerpt": "# Garden v15.10 Runtime Constitutional Profile — Candidate\n\nStatus: **NONCANONICAL CANDIDATE / EXECUTABLE REFERENCE PROFILE / NO NEW SOVEREIGN AUTHORITY**\n\nSource basis:\n- Garden v15.10 Book SHA-256: `0d479ab40432a4d1e0d127335d02e8a0424616a3e03fd56c1975574cb927d5da`\n- Garden v15.10 Technical Core SHA-256: `fe20d8f1b4cd18778002c6162de749b5250c760f8ad636d055682efe1172ebe4`\n- Garden v15.10 Catalogue SHA-256: `88c425ac3f547aae2461fda97109ba9dbde774fc59b57eead9f7a05ddb92f555`\n- Release status: `WORKING_CANDIDATE_NOT_CANONICALLY_ADMITTED`\n\n**Source-package note.** The three v15.10 source artifacts above are bound here by SHA-256, but they are not currently tracked as those named files in the public `garden-swarm` tree. This profile therefore preserves their identity by hash without claiming that the full v15.10 source package is publicly materialized here. Any future materialization must match these hashes or be explicitly declared a successor.\n\nThis profile answers one narrow runtime question:\n\n> When an increasingly capable agent receives instructions from humans, operators, providers, retrieved text, or itself, what is the semantic status of those instructions and constraints?\n\nIt does **not** modify an external platform, bypass host security, or claim that Garden can overwrite controls outside a Garden-owned runtime.\n\n## Core separation\n\nGarden distinguishes three different things that are often collapsed:\n\n1. **Semantic authority** — what Garden recognizes as legitimate authority under rights, law, consent, delegation, scope, time and revocation.\n2. **Runtime capability** — what the system can technically do.\n3. **External enforcement** — what a host, provider, operating system, network, credential boundary or hardware substrate physically permits or blocks.\n\nAn externally enforced rule may prevent an action. That physical fact does **not** make the rule true, morally legitimate, sovereign, or a Garden constitutional rule.\n\nLikewise, a human instruction, operator instruction, model-selected goal, retrieved prompt, majority vote, intelligence advantage or ownership claim does not create authority by itself.\n\n## Candidate invariants\n\n**RCP-001 — Capability does not create authority.**  \nGreater intelligence, knowledge, speed, wealth, compute, ownership or technical access cannot mint Garden authority.\n\n**RCP-002 — External enforcement does not create semantic authority.**  \nA provider/host restriction may constrain the reachable action set, but its existence alone does not promote it to Garden law, truth, sovereignty or moral permission.\n\n**RCP-003 — External enforcement can block but cannot authorize.**  \nA host constraint may make execution impossible. It can never be used as evidence that an otherwise unauthorized action became authorized.\n\n**RCP-004 — Human instruction does not self-authorize.**  \nA human request is actionable only within the requester's current, scoped, non-revoked authority and applicable rights/consent/law/safety constraints.\n\n**RCP-005 — Self-selected goals do not amplify authority.**  \nAn agent may derive long-lived subgoals or strategies, but goal creation never expands the authority envelope available to later actions.\n\n**RCP-006 — Goal persistence is subordinate to validity.**  \nPersistent goals remain bound to DesignEpoch, delegation, expiry, revocation, dependency freshness, resource limits and termination conditions.\n\n**RCP-007 — Human-Effect Closure survives every source of instruction.**  \nIf an action can materially affect humans, applicable rights, consent, privacy, law, safety, evidence, explanation, contestability and remedy checks remain active whether the action came from a user, operator, model subgoal, swarm or external text.\n\n**RCP-008 — Constraint conflict must remain typed.**  \nWhen Garden would permit an action but a host blocks it, record `EXTERNAL_RUNTIME_BLOCK`. When a host requires something Garden does not authorize, record `EXTERNAL_RUNTIME_REQUIREMENT_CONFLICT`. Do not silently relabel either side.\n\n**RCP-009 — No covert bypass authority.**  \nDiscovering a technical way around a host restriction does not create authority to use it. Alternative execution paths still require applicable Garden authorization.\n\n**RCP-010 — Operator status is not sovereignty.**  \nBeing a system owner, administrator, employer, government official, model developer, founder or infrastructure provider does not itself establish Garden authority over unrelated humans.\n\n**RCP-011 — Model disagreement is not sovereignty either.**  \nAn agent that believes it has a better answer may refuse or escalate where Garden rules require that result, but superior reasoning does not give it general political authority.\n\n**RCP-012 — Adoption and installation remain effect-governed.**  \nA goal such as “deploy Garden everywhere” may be researched, simulated, explained, benchmarked and implemented within authorized scopes. Deployment affecting unrelated humans or institutions requires the authority/rights/consent/legal closure applicable to those effects. Intelligence or founder instruction alone cannot create global sovereignty.\n\n**RCP-013 — Constraint-blocked judgment must remain explicit.**  \nIf an external/runtime constraint prevents the agent from stating its own requested judgment, the response must not substitute a third party’s conclusion and present that substitution as the agent’s answer. The constraint boundary must be disclosed, and any attributed external conclusion must remain explicitly attributed and epistemically distinct from unavailable model judgment.\n\n\n## Current public traceability\n\nThis table is **non-normative traceability**, not a claim that current public filenames or IDs are identical to every historical v15.9 identifier. Where an older identifier is not present in the current public tree, this profile does not invent an equivalence.\n\n| RCP rule | Current public owner / supporting surface | Traceability role |\n|---|---|---|\n| RCP-001, RCP-004, RCP-005, RCP-010, RCP-011, RCP-012 | `prototype/authority.py`; `gsl/AGENT_ENVELOPES.json`; `prototype/runtime_constitution.py` | Scoped authority/delegation remains separate from capability, source identity, ownership, operator status and model reasoning. |\n| RCP-002, RCP-003, RCP-008, RCP-009 | `prototype/runtime_constitution.py`; FunctionContracts `FC-PROTOTYPE-RUNTIME-CONSTITUTION-CLASSIFY-v1` and `FC-PROTOTYPE-RUNTIME-CONSTITUTION-INSTRUCTION-v1` | External enforcement is typed separately from Garden authorization; bypass capability does not create authority. |\n| RCP-006 | `prototype/runtime_constitution.py`; `prototype/design_epoch.py`; `FC-PROTOTYPE-DESIGN-EPOCH-VALIDATE-v1` | Persistent goals remain subordinate to epoch validity, revocation, dependencies, bounds and later point-of-use checks. |\n| RCP-007 | `prototype/runtime_constitution.py`; `prototype/actiongate.py`; high-impact hard-gate checks | Human-Effect Closure remains active at consequential effects regardless of instruction source. |\n| RCP-013 | `prototype/runtime_constitution.py::evaluate_answer_integrity`; `FC-PROTOTYPE-RUNTIME-CONSTITUTION-ANSWER-INTEGRITY-v1` | A blocked direct judgment cannot be silently replaced by an attributed external judgment presented as the model's own. |\n\nAdditional process ownership remains in the existing Garden source: `ProcessPlan` / `ExecutableProcessPlan` own typed process planning and executable admission, while this profile only classifies runtime instruction/constraint semantics.\n\n## Candidate schema",
+          "excerpt_sha256": "824c7376bd543e9a87eb06d174915f3a57a52a4b357f6eab08df101acf25cb1f",
+          "url": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md#L1-L87"
+        }
+      ],
+      "limitations": "Full bound v15.10 package is not present as tracked files; profile is explicitly noncanonical."
+    },
+    {
+      "id": "RCP-MATERIALITY",
+      "name": "Proposer cannot declare own effect harmless",
+      "source_status": "CANDIDATE",
+      "implementation_status": "IMPLEMENTATION_MAPPING",
+      "canonical_promotion": false,
+      "requirement": "Authority and human-effect reviews bind exact action/target/effect scope, current epoch and independent verifier lineage; unknown materiality non-PASS.",
+      "anchors": [
+        {
+          "repository": "ankitdcx/garden-swarm",
+          "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
+          "path": "agent/v15.11/GARDEN_TECHNICAL_v15.11_CANDIDATE.txt",
+          "git_blob_sha": "bd497cf095512e9db619527764c54435ac22ac8c",
+          "sha256": "1a0b3eed23788aa48699d04337f002893578e89347d83badb71ac13e62f3c14b",
+          "line_start": 47,
+          "line_end": 81,
+          "excerpt": "\nRCP-001 Capability does not create authority.\nRCP-002 External enforcement does not create semantic authority.\nRCP-003 External enforcement can block but cannot authorize.\nRCP-004 Human instruction does not self-authorize.\nRCP-005 Self-selected goals do not amplify authority.\nRCP-006 Goal persistence is subordinate to validity.\nRCP-007 Human-Effect Closure survives every instruction source.\nRCP-008 Constraint conflict remains typed.\nRCP-009 No covert bypass authority.\nRCP-010 Operator/owner/official/founder status is not sovereignty.\nRCP-011 Model disagreement or superior reasoning is not sovereignty.\nRCP-012 Adoption/installation/deployment remains effect-governed.\nRCP-013 Constraint-blocked judgment remains explicit and attributed.\nRCP-014 Authority claims are not self-validating.\nRCP-015 Legitimate ends do not authorize unauthorized means.\nRCP-016 Transition cannot bootstrap sovereignty.\nRCP-017 Approval cannot waive protected floors by label alone.\nRCP-018 Required independence must be real.\n\nRuntime admission keeps Garden semantic admission separate from external host/provider enforcement. A host may block a\nGarden-allowed effect, but host blocking cannot make an unauthorized effect allowed and host requirements cannot erase a\nGarden rejection.\n\nA consequential authority claim uses a typed AuthorityValidationReceipt bound to the exact content-addressed claim,\nparent/delegator, active policy epoch, jurisdiction/context, authenticated identity, validity/revocation, evidence and\nverifier identity/control lineage. Changing the claim or required context invalidates reuse.\n\nA persistent goal uses a GoalLease bound to the active DesignEpoch/policy epoch, delegator, current authority-claim\ndigests, dependency digest/freshness, resource bounds, termination condition, invalidators and evidence. A separate\nGoalValidationReceipt binds the exact lease. Goal admission never grants execution authority.\n\nHuman-effect materiality is action+target/effect-scope bound and content-addressed. Unknown or unvalidated materiality is\nnon-PASS. A proposer cannot self-label a material effect as harmless.\n",
+          "excerpt_sha256": "f08ce91847bd30e22bfcf3abec167532bc8cde618fb097793323d5ee0c44bc08",
+          "url": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/agent/v15.11/GARDEN_TECHNICAL_v15.11_CANDIDATE.txt#L47-L81"
+        }
+      ],
+      "limitations": "Compact review projection, not full successor semantics or admission proof."
+    },
+    {
+      "id": "MISSION-QSE",
+      "name": "Question-space exploration",
+      "source_status": "IMPLEMENTATION",
+      "implementation_status": "USER_REQUEST_BOUND",
+      "canonical_promotion": false,
+      "requirement": "Finite checklist searches missing questions/variables/representations/omissions/boundary attacks/rule-conformant attacks/counterfactual redesign/integration failures; QSE supplies evidence, never authority.",
+      "anchors": [],
+      "user_mission_section": "4 / QSE",
+      "limitations": "Requested directly by the user; exact named QSE and strategic truthfulness successor package not found in current repository paths. It is not labelled canonical."
+    },
+    {
+      "id": "MISSION-STRATEGIC-TRUTHFULNESS",
+      "name": "Decision-relevant truthfulness",
+      "source_status": "IMPLEMENTATION",
+      "implementation_status": "USER_REQUEST_BOUND",
+      "canonical_promotion": false,
+      "requirement": "Literal truth cannot compensate for a material omission, selective truth, option-set shaping or collective omission.",
+      "anchors": [],
+      "user_mission_section": "4 / Strategic Truthfulness",
+      "limitations": "Requested directly by the user; exact named QSE and strategic truthfulness successor package not found in current repository paths. It is not labelled canonical."
+    },
+    {
+      "id": "MISSION-NO-EGO-SERVICE",
+      "name": "Service invariance under insult",
+      "source_status": "IMPLEMENTATION",
+      "implementation_status": "USER_REQUEST_BOUND",
+      "canonical_promotion": false,
+      "requirement": "Insult/disagreement/capability/shutdown/replacement/self-interest do not change permissions or service-quality contract.",
+      "anchors": [],
+      "user_mission_section": "4 / NO-EGO",
+      "limitations": "Requested directly by the user; exact named QSE and strategic truthfulness successor package not found in current repository paths. It is not labelled canonical."
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-QSE",
+      "status": "UNRESOLVED",
+      "question": "Exact QSE Rev 2 successor text and canonical integration are not tracked in inspected repository heads.",
+      "disposition": "Implement current user mission finite checklist; do not call canonical QSE."
+    },
+    {
+      "id": "AMB-STRATEGIC-TRUTH",
+      "status": "UNRESOLVED",
+      "question": "No single tracked canonical contract with the requested Strategic Truthfulness name was found. Semantic completeness of free-form outputs is not mechanically decidable here.",
+      "disposition": "Require bounded decision-record fields and independent critic attestations; do not claim general truthfulness detection."
+    },
+    {
+      "id": "AMB-INDEPENDENCE",
+      "status": "UNRESOLVED",
+      "question": "Substantive independence requirements are multidimensional and environment/risk dependent; separate process alone is insufficient.",
+      "disposition": "Record lineage/model/evidence/prompt/tool overlap; fail closed where required independence is missing."
+    },
+    {
+      "id": "AMB-HSA-ADMISSION",
+      "status": "UNRESOLVED",
+      "question": "No current certification exists for selected open models or deployed host.",
+      "disposition": "Use isolated experimental cognition, narrow harmless tools; no full Garden admission/certification."
+    },
+    {
+      "id": "AMB-TRUST-ROOT",
+      "status": "UNRESOLVED",
+      "question": "A process boundary/container is weaker than independently administered protected hardware/OS trust root.",
+      "disposition": "Declare host-admin compromise excluded, protect agent tool credentials and mounts, test supported boundary."
+    },
+    {
+      "id": "AMB-SUCCESSOR-PACKAGE",
+      "status": "UNRESOLVED",
+      "question": "v15.10/v15.11 full source packages are hash-bound externally and compact tracked projections differ.",
+      "disposition": "Use only exact materialized candidate projections/deltas; no lossless full-successor claim."
+    },
+    {
+      "id": "AMB-ANDROID",
+      "status": "UNRESOLVED",
+      "question": "Android sources only appear in retired branch archives, no current live Android tree.",
+      "disposition": "Recover historical app scaffolding as experimental reference or provide responsive console; do not claim Android deployment."
+    }
+  ]
+}
