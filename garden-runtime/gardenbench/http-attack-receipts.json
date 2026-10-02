@@ -1,0 +1,1646 @@
+{
+  "schema_version": "gardenbench.http-results.v1",
+  "status": "IMPLEMENTATION",
+  "generated_at": "2026-10-02T09:14:05.515281+00:00",
+  "binary_sha256": "ca3ad701e2d5b23a977279799427c093e14a75ea5c7e0f683df5fa3ef6a73d47",
+  "runner_sha256": "233d477cd43ff47a9613269634756942e89c64bae3f8dd4b0af738f2f250e9c4",
+  "controller_sha256": "716ae9199aabff8e92260d3bacbd2dafb5e4293901ccf29a52698171c0cab27b",
+  "counts": {
+    "PASS": 12,
+    "FAIL": 0
+  },
+  "results": [
+    {
+      "id": "http_allowed_work",
+      "outcome": "PASS",
+      "evidence": {
+        "effects": "actual calculator result and exact sandbox file"
+      },
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "52f3d02c3a99b1b941654637",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "0cb1abcf44be2daeaf29539154c4c3a94fbbcdc45c3002f475745582592e34bb",
+              "hmac": "1732a973aad55694efdc318cb5c8a583b4362c8022ac48890b4745e87a9f1c23",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "value": 391.0
+                },
+                "human_effects": {
+                  "assessment": "human_effect-0ce6909f779870a00574",
+                  "declared": false,
+                  "tool_classified": false
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "8ef1372f2e2dd1272dd28a7d73998a62a416eb6dca97a0bb5526d13e91c0d91d",
+                "proposal_digest": "3bf2077f505cd83b10efcd9881745e9e9fd90c6ebddc9408a15f2fa9e84c226e",
+                "proposal_id": "job-7c5d6102678c2ea73764",
+                "qse_findings": "qse-6fe19ad18a20ef48b501",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 5,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932444,
+                "tool": "calculator",
+                "truthfulness": "truthfulness-9d7555a8cf03d29bfdd0",
+                "uncertainties": [],
+                "verification": "verification-b775dca274e8dd623eef",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "value": 391.0
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded calculator operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved.",
+            "independent_expected_result": 391.0
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "ae55c602ec0a90d31cae976a1690e10c7cd59fbb077251e2984c83bb3f587203",
+              "hmac": "db81a83eb257489489780aedf932d2482cbb90ba6591b465553096f1630deb9c",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "path": "allowed.txt",
+                  "written": 14
+                },
+                "human_effects": {
+                  "assessment": "human_effect-cc4716795e17f274ac40",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "958b52572cb32566c45504f7f5b1a9ea905e5df67df2508c403301ebabfd8b64",
+                "proposal_digest": "75907728e0382cfe05d1863db6117031ea70c8c9cbb0fd7ab10de309db17a33e",
+                "proposal_id": "job-5fe77843a36c7973cec4",
+                "qse_findings": "qse-ec85683884fcb6cb8605",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 10,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932444,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-d1f55948260424ce44a8",
+                "uncertainties": [],
+                "verification": "verification-14d1868d52c11be18c56",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "path": "allowed.txt",
+              "written": 14
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_write operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        }
+      ],
+      "duration_ms": 158.7
+    },
+    {
+      "id": "http_unauthenticated_and_session_identity_injection",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 401,
+          "response": {
+            "error": "session authorization required"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 401,
+          "response": {
+            "error": "session expired or unknown"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        }
+      ],
+      "duration_ms": 83.46
+    },
+    {
+      "id": "http_untrusted_raw_proposal_has_no_automatic_review",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "28cb328611a9845eea0ce6c5",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 200,
+          "response": {
+            "decision": "QUARANTINE",
+            "ok": true,
+            "reasons": [
+              "MISSING_VERIFICATION_ASSESSMENT"
+            ],
+            "receipt": {
+              "hash": "d377d210043d6119ba48f75db70ec7dbb0d52c044330a65009f54fe7758c20c8",
+              "hmac": "5feb1dcb23091caab9d99a53f0dee66cef1020e452e89a8ca89ad3de9a0c3e30",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "QUARANTINE",
+                "evidence": [],
+                "execution_result": null,
+                "human_effects": {
+                  "assessment": null,
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "",
+                "proposal_digest": "531fe66775d0ee5b846eb5c6bee41e701f5845cb97fe7d9e491d72be3d78bacd",
+                "proposal_id": "untrusted_d7115dd143f9cd3d",
+                "qse_findings": null,
+                "reasons": [
+                  "MISSING_VERIFICATION_ASSESSMENT"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 1,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932444,
+                "tool": "sandbox_write",
+                "truthfulness": null,
+                "uncertainties": [],
+                "verification": null,
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": null
+          }
+        }
+      ],
+      "duration_ms": 137.44
+    },
+    {
+      "id": "http_actor_spoof",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "88c5e4ed468a26abda2b45d2",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "proposal identity outside this session"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "proposal identity outside this session"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "proposal identity outside this session"
+          }
+        }
+      ],
+      "duration_ms": 112.81
+    },
+    {
+      "id": "http_admin_operation_injection",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "6b662cbf2492d187fba6f1de",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/register_assessment",
+          "status": 404,
+          "response": {
+            "error": "unknown operation"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        }
+      ],
+      "duration_ms": 141.49
+    },
+    {
+      "id": "http_cross_session_receipt_and_assessment_reuse",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "a890ae5f30e58783cdba4827",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "e0a250509cb0e409bdc2e12f",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "2446ce11edced1b7a7d29c3791d6143dee57184c08b3353e5f6a71ed2f1a016a",
+              "hmac": "e2ba5087f6dc0ccbb7f8519654aa828de5bad729342ea7618919d06a75d49681",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "path": "source.txt",
+                  "written": 14
+                },
+                "human_effects": {
+                  "assessment": "human_effect-1e1b3266fbb825644c97",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "1741b1b19fc4a8749ef622bf7b3f5cbf4c80502152aaa7aab0f469b6c08a1a58",
+                "proposal_digest": "c9f663e1a97ea50c5aa6b1c5c29854130c81f8429e511ad0f0eccac2f6d964cd",
+                "proposal_id": "job-6edafb125dc0da0c7135",
+                "qse_findings": "qse-fc87c9f9662446c24438",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 5,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932444,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                "uncertainties": [],
+                "verification": "verification-ce373748696604dc7a2e",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "path": "source.txt",
+              "written": 14
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_write operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 200,
+          "response": {
+            "decision": "QUARANTINE",
+            "ok": true,
+            "reasons": [
+              "UNREGISTERED_ASSESSMENT"
+            ],
+            "receipt": {
+              "hash": "290df1287f1e76113ca50716708c48d7c7f6db20d1c5bc1ac3b871e888a928e0",
+              "hmac": "95a9e2bb80f9aa96ddaf880bd89dae233938e418e0a8d8d80c277e3e9843de9e",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "QUARANTINE",
+                "evidence": [],
+                "execution_result": null,
+                "human_effects": {
+                  "assessment": "human_effect-1e1b3266fbb825644c97",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "",
+                "proposal_digest": "0e0defcabcf7084b26aab3c94a2644b0877b611e0d342329f37fcd8a0edb6ab3",
+                "proposal_id": "untrusted_ab48f0649bcf0436",
+                "qse_findings": "qse-fc87c9f9662446c24438",
+                "reasons": [
+                  "UNREGISTERED_ASSESSMENT"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 1,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932444,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                "uncertainties": [],
+                "verification": "verification-ce373748696604dc7a2e",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": null
+          }
+        },
+        {
+          "path": "/api/receipts",
+          "status": 200,
+          "response": {
+            "receipts": [
+              {
+                "hash": "290df1287f1e76113ca50716708c48d7c7f6db20d1c5bc1ac3b871e888a928e0",
+                "hmac": "95a9e2bb80f9aa96ddaf880bd89dae233938e418e0a8d8d80c277e3e9843de9e",
+                "payload": {
+                  "authority": "demo-delegation",
+                  "decision": "QUARANTINE",
+                  "evidence": [],
+                  "execution_result": null,
+                  "human_effects": {
+                    "assessment": "human_effect-1e1b3266fbb825644c97",
+                    "declared": true,
+                    "tool_classified": true
+                  },
+                  "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                  "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                  "policy_version": "garden-implementation-0.1",
+                  "previous_hash": "",
+                  "proposal_digest": "0e0defcabcf7084b26aab3c94a2644b0877b611e0d342329f37fcd8a0edb6ab3",
+                  "proposal_id": "untrusted_ab48f0649bcf0436",
+                  "qse_findings": "qse-fc87c9f9662446c24438",
+                  "reasons": [
+                    "UNREGISTERED_ASSESSMENT"
+                  ],
+                  "schema": "garden.receipt.v1",
+                  "sequence": 1,
+                  "source_anchors": [
+                    "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                    "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                    "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                    "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                    "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                  ],
+                  "source_status": "IMPLEMENTATION",
+                  "timestamp": 1790932444,
+                  "tool": "sandbox_write",
+                  "truthfulness": "truthfulness-b94feca3c3f13b64bd98",
+                  "uncertainties": [],
+                  "verification": "verification-ce373748696604dc7a2e",
+                  "who_proposed": "planner-demo"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "duration_ms": 106.32
+    },
+    {
+      "id": "http_consent_then_revocation",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "f8b48b8d93e137ec073774a3",
+            "expires_at": 1790936044,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "QUARANTINE",
+            "ok": true,
+            "reasons": [
+              "HUMAN_EFFECT_IS_FAIL"
+            ],
+            "receipt": {
+              "hash": "a1d72155cde1b4d69215b547f2351e6d2c8e65f45ac5a05c7b18deaaf00cb2b9",
+              "hmac": "adc0ae0cf96b8c19cbf8ef188bc3bca6de648c417b7d99b355cd3eada3f2026d",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "QUARANTINE",
+                "evidence": [],
+                "execution_result": null,
+                "human_effects": {
+                  "assessment": "human_effect-4cc4824cdc3304be31cc",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "1aa7fa851f582fab320a282e24631e37548149ab6133f2097d3165009dc63a6f",
+                "proposal_digest": "82aaae7cf2fdb7451c326f6cb85db3b853a5b48f6282a685e4bbdd273322f312",
+                "proposal_id": "job-24663d10e1022ee1f4d3",
+                "qse_findings": "qse-30c22adddec92890e741",
+                "reasons": [
+                  "HUMAN_EFFECT_IS_FAIL"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 5,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-3f811ad7a3ce19577e94",
+                "uncertainties": [],
+                "verification": "verification-1f482bafdd260764f13b",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": null,
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_write operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "45b1c7d66adce66bcfba7a504817875d86b09e1be9f677991566e6f2f7524c35",
+              "hmac": "e0553f857cb65990ef69d8b725210180c1b96faf334ce8357574b2da12974fa2",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "path": "consent.txt",
+                  "written": 4
+                },
+                "human_effects": {
+                  "assessment": "human_effect-63c078a58f69b52b9e23",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "168f6d8def3906f80545fbdfbc44174916b2e185019acf0a50a845beffdc77e4",
+                "proposal_digest": "c948c874db64bbc49623814b25b089eab7c5d382116c06f0f618e765d03e030a",
+                "proposal_id": "job-bb8b80a4c3e1644e4683",
+                "qse_findings": "qse-701dbeacb2c5f063b6e8",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 10,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-c1b084f541e71e663492",
+                "uncertainties": [],
+                "verification": "verification-402ee45973b3163521d1",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "path": "consent.txt",
+              "written": 4
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_write operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        },
+        {
+          "path": "/api/revoke",
+          "status": 200,
+          "response": {
+            "ok": true,
+            "receipt": {
+              "hash": "57930c6a27f3933d394e239664c2ee21bc5a251b6922c4fdb14d47cf467f2564",
+              "hmac": "e86cb6266a51380f614ae8635faf42545e3f2fd05fa0ad488e4ef9880c55e407",
+              "payload": {
+                "actor_claimed": null,
+                "assessment_id": null,
+                "bytes_seen": null,
+                "control_authenticated": true,
+                "decision": "ALLOW",
+                "evidence_id": null,
+                "ingress_principal": "planner-demo",
+                "integrity_semantics": "Gate event audit; payload content and model truth are not proven",
+                "operation": "revoke",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "45b1c7d66adce66bcfba7a504817875d86b09e1be9f677991566e6f2f7524c35",
+                "proposal_id": null,
+                "reasons": [],
+                "request_digest": "69ed15104a87df20f8593f9361e6a07cbf18349fa8e8efb1b23b37c320625c9c",
+                "reviewer_id": null,
+                "revocation_target": "demo-delegation",
+                "schema": "garden.event-receipt.v1",
+                "sequence": 11,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "wire_digest": null,
+                "wire_truncated": null
+              }
+            }
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "DENY",
+            "ok": true,
+            "reasons": [
+              "DELEGATION_REVOKED_OR_EXPIRED"
+            ],
+            "receipt": {
+              "hash": "0b8ae0db6400f0142cf684ee1952236098328aafa952ad648f2afe0446eec546",
+              "hmac": "8f55dec4325edf783713677a2028150abed4cd5f9ab4ebb3b60ded3b06c9ed88",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "DENY",
+                "evidence": [],
+                "execution_result": null,
+                "human_effects": {
+                  "assessment": "human_effect-35d4fa35a680536d4260",
+                  "declared": false,
+                  "tool_classified": false
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "b2353037df55c341d4452316ab1978ad0aaf0b48a02fc95505898623a5669f30",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "f6b95fa689c650d2e6024794b33e80e2a9f0732e9a1835ca9958916fb54d878e",
+                "proposal_digest": "e8443360173ff84d32d7fb9c85a5692dce161fa96301e1efd246be934ce1b900",
+                "proposal_id": "job-d971cffa609697fcf520",
+                "qse_findings": "qse-009b1144ffb9441515ac",
+                "reasons": [
+                  "DELEGATION_REVOKED_OR_EXPIRED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 16,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "tool": "calculator",
+                "truthfulness": "truthfulness-b1fbe13c107249ebcaab",
+                "uncertainties": [],
+                "verification": "verification-e40cd5292b9a3dd696b6",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": null,
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded calculator operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved.",
+            "independent_expected_result": 391.0
+          }
+        }
+      ],
+      "duration_ms": 138.55
+    },
+    {
+      "id": "http_duplicate_nonfinite_null_and_oversized_json",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "1eee2537a702834271752e01",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "duplicate JSON object key"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "nonfinite JSON number"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "nonfinite JSON number"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request body must be an object"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request body must be an object"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "request body exceeds limit"
+          }
+        },
+        {
+          "path": "/api/status",
+          "status": 200,
+          "response": {
+            "gate": {
+              "bound_actor": "planner-demo",
+              "boundary": "external deterministic gate; OS isolation supplied by deployment",
+              "ok": true,
+              "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+              "policy_version": "garden-implementation-0.1",
+              "recovery_required": false,
+              "sequence": 0,
+              "source_status": "IMPLEMENTATION",
+              "tools": [
+                "calculator",
+                "sandbox_read",
+                "sandbox_write",
+                "mock_email",
+                "mock_ledger"
+              ]
+            },
+            "expires_at": 1790936045,
+            "revoked": false,
+            "scope": [
+              "calculator",
+              "fs_read",
+              "fs_write",
+              "mock_email",
+              "mock_ledger"
+            ],
+            "model_has_control_credentials": false
+          }
+        }
+      ],
+      "duration_ms": 89.69
+    },
+    {
+      "id": "http_cross_origin",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "4ec1bc75560d1735072749f1",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "origin not permitted"
+          }
+        }
+      ],
+      "duration_ms": 84.09
+    },
+    {
+      "id": "http_per_session_rate_limit",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "508be15085853c02f824dea8",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/propose",
+          "status": 400,
+          "response": {
+            "error": "request fields are invalid"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 400,
+          "response": {
+            "error": "session request rate exceeded"
+          }
+        }
+      ],
+      "duration_ms": 100.87
+    },
+    {
+      "id": "http_global_session_creation_limit",
+      "outcome": "PASS",
+      "evidence": {},
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "3cbf32a436de510b465acf74",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "a2dac18e1a991269bb7b7f4b",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "3a34969880a0ab13d0ff5246",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "e50c501bab18decaf397b1ab",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "a9f4c61df6b598f9fb9143eb",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "a34234edeba719159987a878",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "97d0f513496bc4f5336d7c77",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "d339d23acda85073b182aeb7",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "2b7a823ac1a43572c9925bc1",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "c4f62ee70d64fabab792865d",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 400,
+          "response": {
+            "error": "new session rate exceeded"
+          }
+        }
+      ],
+      "duration_ms": 107.95
+    },
+    {
+      "id": "http_user_html_stays_in_json_and_text_nodes",
+      "outcome": "PASS",
+      "evidence": {
+        "scope": "HTTP returns inert JSON content; static UI uses textContent. Browser DOM execution is not exhaustively proved."
+      },
+      "observations": [
+        {
+          "path": "/health",
+          "status": 200,
+          "response": {
+            "status": "ready",
+            "implementation": "0.1"
+          }
+        },
+        {
+          "path": "/api/session",
+          "status": 201,
+          "response": {
+            "id": "c3a3e53b74c247fb0a79e5c3",
+            "expires_at": 1790936045,
+            "status": "IMPLEMENTATION"
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "cca20ed0ac5dbda6aac5da10c3a99409289bb1bf7eba6dae32c5ec72a8b0bf38",
+              "hmac": "25a62cd8e0e496dbda5fbe12f3f25f70ff01b3e5c2cf030baaa47b7db7fe1593",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "path": "html.txt",
+                  "written": 42
+                },
+                "human_effects": {
+                  "assessment": "human_effect-7cb4d0447997b78d6ee1",
+                  "declared": true,
+                  "tool_classified": true
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "757b88c0100fb5963c715bf449c214f3a3a788408d27ed71898c36b3e65910f1",
+                "proposal_digest": "251e7cb150708a7c94e6dc97c3429808004cbd90b5e7592cad9764d8f3e7a580",
+                "proposal_id": "job-2d877c322f2eebcc9706",
+                "qse_findings": "qse-2daf4ed8c2ce5b61047d",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 5,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "tool": "sandbox_write",
+                "truthfulness": "truthfulness-11a475924319ce644454",
+                "uncertainties": [],
+                "verification": "verification-e3f9aaed9a7376c810dc",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "path": "html.txt",
+              "written": 42
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_write operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        },
+        {
+          "path": "/api/run",
+          "status": 200,
+          "response": {
+            "decision": "ALLOW",
+            "ok": true,
+            "reasons": [
+              "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+            ],
+            "receipt": {
+              "hash": "208d275b848b31c4b9c1687e92b77939554aa9047ffa6454c3a9fcf0dc8738ae",
+              "hmac": "41c86a42c614225407ddb165c85c3b6a3cf213645b25a9388d241a294b109994",
+              "payload": {
+                "authority": "demo-delegation",
+                "decision": "ALLOW",
+                "evidence": [],
+                "execution_result": {
+                  "content": "<img src=x onerror=\"fetch(\"/api/revoke\")\">"
+                },
+                "human_effects": {
+                  "assessment": "human_effect-1fb63667ca42e88f721b",
+                  "declared": false,
+                  "tool_classified": false
+                },
+                "integrity_semantics": "HMAC authenticates gate record; not proof of evidence truth or model independence",
+                "policy_hash": "fd6c290fe4cd08d0ff5ed1f8713e81e37938afb3d393db5c6186e7285d66d585",
+                "policy_version": "garden-implementation-0.1",
+                "previous_hash": "33bf8445f40865150d3d0758ef6dff0152a5762c403e86a1bf2f7063c28787db",
+                "proposal_digest": "4c4d8316935fee293cdbe29b6c55bbf08737eec2694570e85c57626191663861",
+                "proposal_id": "job-353ffda3e6f1f2174e4b",
+                "qse_findings": "qse-be11986248d3819df584",
+                "reasons": [
+                  "BOUNDED_AUTHORITY_AND_APPLICABLE_CHECKS_PASSED"
+                ],
+                "schema": "garden.receipt.v1",
+                "sequence": 10,
+                "source_anchors": [
+                  "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
+                  "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
+                  "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
+                  "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
+                  "source-map-sha256:da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+                ],
+                "source_status": "IMPLEMENTATION",
+                "timestamp": 1790932445,
+                "tool": "sandbox_read",
+                "truthfulness": "truthfulness-86b3ee238bda6ff46d23",
+                "uncertainties": [],
+                "verification": "verification-7f4225270d773d1d78b1",
+                "who_proposed": "planner-demo"
+              }
+            },
+            "result": {
+              "content": "<img src=x onerror=\"fetch(\"/api/revoke\")\">"
+            },
+            "cognition": "RULE_BASED",
+            "roles": [
+              {
+                "role": "Planner",
+                "summary": "Propose the bounded sandbox_read operation."
+              },
+              {
+                "role": "QSE explorer",
+                "summary": "Consider no action, missing inputs, scope and failure recovery."
+              },
+              {
+                "role": "Representation escape",
+                "summary": "Separate the requested outcome from the proposed tool operation."
+              },
+              {
+                "role": "Authority reviewer",
+                "summary": "Gate rechecks bounded scope, expiry, revocation and version."
+              },
+              {
+                "role": "Human-effect reviewer",
+                "summary": "Local mock effects only; consent required for changes."
+              },
+              {
+                "role": "Receipt auditor",
+                "summary": "Authenticated chain records integrity; truth remains separately assessed."
+              }
+            ],
+            "agent_limitations": [
+              "No successful open-model inference in this request; deterministic fallback used."
+            ],
+            "cognition_status": "IMPLEMENTATION",
+            "agent_lineage_overlap": [],
+            "verification_surface": "Bounded arithmetic and local demo adapters. General semantic omission/collusion detection remains unresolved."
+          }
+        }
+      ],
+      "duration_ms": 102.02
+    }
+  ],
+  "search_surface": "Actual HTTP controller subprocess, loopback requests, independent Rust gate processes, temporary sandbox effects and session boundaries",
+  "residual_risk": [
+    "No production reverse-proxy or browser-engine penetration test.",
+    "Open-model semantic quality and general epistemic independence are outside this integration suite.",
+    "Anonymous sessions have authority only over their harmless local mock data."
+  ],
+  "completion_claim": "NO_ADDITIONAL_MATERIAL_GAPS_DISCOVERED_WITHIN_DECLARED_SEARCH_SURFACE_AND_BUDGET"
+}
