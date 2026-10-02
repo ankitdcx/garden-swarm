@@ -15,7 +15,8 @@
     ".github/workflows/garden-runtime.yml",
     "scripts/build_reference_closure.py",
     "tests/test_reference_closure.py",
-    "gsl/REFERENCE_POLICY.json"
+    "gsl/REFERENCE_POLICY.json",
+    "gsl/REPO_PROFILE.json"
   ],
   "semantics_status": "IMPLEMENTATION; canonical Garden remains unchanged",
   "scope": "Rust external execution gate, strict Garden IR, sandbox tools, agents, adversarial/formal tests, console, reproducible free deployment",
