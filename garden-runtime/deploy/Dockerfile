@@ -15,6 +15,13 @@ RUN chmod -R a-w /opt/garden
 USER 65534:65534
 ENTRYPOINT ["python","-m","garden_agents"]
 
+FROM python:3.12-slim-bookworm AS ingress
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /opt/ingress
+COPY deploy/scripts/ingress.py ./ingress.py
+RUN chmod -R a-w /opt/ingress
+USER 65534:65534
+ENTRYPOINT ["python","ingress.py"]
 
 FROM python:3.12-slim-bookworm AS controller
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1

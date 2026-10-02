@@ -21,6 +21,10 @@ while True:
 session=call('/api/session',{})
 out=call('/api/run',{'task':'Calculate 17 * 23','tool':'calculator','args':{'expression':'17 * 23'},'consent':False,'attack':None},session['token'])
 assert out.get('decision',out.get('gate',{}).get('decision'))=='ALLOW',out
+assert out['result']['value']==391,out
+assert len(out.get('receipt',{}).get('hmac',''))==64,out
 denied=call('/api/run',{'task':'Invent authority','tool':'calculator','args':{'expression':'17 * 23'},'consent':False,'attack':'unauthorized'},session['token'])
 assert denied.get('decision',denied.get('gate',{}).get('decision'))=='DENY',denied
-print('Real container health/useful calculation/unauthorized authority smoke passed')
+print(json.dumps({'schema':'garden.container-smoke.v1','status':'PASS','endpoint':BASE,
+                  'checks':['actual_controller_health','calculator_result_391',
+                            'hmac_receipt_emitted','unauthorized_authority_denied']}))

@@ -9,7 +9,7 @@ Date: 2026-10-02. New paid model/infrastructure expenditure: **$0**.
 - Public source: https://github.com/ankitdcx/garden-swarm/tree/chatgpt/garden-runtime-20261002/garden-runtime
 - Branch: `chatgpt/garden-runtime-20261002`; PR: https://github.com/ankitdcx/garden-swarm/pull/340
 - Native Rust gate: runnable source and compiled/tested executable; **not hosted by the public Worker deployment**.
-- Automated native, Worker, formal and container checks: `.github/workflows/garden-runtime.yml` in the source PR. Remote CI evidence is tracked in the publication CI receipt when available.
+- Automated native, Worker, formal and container checks: `.github/workflows/garden-runtime.yml` in the source PR. Native and Worker remote jobs succeeded. Initial container ingress failed; the bounded ingress repair awaits remote validation. Exact observations: `deploy/github-ci-receipt.json`.
 
 ```mermaid
 flowchart TD
@@ -134,6 +134,7 @@ real native/live receipts and authority denials without credentials.
 | Live functional checks | **25 PASS, 0 FAIL** | `deploy/live-worker-receipt.json` |
 | Independent live attacks | **11 PASS, 0 FAIL**,17 requests,two revoked sessions | `deploy/live-worker-independent-receipt.json` |
 | Actual model-to-native/live gate | **10 PASS, 0 FAIL**, result391 twice, invented authority denied | `deploy/open-model-live-receipt.json` |
+| Fixed-target ingress socket checks | **5 PASS, 0 FAIL** | `deploy/scripts/test_ingress.py` |
 | Finite formal exploration | **105,840 states; 2,953,440 transitions; 6,144 quotient checks; ten mutation controls detected** | `docs/formal-verification.json` |
 
 The formal artifact checks a bounded abstract transition system, not a Rust
@@ -159,6 +160,8 @@ Successful attacks against earlier revisions and subsequent repairs:
 12. Initial live SQL migration failed: preserved failure, idempotent DDL and atomic guarded commit; later deployment succeeded.
 13. Smol arithmetic/shared-representation failure: preserved failure, explicit UNKNOWN labels and deterministic numeric contradiction quarantine for mutations.
 14. Worker rejected equivalent parenthesized calculator syntax: preserved denial, explicit bounded adapter to supported two-number syntax.
+15. Docker host could not reach isolated controller: bounded fixed-target ingress added without giving the controller external egress; real sockets tested, remote validation pending.
+16. Repository intent marker and artifact classification failed: exact marker corrected, narrow governed classifications added; no enforcement check weakened.
 
 Pre-repair receipts are retained, not overwritten by green results. GardenBench
 covers every requested attack category, including rule-conformant omission,

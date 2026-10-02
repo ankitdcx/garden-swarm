@@ -1,0 +1,47 @@
+{
+  "schema": "garden.github-ci-observations.v1",
+  "timestamp": "2026-10-02T14:21:48.862551+00:00",
+  "repository": "ankitdcx/garden-swarm",
+  "branch": "chatgpt/garden-runtime-20261002",
+  "tested_head": "9cf8d1c95d1b3969fed91c16fce3ae592d11aef6",
+  "run_url": "https://github.com/ankitdcx/garden-swarm/actions/runs/36991938170",
+  "runtime_jobs": {
+    "native": "SUCCESS",
+    "worker": "SUCCESS",
+    "isolation": "FAILURE_HEALTH_CONNECTION_REFUSED"
+  },
+  "process_checks": {
+    "constitutional_path_guard": "SUCCESS",
+    "public_integrity": "FAILURE_STRICT_ARTIFACT_FRONTIER",
+    "integration_provenance": "FAILURE_MISSING_EXACT_HTML_MARKER"
+  },
+  "repairs": {
+    "artifact_profile": "Explicit scoped module obligations; semantic_compliance_proved remains false",
+    "intent_marker": "Corrected PR marker to GARDEN_AGENT_WORK_INTENT without weakening verifier",
+    "container": "Fixed-target unprivileged ingress; private controller and no-network advisory retained"
+  },
+  "local_repaired_checks": {
+    "artifact_classification": {
+      "exit_code": 0,
+      "artifacts": 641,
+      "frontier": 0,
+      "profile_errors": 0
+    },
+    "reference_closure": {
+      "exit_code": 0,
+      "references": 613,
+      "unresolved": 0
+    },
+    "gsl_application": {
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "real_socket_ingress_tests": {
+      "pass": 5,
+      "fail": 0
+    }
+  },
+  "repaired_remote_retest": "PENDING_PUBLICATION",
+  "browser_visual_qa": "Browser operation timed out; no visual verification claim",
+  "no_new_paid_resources": true
+}
