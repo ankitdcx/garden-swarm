@@ -1,0 +1,39 @@
+{
+  "schema":"GardenGCSCV159ToV1510RetentionCheckpoint/v0.1",
+  "status":"SOURCE_GROUNDED_BOUNDED_RETENTION_ANALYSIS",
+  "v15_10_controlling_sources":["GARDEN_BOOK_v15.10.txt","GARDEN_TECHNICAL_v15.10.txt","GARDEN_CATALOGUE_v15.10.txt"],
+  "history_controlling":false,
+  "structural_retention":{
+    "core_objects":{"v15_9":10,"v15_10":10,"status":"PRESERVED"},
+    "core_relations":{"v15_9":24,"v15_10":24,"status":"PRESERVED"},
+    "gsl":{"v15_10":"v45.1 unless separately superseded","status":"PRESERVED"},
+    "rights":{"active":"RIGHT-001..RIGHT-025","reserved":"RIGHT-026","on_hold":"RIGHT-027","status":"PRESERVED_CURRENT_READING"},
+    "legacy_modules":{"status":"PRESERVED_AS_COMPATIBILITY_CROSSWALK_NOT_CURRENT_TOPOLOGY"},
+    "design_forms":{"v15_10":["CONSTRUCT","CONTRACT","STATE","RELATION","PROCESS","RULE","PROJECTION"],"status":"NEW_ABSTRACTION_LAYER"}
+  },
+  "semantic_retention_checks":[
+    ["UNKNOWN first-class / non-PASS","PRESERVED"],
+    ["specification != proof != implementation != validation != certification","PRESERVED"],
+    ["capability/access/authentication/reputation/consensus != authority","PRESERVED"],
+    ["delegation scoped/revocable/non-amplifying","PRESERVED"],
+    ["Human-Effect Closure","PRESERVED"],
+    ["Constitution > Law > Policy > Decision/Optimization","PRESERVED"],
+    ["K0P physical safety necessary not sufficient","PRESERVED"],
+    ["emergency bounded and independently grounded","PRESERVED"],
+    ["privacy purpose/scope/retention lifecycle","PRESERVED"],
+    ["self-change governed / independent review","PRESERVED"],
+    ["multi-agent consensus != truth/authority","PRESERVED"],
+    ["process algebra incl rollback/compensation/termination","PRESERVED"],
+    ["dependency/revalidation discipline","PRESERVED"],
+    ["seven core theories + UPS research status","PRESERVED"],
+    ["theory != authority","PRESERVED"],
+    ["architecture presets do not create authority roots","PRESERVED"],
+    ["old numeric modules cannot override current owners","PRESERVED"],
+    ["external/historical source cannot be sole current semantic owner","PRESERVED"]
+  ],
+  "known_representation_change":"Five predecessor document roles normalized to three current semantic source roles plus non-controlling history; seven Design Forms abstract reusable structure.",
+  "critical_retention_rule":"Design Forms are abstraction devices and cannot erase domain-specific obligations.",
+  "source_declared_prior_build_receipts":{"technical_plus_catalogue_graph_reproduction":"PASS in original r6 build","v15_9_predecessor_reconstruction":"PASS byte exact in original r6 build","semantic_admissions_recognized":false,"predecessor_elision_allowed":false},
+  "current_text_packaging_warning":"The current text edition itself says semantic/byte identity to original r6 requires a new equivalence check against exact pinned r6 bytes; absent those bytes, do not invent a false receipt.",
+  "current_retention_conclusion":"STRONG_SOURCE_SUPPORTED_RETENTION_FOR_CHECKED_CORE_SEMANTICS; FULL_MACHINE_EQUIVALENCE_NOT_RE-CERTIFIED"
+}

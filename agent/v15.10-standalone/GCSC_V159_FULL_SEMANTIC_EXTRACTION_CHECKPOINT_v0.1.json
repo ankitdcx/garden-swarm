@@ -1,0 +1,12 @@
+{
+  "schema":"GardenV159SemanticExtractionCheckpoint/v0.1",
+  "status":"FULL_FIVE_FILE_HIGH_RECALL_EXTRACTION_COMPLETE",
+  "source":"exact attached Garden v15.9 five-file corpus",
+  "raw_semantic_line_occurrences":16135,
+  "unique_exact_text_semantic_units":14542,
+  "units_by_file":{"Annexure":5903,"Technical":5426,"System":1851,"Theories":769,"User":593},
+  "overlapping_topic_counts":{"epistemic":3624,"authority":2475,"schema":2328,"dependency":2213,"audit":1771,"safety":1145,"resource":676,"law":554,"evolution":495,"security":453,"rights":439,"privacy":367,"composition":223},
+  "overlapping_artifact_counts":{"authority_rights":2288,"schema_type":2040,"invariant_rule":2047,"test_conformance":1200,"proof_assurance":1439,"receipt_audit":1578,"registry":392,"function_operator":468,"dependency_direct":687,"failure_validity":1110},
+  "interpretation":"This is a high-recall source-grounded semantic inventory. Exact duplicate text is merged with source locations. Counts overlap and do not assert semantic independence/equivalence.",
+  "next_normalization":"cluster paraphrases/aliases only with source-preserving equivalence receipts; classify explanatory-only vs normative/contractual; map units into GCSC closure dimensions."
+}

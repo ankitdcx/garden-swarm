@@ -1,0 +1,27 @@
+{
+ "schema":"GardenGCSCV159ToV1510DispositionLedger/v0.1",
+ "status":"IDENTIFIER_FAMILY_LEVEL_COMPLETE__SEMANTIC_FAMILY_LEVEL_IN_PROGRESS",
+ "basis":"Frozen retention baseline + full v15.10 current-source rules",
+ "predecessor_v15_9":{
+   "schema_ids":735,
+   "test_ids":881,
+   "registry_ids":62,
+   "right_ids":27,
+   "broad_invariant_qualified_ids":3261,
+   "anchors":308
+ },
+ "identifier_family_retention":{
+   "SchemaID":{"predecessor":735,"literal_family_retention":"PRESERVED_BY_STANDALONE_REBUILD_LEDGER","unmapped":0},
+   "TEST":{"predecessor":881,"literal_family_retention":"PRESERVED_BY_STANDALONE_REBUILD_LEDGER","unmapped":0},
+   "REG":{"predecessor":62,"literal_family_retention":"PRESERVED_BY_STANDALONE_REBUILD_LEDGER","unmapped":0},
+   "RIGHT":{"predecessor":27,"literal_family_retention":"PRESERVED_WITH_ACTIVE_RESERVED_ON_HOLD_STATUS","unmapped":0},
+   "broad_invariant_qualified_ID":{"predecessor":3261,"literal_family_retention":"PRESERVED_OR_DISPOSITIONED","unmapped":0}
+ },
+ "allowed_dispositions":["PRESERVED","GENERALIZED","MERGED_EQUIVALENT","SUPERSEDED_WITH_REPLACEMENT","HISTORICAL_NONCURRENT","UNRESOLVED_RETAINED"],
+ "forbidden_release_state":"UNMAPPED",
+ "reverse_closure_required":true,
+ "semantic_family_baseline":{"conservative_v15_9_families":11537,"note":"not certified equivalence classes"},
+ "machine_receipt_history":{"original_r6_v15_9_reconstruction":"PASS_BYTE_EXACT","semantic_admissions":false,"predecessor_elision_allowed":false},
+ "current_text_edition_machine_equivalence":"NOT_RECERTIFIED_WITH_PINNED_R6_BYTES",
+ "interpretation":"Identifier-family retention is closed at the rebuild-ledger level. Residual work is semantic-family equivalence/generalization classification, not recovery of missing Schema/Test/Registry/Right identifier families."
+}

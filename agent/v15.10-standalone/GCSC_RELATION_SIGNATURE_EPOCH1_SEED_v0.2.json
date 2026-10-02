@@ -1,0 +1,41 @@
+{
+  "schema":"GardenGCSCRelationSignatureEpoch1Seed/v0.2",
+  "status":"SOURCE_GROUNDED_PARTIAL_NOT_FROZEN",
+  "source_basis":"Garden v15.9 Technical §2.2 + relation-registry closure; unspecified domain/range remains UNKNOWN rather than inferred.",
+  "objects":["TIME","SPACE","THING","EVENT","ACTION","AGENCY","RULE","VALUE","CONTEXT","CLAIM"],
+  "global_required_fields":["relation","source","target","context","validity_scope","version","provenance"],
+  "relations":{
+    "identifies":{"pair_status":"UNKNOWN","laws":[]},
+    "causes":{"pair_status":"UNKNOWN","laws":["feedback_cycles_permitted"],"mandatory_bindings":["causalLevel","causalModel","assumptions","context","timeAnchor","epistemicWarrant"]},
+    "governs":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["scope","context","authority","timeAnchor"]},
+    "values":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","criteria"]},
+    "frames":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context"]},
+    "acts":{"source":["AGENCY"],"target":["ACTION"],"pair_status":"SOURCE_SUPPORTED","mandatory_bindings":["context","timeAnchor","authorityFrame"]},
+    "obeys":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","scope"]},
+    "assesses":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","criteria","epistemicWarrant"]},
+    "contextualizes":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context"]},
+    "controls":{"pair_status":"UNKNOWN","laws":["directed","cycles_forbidden"],"mandatory_bindings":["scope","context","authority","timeAnchor"]},
+    "partOf":{"pair_status":"UNKNOWN","laws":["transitive","antisymmetric","cycles_forbidden"],"mandatory_bindings":["context","timeAnchor"]},
+    "dependsOn":{"pair_status":"UNKNOWN","laws":["kind_qualified"],"mandatory_bindings":["dependencyKind","context","timeAnchor"],"dependencyKinds":["BUILD_IMPORT","RUNTIME_READ","RUNTIME_WRITE","SEMANTIC_DEPENDENCY","AUTHORITY_DEPENDENCY","PROOF_DEPENDENCY","EVIDENCE_DEPENDENCY","FEEDBACK_SCC","PROFILE_BINDING"],"kind_rules":{"BUILD_IMPORT":["transitive_over_admitted_build_DAG","cycles_forbidden"],"FEEDBACK_SCC":["explicit_registered_semantics","initialization_required","consistency_required","liveness_or_termination_required"]}},
+    "owns":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","scope","timeAnchor"]},
+    "delegates":{"source":["AGENCY"],"target":["AGENCY"],"pair_status":"SOURCE_SUPPORTED","laws":["delegate_capability_subset_of_principal"],"mandatory_bindings":["scope","context","actionOrRuleScope","timeAnchor","expiry","revocationState","principalAuthority"]},
+    "references":{"pair_status":"UNKNOWN","laws":["cycles_permitted"],"mandatory_bindings":["context"]},
+    "derivedFrom":{"pair_status":"UNKNOWN","laws":["directed","cycles_forbidden"],"mandatory_bindings":["context","epistemicWarrant","timeAnchor"]},
+    "equivalentTo":{"pair_status":"UNKNOWN","laws":["symmetric","transitive","cycles_permitted"],"mandatory_bindings":["compatibilityCriteria","scope","context","version"]},
+    "contradicts":{"pair_status":"UNKNOWN","laws":["symmetric","cycles_permitted"],"mandatory_bindings":["context","criteria","epistemicWarrant"]},
+    "supports":{"pair_status":"UNKNOWN","laws":["no_automatic_epistemic_promotion"],"mandatory_bindings":["context","epistemicWarrant","dependenceModel"]},
+    "blocks":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","scope","authority"]},
+    "hasHypothesis":{"pair_status":"UNKNOWN","laws":[],"mandatory_bindings":["context","epistemicWarrant"]},
+    "supersedes":{"pair_status":"UNKNOWN","laws":["directed","version_aware","cycles_forbidden","predecessor_immutable"],"mandatory_bindings":["lineage","version","effectiveTime","context"]},
+    "conflictsWith":{"pair_status":"UNKNOWN","laws":["symmetric","cycles_permitted","explicit_resolution_required"],"mandatory_bindings":["context","conflictKind","criteria"]},
+    "originatesFrom":{"pair_status":"UNKNOWN","laws":["directed","cycles_forbidden"],"mandatory_bindings":["context","timeAnchor","provenanceKind"]}
+  },
+  "canonical_composition_candidates":[
+    {"premises":["delegates","acts"],"result":"acts","status":"CANDIDATE_REQUIRES_BINDING_COMPATIBILITY"},
+    {"premises":["owns","controls"],"result":"derivedControl","status":"NON_CORE_DERIVED_RESULT"},
+    {"premises":["supports","supports"],"result":"candidateIndirectSupport","promotion":"supports only with explicit valid warrant"},
+    {"premises":["causes","causes"],"result":"causalPath","promotion":"causal Claim only with valid causal model, compatible context and assumptions"},
+    {"premises":["hasHypothesis","assesses"],"result":"evaluatedHypothesis","status":"DERIVED_RESULT"}
+  ],
+  "anti_gaming":"All 2400 raw triples remain in RAW. pair_status UNKNOWN is not INVALID_TYPE and cannot be excluded until a source-grounded or epoch-ratified pair predicate exists."
+}

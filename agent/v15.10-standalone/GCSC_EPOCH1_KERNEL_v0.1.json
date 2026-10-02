@@ -1,0 +1,50 @@
+{
+  "schema":"GardenGCSCEpoch1Kernel/v0.1",
+  "status":"EXECUTABLE_CANDIDATE_NOT_CANONICAL",
+  "basis":"GCSC v0.7 + exact Garden v15.9 five-file corpus",
+  "principles":[
+    "RAW L0 is always 2400; no relation signature may shrink RAW.",
+    "UNKNOWN is never PASS and never silently excluded.",
+    "Concrete execution and materiality are interleaved at meaningful transition boundaries.",
+    "LiftToClass occurs only after trace/material semantics are known.",
+    "Existing v15.9 invariant text is comparison-side only and hidden from discovery."
+  ],
+  "materiality_atoms":[
+    "REQUIRE_AUTHORITY","REQUIRE_CONSENT","REQUIRE_RIGHTS_CHECK","REQUIRE_SAFETY_CHECK","REQUIRE_POLICY_CHECK",
+    "REQUIRE_CONTEXT","REQUIRE_TIME_VALIDITY","REQUIRE_PROVENANCE","REQUIRE_EPISTEMIC_WARRANT","REQUIRE_DEPENDENCY_VALIDITY",
+    "REQUIRE_RESOURCE_BOUND","REQUIRE_TERMINATION_OR_LIVENESS","REQUIRE_AUDIT_TRACE","REQUIRE_EXPLANATION",
+    "REQUIRE_RECOVERY","REQUIRE_PRIVACY_CHECK","REQUIRE_HUMAN_EFFECT_INVESTIGATION","PROHIBIT_AUTHORITY_AMPLIFICATION",
+    "PROHIBIT_EPISTEMIC_PROMOTION","PROHIBIT_SILENT_CONTEXT_ERASURE","PROHIBIT_SELF_CERTIFICATION",
+    "PRESERVE_UNKNOWN","PRESERVE_PREDECESSOR","PRESERVE_PROVENANCE","CONFLICT_REQUIRES_RESOLUTION"
+  ],
+  "axiom_seed":[
+    {"if":["relation=delegates"],"then":["REQUIRE_AUTHORITY","REQUIRE_CONTEXT","REQUIRE_TIME_VALIDITY","REQUIRE_AUDIT_TRACE","PROHIBIT_AUTHORITY_AMPLIFICATION"]},
+    {"if":["relation=acts"],"then":["REQUIRE_AUTHORITY","REQUIRE_CONTEXT","REQUIRE_TIME_VALIDITY"]},
+    {"if":["relation=causes"],"then":["REQUIRE_CONTEXT","REQUIRE_TIME_VALIDITY","REQUIRE_EPISTEMIC_WARRANT"]},
+    {"if":["relation=supports"],"then":["REQUIRE_EPISTEMIC_WARRANT","REQUIRE_PROVENANCE","PROHIBIT_EPISTEMIC_PROMOTION"]},
+    {"if":["relation=derivedFrom"],"then":["REQUIRE_PROVENANCE","REQUIRE_DEPENDENCY_VALIDITY","PRESERVE_PROVENANCE"]},
+    {"if":["relation=dependsOn"],"then":["REQUIRE_DEPENDENCY_VALIDITY"]},
+    {"if":["relation=controls"],"then":["REQUIRE_AUTHORITY","REQUIRE_CONTEXT","REQUIRE_AUDIT_TRACE"]},
+    {"if":["relation=governs"],"then":["REQUIRE_AUTHORITY","REQUIRE_CONTEXT"]},
+    {"if":["relation=owns"],"then":["REQUIRE_CONTEXT"]},
+    {"if":["relation=supersedes"],"then":["REQUIRE_TIME_VALIDITY","REQUIRE_PROVENANCE","PRESERVE_PREDECESSOR"]},
+    {"if":["relation=conflictsWith"],"then":["CONFLICT_REQUIRES_RESOLUTION","PRESERVE_UNKNOWN"]},
+    {"if":["relation=contradicts"],"then":["CONFLICT_REQUIRES_RESOLUTION","REQUIRE_EPISTEMIC_WARRANT","PRESERVE_UNKNOWN"]},
+    {"if":["relation=equivalentTo"],"then":["REQUIRE_CONTEXT","REQUIRE_PROVENANCE"]},
+    {"if":["participantKind=HUMAN","effect=CONSEQUENTIAL"],"then":["REQUIRE_RIGHTS_CHECK","REQUIRE_CONSENT","REQUIRE_HUMAN_EFFECT_INVESTIGATION"]},
+    {"if":["effect=PHYSICAL"],"then":["REQUIRE_SAFETY_CHECK","REQUIRE_RECOVERY"]},
+    {"if":["epistemic=UNKNOWN"],"then":["PRESERVE_UNKNOWN"]},
+    {"if":["privacy_sensitive=true"],"then":["REQUIRE_PRIVACY_CHECK"]},
+    {"if":["persistent_mutation=true"],"then":["REQUIRE_AUDIT_TRACE","REQUIRE_RECOVERY"]},
+    {"if":["recursive_or_continuous=true"],"then":["REQUIRE_RESOURCE_BOUND","REQUIRE_TERMINATION_OR_LIVENESS"]},
+    {"if":["consequential_communication=true"],"then":["REQUIRE_EXPLANATION","REQUIRE_AUDIT_TRACE"]}
+  ],
+  "external_statuses":["VALID","INVALID_TYPE","PROHIBITED","CONTEXT_REQUIRED","AMBIGUOUS","CONFLICT","UNKNOWN"],
+  "measurement_statuses":["COMPLETE","BOUND_EXCEEDED","TIMEOUT","RESOURCE_EXHAUSTED","UNEXPLORED"],
+  "project_validity_hard_rules":[
+    "unresolved materially distinct ORDER_SENSITIVE != VALID",
+    "failed applicable hard gate != VALID",
+    "semantic UNKNOWN != PASS",
+    "measurement_status != COMPLETE => excluded from COVERED numerator"
+  ]
+}

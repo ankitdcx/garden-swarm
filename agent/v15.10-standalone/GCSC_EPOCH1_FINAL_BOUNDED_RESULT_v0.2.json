@@ -1,0 +1,22 @@
+{
+ "schema":"GardenGCSCEpoch1FinalBoundedResult/v0.2",
+ "status":"BOUNDED_EPOCH1_RESEARCH_RESULT_COMPLETE",
+ "corpus":{"v15_9_explicit_non_right_invariant_definitions":1817,"syntactic_prefix_families":212},
+ "spaces":{"raw_l0":2400,"legacy_raw_l1":21168000,"relation_pair_topologies":576,"semantic_domain_pairs":91,"declared_l4_motifs":18,"bounded_l5_property_cases":243},
+ "discovery":{"base_semantic_domains":14,"base_obligation_atoms":66,"primitive_material_signature_classes":14,"relation_l2_candidates":11,"cross_domain_candidates":14,"bounded_l3_candidate_triples":17,"l5_cases_with_activation":239,"l5_distinct_property_obligations":6},
+ "blind_comparison":{
+   "relation_l2":{"candidates":11,"clear_existing":8,"existing_or_refinement":2,"broad_existing_support":1,"confirmed_novel":0},
+   "cross_domain":{"candidates":14,"clear_existing":12,"partial_or_general_support":2,"confirmed_novel":0}
+ },
+ "strengthening_candidate_resolution":{
+   "generic_deadlock_livelock":"RESOLVED_EXISTING","evidence":["P10a-f","PROC-012","ParallelCompositionContract"],
+   "ownership_not_authority":"RESOLVED_EXISTING_SEMANTIC_RULE","evidence":["K-INT-018 Authority Non-Accretion","Productive Finance ownership/governance distinction","P15 Semantic Containment"],
+   "collective_message_channel_integrity":"COMPOSITIONALLY_COVERED_NO_SINGLE_COMBINED_ID_ESTABLISHED","evidence":["MAC message traces integrity-bound","P11 Information Flow","P6 Composition"]
+ },
+ "confirmed_new_invariant_gaps":0,
+ "important_interpretation":"Zero confirmed new gaps means zero among the bounded independently generated candidates that were checked. It is not a proof that Garden is globally complete.",
+ "coverage_percent":null,
+ "why_no_global_percent":"Independent generator does not yet span every semantic domain of all 1817 invariant definitions; ungenerated/unexplored cases cannot be counted as PASS or FAIL.",
+ "method_validation":"Blind rediscovery succeeded across authority, epistemics, causality, dependency, concurrency, privacy/security, jurisdiction, runtime refinement and collective semantics.",
+ "completion_boundary":"The bounded Epoch-1 prototype, declared L4 universe, bounded L5 property generator, blind rediscovery checks and strengthening-candidate verification are complete. Exhaustive depth-64 semantic enumeration remains an open iterative measurement program and is explicitly UNEXPLORED outside the frozen bounded universes."
+}
