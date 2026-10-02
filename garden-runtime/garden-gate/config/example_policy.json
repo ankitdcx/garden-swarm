@@ -5,7 +5,7 @@
     "Garden v15.5 canonical: ankitdcx/garden-main@a9a1290e353a2c8c783edf5f5e8b4a121456a987 canonical/current/Annexure K-INT-010, AGT-005, AGT-007, AGT-016, RESULT-ALG-002, SEC-LEARN-003, VER-003",
     "Garden v15.5 canonical root sha256 63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f801bcc5c74598; docs/source-map.json provides exact spans",
     "QSE/HEC/RCC/representation escape: CANDIDATE semantics implemented per current task; not canonical promotion",
-    "GardenImplementationSourceMap/v1 docs/source-map.json sha256 da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12"
+    "GardenImplementationSourceMap/v1 docs/source-map.json sha256 cc873e34f1e9eaa43ac47f0848ed39a530bb4ed12284bdffbec208eddaab7bd8"
   ],
   "max_request_bytes": 65536,
   "max_actions_per_actor": 100,

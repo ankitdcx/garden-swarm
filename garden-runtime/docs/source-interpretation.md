@@ -17,7 +17,7 @@ DesignEpoch: `Garden-v15.5@63561ce9fcd4a72f44af333662b342fd18c4e99930209c30c5f80
 
 All five canonical files were recovered and independently hashed locally. Their byte counts and SHA-256 hashes match the current manifest. All 59 fetched files match their repository Git blob hashes. Complete recursive tree snapshots were inspected for both heads; 59 selected files were fetched, not every repository file. The selected source corpus includes all five canonical source documents, current manifests, live agent/process guidance, relevant authority/gate/kernel mechanisms, reference tests, v15.10 runtime profile, v15.11 compact review projections and RCC/REP/SHR deltas. Uploaded Git Operating Context was read completely; live AGENTS and Git Operating Context were also read. Historical conversation archives were not exhaustively re-audited.
 
-`source-map.json` records 50 rule mappings with repository, commit, Git blob SHA, full-file SHA-256, line span, exact excerpt and excerpt SHA-256. `source-inventory.json` records every fetched file and hash verification.
+`source-map.json` records 50 rule mappings with repository, commit, Git blob SHA, full-file SHA-256, line span, exact excerpt and excerpt SHA-256. `source-inventory.json` records every fetched file and hash verification. Their published path fields are immutable GitHub blob URLs: these identify external source artifacts rather than required local runtime files. Transient downloaded source mirrors are validation inputs, not deployment dependencies.
 
 ## Precedence and status
 

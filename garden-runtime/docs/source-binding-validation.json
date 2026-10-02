@@ -2,12 +2,13 @@
   "schema": "GardenSourceBindingValidationReceipt/v1",
   "status": "IMPLEMENTATION",
   "result": "PASS_WITH_DECLARED_BOUNDARY",
-  "source_map_sha256": "da65325887fd883a953c3798ce142211c8e2d1606a4b114b2378e83a7a4d0e12",
-  "inventory_sha256": "931512fcfd9c072dbf0f8687874976f6061007d7115061a7dc3cf69bcec3d407",
+  "source_map_sha256": "cc873e34f1e9eaa43ac47f0848ed39a530bb4ed12284bdffbec208eddaab7bd8",
+  "inventory_sha256": "72bd1c7aba8c5a1c65ac084aaf373ad2ac2f0bc37f0240c0fc008f6745ef6d34",
   "canonical_files_verified": 5,
   "repository_blobs_verified": 59,
   "rule_mappings": 50,
   "exact_anchor_spans_verified": 49,
   "candidate_promotions": 0,
+  "reference_semantics": "External source paths are exact immutable GitHub URLs; transient scratch copies are not runtime dependencies. Source content and status are unchanged.",
   "boundary": "Local cryptographic identity/span verification of retrieved exact repository content. Does not establish semantic completeness, independent certification, empirical safety or deployment authority."
 }

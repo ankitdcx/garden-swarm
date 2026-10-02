@@ -19,7 +19,7 @@
   "source_checks": [
     {
       "role": "User",
-      "path": "canonical/current/Garden_User_v15.5_FULL_2026-09-12.txt",
+      "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_User_v15.5_FULL_2026-09-12.txt",
       "expected_sha256": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435",
       "observed_sha256": "55aa9b58be6b0b6f0f02f845dc8b5d4ca692ddc50a8f50841374b599d1356435",
       "bytes": 102337,
@@ -27,7 +27,7 @@
     },
     {
       "role": "System",
-      "path": "canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
+      "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
       "expected_sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
       "observed_sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
       "bytes": 210910,
@@ -35,7 +35,7 @@
     },
     {
       "role": "Technical",
-      "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+      "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
       "expected_sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
       "observed_sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
       "bytes": 735329,
@@ -43,7 +43,7 @@
     },
     {
       "role": "Annexure",
-      "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+      "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
       "expected_sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
       "observed_sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
       "bytes": 671401,
@@ -51,7 +51,7 @@
     },
     {
       "role": "Theories",
-      "path": "canonical/current/Garden_Theories_v15.5_FULL_2026-09-12.txt",
+      "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Theories_v15.5_FULL_2026-09-12.txt",
       "expected_sha256": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93",
       "observed_sha256": "26624ffa482e898ca30d7ef8eb147b17a07fa7a007fea3662169f23426207a93",
       "bytes": 144938,
@@ -71,7 +71,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3859,
@@ -94,7 +94,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3861,
@@ -117,7 +117,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3850,
@@ -140,7 +140,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3851,
@@ -163,7 +163,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3855,
@@ -186,7 +186,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3856,
@@ -209,7 +209,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3862,
@@ -232,7 +232,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3864,
@@ -255,7 +255,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4959,
@@ -278,7 +278,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3418,
@@ -301,7 +301,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3421,
@@ -324,7 +324,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3423,
@@ -347,7 +347,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3424,
@@ -370,7 +370,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3425,
@@ -393,7 +393,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4750,
@@ -416,7 +416,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4751,
@@ -439,7 +439,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3501,
@@ -462,7 +462,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3502,
@@ -485,7 +485,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3505,
@@ -508,7 +508,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3445,
@@ -531,7 +531,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3448,
@@ -554,7 +554,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4920,
@@ -577,7 +577,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4015,
@@ -600,7 +600,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4016,
@@ -623,7 +623,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3332,
@@ -646,7 +646,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3335,
@@ -669,7 +669,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3337,
@@ -692,7 +692,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3338,
@@ -715,7 +715,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3340,
@@ -738,7 +738,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4239,
@@ -761,7 +761,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4244,
@@ -784,7 +784,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4246,
@@ -807,7 +807,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4248,
@@ -830,7 +830,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 5648,
@@ -853,7 +853,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4948,
@@ -876,7 +876,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4952,
@@ -899,7 +899,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 3433,
@@ -922,7 +922,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 4902,
@@ -945,7 +945,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Annexure_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "ab770b4a58095902c150415f7495eb013da6bd0f",
           "sha256": "56aa88e3c63e8ec8540175c0fad7d9d06ead021c49756cb281f4276a5c8bd084",
           "line_start": 1582,
@@ -957,7 +957,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "f6f56f697bec89b456b449d35850002feb19f22a",
           "sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
           "line_start": 77,
@@ -980,7 +980,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_Technical_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "f6f56f697bec89b456b449d35850002feb19f22a",
           "sha256": "865f5ded862cb30d51ad213fa05cdc342983a31fb6a23bb9aad5b25a84d1cb9b",
           "line_start": 1073,
@@ -1003,7 +1003,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "implementation/garden_kernel/authority_path.py",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/implementation/garden_kernel/authority_path.py",
           "git_blob_sha": "71c8821251ba139fff045c5db190528bd0c59ebd",
           "sha256": "1479a250391e9f0ac33d1bcaec5e1a0fd109b7fb4a0bd098bef4ba0bffbc9c3d",
           "line_start": 66,
@@ -1015,7 +1015,7 @@
         {
           "repository": "ankitdcx/garden-swarm",
           "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
-          "path": "prototype/authority.py",
+          "path": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/prototype/authority.py",
           "git_blob_sha": "1696dfe19bd67814e2801acdc2d547117ff12481",
           "sha256": "0ab6f61a24a5859562a63adb01c70925e7d8bd690022e4747ed1400e931ba66b",
           "line_start": 16,
@@ -1038,7 +1038,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/canonical/current/Garden_System_v15.5_FULL_2026-09-12.txt",
           "git_blob_sha": "5373643bf0b57d161e8cdffbda4edc578892e3e1",
           "sha256": "6ead73f66c878caa6d1e419ad82afbc7f0f2a243e5de2cf1477e9c0ee4d93fe1",
           "line_start": 1735,
@@ -1061,7 +1061,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "design_deltas/v15.7/HUMAN-EFFECT-CLOSURE-CANDIDATE-2026-09-16.md",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.7/HUMAN-EFFECT-CLOSURE-CANDIDATE-2026-09-16.md",
           "git_blob_sha": "21d6cc89655dc7a493fe6e85c260371576159527",
           "sha256": "425a719b52bfe9764f37e916a5c0b8161f4a6e31df9ca5299b474333e055ef4e",
           "line_start": 1,
@@ -1084,7 +1084,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "design_deltas/v15.11/rep/GARDEN_v15.11_REP_CANDIDATE.md",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.11/rep/GARDEN_v15.11_REP_CANDIDATE.md",
           "git_blob_sha": "ef936cf3bdb291946e88747fca41fd1e0f955e00",
           "sha256": "b0289b3cc0249ced3b3d63e61679fb716b810e01c1ddd83c1e8bc270961e5a8e",
           "line_start": 1,
@@ -1107,7 +1107,7 @@
         {
           "repository": "ankitdcx/garden-main",
           "commit": "a9a1290e353a2c8c783edf5f5e8b4a121456a987",
-          "path": "design_deltas/v15.11/rcc/GARDEN_v15.11_RCC_CANDIDATE.md",
+          "path": "https://github.com/ankitdcx/garden-main/blob/a9a1290e353a2c8c783edf5f5e8b4a121456a987/design_deltas/v15.11/rcc/GARDEN_v15.11_RCC_CANDIDATE.md",
           "git_blob_sha": "c5976cad138e6b1d725380cf23b586c001e6ccc5",
           "sha256": "1d1cb7182668cacd1de23e34ecbfaad80a1bd7533367997cd91e1d5079899065",
           "line_start": 1,
@@ -1130,7 +1130,7 @@
         {
           "repository": "ankitdcx/garden-swarm",
           "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
-          "path": "agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md",
+          "path": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/agent/GARDEN_RUNTIME_CONSTITUTIONAL_PROFILE_v15.10_CANDIDATE.md",
           "git_blob_sha": "4b0c5a4b12dbb37637d58164d478989f3b928550",
           "sha256": "a3e730928e2adc9738e51180985860ca848c613b0508d86f37ad41a6718f04e9",
           "line_start": 1,
@@ -1153,7 +1153,7 @@
         {
           "repository": "ankitdcx/garden-swarm",
           "commit": "9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e",
-          "path": "agent/v15.11/GARDEN_TECHNICAL_v15.11_CANDIDATE.txt",
+          "path": "https://github.com/ankitdcx/garden-swarm/blob/9bbdc0fcdf8189b1fde5647c1c6e7a1249e6604e/agent/v15.11/GARDEN_TECHNICAL_v15.11_CANDIDATE.txt",
           "git_blob_sha": "bd497cf095512e9db619527764c54435ac22ac8c",
           "sha256": "1a0b3eed23788aa48699d04337f002893578e89347d83badb71ac13e62f3c14b",
           "line_start": 47,
@@ -1242,5 +1242,6 @@
       "question": "Android sources only appear in retired branch archives, no current live Android tree.",
       "disposition": "Recover historical app scaffolding as experimental reference or provide responsive console; do not claim Android deployment."
     }
-  ]
+  ],
+  "path_semantics": "Path fields identify immutable external GitHub blobs; url additionally carries exact line spans. Repository, commit, content hashes, status and excerpts remain independently explicit."
 }

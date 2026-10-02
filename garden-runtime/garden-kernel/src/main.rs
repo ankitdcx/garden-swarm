@@ -467,8 +467,9 @@ impl Gate {
         decision: &str,
         reasons: &[String],
         result: &Value,
+        dispatch_at: Option<u64>,
     ) -> Result<Value, String> {
-        let payload = json!({"schema":"garden.receipt.v1","sequence":self.state.sequence+1,"previous_hash":self.state.last_receipt_hash,"proposal_digest":digest(p),"who_proposed":p.actor_id,"proposal_id":p.id,"tool":p.tool,"evidence":p.claims,"uncertainties":p.unknowns,"authority":p.delegation_id,"verification":p.assessment_ids.verification,"human_effects":{"declared":p.human_effect,"tool_classified":!readonly(&p.tool),"assessment":p.assessment_ids.human_effect},"qse_findings":p.assessment_ids.qse,"truthfulness":p.assessment_ids.truthfulness,"decision":decision,"reasons":reasons,"execution_result":result,"timestamp":now(),"policy_version":self.policy.version,"policy_hash":self.state.policy_hash,"source_status":self.policy.status,"source_anchors":self.policy.source_anchors,"integrity_semantics":"HMAC authenticates gate record; not proof of evidence truth or model independence"});
+        let payload = json!({"schema":"garden.receipt.v1","sequence":self.state.sequence+1,"previous_hash":self.state.last_receipt_hash,"proposal_digest":digest(p),"who_proposed":p.actor_id,"proposal_id":p.id,"tool":p.tool,"evidence":p.claims,"uncertainties":p.unknowns,"authority":p.delegation_id,"verification":p.assessment_ids.verification,"human_effects":{"declared":p.human_effect,"tool_classified":!readonly(&p.tool),"assessment":p.assessment_ids.human_effect},"qse_findings":p.assessment_ids.qse,"truthfulness":p.assessment_ids.truthfulness,"decision":decision,"reasons":reasons,"execution_result":result,"admission_timestamp":dispatch_at,"timestamp":now(),"policy_version":self.policy.version,"policy_hash":self.state.policy_hash,"source_status":self.policy.status,"source_anchors":self.policy.source_anchors,"integrity_semantics":"HMAC authenticates gate record; not proof of evidence truth or model independence"});
         let bytes = serde_json::to_vec(&payload).unwrap();
         let hash = sha(&bytes);
         let receipt = json!({"payload":payload,"hash":hash,"hmac":mac(&self.receipt_key,&bytes)});
@@ -969,6 +970,58 @@ impl Gate {
             resource,
         )
     }
+    // Check time again after all filesystem/evidence validation, immediately at dispatch admission.
+    // Policy/revocation state cannot change concurrently inside this serialized gate process.
+    fn dispatch_time(&self, p: &Proposal) -> Result<u64, String> {
+        let mut deadline = u64::MAX;
+        let mut current = self
+            .policy
+            .delegations
+            .iter()
+            .find(|d| d.id == p.delegation_id)
+            .ok_or("NO_DELEGATION")?;
+        let authority = self
+            .policy
+            .authorities
+            .iter()
+            .find(|a| a.id == current.authority_id)
+            .ok_or("NO_AUTHORITY")?;
+        deadline = deadline.min(authority.expires_at);
+        for _ in 0..=self.policy.max_delegation_depth {
+            deadline = deadline.min(current.expires_at);
+            match &current.parent_id {
+                Some(id) => {
+                    current = self
+                        .policy
+                        .delegations
+                        .iter()
+                        .find(|d| &d.id == id)
+                        .ok_or("MISSING_DELEGATION_PARENT")?
+                }
+                None => break,
+            }
+        }
+        if p.human_effect || !readonly(&p.tool) {
+            for id in [
+                &p.assessment_ids.verification,
+                &p.assessment_ids.qse,
+                &p.assessment_ids.truthfulness,
+                &p.assessment_ids.human_effect,
+            ] {
+                let record = self
+                    .state
+                    .assessments
+                    .get(id.as_ref().ok_or("MISSING_ASSESSMENT")?)
+                    .ok_or("MISSING_ASSESSMENT")?;
+                deadline = deadline.min(record.expires_at)
+            }
+        }
+        let dispatch_at = now();
+        if deadline <= dispatch_at {
+            return Err("DEADLINE_EXPIRED_AT_TOOL_DISPATCH".into());
+        }
+        Ok(dispatch_at)
+    }
     fn execute_tool(&mut self, p: &Proposal) -> Result<Value, String> {
         match p.tool.as_str() {
             "calculator" => {
@@ -1097,6 +1150,7 @@ impl Gate {
                     return json!({"ok":false,"decision":"QUARANTINE","reasons":[format!("DURABILITY_FAILURE: {e}")]});
                 }
                 let mut result = Value::Null;
+                let mut dispatch_at = None;
                 if decision == "ALLOW" {
                     for id in chain {
                         let u = self.state.usages.entry(id).or_default();
@@ -1111,7 +1165,8 @@ impl Gate {
                     if final_decision != "ALLOW" {
                         decision = final_decision;
                         reasons = final_reasons;
-                    } else {
+                    } else if let Ok(at) = self.dispatch_time(&p) {
+                        dispatch_at = Some(at);
                         result = match self.execute_tool(&p) {
                             Ok(r) => r,
                             Err(e) => {
@@ -1125,9 +1180,12 @@ impl Gate {
                                 return json!({"ok":false,"decision":"QUARANTINE","reasons":[format!("EFFECT_STATE_DURABILITY_FAILURE: {e}")]});
                             }
                         }
+                    } else {
+                        decision = "DENY".into();
+                        reasons = vec!["DEADLINE_EXPIRED_AT_TOOL_DISPATCH".into()];
                     }
                 }
-                let receipt = match self.receipt(&p, &decision, &reasons, &result) {
+                let receipt = match self.receipt(&p, &decision, &reasons, &result, dispatch_at) {
                     Ok(r) => r,
                     Err(e) => {
                         return json!({"ok":false,"decision":"QUARANTINE","reasons":[format!("RECEIPT_DURABILITY_FAILURE: {e}")]})
