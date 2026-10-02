@@ -222,3 +222,59 @@ a gate receipt or confer execution authority.
 The model run's kernel-at-receipt hash records the earlier code present during
 that run; the later source-review hash is recorded separately. The model is
 unchanged, and Rust-only edits do not turn its result into a Rust proof.
+
+## Scoped follow-up: Console native fallback
+
+This follow-up independently inspected `garden-runtime/garden-console/server.py` at SHA-256
+`3d6333d373eb27ea146fee7fe4bbfe7fa817b5981d8af0164bc46c48a96fa6f6`
+and `garden-runtime/garden-agents/worker.py` at SHA-256
+`faa2f1c0ffbf66b9eeac478539741a02a33d730f9462efd8417bb4b9af89d01e`.
+It reviews the fixed Python fallback and its authorization relationship, not the
+separate WASM model route or the operator's native inference observation CLI.
+
+**Finding:** disabling model-environment forwarding and unconditionally selecting
+`RuleBasedBackend` closes automatic model-to-human-control privilege promotion
+within the declared fixed-child trusted base. The Console child receives only
+task/tool/arguments, a fixed PATH/LANG/bytecode environment and bounded pipes.
+The shim neither selects a native model binary nor consults ambient model settings.
+The server constructs the actual proposal from validated caller tool arguments,
+performs its narrow consent/review procedure and holds the broker credentials.
+Child prose is advisory; the numeric-claim check can add an uncertainty veto,
+but child output cannot issue a grant, select a human identity, register a PASS
+assessment or set the server's consent flag.
+
+Three targeted regressions in
+[test_console_rule_fallback.py](../garden-tests/test_console_rule_fallback.py)
+passed in an independent rerun. The actual shim ignores an operable native-binary
+fixture and model configuration; a positive control establishes that the fixture
+could launch. The other cases check the exact clean child environment and rule
+fallback when WASM configuration is unavailable. The environment/launch checks
+use scoped interception where stated; they are not kernel or network isolation
+proofs. No new network attack or observed exploitation is claimed here.
+
+The result depends on the following assumptions:
+
+- The server, broker, fixed shim, imported Python modules/interpreter and their
+  configuration remain trusted and immutable to untrusted task/model data.
+  Task text is data; no plugin, dynamic native backend, code evaluation or
+  model-selected command may be added to this lane without a new review.
+- Dropping UID when the server starts as root adds filesystem/process protection
+  but does not remove network access. When started as a non-root user, that UID
+  drop does not occur. A compromised/arbitrary native child is outside this
+  fixed-code argument; UID separation alone cannot contain it.
+- The anonymous `/api/session` route issues a bounded demo bearer capability,
+  not authenticated human identity. Any network-capable client can request that
+  route subject to its limits. The fixed child makes no such request. Admission
+  of arbitrary native runtime code would require an independently enforced
+  network/control boundary or a genuinely authenticated human authorization
+  path; lacking the gate's secret token alone would not establish containment.
+- The server's consent Boolean and synthetic human/reviewer registry labels are
+  sufficient only for the declared harmless per-session demo profile. They do
+  not establish real human identity, informed consent, reviewer independence,
+  jurisdiction or substantive truthfulness. Host compromise, writable imports,
+  credential exposure and broader semantic effects remain excluded or unresolved.
+
+This change reduces the native fallback's execution surface by removing model
+selection. It supplies no HSA/native-runtime admission certificate, no arbitrary
+native inference containment proof, and no new execution authority. Re-enabling
+native model execution would invalidate this fixed-child finding.

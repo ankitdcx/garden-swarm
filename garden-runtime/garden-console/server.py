@@ -124,7 +124,11 @@ def audit_numeric_claims(roles):
 
 
 def agent_work(task, tool, args):
-    """Inference child receives no gate credentials and cannot execute tools."""
+    """Fixed WASM inference or deterministic advice; neither receives gate keys.
+
+    Native model adapters belong to the separate observation CLI. UID separation
+    alone does not isolate their network access from the human control API.
+    """
     wasm_worker = ROOT / "garden-agents/wasm_worker.mjs"
     dependency_path = os.environ.get("GARDEN_WASM_DEPENDENCIES")
     model_directory = os.environ.get("GARDEN_WASM_MODEL_DIR")
@@ -157,11 +161,10 @@ def agent_work(task, tool, args):
             pass
     cli = ROOT / "garden-agents" / "worker.py"
     if cli.exists():
-        clean_env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "LANG": "C.UTF-8",
+        # This fixed child is rule-only. Ambient native model configuration must
+        # never enable executable model/runtime code inside the controller lane.
+        clean_env = {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8",
                      "PYTHONDONTWRITEBYTECODE": "1"}
-        for key in ("GARDEN_MODEL_URL", "GARDEN_MODEL_NAME", "GARDEN_LLAMA_BINARY", "GARDEN_MODEL_PATH"):
-            if key in os.environ:
-                clean_env[key] = os.environ[key]
         def restrict():
             import resource
             resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
