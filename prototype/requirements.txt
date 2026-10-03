@@ -1,2 +1,2 @@
-pytest>=8,<9
-cryptography>=46,<47
+pytest>=9.1.1,<10
+cryptography>=50.0.1,<51
