@@ -25,11 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Aggregate trusted GitHub run metadata without executing candidate code
@@ -38,7 +38,7 @@ jobs:
           CANDIDATE_SHA: ${{ github.event.workflow_run.head_sha || inputs.head_sha }}
           CANDIDATE_REPOSITORY: ${{ github.repository }}
         run: python -m tools.aggregate_ci_receipts --head-sha "$CANDIDATE_SHA" --repository "$CANDIDATE_REPOSITORY" --output aggregate-ci-receipt.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: pipeline-aggregate-${{ github.run_id }}

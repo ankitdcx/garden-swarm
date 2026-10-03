@@ -13,10 +13,10 @@ jobs:
   guard:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Compute observed changed paths
@@ -57,7 +57,7 @@ jobs:
         run: python scripts/check_constitutional_change.py --paths-file /tmp/changed-paths.txt --output /tmp/constitutional-change-guard.json
       - name: Upload guard receipt
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: constitutional-change-guard-${{ github.run_id }}
           path: |
