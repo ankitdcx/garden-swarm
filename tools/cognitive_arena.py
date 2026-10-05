@@ -3,8 +3,8 @@
 import hashlib,json,os,re,time
 from pathlib import Path
 from urllib import request,error
-OR="https://openrouter.ai/api/v1"; CAP=.05; DAILY=2.0
-MODELS=[]
+OR="https://openrouter.ai/api/v1"; CAP=.05; DAILY=3.65
+MODELS=[{"family":"deepseek","model":"deepseek/deepseek-v4-pro-0813"},{"family":"nvidia","model":"nvidia/nemotron-3-ultra-550b-a55b"},{"family":"pareto","model":"unbiased/pareto"},{"family":"mistral","model":"mistralai/mistral-medium-3-5"},{"family":"grok","model":"x-ai/grok-4.6"}]
 OUT=Path("cognitive-arena-result.json")
 def http(url,key,body=None,timeout=180):
  h={"Authorization":"Bearer "+key,"Content-Type":"application/json","User-Agent":"garden-cognitive-arena"}
