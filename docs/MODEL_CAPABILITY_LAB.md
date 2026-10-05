@@ -1,78 +1,39 @@
-# Model Capability Comparison Process v0.1 — Frozen Review Target
+# Model Capability Comparison Process v1.0 — First Executable Epoch
 
-Status: FROZEN_FOR_ADVERSARIAL_REVIEW. No implementation or capability run is authorized by this document.
+Status: FROZEN_FOR_EPOCH_1. Incorporates the independent 2026-10-05 protocol attacks. No rule changes after item generation begins.
 
-## Objective
-Measure comparative reasoning capability across model families while isolating reasoning from web/filesystem/compiler/tools, memory, agent infrastructure, static benchmark memorization, popularity and reputation. Execution after protocol freeze will use OpenRouter where exact models are available.
+## Measurement
+Primary: at least 200 fresh procedurally generated common reasoning items with locally computed deterministic keys. Secondary: each participating model authors 10 reciprocal adversarial questions. Reciprocal questions never replace the common comparison.
 
-## Review-before-run
-Freeze this process; send the identical protocol to independent model families; preserve raw reviews without cross-talk; accept changes only for concrete failure/bias scenarios; reconcile and freeze v1.0 before generating real test items.
+## Roles and exposure
+Authoring, admission, solving and adjudication use isolated sessions. Prior item/key exposure is recorded and disqualifies that solver-item observation from fully blind scoring.
 
-## Roles
-Separate author, admissibility reviewer, solver and verifier/adjudicator. Any overlap is recorded; prior exposure to an item/key disqualifies that observation from fully blind primary scoring.
+## Reciprocal items
+Before solving, freeze question, intended answer, assumptions, category, difficulty claim, scoring rule and ambiguity note. Reject trivia, subjective/current/private knowledge, tokenizer/character/string/spatial exploits, model-identity questions, unverifiable keys and wording traps. Independent key validation is required. Defective items remain author-quality evidence.
 
-## Test structure
-A common independent set plus reciprocal challenges. Each participant authors an equal number (initially 10) of novel questions. Before seeing solver answers, freeze question, answer, scoring rule, assumptions, ambiguity analysis, category, difficulty rationale, verification method and SHA-256.
+## Common items
+Use parametric families spanning arithmetic dependency, modular recurrence, constraint/order, graph/path, probability, sets, causal intervention, scheduling, base conversion and consistency/logic. Freeze generator version, seed and hashes before solving. Retire items after first transmission.
 
-## Admissibility
-Items must be novel, self-contained, text-only, reasoning-focused and independent of current web/private knowledge/tools. Reject trivia, subjective taste, obscure recall, wording traps, tokenizer/subword or character-counting exploits, string reversal, ASCII/spatial tricks, model identity, inaccessible information and unverifiable answers. Normalize notation where practical. Defective items reduce authoring quality.
+## Solving and comparability
+Same substantive instructions; no tools/web/files/memory. Record exact model/provider/version, visible budgets, latency, cost and transport state. Hidden reasoning budgets are not assumed equivalent; also report accuracy/cost and latency frontiers. Two pre-registered semantically equivalent solver wrappers are randomly assigned to disjoint common-item halves.
 
-## Author quality
-Do not reward survival alone. Measure validity plus empirical discriminative power/difficulty. Trivial indisputable items cannot maximize author quality.
+## Failure semantics
+Valid answer scores normally. Refusal/invalid/malformed answer to a valid item is incorrect. Provider/transport/no-visible-text failure is TRANSPORT_FAILURE, not reasoning failure; report capability conditional on availability and end-to-end reliability separately. Unavailable/price-blocked is UNAVAILABLE, never zero capability.
 
-## Blind solving
-Equivalent instructions, information, restrictions, answer format and comparable resource budgets. Record exact model/version/provider/time/temperature/top_p/seed/token or reasoning limits. Randomize item order. No competitor answers, hidden keys, scores or adjudication. Authoring/solving/adjudication use isolated sessions. Self-authored solving is separate and excluded from primary reciprocal accuracy.
+## Verification/disputes
+Deterministic verification first. Author keys/checkers are independently validated. Open answers are normalized/anonymized and unresolved items get at least three independent judges where affordable. Majority is not truth: a verified counterexample overrides votes. Remaining disputes stay DISPUTED and appear in sensitivity analysis.
 
-## Cross-model comparability
-Identical API parameters are not assumed equivalent. Report resource conditions and accuracy-versus-cost/compute Pareto frontiers rather than a fabricated cost-adjusted scalar.
-
-## Verification
-Prefer deterministic/formal verification. Authors cannot unilaterally control representation-biased checkers. Equivalent correct answers must be accepted where appropriate.
-
-## Open-answer adjudication
-Use frozen rubric, structural/style normalization, anonymization, multiple independent adjudicators and inter-rater agreement. Permit explicit counterexamples.
-
-## No majority-vote truth
-Consensus does not establish correctness. A counterexample must itself be verified. Unresolved items become DISPUTED/UNKNOWN; do not force consensus.
-
-## Dispute transparency
-Report dispute count, difficulty, author family, disagreement and reason; show sensitivity with/without disputed items where meaningful.
-
-## Home-field effects
-Report peer-authored accuracy by author family/category, self-authored results separately, and representation/style effects.
+## Home-field
+Exclude self-authored questions from primary reciprocal score. Report peer accuracy by author family/category. Author quality combines validity, rejection/ambiguity rate, empirical difficulty and discrimination; trivial survival alone is not rewarded.
 
 ## Statistics
-Pre-register scoring, exclusions, stopping rule, statistical model, equivalence margin, multiple-comparison correction, minimum power/sample and any composites. Use paired/mixed-effects or IRT-style analysis. Strong claims require hundreds of observations across fresh epochs. Within the practical-equivalence region report INDISTINGUISHABLE, not an artificial rank.
+Common accuracy uses Wilson 95% intervals. Pairwise common-item differences use paired bootstrap with Holm correction. Practical-equivalence margin is 3 percentage points. A>B requires corrected significance and a difference outside that region; otherwise report INDISTINGUISHABLE_AT_CURRENT_POWER or INCONCLUSIVE. Reciprocal results remain secondary because author clustering/home-field dependence persists.
 
-## Longitudinal measurement
-Use fresh epochs. Published/leaked primary items are retired. Link epochs using secret never-published anchors and/or procedural generators with controlled difficulty distributions; pre-register calibration.
+## Cost enforcement
+Provider daily usage remains authoritative. Pre-call estimates reserve at least a 35% safety margin under the per-call ceiling. An observed ceiling overrun is a protocol incident and blocks further calls to that model in the epoch.
 
-## Contamination
-No actual test items during protocol review. Generate the first item bank only after v1.0 freeze. Treat transmission to an external provider as potential exposure. Preserve hashes/timestamps/provenance.
-
-## Calibration/consistency
-Confidence calibration requires confidence reports and sufficient observations. Consistency requires repeated samples under a pre-registered policy; one deterministic response cannot establish consistency.
-
-## Prompt robustness
-Use multiple pre-registered semantically equivalent prompt variants where feasible and report sensitivity. Never select a prompt post-hoc to favor a model.
-
-## Human-grounded validation
-Include an independently validated slice for benchmark validity, ambiguity, disputed keys and category validity so the system is not solely models grading models.
-
-## Adjudication scaling
-If full cross-adjudication is too costly, use pre-registered stratified random adjudication: multiple independent judges per open/disputed item, randomized assignment, minimum coverage, and extra verification for difficult/high-impact disputes.
-
-## Reporting
-Per model: common accuracy; reciprocal peer-authored accuracy; author-family/category breakdown; author validity/discrimination; refusal/invalid rate; calibration/consistency where supported; latency/tokens/cost; accuracy-cost Pareto position; uncertainty intervals.
-
-Primary pairwise conclusions: A>B WITH EVIDENCE; B>A WITH EVIDENCE; INDISTINGUISHABLE AT CURRENT POWER; INCONCLUSIVE; DISPUTED. Non-significance is not proof of equality.
-
-After deterministic analysis, models may independently challenge anonymized results. Label cross-model consensus only where conclusions survive counterexample checking. Preserve disagreements.
-
-Never publish a universal intelligence scalar. Report profiles, pairwise distinctions, uncertainty, cheap-vs-frontier gap, category differences, Pareto frontier, longitudinal change and evidence strength.
-
-## Execution/audit
-After v1.0 freeze, run through OpenRouter where exact models exist. Preserve protocol version -> epoch -> item provenance/hashes -> exact models/settings -> raw answers -> verification -> disputes -> statistics -> conclusions.
+## Reporting/rating
+Publish common accuracy/CI, reciprocal peer accuracy, author quality, category/author breakdown, transport reliability, invalid/refusal rate, latency, cost, Pareto position, pairwise status and disputes. A user-facing Epoch Rating 0-100 may be shown only as a descriptive index: 70% common accuracy + 20% reciprocal peer accuracy + 10% reliability. Missing reciprocal data makes it PROVISIONAL. Pairwise statistical conclusions remain primary; this is not a universal intelligence number.
 
 ## Boundary
-Benchmark performance is empirical evidence only. It grants no truth, Proof, authority, canonical status, permission or automatic model-selection power.
+Scores are empirical evidence only. No score creates truth, Proof, authority, permission, canonical status or automatic model selection.
