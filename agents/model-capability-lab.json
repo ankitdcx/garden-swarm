@@ -1,0 +1,27 @@
+{
+  "schema":"GardenModelCapabilityLabConfig/v1",
+  "status":"ACTIVE_NONCANONICAL_MEASUREMENT",
+  "canonical_effect":"NONE",
+  "authority_effect":"NONE",
+  "common_task_count":10,
+  "reciprocal_questions_per_author":10,
+  "temperature":0,
+  "max_output_tokens":3000,
+  "provider_exclusion_policy":"agents/provider-exclusion-policy.json",
+  "scoring":{"exact_or_frozen_rule_first":true,"blind_anonymized_review":true,"majority_vote_is_proof":false,"counterexample_overrides_consensus":true,"disputed_state_preserved":true},
+  "models":[
+    {"family":"deepseek","model":"deepseek/deepseek-v4-pro-0813"},
+    {"family":"xiaomi","model":"xiaomi/mimo-v2.5-pro"},
+    {"family":"nvidia","model":"nvidia/nemotron-3-ultra-550b-a55b"},
+    {"family":"pareto","model":"unbiased/pareto"},
+    {"family":"mistral","model":"mistralai/mistral-medium-3-5"},
+    {"family":"glm","model":"z-ai/glm-5.3"},
+    {"family":"grok","model":"x-ai/grok-4.6"},
+    {"family":"gemini","model":"google/gemini-3.1-pro-preview"},
+    {"family":"qwen","model":"qwen/qwen3.8-2.4t-a95b"},
+    {"family":"kimi","model":"moonshotai/kimi-k3"},
+    {"family":"openai","model":"openai/gpt-6-astra"},
+    {"family":"anthropic","model":"anthropic/claude-opus-5"},
+    {"family":"sakana","model":"sakana/fugu-ultra-v2"}
+  ]
+}
