@@ -5,8 +5,27 @@ on:
 permissions:
   contents: read
 jobs:
+  extract:
+    if: startsWith(github.event.issue.title, '[COGNITIVE_ARENA_EXTRACT]')
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir a1 a2
+          gh api /repos/${{ github.repository }}/actions/artifacts/11348395118/zip > a1.zip
+          gh api /repos/${{ github.repository }}/actions/artifacts/11348270609/zip > a2.zip
+          unzip -q a1.zip -d a1; unzip -q a2.zip -d a2
+          python - <<'PY'
+          import json
+          for L,p in [('RUN1','a1/cognitive-arena-result.json'),('RUN2','a2/cognitive-arena-result.json')]:
+            d=json.load(open(p)); print('===',L,'===')
+            for fam,v in d['solves'].items(): print('SOLVE',fam,json.dumps(v.get('parsed'),separators=(',',':')))
+            for fam,v in d['research'].items(): print('RESEARCH',fam,json.dumps(v.get('parsed'),separators=(',',':')))
+            for fam,v in d['judges'].items(): print('JUDGE',fam,json.dumps(v.get('parsed'),separators=(',',':')))
+          PY
   arena:
-    if: startsWith(github.event.issue.title, '[COGNITIVE_ARENA]')
+    if: github.event.issue.title == '[COGNITIVE_ARENA] paid bounded epoch R2' || github.event.issue.title == '[COGNITIVE_ARENA] bounded paid epoch R2' || github.event.issue.title == '[COGNITIVE_ARENA] bounded paid epoch' || github.event.issue.title == '[COGNITIVE_ARENA] paid bounded epoch'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
