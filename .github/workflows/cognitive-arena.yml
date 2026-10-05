@@ -1,0 +1,25 @@
+name: Cognitive Arena
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+jobs:
+  arena:
+    if: startsWith(github.event.issue.title, '[COGNITIVE_ARENA]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.cognitive_arena
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cognitive-arena-result
+          path: cognitive-arena-result.json
+          if-no-files-found: ignore
+          retention-days: 90
