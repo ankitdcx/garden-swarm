@@ -1,0 +1,62 @@
+name: Model capability tournament
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        required: true
+        type: choice
+        options: [author, solve-common, solve-reciprocal, judge, report]
+      max_calls:
+        required: false
+        default: "12"
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+jobs:
+  tournament:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[MODEL_TOURNAMENT:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Restore tournament state
+        uses: actions/cache/restore@v4
+        with:
+          path: model-tournament-state.json
+          key: model-tournament-v1-state
+          restore-keys: model-tournament-v1-state
+      - name: Resolve phase
+        id: phase
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "phase=${{ inputs.phase }}" >> "$GITHUB_OUTPUT"
+            echo "calls=${{ inputs.max_calls }}" >> "$GITHUB_OUTPUT"
+          else
+            T="${{ github.event.issue.title }}"
+            P="${T#'[MODEL_TOURNAMENT:'}"; P="${P%']'}"
+            echo "phase=$P" >> "$GITHUB_OUTPUT"
+            echo "calls=13" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run phase
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tools.model_tournament --phase "${{ steps.phase.outputs.phase }}" --max-calls "${{ steps.phase.outputs.calls }}"
+      - name: Save tournament state
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: model-tournament-state.json
+          key: model-tournament-v1-state-${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: model-tournament-${{ steps.phase.outputs.phase }}
+          path: |
+            model-tournament-state.json
+            model-tournament-report.json
+          if-no-files-found: ignore
+          retention-days: 90
