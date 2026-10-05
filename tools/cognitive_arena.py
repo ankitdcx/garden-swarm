@@ -4,7 +4,7 @@ import hashlib,json,os,re,time
 from pathlib import Path
 from urllib import request,error
 OR="https://openrouter.ai/api/v1"; CAP=.05; DAILY=2.0
-MODELS=json.loads(Path("agents/model-capability-lab.json").read_text())["models"]
+MODELS=[]
 OUT=Path("cognitive-arena-result.json")
 def http(url,key,body=None,timeout=180):
  h={"Authorization":"Bearer "+key,"Content-Type":"application/json","User-Agent":"garden-cognitive-arena"}
@@ -37,7 +37,7 @@ def main():
  key=os.environ["OPENROUTER_API_KEY"]; start=float(http(OR+"/key",key)["data"].get("usage_daily") or 0); usable=[]; rec=[]
  # Phase 1: one 3-question challenge per model (keeps full matrix affordable)
  for m in MODELS:
-  if float(http(OR+"/key",key)["data"].get("usage_daily") or 0)+CAP>DAILY:break
+  
   p='Create exactly 3 hard novel self-contained reasoning problems that distinguish frontier AI reasoning. No trivia/web/tokenizer tricks. Freeze objective keys. JSON only {"questions":[{"id":"Q1","question":"...","answer":"...","category":"...","why_hard":"..."}]}.'
   z=call(m["model"],p,key);d=parse(z["text"]); qs=(d or {}).get("questions",[])
   row={"family":m["family"],"model":m["model"],"author_status":z["status"],"questions":qs if len(qs)==3 else [],"cost":z["cost"],"provider":z.get("provider")}
