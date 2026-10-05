@@ -1,10 +1,13 @@
 name: All-model capability protocol sweep
 on:
   workflow_dispatch:
+  issues:
+    types: [opened]
 permissions:
   contents: read
 jobs:
   sweep:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[ALL_MODEL_PROTOCOL_SWEEP]')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
