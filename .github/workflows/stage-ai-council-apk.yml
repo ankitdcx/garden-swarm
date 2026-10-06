@@ -1,11 +1,14 @@
 name: Stage AI Council APK
 on:
   workflow_dispatch:
+  issues:
+    types: [opened]
 permissions:
   contents: write
   actions: read
 jobs:
   stage:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[STAGE_AI_COUNCIL]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
