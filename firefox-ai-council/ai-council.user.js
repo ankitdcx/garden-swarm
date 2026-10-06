@@ -1,0 +1,50 @@
+// ==UserScript==
+// @name         AI Council - Multi AI Roundtable
+// @namespace    garden.local
+// @version      1.0.0
+// @description  Ask logged-in AI web chats together, cross-check, and synthesize without APIs.
+// @match        https://chatgpt.com/*
+// @match        https://gemini.google.com/*
+// @match        https://claude.ai/*
+// @match        https://grok.com/*
+// @match        https://chat.deepseek.com/*
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_addValueChangeListener
+// @grant        GM_registerMenuCommand
+// @run-at       document-idle
+// ==/UserScript==
+(function(){
+'use strict';
+const sleep=m=>new Promise(r=>setTimeout(r,m));
+const S={question:'aic_q',phase:'aic_phase',job:'aic_job',answers:'aic_answers',critiques:'aic_critiques',final:'aic_final',stop:'aic_stop'};
+function who(){let h=location.hostname;if(h==='chatgpt.com')return'ChatGPT';if(h==='gemini.google.com')return'Gemini';if(h==='claude.ai')return'Claude';if(h==='grok.com')return'Grok';if(h==='chat.deepseek.com')return'DeepSeek';return h}
+const cfg={
+ChatGPT:{i:['#prompt-textarea','textarea','div[contenteditable="true"]'],s:['button[data-testid="send-button"]','button[aria-label*="Send"]']},
+Gemini:{i:['div[contenteditable="true"]','textarea'],s:['button[aria-label*="Send"]','button.send-button']},
+Claude:{i:['div[contenteditable="true"]','textarea'],s:['button[aria-label*="Send"]','button[type="submit"]']},
+Grok:{i:['textarea','div[contenteditable="true"]'],s:['button[type="submit"]','button[aria-label*="Send"]']},
+DeepSeek:{i:['textarea','div[contenteditable="true"]'],s:['button[aria-label*="Send"]','button[type="submit"]']}
+};
+function first(a){for(const q of a){let e=document.querySelector(q);if(e)return e}return null}
+function setText(e,t){e.focus();if('value'in e){let p=Object.getPrototypeOf(e),d=Object.getOwnPropertyDescriptor(p,'value');if(d&&d.set)d.set.call(e,t);else e.value=t;e.dispatchEvent(new Event('input',{bubbles:true}))}else{e.textContent=t;e.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:t}))}}
+function snaps(){let out=[];['[data-message-author-role="assistant"]','.markdown','.prose','article','main'].forEach(q=>document.querySelectorAll(q).forEach(e=>{let t=(e.innerText||'').trim();if(t.length>40)out.push(t)}));return out}
+async function stable(old){let last='',n=0;for(let k=0;k<180;k++){if(GM_getValue(S.stop,false))throw Error('Stopped');await sleep(1000);let a=snaps(),x=a[a.length-1]||'';if(x&&x!==old&&x===last)n++;else n=0;last=x;if(n>=3&&x.length>40)return x}throw Error('Response timeout')}
+async function send(p){let c=cfg[who()],e=first(c.i);if(!e)throw Error('Input not found');let old=snaps().slice(-1)[0]||'';setText(e,p);await sleep(500);let b=first(c.s);if(b)b.click();else{e.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true}));e.dispatchEvent(new KeyboardEvent('keyup',{key:'Enter',code:'Enter',bubbles:true}))}return stable(old)}
+function getObj(k){let x=GM_getValue(k,{});return x&&typeof x==='object'?x:{}}
+function anon(o,label='Answer'){return Object.values(o).map((x,i)=>label+' '+String.fromCharCode(65+i)+':\n'+x).join('\n\n')}
+async function execute(job){
+ if(!job||job.id===GM_getValue('aic_last_job',''))return;GM_setValue('aic_last_job',job.id);
+ let me=who();try{let answer=await send(job.prompt);let key=job.phase==='round1'?S.answers:job.phase==='critique'?S.critiques:S.final;if(key===S.final)GM_setValue(key,{model:me,text:answer});else{let o=getObj(key);o[me]=answer;GM_setValue(key,o)}}catch(e){let key=job.phase==='round1'?S.answers:S.critiques,o=getObj(key);o[me]='ERROR: '+e.message;GM_setValue(key,o)}
+ render();
+}
+GM_addValueChangeListener(S.job,(k,o,n,remote)=>{if(remote)execute(n)});
+function broadcast(phase,prompt){GM_setValue(S.stop,false);GM_setValue(S.job,{id:Date.now()+'-'+Math.random(),phase,prompt})}
+function start(){let q=document.querySelector('#aic-question').value.trim();if(!q)return;GM_setValue(S.question,q);GM_setValue(S.answers,{});GM_setValue(S.critiques,{});GM_setValue(S.final,{});broadcast('round1',q);render()}
+function challenge(){let q=GM_getValue(S.question,''),a=getObj(S.answers);broadcast('critique','Original question:\n'+q+'\n\nIndependent answers:\n'+anon(a)+'\n\nIdentify concrete errors, missing dimensions and disagreements. Do not guess authors. Give your revised answer under 200 words.');render()}
+function final(){let q=GM_getValue(S.question,''),a=getObj(S.answers),c=getObj(S.critiques);broadcast('final','Original question:\n'+q+'\n\nAnswers:\n'+anon(a)+'\n\nCross-critiques:\n'+anon(c,'Critique')+'\n\nProduce one concise best-supported answer, then unresolved disagreements and unknowns. Do not force consensus.');render()}
+function stop(){GM_setValue(S.stop,true);render()}
+function render(){let p=document.querySelector('#ai-council-box');if(!p)return;let a=getObj(S.answers),c=getObj(S.critiques),f=getObj(S.final);p.querySelector('#aic-status').textContent='This tab: '+who()+' | Answers '+Object.keys(a).length+' | Critiques '+Object.keys(c).length+(f.text?' | Final ready':'');p.querySelector('#aic-out').textContent=f.text||Object.entries(a).map(([k,v])=>k+': '+v.slice(0,180)).join('\n\n')}
+function ui(){if(document.querySelector('#ai-council-box'))return;let d=document.createElement('div');d.id='ai-council-box';d.style='position:fixed;z-index:2147483647;right:8px;bottom:8px;width:min(360px,92vw);background:#111;color:#fff;padding:10px;border-radius:12px;font:13px sans-serif;box-shadow:0 2px 18px #0008';d.innerHTML='<b>AI Council</b><textarea id="aic-question" placeholder="Ask all open AI tabs…" style="width:100%;height:65px;margin-top:6px;box-sizing:border-box"></textarea><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px"><button id="aic-ask">ASK ALL</button><button id="aic-challenge">CROSS-CHECK</button><button id="aic-final">FINAL</button><button id="aic-stop">STOP</button></div><div id="aic-status" style="margin-top:5px"></div><pre id="aic-out" style="white-space:pre-wrap;max-height:150px;overflow:auto"></pre>';document.body.appendChild(d);d.querySelector('#aic-ask').onclick=start;d.querySelector('#aic-challenge').onclick=challenge;d.querySelector('#aic-final').onclick=final;d.querySelector('#aic-stop').onclick=stop;render()}
+GM_registerMenuCommand('AI Council: show panel',ui);setTimeout(ui,1500);setInterval(render,3000);
+})();
