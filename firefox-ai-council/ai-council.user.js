@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AI Council - Multi AI Roundtable
 // @namespace    garden.local
-// @version      1.2.0
+// @version      1.3.0
 // @description  Ask logged-in AI web chats together, cross-check, and synthesize without APIs.
 // @match        https://chatgpt.com/*
 // @match        https://gemini.google.com/*
@@ -21,7 +21,7 @@ const S={question:'aic_q',phase:'aic_phase',job:'aic_job',answers:'aic_answers',
 function who(){let h=location.hostname;if(h==='chatgpt.com')return'ChatGPT';if(h==='gemini.google.com')return'Gemini';if(h==='claude.ai')return'Claude';if(h==='grok.com')return'Grok';if(h==='chat.deepseek.com')return'DeepSeek';return h}
 const cfg={
 ChatGPT:{i:['#prompt-textarea','textarea','div[contenteditable="true"]'],s:['button[data-testid="send-button"]','button[aria-label*="Send"]']},
-Gemini:{i:['div[contenteditable="true"]','textarea'],s:['button[aria-label*="Send"]','button.send-button']},
+Gemini:{i:['rich-textarea div[contenteditable="true"]','div.ql-editor[contenteditable="true"]','div[contenteditable="true"]'],s:['button[aria-label="Send message"]','button[aria-label*="Send"]']},
 Claude:{i:['div[contenteditable="true"]','textarea'],s:['button[aria-label*="Send"]','button[type="submit"]']},
 Grok:{i:['textarea','div[contenteditable="true"]'],s:['button[type="submit"]','button[aria-label*="Send"]']},
 DeepSeek:{i:['textarea','div[contenteditable="true"]'],s:['button[aria-label*="Send"]','button[type="submit"]']}
@@ -45,16 +45,16 @@ async function waitCount(key,n,ms=180000){let t=Date.now();while(Date.now()-t<ms
 function setStage(x){GM_setValue('aic_stage',x);render()}
 async function start(){
  let q=document.querySelector('#aic-question').value.trim();if(!q)return;
- GM_setValue(S.question,q);GM_setValue(S.answers,{});GM_setValue(S.critiques,{});GM_setValue(S.final,{});GM_setValue(S.stop,false);
+ GM_setValue(S.stop,true);GM_setValue(S.question,q);GM_setValue(S.answers,{});GM_setValue(S.critiques,{});GM_setValue(S.final,{});GM_setValue('aic_stage','Starting new council…');let box=document.querySelector('#aic-out');if(box)box.textContent='';await sleep(150);GM_setValue(S.stop,false);
  const n=expectedTabs();
  try{
   setStage('Asking '+n+' AIs…');broadcast('round1',q);
   await waitCount(S.answers,n);
   setStage('Comparing answers…');
-  let a=getObj(S.answers);broadcast('critique','Original question:\n'+q+'\n\nIndependent answers:\n'+anon(a)+'\n\nIdentify concrete errors, missing dimensions and disagreements. Do not guess authors. Give your revised answer under 200 words.');
+  let a=getObj(S.answers);broadcast('critique','Original question:\n'+q+'\n\nIndependent answers:\n'+labelled(a)+'\n\nReview EVERY answer above independently. For each answer, state any concrete error, missing dimension, or useful unique insight. Then give your own revised answer under 200 words. Do not merely follow majority agreement.');
   await waitCount(S.critiques,n);
   setStage('Making final answer…');
-  let c=getObj(S.critiques);broadcast('final','Original question:\n'+q+'\n\nAnswers:\n'+anon(a)+'\n\nCross-critiques:\n'+anon(c,'Critique')+'\n\nProduce one concise best-supported answer, then unresolved disagreements and unknowns. Do not force consensus.');
+  let c=getObj(S.critiques);broadcast('final','Original question:\n'+q+'\n\nAnswers:\n'+labelled(a)+'\n\nCross-critiques:\n'+labelled(c,'Review')+'\n\nYou are the final synthesizer. Use EVERY original answer and EVERY cross-review/revised answer above. Resolve disagreements only when reasons or evidence justify it. Produce sections: FINAL ANSWER, AGREEMENT, IMPORTANT DISAGREEMENTS, MISSED DIMENSIONS, UNKNOWNS. Keep the final answer concise but preserve important minority insights.');
   let t=Date.now();while(Date.now()-t<180000){let f=getObj(S.final);if(f.text){setStage('Done');return}await sleep(1000)}
   setStage('Final answer timed out');
  }catch(e){setStage(e.message)}
