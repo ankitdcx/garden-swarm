@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AI Council - Multi AI Roundtable
 // @namespace    garden.local
-// @version      1.1.0
+// @version      1.2.0
 // @description  Ask logged-in AI web chats together, cross-check, and synthesize without APIs.
 // @match        https://chatgpt.com/*
 // @match        https://gemini.google.com/*
@@ -40,11 +40,41 @@ async function execute(job){
 }
 GM_addValueChangeListener(S.job,(k,o,n,remote)=>{if(remote)execute(n)});
 function broadcast(phase,prompt){GM_setValue(S.stop,false);GM_setValue(S.job,{id:Date.now()+'-'+Math.random(),phase,prompt})}
-function start(){let q=document.querySelector('#aic-question').value.trim();if(!q)return;GM_setValue(S.question,q);GM_setValue(S.answers,{});GM_setValue(S.critiques,{});GM_setValue(S.final,{});broadcast('round1',q);render()}
-function challenge(){let q=GM_getValue(S.question,''),a=getObj(S.answers);broadcast('critique','Original question:\n'+q+'\n\nIndependent answers:\n'+anon(a)+'\n\nIdentify concrete errors, missing dimensions and disagreements. Do not guess authors. Give your revised answer under 200 words.');render()}
-function final(){let q=GM_getValue(S.question,''),a=getObj(S.answers),c=getObj(S.critiques);broadcast('final','Original question:\n'+q+'\n\nAnswers:\n'+anon(a)+'\n\nCross-critiques:\n'+anon(c,'Critique')+'\n\nProduce one concise best-supported answer, then unresolved disagreements and unknowns. Do not force consensus.');render()}
-function stop(){GM_setValue(S.stop,true);render()}
-function render(){let p=document.querySelector('#ai-council-box');if(!p)return;let a=getObj(S.answers),c=getObj(S.critiques),f=getObj(S.final);p.querySelector('#aic-status').textContent='This tab: '+who()+' | Answers '+Object.keys(a).length+' | Critiques '+Object.keys(c).length+(f.text?' | Final ready':'');p.querySelector('#aic-out').textContent=f.text||Object.entries(a).map(([k,v])=>k+': '+v.slice(0,180)).join('\n\n')}
-function ui(){if(document.querySelector('#ai-council-box'))return;let d=document.createElement('div');d.id='ai-council-box';d.style='position:fixed;z-index:2147483647;left:10vw;top:10vh;width:80vw;height:80vh;background:#111;color:#fff;padding:18px;border-radius:18px;font:18px sans-serif;box-shadow:0 4px 28px #000b;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden';d.innerHTML='<b style="font-size:26px">AI Council</b><textarea id="aic-question" placeholder="Ask all open AI tabs…" style="width:100%;height:18%;min-height:90px;margin-top:10px;box-sizing:border-box;font-size:20px;padding:12px;border-radius:10px"></textarea><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><button id="aic-ask" style="font-size:20px;padding:16px;min-height:60px">ASK ALL</button><button id="aic-challenge" style="font-size:20px;padding:16px;min-height:60px">CROSS-CHECK</button><button id="aic-final" style="font-size:20px;padding:16px;min-height:60px">FINAL</button><button id="aic-stop" style="font-size:20px;padding:16px;min-height:60px">STOP</button></div><div id="aic-status" style="margin-top:10px;font-size:16px"></div><pre id="aic-out" style="white-space:pre-wrap;flex:1;min-height:0;overflow:auto;background:#1d1d1d;padding:14px;border-radius:10px;font-size:18px;line-height:1.45;margin:10px 0 0 0"></pre>';document.body.appendChild(d);d.querySelector('#aic-ask').onclick=start;d.querySelector('#aic-challenge').onclick=challenge;d.querySelector('#aic-final').onclick=final;d.querySelector('#aic-stop').onclick=stop;render()}
+function expectedTabs(){return Number(GM_getValue('aic_expected',3))||3}
+async function waitCount(key,n,ms=180000){let t=Date.now();while(Date.now()-t<ms){if(GM_getValue(S.stop,false))throw Error('Stopped');if(Object.keys(getObj(key)).length>=n)return true;await sleep(1000)}return false}
+function setStage(x){GM_setValue('aic_stage',x);render()}
+async function start(){
+ let q=document.querySelector('#aic-question').value.trim();if(!q)return;
+ GM_setValue(S.question,q);GM_setValue(S.answers,{});GM_setValue(S.critiques,{});GM_setValue(S.final,{});GM_setValue(S.stop,false);
+ const n=expectedTabs();
+ try{
+  setStage('Asking '+n+' AIs…');broadcast('round1',q);
+  await waitCount(S.answers,n);
+  setStage('Comparing answers…');
+  let a=getObj(S.answers);broadcast('critique','Original question:\n'+q+'\n\nIndependent answers:\n'+anon(a)+'\n\nIdentify concrete errors, missing dimensions and disagreements. Do not guess authors. Give your revised answer under 200 words.');
+  await waitCount(S.critiques,n);
+  setStage('Making final answer…');
+  let c=getObj(S.critiques);broadcast('final','Original question:\n'+q+'\n\nAnswers:\n'+anon(a)+'\n\nCross-critiques:\n'+anon(c,'Critique')+'\n\nProduce one concise best-supported answer, then unresolved disagreements and unknowns. Do not force consensus.');
+  let t=Date.now();while(Date.now()-t<180000){let f=getObj(S.final);if(f.text){setStage('Done');return}await sleep(1000)}
+  setStage('Final answer timed out');
+ }catch(e){setStage(e.message)}
+}
+function stop(){GM_setValue(S.stop,true);setStage('Stopped')}
+function render(){
+ let p=document.querySelector('#ai-council-box');if(!p)return;
+ let a=getObj(S.answers),c=getObj(S.critiques),f=getObj(S.final),stage=GM_getValue('aic_stage','Ready');
+ p.querySelector('#aic-status').textContent=stage+'  •  '+Object.keys(a).length+' answers  •  '+Object.keys(c).length+' reviews';
+ p.querySelector('#aic-out').textContent=f.text|| (Object.keys(a).length? 'Waiting for the council to finish.\n\nAnswers received from: '+Object.keys(a).join(', '):'Your final answer will appear here.');
+}
+function ui(){
+ if(document.querySelector('#ai-council-box'))return;
+ let d=document.createElement('div');d.id='ai-council-box';
+ d.style='position:fixed;z-index:2147483647;left:5vw;top:5vh;width:90vw;height:90vh;background:#111;color:#fff;padding:18px;border-radius:18px;font:18px sans-serif;box-shadow:0 4px 28px #000b;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden';
+ d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:28px">AI Council</b><button id="aic-close" style="font-size:24px;padding:5px 14px">×</button></div><textarea id="aic-question" placeholder="Ask something…" style="width:100%;height:18%;min-height:90px;margin-top:10px;box-sizing:border-box;font-size:21px;padding:12px;border-radius:10px"></textarea><button id="aic-ask" style="font-size:24px;font-weight:bold;padding:18px;min-height:70px;margin-top:10px">ASK COUNCIL</button><div id="aic-status" style="margin-top:12px;font-size:17px">Ready</div><pre id="aic-out" style="white-space:pre-wrap;flex:1;min-height:0;overflow:auto;background:#1d1d1d;padding:16px;border-radius:10px;font-size:19px;line-height:1.5;margin:10px 0 0 0"></pre><div style="display:flex;gap:8px;margin-top:8px"><button id="aic-stop" style="flex:1;font-size:18px;padding:12px">STOP</button><button id="aic-settings" style="flex:1;font-size:18px;padding:12px">AI COUNT: '+expectedTabs()+'</button></div>';
+ document.body.appendChild(d);
+ d.querySelector('#aic-ask').onclick=start;d.querySelector('#aic-stop').onclick=stop;d.querySelector('#aic-close').onclick=()=>d.remove();
+ d.querySelector('#aic-settings').onclick=()=>{let n=prompt('How many AI tabs should Council wait for?',expectedTabs());if(n&&Number(n)>0){GM_setValue('aic_expected',Number(n));d.querySelector('#aic-settings').textContent='AI COUNT: '+Number(n)}};
+ render();
+}
 GM_registerMenuCommand('AI Council: show panel',ui);setTimeout(ui,1500);setInterval(render,3000);
 })();
