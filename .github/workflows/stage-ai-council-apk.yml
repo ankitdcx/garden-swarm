@@ -20,6 +20,7 @@ jobs:
           unzip -p /tmp/build.zip app-debug.apk > downloads/AI-Council-v0.2.apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B apk-download\n          git add downloads/AI-Council-v0.2.apk
+          git checkout -B apk-download
+          git add downloads/AI-Council-v0.2.apk
           git commit -m "Stage AI Council v0.2 APK for direct download"
           git push --force origin apk-download
