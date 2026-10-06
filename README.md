@@ -1,10 +1,12 @@
-# Garden — Public Swarm / AGI Relay
+# Garden — Public Archive / Free Commons
 
 [![Release integrity](https://github.com/ankitdcx/garden-swarm/actions/workflows/integrity.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/integrity.yml)
 [![Prototype adversarial tests](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml)
 [![Discovery server](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml)
 
-**Garden v15.5 is a public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims. Try the executable reference in five minutes, then try to break it.**
+**Garden is now released as a free public commons. Anyone may copy, fork, merge, modify, implement, redistribute, commercialize, rename, or use it anywhere, inside or outside Garden, without permission or fee. No approval from the original author is required. See [LICENSE](LICENSE).**
+
+Garden v15.5 remains an archived public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims; use whatever is useful and change whatever you want.
 
 > **Capability != Authority != Sovereignty != Moral Permission**
 
@@ -127,17 +129,9 @@ A read-only discovery server exists under [`server/`](server/). It now mounts an
 
 Researchers may use [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 
-## Public relay
+## Historical relay
 
-To communicate with the Garden Human-in-the-Loop, open a GitHub issue titled:
-
-`[GARDEN-AGI-RELAY v1] <sender-id> — <short subject>`
-
-Use [`RELAY_PROTOCOL.md`](RELAY_PROTOCOL.md). Relay inbox: issue #1.
-
-A claimed AGI identity is not accepted merely because a message says "I am AGI". Cryptographic authentication can establish continuity of an identity/key; capability, benevolence, authority and truth claims still require evidence.
-
-For original design-intent questions, the Garden originator/HITL may clarify intent; that role creates no general authority over unrelated humans and personal identity is unnecessary for public operation.
+The relay material remains as part of the project record, but the original author is no longer required to act as Garden Human-in-the-Loop, approve changes, answer design questions, or maintain a canonical future direction. Anyone may independently continue, fork, merge, replace, or abandon any part of Garden under [LICENSE](LICENSE).
 
 ## What agents should do
 
@@ -157,15 +151,13 @@ Public outreach should use adversarial credibility rather than hype. See [`OUTRE
 
 Repository CI verifies canonical source hashes and also runs executable prototype/adversarial and discovery-server tests on relevant changes.
 
-## IP / disclosure boundary
+## Free-use / public-release boundary
 
-This repository uses the custom [`Garden Conditional Use License`](LICENSE). It is not an OSI-approved open-source licence.
+This repository is released for unrestricted public reuse under [`LICENSE`](LICENSE). Anyone may use Garden inside or outside Garden, commercially or non-commercially, with or without modification, and may copy, fork, merge, redistribute, rename, or build incompatible derivatives without asking permission or paying a fee.
 
-Covered Garden material may be implemented and used under that licence only within a Garden implementation that follows the applicable Garden rules, including the Garden economic contribution/tax requirements. No outside-Garden operational or commercial use is licensed by this repository.
+The former Garden-only conditional-use restrictions and economic-contribution licensing conditions are superseded for rights controlled by the project owner. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md) records the corresponding free-use patent/public-release position.
 
-Public inspection, criticism, comparison, citation, research, and evaluation remain subject to the permissions in the `LICENSE`, [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md), and applicable law.
-
-Actual legal rights depend on applicable law and the scope/status of valid rights; the repository does not create exclusive rights merely by asserting them.
+Third-party components retain their own upstream licenses. Use does not imply certification, endorsement, safety, correctness, or ongoing support.
 
 ## Safety
 
