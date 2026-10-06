@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "AI Council",
+  "version": "0.1.0",
+  "description": "Ask multiple AI web chats, collect answers, cross-check, and synthesize.",
+  "permissions": ["tabs","storage","activeTab","<all_urls>"],
+  "browser_action": {"default_title":"AI Council","default_popup":"popup.html"},
+  "background": {"scripts":["background.js"]},
+  "content_scripts": [{
+    "matches": ["*://chatgpt.com/*","*://gemini.google.com/*","*://claude.ai/*","*://grok.com/*","*://chat.deepseek.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }],
+  "browser_specific_settings": {"gecko":{"id":"ai-council@garden.local","strict_min_version":"120.0"}}
+}
