@@ -1,0 +1,24 @@
+name: Package Firefox AI Council
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+jobs:
+  package:
+    if: startsWith(github.event.issue.title, '[PACKAGE_FIREFOX_COUNCIL]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          cd firefox-ai-council
+          zip -r ../AI-Council-Firefox-v0.1.xpi .
+          cd ..
+          cp AI-Council-Firefox-v0.1.xpi AI-Council-Firefox-v0.1.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AI-Council-Firefox-v0.1
+          path: |
+            AI-Council-Firefox-v0.1.xpi
+            AI-Council-Firefox-v0.1.zip
+          retention-days: 30
