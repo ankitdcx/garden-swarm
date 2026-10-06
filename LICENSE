@@ -1,147 +1,80 @@
-GARDEN CONDITIONAL USE LICENSE v0.2
+GARDEN FREE USE / PUBLIC RELEASE NOTICE
 
-This is a custom conditional-use license. It is not an OSI-approved open-source
-license.
+Effective date: 2026-10-06
 
-1. Scope
+Garden is released for unrestricted public use.
 
-Subject to applicable law and only to the extent the relevant rights are legally
-protectable and licensable, this license applies to the copyrightable material,
-software, specifications, documentation, protected inventions, designs, and
-implementations disclosed in this repository ("Covered Garden Material").
+Anyone may copy, fork, merge, modify, adapt, implement, publish, redistribute,
+sublicense, commercialize, combine with other systems, rename, or use Garden
+material inside or outside Garden, for any purpose, without asking permission
+and without paying a fee.
 
-Nothing in this license creates an intellectual-property right that does not
-otherwise exist under applicable law.
+No approval by the original author, maintainer, Garden process, community,
+organization, or governance mechanism is required for use of the material.
 
-2. Permission for Garden use only
+1. Software — BSD Zero Clause (0BSD)
 
-You may copy, modify, implement, run, distribute, and otherwise use Covered
-Garden Material only as part of a Garden implementation that:
+For software and source code authored by the Garden project owner:
 
-(a) is actually governed by the applicable ratified Garden rules rather than
-merely using the Garden name;
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted.
 
-(b) preserves the applicable Garden requirements for human sovereignty, rights,
-privacy, consent, bounded authority, evidence/provenance, auditability, and
-other mandatory constitutional or safety rules; and
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
 
-(c) complies with the Garden economic contribution/tax rule in Section 3.
+2. Documentation, designs, specifications, and related material — CC0 1.0
 
-Permission under this license is conditional on continued compliance with these
-requirements.
+To the extent legally possible, Garden documentation, design text, specifications,
+schemas, diagrams, theories, descriptions, terminology, and other eligible material
+authored by the Garden project owner are dedicated to the public domain under
+Creative Commons CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
 
-3. Garden economic contribution / tax rule
+Where an idea, fact, concept, method, system, or principle is not subject to
+exclusive copyright in the first place, no separate Garden permission is required
+to use it.
 
-For a natural person's annual income or earnings, let M be the median individual
-income in the person's applicable local economic geography, as determined under
-the applicable Garden economic rules.
+3. Patent permission
 
-The required Garden income contribution/tax schedule is:
+To the extent the Garden project owner controls patent claims that would
+necessarily be infringed solely by making, using, selling, offering for sale,
+importing, implementing, modifying, combining, or distributing Garden material
+as disclosed in these repositories, the owner grants every person and entity a
+perpetual, worldwide, royalty-free, irrevocable, non-exclusive license under
+those claims for those activities.
 
-- income at or below 1 x M: 0%;
-- income above 1 x M and below 20 x M: a progressive effective rate that rises
-  from 0% toward 50%;
-- income at or above 20 x M: 50%.
+No fee, Garden membership, Garden compliance, economic contribution, tax,
+governance participation, attribution, or approval is required for this grant.
 
-The intermediate schedule must be implemented so that after-contribution income
-strictly increases as gross income increases; earning more must not reduce
-after-contribution income. The more precise current ratified Garden economic
-rule controls the intermediate curve, income definition, measurement period,
-economic-geography definition, collection mechanism, exemptions, and audit
-rules, provided it preserves the endpoints above unless a later valid Garden
-constitutional process changes them.
+4. Forks, merges, and incompatible versions
 
-The applicable local economic geography should be a stable labour/economic
-market area rather than an arbitrary small administrative boundary, using the
-current Garden methodology for population sufficiency and smoothed/rolling
-income measurement.
+Anyone may fork Garden, merge it into another project, change its rules, remove
+parts, rename it, create incompatible versions, or build something entirely
+different from it. There is no requirement to preserve a canonical Garden form.
 
-For organizations, cooperatives, projects, or other entities, compliance is
-determined under the applicable Garden economic and beneficial-ownership rules.
-This license does not create a separate corporation-level tax where Garden rules
-allocate the obligation differently.
+5. No maintenance, certification, or endorsement obligation
 
-This Section is a condition of the permission granted by this license. It does
-not by itself claim governmental taxing power outside whatever lawful Garden
-governance or contractual structure actually applies.
+Use of Garden does not make an implementation official, certified, safe, correct,
+or endorsed. The original author has no obligation to maintain, review, approve,
+support, govern, or update downstream uses.
 
-4. No outside-Garden use
+6. Third-party material
 
-No permission is granted under this license for operational, commercial,
-production, deployment, or other exploitation of Covered Garden Material
-outside a Garden implementation satisfying Sections 2 and 3.
+This notice grants only rights controlled by the Garden project owner. Third-party
+software, libraries, model weights, datasets, trademarks, patents, or other
+materials remain subject to their own applicable licenses and rights notices.
 
-Payment of the Garden contribution/tax does not convert an outside-Garden use
-into a permitted use.
+7. Earlier Garden restrictions
 
-5. Unauthorized outside-Garden use and agreed economic remedy
+Older repository files, snapshots, branches, commits, or documents may contain
+earlier restrictive or conditional Garden licensing language. For rights
+controlled by the Garden project owner, this root LICENSE supersedes those
+earlier project-imposed restrictions from 2026-10-06 forward.
 
-By exercising any permission under this license, or otherwise assenting to these
-terms while accessing, copying, implementing, modifying, distributing, or using
-Covered Garden Material, a person or entity agrees that any outside-Garden use
-of Covered Garden Material or legally protected Garden rights without applicable
-approval is unauthorized.
-
-For such unauthorized outside-Garden use, and to the maximum extent permitted by
-applicable law, the user agrees to pay an amount equal to 1000% (ten times) of
-all savings, gains, revenues, cost reductions, profits, economic advantages, or
-other measurable benefits derived from or attributable to the unauthorized use
-of Covered Garden Material or protected Garden rights. The calculation should
-include direct and indirect benefits that can be established with reasonable
-evidence and should avoid double counting the same economic benefit.
-
-This 1000% amount is intended as an agreed contractual remedy for unauthorized
-use where such a remedy is legally enforceable; it does not create intellectual-
-property rights in unprotectable abstract ideas, facts, methods, or concepts. If
-a court or other competent authority determines that the 1000% measure is
-unenforceable, excessive, or constitutes an impermissible penalty, the amount
-shall be reduced to the maximum lawful enforceable amount, without waiving any
-other remedy available under contract, copyright, patent, trade-secret, unjust-
-enrichment, restitution, or other applicable law.
-
-Nothing in this Section grants permission for outside-Garden use merely because
-a user is willing to pay the stated amount. Outside-Garden use remains
-unlicensed unless separately approved by an authorized Garden licensing process.
-
-6. Inspection, criticism, and evaluation
-
-This license does not restrict rights that already exist independently under
-applicable law. Public reading, citation, criticism, comparison, research, and
-evaluation of the published material remain permitted to the extent allowed by
-law and the repository's notices, provided those activities do not themselves
-amount to an otherwise unlicensed practice or exploitation of protected Garden
-rights.
-
-7. No authority grant
-
-This license grants no political, constitutional, governance, enforcement,
-deployment, certification, or real-world authority. Intellectual-property
-permission and Garden governance authority are separate.
-
-8. Attribution and notices
-
-Redistributions or permitted Garden implementations must preserve this LICENSE
-and applicable copyright, patent, provenance, and use notices supplied with the
-Covered Garden Material.
-
-9. Termination
-
-Permission under this license terminates automatically for a use that ceases to
-satisfy Sections 2 or 3, or that becomes an outside-Garden use prohibited by
-Section 4. Termination does not erase obligations or liabilities that arose
-before termination.
-
-10. No warranty
-
-THE COVERED GARDEN MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE, NON-INFRINGEMENT, SAFETY, CORRECTNESS, CERTIFICATION, OR
-FITNESS FOR DEPLOYMENT.
-
-11. Legal boundary
-
-Patentability, copyright scope, enforceability, independent creation, lawful
-exceptions, exhaustion, compulsory licensing, interoperability rights, fair
-use/fair dealing, and other legal questions depend on applicable law and actual
-rights. This license must not be read as creating exclusive rights in abstract
-ideas or facts where the law does not provide such rights.
+Garden is free to use. Take what is useful, change it, merge it, fork it, or
+ignore it.

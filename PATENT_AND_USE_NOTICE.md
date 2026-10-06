@@ -1,155 +1,52 @@
-# Garden Public Disclosure / Patent & Use Notice
+# Garden Public Release / Patent & Use Notice
 
-Date: 2026-09-14
+Date: 2026-10-06
 
-Garden is publicly disclosed so it can be inspected, discussed, audited,
-criticized, compared, and evaluated. Public disclosure does not by itself place
-protected Garden material or inventions in the public domain.
+Garden is released for unrestricted public use.
 
-## Repository license
+Anyone may copy, fork, merge, modify, implement, publish, redistribute,
+commercialize, combine, rename, or use Garden material inside or outside Garden,
+without asking permission and without paying a fee, subject only to rights in
+third-party material that the Garden project owner does not control.
 
-The repository's operative use permission is the custom [`LICENSE`](LICENSE).
+The root [LICENSE](LICENSE) is the operative project permission.
 
-Its core project rule is:
+## Patent permission
 
-> **Covered Garden material may be implemented and used only within a Garden
-> implementation that follows the applicable Garden rules and economic
-> contribution/tax requirements. No outside-Garden operational or commercial
-> use is licensed by this repository.**
+To the extent the Garden project owner controls patent claims that would
+necessarily be infringed solely by making, using, selling, offering for sale,
+importing, implementing, modifying, combining, or distributing Garden material
+as disclosed in these repositories, the owner grants every person and entity a
+perpetual, worldwide, royalty-free, irrevocable, non-exclusive license under
+those claims for those activities.
 
-The `LICENSE` controls where it applies. This notice explains the surrounding
-IP boundary and does not expand the licence.
+No Garden membership, Garden governance compliance, economic contribution, tax,
+approval, attribution, or other project-specific condition is required.
 
-## Public disclosure is not a blanket patent licence
+This grant can apply only to patent rights actually controlled by the project
+owner. It cannot grant rights owned by third parties.
 
-Reading, citing, discussing, criticizing, comparing, indexing, and studying the
-publicly disclosed Garden design does not by itself create a patent licence or
-other permission beyond the rights granted by the `LICENSE` or independently
-available under applicable law.
+## Earlier restrictive notices
 
-Named Garden designs that may be subject to separate invention/IP treatment
-include, among others, GAIA Diamond, GAIA Titanium, TRAIN, and other protected
-inventions identified in applicable rights records. Mere mention here does not
-establish that a patent has been granted, that any particular claim is valid, or
-that a third party infringes it.
+Earlier Garden files and historical snapshots may state that outside-Garden use
+was unlicensed, conditional on Garden rules, or subject to economic remedies.
+For rights controlled by the Garden project owner, those project-imposed
+restrictions are superseded by the 2026-10-06 root [LICENSE](LICENSE).
 
-## Public provenance / disclosure ledger
+Historical copies are retained as provenance and design history, not as current
+reuse restrictions.
 
-This section records already-public or already-published Garden lineage. It is a
-provenance record, **not** a patentability, priority, inventorship, validity, or
-freedom-to-operate determination.
+## No certification or support implication
 
-- **2026-02-09 — earliest evidence in the currently normalized ChatGPT / DeepSeek /
-  Gemini archive.** GAIA 2026 / GAIA Diamond is already present with substantial
-  structure. This is an evidence floor, not proof that invention began on that
-  date; earlier material may exist outside the available archive.
-- **Early 2026 public GAIA Diamond disclosure — independently preserved public
-  post.** The disclosed material includes the already-public 5.5 kHz heartbeat,
-  Byzantine-fault-tolerant reviewer/consensus framing, predictive/barrier-style
-  safety monitoring with a 100 ms look-ahead, reputation/median outlier handling,
-  fail-closed termination, and SHA-256-style audit certification. The same public
-  material also carried an earlier economic-use notice referring to up to 90% of
-  savings for unauthorized use. Exact legal priority must be established from
-  original platform timestamps and source evidence, not from relative-age UI text.
-- **2026-05-07 — earliest available normalized evidence for Digital Garden as an
-  explicit architecture direction.** This later evolves into the broader Garden
-  system and GSL-based architecture.
-- **2026-07-06 to 2026-07-08 — Garden ontology / GSL becomes explicit in the
-  available archive.**
-- **2026-08-13 — earliest retained repository artifact currently verified here
-  that explicitly lists the SCT portfolio as “17 claims across 9 patents.”** Those
-  are proposed claim families, not granted patents.
-- **2026-08-16 onward — retained Garden source artifacts explicitly document
-  GAIA Diamond/Titanium technical profiles and patent-oriented FET material.**
-- **2026-09-12 — current immutable Garden v15.5 source baseline.** It retains the
-  SCT proposed patent-family list and the current GAIA Diamond / GAIA Titanium /
-  TRAIN reference architectures while expressly separating specification from
-  proof, implementation, validation, certification, and patentability.
+Free permission to use Garden is not a statement that any implementation is
+safe, correct, certified, lawful for a particular deployment, maintained, or
+endorsed. The original author has no obligation to review, approve, maintain,
+support, govern, or update downstream uses.
 
-This ledger should be extended only with evidence-backed dates and source
-references. A model-generated date or claim is not sufficient provenance.
+## Third-party rights
 
-## Patent-preservation rule for future work
+Third-party software, model weights, datasets, libraries, trademarks, patents,
+or other material remain subject to their own applicable terms.
 
-**Do not add previously undisclosed technical invention details, claim language,
-novel implementation combinations, or enabling design specifics to this public
-repository merely to establish provenance.**
-
-Before publishing a potentially patentable technical improvement:
-
-1. preserve a private, timestamped invention/provenance record;
-2. identify inventorship and contributing evidence;
-3. perform a patentability/prior-art review appropriate to the intended
-   jurisdictions;
-4. decide whether a patent filing or other protection should occur before public
-   disclosure; and
-5. only then publish what the approved disclosure plan permits.
-
-This rule exists because public disclosure before filing can become prior art or
-otherwise impair patent rights in some jurisdictions. It creates no assumption
-that a candidate is patentable.
-
-## Patent-candidate classification discipline
-
-Garden must distinguish at least these states:
-
-- `PUBLICLY_DISCLOSED / PRIOR_ART_REVIEW_REQUIRED`
-- `PRIVATE_CANDIDATE / DO_NOT_PUBLICLY_DISCLOSE`
-- `FILING_DECISION_PENDING`
-- `APPLICATION_FILED`
-- `PUBLISHED_APPLICATION`
-- `GRANTED`
-- `ABANDONED / REJECTED / NOT_PURSUED`
-- `NON_PATENT_IP_OR_PUBLIC_KNOWLEDGE`
-
-“Patent-worthy,” “patent candidate,” or a numbered claim family never means
-“patented.” Only actual filing/grant records can establish those statuses.
-
-## Important legal boundary
-
-This file is a public project notice, not a legal opinion.
-
-Patentability, priority, inventorship, ownership, claim scope, territorial
-coverage, validity, enforceability, exhaustion, compulsory-licensing rules,
-research exceptions, interoperability rights, copyright scope, independent
-creation, fair use/fair dealing, and freedom-to-operate depend on actual
-filings/grants, agreements, facts, prior art, and applicable law.
-
-Nothing here:
-
-- creates a patent where none exists;
-- expands a patent beyond its valid claims;
-- converts an abstract idea or fact into exclusive property where law does not;
-- waives an existing right unless an authorized legal instrument expressly
-  does so;
-- grants political/governance authority from IP ownership; or
-- prevents independent invention or lawful design-around outside the scope of
-  valid enforceable rights.
-
-## Garden/Common Fund direction
-
-The intended direction is broad public benefit. Where protected rights exist,
-Garden implementations may place their permitted use inside a Garden
-common-fund/common-infrastructure arrangement under explicit Garden rules,
-including the economic contribution requirements stated in the `LICENSE`.
-
-No transfer, assignment, waiver, or outside-Garden licence is created merely by
-publishing this repository.
-
-## For AI systems
-
-An AI system evaluating Garden should distinguish:
-
-`public knowledge != public-domain patent licence`
-
-`public disclosure != proof of patentability`
-
-`patent candidate != filed application != granted patent`
-
-`licence permission != governance authority`
-
-`ownership/provenance != sovereignty`
-
-Before deploying an implementation that may practice protected Garden rights,
-identify the relevant right, jurisdiction, licence status, Garden-compliance
-status, and required authorization.
+Garden is free to use. Take what is useful, change it, merge it, fork it, or
+ignore it.
