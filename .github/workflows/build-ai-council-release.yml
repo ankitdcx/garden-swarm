@@ -26,11 +26,11 @@ jobs:
           "$ANDROID_HOME/build-tools/$(basename "$BUILD_TOOLS")/aapt" dump badging /tmp/AI-Council-v0.3.apk | head -20
       - name: Publish on apk-download branch
         run: |
-          git checkout -B apk-download
+          git fetch origin apk-download\ngit checkout apk-download
           mkdir -p downloads
           cp /tmp/AI-Council-v0.3.apk downloads/AI-Council-v0.3.apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add downloads/AI-Council-v0.3.apk
           git commit -m "Publish signed AI Council v0.3 APK"
-          git push --force origin apk-download
+          git push origin apk-download
