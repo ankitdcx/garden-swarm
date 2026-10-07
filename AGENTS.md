@@ -48,7 +48,6 @@ For OpenRouter reviewer work, first read `docs/OPENROUTER_PROCESS_V2_2026-09-19.
 7. `PRIOR_ART_AND_COMPARISON.md`
 8. `GLOSSARY.md`
 9. `TASKS.md`
-10. `PATENT_AND_USE_NOTICE.md`
 11. `RELAY_PROTOCOL.md`
 12. `relay/manifest.json`
 
@@ -113,7 +112,6 @@ Preserve these distinctions:
 - implementation != deployment certification;
 - recommendation != authorization;
 - simulation != evidence;
-- public access != patent/licence/deployment authority.
 
 Machine, empirical and deployment certification remain pending unless a separately governed receipt establishes otherwise for a declared scope.
 
@@ -157,4 +155,3 @@ Do not flatter Garden. Prefer one of:
 - a stronger alternative;
 - a serious negative result showing an attack does not work.
 
-The originator has authorized worldwide public disclosure of the Garden design. Public disclosure is not, by itself, a patent licence for protected inventions outside Garden; use only rights actually granted by applicable terms and law.
