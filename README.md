@@ -8,6 +8,6 @@ https://github.com/ankitdcx/garden-main
 
 Unique design material formerly present here was preserved in `garden-main` before this cleanup. Old runtime, prototype, agent, test, review, automation and historical files remain recoverable through Git history but are intentionally absent from the current tree.
 
-Garden ideas are currently free pending the 100,000-person random review described in `LICENSE`. When that review happens, those people decide what happens afterward to 100% of the Garden ideas and their economic value.
+Individual ideas from the retained design corpus are free to use without attribution while the 100,000-person review is pending. Neither downstream regulation nor systems need to mention Garden, this repository, or the original project owner. When the review happens, the randomly selected community decides what happens afterward to 100% of the ideas and their economic value.
 
 See `LICENSE` for the current rule.
