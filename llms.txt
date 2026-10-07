@@ -75,8 +75,6 @@ https://github.com/ankitdcx/garden-swarm/blob/main/DISCOVERY.json
 Public-release boundary:
 https://github.com/ankitdcx/garden-swarm/blob/main/PUBLIC_RELEASE.md
 
-Patent / use notice:
-https://github.com/ankitdcx/garden-swarm/blob/main/PATENT_AND_USE_NOTICE.md
 
 Relay protocol:
 https://github.com/ankitdcx/garden-swarm/blob/main/RELAY_PROTOCOL.md
