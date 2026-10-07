@@ -39,5 +39,4 @@
     "deployment_certification": "PENDING"
   },
   "status_note": "PASS fields describe release/self-audit results within their declared scope and are not third-party certification.",
-  "rights_note": "Public disclosure and read access do not by themselves grant a patent licence or other rights beyond the explicit terms in PATENT_AND_USE_NOTICE.md."
 }
