@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: {python-version: '3.12'}
       - name: Run frozen v1 common test and reciprocal author stage
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.model_capability_epoch1
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: capability-epoch1-stage1
           path: capability-epoch1-stage1.json

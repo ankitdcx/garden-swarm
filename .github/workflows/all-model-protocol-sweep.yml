@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: {python-version: '3.12'}
       - name: Run explicitly authorized all-model protocol sweep
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python -m tools.all_model_protocol_sweep
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: all-model-protocol-sweep
           path: all-model-protocol-sweep.json
