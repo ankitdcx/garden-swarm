@@ -27,7 +27,6 @@ title: Garden v15.5
     "A2A",
     "MCP"
   ],
-  "license": "https://github.com/ankitdcx/garden-swarm/blob/main/PATENT_AND_USE_NOTICE.md",
   "creator": {
     "@type": "Organization",
     "name": "Garden Project"
