@@ -66,9 +66,7 @@ Do not contribute:
 
 Security vulnerabilities should follow `SECURITY.md`.
 
-## Rights / patent boundary
 
-Read `PATENT_AND_USE_NOTICE.md` before implementation or downstream use. Public contribution or source availability does not create rights beyond the explicit terms that actually apply.
 
 ## Human-in-the-loop
 
