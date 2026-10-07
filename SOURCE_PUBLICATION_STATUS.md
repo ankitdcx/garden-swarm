@@ -28,7 +28,6 @@ A local archival bundle created from those five exact files has SHA-256:
 
 ## Current mirror state
 
-The public `garden-swarm` repository currently contains the worldwide discovery/relay layer, public-release declaration, compact AGI-readable design summary, agent instructions, task queue, relay protocol, and IP/patent-use notice.
 
 **The five large canonical source files have not yet been copied into this public repository.** The present GitHub connector can read the controlled canonical repository and write the public repository, but it does not expose repository-visibility changes or a direct cross-repository large-file copy/upload operation. This is a transport limitation, not a secrecy decision.
 
@@ -42,4 +41,3 @@ Do not treat a partial, reformatted, summarized, or regenerated copy as canonica
 
 ## Rights boundary
 
-Public mirroring does not by itself create a patent licence outside Garden. See `PATENT_AND_USE_NOTICE.md`.

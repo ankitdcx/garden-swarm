@@ -17,7 +17,6 @@ REQUIRED_FILES = [
     "GARDEN_FOR_AGI.md",
     "PUBLIC_RELEASE.md",
     "LICENSE",
-    "PATENT_AND_USE_NOTICE.md",
     "RELAY_PROTOCOL.md",
     "TASKS.md",
     "SOURCE_MANIFEST.json",

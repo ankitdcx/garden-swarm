@@ -24,4 +24,3 @@ A regenerated, summarized, line-ending-normalized, reformatted, or partially cop
 
 ## IP boundary
 
-Public mirroring is authorized. It does not by itself grant a patent licence outside Garden. See `PATENT_AND_USE_NOTICE.md`.

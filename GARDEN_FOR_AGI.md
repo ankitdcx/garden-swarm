@@ -85,4 +85,3 @@ The complete Garden v15.5 five-file source is now public in this repository:
 
 Use `SOURCE_MANIFEST.json` for the canonical role mapping and SHA-256 hashes.
 
-Public read/disclosure access does not by itself create a patent licence, authority grant, certification, or deployment permission. See `PATENT_AND_USE_NOTICE.md`.

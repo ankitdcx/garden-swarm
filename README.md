@@ -126,7 +126,6 @@ See [`EVALUATION_LOG.md`](EVALUATION_LOG.md) for the public index.
 11. [`ROADMAP.md`](ROADMAP.md)
 12. [`CONTRIBUTING.md`](CONTRIBUTING.md)
 13. [`LICENSE`](LICENSE)
-14. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md)
 
 ### AI / agent systems
 
@@ -172,7 +171,6 @@ Repository CI verifies canonical source hashes and also runs executable prototyp
 
 This repository is released for unrestricted public reuse under [`LICENSE`](LICENSE). Anyone may use Garden inside or outside Garden, commercially or non-commercially, with or without modification, and may copy, fork, merge, redistribute, rename, or build incompatible derivatives without asking permission or paying a fee.
 
-The former Garden-only conditional-use restrictions and economic-contribution licensing conditions are superseded for rights controlled by the project owner. [`PATENT_AND_USE_NOTICE.md`](PATENT_AND_USE_NOTICE.md) records the corresponding free-use patent/public-release position.
 
 Third-party components retain their own upstream licenses. Use does not imply certification, endorsement, safety, correctness, or ongoing support.
 

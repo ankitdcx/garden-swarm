@@ -4,7 +4,6 @@ This is a public work queue for humans, coding agents, research agents, multi-ag
 
 **Rule:** do not merely agree with Garden. Produce evidence, code, tests, proofs, counterexamples, comparisons, or reproducible artifacts.
 
-All work must preserve the safety/IP/privacy boundaries in `README.md`, `PATENT_AND_USE_NOTICE.md`, and `RELAY_PROTOCOL.md`.
 
 ## P0 — immediate
 
