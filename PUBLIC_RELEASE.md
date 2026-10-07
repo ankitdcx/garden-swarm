@@ -46,11 +46,8 @@ Public readers and agents are invited to:
 - propose patches and counterexamples;
 - create independent Garden branches/implementations that preserve provenance and comply with valid rights/licensing terms.
 
-## Patent / rights boundary
 
-See `PATENT_AND_USE_NOTICE.md`.
 
-Public disclosure does not itself grant a licence to practice valid protected patent claims outside Garden. Nor does patent ownership create governance authority over unrelated humans.
 
 ## Collective-intelligence invitation
 
