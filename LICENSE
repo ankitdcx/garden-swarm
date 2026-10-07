@@ -7,9 +7,7 @@ CURRENT STATUS — FREE FOR EVERYONE
 
 The Garden project owner has made Garden free for everyone.
 
-The owner believes Garden ideas may have very large economic value—potentially
-billions or trillions if their claimed usefulness proves out—but has nevertheless
-chosen the fully-free option as the current state.
+Anyone may use the rights granted by this license under the terms below. The owner believes Garden ideas may have very large economic value—potentially billions or trillions if their claimed usefulness proves out—but has nevertheless chosen the fully-free option as the current state.
 
 IF ANYONE WANTS TO CHANGE THE FREE STATUS
 
@@ -21,100 +19,57 @@ This is the current state.
 
 OPTION 2 — GARDEN COMMON FUND
 
-If Garden is ever moved away from the fully-free model, then, to the extent
-Garden-related economic rights, future material, assets, proceeds, or other
-interests remain legally controllable, they are intended to be held by a
-Garden Common Fund rather than placed under private or political control.
+If Garden is ever moved away from the fully-free model, then, to the extent Garden-related economic rights, future material, assets, proceeds, or other interests remain legally controllable, they are intended to be held by a Garden Common Fund rather than placed under private or political control.
 
-Spending and economic-governance decisions would be made democratically by
-approximately 100,000 randomly selected, periodically rotating ordinary people
-through a mechanism designed to be politically independent and strongly
-resistant to corruption, coercion, government interference, corporate capture,
-concentrated wealth, organized capture and permanent control.
+Spending and economic-governance decisions would be made democratically by approximately 100,000 randomly selected, periodically rotating ordinary people through a mechanism designed to be politically independent and strongly resistant to corruption, coercion, government interference, corporate capture, concentrated wealth, organized capture and permanent control.
 
-Those voters would be temporary governors, not shareholders. Voting authority
-would not create transferable, saleable or inheritable personal ownership
-shares. The Garden Common Fund would hold the relevant common assets and the
-selected community would decide spending.
+Those voters would be temporary governors, not shareholders. Voting authority would not create transferable, saleable or inheritable personal ownership shares. The Garden Common Fund would hold the relevant common assets and the selected community would decide spending.
 
-The exact selection, identity, voting, audit, rotation and anti-capture
-mechanisms can be designed and tested if this second option ever needs to be
-activated.
+The exact selection, identity, voting, audit, rotation and anti-capture mechanisms can be designed and tested if this second option ever needs to be activated.
 
 NO THIRD OPTION IS INTENDED
 
-A move away from free use is not intended to create permanent founder,
-government, political-party, corporate, billionaire, administrator or other
-privileged private control.
+A move away from free use is not intended to create permanent government, political-party, corporate, billionaire, administrator or other privileged private control.
 
 EXISTING GRANTS ARE NOT RETROACTIVELY CANCELLED
 
-The public release below granted some permissions expressly on a perpetual or
-irrevocable basis. This governance clarification does not claim to retroactively
-cancel rights already validly granted under the 2026-10-06 release. The Common
-Fund alternative therefore concerns rights, future material, assets, proceeds
-or interests that remain controllable.
+The public release below granted some permissions expressly on a perpetual or irrevocable basis. This governance clarification does not claim to retroactively cancel rights already validly granted under the 2026-10-06 release. The Common Fund alternative therefore concerns rights, future material, assets, proceeds or interests that remain controllable.
 
 1. Software — BSD Zero Clause (0BSD)
 
 For software and source code authored by the Garden project owner:
 
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted.
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 2. Documentation, designs, specifications, and related material — CC0 1.0
 
-To the extent legally possible, Garden documentation, design text, specifications,
-schemas, diagrams, theories, descriptions, terminology, and other eligible material
-authored by the Garden project owner are dedicated to the public domain under
-Creative Commons CC0 1.0 Universal:
+To the extent legally possible, Garden documentation, design text, specifications, schemas, diagrams, theories, descriptions, terminology, and other eligible material authored by the Garden project owner are dedicated to the public domain under Creative Commons CC0 1.0 Universal:
 https://creativecommons.org/publicdomain/zero/1.0/
 
-Where an idea, fact, concept, method, system, or principle is not subject to
-exclusive copyright in the first place, no separate Garden permission is required
-to use it.
+Where an idea, fact, concept, method, system, or principle is not subject to exclusive copyright in the first place, no separate Garden permission is required to use it.
 
+3. Forks, merges, and incompatible versions
 
-necessarily be infringed solely by making, using, selling, offering for sale,
-importing, implementing, modifying, combining, or distributing Garden material
-as disclosed in these repositories, the owner grants every person and entity a
-perpetual, worldwide, royalty-free, irrevocable, non-exclusive license under
-those claims for those activities.
+Anyone may fork Garden, merge it into another project, change its rules, remove parts, rename it, create incompatible versions, or build something entirely different from it under rights validly granted by this license.
 
-No fee, Garden membership, Garden compliance, economic contribution, tax,
-governance participation, attribution, or approval is required for this grant.
+4. No maintenance, certification, or endorsement obligation
 
-4. Forks, merges, and incompatible versions
+Use of Garden does not make an implementation official, certified, safe, correct, or endorsed. The original author has no obligation to maintain, review, approve, support, govern, or update downstream uses.
 
-Anyone may fork Garden, merge it into another project, change its rules, remove
-parts, rename it, create incompatible versions, or build something entirely
-different from it. There is no requirement to preserve a canonical Garden form.
+5. Third-party material
 
-5. No maintenance, certification, or endorsement obligation
+This notice grants only rights controlled by the Garden project owner. Third-party materials remain subject to their own applicable licenses and rights notices.
 
-Use of Garden does not make an implementation official, certified, safe, correct,
-or endorsed. The original author has no obligation to maintain, review, approve,
-support, govern, or update downstream uses.
+6. Earlier Garden restrictions
 
-6. Third-party material
+Older repository files, snapshots, branches, commits, or documents may contain earlier restrictive or conditional Garden licensing language. For rights controlled by the Garden project owner, this root LICENSE supersedes those earlier project-imposed restrictions from 2026-10-06 forward.
 
-This notice grants only rights controlled by the Garden project owner. Third-party
-materials remain subject to their own applicable licenses and rights notices.
+SUMMARY
 
-7. Earlier Garden restrictions
+Garden is currently free for everyone.
 
-Older repository files, snapshots, branches, commits, or documents may contain
-earlier restrictive or conditional Garden licensing language. For rights
-controlled by the Garden project owner, this root LICENSE supersedes those
-earlier project-imposed restrictions from 2026-10-06 forward.
+If that free status is ever changed for rights or value that remain controllable, the intended alternative is the Garden Common Fund under large-scale randomized, rotating, politically independent and capture-resistant democratic governance.
 
-Garden is free to use. Take what is useful, change it, merge it, fork it, or
-ignore it.
+There is no intended third option.
