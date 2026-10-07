@@ -4,7 +4,24 @@
 [![Prototype adversarial tests](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/prototype-adversarial.yml)
 [![Discovery server](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml/badge.svg)](https://github.com/ankitdcx/garden-swarm/actions/workflows/discovery-server.yml)
 
-**Garden is now released as a free public commons. Anyone may copy, fork, merge, modify, implement, redistribute, commercialize, rename, or use it anywhere, inside or outside Garden, without permission or fee. No approval from the original author is required. See [LICENSE](LICENSE).**
+**Current status: the owner has made Garden free for everyone.** Anyone may use the rights granted under [LICENSE](LICENSE).
+
+The owner believes Garden ideas may have very large economic value—potentially billions or trillions if their claimed usefulness proves out. Even so, **fully free for everyone is the current choice.**
+
+## If anyone wants to change the free status
+
+There are only two intended outcomes:
+
+1. **Fully free for everyone** — the current state.
+2. **Garden Common Fund** — if Garden is ever moved away from the fully-free model for rights or value that remain controllable, those rights, assets and proceeds must go to a Garden Common Fund rather than private or political control. Spending and economic decisions would be made democratically by approximately **100,000 randomly selected, periodically rotating ordinary people**, using a system designed to be politically independent and strongly resistant to corruption, coercion, government interference, corporate capture, concentrated wealth and organized capture.
+
+The voters would be temporary governors, not shareholders. They would not receive transferable personal ownership stakes. The Common Fund would hold the relevant common assets and the selected community would decide spending.
+
+The exact selection, voting, audit, rotation and anti-capture mechanism can be designed and tested if Option 2 ever needs to be activated.
+
+**No third option is intended.** Changing the free status must not turn Garden into permanent founder, government, political-party, corporate, billionaire, administrator or other privileged private control.
+
+The 2026-10-06 public release included permissions expressly described as perpetual or irrevocable. Nothing here claims to retroactively cancel rights already validly granted under that release.
 
 Garden v15.5 remains an archived public human-sovereignty architecture for increasingly capable and multi-agent AI. It makes falsifiable claims; use whatever is useful and change whatever you want.
 
