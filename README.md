@@ -8,8 +8,6 @@ https://github.com/ankitdcx/garden-main
 
 Unique design material formerly present here was preserved in `garden-main` before this cleanup. Old runtime, prototype, agent, test, review, automation and historical files remain recoverable through Git history but are intentionally absent from the current tree.
 
-Individual ideas from the retained design corpus are free to use without attribution while the minimum-100,000-person review is pending. Neither downstream regulation nor systems need to mention Garden, this repository, or the original project owner. When the review happens, the randomly selected community decides what happens afterward to 100% of the ideas and their economic value.
-
-The electorate has a minimum of 100,000 qualified randomly selected reviewers and no upper limit. Selection happens before a neutral comprehension check; the check tests understanding of the decision, not ideology or preferred outcome.
+Individual ideas remain free pending the review. Voting membership is open to every resident of an AI-Accord member country who passes objective general-reasoning and basic AI-knowledge tests. No political appointments, random-selection gate, ideological screening, discretionary filtering or mandatory coaching. At least 100,000 qualified members, no upper limit, one equal vote each; membership stays open. The community decides the future of 100% of the ideas and worldwide revenue earned from their use, without requiring Garden branding or personal attribution.
 
 See `LICENSE` for the current rule.
