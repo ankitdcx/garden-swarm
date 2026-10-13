@@ -1,0 +1,22 @@
+{
+ "schema":"GardenGCSCV1510SourceOnlyMigrationPlan/v0.1",
+ "status":"READY",
+ "source_only_leaves":2660,
+ "tiers":{"T0_HIGH_RISK":1572,"T1_STRUCTURAL":18,"T2_RESIDUAL":1070},
+ "seed_classes":{"SEED_RESIDUAL":1963,"SEED_EXCEPTION":390,"SEED_IDENTITY":171,"SEED_PROTECTED":110,"SEED_MODEL":26},
+ "owner_distribution":{"Annexure":2310,"Technical":208,"System":69,"Human":47,"Theories":26},
+ "migration_rule":"Exact predecessor source remains controlling until a machine-checkable structured equivalence/refinement receipt succeeds.",
+ "per_leaf_acceptance":[
+  "structured representation exists",
+  "source span/hash retained",
+  "scope/context/time/jurisdiction preserved",
+  "modality/quantification/exceptions preserved",
+  "authority/rights/privacy/safety preserved",
+  "UNKNOWN/failure semantics preserved",
+  "dependencies/invalidators preserved",
+  "schema/invariant/test/proof/function closure checked",
+  "GCSC composition/adversarial checks pass",
+  "equivalence_or_authorized_refinement_receipt emitted"
+ ],
+ "next_execution":"Process T0 first; no bulk elision. Failed/uncertain leaves remain SOURCE_ONLY."
+}

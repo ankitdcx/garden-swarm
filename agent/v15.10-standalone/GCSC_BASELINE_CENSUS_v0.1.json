@@ -1,0 +1,8 @@
+{
+  "schema":"GardenGCSCBaselineCensus/v0.1",
+  "status":"EVIDENCE_BASELINE_NOT_COVERAGE",
+  "source":"agent/v15.10-standalone/RETENTION_BASELINE_2026-09-21.md",
+  "v15_9":{"schema_ids":735,"test_ids":881,"registry_ids":62,"right_ids":27,"broad_invariant_qualified_id_pattern":3261,"anchors":308},
+  "raw_gcsc_l0":2400,
+  "notes":["Identifier census is not minimal semantic-family count.","No coverage percentage is asserted.","Blind rediscovery compares normalized semantic families, not raw IDs."]
+}

@@ -1,0 +1,11 @@
+{
+ "schema":"GardenGCSCEpoch1L0SourceGroundedResult/v0.1",
+ "status":"PARTIAL_MEASUREMENT_NOT_COVERAGE",
+ "raw_l0":2400,
+ "source_supported_exact_pairs":2,
+ "source_supported_pairs":[["AGENCY","acts","ACTION"],["AGENCY","delegates","AGENCY"]],
+ "unknown_pair_predicate":2398,
+ "interpretation":"The attached v15.9 text explicitly states algebraic laws and registry requirements for all 24 relations, but the retrieved source does not provide a complete machine-readable domain/range table. Therefore only pairs directly established by semantics are admitted here; all others remain UNKNOWN rather than guessed or excluded.",
+ "important":"This deliberately produces a smaller admitted set than the older 659-cell candidate envelope. That 659 envelope was a review candidate inferred from semantics and is not source-certified.",
+ "coverage_percent":null
+}

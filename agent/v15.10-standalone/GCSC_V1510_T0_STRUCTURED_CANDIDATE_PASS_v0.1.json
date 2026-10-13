@@ -1,0 +1,12 @@
+{
+ "schema":"GardenV1510T0StructuredCandidatePass/v0.1",
+ "status":"NO_ELISION__SEMANTIC_PROOF_REQUIRED",
+ "templates_generated":50,
+ "leaves_evaluated":755,
+ "metadata_preservation_pass":755,
+ "verified_equivalent_structured":0,
+ "keep_source_only_pending_semantic_proof":755,
+ "finding":"Existing form/facet/law/seed metadata is sufficient for batching but insufficient to prove material semantic equivalence. Scope, modality/quantification, exceptions/precedence, UNKNOWN/failure, time/jurisdiction/context, closure bindings and GCSC composition still require proof.",
+ "authority_effect":"NONE",
+ "retention_effect":"Exact predecessor source remains controlling for all 755 leaves."
+}
