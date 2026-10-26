@@ -8,6 +8,10 @@ https://github.com/ankitdcx/garden-main
 
 Unique design material formerly present here was preserved in `garden-main` before this cleanup. Old runtime, prototype, agent, test, review, automation and historical files remain recoverable through Git history but are intentionally absent from the current tree.
 
-**Current use terms — four core rules.** Garden ideas may be used worldwide. 99% of economic benefits attributable to Garden goes to the Garden Common Fund. The rate stays at 99% unless the repository owner expressly approves reducing it to 50%. All Fund money must be placed in fixed deposits targeting 6% annual returns; during the owner's lifetime, spending or disbursement requires the owner's prior express permission. After the owner's death, at least 100,000 randomly selected, verified people worldwide decide Fund governance and proposed spending through a publicly auditable process. The 6% return is a target, not a guarantee. See [LICENSE](LICENSE) for the four core rules.
+**Use terms — privacy first, then free use pending public review.** Under the proposed [LICENSE](LICENSE), operational use is not offered until the owner's full privacy, consent, dignity and security requirements are satisfied. After that condition is met, Garden ideas are offered for free use without fees or mandatory attribution while a public review is pending. The review does **not** delay that interim free use. After privacy, openly recruit at least 100,000 verified citizens of participating AI Accord countries for future decisions on patents, licensing, fees, revenue, design changes and governance through public voting. No special political voting authority or concealed decision-making. Public proceedings are auditable; individual ballots and personal data remain private. See [LICENSE](LICENSE) for the controlling terms.
 
-See `LICENSE` for the current rule.
+## Version-control history
+
+**2026-10-26 — rollback to the 2026-10-25 stable state:** A more humane attempt to update the Garden use terms was made today, but it was not well received. The attempted update was rolled back, and the LICENSE was restored to the last stable wording that was in effect yesterday evening. This entry records the attempted change and rollback; the restored LICENSE remains the controlling text.
+
+See [CHANGELOG.md](CHANGELOG.md) for this rollback record and [LICENSE](LICENSE) for the restored use terms.
