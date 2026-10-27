@@ -7,4 +7,4 @@ The previous LICENSE and README state was restored from the last pre-2026-10-26 
 
 ## LICENSE governance — 2026-10-26
 
-Established a separate canonical-LICENSE change policy and recorded today's discussed changes in a proposal file. The proposed worldwide/Common Fund terms are **not adopted**; the Germany-specific idea is recorded as withdrawn from the proposed update. The LICENSE remains the controlling text and was not changed by these proposal documents.
+The canonical-LICENSE change policy was established. The separate proposal document created on this date has since been removed from the current tree at the owner's request; the canonical LICENSE was not changed. Git history may retain earlier revisions.
