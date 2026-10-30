@@ -1,0 +1,15 @@
+{
+ "schema":"GardenGCSCEpoch1BoundedFindings/v0.1",
+ "status":"CANDIDATE_FINDINGS_REQUIRE_SEMANTIC_COMPARISON",
+ "l0":{"raw":2400,"primitive_material_signature_classes":14,"nonempty_signatures":13,"cells_without_seed_axiom":1100},
+ "l2":{"raw_relation_pair_topologies":576,"interaction_seed_pairs":10,"candidate_emergent_obligations":[
+   "REQUIRE_DELEGATION_SCOPE_COMPATIBILITY","REQUIRE_AUTHORITY_AT_EFFECT","REQUIRE_CHAIN_WARRANT",
+   "REQUIRE_CAUSAL_MODEL","REQUIRE_ASSUMPTION_COMPATIBILITY","REQUIRE_CONTEXT_COMPATIBILITY",
+   "REQUIRE_OWNERSHIP_CONTROL_DISTINCTION","PRESERVE_HYPOTHESIS_STATUS","REQUIRE_DEPENDENCY_REVALIDATION",
+   "PROHIBIT_AUTHORITY_BY_AGGREGATION","REQUIRE_DELEGATION_SCOPE_INTERSECTION"
+ ]},
+ "known_v15_9_comparison_side":{"explicit_invariant_definitions_excluding_rights":1817,"syntactic_prefix_families":212},
+ "interpretation":"The L2 deltas are independent candidate obligations derived from GSL composition semantics. They are not yet NEW Garden gaps: v15.9 may already cover them under differently named invariants.",
+ "coverage_percent":null,
+ "next_required_for_valid_gap_claim":"semantic comparison against the full v15.9 invariant definitions, preserving exact source text and classifying exact/equivalent/refinement/overlap/novel/unresolved."
+}

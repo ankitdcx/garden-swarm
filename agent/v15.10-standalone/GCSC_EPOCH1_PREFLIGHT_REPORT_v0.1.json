@@ -1,0 +1,41 @@
+{
+  "schema": "GardenGCSCEpoch1PreflightReport/v0.1",
+  "status": "PREFLIGHT_NOT_COVERAGE",
+  "raw_l0": 2400,
+  "candidate_relation_signature_envelope": {
+    "typed_source_target_cells": 659,
+    "outside_candidate_envelope": 1741,
+    "warning": "659 is not a semantic denominator: compatibility/pair predicates and mandatory qualifiers are not frozen. All 2400 remain RAW."
+  },
+  "recovered_v15_10_catalogue_inventory": {
+    "schema_ids": 733,
+    "test_ids": 788,
+    "registry_ids": 62,
+    "right_ids": 27,
+    "definition_index": 2239,
+    "family_index": 55,
+    "fundamental_laws": 18,
+    "identity_index": 1935,
+    "semantic_edges": 7747,
+    "semantic_leaves": 2660,
+    "semantic_units": 206,
+    "formula_operator_candidates": 2981
+  },
+  "predecessor_v15_9_census": {
+    "schema_ids": 735,
+    "test_ids": 881,
+    "registry_ids": 62,
+    "right_ids": 27,
+    "broad_invariant_qualified_id_pattern": 3261
+  },
+  "deltas_note": "Recovered v15.10 catalogue raw ID counts differ from predecessor census (733 vs 735 SchemaIDs; 788 vs 881 TestIDs). This is a retention/audit signal, not proof of semantic loss, because v15.10 uses abstraction/indexing and retained predecessor material. Must be resolved by semantic/disposition mapping.",
+  "blind_rediscovery_status": "NOT_RUN_FULL_CORPUS",
+  "blocker": "Exact recovered v15.10 Catalogue bytes are hash-bound but not present as a repository-readable file; full semantic-family normalization cannot be honestly completed from compact projections alone.",
+  "next_executable_scope": [
+    "classify all 2400 RAW L0 cells without exclusion",
+    "freeze mandatory relation qualifiers/pair predicates",
+    "normalize explicit invariant families available in review projections",
+    "build schema/invariant/test binding index",
+    "run blind rediscovery after independent materiality axioms are frozen"
+  ]
+}

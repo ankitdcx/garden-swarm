@@ -1,0 +1,14 @@
+{
+  "schema":"GardenGCSCEpoch1DiscoveryRun/v0.1",
+  "status":"BOUNDED_DISCOVERY_KERNEL_RESULT_NOT_GARDEN_COVERAGE",
+  "raw_l0":2400,
+  "primitive_material_signature_classes":14,
+  "nonempty_primitive_material_signature_classes":13,
+  "cells_with_no_current_independent_seed_axiom":1100,
+  "warning_on_empty":"No current seed axiom is not equivalent to no obligation. These cells remain discovery-incomplete.",
+  "l2_relation_pair_topologies_before_type_join_reduction":576,
+  "existing_v15_9_comparison_side":{"explicit_invariant_definitions_excluding_rights":1817,"syntactic_prefix_families":212},
+  "blind_comparison_status":"NOT_YET_SEMANTICALLY_MATCHED",
+  "why":"The 13 primitive signatures are obligation-pattern families, not normalized Garden invariant families. Matching them to the 1,817 existing invariants now requires a semantic comparator, not keyword/ID matching.",
+  "next":"Build comparator fingerprints and use known v15.9 invariants only after discovery output is frozen."
+}
